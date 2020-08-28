@@ -6,7 +6,7 @@ const JobsDashboard = () => {
 	const JOBS = [
 		{
 			id: 'SSS001',
-			name: 'Tanker Officer',
+			name: 'Orbal Network Operator',
 			company: 'Special Support Section',
 			city: 'Crossbell',
 			region: 'West Zemuria',
@@ -16,7 +16,7 @@ const JobsDashboard = () => {
 		},
 		{
 			id: 'RCN001',
-			name: 'Fighter Scout',
+			name: 'Landscape Mapping Officer',
 			company: 'Recon Corps',
 			city: 'Shigansina',
 			region: 'Wall Maria',

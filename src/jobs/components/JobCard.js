@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import classes from './JobCard.module.css';
-import Button from '../../shared/UI_Element/Button/Button';
+import Button from '../../shared/UI_Element/Button';
 
 const JobCard = props => {
 	return (

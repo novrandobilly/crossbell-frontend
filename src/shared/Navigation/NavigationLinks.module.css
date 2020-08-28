@@ -6,7 +6,7 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
 }
 
@@ -20,6 +20,8 @@
 	text-decoration: none;
 	padding: .5rem;
 	font-weight: bold;
+	transition: all .1s ease-in;
+	font-size: 1.3rem;
 }
 
 .NavLinks a:hover,
@@ -51,15 +53,18 @@
 @media screen and (min-width: 768px) {
 	.NavLinks {
 		flex-direction: row;
+		width: 100%;
+		justify-content: center;
 	}
 
 	.NavLinks li {
-		margin: 0 0.5rem;
+		margin: 0;
 	}
 
 	.NavLinks a {
 		color: rgba(58, 81, 153, 1);
 		text-decoration: none;
+		font-size: .9rem;
 	}
 
 	.NavLinks button {

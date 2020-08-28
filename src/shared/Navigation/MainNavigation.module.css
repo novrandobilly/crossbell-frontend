@@ -8,6 +8,7 @@
 	justify-content: space-around;
 	margin-right: 2rem;
 	cursor: pointer;
+	outline: none;
 }
 
 .MenuBtn span {
@@ -27,20 +28,20 @@
 	color: rgba(58, 81, 153, 1);
 }
 
-/* .main-navigation__header-nav {
-   display: none;
- }
- 
- .main-navigation__drawer-nav {
-   height: 100%;
- } */
+.HeaderNav {
+	display: none;
+}
+
+.DrawerNav {
+	height: 100%;
+}
 
 @media (min-width: 768px) {
 	.MenuBtn {
 		display: none;
 	}
 
-	/* .main-navigation__header-nav {
-     display: block;
-   } */
+	.HeaderNav {
+		display: block;
+	}
 }
