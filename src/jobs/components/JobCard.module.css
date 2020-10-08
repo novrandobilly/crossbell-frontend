@@ -16,7 +16,7 @@
 	left: -15px;
 	border-radius: 50%;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-	background-color: #d5d6d2;
+	background-color: rgb(215, 226, 255);
 	background-size: cover;
 	background-position: center;
 	display: flex;

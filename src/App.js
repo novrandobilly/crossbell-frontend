@@ -22,6 +22,7 @@ import CustomerSupportsAO from './users/admin/pages/CustomerSupportsAO/CustomerS
 import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
 import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
 import MainNavigation from './shared/Navigation/MainNavigation';
+import Footer from './shared/Navigation/Footer';
 
 import './App.css';
 
@@ -65,6 +66,7 @@ const App = () => {
 					<Redirect to='/' />
 				</Switch>
 			</main>
+			<Footer />
 		</Router>
 	);
 };

@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import MainHeader from './MainHeader';
 import NavigationLinks from './NavigationLinks';
 import SideDrawer from './SideDrawer';
-import classes from './MainNavigation.module.css';
 import Backdrop from '../UI_Element/Backdrop';
+import Logo from '../UI_Element/Logo';
+
+import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
 	const [ drawerIsOpen, setDrawerIsOpen ] = useState(false);
@@ -31,7 +33,9 @@ const MainNavigation = () => {
 					<span />
 				</button>
 				<h2 className={classes.Title}>
-					<Link to='/'>Kolam Pemancingan</Link>
+					<Link to='/'>
+						<Logo logoWidth='45px' />
+					</Link>
 				</h2>
 				<nav className={classes.HeaderNav}>
 					<NavigationLinks />
