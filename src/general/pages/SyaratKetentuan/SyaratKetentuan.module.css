@@ -1,0 +1,56 @@
+.SyaratKetentuan {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-flow: column;
+	width: 100%;
+}
+
+.SyaratKetentuan body {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+}
+
+.Pengantar {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	text-align: left;
+	margin: 0;
+}
+
+.Pengantar p {
+	margin: .5rem 0;
+}
+
+.MainPoints {
+	list-style: upper-alpha;
+	padding-left: 1rem;
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.MainPoints > li {
+	text-align: left;
+	margin-top: 1rem;
+}
+
+.MainPoints > li > span {
+	font-weight: bold;
+}
+
+.MainPoints > li > p {
+	margin-top: 0.5rem;
+}
+.MainPoints > li > ul {
+	list-style: decimal;
+}
+.MainPoints > li > ul > li {
+	margin: .5rem 0;
+}
+.MainPoints > li > ul > li > ul {
+	list-style: lower-roman;
+}
