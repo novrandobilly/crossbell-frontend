@@ -6,6 +6,8 @@ import Home from './general/pages/Home/Home';
 import Blogs from './general/pages/Blogs/Blogs';
 import AboutUs from './general/pages/AboutUs/AboutUs';
 import ContactUs from './general/pages/ContactUs/ContactUs';
+import SyaratKetentuan from './general/pages/SyaratKetentuan/SyaratKetentuan';
+import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi';
 import CompanyProfileForm from './users/company/pages/CompanyProfileForm/CompanyProfileForm';
 import NewJob from './jobs/pages/NewJob/NewJob';
 import PackageAds from './jobs/pages/PackageAds/PackageAds';
@@ -60,6 +62,8 @@ const App = () => {
 					<Route path='/blogs' component={Blogs} />
 					<Route path='/about-us' component={AboutUs} />
 					<Route path='/contact-us' component={ContactUs} />
+					<Route path='/syarat-ketentuan' component={SyaratKetentuan} />
+					<Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
 					<Route path='/' component={Home} />
 
 					{/* Absurd Routes */}

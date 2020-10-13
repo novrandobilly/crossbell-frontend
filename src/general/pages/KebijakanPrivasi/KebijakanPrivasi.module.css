@@ -1,0 +1,36 @@
+.KebijakanPrivasi {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.KebijakanPrivasi > * {
+	width: 80%;
+}
+
+.MainPoints {
+	list-style: upper-alpha;
+	text-align: left;
+}
+
+.MainPoints p {
+	margin: 0;
+}
+
+.MainPoints li {
+	margin: .7rem 0;
+}
+
+.MainPoints > li > span {
+	font-weight: bold;
+}
+
+.MainPoints > li > ul {
+	list-style: lower-roman;
+}
+.MainPoints > li > ul > li {
+	margin: .3rem;
+}
