@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import App from './App';
+import configureJobsStore from './store/jobs-store';
 import * as serviceWorker from './serviceWorker';
+
+configureJobsStore();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
