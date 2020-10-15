@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Login from "./Components/Login";
+import CompanyForm from "./Components/CompanyForm";
 import Register from "./Components/Register";
 
 const Home = () => {
@@ -15,9 +15,9 @@ const Home = () => {
       <h1>This is a homepage </h1>
 
       {!sign ? (
-        <Login toggled={toggleSign} />
-      ) : (
         <Register toggled={toggleSign} />
+      ) : (
+        <CompanyForm toggled={toggleSign} />
       )}
     </div>
   );

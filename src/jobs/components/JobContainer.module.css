@@ -1,0 +1,119 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  font-family: sans-serif;
+}
+
+.LeftContainer {
+  display: flex;
+  flex-direction: column;
+  width: 60rem;
+  margin-left: 6rem;
+  margin-right: 2rem;
+}
+
+.RightContainer {
+  display: flex;
+  flex-direction: column;
+  margin-right: 6rem;
+  border: solid 0.01rem rgba(0, 0, 0, 0.4);
+}
+
+.UpperContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.6);
+  padding-bottom: 1rem;
+}
+
+.Logo {
+  height: 10rem;
+  margin-right: 2rem;
+}
+
+.ContainerIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 10rem;
+}
+
+.JobTitle {
+  align-self: flex-start;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-bottom: -0.3rem;
+}
+
+.ContainerNameLoc {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.TextLeft {
+  margin-right: 1rem;
+}
+
+.TextMiddle {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.TextRight {
+  margin-left: 1rem;
+}
+
+.ContainerSal {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: -1rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.TextDate {
+  align-self: flex-start;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.JobDesc {
+  padding-bottom: 1rem;
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.6);
+}
+
+.TextLabel {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.TextDetail {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  width: 55rem;
+  text-align: left;
+}
+
+.AboutLabel {
+  margin-left: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 2rem;
+}
+
+.AboutText {
+  font-size: 0.9rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-bottom: 2rem;
+  text-align: left;
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.6);
+}

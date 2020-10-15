@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: row;
   font-family: sans-serif;
+  height: 15rem;
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding-bottom: 3rem;
 }
 
 .ContainerLeft {
@@ -23,8 +28,8 @@
 }
 
 .Logo {
-  width: 10rem;
-  height: 10rem;
+  width: 15rem;
+  height: auto;
   margin-right: 2rem;
   margin-left: 3rem;
 }
@@ -49,7 +54,8 @@
 }
 
 .DetailContainer {
-  margin: 5rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
   size: 90rem;
 }
 
@@ -64,7 +70,8 @@
 }
 
 .MissionContainer {
-  margin: 5rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
   size: 90rem;
 }
 
@@ -76,4 +83,11 @@
 .MissionLabel {
   font-size: 1.7rem;
   font-weight: bold;
+}
+
+.Line {
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding-bottom: 3rem;
 }

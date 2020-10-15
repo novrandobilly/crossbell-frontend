@@ -40,10 +40,14 @@ const CompanyCard = (props) => {
         <p className={classes.CompanyDetail}>{props.detail}</p>
       </div>
 
+      <div className={classes.Line}></div>
+
       <div className={classes.MissionContainer}>
         <p className={classes.MissionLabel}>Company Mission</p>
         <p className={classes.CompanyMission}>{props.mission}</p>
       </div>
+
+      <div className={classes.Line}></div>
     </>
   );
 };
