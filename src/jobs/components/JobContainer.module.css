@@ -46,7 +46,7 @@
   margin-bottom: -0.3rem;
 }
 
-.ContainerNameLoc {
+.ContainerFirst {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -66,7 +66,7 @@
   margin-left: 1rem;
 }
 
-.ContainerSal {
+.ContainerSecond {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -74,10 +74,28 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.ContainerThird {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .TextDate {
   align-self: flex-start;
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.InstantButton {
+  width: 8rem;
+  margin-left: 30rem;
+  background-color: transparent;
+  border: none;
+  color: rgba(58, 81, 153, 1);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .JobDesc {

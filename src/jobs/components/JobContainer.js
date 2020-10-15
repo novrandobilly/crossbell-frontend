@@ -3,6 +3,10 @@ import React from "react";
 import classes from "./JobContainer.module.css";
 
 const JobDetails = (props) => {
+  const onSaveHandler = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <div className={classes.Container}>
@@ -16,8 +20,7 @@ const JobDetails = (props) => {
 
             <div className={classes.ContainerIntro}>
               <p className={classes.JobTitle}>{props.jobName}</p>
-
-              <div className={classes.ContainerNameLoc}>
+              <div className={classes.ContainerFirst}>
                 <p className={classes.TextLeft}>{props.name}</p>
                 <p>-</p>
                 <p className={classes.TextMiddle}>{props.industry}</p>
@@ -25,7 +28,7 @@ const JobDetails = (props) => {
                 <p className={classes.TextRight}>{props.city}</p>
               </div>
 
-              <div className={classes.ContainerSal}>
+              <div className={classes.ContainerSecond}>
                 <p className={classes.TextLeft}>Salary: {props.payment}</p>
                 <p>-</p>
                 <p className={classes.TextMiddle}>{props.employment}</p>
@@ -34,9 +37,18 @@ const JobDetails = (props) => {
                 <p>-</p>
                 <p className={classes.TextRight}>{props.jobFunction}</p>
               </div>
-              <p className={classes.TextDate}>
-                Posted {props.datePosted} days ago
-              </p>
+
+              <div className={classes.ContainerThird}>
+                <p className={classes.TextDate}>
+                  Posted {props.datePosted} days ago
+                </p>
+                <button
+                  className={classes.InstantButton}
+                  onClick={onSaveHandler}
+                >
+                  <span>Instant Apply</span>
+                </button>
+              </div>
             </div>
           </div>
 

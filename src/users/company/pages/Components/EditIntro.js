@@ -31,6 +31,7 @@ const EditIntro = (props) => {
               <input className={classes.Input} type="text" />
             </div>
           </div>
+
           <button className={classes.SaveButton} onClick={onSaveHandler}>
             <span>Save</span>
           </button>
