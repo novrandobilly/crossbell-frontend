@@ -2,12 +2,20 @@ import React from "react";
 
 import classes from "./CompanyForm.module.css";
 
-const Register = ({ toggled }) => {
+const CompanyForm = ({ sign, role }) => {
   return (
     <>
       <form className={classes.Container}>
         <div className={classes.ContainerFlex}>
           <p className={classes.FormTitle}>Company Sign Up</p>
+
+          <button
+            className={classes.ApplicantRegister}
+            onClick={role}
+            type="button"
+          >
+            Applicant sign up
+          </button>
 
           <label className={classes.LabelName}>Company name</label>
           <input className={classes.Input} type="text" />
@@ -23,19 +31,8 @@ const Register = ({ toggled }) => {
           </button>
 
           <span className={classes.sign}>
-            Sign for applicant account?
-            <button
-              className={classes.ChangeSign}
-              onClick={toggled}
-              type="button"
-            >
-              Click here
-            </button>
-          </span>
-
-          <span className={classes.sign}>
             Already have an account?
-            <button className={classes.ChangeSign} type="button">
+            <button className={classes.ChangeSign} onClick={sign} type="button">
               Sign In Here
             </button>
           </span>
@@ -44,4 +41,4 @@ const Register = ({ toggled }) => {
     </>
   );
 };
-export default Register;
+export default CompanyForm;
