@@ -16,11 +16,11 @@
 	cursor: not-allowed;
 }
 
-.Button:hover {
+.Button:hover:enabled {
 	transform: scale(1);
 }
 
-.Button:active {
+.Button:active:enabled {
 	transform: translateY(2px);
 }
 
@@ -28,8 +28,18 @@
 	color: rgba(58, 81, 153, 1);
 }
 
+.Dark {
+	background-color: rgb(215, 226, 255);
+	color: rgba(58, 81, 153, 1);
+	border-radius: 15px;
+	padding: 5px 20px;
+}
+.Dark:disabled {
+	background-color: rgb(215, 226, 255);
+}
+
 @media screen and (min-width: 768px) {
-	.Button:hover {
+	.Button:hover:enabled {
 		transform: scale(1.1);
 	}
 	.Button:active {

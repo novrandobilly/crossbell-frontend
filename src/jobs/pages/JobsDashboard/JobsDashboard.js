@@ -2,6 +2,8 @@ import React from 'react';
 
 import JobsList from '../../components/JobsList';
 
+import classes from './JobsDashboard.module.css';
+
 export let JOBS = [
 	{
 		id: 'SSS001',
@@ -35,7 +37,11 @@ export let JOBS = [
 ];
 
 const JobsDashboard = () => {
-	return <JobsList items={JOBS} />;
+	return (
+		<div className={classes.JobsDashboard}>
+			<JobsList items={JOBS} />;
+		</div>
+	);
 };
 
 export default JobsDashboard;

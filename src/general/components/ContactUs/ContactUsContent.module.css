@@ -1,0 +1,61 @@
+.ContactUsContent {
+	margin-top: 2rem;
+	box-sizing: border-box;
+}
+
+.Section1 {
+	display: flex;
+	justify-content: space-around;
+}
+
+.HelpArticles {
+	text-align: start;
+}
+
+.HelpArticlesLink {
+	list-style: none;
+	padding-left: 1rem;
+}
+
+.HelpArticlesLink > * {
+	margin: 1rem 0;
+	border-bottom: 1px solid rgb(199, 208, 219);
+	padding-bottom: 1rem;
+}
+
+.HelpArticlesLink a {
+	text-decoration: none;
+	color: black;
+}
+
+.SeeAllArticles a {
+	text-decoration: none;
+	color: rgb(122, 148, 221);
+	font-size: .8rem;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.SeeAllArticles a:hover,
+.HelpArticlesLink a:hover {
+	color: rgba(58, 81, 153, 1);
+}
+
+.NeedSupport > * {
+	margin: .5rem 0;
+}
+
+.Section2 {
+	width: 100%;
+	background-color: rgb(215, 226, 255);
+	margin: 4rem 0;
+	padding: 2rem 5rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.Section2 > div {
+	width: 40%;
+}

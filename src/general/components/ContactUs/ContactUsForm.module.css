@@ -1,0 +1,20 @@
+.ContactUsContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.ContactUsForm {
+	width: 25rem;
+	padding: .5rem;
+	display: flex;
+	flex-flow: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.ContactUsForm > * {
+	margin: .3rem 0;
+}

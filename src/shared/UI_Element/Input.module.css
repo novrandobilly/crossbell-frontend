@@ -1,0 +1,10 @@
+.InputElements {
+	border-radius: 5px;
+	outline: none;
+	width: 100%;
+	border: 2px solid rgba(58, 81, 153, 1);
+}
+
+::placeholder {
+	color: rgba(58, 81, 153, 1);
+}

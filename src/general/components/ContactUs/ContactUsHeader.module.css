@@ -1,0 +1,16 @@
+.ContactUsHeader {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 10rem;
+	padding: 0 10%;
+	background-color: rgb(215, 226, 255);
+	color: rgba(58, 81, 153, 1);
+	box-sizing: border-box;
+}
+
+.ContactUsHeader > * {
+	margin: .5rem 0;
+}
