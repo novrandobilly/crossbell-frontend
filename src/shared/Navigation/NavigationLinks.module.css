@@ -1,81 +1,83 @@
 .NavLinks {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
 }
 
 .NavLinks li {
-	margin: 1rem;
+  margin: 1rem;
 }
 
 .NavLinks a {
-	border: 1px solid transparent;
-	color: rgba(58, 81, 153, 1);
-	text-decoration: none;
-	padding: .5rem;
-	font-weight: bold;
-	transition: all .1s ease-in;
-	font-size: 1.3rem;
+  border: 1px solid transparent;
+  color: rgba(58, 81, 153, 1);
+  text-decoration: none;
+  padding: 0.5rem;
+  font-weight: bold;
+  transition: all 0.1s ease-in;
+  font-size: 1.3rem;
 }
 
 .NavLinks a:hover,
 .NavLinks a:active,
 .NavLinks a.active {
-	color: white;
-	text-shadow: 2px 2px 4px rgba(58, 81, 153, 1);
+  color: #2f2e33;
+  border-bottom: solid 0.2rem rgba(47, 46, 51);
+  border-radius: 0.5rem;
 }
 
 .NavLinks button {
-	cursor: pointer;
-	border: 1px solid rgba(58, 81, 153, 1);
-	color: rgba(58, 81, 153, 1);
-	background: transparent;
-	padding: .5rem;
-	font: inherit;
+  cursor: pointer;
+  border: 1px solid rgba(58, 81, 153, 1);
+  color: rgba(58, 81, 153, 1);
+  background: transparent;
+  padding: 0.5rem;
+  font: inherit;
 }
 
 .NavLinks button:focus {
-	outline: none;
+  outline: none;
 }
 
 .NavLinks button:hover,
 .NavLinks button:active {
-	background: rgba(58, 81, 153, 1);
-	color: white;
+  background: rgba(58, 81, 153, 1);
+  color: white;
 }
 
 @media screen and (min-width: 768px) {
-	.NavLinks {
-		flex-direction: row;
-		width: 100%;
-		justify-content: center;
-	}
+  .NavLinks {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+  }
 
-	.NavLinks li {
-		margin: 0;
-	}
+  .NavLinks li {
+    margin: 0;
+  }
 
-	.NavLinks a {
-		color: rgba(58, 81, 153, 1);
-		text-decoration: none;
-		font-size: 1rem;
-	}
+  .NavLinks a {
+    color: rgba(58, 81, 153, 1);
+    text-decoration: none;
+    font-size: 1rem;
+  }
 
-	.NavLinks button {
-		border: 1px solid white;
-		color: white;
-		background: transparent;
-	}
+  .NavLinks button {
+    border: 1px solid white;
+    color: white;
+    background: transparent;
+  }
 
-	.NavLinks button:hover,
-	.NavLinks button:active {
-		background: white;
-		color: rgba(58, 81, 153, 1);
-	}
+  .NavLinks button:hover,
+  .NavLinks button:active {
+    background: white;
+    color: rgba(58, 81, 153, 1);
+  }
 }

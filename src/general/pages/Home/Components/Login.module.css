@@ -3,6 +3,7 @@
   flex-direction: row;
   justify-content: center;
 }
+
 .ContainerFlex {
   width: 32rem;
   height: auto;
@@ -14,12 +15,12 @@
   padding-bottom: 2rem;
   background-color: rgb(215, 226, 255);
   font-family: sans-serif;
-  font-size: 14pt;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
 .FormTitle {
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 .LabelName {
@@ -43,7 +44,7 @@
   color: white;
   background-color: rgba(58, 81, 153, 1);
   font-family: sans-serif;
-  font-size: 14pt;
+  font-size: 1rem;
   font-weight: bold;
   transition: all 0.5s;
 }
@@ -59,12 +60,12 @@
   position: absolute;
   opacity: 0;
   top: 0;
-  right: -20px;
+  right: -2rem;
   transition: 0.5s;
 }
 
 .SubmitButton:hover span {
-  padding-right: 25px;
+  padding-right: 1.5rem;
 }
 
 .SubmitButton:hover span:after {
@@ -78,13 +79,13 @@
   color: blue;
   background-color: transparent;
   font-family: sans-serif;
-  font-size: 10pt;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 
 .sign {
   color: black;
   font-family: sans-serif;
-  font-size: 10pt;
+  font-size: 0.8rem;
   font-weight: bold;
 }

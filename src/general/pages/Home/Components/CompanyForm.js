@@ -1,29 +1,18 @@
 import React from "react";
 
-import classes from "./Register.module.css";
+import classes from "./CompanyForm.module.css";
 
 const Register = ({ toggled }) => {
   return (
     <>
       <form className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Applicant Sign Up</p>
+          <p className={classes.FormTitle}>Company Sign Up</p>
 
-          <button
-            className={classes.CompanyRegister}
-            onClick={toggled}
-            type="button"
-          >
-            Company sign up here >
-          </button>
-
-          <label className={classes.LabelName}>First Name</label>
+          <label className={classes.LabelName}>Company name</label>
           <input className={classes.Input} type="text" />
 
-          <label className={classes.LabelName}>Last Name</label>
-          <input className={classes.Input} type="text" />
-
-          <label className={classes.LabelName}>Email</label>
+          <label className={classes.LabelName}>Company email</label>
           <input className={classes.Input} type="text" />
 
           <label className={classes.LabelName}>Password</label>
@@ -33,7 +22,18 @@ const Register = ({ toggled }) => {
             <span>Submit</span>
           </button>
 
-          <span className={classes.Sign}>
+          <span className={classes.sign}>
+            Sign for applicant account?
+            <button
+              className={classes.ChangeSign}
+              onClick={toggled}
+              type="button"
+            >
+              Click here
+            </button>
+          </span>
+
+          <span className={classes.sign}>
             Already have an account?
             <button className={classes.ChangeSign} type="button">
               Sign In Here

@@ -1,11 +1,17 @@
-import React from 'react';
+import React from "react";
 
-const CompanyProfileForm = props => {
-	return (
-		<div>
-			<h1>This is Company Profile Form Pages</h1>
-		</div>
-	);
+import EditIntro from "../Components/EditIntro";
+import EditDetails from "../Components/EditDetails";
+import EditMission from "../Components/EditMission";
+
+const CompanyProfileForm = (props) => {
+  return (
+    <>
+      <EditIntro />
+      <EditDetails />
+      <EditMission />
+    </>
+  );
 };
 
 export default CompanyProfileForm;
