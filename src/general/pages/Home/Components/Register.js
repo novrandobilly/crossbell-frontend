@@ -14,7 +14,11 @@ const Register = ({ sign, role }) => {
             onClick={role}
             type="button"
           >
+
+           
+
             Company sign up
+
           </button>
 
           <label className={classes.LabelName}>First Name</label>

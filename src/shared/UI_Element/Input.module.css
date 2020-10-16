@@ -1,8 +1,23 @@
+.inputContainer {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
 .InputElements {
 	border-radius: 5px;
 	outline: none;
 	width: 100%;
 	border: 2px solid rgba(58, 81, 153, 1);
+}
+
+.inputLabel {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: .2rem;
+	color: rgba(58, 81, 153, 1);
 }
 
 ::placeholder {

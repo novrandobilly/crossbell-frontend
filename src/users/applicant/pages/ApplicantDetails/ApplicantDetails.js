@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 
 import NewJob from "../../../../jobs/pages/NewJob/NewJob";
 import JobDetails from "../../../../jobs/pages/JobDetails/JobDetails";
@@ -13,6 +14,7 @@ const ApplicantDetails = () => {
       {/* <CompanyForm /> */}
     </div>
   );
+
 };
 
 export default ApplicantDetails;
