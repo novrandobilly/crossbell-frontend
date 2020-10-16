@@ -14,7 +14,7 @@ const Register = ({ toggled }) => {
             onClick={toggled}
             type="button"
           >
-            Company sign up here >
+            Company sign up here 
           </button>
 
           <label className={classes.LabelName}>First Name</label>
