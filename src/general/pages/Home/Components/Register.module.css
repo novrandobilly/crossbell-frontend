@@ -1,11 +1,11 @@
 .Container {
-  margin-top: 5rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
+
 .ContainerFlex {
-  width: 32rem;
+  width: 20rem;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -30,16 +30,16 @@
 }
 
 .Input {
-  width: 30rem;
+  width: 18rem;
   height: 2rem;
   border: none;
   border-radius: 0.5rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .SubmitButton {
-  margin-top: 2rem;
-  width: 30rem;
+  margin-top: 1rem;
+  width: 18rem;
   height: 3rem;
   border: none;
   border-radius: 0.5rem;
@@ -49,6 +49,7 @@
   font-size: 1rem;
   font-weight: bold;
   transition: all 0.5s;
+  cursor: pointer;
 }
 
 .SubmitButton span {
@@ -83,6 +84,7 @@
   font-family: sans-serif;
   font-size: 0.8rem;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .Sign {
@@ -105,6 +107,8 @@
   font-weight: bold;
   opacity: 0.6;
   transition: 0.3s;
+  margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .CompanyRegister:hover {

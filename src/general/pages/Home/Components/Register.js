@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Register.module.css";
 
-const Register = ({ toggled }) => {
+const Register = ({ sign, role }) => {
   return (
     <>
       <form className={classes.Container}>
@@ -11,10 +11,14 @@ const Register = ({ toggled }) => {
 
           <button
             className={classes.CompanyRegister}
-            onClick={toggled}
+            onClick={role}
             type="button"
           >
-            Company sign up here 
+
+           
+
+            Company sign up
+
           </button>
 
           <label className={classes.LabelName}>First Name</label>
@@ -35,7 +39,7 @@ const Register = ({ toggled }) => {
 
           <span className={classes.Sign}>
             Already have an account?
-            <button className={classes.ChangeSign} type="button">
+            <button className={classes.ChangeSign} type="button" onClick={sign}>
               Sign In Here
             </button>
           </span>

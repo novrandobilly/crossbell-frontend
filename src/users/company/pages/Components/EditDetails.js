@@ -3,6 +3,9 @@ import React from "react";
 import classes from "./EditDetails.module.css";
 
 const EditDetails = (props) => {
+  const onSaveHandler = (event) => {
+    event.preventDefault();
+  };
   return (
     <>
       <form className={classes.Container}>
@@ -15,7 +18,8 @@ const EditDetails = (props) => {
               <textarea className={classes.InputArea} type="text" />
             </div>
           </div>
-          <button className={classes.SaveButton}>
+
+          <button className={classes.SaveButton} onClick={onSaveHandler}>
             <span>Save</span>
           </button>
         </div>

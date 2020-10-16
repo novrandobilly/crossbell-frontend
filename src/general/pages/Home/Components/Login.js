@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Login.module.css";
 
-const Login = ({ toggled }) => {
+const Login = ({ sign }) => {
   return (
     <>
       <form className={classes.Container}>
@@ -21,11 +21,7 @@ const Login = ({ toggled }) => {
 
           <span className={classes.sign}>
             Don't have an account
-            <button
-              className={classes.ChangeSign}
-              onClick={toggled}
-              type="button"
-            >
+            <button className={classes.ChangeSign} onClick={sign} type="button">
               Sign Up Here
             </button>
           </span>
