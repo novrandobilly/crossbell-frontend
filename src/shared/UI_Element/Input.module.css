@@ -23,3 +23,11 @@
 ::placeholder {
 	color: rgba(58, 81, 153, 1);
 }
+
+.AddJobInput{
+	font-size: 0.8rem;
+	width: 40rem;
+	height: 1.5rem;
+	border: solid 0.05rem;
+	margin-bottom: 1rem;
+}

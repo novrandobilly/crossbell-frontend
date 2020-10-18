@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./CompanyCard.module.css";
 
@@ -32,6 +33,16 @@ const CompanyCard = (props) => {
               ></img>
             </a>
           </div>
+
+          <div className={classes.ContainerRight}>
+            <Link to ={'/jobs/new'}>
+              <button className={classes.AddJob}>+</button>
+            </Link>
+
+            <Link to ={`/co/${props.id}/compro`}>
+              <button className={classes.AddJob}>edit</button>
+            </Link>
+          </div>   
         </div>
       </div>
 

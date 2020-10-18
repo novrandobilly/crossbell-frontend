@@ -91,3 +91,19 @@
   margin-right: 2rem;
   padding-bottom: 3rem;
 }
+
+.ContainerRight{
+  display:flex;
+  flex-direction:row;
+  width: 40rem;
+  margin-left:2rem;
+  align-self:flex-end;
+}
+
+.AddJob{
+  height:2.5rem;
+  width:2.5rem;
+  border-radius:5rem;
+  border:solid 0.1rem rgba(0, 0, 0, 0.4);
+  margin-left: 1rem
+}
