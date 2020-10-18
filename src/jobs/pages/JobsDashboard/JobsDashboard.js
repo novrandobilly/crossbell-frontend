@@ -38,6 +38,7 @@ export let JOBS = [
 
 const JobsDashboard = () => {
 	return (
+		
 		<div className={classes.JobsDashboard}>
 			<JobsList items={JOBS} />;
 		</div>

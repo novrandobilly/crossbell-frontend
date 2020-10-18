@@ -1,5 +1,8 @@
 import React from "react";
 
+import Input from '../../../../shared/UI_Element/Input';
+import { VALIDATOR_REQUIRE} from '../../../../shared/utils/validator';
+
 import classes from "./EditIntro.module.css";
 
 const EditIntro = (props) => {
@@ -15,20 +18,46 @@ const EditIntro = (props) => {
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
-              <label className={classes.LabelName}>Name*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='name'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='name*'
+              />
 
-              <label className={classes.LabelName}>size*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='size'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Size*'
+              />
 
-              <label className={classes.LabelName}>Industry*</label>
-              <input className={classes.Input} type="text" />
 
-              <label className={classes.LabelName}>Address*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='industry'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Industry*'
+              />
 
-              <label className={classes.LabelName}>Websites</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='headquarter'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Address*'
+              />
+
+              <Input
+                inputType='input'
+                id='websites'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Websites*'
+              />
             </div>
           </div>
 

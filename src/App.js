@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
+import EditIntro from "./users/company/pages/Components/EditIntro";
+import EditDetails from "./users/company/pages/Components/EditDetails";
+import EditMission from "./users/company/pages/Components/EditMission";
+
 import JobsDashboard from './jobs/pages/JobsDashboard/JobsDashboard';
 import Home from './general/pages/Home/Home';
 import Blogs from './general/pages/Blogs/Blogs';
@@ -40,6 +44,9 @@ const App = () => {
 					<Route path='/authentication/ap' component={AuthenticationAp} />
 
 					{/* Users Routes: Company */}
+					<Route path='/co/:companyid/compro/Intro' component={EditIntro} />
+					<Route path='/co/:companyid/compro/Details' component={EditDetails} />
+					<Route path='/co/:companyid/Mission' component={EditMission} />
 					<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
 					<Route path='/co/:companyid' component={CompanyDetails} />
 					<Route path='/authentication/co' component={AuthenticationCo} />

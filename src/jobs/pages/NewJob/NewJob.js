@@ -1,5 +1,8 @@
 import React from "react";
 
+import Input from '../../../shared/UI_Element/Input';
+import { VALIDATOR_REQUIRE} from '../../../shared/utils/validator';
+
 import classes from "./NewJob.module.css";
 
 const NewJob = (props) => {
@@ -21,22 +24,45 @@ const NewJob = (props) => {
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
-              <label className={classes.LabelName}>Job Title*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='title'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Job Title*'
+              />
 
-              <label className={classes.LabelName}>Job Description*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='description'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Job Description*'
+              />
 
-              <label className={classes.LabelName}>Job Qualification*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='qualification'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Job Qualification*'
+              />
 
-              <label className={classes.LabelName}>
-                Technical Requirement*
-              </label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='requirement'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Technical Requirement*'
+              />
 
-              <label className={classes.LabelName}>Placement*</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='placement'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Job Placement*'
+              />
 
               <label className={classes.LabelName}>Job Level*</label>
               <select
@@ -64,11 +90,21 @@ const NewJob = (props) => {
                 <option id="2">Internship</option>
               </select>
 
-              <label className={classes.LabelName}>Salary</label>
-              <input className={classes.Input} type="text" />
+              <Input
+                inputType='input'
+                id='salary'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Salary*'
+              />
 
-              <label className={classes.LabelName}>Benefits</label>
-              <input className={classes.Input} type="text" />
+               <Input
+                inputType='input'
+                id='benefit'
+                inputClass='AddJobInput'
+                validatorMethod={[ VALIDATOR_REQUIRE() ]}
+                label='Benefits*'
+              />
             </div>
           </div>
           <button className={classes.SaveButton} onClick={onSaveHandler}>

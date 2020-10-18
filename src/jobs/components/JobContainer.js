@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./JobContainer.module.css";
 
@@ -21,7 +22,9 @@ const JobDetails = (props) => {
             <div className={classes.ContainerIntro}>
               <p className={classes.JobTitle}>{props.jobName}</p>
               <div className={classes.ContainerFirst}>
-                <p className={classes.TextLeft}>{props.name}</p>
+                <Link to={`/co/${props.id}`}>
+                  <p className={classes.TextLeft}>{props.name}</p>
+                </Link>
                 <p>-</p>
                 <p className={classes.TextMiddle}>{props.industry}</p>
                 <p>-</p>
