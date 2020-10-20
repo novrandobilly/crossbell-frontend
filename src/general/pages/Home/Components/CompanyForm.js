@@ -12,7 +12,7 @@ import classes from "./CompanyForm.module.css";
 const ACTION = { UPDATEFORM_COMPANY: "update-form-applicant" };
 const formReducer = (state, action) => {
   switch (action.type) {
-    case ACTION.UPDATEFORM:
+    case ACTION.UPDATEFORM_COMPANY:
       let formValidity = true;
       for (const key in state.inputs) {
         if (key === action.payload.id) {
@@ -57,7 +57,10 @@ const CompanyForm = ({ sign, role }) => {
   });
 
   const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({ type: ACTION.UPDATEFORM, payload: { id, value, isValid } });
+    dispatch({
+      type: ACTION.UPDATEFORM_COMPANY,
+      payload: { id, value, isValid },
+    });
   }, []);
 
   const onSubmitHandler = (event) => {

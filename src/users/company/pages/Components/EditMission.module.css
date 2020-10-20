@@ -55,13 +55,18 @@
   transition: all 0.5s;
 }
 
-.SaveButton span {
+.SaveButton:disabled{
+  color: rgb(10, 0, 0);
+	cursor: not-allowed;
+}
+
+.SaveButton:enabled span {
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.SaveButton span:after {
+.SaveButton:enabled span:after {
   content: ">>";
   position: absolute;
   opacity: 0;
@@ -70,11 +75,11 @@
   transition: 0.5s;
 }
 
-.SaveButton:hover span {
+.SaveButton:hover:enabled span {
   padding-right: 1.5rem;
 }
 
-.SaveButton:hover span:after {
+.SaveButton:hover:enabled span:after {
   opacity: 1;
   right: 0;
 }

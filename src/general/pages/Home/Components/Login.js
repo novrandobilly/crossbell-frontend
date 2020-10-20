@@ -12,7 +12,7 @@ import classes from "./Login.module.css";
 const ACTION = { UPDATEFORM_LOGIN: "update-form-login" };
 const formReducer = (state, action) => {
   switch (action.type) {
-    case ACTION.UPDATEFORM:
+    case ACTION.UPDATEFORM_LOGIN:
       let formValidity = true;
       for (const key in state.inputs) {
         if (key === action.payload.id) {
@@ -53,7 +53,10 @@ const Login = ({ sign }) => {
   });
 
   const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({ type: ACTION.UPDATEFORM, payload: { id, value, isValid } });
+    dispatch({
+      type: ACTION.UPDATEFORM_LOGIN,
+      payload: { id, value, isValid },
+    });
   }, []);
 
   const onSubmitHandler = (event) => {
