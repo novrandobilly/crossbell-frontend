@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, useCallback } from "react";
 
 import Input from "../../../../shared/UI_Element/Input";
 import {
@@ -8,14 +8,80 @@ import {
 
 import classes from "./EditIntro.module.css";
 
+const ACTION = { UPDATEFORM_COMINTRO: "update-form-commpanyIntro" };
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case ACTION.UPDATEFORM_COMINTRO:
+      let formValidity = true;
+      for (const key in state.inputs) {
+        if (key === action.payload.id) {
+          formValidity = formValidity && action.payload.isValid;
+        } else {
+          formValidity = formValidity && state.inputs[key].isValid;
+        }
+      }
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.payload.id]: {
+            value: action.payload.value,
+            isValid: action.payload.isValid,
+          },
+        },
+        formIsValid: formValidity,
+      };
+    default:
+      return state;
+  }
+};
+
 const EditIntro = (props) => {
-  const onSaveHandler = (event) => {
+  const [state, dispatch] = useReducer(formReducer, {
+    inputs: {
+      name: {
+        value: "",
+        isValid: false,
+      },
+      size: {
+        value: "",
+        isValid: false,
+      },
+      industry: {
+        value: "",
+        isValid: false,
+      },
+      headquarter: {
+        value: "",
+        isValid: false,
+      },
+      websites: {
+        value: "",
+        isValid: false,
+      },
+      recipient: {
+        value: "",
+        isValid: false,
+      },
+    },
+    formIsValid: false,
+  });
+
+  const onInputHandler = useCallback((id, value, isValid) => {
+    dispatch({
+      type: ACTION.UPDATEFORM_COMINTRO,
+      payload: { id, value, isValid },
+    });
+  }, []);
+
+  const onSubmitHandler = (event) => {
     event.preventDefault();
+    // console.log(state);
   };
 
   return (
     <>
-      <form className={classes.Container}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
           <p className={classes.FormTitle}>Edit Company Intro</p>
 
@@ -26,6 +92,7 @@ const EditIntro = (props) => {
                 id="name"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
                 label="Name*"
               />
 
@@ -34,6 +101,7 @@ const EditIntro = (props) => {
                 id="size"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
                 label="Size*"
               />
 
@@ -42,6 +110,7 @@ const EditIntro = (props) => {
                 id="industry"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
                 label="Industry*"
               />
 
@@ -50,6 +119,7 @@ const EditIntro = (props) => {
                 id="headquarter"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
                 label="Address*"
               />
 
@@ -58,6 +128,7 @@ const EditIntro = (props) => {
                 id="websites"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
                 label="Websites*"
               />
 
@@ -66,12 +137,13 @@ const EditIntro = (props) => {
                 id="recipient"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
+                onInputHandler={onInputHandler}
                 label="Email Recipient*"
               />
             </div>
           </div>
 
-          <button className={classes.SaveButton} onClick={onSaveHandler}>
+          <button disabled={!state.formIsValid} className={classes.SaveButton}>
             <span>Save</span>
           </button>
         </div>

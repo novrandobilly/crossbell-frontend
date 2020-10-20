@@ -12,7 +12,7 @@ import classes from "./Register.module.css";
 const ACTION = { UPDATEFORM_APPLICANT: "update-form-applicant" };
 const formReducer = (state, action) => {
   switch (action.type) {
-    case ACTION.UPDATEFORM:
+    case ACTION.UPDATEFORM_APPLICANT:
       let formValidity = true;
       for (const key in state.inputs) {
         if (key === action.payload.id) {
@@ -61,7 +61,10 @@ const Register = ({ sign, role }) => {
   });
 
   const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({ type: ACTION.UPDATEFORM, payload: { id, value, isValid } });
+    dispatch({
+      type: ACTION.UPDATEFORM_APPLICANT,
+      payload: { id, value, isValid },
+    });
   }, []);
 
   const onSubmitHandler = (event) => {
