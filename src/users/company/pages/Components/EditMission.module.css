@@ -40,20 +40,6 @@
   align-self: flex-start;
 }
 
-.LabelName {
-  align-self: flex-start;
-  margin-bottom: 0.2rem;
-}
-
-.InputArea {
-  align-content: flex-start;
-  width: 40rem;
-  height: 15rem;
-  border: solid 0.05rem;
-  margin-bottom: 1rem;
-  resize: none;
-}
-
 .SaveButton {
   align-self: flex-end;
   margin-right: 2.5rem;
@@ -64,7 +50,6 @@
   border-radius: 1rem;
   color: white;
   background-color: rgba(58, 81, 153, 1);
-  font-family: sans-serif;
   font-size: 0.8rem;
   font-weight: bold;
   transition: all 0.5s;

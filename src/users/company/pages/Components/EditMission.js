@@ -1,5 +1,8 @@
 import React from "react";
 
+import Input from "../../../../shared/UI_Element/Input";
+import { VALIDATOR_REQUIRE } from "../../../../shared/utils/validator";
+
 import classes from "./EditMission.module.css";
 
 const EditMission = (props) => {
@@ -14,8 +17,13 @@ const EditMission = (props) => {
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
-              <label className={classes.LabelName}>Mission</label>
-              <textarea className={classes.InputArea} type="text" />
+              <Input
+                inputType="textarea"
+                id="mission"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Mission*"
+              />
             </div>
           </div>
 

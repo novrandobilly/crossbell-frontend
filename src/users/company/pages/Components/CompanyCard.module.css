@@ -95,9 +95,10 @@
 .ContainerRight{
   display:flex;
   flex-direction:row;
+  justify-content: flex-end;
   width: 40rem;
   margin-left:2rem;
-  align-self:flex-end;
+  margin-top: 2rem;
 }
 
 .AddJob{
