@@ -31,3 +31,28 @@
 	border: solid 0.05rem;
 	margin-bottom: 1rem;
 }
+
+.Login{
+	width: 18rem;
+	height: 2.5rem;
+	border: none;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.Register {
+	width: 18rem;
+	height: 2rem;
+	border: none;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+  }
+
+  .EditProfileTextArea{
+	align-content: flex-start;
+	width: 40rem;
+	height: 15rem;
+	border: solid 0.05rem;
+	margin-bottom: 1rem;
+	resize: none;
+  }

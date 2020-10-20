@@ -1,7 +1,10 @@
 import React from "react";
 
-import Input from '../../../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE} from '../../../../shared/utils/validator';
+import Input from "../../../../shared/UI_Element/Input";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+} from "../../../../shared/utils/validator";
 
 import classes from "./EditIntro.module.css";
 
@@ -19,44 +22,51 @@ const EditIntro = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
-                inputType='input'
-                id='name'
-                inputClass='AddJobInput'
-                validatorMethod={[ VALIDATOR_REQUIRE() ]}
-                label='name*'
+                inputType="input"
+                id="name"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Name*"
               />
 
               <Input
-                inputType='input'
-                id='size'
-                inputClass='AddJobInput'
-                validatorMethod={[ VALIDATOR_REQUIRE() ]}
-                label='Size*'
-              />
-
-
-              <Input
-                inputType='input'
-                id='industry'
-                inputClass='AddJobInput'
-                validatorMethod={[ VALIDATOR_REQUIRE() ]}
-                label='Industry*'
+                inputType="input"
+                id="size"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Size*"
               />
 
               <Input
-                inputType='input'
-                id='headquarter'
-                inputClass='AddJobInput'
-                validatorMethod={[ VALIDATOR_REQUIRE() ]}
-                label='Address*'
+                inputType="input"
+                id="industry"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Industry*"
               />
 
               <Input
-                inputType='input'
-                id='websites'
-                inputClass='AddJobInput'
-                validatorMethod={[ VALIDATOR_REQUIRE() ]}
-                label='Websites*'
+                inputType="input"
+                id="headquarter"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Address*"
+              />
+
+              <Input
+                inputType="input"
+                id="websites"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Websites*"
+              />
+
+              <Input
+                inputType="input"
+                id="recipient"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
+                label="Email Recipient*"
               />
             </div>
           </div>

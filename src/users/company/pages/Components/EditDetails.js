@@ -1,7 +1,7 @@
 import React from "react";
 
-import Input from '../../../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE} from '../../../../shared/utils/validator';
+import Input from "../../../../shared/UI_Element/Input";
+import { VALIDATOR_REQUIRE } from "../../../../shared/utils/validator";
 
 import classes from "./EditDetails.module.css";
 
@@ -18,11 +18,11 @@ const EditDetails = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
-                inputType='textarea'
-                id='details'
-                inputClass='AddJobInput'
-                validatorMethod={[ VALIDATOR_REQUIRE() ]}
-                label='Details*'
+                inputType="textarea"
+                id="details"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                label="Details*"
               />
             </div>
           </div>

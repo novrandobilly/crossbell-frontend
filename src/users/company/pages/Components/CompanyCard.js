@@ -35,14 +35,14 @@ const CompanyCard = (props) => {
           </div>
 
           <div className={classes.ContainerRight}>
-            <Link to ={'/jobs/new'}>
+            <Link to={"/jobs/new"}>
               <button className={classes.AddJob}>+</button>
             </Link>
 
-            <Link to ={`/co/${props.id}/compro`}>
+            <Link to={`/co/${props.id}/compro`}>
               <button className={classes.AddJob}>edit</button>
             </Link>
-          </div>   
+          </div>
         </div>
       </div>
 
