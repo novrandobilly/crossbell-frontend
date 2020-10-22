@@ -42,7 +42,7 @@
 	.Button:hover:enabled {
 		transform: scale(1.1);
 	}
-	.Button:active {
-		transform: translateY(2px);
+	.Button:active:enabled {
+		transform: translateY(3px) scale(1.1);
 	}
 }
