@@ -1,4 +1,5 @@
-import React, { useReducer, useCallback } from "react";
+import React from "react";
+import { useForm } from "../../../../shared/utils/useForm";
 
 import Input from "../../../../shared/UI_Element/Input";
 import {
@@ -8,37 +9,9 @@ import {
 
 import classes from "./EditIntro.module.css";
 
-const ACTION = { UPDATEFORM_COMINTRO: "update-form-commpanyIntro" };
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case ACTION.UPDATEFORM_COMINTRO:
-      let formValidity = true;
-      for (const key in state.inputs) {
-        if (key === action.payload.id) {
-          formValidity = formValidity && action.payload.isValid;
-        } else {
-          formValidity = formValidity && state.inputs[key].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.payload.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formIsValid: formValidity,
-      };
-    default:
-      return state;
-  }
-};
-
 const EditIntro = (props) => {
-  const [state, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, onInputHandler] = useForm(
+    {
       name: {
         value: "",
         isValid: false,
@@ -64,19 +37,12 @@ const EditIntro = (props) => {
         isValid: false,
       },
     },
-    formIsValid: false,
-  });
-
-  const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: ACTION.UPDATEFORM_COMINTRO,
-      payload: { id, value, isValid },
-    });
-  }, []);
+    false
+  );
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    // console.log(state);
+    console.log(formState);
   };
 
   return (
@@ -143,7 +109,10 @@ const EditIntro = (props) => {
             </div>
           </div>
 
-          <button disabled={!state.formIsValid} className={classes.SaveButton}>
+          <button
+            disabled={!formState.formIsValid}
+            className={classes.SaveButton}
+          >
             <span>Save</span>
           </button>
         </div>

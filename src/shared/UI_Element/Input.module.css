@@ -30,6 +30,7 @@
 	height: 1.5rem;
 	border: solid 0.05rem;
 	margin-bottom: 1rem;
+	outline:none;
 }
 
 .Login{

@@ -53,11 +53,13 @@
   font-size: 0.8rem;
   font-weight: bold;
   transition: all 0.5s;
+  outline: none;
 }
 
 .SaveButton:disabled{
-  color: black;
-	cursor: not-allowed;
+  color: #ccc;
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 .SaveButton:enabled span {

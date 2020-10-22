@@ -1,4 +1,5 @@
-import React, { useReducer, useCallback } from "react";
+import React from "react";
+import { useForm } from "../../../../shared/utils/useForm";
 
 import Input from "../../../../shared/UI_Element/Input";
 import {
@@ -8,55 +9,20 @@ import {
 
 import classes from "./EditDetails.module.css";
 
-const ACTION = { UPDATEFORM_COMDETAIL: "update-form-companyDetail" };
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case ACTION.UPDATEFORM_COMDETAIL:
-      let formValidity = true;
-      for (const key in state.inputs) {
-        if (key === action.payload.id) {
-          formValidity = formValidity && action.payload.isValid;
-        } else {
-          formValidity = formValidity && state.inputs[key].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.payload.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formIsValid: formValidity,
-      };
-    default:
-      return state;
-  }
-};
-
 const EditDetails = (props) => {
-  const [state, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, onInputHandler] = useForm(
+    {
       details: {
         value: "",
         isValid: false,
       },
     },
-    formIsValid: false,
-  });
-
-  const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: ACTION.UPDATEFORM_COMDETAIL,
-      payload: { id, value, isValid },
-    });
-  }, []);
+    false
+  );
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(state);
+    console.log(formState);
   };
 
   return (
@@ -78,7 +44,10 @@ const EditDetails = (props) => {
             </div>
           </div>
 
-          <button disabled={!state.formIsValid} className={classes.SaveButton}>
+          <button
+            disabled={!formState.formIsValid}
+            className={classes.SaveButton}
+          >
             <span>Save</span>
           </button>
         </div>
