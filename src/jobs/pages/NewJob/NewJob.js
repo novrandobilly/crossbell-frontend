@@ -49,7 +49,6 @@ const NewJob = props => {
 		false
 	);
 
-	//Ini alternatif solusi untuk ekstrak value dropdownnya tom ====================================
 	useEffect(
 		() => {
 			const level = document.getElementById('level');
@@ -69,7 +68,6 @@ const NewJob = props => {
 
 		onInputHandler(elementId, elementValue, true);
 	};
-	//==============================================================================================
 
 	const onSubmitHandler = event => {
 		event.preventDefault();
