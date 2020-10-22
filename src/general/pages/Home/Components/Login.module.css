@@ -34,11 +34,13 @@
   font-weight: bold;
   transition: all 0.5s;
   cursor: pointer;
+  outline:none;
 }
 
 .SubmitButton:disabled{
   color: #ccc;
-	cursor: not-allowed;
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 .SubmitButton:enabled span {
@@ -73,6 +75,7 @@
   font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
+  outline:none;
 }
 
 .sign {

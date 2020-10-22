@@ -1,4 +1,5 @@
-import React, { useReducer, useCallback } from "react";
+import React from "react";
+import { useForm } from "../../../../shared/utils/useForm";
 
 import Input from "../../../../shared/UI_Element/Input";
 import {
@@ -9,37 +10,9 @@ import {
 
 import classes from "./CompanyForm.module.css";
 
-const ACTION = { UPDATEFORM_COMPANY: "update-form-applicant" };
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case ACTION.UPDATEFORM_COMPANY:
-      let formValidity = true;
-      for (const key in state.inputs) {
-        if (key === action.payload.id) {
-          formValidity = formValidity && action.payload.isValid;
-        } else {
-          formValidity = formValidity && state.inputs[key].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.payload.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formIsValid: formValidity,
-      };
-    default:
-      return state;
-  }
-};
-
 const CompanyForm = ({ sign, role }) => {
-  const [state, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, onInputHandler] = useForm(
+    {
       name: {
         value: "",
         isValid: false,
@@ -53,19 +26,12 @@ const CompanyForm = ({ sign, role }) => {
         isValid: false,
       },
     },
-    formIsValid: false,
-  });
-
-  const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: ACTION.UPDATEFORM_COMPANY,
-      payload: { id, value, isValid },
-    });
-  }, []);
+    false
+  );
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    // console.log(state);
+    console.log(formState);
   };
 
   return (
@@ -107,10 +73,11 @@ const CompanyForm = ({ sign, role }) => {
             validatorMethod={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6)]}
             onInputHandler={onInputHandler}
             label="Password*"
+            type="password"
           />
 
           <button
-            disabled={!state.formIsValid}
+            disabled={!formState.formIsValid}
             className={classes.SubmitButton}
           >
             <span>Submit</span>

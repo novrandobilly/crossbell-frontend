@@ -1,5 +1,5 @@
 import React from "react";
-import {useForm} from '../../../../shared/utils/useForm'
+import { useForm } from "../../../../shared/utils/useForm";
 
 import Input from "../../../../shared/UI_Element/Input";
 import {
@@ -11,16 +11,19 @@ import {
 import classes from "./Login.module.css";
 
 const Login = ({ sign }) => {
-  const [formState, onInputHandler] = useForm({
-    email: {
-      value: "",
-      isValid: false,
+  const [formState, onInputHandler] = useForm(
+    {
+      email: {
+        value: "",
+        isValid: false,
+      },
+      password: {
+        value: "",
+        isValid: false,
+      },
     },
-    password: {
-      value: "",
-      isValid: false,
-    },
-  }, false)
+    false
+  );
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -49,6 +52,7 @@ const Login = ({ sign }) => {
             validatorMethod={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6)]}
             onInputHandler={onInputHandler}
             label="Password*"
+            type="password"
           />
 
           <button

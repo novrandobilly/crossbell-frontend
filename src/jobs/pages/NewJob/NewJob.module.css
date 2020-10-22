@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 6rem;
 }
 
 .ContainerFlex {
@@ -70,11 +71,13 @@
   font-size: 0.8rem;
   font-weight: bold;
   transition: all 0.5s;
+  outline:none;
 }
 
 .SaveButton:disabled{
   color: #ccc;
-	cursor: not-allowed;
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 .SaveButton:enabled span {

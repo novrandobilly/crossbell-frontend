@@ -1,41 +1,14 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useState } from "react";
+import { useForm } from "../../../shared/utils/useForm";
 
 import Input from "../../../shared/UI_Element/Input";
 import { VALIDATOR_REQUIRE } from "../../../shared/utils/validator";
 
 import classes from "./NewJob.module.css";
 
-const ACTION = { UPDATEFORM_NEWJOB: "update-form-login" };
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case ACTION.UPDATEFORM_NEWJOB:
-      let formValidity = true;
-      for (const key in state.inputs) {
-        if (key === action.payload.id) {
-          formValidity = formValidity && action.payload.isValid;
-        } else {
-          formValidity = formValidity && state.inputs[key].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.payload.id]: {
-            value: action.payload.value,
-            isValid: action.payload.isValid,
-          },
-        },
-        formIsValid: formValidity,
-      };
-    default:
-      return state;
-  }
-};
-
 const NewJob = (props) => {
-  const [state, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, onInputHandler] = useForm(
+    {
       title: {
         value: "",
         isValid: false,
@@ -73,29 +46,27 @@ const NewJob = (props) => {
         isValid: false,
       },
     },
-    formIsValid: false,
+    false
+  );
+
+  const [select, setSelect] = useState({
+    level: "entryLevel",
+    employment: "fullTime",
   });
 
-  const onInputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: ACTION.UPDATEFORM_NEWJOB,
-      payload: { id, value, isValid },
-    });
-  }, []);
+  console.log(select);
+
+  const changeSelect = (newValue) => {
+    setSelect(newValue);
+  };
+
+  const onChangeHandler = (e) => {
+    changeSelect(e.target.value);
+  };
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(state);
-  };
-
-  const onChangeHandler = (event) => {
-    dispatch({
-      type: ACTION.ONCHANGE,
-      payload: {
-        value: event.target.value,
-        validatorMethod: props.validatorMethod,
-      },
-    });
+    console.log(formState);
   };
 
   return (
@@ -155,23 +126,22 @@ const NewJob = (props) => {
               <select
                 id="level"
                 name="level"
-                value={state.value}
                 onChange={onChangeHandler}
                 className={classes.DropDown}
               >
-                <option id="0" value="1">
+                <option id="1" value="entryLevel">
                   Entry Level
                 </option>
-                <option id="1" value="2">
+                <option id="2" value="juniorApp">
                   Junior Apprentice
                 </option>
-                <option id="2" value="3">
+                <option id="3" value="assoc">
                   Associate/ Supervisor
                 </option>
-                <option id="3" value="4">
+                <option id="4" value="midSenior">
                   Mid-Senior/ Manager
                 </option>
-                <option id="4" value="5">
+                <option id="5" value="director">
                   Director/ Executive
                 </option>
               </select>
@@ -180,17 +150,16 @@ const NewJob = (props) => {
               <select
                 id="employment"
                 name="employment"
-                value={state.value}
                 onChange={onChangeHandler}
                 className={classes.DropDown}
               >
-                <option id="0" value="1">
+                <option id="0" value="fullTime">
                   Full Time
                 </option>
-                <option id="1" value="2">
+                <option id="1" value="contract">
                   Contract
                 </option>
-                <option id="2" value="3">
+                <option id="2" value="intern">
                   Internship
                 </option>
               </select>
@@ -214,7 +183,10 @@ const NewJob = (props) => {
               />
             </div>
           </div>
-          <button disabled={!state.formIsValid} className={classes.SaveButton}>
+          <button
+            disabled={!formState.formIsValid}
+            className={classes.SaveButton}
+          >
             <span>Save</span>
           </button>
         </div>

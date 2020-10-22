@@ -34,11 +34,13 @@
   font-weight: bold;
   transition: all 0.5s;
   cursor: pointer;
+  outline:none;
 }
 
 .SubmitButton:disabled{
   color: #ccc;
-	cursor: not-allowed;
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 .SubmitButton:enabled span {
@@ -73,6 +75,7 @@
   font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
+  outline:none;
 }
 
 .Sign {
@@ -83,6 +86,7 @@
 }
 
 .CompanyRegister {
+  outline:none;
   border: solid 0.1rem rgba(0, 0, 0, 0.5);
   border-radius: 0.5rem;
   background-color: rgba(47, 46, 51, 1);
@@ -98,5 +102,7 @@
 }
 
 .CompanyRegister:hover {
-  opacity: 0.9;
+  opacity: 1;
+  background-color: rgba(58, 81, 153, 1);
+  border-color: rgba(58, 81, 153, 1) ;
 }
