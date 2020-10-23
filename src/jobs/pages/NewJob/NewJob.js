@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { useForm } from "../../../shared/utils/useForm";
 
@@ -194,5 +195,6 @@ const NewJob = (props) => {
       </form>
     </React.Fragment>
   );
+
 };
 export default NewJob;
