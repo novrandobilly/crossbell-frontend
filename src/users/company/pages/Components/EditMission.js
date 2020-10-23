@@ -2,10 +2,7 @@ import React from "react";
 import { useForm } from "../../../../shared/utils/useForm";
 
 import Input from "../../../../shared/UI_Element/Input";
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH,
-} from "../../../../shared/utils/validator";
+import { VALIDATOR_MINLENGTH } from "../../../../shared/utils/validator";
 
 import classes from "./EditMission.module.css";
 
@@ -37,7 +34,7 @@ const EditMission = (props) => {
                 inputType="textarea"
                 id="mission"
                 inputClass="EditProfileTextArea"
-                validatorMethod={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(20)]}
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
                 label="Mission*"
               />

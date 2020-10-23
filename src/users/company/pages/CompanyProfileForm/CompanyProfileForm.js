@@ -7,7 +7,7 @@ import EditMission from "../Components/EditMission";
 const CompanyProfileForm = (props) => {
   return (
     <>
-      <EditIntro />
+      <EditIntro FlexClass="FlexContainer" />
       <EditDetails />
       <EditMission />
     </>
