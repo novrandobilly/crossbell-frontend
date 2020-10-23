@@ -107,5 +107,42 @@
   border-radius:5rem;
   border:solid 0.1rem rgba(0, 0, 0, 0.4);
   margin-left: 1rem;
+  transition: all 0.5s;
+  cursor: pointer;
   outline: none;
+}
+
+.AddJob span {
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.AddJob span:after {
+  content: "Edit";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0rem;
+  transition: 0.5s;
+}
+
+.AddJob:hover span {
+  padding-right: 2rem;
+  
+}
+
+.AddJob:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.AddJob:hover{
+  width:5rem;
+}
+
+.Header{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between ;
 }

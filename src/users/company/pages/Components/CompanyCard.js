@@ -36,25 +36,44 @@ const CompanyCard = (props) => {
 
           <div className={classes.ContainerRight}>
             <Link to={"/jobs/new"}>
-              <button className={classes.AddJob}>+</button>
+              <button className={classes.AddJob}>
+                <span>+</span>
+              </button>
             </Link>
 
-            <Link to={`/co/${props.id}/compro`}>
-              <button className={classes.AddJob}>edit</button>
+            <Link to={`/co/${props.id}/compro/Intro`}>
+              <button className={classes.AddJob}>
+                <span>#</span>
+              </button>
             </Link>
           </div>
         </div>
       </div>
 
       <div className={classes.DetailContainer}>
-        <p className={classes.DetailLabel}>Company Detail</p>
+        <div className={classes.Header}>
+          <p className={classes.DetailLabel}>Company Detail</p>
+          <div className={classes.ContainerRight}>
+            <Link to={`/co/${props.id}/compro/Details`}>
+              <button className={classes.AddJob}>Edit</button>
+            </Link>
+          </div>
+        </div>
         <p className={classes.CompanyDetail}>{props.detail}</p>
       </div>
 
       <div className={classes.Line}></div>
 
       <div className={classes.MissionContainer}>
-        <p className={classes.MissionLabel}>Company Mission</p>
+        <div className={classes.Header}>
+          <p className={classes.DetailLabel}>Company Mission</p>
+          <div className={classes.ContainerRight}>
+            <Link to={`/co/${props.id}/compro/Mission`}>
+              <button className={classes.AddJob}>edit</button>
+            </Link>
+          </div>
+        </div>
+
         <p className={classes.CompanyMission}>{props.mission}</p>
       </div>
 

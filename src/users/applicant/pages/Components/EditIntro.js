@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "../../../../shared/utils/useForm";
+import EditIcon from "@material-ui/icons/Edit";
 
 import Input from "../../../../shared/UI_Element/Input";
 import {
@@ -16,23 +17,31 @@ const EditIntro = (props) => {
         value: "",
         isValid: false,
       },
-      size: {
+      address: {
         value: "",
         isValid: false,
       },
-      industry: {
+      city: {
         value: "",
         isValid: false,
       },
-      headquarter: {
+      state: {
+        value: "",
+        isValid: false,
+      },
+      zip: {
+        value: "",
+        isValid: false,
+      },
+      email: {
+        value: "",
+        isValid: false,
+      },
+      phone: {
         value: "",
         isValid: false,
       },
       websites: {
-        value: "",
-        isValid: false,
-      },
-      recipient: {
         value: "",
         isValid: false,
       },
@@ -49,40 +58,24 @@ const EditIntro = (props) => {
     <>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Edit Company Intro</p>
+          <p className={classes.FormTitle}>About Me</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
+              <EditIcon />
+
               <Input
                 inputType="input"
                 id="name"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Name*"
+                label="Full Name*"
               />
 
               <Input
                 inputType="input"
-                id="size"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Size*"
-              />
-
-              <Input
-                inputType="input"
-                id="industry"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Industry*"
-              />
-
-              <Input
-                inputType="input"
-                id="headquarter"
+                id="address"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
@@ -91,20 +84,56 @@ const EditIntro = (props) => {
 
               <Input
                 inputType="input"
-                id="websites"
+                id="city"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Websites*"
+                label="City*"
               />
 
               <Input
                 inputType="input"
-                id="recipient"
+                id="state"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="State*"
+              />
+
+              <Input
+                inputType="input"
+                id="zip"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Zip*"
+              />
+
+              <Input
+                inputType="input"
+                id="email"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
-                label="Email Recipient*"
+                label="Email*"
+              />
+
+              <Input
+                inputType="input"
+                id="phone"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Phone*"
+              />
+
+              <Input
+                inputType="input"
+                id="websites"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Websites"
               />
             </div>
           </div>
