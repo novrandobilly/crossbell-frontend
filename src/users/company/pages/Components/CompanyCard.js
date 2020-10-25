@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -57,5 +58,6 @@ const CompanyCard = props => {
 			<div className={classes.Line} />
 		</React.Fragment>
 	);
+
 };
 export default CompanyCard;
