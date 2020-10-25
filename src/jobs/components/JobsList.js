@@ -25,6 +25,7 @@ const JobsList = props => {
 					logo={job.logo}
 					salary={job.salary}
 					emailRecipient={job.emailRecipient}
+					companyId={job.companyId}
 				/>
 			))}
 		</div>

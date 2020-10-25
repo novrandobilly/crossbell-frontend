@@ -22,7 +22,8 @@ export let JOBS = [
 		industry: 'Information Technology',
 		jobFunction: 'Engineer',
 		benefits: 'Medical Insurance',
-		datePosted: '3'
+		datePosted: '3',
+		companyId: 'SSS'
 	},
 	{
 		id: 'RCN001',
@@ -41,7 +42,8 @@ export let JOBS = [
 		industry: 'Military',
 		jobFunction: 'Military Engineer',
 		benefits: 'Medical Insurance',
-		datePosted: '3'
+		datePosted: '3',
+		companyId: 'RCN'
 	},
 	{
 		id: 'IDN001',
@@ -53,13 +55,14 @@ export let JOBS = [
 		detail:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 		salary: '1500',
-		emailRecipient: 'lunoxshivansh@gmail.com',
+		emailRecipient: 'tommyprn8@gmail.com',
 		level: 'Staff',
 		employment: 'Full-Time',
 		industry: 'Management Consultancy',
 		jobFunction: 'Marketing',
 		benefits: 'Medical Insurance',
-		datePosted: '3'
+		datePosted: '3',
+		companyId: 'IDN'
 	}
 ];
 

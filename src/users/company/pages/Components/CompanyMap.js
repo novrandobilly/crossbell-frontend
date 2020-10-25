@@ -1,26 +1,24 @@
-import React from "react";
+import React from 'react';
 
-import CompanyCard from "./CompanyCard";
+import CompanyCard from './CompanyCard';
 
-const CompanyMap = (props) => {
-  return (
-    <div>
-      {props.items.map((Comp) => (
-        <CompanyCard
-          key={Comp.id}
-          id={Comp.id}
-          name={Comp.name}
-          logo={Comp.logo}
-          size={Comp.size}
-          industry={Comp.industry}
-          address={Comp.address}
-          websites={Comp.websites}
-          detail={Comp.detail}
-          mission={Comp.mission}
-        />
-      ))}
-    </div>
-  );
+const CompanyMap = props => {
+	return (
+		<div>
+			<CompanyCard
+				key={props.items.id}
+				id={props.items.id}
+				name={props.items.name}
+				logo={props.items.logo}
+				size={props.items.size}
+				industry={props.items.industry}
+				address={props.items.address}
+				websites={props.items.websites}
+				detail={props.items.detail}
+				mission={props.items.mission}
+			/>
+		</div>
+	);
 };
 
 export default CompanyMap;
