@@ -54,9 +54,11 @@ const JobCard = props => {
 				</h3>
 
 				<p>
-					<em>
-						<strong>{props.company} </strong>
-					</em>
+					<Link to={`/co/${props.companyId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+						<em>
+							<strong>{props.company} </strong>
+						</em>
+					</Link>
 					- {props.city}, {props.region}
 				</p>
 				<p>${props.salary} /month</p>
