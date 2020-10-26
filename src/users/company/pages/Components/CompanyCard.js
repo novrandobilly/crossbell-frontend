@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 import classes from "./CompanyCard.module.css";
 
+import IconButton from "../../../../shared/UI_Element/IconButton";
+import TextOnly from "../../../../shared/UI_Element/TextOnly";
+
 const CompanyCard = (props) => {
   return (
     <>
@@ -36,48 +39,29 @@ const CompanyCard = (props) => {
 
           <div className={classes.ContainerRight}>
             <Link to={"/jobs/new"}>
-              <button className={classes.AddJob}>
-                <span>+</span>
-              </button>
+              <IconButton iconType="NewJob" />
             </Link>
 
             <Link to={`/co/${props.id}/compro/Intro`}>
-              <button className={classes.AddJob}>
-                <span>#</span>
-              </button>
+              <IconButton />
             </Link>
           </div>
         </div>
       </div>
 
-      <div className={classes.DetailContainer}>
-        <div className={classes.Header}>
-          <p className={classes.DetailLabel}>Company Detail</p>
-          <div className={classes.ContainerRight}>
-            <Link to={`/co/${props.id}/compro/Details`}>
-              <button className={classes.AddJob}>Edit</button>
-            </Link>
-          </div>
-        </div>
-        <p className={classes.CompanyDetail}>{props.detail}</p>
-      </div>
+      <TextOnly
+        id={props.id}
+        labelName="Company Detail"
+        route="Details"
+        text={props.detail}
+      />
 
-      <div className={classes.Line}></div>
-
-      <div className={classes.MissionContainer}>
-        <div className={classes.Header}>
-          <p className={classes.DetailLabel}>Company Mission</p>
-          <div className={classes.ContainerRight}>
-            <Link to={`/co/${props.id}/compro/Mission`}>
-              <button className={classes.AddJob}>edit</button>
-            </Link>
-          </div>
-        </div>
-
-        <p className={classes.CompanyMission}>{props.mission}</p>
-      </div>
-
-      <div className={classes.Line}></div>
+      <TextOnly
+        id={props.id}
+        labelName="Company Mission"
+        route="Mission"
+        text={props.mission}
+      />
     </>
   );
 };
