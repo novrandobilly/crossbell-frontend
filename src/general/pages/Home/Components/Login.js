@@ -68,6 +68,13 @@ const Login = ({ sign }) => {
               Sign Up Here
             </button>
           </span>
+
+          <span className={classes.sign}>
+            Forgot password?
+            <button className={classes.ChangeSign} type="button">
+              Click Here
+            </button>
+          </span>
         </div>
       </form>
     </>

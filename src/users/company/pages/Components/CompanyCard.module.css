@@ -1,91 +1,96 @@
 .Container {
+
   display: flex;
   flex-direction: row;
   font-family: sans-serif;
   height: 15rem;
-  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
   margin-left: 2rem;
   margin-right: 2rem;
-  padding-bottom: 3rem;
+
 }
 
 .ContainerLeft {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .ContainerLeftDivider {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
 
 .ContainerSizeIn {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  font-size: 0.9rem;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	font-size: 0.9rem;
 }
 
 .Logo {
-  width: 15rem;
-  height: auto;
-  margin-right: 2rem;
-  margin-left: 3rem;
+	width: 15rem;
+	height: auto;
+	margin-right: 2rem;
+	margin-left: 3rem;
 }
 
 .CompanyName {
-  font-size: 2rem;
-  font-weight: bold;
+	font-size: 2rem;
+	font-weight: bold;
 }
 
 .CompanySize {
-  margin-right: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .CompanyIndustry {
-  margin-left: 0.5rem;
+	margin-left: 0.5rem;
+}
+
+.CompanyWebsites {
+  cursor: pointer;
 }
 
 .LinkIcon {
-  width: 2rem;
-  height: 2rem;
-  opacity: 0.8;
+	width: 2rem;
+	height: 2rem;
+	opacity: 0.8;
 }
 
 .DetailContainer {
-  margin-left: 5rem;
-  margin-right: 5rem;
-  size: 90rem;
+	margin-left: 5rem;
+	margin-right: 5rem;
+	size: 90rem;
 }
 
 .CompanyDetail {
-  font-size: 1rem;
-  text-align: left;
+	font-size: 1rem;
+	text-align: left;
 }
 
 .DetailLabel {
-  font-size: 1.7rem;
-  font-weight: bold;
+	font-size: 1.7rem;
+	font-weight: bold;
 }
 
 .MissionContainer {
-  margin-left: 5rem;
-  margin-right: 5rem;
-  size: 90rem;
+	margin-left: 5rem;
+	margin-right: 5rem;
+	size: 90rem;
 }
 
 .CompanyMission {
-  font-size: 1rem;
-  text-align: left;
+	font-size: 1rem;
+	text-align: left;
 }
 
 .MissionLabel {
-  font-size: 1.7rem;
-  font-weight: bold;
+	font-size: 1.7rem;
+	font-weight: bold;
 }
 
 .Line {
+
   border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
   margin-left: 2rem;
   margin-right: 2rem;
@@ -95,9 +100,10 @@
 .ContainerRight{
   display:flex;
   flex-direction:row;
+
   justify-content: flex-end;
   width: 40rem;
-  margin-left:2rem;
+  margin-left: 2rem;
   margin-top: 2rem;
 }
 
@@ -107,5 +113,44 @@
   border-radius:5rem;
   border:solid 0.1rem rgba(0, 0, 0, 0.4);
   margin-left: 1rem;
+  transition: all 0.5s;
+  cursor: pointer;
   outline: none;
 }
+
+.AddJob span {
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.AddJob span:after {
+  content: "Edit";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0rem;
+  transition: 0.5s;
+}
+
+.AddJob:hover span {
+  padding-right: 2rem;
+  
+}
+
+.AddJob:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.AddJob:hover{
+  width:5rem;
+}
+
+.Header{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between ;
+}
+
+

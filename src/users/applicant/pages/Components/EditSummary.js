@@ -1,15 +1,24 @@
 import React from "react";
 import { useForm } from "../../../../shared/utils/useForm";
 
-import Input from "../../../../shared/UI_Element/Input";
-import { VALIDATOR_MINLENGTH } from "../../../../shared/utils/validator";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MINLENGTH,
+} from "../../../../shared/utils/validator";
 
-import classes from "./EditDetails.module.css";
+import Input from "../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../shared/UI_Element/SaveButton";
+
+import classes from "./EditSummary.module.css";
 
 const EditDetails = (props) => {
   const [formState, onInputHandler] = useForm(
     {
       details: {
+        value: "",
+        isValid: false,
+      },
+      dob: {
         value: "",
         isValid: false,
       },
@@ -26,7 +35,7 @@ const EditDetails = (props) => {
     <>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Edit Company Details</p>
+          <p className={classes.FormTitle}>Summary</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
@@ -39,14 +48,25 @@ const EditDetails = (props) => {
                 label="Details*"
               />
             </div>
+
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="input"
+                id="dob"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Date of Birth*"
+                placeholder="DD/MM/YYYY"
+              />
+            </div>
           </div>
 
-          <button
+          <SaveButton
+            btnClass="SaveButton"
             disabled={!formState.formIsValid}
-            className={classes.SaveButton}
-          >
-            <span>Save</span>
-          </button>
+            placeholder="Save"
+          />
         </div>
       </form>
     </>

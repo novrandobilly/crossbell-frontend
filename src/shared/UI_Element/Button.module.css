@@ -1,48 +1,50 @@
 .Button {
-	background-color: transparent;
-	border: none;
-	color: white;
-	outline: none;
-	cursor: pointer;
-	font: inherit;
-	padding: 10px;
-	margin: 10px;
-	font-weight: bold;
-	transition: transform .1s ease-in;
+  background-color: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bold;
+  transition: transform 0.1s ease-in;
 }
 
 .Button:disabled {
-	color: #ccc;
-	cursor: not-allowed;
+  color: #ccc;
+  cursor: not-allowed;
 }
 
 .Button:hover:enabled {
-	transform: scale(1);
+  transform: scale(1);
 }
 
 .Button:active:enabled {
-	transform: translateY(2px);
+  transform: translateY(2px);
 }
 
 .InstantApply {
-	color: rgba(58, 81, 153, 1);
+  color: rgba(58, 81, 153, 1);
 }
 
 .Dark {
-	background-color: rgb(215, 226, 255);
-	color: rgba(58, 81, 153, 1);
-	border-radius: 15px;
-	padding: 5px 20px;
+  background-color: rgb(215, 226, 255);
+  color: rgba(58, 81, 153, 1);
+  border-radius: 15px;
+  padding: 5px 20px;
 }
 .Dark:disabled {
-	background-color: rgb(215, 226, 255);
+  background-color: rgb(215, 226, 255);
 }
 
 @media screen and (min-width: 768px) {
-	.Button:hover:enabled {
-		transform: scale(1.1);
-	}
-	.Button:active {
-		transform: translateY(2px);
-	}
+
+  .Button:hover:enabled {
+    transform: scale(1.1);
+  }
+  .Button:active {
+    transform: translateY(2px);
+  }
+
 }
