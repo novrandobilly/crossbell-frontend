@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import jobReducers from './store/job-reducers';
+import companyReducers from './store/company-reducers';
 
-const store = createStore(jobReducers);
+const rootReducers = combineReducers({
+	job: jobReducers,
+	company: companyReducers
+});
+
+const store = createStore(rootReducers);
 
 ReactDOM.render(
 	<Provider store={store}>
