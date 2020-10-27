@@ -1,47 +1,40 @@
 import React from "react";
 import { useForm } from "../../../../shared/utils/useForm";
+
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
 } from "../../../../shared/utils/validator";
 
 import Input from "../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../shared/UI_Element/SaveButton";
 
-import classes from "./EditIntro.module.css";
+import classes from "./Experience.module.css";
 
-const EditIntro = (props) => {
+const EditDetails = (props) => {
   const [formState, onInputHandler] = useForm(
     {
-      name: {
+      prevTitle: {
         value: "",
         isValid: false,
       },
-      address: {
+      prevCompany: {
         value: "",
         isValid: false,
       },
-      city: {
+      prevLocation: {
         value: "",
         isValid: false,
       },
-      state: {
+      startDate: {
         value: "",
         isValid: false,
       },
-      zip: {
+      endDate: {
         value: "",
         isValid: false,
       },
-      email: {
-        value: "",
-        isValid: false,
-      },
-      phone: {
-        value: "",
-        isValid: false,
-      },
-      websites: {
+      prevDescription: {
         value: "",
         isValid: false,
       },
@@ -58,80 +51,78 @@ const EditIntro = (props) => {
     <>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>About Me</p>
+          <p className={classes.FormTitle}>Experience</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="name"
+                id="prevTitle"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Full Name*"
+                label="Previous Title *"
+                placeholder="Ex: Marketing Chief"
               />
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="address"
+                id="prevCompany"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Address*"
+                label="Company Name*"
               />
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="city"
+                id="prevLocation"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="City*"
+                label="Location*"
+                placeholder="Ex: Bandung, West Java"
               />
+            </div>
 
-              <Input
-                inputType="input"
-                id="state"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="State*"
-              />
+            <div className={classes.Period}>
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="input"
+                  id="startDate"
+                  inputClass="DateInput"
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label="Start Date*"
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
 
-              <Input
-                inputType="input"
-                id="zip"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Zip*"
-              />
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="input"
+                  id="endDate"
+                  inputClass="DateInput"
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label="End Date*"
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="email"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_EMAIL()]}
+                inputType="textarea"
+                id="prevDescription"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label="Email*"
-              />
-
-              <Input
-                inputType="input"
-                id="phone"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Phone*"
-              />
-
-              <Input
-                inputType="input"
-                id="websites"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Websites"
+                label="Description*"
               />
             </div>
           </div>
@@ -146,4 +137,5 @@ const EditIntro = (props) => {
     </>
   );
 };
-export default EditIntro;
+
+export default EditDetails;

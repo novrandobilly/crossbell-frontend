@@ -1,13 +1,15 @@
 import React from "react";
 import { useForm } from "../../../../shared/utils/useForm";
 
-import Input from "../../../../shared/UI_Element/Input";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../shared/utils/validator";
 
-import classes from "./EditDetails.module.css";
+import Input from "../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../shared/UI_Element/SaveButton";
+
+import classes from "./EditSummary.module.css";
 
 const EditDetails = (props) => {
   const [formState, onInputHandler] = useForm(
@@ -60,12 +62,11 @@ const EditDetails = (props) => {
             </div>
           </div>
 
-          <button
+          <SaveButton
+            btnClass="SaveButton"
             disabled={!formState.formIsValid}
-            className={classes.SaveButton}
-          >
-            <span>Save</span>
-          </button>
+            placeholder="Save"
+          />
         </div>
       </form>
     </>

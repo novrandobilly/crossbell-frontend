@@ -1,47 +1,48 @@
 import React from "react";
 import { useForm } from "../../../../shared/utils/useForm";
+
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
 } from "../../../../shared/utils/validator";
 
 import Input from "../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../shared/UI_Element/SaveButton";
 
-import classes from "./EditIntro.module.css";
+import classes from "./Experience.module.css";
 
-const EditIntro = (props) => {
+const EditDetails = (props) => {
   const [formState, onInputHandler] = useForm(
     {
-      name: {
+      school: {
         value: "",
         isValid: false,
       },
-      address: {
+      degree: {
         value: "",
         isValid: false,
       },
-      city: {
+      major: {
         value: "",
         isValid: false,
       },
-      state: {
+      location: {
         value: "",
         isValid: false,
       },
-      zip: {
+      status: {
         value: "",
         isValid: false,
       },
-      email: {
+      startDate: {
         value: "",
         isValid: false,
       },
-      phone: {
+      endDate: {
         value: "",
         isValid: false,
       },
-      websites: {
+      description: {
         value: "",
         isValid: false,
       },
@@ -58,80 +59,104 @@ const EditIntro = (props) => {
     <>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>About Me</p>
+          <p className={classes.FormTitle}>Education</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="name"
+                id="school"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Full Name*"
+                label="School *"
+                placeholder="Ex: University of Indonesia"
               />
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="address"
+                id="degree"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Address*"
+                label="Degree *"
+                placeholder="Ex: Bachelor of Engineering"
               />
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="city"
+                id="major"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="City*"
+                label="Field of Study *"
+                placeholder="Ex: International Relations"
               />
+            </div>
 
+            {/* gani pake dropdown button  */}
+            <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="state"
+                id="status"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="State*"
+                label="Status *"
+                placeholder="Ex: Graduated/ Under graduate"
               />
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="zip"
+                id="location"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Zip*"
+                label="Location *"
+                placeholder="Ex: Depok, West Java"
               />
+            </div>
 
-              <Input
-                inputType="input"
-                id="email"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_EMAIL()]}
-                onInputHandler={onInputHandler}
-                label="Email*"
-              />
+            <div className={classes.Period}>
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="input"
+                  id="startDate"
+                  inputClass="DateInput"
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label="Start Date *"
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
 
-              <Input
-                inputType="input"
-                id="phone"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Phone*"
-              />
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="input"
+                  id="endDate"
+                  inputClass="DateInput"
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label="End Date *"
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
+            </div>
 
+            <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="websites"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
+                inputType="textarea"
+                id="description"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label="Websites"
+                label="Description *"
               />
             </div>
           </div>
@@ -146,4 +171,5 @@ const EditIntro = (props) => {
     </>
   );
 };
-export default EditIntro;
+
+export default EditDetails;
