@@ -1,0 +1,35 @@
+.Line {
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding-bottom: 3rem;
+}
+
+.Container {
+  margin-left: 5rem;
+  margin-right: 5rem;
+  size: 90rem;
+}
+
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.Label {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.Description {
+  font-size: 1rem;
+  text-align: left;
+}
+
+.MissionLabel {
+  font-size: 1.7rem;
+  font-weight: bold;
+}

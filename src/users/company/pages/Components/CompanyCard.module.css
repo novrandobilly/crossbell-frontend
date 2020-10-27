@@ -1,13 +1,12 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	font-family: sans-serif;
-	height: 15rem;
-	border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
-	margin-left: 2rem;
-	margin-top: 6rem;
-	margin-right: 2rem;
-	padding-bottom: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  font-family: sans-serif;
+  height: 15rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+
 }
 
 .ContainerLeft {
@@ -46,6 +45,10 @@
 
 .CompanyIndustry {
 	margin-left: 0.5rem;
+}
+
+.CompanyWebsites {
+  cursor: pointer;
 }
 
 .LinkIcon {
@@ -97,9 +100,10 @@
 .ContainerRight{
   display:flex;
   flex-direction:row;
+
   justify-content: flex-end;
   width: 40rem;
-  margin-left:2rem;
+  margin-left: 2rem;
   margin-top: 2rem;
 }
 
@@ -148,4 +152,5 @@
   flex-direction:row;
   justify-content:space-between ;
 }
+
 
