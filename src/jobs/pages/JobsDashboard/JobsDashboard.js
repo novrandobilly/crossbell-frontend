@@ -89,7 +89,7 @@ const JobsDashboard = props => {
 
 const mapStateToProps = state => {
 	return {
-		jobStore: state.jobs
+		jobStore: state.job.jobs
 	};
 };
 
