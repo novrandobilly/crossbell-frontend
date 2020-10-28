@@ -21,7 +21,7 @@ const NavigationLinks = props => {
 					Blog & Article
 				</NavLink>
 			</li>
-			<li>
+			{/* <li>
 				<NavLink to='/authentication/ap' activeClassName={classes.active}>
 					Jobseeker
 				</NavLink>
@@ -30,7 +30,7 @@ const NavigationLinks = props => {
 				<NavLink to='/authentication/co' activeClassName={classes.active}>
 					Employer
 				</NavLink>
-			</li>
+			</li> */}
 			<li>
 				<NavLink to='/ap/:applicantid' activeClassName={classes.active}>
 					My Profile

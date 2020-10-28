@@ -7,8 +7,7 @@ import JobDetailMap from '../../components/JobDetailMap';
 const JobDetails = props => {
 	const { jobsid } = useParams();
 
-	const JobDetails = props.jobStore.find(job => job.id === jobsid);
-	console.log(jobsid);
+	const JobDetails = props.jobStore.find(job => job.jobId === jobsid);
 
 	return (
 		<React.Fragment>

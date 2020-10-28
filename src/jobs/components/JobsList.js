@@ -16,15 +16,13 @@ const JobsList = props => {
 		<div className={classes.JobList}>
 			{props.items.map(job => (
 				<JobCard
-					key={job.id}
-					id={job.id}
-					name={job.name}
+					key={job.jobId}
+					jobId={job.jobId}
+					jobTitle={job.jobTitle}
 					city={job.city}
 					region={job.region}
 					company={job.company}
-					logo={job.logo}
 					salary={job.salary}
-					emailRecipient={job.emailRecipient}
 					companyId={job.companyId}
 				/>
 			))}
