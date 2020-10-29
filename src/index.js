@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import jobReducers from './store/job-reducers';
-import companyReducers from './store/company-reducers';
+import jobReducers from './store/reducers/job-reducers';
+import companyReducers from './store/reducers/company-reducers';
 
 const rootReducers = combineReducers({
 	job: jobReducers,

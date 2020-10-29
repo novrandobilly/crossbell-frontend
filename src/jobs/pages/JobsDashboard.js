@@ -1,8 +1,8 @@
 import React, { useReducer, useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import JobsList from '../../components/JobsList';
-import QueryBar from '../../components/QueryBar';
+import JobsList from '../components/JobsList';
+import QueryBar from '../components/QueryBar';
 
 import classes from './JobsDashboard.module.css';
 
