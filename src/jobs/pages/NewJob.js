@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import { useForm } from '../../../shared/utils/useForm';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { useForm } from '../../shared/utils/useForm';
+import * as actionTypes from '../../store/actions/actions';
 
-import Input from '../../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE } from '../../../shared/utils/validator';
+import Input from '../../shared/UI_Element/Input';
+import { VALIDATOR_REQUIRE } from '../../shared/utils/validator';
 
 import classes from './NewJob.module.css';
 
@@ -25,11 +28,11 @@ const NewJob = props => {
 				value: '',
 				isValid: false
 			},
-			qualification: {
+			jobQualification: {
 				value: '',
 				isValid: false
 			},
-			jobRequirement: {
+			technicalRequirement: {
 				value: '',
 				isValid: false
 			},
@@ -62,7 +65,7 @@ const NewJob = props => {
 				isValid: false
 			},
 			datePosted: {
-				value: new Date(),
+				value: '3',
 				isValid: true
 			}
 		},
@@ -88,7 +91,26 @@ const NewJob = props => {
 
 	const onSubmitHandler = event => {
 		event.preventDefault();
-		console.log(formState);
+		// console.log(formState);
+		const newJob = {
+			jobId: formState.inputs.jobId.value,
+			jobTitle: formState.inputs.jobTitle.value,
+			jobFunction: formState.inputs.jobFunction.value,
+			jobDescription: formState.inputs.jobDescription.value,
+			jobQualification: formState.inputs.jobQualification.value,
+			technicalRequirement: formState.inputs.technicalRequirement.value,
+			region: formState.inputs.region.value,
+			city: formState.inputs.city.value,
+			benefit: formState.inputs.benefit.value,
+			salary: formState.inputs.salary.value,
+			level: formState.inputs.level.value,
+			employment: formState.inputs.employment.value,
+			datePosted: formState.inputs.datePosted.value,
+			companyId: formState.inputs.companyId.value
+		};
+
+		props.createJob(newJob);
+		props.history.push('/jobs-dashboard');
 	};
 
 	return (
@@ -137,7 +159,7 @@ const NewJob = props => {
 
 							<Input
 								inputType='input'
-								id='qualification'
+								id='jobQualification'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
@@ -146,7 +168,7 @@ const NewJob = props => {
 
 							<Input
 								inputType='input'
-								id='jobRequirement'
+								id='technicalRequirement'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
@@ -248,4 +270,11 @@ const NewJob = props => {
 		</React.Fragment>
 	);
 };
-export default NewJob;
+
+const mapDispatchToProps = dispatch => {
+	return {
+		createJob: newJob => dispatch({ type: actionTypes.CREATEJOB, payload: { newJob } })
+	};
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(NewJob));

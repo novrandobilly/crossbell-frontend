@@ -11,33 +11,11 @@ const JobDetailMap = props => {
 		);
 	}
 
-	// return (
-	//   <div>
-	//     {props.items.map((job) => (
-	//       <JobContainer
-	//         key={job.id}
-	//         id={job.id}
-	//         logo={job.logo}
-	//         jobName={job.jobName}
-	//         name={job.name}
-	//         city={job.city}
-	//         datePosted={job.datePosted}
-	//         payment={job.payment}
-	//         employment={job.employment}
-	//         level={job.level}
-	//         industry={job.industry}
-	//         jobFunction={job.jobFunction}
-	//         detail={job.detail}
-	//         benefits={job.benefits}
-	//       />
-	//     ))}
-	//   </div>
-	// );
 	return (
 		<div>
 			<JobContainer
 				key={props.job.id}
-				id={props.job.id}
+				jobId={props.job.jobId}
 				logo={props.job.logo}
 				jobTitle={props.job.jobTitle}
 				companyName={props.job.company}
