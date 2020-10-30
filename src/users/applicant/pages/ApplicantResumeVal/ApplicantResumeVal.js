@@ -5,11 +5,13 @@ import EditIntro from "../Components/EditIntro.js";
 import Experience from "../Components/Experience.js";
 import Education from "../Components/Education.js";
 import Certification from "../Components/Certification.js";
+import Skill from "../Components/Skill";
 
 const ApplicantResumeVal = () => {
   return (
     <div>
       <h1>This is Applicant Resume Form page </h1>
+      <Skill />
       <Certification />
       <Education />
       <Experience />

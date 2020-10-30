@@ -62,6 +62,18 @@ const EditIntro = (props) => {
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
+              <div className={classes.ProfilePicture}>
+                <img
+                  src="https://vignette.wikia.nocookie.net/slap-on-titan5669/images/c/cf/Mikasa.png/revision/latest?cb=20161213102353"
+                  alt="Profile"
+                  className={classes.Picture}
+                />
+                <label className={classes.InputButton}>
+                  <input type="file"></input>
+                  <span className={classes.InputButtonText}> Upload File </span>
+                </label>
+              </div>
+
               <Input
                 inputType="input"
                 id="name"
