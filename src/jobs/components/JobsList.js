@@ -12,6 +12,7 @@ const JobsList = (props) => {
     );
   }
 
+
   return (
     <div className={classes.JobList}>
       {props.items.map((job) => (
@@ -30,6 +31,7 @@ const JobsList = (props) => {
       ))}
     </div>
   );
+
 };
 
 export default JobsList;

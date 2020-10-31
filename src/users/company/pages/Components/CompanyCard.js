@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import classes from "./CompanyCard.module.css";
-
 import IconButton from "../../../../shared/UI_Element/IconButton";
 import TextOnly from "../../../../shared/UI_Element/TextOnly";
+
+import classes from './CompanyCard.module.css';
+
+
+
 
 const CompanyCard = (props) => {
   return (
@@ -18,7 +21,7 @@ const CompanyCard = (props) => {
           ></img>
 
           <div className={classes.ContainerLeftDivider}>
-            <p className={classes.CompanyName}>{props.name}</p>
+            <p className={classes.CompanyName}>{props.companyName}</p>
 
             <div className={classes.ContainerSizeIn}>
               <p className={classes.CompanySize}>{props.size}</p>

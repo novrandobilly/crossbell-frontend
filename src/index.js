@@ -3,12 +3,14 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
+
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import jobReducers from "./store/job-reducers";
 import companyReducers from "./store/company-reducers";
 import applicantReducers from "./store/applicant-reducers";
+
 
 const rootReducers = combineReducers({
   job: jobReducers,

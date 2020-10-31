@@ -8,7 +8,7 @@ const CompanyMap = props => {
 			<CompanyCard
 				key={props.items.id}
 				id={props.items.id}
-				name={props.items.name}
+				companyName={props.items.companyName}
 				logo={props.items.logo}
 				size={props.items.size}
 				industry={props.items.industry}

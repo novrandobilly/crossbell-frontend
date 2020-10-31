@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import classes from './JobCard.module.css';
 
@@ -8,17 +9,21 @@ import Button from '../../shared/UI_Element/Button';
 
 const JobCard = props => {
 	const [ isLoading, setIsLoading ] = useState(false);
+
+	const foundCompany = props.companies.find(co => co.companyId === props.companyId);
+
+	//=====================================INSTANT APPLY=====================================
 	const applyHandler = async () => {
 		setIsLoading(true);
 		try {
-			const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.id}/apply`, {
+			const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.jobId}/apply`, {
 				// const response = await fetch(`http://localhost:5000/api/jobs/${props.id}/apply`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					companyEmail: props.emailRecipient
+					companyEmail: foundCompany.emailRecipient
 				})
 			});
 
@@ -40,23 +45,24 @@ const JobCard = props => {
 	if (isLoading) {
 		instantApplyButton = <Spinner />;
 	}
+	//=====================================================================================
 
 	return (
 		<div className={classes.JobCard}>
 			<div className={classes.Logo}>
-				<img src={props.logo} alt={props.company} />
+				<img src={foundCompany.logo} alt={foundCompany.companyName} />
 			</div>
 			<div className={classes.Content}>
 				<h3>
-					<Link to={`/jobs/${props.id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-						{props.name}
+					<Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+						{props.jobTitle}
 					</Link>
 				</h3>
 
 				<p>
-					<Link to={`/co/${props.companyId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+					<Link to={`/co/${foundCompany.companyId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
 						<em>
-							<strong>{props.company} </strong>
+							<strong>{foundCompany.companyName} </strong>
 						</em>
 					</Link>
 					- {props.city}, {props.region}
@@ -69,4 +75,10 @@ const JobCard = props => {
 	);
 };
 
-export default JobCard;
+const mapStateToProps = state => {
+	return {
+		companies: state.company.companies
+	};
+};
+
+export default connect(mapStateToProps)(JobCard);
