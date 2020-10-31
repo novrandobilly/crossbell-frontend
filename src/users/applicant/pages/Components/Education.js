@@ -30,10 +30,6 @@ const EditDetails = (props) => {
         value: "",
         isValid: false,
       },
-      status: {
-        value: "",
-        isValid: false,
-      },
       startDate: {
         value: "",
         isValid: false,
@@ -95,19 +91,6 @@ const EditDetails = (props) => {
                 onInputHandler={onInputHandler}
                 label="Field of Study *"
                 placeholder="Ex: International Relations"
-              />
-            </div>
-
-            {/* gani pake dropdown button  */}
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="input"
-                id="status"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Status *"
-                placeholder="Ex: Graduated/ Under graduate"
               />
             </div>
 

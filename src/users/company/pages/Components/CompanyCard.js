@@ -1,11 +1,11 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 import IconButton from "../../../../shared/UI_Element/IconButton";
 import TextOnly from "../../../../shared/UI_Element/TextOnly";
 
 import classes from './CompanyCard.module.css';
+
 
 
 
@@ -67,6 +67,5 @@ const CompanyCard = (props) => {
       />
     </>
   );
-
 };
 export default CompanyCard;

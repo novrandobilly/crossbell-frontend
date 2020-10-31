@@ -28,6 +28,7 @@
 
 .FormRow {
   display: flex;
+  flex-direction: column;
   border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
   padding-top: 2rem;
 }
@@ -38,26 +39,7 @@
   align-self: flex-start;
 }
 
-.ProfilePicture {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.Picture {
-  width: 15rem;
-  margin-bottom: 1rem;
-  border: solid 0.4rem rgba(58, 81, 153, 0.5);
-  border-radius: 50rem;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.InputButton {
+.AddButton {
   border: none;
   border-radius: 1rem;
   background-color: rgba(58, 81, 153, 1);
@@ -66,6 +48,5 @@ input[type="file"] {
   cursor: pointer;
   font-weight: bold;
   width: 6rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  height: 2rem;
 }
