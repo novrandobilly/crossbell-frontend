@@ -1,56 +1,79 @@
-import React from "react";
-import { useForm } from "../../../../shared/utils/useForm";
+import React from 'react';
+import { connect } from 'react-redux';
+import { useParams, withRouter } from 'react-router-dom';
+import * as actionTypes from '../../../../store/actions/actions';
+import { useForm } from '../../../../shared/utils/useForm';
 
-import Input from "../../../../shared/UI_Element/Input";
-import { VALIDATOR_MINLENGTH } from "../../../../shared/utils/validator";
+import Input from '../../../../shared/UI_Element/Input';
+import { VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
-import classes from "./EditDetails.module.css";
+import classes from './EditDetails.module.css';
 
-const EditDetails = (props) => {
-  const [formState, onInputHandler] = useForm(
-    {
-      details: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
+const EditDetails = props => {
+	const { companyid } = useParams();
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    console.log(formState);
-  };
+	const identifiedCompany = props.company.find(co => co.companyId === companyid);
+	const [ formState, onInputHandler ] = useForm(
+		{
+			details: {
+				value: identifiedCompany.details,
+				isValid: identifiedCompany.details ? true : false
+			}
+		},
+		false
+	);
 
-  return (
-    <>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Edit Company Details</p>
+	const onSubmitHandler = event => {
+		event.preventDefault();
+		const detailsUpdateData = {
+			companyId: identifiedCompany.companyId,
+			details: formState.inputs.details.value
+		};
 
-          <div className={classes.FormRow}>
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="textarea"
-                id="details"
-                inputClass="EditProfileTextArea"
-                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-                onInputHandler={onInputHandler}
-                label="Details*"
-              />
-            </div>
-          </div>
+		props.detailsUpdate(detailsUpdateData);
+		props.history.goBack();
+	};
 
-          <button
-            disabled={!formState.formIsValid}
-            className={classes.SaveButton}
-          >
-            <span>Save</span>
-          </button>
-        </div>
-      </form>
-    </>
-  );
+	return (
+		<React.Fragment>
+			<form onSubmit={onSubmitHandler} className={classes.Container}>
+				<div className={classes.ContainerFlex}>
+					<p className={classes.FormTitle}>Edit Company Details</p>
+
+					<div className={classes.FormRow}>
+						<div className={classes.EditLabel}>
+							<Input
+								inputType='textarea'
+								id='details'
+								inputClass='EditProfileTextArea'
+								validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
+								onInputHandler={onInputHandler}
+								label='Details*'
+								initValue={formState.inputs.details.value}
+								initIsValid={formState.inputs.details.isValid}
+							/>
+						</div>
+					</div>
+
+					<button disabled={!formState.formIsValid} className={classes.SaveButton}>
+						<span>Save</span>
+					</button>
+				</div>
+			</form>
+		</React.Fragment>
+	);
 };
 
-export default EditDetails;
+const mapStateToProps = state => {
+	return {
+		company: state.company.companies
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		detailsUpdate: payload => dispatch({ type: actionTypes.EDITCOMPANYDETAILS, payload })
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditDetails));

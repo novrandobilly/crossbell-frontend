@@ -16,12 +16,12 @@ const NavigationLinks = props => {
 					Explore Jobs
 				</NavLink>
 			</li>
-			<li>
+			{/* <li>
 				<NavLink to='/blogs' activeClassName={classes.active}>
 					Blog & Article
 				</NavLink>
 			</li>
-			{/* <li>
+			<li>
 				<NavLink to='/authentication/ap' activeClassName={classes.active}>
 					Jobseeker
 				</NavLink>
@@ -37,7 +37,7 @@ const NavigationLinks = props => {
 				</NavLink>
 			</li>
 			<li>
-				<NavLink to='/co/SSS' activeClassName={classes.active}>
+				<NavLink to='/co/CRO' activeClassName={classes.active}>
 					Company Profile
 				</NavLink>
 			</li>
