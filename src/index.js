@@ -1,30 +1,30 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createStore, combineReducers } from "redux";
-import { Provider } from "react-redux";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, combineReducers, compose } from 'redux';
+import { Provider } from 'react-redux';
 
-
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import jobReducers from "./store/job-reducers";
-import companyReducers from "./store/company-reducers";
-import applicantReducers from "./store/applicant-reducers";
-
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+import jobReducers from './store/reducers/job-reducers';
+import companyReducers from './store/reducers/company-reducers';
+import applicantReducers from './store/reducers/applicant-reducers';
 
 const rootReducers = combineReducers({
-  job: jobReducers,
-  company: companyReducers,
-  applicant: applicantReducers,
+	job: jobReducers,
+	company: companyReducers,
+	applicant: applicantReducers
 });
 
-const store = createStore(rootReducers);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducers, composeEnhancers());
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
