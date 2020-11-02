@@ -8,7 +8,6 @@ import TextOnly from "../../../../shared/UI_Element/TextOnly";
 import RangeSegment from "../../../../shared/UI_Element/RangeSegment";
 
 const ApplicantCard = (props) => {
-  console.log(props.education);
   return (
     <>
       <div className={classes.Container}>
@@ -44,11 +43,11 @@ const ApplicantCard = (props) => {
           </div>
 
           <div className={classes.ContainerRight}>
-            <Link to={"/jobs/new"}>
+            <Link to={"#"}>
               <IconButton iconType="NewJob" />
             </Link>
 
-            <Link to={`/co/${props.id}/compro/Intro`}>
+            <Link to={`#`}>
               <IconButton />
             </Link>
           </div>
@@ -71,6 +70,7 @@ const ApplicantCard = (props) => {
         start={props.startEdu}
         end={props.endEdu}
         description={props.description}
+        contents={props.education}
       />
 
       <RangeSegment

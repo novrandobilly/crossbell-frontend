@@ -4,6 +4,8 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
 } from "../../../../shared/utils/validator";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Input from "../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../shared/UI_Element/SaveButton";
@@ -11,6 +13,10 @@ import SaveButton from "../../../../shared/UI_Element/SaveButton";
 import classes from "./EditIntro.module.css";
 
 const EditIntro = (props) => {
+  const { applicantid } = useParams();
+
+  const applicant = props.applicant.find((app) => app.id === applicantid);
+
   const [formState, onInputHandler] = useForm(
     {
       name: {
@@ -81,6 +87,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Full Name*"
+                placeholder={applicant.name}
               />
 
               <Input
@@ -90,6 +97,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Address*"
+                placeholder={applicant.address}
               />
 
               <Input
@@ -99,6 +107,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="City*"
+                placeholder={applicant.city}
               />
 
               <Input
@@ -108,6 +117,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="State*"
+                placeholder={applicant.state}
               />
 
               <Input
@@ -117,6 +127,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Zip*"
+                placeholder={applicant.zip}
               />
 
               <Input
@@ -126,6 +137,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
                 label="Email*"
+                placeholder={applicant.email}
               />
 
               <Input
@@ -135,6 +147,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Phone*"
+                placeholder={applicant.phone}
               />
 
               <Input
@@ -144,6 +157,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Websites"
+                placeholder={applicant.websites}
               />
             </div>
           </div>
@@ -158,4 +172,10 @@ const EditIntro = (props) => {
     </>
   );
 };
-export default EditIntro;
+
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant.applicants,
+  };
+};
+export default connect(mapStateToProps)(EditIntro);

@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import RangeSegmentMap from "./RangeSegmentMap";
 import IconButton from "./IconButton";
 
 import classes from "./RangeSegment.module.css";
 
 const RangeSegment = (props) => {
+  console.log(props.contents);
   return (
     <>
       <div className={classes.Line}></div>
@@ -16,14 +18,28 @@ const RangeSegment = (props) => {
             <label className={classes.Label}>{props.labelName}</label>
           )}
           <div>
-            <Link to={`/co/${props.id}/compro/${props.route}`}>
+            <Link to={`#`}>
               <IconButton iconType="NewJob" />
             </Link>
-            <Link to={`/co/${props.id}/compro/${props.route}`}>
+            <Link to={`#`}>
               <IconButton />
             </Link>
           </div>
         </div>
+
+        {/* {props.contents.map((content, i) => {
+          return (
+            <div key={i}>
+              <RangeSegmentMap
+                title={content.title}
+                subTitle={content.subTitle}
+                start={content.startDate}
+                end={content.endDate}
+                description={content.description}
+              />
+            </div>
+          );
+        })} */}
 
         <div className={classes.MapContainer}>
           <div className={classes.Square} />
