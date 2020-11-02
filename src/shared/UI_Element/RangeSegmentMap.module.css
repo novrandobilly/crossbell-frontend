@@ -1,0 +1,51 @@
+.MapContainer {
+  border-left: solid 0.4rem rgba(58, 81, 153, 1);
+  padding-left: 3rem;
+  padding-bottom: 2rem;
+}
+
+.Square {
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: rgba(58, 81, 153, 1);
+  transform: rotate(45deg);
+  position: absolute;
+  left: 4.47rem;
+}
+
+.Title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: -0.5rem;
+}
+
+.SubTitle {
+  font-size: 1rem;
+  text-align: left;
+  margin-bottom: -0.8rem;
+}
+
+.PeriodSegment {
+  display: flex;
+  flex-direction: row;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: -1rem;
+}
+
+.Period {
+  font-size: 1rem;
+  text-align: left;
+}
+
+.Space {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.Description {
+  width: 50rem;
+  font-size: 1rem;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.5);
+}

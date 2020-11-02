@@ -16,16 +16,28 @@ const initialState = {
         "The department was founded by Sergei Lou and Guy Bannings in early S.1204 prior to the events of Zero no Kiseki. After Guy's death, Sergei runs as the section's chief. Unlike other departments or bureaus, operations handled in the section consists of listening to every citizen's query to monster hunts.",
       dateOfBirth: "14-14-1990",
 
-      education: {
-        school: "Survey Corps Military School",
-        degree: "Bachelor",
-        major: "Biological Defense",
-        location: "Paradis island",
-        startDate: "08/09/2004",
-        endDate: "08/092020",
-        description:
-          "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
-      },
+      education: [
+        {
+          school: "Survey Corps Military School",
+          degree: "Bachelor",
+          major: "Biological Defense",
+          location: "Paradis island",
+          startDate: "08/09/2004",
+          endDate: "08/092020",
+          description:
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
+        {
+          school: "Survey Corps Military School",
+          degree: "Bachelor",
+          major: "Biological Defense",
+          location: "Paradis island",
+          startDate: "08/09/2004",
+          endDate: "08/092020",
+          description:
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
+      ],
 
       experience: {
         prevTitle: "Wall Maria Chief Officer",

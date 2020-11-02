@@ -5,6 +5,8 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../shared/utils/validator";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Input from "../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../shared/UI_Element/SaveButton";
@@ -12,6 +14,10 @@ import SaveButton from "../../../../shared/UI_Element/SaveButton";
 import classes from "./EditSummary.module.css";
 
 const EditDetails = (props) => {
+  const { applicantid } = useParams();
+
+  const applicant = props.applicant.find((app) => app.id === applicantid);
+
   const [formState, onInputHandler] = useForm(
     {
       details: {
@@ -46,6 +52,7 @@ const EditDetails = (props) => {
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
                 label="Details*"
+                placeholder={applicant.details}
               />
             </div>
 
@@ -57,7 +64,7 @@ const EditDetails = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Date of Birth*"
-                placeholder="DD/MM/YYYY"
+                placeholder={applicant.dateOfBirth}
               />
             </div>
           </div>
@@ -73,4 +80,10 @@ const EditDetails = (props) => {
   );
 };
 
-export default EditDetails;
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant.applicants,
+  };
+};
+
+export default connect(mapStateToProps)(EditDetails);

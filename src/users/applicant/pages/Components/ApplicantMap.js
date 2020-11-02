@@ -21,7 +21,7 @@ const ApplicantMap = (props) => {
         details={props.items.details}
         dob={props.items.dob}
         // ======================================== Applicant Education
-        // education={props.items.education}
+        education={props.items.education}
         school={props.items.education.school}
         degree={props.items.education.degree}
         major={props.items.education.major}
