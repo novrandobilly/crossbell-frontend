@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import EditIntro from './users/company/pages/Components/EditIntro';
 import EditDetails from './users/company/pages/Components/EditDetails';
@@ -29,61 +30,95 @@ import ApplicantsListAO from './users/admin/pages/ApplicantsListAO/ApplicantsLis
 import JobsDetailsAO from './users/admin/pages/JobDetailsAO/JobDetailsAO';
 import CustomerSupportsAO from './users/admin/pages/CustomerSupportsAO/CustomerSupportsAO';
 import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
-import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
+// import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
 import MainNavigation from './shared/Navigation/MainNavigation';
 import Footer from './shared/Navigation/Footer';
 
 import './App.css';
 
-const App = () => {
+const App = props => {
+	let routes;
+
+	if (props.auth.isLoggedIn) {
+		routes = (
+			<Switch>
+				{/* Users Routes: Applicant */}
+				<Route path='/ap/:applicantid/res-val' component={ApplicantResumeVal} />
+				<Route path='/ap/:applicantid' component={ApplicantDetails} />
+				<Route path='/authentication/ap' component={AuthenticationAp} />
+
+				{/* Users Routes: Company */}
+				<Route path='/co/:companyid/compro/Intro' component={EditIntro} />
+				<Route path='/co/:companyid/compro/Details' component={EditDetails} />
+				<Route path='/co/:companyid/compro/Mission' component={EditMission} />
+				<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
+				<Route path='/co/:companyid' component={CompanyDetails} />
+				{/* <Route path='/authentication/co' component={AuthenticationCo} /> */}
+
+				{/* Jobs Routes */}
+				<Route path='/jobs-dashboard' component={JobsDashboard} />
+				<Route path='/jobs/new' component={NewJob} />
+				<Route path='/jobs/packageads' component={PackageAds} />
+				<Route path='/jobs/:jobsid/edit' component={EditJob} />
+				<Route path='/jobs/:jobsid' component={JobDetails} />
+
+				{/* Admin Routes */}
+				<Route path='/ad/alphaomega/applicants/:applicantid' component={ApplicantDetailsAO} />
+				<Route path='/ad/alphaomega/applicants' component={ApplicantsListAO} />
+				<Route path='/ad/alphaomega/jobs/:jobid' component={JobsDetailsAO} />
+				<Route path='/ad/alphaomega/jobs' component={JobsListAO} />
+				<Route path='/ad/alphaomega/companies' component={CompaniesListAO} />
+				<Route path='/ad/alphaomega/customer-supports' component={CustomerSupportsAO} />
+
+				{/* General Routes */}
+				<Route path='/blogs' component={Blogs} />
+				<Route path='/about-us' component={AboutUs} />
+				<Route path='/contact-us' component={ContactUs} />
+				<Route path='/syarat-ketentuan' component={SyaratKetentuan} />
+				<Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
+				<Route path='/' component={Home} />
+
+				{/* Absurd Routes */}
+				<Redirect to='/' />
+			</Switch>
+		);
+	} else {
+		routes = (
+			<Switch>
+				{/* Jobs Routes */}
+				<Route path='/jobs-dashboard' component={JobsDashboard} />
+				<Route path='/jobs/:jobsid' component={JobDetails} />
+
+				{/* Users Routes: Company */}
+				<Route path='/co/:companyid' exact component={CompanyDetails} />
+
+				{/* General Routes */}
+				<Route path='/blogs' component={Blogs} />
+				<Route path='/about-us' component={AboutUs} />
+				<Route path='/contact-us' component={ContactUs} />
+				<Route path='/syarat-ketentuan' component={SyaratKetentuan} />
+				<Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
+				<Route path='/' component={Home} />
+
+				{/* Absurd Routes */}
+				<Redirect to='/' />
+			</Switch>
+		);
+	}
+
 	return (
 		<Router>
 			<MainNavigation />
-			<main>
-				<Switch>
-					{/* Users Routes: Applicant */}
-					<Route path='/ap/:applicantid/res-val' component={ApplicantResumeVal} />
-					<Route path='/ap/:applicantid' component={ApplicantDetails} />
-					<Route path='/authentication/ap' component={AuthenticationAp} />
-
-					{/* Users Routes: Company */}
-					<Route path='/co/:companyid/compro/Intro' component={EditIntro} />
-					<Route path='/co/:companyid/compro/Details' component={EditDetails} />
-					<Route path='/co/:companyid/compro/Mission' component={EditMission} />
-					<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
-					<Route path='/co/:companyid' component={CompanyDetails} />
-					<Route path='/authentication/co' component={AuthenticationCo} />
-
-					{/* Jobs Routes */}
-					<Route path='/jobs-dashboard' component={JobsDashboard} />
-					<Route path='/jobs/new' component={NewJob} />
-					<Route path='/jobs/packageads' component={PackageAds} />
-					<Route path='/jobs/:jobsid/edit' component={EditJob} />
-					<Route path='/jobs/:jobsid' component={JobDetails} />
-
-					{/* Admin Routes */}
-					<Route path='/ad/alphaomega/applicants/:applicantid' component={ApplicantDetailsAO} />
-					<Route path='/ad/alphaomega/applicants' component={ApplicantsListAO} />
-					<Route path='/ad/alphaomega/jobs/:jobid' component={JobsDetailsAO} />
-					<Route path='/ad/alphaomega/jobs' component={JobsListAO} />
-					<Route path='/ad/alphaomega/companies' component={CompaniesListAO} />
-					<Route path='/ad/alphaomega/customer-supports' component={CustomerSupportsAO} />
-
-					{/* General Routes */}
-					<Route path='/blogs' component={Blogs} />
-					<Route path='/about-us' component={AboutUs} />
-					<Route path='/contact-us' component={ContactUs} />
-					<Route path='/syarat-ketentuan' component={SyaratKetentuan} />
-					<Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
-					<Route path='/' component={Home} />
-
-					{/* Absurd Routes */}
-					<Redirect to='/' />
-				</Switch>
-			</main>
+			<main>{routes}</main>
 			<Footer />
 		</Router>
 	);
 };
 
-export default App;
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
+
+export default connect(mapStateToProps)(App);

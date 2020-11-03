@@ -9,7 +9,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../.
 
 import classes from './CompanyForm.module.css';
 
-const CompanyForm = (props, { sign, role }) => {
+const CompanyForm = props => {
 	const [ formState, onInputHandler ] = useForm(
 		{
 			companyName: {
@@ -37,7 +37,9 @@ const CompanyForm = (props, { sign, role }) => {
 			password: formState.inputs.password.value
 		};
 		props.createCompany(newCompany);
-		props.history.push('/jobs-dashboard');
+		props.login();
+		props.authCompany();
+		props.history.push(`/co/${formState.inputs.companyName.value.slice(0, 3).toUpperCase()}/compro`);
 	};
 
 	return (
@@ -45,7 +47,7 @@ const CompanyForm = (props, { sign, role }) => {
 			<div className={classes.ContainerFlex}>
 				<p className={classes.FormTitle}>Company Sign Up</p>
 
-				<button className={classes.ApplicantRegister} onClick={role} type='button'>
+				<button className={classes.ApplicantRegister} onClick={props.role} type='button'>
 					Applicant sign up
 				</button>
 
@@ -83,7 +85,7 @@ const CompanyForm = (props, { sign, role }) => {
 
 				<span className={classes.sign}>
 					Already have an account?
-					<button className={classes.ChangeSign} onClick={sign} type='button'>
+					<button className={classes.ChangeSign} onClick={props.sign} type='button'>
 						Sign In Here
 					</button>
 				</span>
@@ -94,7 +96,9 @@ const CompanyForm = (props, { sign, role }) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany })
+		createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
+		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
+		authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY })
 	};
 };
 
