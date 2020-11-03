@@ -50,7 +50,10 @@ const JobCard = props => {
 	return (
 		<div className={classes.JobCard}>
 			<div className={classes.Logo}>
-				<img src={foundCompany.logo} alt={foundCompany.companyName} />
+				<img
+					src={foundCompany.logo || 'https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'}
+					alt={foundCompany.companyName}
+				/>
 			</div>
 			<div className={classes.Content}>
 				<h3>
