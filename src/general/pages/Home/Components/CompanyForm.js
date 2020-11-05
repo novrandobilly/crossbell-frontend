@@ -1,119 +1,131 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { useForm } from '../../../../shared/utils/useForm';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
 
-import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { useForm } from "../../../../shared/utils/useForm";
-import * as actionTypes from "../../../../store/actions/actions";
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-} from "../../../../shared/utils/validator";
+import Input from '../../../../shared/UI_Element/Input';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
-import Input from "../../../../shared/UI_Element/Input";
+import classes from './CompanyForm.module.css';
 
+const CompanyForm = props => {
+	const [ formState, onInputHandler ] = useForm(
+		{
+			companyName: {
+				value: '',
+				isValid: false
+			},
+			email: {
+				value: '',
+				isValid: false
+			},
+			password: {
+				value: '',
+				isValid: false
+			}
+		},
+		false
+	);
 
-import classes from "./CompanyForm.module.css";
+	const onSubmitHandler = async event => {
+		event.preventDefault();
+		// console.log(formState);
+		// const coId = formState.inputs.companyName.value.slice(0, 3).toUpperCase();
+		const newCompany = {
+			companyName: formState.inputs.companyName.value,
+			email: formState.inputs.email.value,
+			password: formState.inputs.password.value
+		};
 
+		try {
+			const res = await props.createCompany(newCompany);
+			props.login();
+			props.authCompany();
+			console.log(res);
+			props.history.push(`/co/${res.id}/compro`);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-const CompanyForm = (props, { sign, role }) => {
-  const [formState, onInputHandler] = useForm(
-    {
-      companyName: {
-        value: "",
-        isValid: false,
-      },
-      email: {
-        value: "",
-        isValid: false,
-      },
-      password: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
+	let formContent = (
+		<React.Fragment>
+			<div className={classes.ContainerFlex}>
+				<p className={classes.FormTitle}>Company Sign Up</p>
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
+				<button className={classes.ApplicantRegister} onClick={props.role} type='button'>
+					Applicant sign up
+				</button>
 
-    const newCompany = {
-      companyName: formState.inputs.companyName.value,
-      email: formState.inputs.email.value,
-      password: formState.inputs.password.value,
-    };
-    props.createCompany(newCompany);
-    props.history.push("/jobs-dashboard");
-  };
+				<Input
+					inputType='input'
+					id='companyName'
+					inputClass='Register'
+					validatorMethod={[ VALIDATOR_REQUIRE() ]}
+					onInputHandler={onInputHandler}
+					label='Company Name*'
+				/>
 
-  return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Company Sign Up</p>
+				<Input
+					inputType='input'
+					id='email'
+					inputClass='Register'
+					validatorMethod={[ VALIDATOR_EMAIL() ]}
+					onInputHandler={onInputHandler}
+					label='Company Email*'
+				/>
 
+				<Input
+					inputType='input'
+					id='password'
+					inputClass='Register'
+					validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
+					onInputHandler={onInputHandler}
+					label='Password*'
+					type='password'
+				/>
 
-        <button
-          className={classes.ApplicantRegister}
-          onClick={props.role}
-          type="button"
-        >
-          Applicant sign up
-        </button>
+				<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
+					<span>Submit</span>
+				</button>
 
-        <Input
-          inputType="input"
-          id="companyName"
-          inputClass="Register"
-          validatorMethod={[VALIDATOR_REQUIRE()]}
-          onInputHandler={onInputHandler}
-          label="Company Name*"
-        />
+				<span className={classes.sign}>
+					Already have an account?
+					<button className={classes.ChangeSign} onClick={props.sign} type='button'>
+						Sign In Here
+					</button>
+				</span>
+			</div>
+		</React.Fragment>
+	);
 
-        <Input
-          inputType="input"
-          id="email"
-          inputClass="Register"
-          validatorMethod={[VALIDATOR_EMAIL()]}
-          onInputHandler={onInputHandler}
-          label="Company Email*"
-        />
+	if (props.isLoading) {
+		formContent = <SpinnerCircle />;
+	}
 
-        <Input
-          inputType="input"
-          id="password"
-          inputClass="Register"
-          validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-          onInputHandler={onInputHandler}
-          label="Password*"
-          type="password"
-        />
-
-
-        <button
-          disabled={!formState.formIsValid}
-          className={classes.SubmitButton}
-        >
-          <span>Submit</span>
-        </button>
-
-        <span className={classes.sign}>
-          Already have an account?
-          <button className={classes.ChangeSign} onClick={sign} type="button">
-            Sign In Here
-          </button>
-        </span>
-      </div>
-    </form>
-  );
+	return (
+		<form onSubmit={onSubmitHandler} className={classes.Container}>
+			{formContent}
+		</form>
+	);
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createCompany: (newCompany) =>
-      dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.company.isLoading
+	};
+};
 
+const mapDispatchToProps = dispatch => {
+	return {
+		createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
+		// createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
+		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
+		authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY })
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyForm));
