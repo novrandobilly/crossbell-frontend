@@ -18,7 +18,7 @@ const MainNavigation = () => {
 
 	return (
 		<React.Fragment>
-			{drawerIsOpen && <Backdrop toggleSideDrawer={toggleDrawerHandler} />}
+			{drawerIsOpen && <Backdrop onClick={toggleDrawerHandler} />}
 
 			<SideDrawer show={drawerIsOpen}>
 				<nav className={classes.DrawerNav} onClick={toggleDrawerHandler}>

@@ -5,6 +5,7 @@ import CompanyForm from "../Components/CompanyForm";
 import Register from "./Register";
 
 const AuthForm = () => {
+
   const [sign, setSign] = useState(false);
   const [role, setRole] = useState(false);
 
@@ -43,6 +44,7 @@ const AuthForm = () => {
       </div>
     );
   }
+
 };
 
 export default AuthForm;

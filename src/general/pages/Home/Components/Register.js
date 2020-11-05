@@ -1,3 +1,4 @@
+
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -49,11 +50,13 @@ const Register = (props, { sign, role }) => {
     props.history.push("/jobs-dashboard");
   };
 
-  return (
-    <>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Applicant Sign Up</p>
+
+	return (
+		<React.Fragment>
+			<form onSubmit={onSubmitHandler} className={classes.Container}>
+				<div className={classes.ContainerFlex}>
+					<p className={classes.FormTitle}>Applicant Sign Up</p>
+
 
           <button
             className={classes.CompanyRegister}
@@ -63,23 +66,25 @@ const Register = (props, { sign, role }) => {
             Company sign up
           </button>
 
-          <Input
-            inputType="input"
-            id="firstName"
-            inputClass="Register"
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label="First Name*"
-          />
 
-          <Input
-            inputType="input"
-            id="lastName"
-            inputClass="Register"
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label="Last Name*"
-          />
+					<Input
+						inputType='input'
+						id='firstName'
+						inputClass='Register'
+						validatorMethod={[ VALIDATOR_REQUIRE() ]}
+						onInputHandler={onInputHandler}
+						label='First Name*'
+					/>
+
+					<Input
+						inputType='input'
+						id='lastName'
+						inputClass='Register'
+						validatorMethod={[ VALIDATOR_REQUIRE() ]}
+						onInputHandler={onInputHandler}
+						label='Last Name*'
+					/>
+
 
           <Input
             inputType="input"
@@ -90,34 +95,33 @@ const Register = (props, { sign, role }) => {
             label="Email*"
           />
 
-          <Input
-            inputType="input"
-            id="password"
-            inputClass="Register"
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label="Password*"
-            type="password"
-          />
 
-          <button
-            disabled={!formState.formIsValid}
-            className={classes.SubmitButton}
-          >
-            <span>Submit</span>
-          </button>
+					<Input
+						inputType='input'
+						id='password'
+						inputClass='Register'
+						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
+						onInputHandler={onInputHandler}
+						label='Password*'
+						type='password'
+					/>
 
-          <span className={classes.Sign}>
-            Already have an account?
-            <button className={classes.ChangeSign} type="button" onClick={sign}>
-              Sign In Here
-            </button>
-          </span>
-        </div>
-      </form>
-    </>
-  );
+					<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
+						<span>Submit</span>
+					</button>
+
+					<span className={classes.Sign}>
+						Already have an account?
+						<button className={classes.ChangeSign} type='button' onClick={props.sign}>
+							Sign In Here
+						</button>
+					</span>
+				</div>
+			</form>
+		</React.Fragment>
+	);
 };
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -125,5 +129,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.CREATEAPPLICANT, payload: newApplicant }),
   };
 };
+
 
 export default connect(null, mapDispatchToProps)(withRouter(Register));

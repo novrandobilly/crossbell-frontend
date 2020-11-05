@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -176,6 +177,13 @@ const App = () => {
       <Footer />
     </Router>
   );
+
 };
 
-export default App;
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
+
+export default connect(mapStateToProps)(App);

@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actions";
 
 const initialState = {
+
   companies: [
     {
       companyId: "SSS",
@@ -97,6 +98,7 @@ const companyReducers = (state = initialState, action) => {
         companies: companyArray,
       };
     }
+
 
     case actionTypes.EDITCOMPANYMISSION: {
       const companyArray = [...state.companies];

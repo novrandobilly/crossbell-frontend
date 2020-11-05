@@ -1,3 +1,4 @@
+
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -11,7 +12,9 @@ import {
 
 import Input from "../../../../shared/UI_Element/Input";
 
+
 import classes from "./CompanyForm.module.css";
+
 
 const CompanyForm = (props, { sign, role }) => {
   const [formState, onInputHandler] = useForm(
@@ -49,6 +52,7 @@ const CompanyForm = (props, { sign, role }) => {
       <div className={classes.ContainerFlex}>
         <p className={classes.FormTitle}>Company Sign Up</p>
 
+
         <button
           className={classes.ApplicantRegister}
           onClick={props.role}
@@ -85,6 +89,7 @@ const CompanyForm = (props, { sign, role }) => {
           type="password"
         />
 
+
         <button
           disabled={!formState.formIsValid}
           className={classes.SubmitButton}
@@ -108,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
     createCompany: (newCompany) =>
       dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
   };
+
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(CompanyForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyForm));

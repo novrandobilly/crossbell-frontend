@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 import IconButton from "../../../../shared/UI_Element/IconButton";
 import TextOnly from "../../../../shared/UI_Element/TextOnly";
@@ -8,16 +9,18 @@ import SkillsMap from "../Components/SkillsMap";
 
 import classes from "./ApplicantCard.module.css";
 
-const ApplicantCard = (props) => {
-  return (
-    <>
-      <div className={classes.Container}>
-        <div className={classes.ContainerLeft}>
-          <img
-            src="https://vignette.wikia.nocookie.net/shingekinokyojin/images/4/4f/Mikasa_Ackermann_%28Anime%29_character_image.png/revision/latest?cb=20190710121820"
-            alt="applicant"
-            className={classes.Picture}
-          ></img>
+
+const ApplicantCard = props => {
+	return (
+		<React.Fragment>
+			<div className={classes.Container}>
+				<div className={classes.ContainerLeft}>
+					<img
+						src='https://vignette.wikia.nocookie.net/shingekinokyojin/images/4/4f/Mikasa_Ackermann_%28Anime%29_character_image.png/revision/latest?cb=20190710121820'
+						alt='applicant'
+						className={classes.Picture}
+					/>
+
 
           <div className={classes.ContainerLeftDivider}>
             <p className={classes.Name}>
@@ -25,25 +28,27 @@ const ApplicantCard = (props) => {
             </p>
             <p className={classes.Title}>{props.headline}</p>
 
-            <div className={classes.ContainerHouse}>
-              <p className={classes.Address}>{props.address}</p>
-              <p>-</p>
-              <p className={classes.City}>{props.city}</p>
-            </div>
 
-            <div className={classes.ContainerHouse}>
-              <p className={classes.Email}>{props.email}</p>
-              <p className={classes.Email}>{props.phone}</p>
-            </div>
+						<div className={classes.ContainerHouse}>
+							<p className={classes.Address}>{props.address}</p>
+							<p>-</p>
+							<p className={classes.City}>{props.city}</p>
+						</div>
 
-            <a href={props.website} className={classes.Websites}>
-              <img
-                className={classes.LinkIcon}
-                alt="web-icon"
-                src="https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png"
-              ></img>
-            </a>
-          </div>
+						<div className={classes.ContainerHouse}>
+							<p className={classes.Email}>{props.email}</p>
+							<p className={classes.Email}>{props.phone}</p>
+						</div>
+
+						<a href={props.website} className={classes.Websites}>
+							<img
+								className={classes.LinkIcon}
+								alt='web-icon'
+								src='https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'
+							/>
+						</a>
+					</div>
+
 
           <div className={classes.ContainerRight}>
             <Link to={`/ap/${props.id}/intro`}>
@@ -93,5 +98,6 @@ const ApplicantCard = (props) => {
       />
     </>
   );
+
 };
 export default ApplicantCard;

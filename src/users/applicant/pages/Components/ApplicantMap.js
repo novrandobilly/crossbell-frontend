@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import ApplicantCard from "./ApplicantCard";
+import ApplicantCard from './ApplicantCard';
+
 
 const ApplicantMap = (props) => {
   return (
@@ -32,6 +33,7 @@ const ApplicantMap = (props) => {
       />
     </div>
   );
+
 };
 
 export default ApplicantMap;

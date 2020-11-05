@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import classes from './JobCard.module.css';
 
-import Spinner from '../../shared/UI_Element/Spinner';
+import Spinner from '../../shared/UI_Element/Spinner/Spinner';
 import Button from '../../shared/UI_Element/Button';
 
 const JobCard = props => {
@@ -50,7 +50,10 @@ const JobCard = props => {
 	return (
 		<div className={classes.JobCard}>
 			<div className={classes.Logo}>
-				<img src={foundCompany.logo} alt={foundCompany.companyName} />
+				<img
+					src={foundCompany.logo || 'https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'}
+					alt={foundCompany.companyName}
+				/>
 			</div>
 			<div className={classes.Content}>
 				<h3>

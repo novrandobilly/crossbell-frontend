@@ -1,10 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import RangeSegmentMap from "./RangeSegmentMap";
-import IconButton from "./IconButton";
+import RangeSegmentMap from './RangeSegmentMap';
+import IconButton from './IconButton';
 
-import classes from "./RangeSegment.module.css";
+import classes from './RangeSegment.module.css';
+
 
 const RangeSegment = (props) => {
   return (
@@ -43,6 +44,7 @@ const RangeSegment = (props) => {
       </div>
     </>
   );
+
 };
 
 export default RangeSegment;
