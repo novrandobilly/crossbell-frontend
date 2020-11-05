@@ -34,6 +34,9 @@ export const createCompany = companyData => {
 				})
 			});
 			const responseJSON = await response.json();
+			// if (!response.ok) {
+			// 	throw new Error(responseJSON.message);
+			// }
 			dispatch(createCompanySuccess(responseJSON.newCompany));
 			return responseJSON.newCompany;
 		} catch (err) {
