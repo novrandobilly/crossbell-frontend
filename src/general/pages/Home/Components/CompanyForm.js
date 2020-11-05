@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
 import * as actionTypes from '../../../../store/actions/actions';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import * as actionCreators from '../../../../store/actions/index';
 
 import Input from '../../../../shared/UI_Element/Input';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
 import classes from './CompanyForm.module.css';
 
@@ -30,22 +32,27 @@ const CompanyForm = props => {
 
 	const onSubmitHandler = async event => {
 		event.preventDefault();
-
+		// console.log(formState);
+		// const coId = formState.inputs.companyName.value.slice(0, 3).toUpperCase();
 		const newCompany = {
 			companyName: formState.inputs.companyName.value,
 			email: formState.inputs.email.value,
 			password: formState.inputs.password.value
 		};
+
 		try {
-			await props.createCompany(newCompany);
-			props.history.push('/jobs-dashboard');
+			const res = await props.createCompany(newCompany);
+			props.login();
+			props.authCompany();
+			console.log(res);
+			props.history.push(`/co/${res.id}/compro`);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
+	let formContent = (
+		<React.Fragment>
 			<div className={classes.ContainerFlex}>
 				<p className={classes.FormTitle}>Company Sign Up</p>
 
@@ -92,18 +99,33 @@ const CompanyForm = props => {
 					</button>
 				</span>
 			</div>
+		</React.Fragment>
+	);
+
+	if (props.isLoading) {
+		formContent = <SpinnerCircle />;
+	}
+
+	return (
+		<form onSubmit={onSubmitHandler} className={classes.Container}>
+			{formContent}
 		</form>
 	);
 };
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
 	return {
-		createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany })
+		isLoading: state.company.isLoading
 	};
 };
 
-const mapStateToProps = state => {
-	return {};
+const mapDispatchToProps = dispatch => {
+	return {
+		createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
+		// createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
+		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
+		authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY })
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyForm));
