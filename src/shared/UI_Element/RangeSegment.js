@@ -6,52 +6,45 @@ import IconButton from './IconButton';
 
 import classes from './RangeSegment.module.css';
 
-const RangeSegment = props => {
-	return (
-		<React.Fragment>
-			<div className={classes.Line} />
 
-			<div className={classes.Container}>
-				<div className={classes.Header}>
-					{props.labelName && <label className={classes.Label}>{props.labelName}</label>}
-					<div>
-						<Link to={`#`}>
-							<IconButton iconType='NewJob' />
-						</Link>
-						<Link to={`#`}>
-							<IconButton />
-						</Link>
-					</div>
-				</div>
+const RangeSegment = (props) => {
+  return (
+    <>
+      <div className={classes.Line}></div>
 
-				{props.contents &&
-					props.contents.map((content, i) => {
-						return (
-							<RangeSegmentMap
-								key={i}
-								title={content.title}
-								subTitle={content.subTitle}
-								start={content.startDate}
-								end={content.endDate}
-								description={content.description}
-							/>
-						);
-					})}
+      <div className={classes.Container}>
+        <div className={classes.Header}>
+          {props.labelName && (
+            <label className={classes.Label}>{props.labelName}</label>
+          )}
+          <div>
+            <Link to={props.routeAdd}>
+              <IconButton iconType="NewSegment" />
+            </Link>
+          </div>
+        </div>
 
-				<div className={classes.MapContainer}>
-					<div className={classes.Square} />
-					<p className={classes.Title}>{props.title}</p>
-					<p className={classes.SubTitle}>{props.subTitle}</p>
-					<div className={classes.PeriodSegment}>
-						<p className={classes.Period}>{props.start}</p>
-						<p className={classes.Space}>-</p>
-						<p className={classes.Period}>{props.end}</p>
-					</div>
-					<p className={classes.Description}>{props.description}</p>
-				</div>
-			</div>
-		</React.Fragment>
-	);
+        {props.contents &&
+          props.contents.map((content, i) => {
+            return (
+              <div key={i}>
+                <RangeSegmentMap
+                  title={content.school || content.prevTitle || content.title}
+                  subTitle={
+                    content.major || content.prevCompany || content.organization
+                  }
+                  start={content.startDate}
+                  end={content.endDate}
+                  description={content.description}
+                  routeEdit={`${props.routeEdit}/${i}`}
+                />
+              </div>
+            );
+          })}
+      </div>
+    </>
+  );
+
 };
 
 export default RangeSegment;

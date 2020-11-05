@@ -1,17 +1,26 @@
 import React from "react";
-import { useForm } from "../../../../shared/utils/useForm";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../../shared/utils/useForm";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../../../shared/utils/validator";
+} from "../../../../../shared/utils/validator";
 
-import Input from "../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../shared/UI_Element/SaveButton";
+import Input from "../../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
 import classes from "./Certification.module.css";
 
-const EditDetails = (props) => {
+const Certification = (props) => {
+  const { applicantid } = useParams();
+
+  const applicant = props.applicant.find(
+    (app) => app.applicantId === applicantid
+  );
+
   const [formState, onInputHandler] = useForm(
     {
       title: {
@@ -40,7 +49,17 @@ const EditDetails = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+
+    const updatedCertification = {
+      applicantId: applicant.applicantId,
+      title: formState.inputs.title.value,
+      organization: formState.inputs.organization.value,
+      startDate: formState.inputs.startDate.value,
+      endDate: formState.inputs.endDate.value,
+      description: formState.inputs.description.value,
+    };
+    props.onUpdateAppCertification(updatedCertification);
+    props.history.push(`/ap/${applicant.applicantId}`);
   };
 
   return (
@@ -125,4 +144,23 @@ const EditDetails = (props) => {
   );
 };
 
-export default EditDetails;
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant.applicants,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateAppCertification: (updatedCertification) =>
+      dispatch({
+        type: actionTypes.CREATEAPPLICANTCERTIFICATION,
+        payload: { updatedCertification },
+      }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Certification));

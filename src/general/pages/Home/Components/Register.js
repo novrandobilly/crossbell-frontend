@@ -1,43 +1,55 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actionTypes from '../../../../store/actions/actions';
-import { useForm } from '../../../../shared/utils/useForm';
 
-import Input from '../../../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { useForm } from "../../../../shared/utils/useForm";
+import * as actionTypes from "../../../../store/actions/actions";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+} from "../../../../shared/utils/validator";
 
-import classes from './Register.module.css';
+import Input from "../../../../shared/UI_Element/Input";
 
-const Register = props => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			firstName: {
-				value: '',
-				isValid: false
-			},
-			lastName: {
-				value: '',
-				isValid: false
-			},
-			email: {
-				value: '',
-				isValid: false
-			},
-			password: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+import classes from "./Register.module.css";
 
-	const onSubmitHandler = event => {
-		event.preventDefault();
-		console.log(formState);
-		props.login();
-		props.history.push('/jobs-dashboard');
-	};
+const Register = (props, { sign, role }) => {
+  const [formState, onInputHandler] = useForm(
+    {
+      firstName: {
+        value: "",
+        isValid: false,
+      },
+      lastName: {
+        value: "",
+        isValid: false,
+      },
+      email: {
+        value: "",
+        isValid: false,
+      },
+      password: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    const newApplicant = {
+      firstName: formState.inputs.firstName.value,
+      lastName: formState.inputs.lastName.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    };
+    props.createApplicant(newApplicant);
+    props.history.push("/jobs-dashboard");
+  };
+
 
 	return (
 		<React.Fragment>
@@ -45,9 +57,15 @@ const Register = props => {
 				<div className={classes.ContainerFlex}>
 					<p className={classes.FormTitle}>Applicant Sign Up</p>
 
-					<button className={classes.CompanyRegister} onClick={props.role} type='button'>
-						Company sign up
-					</button>
+
+          <button
+            className={classes.CompanyRegister}
+            onClick={props.role}
+            type="button"
+          >
+            Company sign up
+          </button>
+
 
 					<Input
 						inputType='input'
@@ -67,14 +85,16 @@ const Register = props => {
 						label='Last Name*'
 					/>
 
-					<Input
-						inputType='input'
-						id='email'
-						inputClass='Register'
-						validatorMethod={[ VALIDATOR_EMAIL() ]}
-						onInputHandler={onInputHandler}
-						label='Company Email*'
-					/>
+
+          <Input
+            inputType="input"
+            id="email"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_EMAIL()]}
+            onInputHandler={onInputHandler}
+            label="Email*"
+          />
+
 
 					<Input
 						inputType='input'
@@ -102,9 +122,13 @@ const Register = props => {
 	);
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		login: () => dispatch({ type: actionTypes.AUTHLOGIN })
-	};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createApplicant: (newApplicant) =>
+      dispatch({ type: actionTypes.CREATEAPPLICANT, payload: newApplicant }),
+  };
 };
+
+
 export default connect(null, mapDispatchToProps)(withRouter(Register));

@@ -15,7 +15,7 @@ const Button = (props) => {
           {props.labelName && (
             <label className={classes.Label}>{props.labelName}</label>
           )}
-          <Link to={`/co/${props.id}/compro/${props.route}`}>
+          <Link to={props.route}>
             <IconButton />
           </Link>
         </div>

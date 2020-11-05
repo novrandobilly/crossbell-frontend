@@ -1,42 +1,52 @@
 import React from "react";
-import { useForm } from "../../../../shared/utils/useForm";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../../shared/utils/useForm";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../../../shared/utils/validator";
+} from "../../../../../shared/utils/validator";
 
-import Input from "../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../shared/UI_Element/SaveButton";
+import Input from "../../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
 import classes from "./Experience.module.css";
 
-const EditDetails = (props) => {
+const Experience = (props) => {
+  const { applicantid } = useParams();
+  const { experienceindex } = useParams();
+
+  const applicant = props.applicant.find(
+    (app) => app.applicantId === applicantid
+  );
+
   const [formState, onInputHandler] = useForm(
     {
       prevTitle: {
-        value: "",
-        isValid: false,
+        value: applicant.experience[experienceindex].prevTitle,
+        isValid: true,
       },
       prevCompany: {
-        value: "",
-        isValid: false,
+        value: applicant.experience[experienceindex].prevCompany,
+        isValid: true,
       },
       prevLocation: {
-        value: "",
-        isValid: false,
+        value: applicant.experience[experienceindex].prevLocation,
+        isValid: true,
       },
       startDate: {
-        value: "",
-        isValid: false,
+        value: applicant.experience[experienceindex].startDate,
+        isValid: true,
       },
       endDate: {
-        value: "",
-        isValid: false,
+        value: applicant.experience[experienceindex].endDate,
+        isValid: true,
       },
-      prevDescription: {
-        value: "",
-        isValid: false,
+      description: {
+        value: applicant.experience[experienceindex].description,
+        isValid: true,
       },
     },
     false
@@ -44,7 +54,18 @@ const EditDetails = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+    const updatedExperience = {
+      applicantId: applicant.applicantId,
+      experienceindex: experienceindex,
+      prevTitle: formState.inputs.prevTitle.value,
+      prevCompany: formState.inputs.prevCompany.value,
+      prevLocation: formState.inputs.prevLocation.value,
+      startDate: formState.inputs.startDate.value,
+      endDate: formState.inputs.endDate.value,
+      description: formState.inputs.description.value,
+    };
+    props.onUpdateAppExperience(updatedExperience);
+    props.history.push(`/ap/${applicant.applicantId}`);
   };
 
   return (
@@ -62,7 +83,8 @@ const EditDetails = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Previous Title *"
-                placeholder="Ex: Marketing Chief"
+                initValue={applicant.experience[experienceindex].prevTitle}
+                initIsValid={true}
               />
             </div>
 
@@ -74,6 +96,8 @@ const EditDetails = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Company Name*"
+                initValue={applicant.experience[experienceindex].prevCompany}
+                initIsValid={true}
               />
             </div>
 
@@ -85,7 +109,8 @@ const EditDetails = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Location*"
-                placeholder="Ex: Bandung, West Java"
+                initValue={applicant.experience[experienceindex].prevLocation}
+                initIsValid={true}
               />
             </div>
 
@@ -98,7 +123,8 @@ const EditDetails = (props) => {
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
                   label="Start Date*"
-                  placeholder="DD/MM/YYYY"
+                  initValue={applicant.experience[experienceindex].startDate}
+                  initIsValid={true}
                 />
               </div>
 
@@ -110,7 +136,8 @@ const EditDetails = (props) => {
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
                   label="End Date*"
-                  placeholder="DD/MM/YYYY"
+                  initValue={applicant.experience[experienceindex].endDate}
+                  initIsValid={true}
                 />
               </div>
             </div>
@@ -118,11 +145,13 @@ const EditDetails = (props) => {
             <div className={classes.EditLabel}>
               <Input
                 inputType="textarea"
-                id="prevDescription"
+                id="description"
                 inputClass="EditProfileTextArea"
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
                 label="Description*"
+                initValue={applicant.experience[experienceindex].description}
+                initIsValid={true}
               />
             </div>
           </div>
@@ -138,4 +167,23 @@ const EditDetails = (props) => {
   );
 };
 
-export default EditDetails;
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant.applicants,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateAppExperience: (updatedExperience) =>
+      dispatch({
+        type: actionTypes.EDITAPPLICANTEXPERIENCE,
+        payload: { updatedExperience },
+      }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Experience));

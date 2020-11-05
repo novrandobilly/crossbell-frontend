@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import classes from './ApplicantCard.module.css';
 
-import IconButton from '../../../../shared/UI_Element/IconButton';
-import TextOnly from '../../../../shared/UI_Element/TextOnly';
-import RangeSegment from '../../../../shared/UI_Element/RangeSegment';
+import IconButton from "../../../../shared/UI_Element/IconButton";
+import TextOnly from "../../../../shared/UI_Element/TextOnly";
+import RangeSegment from "../../../../shared/UI_Element/RangeSegment";
+import SkillsMap from "../Components/SkillsMap";
+
+import classes from "./ApplicantCard.module.css";
+
 
 const ApplicantCard = props => {
 	return (
@@ -18,9 +21,13 @@ const ApplicantCard = props => {
 						className={classes.Picture}
 					/>
 
-					<div className={classes.ContainerLeftDivider}>
-						<p className={classes.Name}>{props.name}</p>
-						<p className={classes.Title}>{props.headline}</p>
+
+          <div className={classes.ContainerLeftDivider}>
+            <p className={classes.Name}>
+              {props.firstName} {props.lastName}
+            </p>
+            <p className={classes.Title}>{props.headline}</p>
+
 
 						<div className={classes.ContainerHouse}>
 							<p className={classes.Address}>{props.address}</p>
@@ -42,54 +49,55 @@ const ApplicantCard = props => {
 						</a>
 					</div>
 
-					<div className={classes.ContainerRight}>
-						<Link to={'#'}>
-							<IconButton iconType='NewJob' />
-						</Link>
 
-						<Link to={`#`}>
-							<IconButton />
-						</Link>
-					</div>
-				</div>
-			</div>
+          <div className={classes.ContainerRight}>
+            <Link to={`/ap/${props.id}/intro`}>
+              <IconButton />
+            </Link>
+          </div>
+        </div>
+      </div>
 
-			<TextOnly id={props.id} labelName='Summary' route='#' text={props.details} />
+      <TextOnly
+        id={props.id}
+        labelName="Summary"
+        route={`/ap/${props.id}/summary`}
+        text={props.details}
+      />
 
-			<RangeSegment
-				id={props.id}
-				labelName='Education'
-				route='#'
-				title={props.school}
-				subTitle={props.major}
-				start={props.startEdu}
-				end={props.endEdu}
-				description={props.description}
-				contents={props.education}
-			/>
+      <RangeSegment
+        id={props.id}
+        labelName="Education"
+        routeEdit={`/ap/${props.id}/education`}
+        routeAdd={`/ap/${props.id}/education`}
+        contents={props.education}
+      />
 
-			<RangeSegment
-				id={props.id}
-				labelName='Experience'
-				route='#'
-				title={props.prevTitle}
-				subTitle={props.prevCompany}
-				start={props.startExp}
-				end={props.endExp}
-				description={props.prevDescription}
-			/>
+      <RangeSegment
+        id={props.id}
+        labelName="Experience"
+        routeEdit={`/ap/${props.id}/experience`}
+        routeAdd={`/ap/${props.id}/experience`}
+        contents={props.experience}
+      />
 
-			<RangeSegment
-				id={props.id}
-				labelName='Certification/ Achievement'
-				route='#'
-				title={props.title}
-				subTitle={props.organization}
-				start={props.startCert}
-				end={props.endCert}
-				description={props.certDescription}
-			/>
-		</React.Fragment>
-	);
+      <RangeSegment
+        id={props.id}
+        labelName="Certification/ Achievement"
+        routeEdit={`/ap/${props.id}/certification`}
+        routeAdd={`/ap/${props.id}/certification`}
+        contents={props.certification}
+      />
+
+      <SkillsMap
+        id={props.id}
+        labelName="Skills"
+        routeEdit={`/ap/${props.id}/skills`}
+        routeAdd={`/ap/${props.id}/skills`}
+        skills={props.skills}
+      />
+    </>
+  );
+
 };
 export default ApplicantCard;

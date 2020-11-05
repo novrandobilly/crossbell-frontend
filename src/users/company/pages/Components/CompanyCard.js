@@ -57,7 +57,7 @@ const CompanyCard = (props) => {
               <IconButton iconType="NewJob" />
             </Link>
 
-            <Link to={`/co/${props.companyId}/compro/Intro`}>
+            <Link to={`/co/${props.companyId}/compro/intro`}>
               <IconButton />
             </Link>
           </div>
@@ -67,14 +67,14 @@ const CompanyCard = (props) => {
       <TextOnly
         id={props.companyId}
         labelName="Company Detail"
-        route="details"
+        route={`/co/${props.companyId}/compro/details`}
         text={props.details}
       />
 
       <TextOnly
         id={props.companyId}
         labelName="Company Mission"
-        route="mission"
+        route={`/co/${props.companyId}/compro/mission`}
         text={props.mission}
       />
     </React.Fragment>

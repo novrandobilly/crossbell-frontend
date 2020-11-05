@@ -65,4 +65,6 @@
   border: solid 0.05rem;
   margin-bottom: 1rem;
   outline: none;
+  font-size: small;
+  font-family: sans-serif;
 }

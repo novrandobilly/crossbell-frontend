@@ -10,6 +10,20 @@ const IconButton = (props) => {
       return (
         <button
           className={[
+            classes.IconAddJobButton,
+            classes[props.IconButtonClass],
+          ].join(" ")}
+        >
+          <span className={classes.AddButton}>
+            <AddIcon />
+          </span>
+        </button>
+      );
+
+    case "NewSegment":
+      return (
+        <button
+          className={[
             classes.IconAddButton,
             classes[props.IconButtonClass],
           ].join(" ")}

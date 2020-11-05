@@ -16,10 +16,28 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .Label {
   font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.MapContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.SkillContainer {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: rgb(58, 81, 153, 0.8);
+  border: solid 0.1rem rgba(0, 0, 0, 0.3);
+  border-radius: 5rem;
+  color: white;
   font-weight: bold;
 }
