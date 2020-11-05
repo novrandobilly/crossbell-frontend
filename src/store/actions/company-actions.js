@@ -37,6 +37,7 @@ export const createCompany = companyData => {
 			// if (!response.ok) {
 			// 	throw new Error(responseJSON.message);
 			// }
+			// }
 			dispatch(createCompanySuccess(responseJSON.newCompany));
 			return responseJSON.newCompany;
 		} catch (err) {
