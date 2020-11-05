@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import classes from './JobCard.module.css';
 
-import Spinner from '../../shared/UI_Element/Spinner';
+import Spinner from '../../shared/UI_Element/Spinner/Spinner';
 import Button from '../../shared/UI_Element/Button';
 
 const JobCard = props => {

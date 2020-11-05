@@ -12,8 +12,9 @@ import classes from './EditIntro.module.css';
 const EditIntro = props => {
 	const { companyid } = useParams();
 
+	console.log(companyid);
 	const identifiedCompany = props.company.find(co => co.companyId === companyid);
-
+	console.log(identifiedCompany);
 	const [ formState, onInputHandler ] = useForm(
 		{
 			companyName: {

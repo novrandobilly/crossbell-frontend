@@ -50,14 +50,23 @@ const initialState = {
 				'Inti Dinamis bergerak dalam bidang jasa konsultan organisasi dan pengembangan sumber daya manusia. Didirikan tahun 2005 dengan dilandasi intensi untuk menjadi mitra terbaik bagi rekan bisnisnya dalam mengelola dan mengembangkan Human Capital untuk menjamin pencapaian visi yang dicanangkan.',
 			mission: 'Menjadi Mitra Usaha Terbaik Bagi Klien Dalam Mengelola dan Mengembangkan Human Capital.'
 		}
-	]
+	],
+	isLoading: false,
+	error: false
 };
 
 const companyReducers = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.CREATECOMPANYSTART: {
+			return {
+				...state,
+				isLoading: true,
+				error: false
+			};
+		}
 		case actionTypes.CREATECOMPANY: {
 			const newCompany = {
-				companyId: action.payload.companyName.slice(0, 3).toUpperCase(),
+				companyId: action.payload.id,
 				logo: '',
 				companyName: action.payload.companyName,
 				email: action.payload.email,
@@ -72,7 +81,17 @@ const companyReducers = (state = initialState, action) => {
 			};
 			return {
 				...state,
+				isLoading: false,
+				error: false,
 				companies: state.companies.concat(newCompany)
+			};
+		}
+
+		case actionTypes.CREATECOMPANYFAIL: {
+			return {
+				...state,
+				isLoading: false,
+				error: true
 			};
 		}
 
