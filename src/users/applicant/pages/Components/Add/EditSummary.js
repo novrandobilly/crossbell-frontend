@@ -1,22 +1,25 @@
 import React from "react";
-import { useForm } from "../../../../shared/utils/useForm";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../../shared/utils/useForm";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../../../shared/utils/validator";
-import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
+} from "../../../../../shared/utils/validator";
 
-import Input from "../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../shared/UI_Element/SaveButton";
+import Input from "../../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
 import classes from "./EditSummary.module.css";
 
-const EditDetails = (props) => {
+const EditSummary = (props) => {
   const { applicantid } = useParams();
 
-  const applicant = props.applicant.find((app) => app.id === applicantid);
+  const applicant = props.applicant.find(
+    (app) => app.applicantId === applicantid
+  );
 
   const [formState, onInputHandler] = useForm(
     {
@@ -24,7 +27,7 @@ const EditDetails = (props) => {
         value: "",
         isValid: false,
       },
-      dob: {
+      dateOfBirth: {
         value: "",
         isValid: false,
       },
@@ -34,7 +37,14 @@ const EditDetails = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+
+    const updatedAppSummary = {
+      applicantId: applicant.applicantId,
+      details: formState.inputs.details.value,
+      dateOfBirth: formState.inputs.dateOfBirth.value,
+    };
+    props.onUpdateAppSummary(updatedAppSummary);
+    props.history.push(`/ap/${applicant.applicantId}`);
   };
 
   return (
@@ -52,19 +62,18 @@ const EditDetails = (props) => {
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
                 label="Details*"
-                placeholder={applicant.details}
               />
             </div>
 
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="dob"
+                id="dateOfBirth"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Date of Birth*"
-                placeholder={applicant.dateOfBirth}
+                placeholder="DD/MM/YYYY"
               />
             </div>
           </div>
@@ -86,4 +95,17 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditDetails);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateAppSummary: (updatedAppSummary) =>
+      dispatch({
+        type: actionTypes.EDITAPPLICANTSUMMARY,
+        payload: { updatedAppSummary },
+      }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditSummary));

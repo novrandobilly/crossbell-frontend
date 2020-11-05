@@ -1,25 +1,39 @@
 import React from "react";
-import { useForm } from "../../../../shared/utils/useForm";
+import { useForm } from "../../../../../shared/utils/useForm";
+import { useParams, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import * as actionTypes from "../../../../../store/actions/actions";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
-} from "../../../../shared/utils/validator";
-import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
+} from "../../../../../shared/utils/validator";
 
-import Input from "../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../shared/UI_Element/SaveButton";
+import Input from "../../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
 import classes from "./EditIntro.module.css";
 
 const EditIntro = (props) => {
   const { applicantid } = useParams();
 
-  const applicant = props.applicant.find((app) => app.id === applicantid);
+  const applicant = props.applicant.find(
+    (app) => app.applicantId === applicantid
+  );
 
   const [formState, onInputHandler] = useForm(
     {
-      name: {
+      firstName: {
+        value: applicant.firstName,
+        isValid: true,
+      },
+
+      lastName: {
+        value: applicant.lastName,
+        isValid: true,
+      },
+
+      headline: {
         value: "",
         isValid: false,
       },
@@ -40,8 +54,8 @@ const EditIntro = (props) => {
         isValid: false,
       },
       email: {
-        value: "",
-        isValid: false,
+        value: applicant.email,
+        isValid: true,
       },
       phone: {
         value: "",
@@ -57,7 +71,22 @@ const EditIntro = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+
+    const updatedAppIntro = {
+      applicantId: applicant.applicantId,
+      firstName: formState.inputs.firstName.value,
+      lastName: formState.inputs.lastName.value,
+      headline: formState.inputs.headline.value,
+      email: formState.inputs.email.value,
+      address: formState.inputs.address.value,
+      city: formState.inputs.city.value,
+      state: formState.inputs.state.value,
+      zip: formState.inputs.zip.value,
+      phone: formState.inputs.phone.value,
+      websites: formState.inputs.websites.value,
+    };
+    props.onUpdateAppIntro(updatedAppIntro);
+    props.history.push(`/ap/${applicant.applicantId}`);
   };
 
   return (
@@ -82,12 +111,34 @@ const EditIntro = (props) => {
 
               <Input
                 inputType="input"
-                id="name"
+                id="firstName"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Full Name*"
-                placeholder={applicant.name}
+                label="First Name*"
+                initValue={applicant.firstName}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType="input"
+                id="lastName"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Last Name*"
+                initValue={applicant.lastName}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType="input"
+                id="headline"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Headline*"
+                placeholder="Ex: Full stack developer"
               />
 
               <Input
@@ -97,7 +148,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Address*"
-                placeholder={applicant.address}
+                placeholder="Ex: Cilandak Street no.188, South Jakarta"
               />
 
               <Input
@@ -107,7 +158,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="City*"
-                placeholder={applicant.city}
+                placeholder="Ex: South Jakarta"
               />
 
               <Input
@@ -117,7 +168,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="State*"
-                placeholder={applicant.state}
+                placeholder="Ex: West Java"
               />
 
               <Input
@@ -127,7 +178,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Zip*"
-                placeholder={applicant.zip}
+                placeholder="Ex: 16869"
               />
 
               <Input
@@ -137,7 +188,9 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
                 label="Email*"
-                placeholder={applicant.email}
+                placeholder="Ex: Dwi_haryo@hotmail.com"
+                initValue={applicant.email}
+                initIsValid={true}
               />
 
               <Input
@@ -147,7 +200,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Phone*"
-                placeholder={applicant.phone}
+                placeholder="Ex: 08179192342"
               />
 
               <Input
@@ -157,7 +210,7 @@ const EditIntro = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Websites"
-                placeholder={applicant.websites}
+                placeholder="Ex: https://www.facebook.com/dwikun"
               />
             </div>
           </div>
@@ -178,4 +231,18 @@ const mapStateToProps = (state) => {
     applicant: state.applicant.applicants,
   };
 };
-export default connect(mapStateToProps)(EditIntro);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateAppIntro: (updatedAppIntro) =>
+      dispatch({
+        type: actionTypes.EDITAPPLICANTINTRO,
+        payload: { updatedAppIntro },
+      }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditIntro));

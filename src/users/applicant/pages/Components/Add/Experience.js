@@ -1,32 +1,36 @@
 import React from "react";
-import { useForm } from "../../../../shared/utils/useForm";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../../shared/utils/useForm";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../../../shared/utils/validator";
+} from "../../../../../shared/utils/validator";
 
-import Input from "../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../shared/UI_Element/SaveButton";
+import Input from "../../../../../shared/UI_Element/Input";
+import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
 import classes from "./Experience.module.css";
 
-const EditDetails = (props) => {
+const Experience = (props) => {
+  const { applicantid } = useParams();
+
+  const applicant = props.applicant.find(
+    (app) => app.applicantId === applicantid
+  );
   const [formState, onInputHandler] = useForm(
     {
-      school: {
+      prevTitle: {
         value: "",
         isValid: false,
       },
-      degree: {
+      prevCompany: {
         value: "",
         isValid: false,
       },
-      major: {
-        value: "",
-        isValid: false,
-      },
-      location: {
+      prevLocation: {
         value: "",
         isValid: false,
       },
@@ -48,61 +52,58 @@ const EditDetails = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+    const updatedExperience = {
+      applicantId: applicant.applicantId,
+      prevTitle: formState.inputs.prevTitle.value,
+      prevCompany: formState.inputs.prevCompany.value,
+      prevLocation: formState.inputs.prevLocation.value,
+      startDate: formState.inputs.startDate.value,
+      endDate: formState.inputs.endDate.value,
+      description: formState.inputs.description.value,
+    };
+    props.onUpdateAppExperience(updatedExperience);
+    props.history.push(`/ap/${applicant.applicantId}`);
   };
 
   return (
     <>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Education</p>
+          <p className={classes.FormTitle}>Experience</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="school"
+                id="prevTitle"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="School *"
-                placeholder="Ex: University of Indonesia"
+                label="Previous Title *"
+                placeholder="Ex: Marketing Chief"
               />
             </div>
 
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="degree"
+                id="prevCompany"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Degree *"
-                placeholder="Ex: Bachelor of Engineering"
+                label="Company Name*"
               />
             </div>
 
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="major"
+                id="prevLocation"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Field of Study *"
-                placeholder="Ex: International Relations"
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="input"
-                id="location"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Location *"
-                placeholder="Ex: Depok, West Java"
+                label="Location*"
+                placeholder="Ex: Bandung, West Java"
               />
             </div>
 
@@ -114,7 +115,7 @@ const EditDetails = (props) => {
                   inputClass="DateInput"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label="Start Date *"
+                  label="Start Date*"
                   placeholder="DD/MM/YYYY"
                 />
               </div>
@@ -126,7 +127,7 @@ const EditDetails = (props) => {
                   inputClass="DateInput"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label="End Date *"
+                  label="End Date*"
                   placeholder="DD/MM/YYYY"
                 />
               </div>
@@ -139,7 +140,7 @@ const EditDetails = (props) => {
                 inputClass="EditProfileTextArea"
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label="Description *"
+                label="Description*"
               />
             </div>
           </div>
@@ -155,4 +156,23 @@ const EditDetails = (props) => {
   );
 };
 
-export default EditDetails;
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant.applicants,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateAppExperience: (updatedExperience) =>
+      dispatch({
+        type: actionTypes.CREATEAPPLICANTEXPERIENCE,
+        payload: { updatedExperience },
+      }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Experience));

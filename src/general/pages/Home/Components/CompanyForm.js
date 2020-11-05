@@ -1,101 +1,113 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { useForm } from '../../../../shared/utils/useForm';
-import * as actionTypes from '../../../../store/actions/actions';
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { useForm } from "../../../../shared/utils/useForm";
+import * as actionTypes from "../../../../store/actions/actions";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+} from "../../../../shared/utils/validator";
 
-import Input from '../../../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import Input from "../../../../shared/UI_Element/Input";
 
-import classes from './CompanyForm.module.css';
+import classes from "./CompanyForm.module.css";
 
 const CompanyForm = (props, { sign, role }) => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			companyName: {
-				value: '',
-				isValid: false
-			},
-			email: {
-				value: '',
-				isValid: false
-			},
-			password: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+  const [formState, onInputHandler] = useForm(
+    {
+      companyName: {
+        value: "",
+        isValid: false,
+      },
+      email: {
+        value: "",
+        isValid: false,
+      },
+      password: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
 
-	const onSubmitHandler = event => {
-		event.preventDefault();
-		// console.log(formState);
-		const newCompany = {
-			companyName: formState.inputs.companyName.value,
-			email: formState.inputs.email.value,
-			password: formState.inputs.password.value
-		};
-		props.createCompany(newCompany);
-		props.history.push('/jobs-dashboard');
-	};
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			<div className={classes.ContainerFlex}>
-				<p className={classes.FormTitle}>Company Sign Up</p>
+    const newCompany = {
+      companyName: formState.inputs.companyName.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    };
+    props.createCompany(newCompany);
+    props.history.push("/jobs-dashboard");
+  };
 
-				<button className={classes.ApplicantRegister} onClick={role} type='button'>
-					Applicant sign up
-				</button>
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Company Sign Up</p>
 
-				<Input
-					inputType='input'
-					id='companyName'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Company Name*'
-				/>
+        <button
+          className={classes.ApplicantRegister}
+          onClick={props.role}
+          type="button"
+        >
+          Applicant sign up
+        </button>
 
-				<Input
-					inputType='input'
-					id='email'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_EMAIL() ]}
-					onInputHandler={onInputHandler}
-					label='Company Email*'
-				/>
+        <Input
+          inputType="input"
+          id="companyName"
+          inputClass="Register"
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label="Company Name*"
+        />
 
-				<Input
-					inputType='input'
-					id='password'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
-					onInputHandler={onInputHandler}
-					label='Password*'
-					type='password'
-				/>
+        <Input
+          inputType="input"
+          id="email"
+          inputClass="Register"
+          validatorMethod={[VALIDATOR_EMAIL()]}
+          onInputHandler={onInputHandler}
+          label="Company Email*"
+        />
 
-				<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
-					<span>Submit</span>
-				</button>
+        <Input
+          inputType="input"
+          id="password"
+          inputClass="Register"
+          validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+          onInputHandler={onInputHandler}
+          label="Password*"
+          type="password"
+        />
 
-				<span className={classes.sign}>
-					Already have an account?
-					<button className={classes.ChangeSign} onClick={sign} type='button'>
-						Sign In Here
-					</button>
-				</span>
-			</div>
-		</form>
-	);
+        <button
+          disabled={!formState.formIsValid}
+          className={classes.SubmitButton}
+        >
+          <span>Submit</span>
+        </button>
+
+        <span className={classes.sign}>
+          Already have an account?
+          <button className={classes.ChangeSign} onClick={sign} type="button">
+            Sign In Here
+          </button>
+        </span>
+      </div>
+    </form>
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createCompany: (newCompany) =>
+      dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
+  };
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(CompanyForm));

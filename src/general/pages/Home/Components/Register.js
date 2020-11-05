@@ -1,16 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { useForm } from "../../../../shared/utils/useForm";
-
-import Input from "../../../../shared/UI_Element/Input";
+import * as actionTypes from "../../../../store/actions/actions";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
 } from "../../../../shared/utils/validator";
 
+import Input from "../../../../shared/UI_Element/Input";
+
 import classes from "./Register.module.css";
 
-const Register = ({ sign, role }) => {
+const Register = (props, { sign, role }) => {
   const [formState, onInputHandler] = useForm(
     {
       firstName: {
@@ -35,7 +38,15 @@ const Register = ({ sign, role }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState);
+
+    const newApplicant = {
+      firstName: formState.inputs.firstName.value,
+      lastName: formState.inputs.lastName.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    };
+    props.createApplicant(newApplicant);
+    props.history.push("/jobs-dashboard");
   };
 
   return (
@@ -46,7 +57,7 @@ const Register = ({ sign, role }) => {
 
           <button
             className={classes.CompanyRegister}
-            onClick={role}
+            onClick={props.role}
             type="button"
           >
             Company sign up
@@ -76,7 +87,7 @@ const Register = ({ sign, role }) => {
             inputClass="Register"
             validatorMethod={[VALIDATOR_EMAIL()]}
             onInputHandler={onInputHandler}
-            label="Company Email*"
+            label="Email*"
           />
 
           <Input
@@ -107,4 +118,12 @@ const Register = ({ sign, role }) => {
     </>
   );
 };
-export default Register;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createApplicant: (newApplicant) =>
+      dispatch({ type: actionTypes.CREATEAPPLICANT, payload: newApplicant }),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(Register));

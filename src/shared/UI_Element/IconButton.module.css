@@ -1,124 +1,109 @@
 /* =============== Edit/ Defaut Button ===============  */
 
 .IconButton {
-	height: 2.5rem;
-	width: 2.5rem;
-	border-radius: 5rem;
-	border: solid 0.05rem rgba(0, 0, 0, 0.4);
-	margin-left: 1rem;
-	transition: all 0.5s;
-	cursor: pointer;
-	outline: none;
-	font-family: sans-serif;
-	font-size: 0.8rem;
-	font-weight: bold;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 5rem;
+  border: solid 0.05rem rgba(0, 0, 0, 0.4);
+  margin-left: 1rem;
+  transition: all 0.5s;
+  cursor: pointer;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 .IconButton:hover {
-	width: 5rem;
-	position: relative;
-	padding-right: 4rem;
+  width: 5rem;
+  position: relative;
+  padding-right: 4rem;
 }
 
 .IconButton::after {
-	content: 'Edit';
-	position: absolute;
-	white-space: nowrap;
-	top: 0.7rem;
-	right: 1rem;
-	opacity: 0;
-	transition: all 0.5s;
+  content: "Edit";
+  position: absolute;
+  white-space: nowrap;
+  top: 0.7rem;
+  right: 1rem;
+  opacity: 0;
+  transition: all 0.5s;
 }
 .IconButton:hover::after {
-	opacity: 1;
-	transform: translateX(10%);
+  opacity: 1;
+  transform: translateX(10%);
 }
 
-/* .IconButton:hover {
-	width: 5.5rem;
+/* =============== Add Job Button ===============  */
+
+.IconAddJobButton {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 5rem;
+  border: solid 0.05rem rgba(0, 0, 0, 0.4);
+  margin-left: 1rem;
+  cursor: pointer;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.5s;
 }
 
-.EditButton {
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
+.IconAddJobButton:hover {
+  width: 6.5rem;
+  position: relative;
+  padding-right: 4rem;
 }
 
-.EditButton:after {
-	content: "Edit";
-	position: absolute;
-	opacity: 0;
-	top: 0.4rem;
-	right: 0;
-	transition: 0.3s;
+.IconAddJobButton::after {
+  content: "Add Job";
+  position: absolute;
+  white-space: nowrap;
+  top: 0.7rem;
+  right: 1rem;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.IconAddJobButton:hover::after {
+  opacity: 1;
+  transform: translateX(10%);
 }
 
-.EditButton:hover {
-	padding-right: 2rem;
-}
-
-.EditButton:hover:after {
-	opacity: 1;
-	right: 0;
-} */
-
-/* =============== Add Button ===============  */
+/* =============== Add Segment Button ===============  */
 
 .IconAddButton {
-	height: 2.5rem;
-	width: 2.5rem;
-	border-radius: 5rem;
-	border: solid 0.05rem rgba(0, 0, 0, 0.4);
-	margin-left: 1rem;
-	cursor: pointer;
-	outline: none;
-	font-family: sans-serif;
-	font-size: 0.8rem;
-	font-weight: bold;
-	position: relative;
-	transition: all 0.5s;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 5rem;
+  border: solid 0.05rem rgba(0, 0, 0, 0.4);
+  margin-left: 1rem;
+  cursor: pointer;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.5s;
 }
 
 .IconAddButton:hover {
-	width: 6.5rem;
-	position: relative;
-	padding-right: 4rem;
+  width: 5rem;
+  position: relative;
+  padding-right: 4rem;
 }
 
 .IconAddButton::after {
-	content: 'Add Job';
-	position: absolute;
-	white-space: nowrap;
-	top: 0.7rem;
-	right: 1rem;
-	opacity: 0;
-	transition: all 0.5s;
+  content: "Add";
+  position: absolute;
+  white-space: nowrap;
+  top: 0.7rem;
+  right: 1rem;
+  opacity: 0;
+  transition: all 0.5s;
 }
 .IconAddButton:hover::after {
-	opacity: 1;
-	transform: translateX(10%);
+  opacity: 1;
+  transform: translateX(10%);
 }
-
-/* .AddButton {
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
-}
-
-.AddButton:after {
-	content: "Add Job";
-	position: absolute;
-	opacity: 0;
-	top: 0.4rem;
-	right: 0.5rem;
-	transition: 0.3s;
-} */
-
-/* .AddButton:hover {
-	padding-right: 3.5rem;
-} */
-
-/* .AddButton:hover:after {
-	opacity: 1;
-	right: 0;
-} */

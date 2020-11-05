@@ -38,13 +38,18 @@
   background-color: rgb(215, 226, 255);
 }
 
-@media screen and (min-width: 768px) {
+.SkipButton {
+  background-color: rgba(58, 81, 153, 1);
+  font-size: 0.8rem;
+  border-radius: 5rem;
+  outline: none;
+}
 
+@media screen and (min-width: 768px) {
   .Button:hover:enabled {
     transform: scale(1.1);
   }
   .Button:active {
     transform: translateY(2px);
   }
-
 }
