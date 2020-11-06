@@ -24,9 +24,12 @@ const CompanyCard = (props) => {
             <p className={classes.CompanyName}>{props.companyName}</p>
 
             <div className={classes.ContainerSizeIn}>
-              <p className={classes.CompanySize}>{props.size}</p>
+              <p className={classes.CompanySize}>{props.industry}</p>
               <p>-</p>
-              <p className={classes.CompanyIndustry}>{props.industry}</p>
+
+              <p className={classes.CompanyIndustry}>
+                {props.size} people working here
+              </p>
             </div>
 
             <p className={classes.CompanyHeadquarter}>{props.address}</p>
@@ -38,9 +41,11 @@ const CompanyCard = (props) => {
                 display: "flex",
                 justifyContent: "space-around",
                 alignItems: "center",
-                width: "100%",
+                width: "80%",
                 textDecoration: "none",
-                color: "inherit",
+                fontSize: "0.8rem",
+                fontWeight: "bold",
+                color: "rgba(58, 81, 153, 1)",
               }}
             >
               <img
@@ -51,16 +56,15 @@ const CompanyCard = (props) => {
               {props.website}
             </a>
           </div>
+        </div>
+        <div className={classes.ContainerRight}>
+          <Link to={"/jobs/new"}>
+            <IconButton iconType="NewJob" />
+          </Link>
 
-          <div className={classes.ContainerRight}>
-            <Link to={"/jobs/new"}>
-              <IconButton iconType="NewJob" />
-            </Link>
-
-            <Link to={`/co/${props.companyId}/compro/intro`}>
-              <IconButton />
-            </Link>
-          </div>
+          <Link to={`/co/${props.companyId}/compro/intro`}>
+            <IconButton />
+          </Link>
         </div>
       </div>
 

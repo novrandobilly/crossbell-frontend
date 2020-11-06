@@ -4,7 +4,9 @@
   font-family: sans-serif;
   height: 15rem;
   margin-left: 2rem;
-  margin-right: 2rem;
+  margin-right: 5.2rem;
+  margin-top: 7rem;
+  justify-content: space-between;
 }
 
 .ContainerLeft {
@@ -22,7 +24,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
+  margin-top: -2rem;
 }
 
 .Logo {
@@ -47,6 +50,7 @@
 
 .CompanyWebsites {
   cursor: pointer;
+  margin-left: -1.5rem;
 }
 
 .LinkIcon {
@@ -95,10 +99,6 @@
 }
 
 .ContainerRight {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 40rem;
   margin-left: 2rem;
   margin-top: 2rem;
 }

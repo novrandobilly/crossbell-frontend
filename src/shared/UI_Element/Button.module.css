@@ -40,8 +40,8 @@
 
 .SkipButton {
   background-color: rgba(58, 81, 153, 1);
-  font-size: 0.8rem;
-  border-radius: 5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
   outline: none;
 }
 

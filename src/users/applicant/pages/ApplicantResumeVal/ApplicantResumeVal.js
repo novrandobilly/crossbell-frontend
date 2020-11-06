@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 
 import Summary from "../Components/Add/EditSummary.js";
 import Intro from "../Components/Add/EditIntro.js";
@@ -11,8 +12,10 @@ import Button from "../../../../shared/UI_Element/Button";
 import classes from "./ApplicantResumeVal.module.css";
 
 const ApplicantResumeVal = () => {
+  const { applicantid } = useParams();
+
   return (
-    <div>
+    <div className={classes.Container}>
       <h1>This is Applicant Resume Form page </h1>
 
       <div className={classes.Container}>
@@ -22,10 +25,11 @@ const ApplicantResumeVal = () => {
         <Experience />
         <Certification />
         <Skill />
-
-        <div className={classes.Flexed}>
+      </div>
+      <div className={classes.Flexed}>
+        <Link to={`/ap/${applicantid}`}>
           <Button btnType="SkipButton" children="Skip this step" />
-        </div>
+        </Link>
       </div>
     </div>
   );

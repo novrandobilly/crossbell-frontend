@@ -1,7 +1,6 @@
 import * as actionTypes from "../actions/actions";
 
 const initialState = {
-
   applicants: [
     {
       applicantId: "AAA",
@@ -450,7 +449,6 @@ const applicantReducers = (state = initialState, action) => {
     default:
       return state;
   }
-
 };
 
 export default applicantReducers;

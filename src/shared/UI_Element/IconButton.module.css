@@ -6,12 +6,13 @@
   border-radius: 5rem;
   border: solid 0.05rem rgba(0, 0, 0, 0.4);
   margin-left: 1rem;
-  transition: all 0.5s;
   cursor: pointer;
   outline: none;
   font-family: sans-serif;
   font-size: 0.8rem;
   font-weight: bold;
+  position: relative;
+  transition: all 0.5s;
 }
 
 .IconButton:hover {
@@ -104,6 +105,43 @@
   transition: all 0.5s;
 }
 .IconAddButton:hover::after {
+  opacity: 1;
+  transform: translateX(10%);
+}
+
+/* =============== Delete Button ===============  */
+
+.IconDeleteButton {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 5rem;
+  border: solid 0.05rem rgba(0, 0, 0, 0.4);
+  margin-left: 1rem;
+  cursor: pointer;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.5s;
+}
+
+.IconDeleteButton:hover {
+  width: 5.5rem;
+  position: relative;
+  padding-right: 4rem;
+}
+
+.IconDeleteButton::after {
+  content: "Delete";
+  position: absolute;
+  white-space: nowrap;
+  top: 0.7rem;
+  right: 1rem;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.IconDeleteButton:hover::after {
   opacity: 1;
   transform: translateX(10%);
 }

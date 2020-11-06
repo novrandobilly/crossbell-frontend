@@ -44,3 +44,20 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.CheckboxDiv {
+  display: flex;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.Checkbox {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.CheckboxText {
+  align-self: center;
+  margin-left: 0.5rem;
+  color: black;
+}
