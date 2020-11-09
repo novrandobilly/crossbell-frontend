@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useParams, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../../../../store/actions/actions';
 import { useForm } from '../../../../../shared/utils/useForm';
 
 import { VALIDATOR_REQUIRE } from '../../../../../shared/utils/validator';
@@ -9,25 +12,34 @@ import SaveButton from '../../../../../shared/UI_Element/SaveButton';
 import classes from './Skill.module.css';
 
 const EditDetails = props => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			skill: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+	const [ skills, setSkills ] = useState([ 'skill' ]);
+	// let initInput = {};
+	// skills.forEach((skill, index) => {
+	// 	initInput[`${skill}_${index}`] = {
+	// 		value: '',
+	// 		isValid: false
+	// 	};
+	// });
+	const [ formState, onInputHandler ] = useForm({}, false);
 
-	const [ skills, setSkills ] = useState([]);
+	const { applicantid } = useParams();
 
 	const onSubmitHandler = event => {
 		event.preventDefault();
-		console.log(formState);
+		let skillsData = [];
+		for (const key in formState.inputs) {
+			skillsData = skillsData.concat(formState.inputs[key].value);
+		}
+		const updatedData = {
+			applicantId: applicantid,
+			skillsData
+		};
+		props.updateSkills(updatedData);
+		props.history.push(`/ap/${applicantid}`);
 	};
 
 	const addSkill = e => {
-		setSkills(skills => [ ...skills, 'testing' ]);
+		setSkills(skills => [ ...skills, 'skill' ]);
 	};
 
 	return (
@@ -36,7 +48,7 @@ const EditDetails = props => {
 				<p className={classes.FormTitle}>Skills</p>
 
 				<div className={classes.FormRow}>
-					<div className={classes.EditLabel}>
+					{/* <div className={classes.EditLabel}>
 						<Input
 							inputType='input'
 							id='skill'
@@ -45,14 +57,14 @@ const EditDetails = props => {
 							onInputHandler={onInputHandler}
 							placeholder='Ex: Communication'
 						/>
-					</div>
+					</div> */}
 
 					{skills.map((skill, i) => {
 						return (
 							<div className={classes.EditLabel} key={i}>
 								<Input
 									inputType='input'
-									id='skill'
+									id={`skill_${i}`}
 									inputClass='AddJobInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
@@ -63,7 +75,7 @@ const EditDetails = props => {
 					})}
 				</div>
 
-				<button onClick={e => addSkill(e)} className={classes.AddButton}>
+				<button type='button' onClick={e => addSkill(e)} className={classes.AddButton}>
 					Add Skill
 				</button>
 
@@ -73,4 +85,10 @@ const EditDetails = props => {
 	);
 };
 
-export default EditDetails;
+const mapDispatchToProps = dispatch => {
+	return {
+		updateSkills: payload => dispatch({ type: actionTypes.EDITAPPLICANTSKILL, payload })
+	};
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(EditDetails));
