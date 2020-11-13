@@ -16,8 +16,6 @@ const AuthForm = () => {
 		setRole(!role);
 	};
 
-	console.log(role);
-
 	if (role) {
 		return <div>{!sign ? <CompanyForm sign={toggleSign} role={toggleRole} /> : <Login sign={toggleSign} />}</div>;
 	} else {

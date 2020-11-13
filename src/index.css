@@ -42,3 +42,25 @@ main {
 	opacity: 0;
 	transition: all 400ms;
 }
+
+.Modal-enter {
+	transform: translateY(-10rem);
+	opacity: 0;
+}
+
+.Modal-enter-active {
+	transform: translateY(0);
+	opacity: 1;
+	transition: all 200ms;
+}
+
+.Modal-exit {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.Modal-exit-active {
+	transform: translateY(-10rem);
+	opacity: 0;
+	transition: all 200ms;
+}
