@@ -13,13 +13,7 @@ import classes from './Skill.module.css';
 
 const EditDetails = props => {
 	const [ skills, setSkills ] = useState([ 'skill' ]);
-	// let initInput = {};
-	// skills.forEach((skill, index) => {
-	// 	initInput[`${skill}_${index}`] = {
-	// 		value: '',
-	// 		isValid: false
-	// 	};
-	// });
+
 	const [ formState, onInputHandler ] = useForm({}, false);
 
 	const { applicantid } = useParams();
@@ -48,17 +42,6 @@ const EditDetails = props => {
 				<p className={classes.FormTitle}>Skills</p>
 
 				<div className={classes.FormRow}>
-					{/* <div className={classes.EditLabel}>
-						<Input
-							inputType='input'
-							id='skill'
-							inputClass='AddJobInput'
-							validatorMethod={[ VALIDATOR_REQUIRE() ]}
-							onInputHandler={onInputHandler}
-							placeholder='Ex: Communication'
-						/>
-					</div> */}
-
 					{skills.map((skill, i) => {
 						return (
 							<div className={classes.EditLabel} key={i}>

@@ -5,6 +5,7 @@ import { useForm } from '../../../../shared/utils/useForm';
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
 
+import Modal from '../../../../shared/UI_Element/Modal';
 import Input from '../../../../shared/UI_Element/Input';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
@@ -42,10 +43,12 @@ const CompanyForm = props => {
 
 		try {
 			const res = await props.createCompany(newCompany);
+			if (!res.newCompany) {
+				throw new Error("It's error dude!");
+			}
 			props.login();
 			props.authCompany();
-			console.log(res);
-			props.history.push(`/co/${res.id}/compro`);
+			props.history.push(`/co/${res.newCompany.id}/compro`);
 		} catch (err) {
 			console.log(err);
 		}
@@ -106,8 +109,15 @@ const CompanyForm = props => {
 		formContent = <SpinnerCircle />;
 	}
 
+	const onCancelHandler = () => {
+		props.resetCompany();
+	};
+
 	return (
 		<form onSubmit={onSubmitHandler} className={classes.Container}>
+			<Modal show={props.error} onCancel={onCancelHandler}>
+				Error bro
+			</Modal>
 			{formContent}
 		</form>
 	);
@@ -115,13 +125,15 @@ const CompanyForm = props => {
 
 const mapStateToProps = state => {
 	return {
-		isLoading: state.company.isLoading
+		isLoading: state.company.isLoading,
+		error: state.company.error
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
+		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
 		// createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
 		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
 		authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY })

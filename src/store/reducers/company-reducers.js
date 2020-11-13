@@ -57,6 +57,13 @@ const initialState = {
 
 const companyReducers = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.COMPANYRESET: {
+			return {
+				...state,
+				error: false,
+				isLoading: false
+			};
+		}
 		case actionTypes.CREATECOMPANYSTART: {
 			return {
 				...state,
