@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
@@ -48,19 +48,39 @@ const Certification = (props) => {
     false
   );
 
+  const [expiry, setExpiry] = useState(false);
+
+  const expiryHandler = (event) => {
+    setExpiry(!expiry);
+  };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const updatedCertification = {
-      applicantId: applicant.applicantId,
-      certificationindex: certificationindex,
-      title: formState.inputs.title.value,
-      organization: formState.inputs.organization.value,
-      startDate: formState.inputs.startDate.value,
-      endDate: formState.inputs.endDate.value,
-      description: formState.inputs.description.value,
-    };
-    props.onUpdateAppCertification(updatedCertification);
-    props.history.push(`/ap/${applicant.applicantId}`);
+    if (expiry) {
+      const updatedCertification = {
+        applicantId: applicant.applicantId,
+        certificationindex: certificationindex,
+        title: formState.inputs.title.value,
+        organization: formState.inputs.organization.value,
+        startDate: formState.inputs.startDate.value,
+        endDate: formState.inputs.endDate.value,
+        description: formState.inputs.description.value,
+      };
+      props.onUpdateAppCertification(updatedCertification);
+      props.history.push(`/ap/${applicant.applicantId}`);
+    } else {
+      const updatedCertification = {
+        applicantId: applicant.applicantId,
+        certificationindex: certificationindex,
+        title: formState.inputs.title.value,
+        organization: formState.inputs.organization.value,
+        startDate: formState.inputs.startDate.value,
+        endDate: "12/12/4000",
+        description: formState.inputs.description.value,
+      };
+      props.onUpdateAppCertification(updatedCertification);
+      props.history.push(`/ap/${applicant.applicantId}`);
+    }
   };
 
   return (
@@ -98,7 +118,14 @@ const Certification = (props) => {
               />
             </div>
 
-            {/* Tambahin logic dan button untuk sertifikasi seumur hidup */}
+            <div className={classes.CheckboxDiv}>
+              <input
+                type="checkbox"
+                className={classes.Checkbox}
+                onChange={expiryHandler}
+              />
+              <label className={classes.CheckboxText}>No expiry date</label>
+            </div>
 
             <div className={classes.Period}>
               <div className={classes.EditLabel}>
@@ -116,20 +143,24 @@ const Certification = (props) => {
                 />
               </div>
 
-              <div className={classes.EditLabel}>
-                <Input
-                  inputType="input"
-                  id="endDate"
-                  inputClass="DateInput"
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label="Expiration Date*"
-                  initValue={
-                    applicant.certification[certificationindex].endDate
-                  }
-                  initIsValid={true}
-                />
-              </div>
+              {!expiry ? (
+                <div className={classes.EditLabel}>
+                  <Input
+                    inputType="input"
+                    id="endDate"
+                    inputClass="DateInput"
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label="Expiration Date*"
+                    initValue={
+                      applicant.certification[certificationindex].endDate
+                    }
+                    initIsValid={true}
+                  />
+                </div>
+              ) : (
+                <div />
+              )}
             </div>
 
             <div className={classes.EditLabel}>

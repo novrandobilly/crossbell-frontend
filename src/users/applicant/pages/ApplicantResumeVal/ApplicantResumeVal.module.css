@@ -1,0 +1,9 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+.Flexed {
+  display: flex;
+  align-self: flex-end;
+  margin-right: 22rem;
+}

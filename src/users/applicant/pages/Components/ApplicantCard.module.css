@@ -4,8 +4,9 @@
   font-family: sans-serif;
   height: 15rem;
   margin-left: 2rem;
-  margin-right: 2rem;
+  margin-right: 5.2rem;
   margin-top: 6rem;
+  justify-content: space-between;
 }
 
 .ContainerLeft {
@@ -109,11 +110,6 @@
 }
 
 .ContainerRight {
-  display: flex;
-  flex-direction: row;
-
-  justify-content: flex-end;
-  width: 40rem;
   margin-left: 2rem;
   margin-top: 2rem;
 }
@@ -155,10 +151,4 @@
 
 .AddJob:hover {
   width: 5rem;
-}
-
-.Header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }

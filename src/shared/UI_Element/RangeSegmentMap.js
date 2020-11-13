@@ -23,9 +23,13 @@ const RangeSegmentMap = (props) => {
           <p className={classes.Description}>{props.description}</p>
         </div>
 
-        <Link to={props.routeEdit}>
-          <IconButton />
-        </Link>
+        <div>
+          <Link to={props.routeEdit}>
+            <IconButton />
+          </Link>
+
+          <IconButton iconType="Delete" />
+        </div>
       </div>
     </>
   );

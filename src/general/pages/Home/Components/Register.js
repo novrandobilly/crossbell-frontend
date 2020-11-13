@@ -1,4 +1,3 @@
-
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -41,22 +40,22 @@ const Register = (props, { sign, role }) => {
     event.preventDefault();
 
     const newApplicant = {
+      applicantId: formState.inputs.firstName.value.slice(0, 3).toUpperCase(),
       firstName: formState.inputs.firstName.value,
       lastName: formState.inputs.lastName.value,
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
     };
     props.createApplicant(newApplicant);
-    props.history.push("/jobs-dashboard");
+    props.authLogin();
+    props.history.push(`/ap/${newApplicant.applicantId}/res-val`);
   };
 
-
-	return (
-		<React.Fragment>
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Applicant Sign Up</p>
-
+  return (
+    <React.Fragment>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Applicant Sign Up</p>
 
           <button
             className={classes.CompanyRegister}
@@ -66,25 +65,23 @@ const Register = (props, { sign, role }) => {
             Company sign up
           </button>
 
+          <Input
+            inputType="input"
+            id="firstName"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="First Name*"
+          />
 
-					<Input
-						inputType='input'
-						id='firstName'
-						inputClass='Register'
-						validatorMethod={[ VALIDATOR_REQUIRE() ]}
-						onInputHandler={onInputHandler}
-						label='First Name*'
-					/>
-
-					<Input
-						inputType='input'
-						id='lastName'
-						inputClass='Register'
-						validatorMethod={[ VALIDATOR_REQUIRE() ]}
-						onInputHandler={onInputHandler}
-						label='Last Name*'
-					/>
-
+          <Input
+            inputType="input"
+            id="lastName"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="Last Name*"
+          />
 
           <Input
             inputType="input"
@@ -95,40 +92,45 @@ const Register = (props, { sign, role }) => {
             label="Email*"
           />
 
+          <Input
+            inputType="input"
+            id="password"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+            onInputHandler={onInputHandler}
+            label="Password*"
+            type="password"
+          />
 
-					<Input
-						inputType='input'
-						id='password'
-						inputClass='Register'
-						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
-						onInputHandler={onInputHandler}
-						label='Password*'
-						type='password'
-					/>
+          <button
+            disabled={!formState.formIsValid}
+            className={classes.SubmitButton}
+          >
+            <span>Submit</span>
+          </button>
 
-					<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
-						<span>Submit</span>
-					</button>
-
-					<span className={classes.Sign}>
-						Already have an account?
-						<button className={classes.ChangeSign} type='button' onClick={props.sign}>
-							Sign In Here
-						</button>
-					</span>
-				</div>
-			</form>
-		</React.Fragment>
-	);
+          <span className={classes.Sign}>
+            Already have an account?
+            <button
+              className={classes.ChangeSign}
+              type="button"
+              onClick={props.sign}
+            >
+              Sign In Here
+            </button>
+          </span>
+        </div>
+      </form>
+    </React.Fragment>
+  );
 };
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createApplicant: (newApplicant) =>
       dispatch({ type: actionTypes.CREATEAPPLICANT, payload: newApplicant }),
+    authLogin: () => dispatch({ type: actionTypes.AUTHLOGIN }),
   };
 };
-
 
 export default connect(null, mapDispatchToProps)(withRouter(Register));

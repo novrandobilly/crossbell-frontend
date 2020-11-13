@@ -1,11 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import RangeSegmentMap from './RangeSegmentMap';
-import IconButton from './IconButton';
+import RangeSegmentMap from "./RangeSegmentMap";
+import IconButton from "./IconButton";
 
-import classes from './RangeSegment.module.css';
-
+import classes from "./RangeSegment.module.css";
 
 const RangeSegment = (props) => {
   return (
@@ -37,6 +36,8 @@ const RangeSegment = (props) => {
                   end={content.endDate}
                   description={content.description}
                   routeEdit={`${props.routeEdit}/${i}`}
+                  index={i}
+                  state={props.state}
                 />
               </div>
             );
@@ -44,7 +45,6 @@ const RangeSegment = (props) => {
       </div>
     </>
   );
-
 };
 
 export default RangeSegment;

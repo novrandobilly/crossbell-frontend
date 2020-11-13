@@ -1,10 +1,11 @@
 .MapContainer {
   border-left: solid 0.4rem rgba(58, 81, 153, 1);
-  padding-left: 3rem;
+  padding-left: 4rem;
   padding-bottom: 2rem;
-  margin-top: -1.5rem;
+  margin-top: -0.5rem;
   display: flex;
   justify-content: space-between;
+  text-align: left;
 }
 
 .Square {
@@ -19,13 +20,12 @@
 .Title {
   font-size: 1.2rem;
   font-weight: bold;
-  text-align: left;
   margin-bottom: -0.5rem;
+  margin-top: 0rem;
 }
 
 .SubTitle {
   font-size: 1rem;
-  text-align: left;
   margin-bottom: -0.8rem;
 }
 
@@ -38,7 +38,6 @@
 
 .Period {
   font-size: 1rem;
-  text-align: left;
 }
 
 .Space {
@@ -49,6 +48,5 @@
 .Description {
   width: 50rem;
   font-size: 1rem;
-  text-align: left;
   color: rgba(0, 0, 0, 0.5);
 }
