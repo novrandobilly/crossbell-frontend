@@ -22,6 +22,7 @@ export const createCompany = companyData => {
 		dispatch(createCompanyStart());
 		try {
 			const response = await fetch(`http://localhost:5000/api/users/signup`, {
+				// const response = await fetch(`https://crossbell-corps.herokuapp.com/api/users/signup`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -34,14 +35,14 @@ export const createCompany = companyData => {
 				})
 			});
 			const responseJSON = await response.json();
-			// if (!response.ok) {
-			// 	throw new Error(responseJSON.message);
-			// }
-			// }
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
 			dispatch(createCompanySuccess(responseJSON.newCompany));
-			return responseJSON.newCompany;
+			return responseJSON;
 		} catch (err) {
-			dispatch(createCompanyFail);
+			dispatch(createCompanyFail());
+			return err;
 		}
 	};
 };
