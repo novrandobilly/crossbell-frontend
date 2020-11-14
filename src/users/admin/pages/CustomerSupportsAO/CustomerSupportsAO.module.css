@@ -1,0 +1,62 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.FeedContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.FeedCard {
+  margin: 2rem;
+  width: 25rem;
+  height: 13rem;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  overflow-x: hidden;
+  box-shadow: 0 0rem 1rem rgba(58, 81, 153, 0.8);
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  padding: 5%;
+  text-align: start;
+}
+
+.Header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.Date {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.DeleteFeed {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+  outline: none;
+}
+
+.DeleteFeed:hover {
+  transform: scale(1.5);
+}
+
+.Feeds {
+  color: rgba(0, 0, 0, 0.6);
+  text-align: justify;
+}

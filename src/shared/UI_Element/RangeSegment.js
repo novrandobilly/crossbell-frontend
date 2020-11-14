@@ -36,8 +36,8 @@ const RangeSegment = (props) => {
                   end={content.endDate}
                   description={content.description}
                   routeEdit={`${props.routeEdit}/${i}`}
+                  stateName={props.state}
                   index={i}
-                  state={props.state}
                 />
               </div>
             );

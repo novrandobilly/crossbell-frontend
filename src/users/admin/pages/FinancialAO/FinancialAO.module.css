@@ -92,3 +92,36 @@
 .DropDown:hover .DropButton {
   background-color: #d7e2ff;
 }
+
+.RevenueContainer {
+  margin-top: 2rem;
+  display: flex;
+  border: solid 0.1rem gray;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: #d7e2ff;
+  box-shadow: 0 0 0.5rem 0.01rem rgb(146, 146, 146);
+  font-weight: bold;
+}
+
+.RevenueLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: solid 0.1rem gray;
+  padding-right: 4rem;
+  margin-right: 2rem;
+}
+
+.Label {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.RevenueNumber {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 4rem;
+  margin-right: 2rem;
+}
