@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import IconButton from "../../../../shared/UI_Element/IconButton";
 import TextOnly from "../../../../shared/UI_Element/TextOnly";
@@ -47,6 +48,11 @@ const ApplicantCard = (props) => {
         </div>
 
         <div className={classes.ContainerRight}>
+          {props.admin && (
+            <Link to={`/ad/alphaomega/applicants/${props.id}`}>
+              <button> Jobs Applied </button>
+            </Link>
+          )}
           <Link to={`/ap/${props.id}/intro`}>
             <IconButton />
           </Link>
@@ -59,7 +65,6 @@ const ApplicantCard = (props) => {
         route={`/ap/${props.id}/summary`}
         text={props.details}
       />
-
       <RangeSegment
         id={props.id}
         labelName="Education"
@@ -68,7 +73,6 @@ const ApplicantCard = (props) => {
         contents={props.education}
         state="education"
       />
-
       <RangeSegment
         id={props.id}
         labelName="Experience"
@@ -77,7 +81,6 @@ const ApplicantCard = (props) => {
         contents={props.experience}
         state="experience"
       />
-
       <RangeSegment
         id={props.id}
         labelName="Certification/ Achievement"
@@ -86,7 +89,6 @@ const ApplicantCard = (props) => {
         contents={props.certification}
         state="certification"
       />
-
       <SkillsMap
         id={props.id}
         labelName="Skills"
@@ -97,4 +99,12 @@ const ApplicantCard = (props) => {
     </React.Fragment>
   );
 };
-export default ApplicantCard;
+
+const mapStateToProps = (state) => {
+  return {
+    login: state.auth.isLogin,
+    admin: state.auth.isAdmin,
+  };
+};
+
+export default connect(mapStateToProps)(ApplicantCard);
