@@ -30,7 +30,7 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "Studying about survey corps routine, goals, missions, and so on"
+            "Studying about survey corps routine, goals, missions, and so on",
         },
         {
           school: "Survey Corps Military high school",
@@ -40,19 +40,20 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "studying about paradis island history, corps, area, titans fundamental and many other thing"
-        }
+            "studying about paradis island history, corps, area, titans fundamental and many other thing",
+        },
       ],
 
       experience: [
         {
-          prevTitle: "Wall Maria Chief Officer",
+          prevTitle: "Chef",
           prevCompany: "Survey Corps",
           prevLocation: "Wall Rose",
           startDate: "08/09/2004",
           endDate: "08/092020",
-          description: "In charge of wall maria safety issue with titans attack"
-        }
+          description:
+            "In charge of wall maria safety issue with titans attack",
+        },
       ],
 
       certification: [
@@ -61,8 +62,8 @@ const initialState = {
           organization: "Institute of Rock Bandung",
           startDate: "08/09/2004",
           endDate: "08/092020",
-          description: "Keep flying around titans for 3 hour stright"
-        }
+          description: "Keep flying around titans for 3 hour stright",
+        },
       ],
       skills: [
         "Communication",
@@ -77,9 +78,9 @@ const initialState = {
         "Fishing",
         "Javascript Fundamental",
         "Javascript Fundamental",
-        "Javascript Fundamental"
+        "Javascript Fundamental",
       ],
-      jobApplied: ["IDN001", "RCN001", "SSS001"]
+      jobApplied: ["IDN001", "RCN001", "SSS001"],
     },
 
     {
@@ -109,7 +110,7 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
         },
         {
           school: "Survey Corps Military School",
@@ -119,8 +120,8 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
-        }
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
       ],
 
       experience: [
@@ -131,8 +132,8 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
-        }
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
       ],
 
       certification: [
@@ -142,12 +143,12 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
-        }
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
       ],
 
       skills: ["Communication", "Marketing", "React"],
-      jobApplied: ["IDN001", "RCN001", "SSS001"]
+      jobApplied: ["IDN001", "RCN001", "SSS001"],
     },
 
     {
@@ -171,14 +172,14 @@ const initialState = {
       education: [
         {
           educationId: 1,
-          school: "Survey Corps Military School",
+          school: "Gonz",
           degree: "Bachelor",
           major: "Biological Defense",
           location: "Paradis island",
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
         },
         {
           educationId: 2,
@@ -189,8 +190,8 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
-        }
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
       ],
 
       experience: [
@@ -201,8 +202,8 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
-        }
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
       ],
 
       certification: [
@@ -212,13 +213,13 @@ const initialState = {
           startDate: "08/09/2004",
           endDate: "08/092020",
           description:
-            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree"
-        }
+            "To regain the citizens' trust for the government's mismanagement of the spreading crime spree",
+        },
       ],
       skills: ["Communication", "Marketing", "React"],
-      jobApplied: ["IDN001", "RCN001", "SSS001"]
-    }
-  ]
+      jobApplied: ["IDN001", "RCN001", "SSS001"],
+    },
+  ],
 };
 
 const applicantReducers = (state = initialState, action) => {
@@ -241,18 +242,18 @@ const applicantReducers = (state = initialState, action) => {
         education: [],
         experience: [],
         certification: [],
-        skills: []
+        skills: [],
       };
       return {
         ...state,
-        applicants: state.applicants.concat(newApplicant)
+        applicants: state.applicants.concat(newApplicant),
       };
     }
 
     case actionTypes.EDITAPPLICANTINTRO: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.updatedAppIntro.applicantId
+        (app) => app.applicantId === action.payload.updatedAppIntro.applicantId
       );
 
       const EditAppIntro = {
@@ -266,21 +267,21 @@ const applicantReducers = (state = initialState, action) => {
         state: action.payload.updatedAppIntro.state,
         zip: action.payload.updatedAppIntro.zip,
         phone: action.payload.updatedAppIntro.phone,
-        websites: action.payload.updatedAppIntro.websites
+        websites: action.payload.updatedAppIntro.websites,
       };
 
       applicantArray[applicantIndex] = EditAppIntro;
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.CREATEAPPLICANTEDUCATION: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.updatedEducation.applicantId
+        (app) => app.applicantId === action.payload.updatedEducation.applicantId
       );
 
       const newEducation = {
@@ -290,7 +291,7 @@ const applicantReducers = (state = initialState, action) => {
         location: action.payload.updatedEducation.location,
         startDate: action.payload.updatedEducation.startDate,
         endDate: action.payload.updatedEducation.endDate,
-        description: action.payload.updatedEducation.description
+        description: action.payload.updatedEducation.description,
       };
 
       applicantArray[applicantIndex].education = applicantArray[
@@ -299,14 +300,15 @@ const applicantReducers = (state = initialState, action) => {
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.CREATEAPPLICANTEXPERIENCE: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.updatedExperience.applicantId
+        (app) =>
+          app.applicantId === action.payload.updatedExperience.applicantId
       );
 
       const newExperience = {
@@ -315,7 +317,7 @@ const applicantReducers = (state = initialState, action) => {
         prevLocation: action.payload.updatedExperience.prevLocation,
         startDate: action.payload.updatedExperience.startDate,
         endDate: action.payload.updatedExperience.endDate,
-        description: action.payload.updatedExperience.description
+        description: action.payload.updatedExperience.description,
       };
 
       applicantArray[applicantIndex].experience = applicantArray[
@@ -324,14 +326,14 @@ const applicantReducers = (state = initialState, action) => {
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.CREATEAPPLICANTCERTIFICATION: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app =>
+        (app) =>
           app.applicantId === action.payload.updatedCertification.applicantId
       );
 
@@ -340,7 +342,7 @@ const applicantReducers = (state = initialState, action) => {
         organization: action.payload.updatedCertification.organization,
         startDate: action.payload.updatedCertification.startDate,
         endDate: action.payload.updatedCertification.endDate,
-        description: action.payload.updatedCertification.description
+        description: action.payload.updatedCertification.description,
       };
 
       applicantArray[applicantIndex].certification = applicantArray[
@@ -349,34 +351,35 @@ const applicantReducers = (state = initialState, action) => {
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.EDITAPPLICANTSUMMARY: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.updatedAppSummary.applicantId
+        (app) =>
+          app.applicantId === action.payload.updatedAppSummary.applicantId
       );
 
       const EditAppSummary = {
         ...applicantArray[applicantIndex],
         details: action.payload.updatedAppSummary.details,
-        dateOfBirth: action.payload.updatedAppSummary.dateOfBirth
+        dateOfBirth: action.payload.updatedAppSummary.dateOfBirth,
       };
 
       applicantArray[applicantIndex] = EditAppSummary;
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.EDITAPPLICANTEDUCATION: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.updatedEducation.applicantId
+        (app) => app.applicantId === action.payload.updatedEducation.applicantId
       );
 
       applicantArray[applicantIndex].education[
@@ -391,19 +394,20 @@ const applicantReducers = (state = initialState, action) => {
         location: action.payload.updatedEducation.location,
         startDate: action.payload.updatedEducation.startDate,
         endDate: action.payload.updatedEducation.endDate,
-        description: action.payload.updatedEducation.description
+        description: action.payload.updatedEducation.description,
       };
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.EDITAPPLICANTEXPERIENCE: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.updatedExperience.applicantId
+        (app) =>
+          app.applicantId === action.payload.updatedExperience.applicantId
       );
 
       applicantArray[applicantIndex].experience[
@@ -417,18 +421,18 @@ const applicantReducers = (state = initialState, action) => {
         prevLocation: action.payload.updatedExperience.prevLocation,
         startDate: action.payload.updatedExperience.startDate,
         endDate: action.payload.updatedExperience.endDate,
-        description: action.payload.updatedExperience.description
+        description: action.payload.updatedExperience.description,
       };
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
     case actionTypes.EDITAPPLICANTCERTIFICATION: {
       const applicantArray = [...state.applicants];
       const applicantIndex = applicantArray.findIndex(
-        app =>
+        (app) =>
           app.applicantId === action.payload.updatedCertification.applicantId
       );
       applicantArray[applicantIndex].certification[
@@ -441,11 +445,11 @@ const applicantReducers = (state = initialState, action) => {
         organization: action.payload.updatedCertification.organization,
         startDate: action.payload.updatedCertification.startDate,
         endDate: action.payload.updatedCertification.endDate,
-        description: action.payload.updatedCertification.description
+        description: action.payload.updatedCertification.description,
       };
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 
@@ -453,11 +457,11 @@ const applicantReducers = (state = initialState, action) => {
       let applicantArray = [...state.applicants];
 
       const applicantIndex = applicantArray.findIndex(
-        app => app.applicantId === action.payload.applicantId
+        (app) => app.applicantId === action.payload.applicantId
       );
 
       let segmentArray = [
-        ...applicantArray[applicantIndex][action.payload.stateName]
+        ...applicantArray[applicantIndex][action.payload.stateName],
       ];
 
       segmentArray = segmentArray.filter(
@@ -468,7 +472,7 @@ const applicantReducers = (state = initialState, action) => {
 
       return {
         ...state,
-        applicants: applicantArray
+        applicants: applicantArray,
       };
     }
 

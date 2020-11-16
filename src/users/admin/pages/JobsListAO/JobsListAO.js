@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
-import CompanyList from "../CompaniesListAO/CompaniesListAO";
-import ApplicantList from "../ApplicantsListAO/ApplicantsListAO";
-import FinancialAO from "../FinancialAO/FinancialAO";
-
 import classes from "./JobsListAO.module.css";
 
 const JobsListAO = (props) => {
@@ -190,9 +186,6 @@ const JobsListAO = (props) => {
           )}
         </table>
       </div>
-      <CompanyList />;
-      <ApplicantList />;
-      <FinancialAO />
     </div>
   );
 };
