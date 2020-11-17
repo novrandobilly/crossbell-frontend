@@ -23,7 +23,7 @@ const NavigationLinks = (props) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/ad/alphaomega/jobs" activeClassName={classes.active}>
+        <NavLink to="#" activeClassName={classes.active}>
           Development Pages
         </NavLink>
       </li>
