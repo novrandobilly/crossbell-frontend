@@ -46,13 +46,6 @@
   margin-bottom: 2rem;
 }
 
-.Picture {
-  width: 15rem;
-  margin-bottom: 1rem;
-  border: solid 0.4rem rgba(58, 81, 153, 0.5);
-  border-radius: 50rem;
-}
-
 input[type="file"] {
   display: none;
 }

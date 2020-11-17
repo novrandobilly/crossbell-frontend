@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border:0.05rem solid grey;
+  border: 0.05rem solid grey;
   padding-bottom: 2rem;
   background-color: rgba(213, 214, 210, 0.7);
   font-family: sans-serif;
@@ -33,6 +33,27 @@
   padding-top: 2rem;
 }
 
+.ProfilePicture {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.InputButton {
+  border: none;
+  border-radius: 1rem;
+  background-color: rgba(58, 81, 153, 1);
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 6rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .EditLabel {
   display: flex;
   flex-direction: column;
@@ -53,11 +74,11 @@
   font-size: 0.8rem;
   font-weight: bold;
   transition: all 0.5s;
-  cursor:pointer;
+  cursor: pointer;
   outline: none;
 }
 
-.SaveButton:disabled{
+.SaveButton:disabled {
   color: #ccc;
   cursor: not-allowed;
   background-color: gray;

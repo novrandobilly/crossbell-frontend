@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import IconButton from "../../../../shared/UI_Element/IconButton";
 import TextOnly from "../../../../shared/UI_Element/TextOnly";
 import RangeSegment from "../../../../shared/UI_Element/RangeSegment";
@@ -14,10 +15,11 @@ const ApplicantCard = (props) => {
     <React.Fragment>
       <div className={classes.Container}>
         <div className={classes.ContainerLeft}>
-          <img
-            src="https://vignette.wikia.nocookie.net/shingekinokyojin/images/4/4f/Mikasa_Ackermann_%28Anime%29_character_image.png/revision/latest?cb=20190710121820"
-            alt="applicant"
-            className={classes.Picture}
+          <AccountCircleIcon
+            style={{
+              fontSize: "15rem",
+              marginBottom: "1rem",
+            }}
           />
 
           <div className={classes.ContainerLeftDivider}>
