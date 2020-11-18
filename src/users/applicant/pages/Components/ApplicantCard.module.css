@@ -28,14 +28,6 @@
   text-align: center;
 }
 
-.Picture {
-  width: 15rem;
-  height: auto;
-  margin-right: 2rem;
-  margin-left: 3rem;
-  border-radius: 50rem;
-}
-
 .Name {
   font-size: 2rem;
   font-weight: bold;

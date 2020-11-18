@@ -9,6 +9,7 @@ import {
   VALIDATOR_EMAIL,
 } from "../../../../../shared/utils/validator";
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
@@ -98,10 +99,11 @@ const EditIntro = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <div className={classes.ProfilePicture}>
-                <img
-                  src="https://vignette.wikia.nocookie.net/slap-on-titan5669/images/c/cf/Mikasa.png/revision/latest?cb=20161213102353"
-                  alt="Profile"
-                  className={classes.Picture}
+                <AccountCircleIcon
+                  style={{
+                    fontSize: "15rem",
+                    marginBottom: "1rem",
+                  }}
                 />
                 <label className={classes.InputButton}>
                   <input type="file"></input>
