@@ -66,31 +66,37 @@ const FinancialAO = (props) => {
                   {/* ========== Slot ========== */}
                   {fin.status === "Pending" ? (
                     <th>{parseInt((slot[i] = 0))}</th>
-                  ) : fin.package === "Regular" ? (
-                    <th>{parseInt((slot[i] = 30))}</th>
-                  ) : fin.package === "Premium" ? (
-                    <th>{parseInt((slot[i] = 40))}</th>
+                  ) : fin.status === "Cancel" ? (
+                    <th>{parseInt((slot[i] = 0))}</th>
                   ) : (
-                    <th>{parseInt((slot[i] = 60))}</th>
+                    <th>{fin.slot}</th>
                   )}
 
                   {/* ========== Price/Slot ========== */}
                   {fin.status === "Pending" ? (
-                    <th>{parseInt((slot[i] = 0))}</th>
-                  ) : fin.package === "Regular" ? (
-                    <th>Rp. {parseInt((price[i] = 20000))},-</th>
-                  ) : fin.package === "Premium" ? (
-                    <th>Rp. {parseInt((price[i] = 18000))},-</th>
+                    <th>{parseInt((price[i] = 0))}</th>
+                  ) : fin.status === "Cancel" ? (
+                    <th>{parseInt((price[i] = 0))}</th>
                   ) : (
-                    <th>Rp. {parseInt((price[i] = 15000))},-</th>
+                    <th>{fin.price}</th>
                   )}
 
                   {/* ========== Total Price ========== */}
                   {fin.status === "Pending" ? (
-                    <th>{parseInt((total[i] = 0))}</th>
+                    <th>{parseInt((slot[i] = 0))}</th>
+                  ) : fin.status === "Cancel" ? (
+                    <th>{parseInt((slot[i] = 0))}</th>
                   ) : (
-                    <th>Rp. {parseInt((total[i] = slot[i] * price[i]))},-</th>
+                    <th>
+                      Rp.{" "}
+                      {parseInt(
+                        (total[i] =
+                          (slot[i] || fin.slot) * (price[i] || fin.price))
+                      )}
+                      ,-
+                    </th>
                   )}
+
                   <th
                     style={
                       fin.status === "Cancel"
