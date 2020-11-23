@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -138,6 +139,10 @@ const mapDispatchToProps = dispatch => {
 		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
 		authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY })
 	};
+
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyForm));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CompanyForm));

@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "../../../../../shared/utils/useForm";
-import { useParams, withRouter } from "react-router-dom";
+import { withRouter, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
 } from "../../../../../shared/utils/validator";
 
+import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
@@ -17,21 +18,19 @@ import classes from "./EditIntro.module.css";
 
 const EditIntro = (props) => {
   const { applicantid } = useParams();
-
-  const applicant = props.applicant.find(
-    (app) => app.applicantId === applicantid
-  );
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const [formState, onInputHandler] = useForm(
     {
       firstName: {
-        value: applicant.firstName,
-        isValid: true,
+        value: data.firstName,
+        isValid: data.firstName ? true : false,
       },
 
       lastName: {
-        value: applicant.lastName,
-        isValid: true,
+        value: data.lastName,
+        isValid: data.lastName ? true : false,
       },
 
       headline: {
@@ -55,8 +54,8 @@ const EditIntro = (props) => {
         isValid: false,
       },
       email: {
-        value: applicant.email,
-        isValid: true,
+        value: data.email,
+        isValid: data.email ? true : false,
       },
       phone: {
         value: "",
@@ -70,11 +69,11 @@ const EditIntro = (props) => {
     false
   );
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    const updatedAppIntro = {
-      applicantId: applicant.applicantId,
+    const ApplicantData = {
+      applicantId: data.id,
       firstName: formState.inputs.firstName.value,
       lastName: formState.inputs.lastName.value,
       headline: formState.inputs.headline.value,
@@ -86,165 +85,178 @@ const EditIntro = (props) => {
       phone: formState.inputs.phone.value,
       websites: formState.inputs.websites.value,
     };
-    props.onUpdateAppIntro(updatedAppIntro);
-    props.history.push(`/ap/${applicant.applicantId}`);
+
+    try {
+      const res = await props.updateApplicantIntro(ApplicantData);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no response");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  return (
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    getOneApplicant(applicantid).then((res) => {
+      setData(res.applicant);
+      setIsLoading(false);
+    });
+  }, [getOneApplicant, setIsLoading, applicantid]);
+
+  let formContent = (
     <>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>About Me</p>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>About Me</p>
 
-          <div className={classes.FormRow}>
-            <div className={classes.EditLabel}>
-              <div className={classes.ProfilePicture}>
-                <AccountCircleIcon
-                  style={{
-                    fontSize: "15rem",
-                    marginBottom: "1rem",
-                  }}
-                />
-                <label className={classes.InputButton}>
-                  <input type="file"></input>
-                  <span className={classes.InputButtonText}> Upload File </span>
-                </label>
-              </div>
-
-              <Input
-                inputType="input"
-                id="firstName"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="First Name*"
-                initValue={applicant.firstName}
-                initIsValid={true}
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <div className={classes.ProfilePicture}>
+              <AccountCircleIcon
+                style={{
+                  fontSize: "15rem",
+                  marginBottom: "1rem",
+                }}
               />
-
-              <Input
-                inputType="input"
-                id="lastName"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Last Name*"
-                initValue={applicant.lastName}
-                initIsValid={true}
-              />
-
-              <Input
-                inputType="input"
-                id="headline"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Headline*"
-                placeholder="Ex: Full stack developer"
-              />
-
-              <Input
-                inputType="input"
-                id="address"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Address*"
-                placeholder="Ex: Cilandak Street no.188, South Jakarta"
-              />
-
-              <Input
-                inputType="input"
-                id="city"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="City*"
-                placeholder="Ex: South Jakarta"
-              />
-
-              <Input
-                inputType="input"
-                id="state"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="State*"
-                placeholder="Ex: West Java"
-              />
-
-              <Input
-                inputType="input"
-                id="zip"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Zip*"
-                placeholder="Ex: 16869"
-              />
-
-              <Input
-                inputType="input"
-                id="email"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_EMAIL()]}
-                onInputHandler={onInputHandler}
-                label="Email*"
-                placeholder="Ex: Dwi_haryo@hotmail.com"
-                initValue={applicant.email}
-                initIsValid={true}
-              />
-
-              <Input
-                inputType="input"
-                id="phone"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Phone*"
-                placeholder="Ex: 08179192342"
-              />
-
-              <Input
-                inputType="input"
-                id="websites"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Websites"
-                placeholder="Ex: https://www.facebook.com/dwikun"
-              />
+              <label className={classes.InputButton}>
+                <input type="file"></input>
+                <span className={classes.InputButtonText}> Upload File </span>
+              </label>
             </div>
-          </div>
+            <Input
+              inputType="input"
+              id="firstName"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="First Name*"
+              initValue={data.firstName}
+              initIsValid={true}
+            />
 
-          <SaveButton
-            btnClass="SaveButton"
-            disabled={!formState.formIsValid}
-            placeholder="Save"
-          />
+            <Input
+              inputType="input"
+              id="lastName"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Last Name*"
+              initValue={data.lastName}
+              initIsValid={true}
+            />
+
+            <Input
+              inputType="input"
+              id="headline"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Headline*"
+              placeholder="Ex: Full stack developer"
+            />
+
+            <Input
+              inputType="input"
+              id="address"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Address*"
+              placeholder="Ex: Cilandak Street no.188, South Jakarta"
+            />
+
+            <Input
+              inputType="input"
+              id="city"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="City*"
+              placeholder="Ex: South Jakarta"
+            />
+
+            <Input
+              inputType="input"
+              id="state"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="State*"
+              placeholder="Ex: West Java"
+            />
+
+            <Input
+              inputType="input"
+              id="zip"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Zip*"
+              placeholder="Ex: 16869"
+            />
+
+            <Input
+              inputType="input"
+              id="email"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_EMAIL()]}
+              onInputHandler={onInputHandler}
+              label="Email*"
+              placeholder="Ex: Dwi_haryo@hotmail.com"
+              initValue={data.email}
+              initIsValid={true}
+            />
+
+            <Input
+              inputType="input"
+              id="phone"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Phone*"
+              placeholder="Ex: 08179192342"
+            />
+
+            <Input
+              inputType="input"
+              id="websites"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Websites"
+              placeholder="Ex: https://www.facebook.com/dwikun"
+            />
+          </div>
         </div>
-      </form>
+
+        <SaveButton
+          btnClass="SaveButton"
+          disabled={!formState.formIsValid}
+          placeholder="Save"
+        />
+      </div>
     </>
   );
-};
 
-const mapStateToProps = (state) => {
-  return {
-    applicant: state.applicant.applicants,
-  };
+  if (isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      {formContent}
+    </form>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdateAppIntro: (updatedAppIntro) =>
-      dispatch({
-        type: actionTypes.EDITAPPLICANTINTRO,
-        payload: { updatedAppIntro },
-      }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantIntro: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantIntro(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(null, mapDispatchToProps)(withRouter(EditIntro));

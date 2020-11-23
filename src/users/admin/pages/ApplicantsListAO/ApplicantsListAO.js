@@ -2,6 +2,7 @@ import React, { useState, useCallback, useReducer } from "react";
 import { connect } from "react-redux";
 
 import QueryBar from "./Component/QueryBar";
+// import ApplicantCard from "./Component/ApplicantCard";
 
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
@@ -210,7 +211,6 @@ const ApplicantListAO = (props) => {
             <tr>
               <th>Id</th>
               <th>Applicant Name</th>
-              <th>Headline</th>
               <th>Email</th>
               <th>Address</th>
               <th>Status</th>
@@ -262,9 +262,14 @@ const ApplicantListAO = (props) => {
                 <tr key={app.applicantId}>
                   <th>{app.applicantId}</th>
                   <th>
-                    {app.firstName} {app.lastName}
+                    <div className={classes.NameRow}>
+                      <div className={classes.ApplicantName}>
+                        {app.firstName} {app.lastName}
+                      </div>
+                      <p></p>
+                      {app.headline}
+                    </div>
                   </th>
-                  <th>{app.headline}</th>
                   <th>{app.email}</th>
                   <th>{app.address}</th>
                   <th
@@ -295,6 +300,7 @@ const ApplicantListAO = (props) => {
           )}
         </table>
       </div>
+      {/* <ApplicantCard /> */}
     </div>
   );
 };

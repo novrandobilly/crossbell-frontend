@@ -3,10 +3,12 @@ const initJobState = {
     {
       orderId: "SSS_O1",
       companyId: "SSS",
-      package: "Regular",
+      orders: [
+        { package: "Regular", slot: 30, price: 20000 },
+        { package: "Premium", slot: 40, price: 18000 },
+        { package: "Lifetime", slot: 60, price: 15000 },
+      ],
       status: "Active",
-      slot: 30,
-      price: 20000,
     },
     {
       orderId: "SSS_O2",

@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 
-import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
@@ -16,10 +17,6 @@ import classes from "./Experience.module.css";
 
 const Education = (props) => {
   const { applicantid } = useParams();
-
-  const applicant = props.applicant.find(
-    (app) => app.applicantId === applicantid
-  );
 
   const [formState, onInputHandler] = useForm(
     {
@@ -55,10 +52,10 @@ const Education = (props) => {
     false
   );
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     const updatedEducation = {
-      applicantId: applicant.applicantId,
+      applicantId: applicantid,
       school: formState.inputs.school.value,
       degree: formState.inputs.degree.value,
       major: formState.inputs.major.value,
@@ -67,111 +64,126 @@ const Education = (props) => {
       endDate: formState.inputs.endDate.value,
       description: formState.inputs.description.value,
     };
-    props.onUpdateAppEducation(updatedEducation);
-    props.history.push(`/ap/${applicant.applicantId}`);
+    try {
+      const res = await props.updateApplicantEducation(updatedEducation);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no res detected");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  return (
+  let formContent = (
     <>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Education</p>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Education</p>
 
-          <div className={classes.FormRow}>
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="school"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="School *"
+              placeholder="Ex: University of Indonesia"
+            />
+          </div>
+
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="degree"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Degree *"
+              placeholder="Ex: Bachelor of Engineering"
+            />
+          </div>
+
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="major"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Field of Study *"
+              placeholder="Ex: International Relations"
+            />
+          </div>
+
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="location"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Location *"
+              placeholder="Ex: Depok, West Java"
+            />
+          </div>
+
+          <div className={classes.Period}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="school"
-                inputClass="AddJobInput"
+                id="startDate"
+                inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="School *"
-                placeholder="Ex: University of Indonesia"
+                label="Start Date *"
+                placeholder="DD/MM/YYYY"
               />
             </div>
 
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="degree"
-                inputClass="AddJobInput"
+                id="endDate"
+                inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Degree *"
-                placeholder="Ex: Bachelor of Engineering"
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="input"
-                id="major"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Field of Study *"
-                placeholder="Ex: International Relations"
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="input"
-                id="location"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Location *"
-                placeholder="Ex: Depok, West Java"
-              />
-            </div>
-
-            <div className={classes.Period}>
-              <div className={classes.EditLabel}>
-                <Input
-                  inputType="input"
-                  id="startDate"
-                  inputClass="DateInput"
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label="Start Date *"
-                  placeholder="DD/MM/YYYY"
-                />
-              </div>
-
-              <div className={classes.EditLabel}>
-                <Input
-                  inputType="input"
-                  id="endDate"
-                  inputClass="DateInput"
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label="End Date *"
-                  placeholder="DD/MM/YYYY"
-                />
-              </div>
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="textarea"
-                id="description"
-                inputClass="EditProfileTextArea"
-                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-                onInputHandler={onInputHandler}
-                label="Description *"
+                label="End Date *"
+                placeholder="DD/MM/YYYY"
               />
             </div>
           </div>
 
-          <SaveButton
-            btnClass="SaveButton"
-            disabled={!formState.formIsValid}
-            placeholder="Save"
-          />
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="textarea"
+              id="description"
+              inputClass="EditProfileTextArea"
+              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+              onInputHandler={onInputHandler}
+              label="Description *"
+            />
+          </div>
         </div>
-      </form>
+
+        <SaveButton
+          btnClass="SaveButton"
+          disabled={!formState.formIsValid}
+          placeholder="Save"
+        />
+      </div>
     </>
+  );
+  if (props.isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      {formContent}
+    </form>
   );
 };
 
@@ -183,11 +195,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdateAppEducation: (updatedEducation) =>
-      dispatch({
-        type: actionTypes.CREATEAPPLICANTEDUCATION,
-        payload: { updatedEducation },
-      }),
+    updateApplicantEducation: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
   };
 };
 

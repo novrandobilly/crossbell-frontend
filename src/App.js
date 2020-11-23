@@ -50,6 +50,7 @@ import ApplicantsListAO from "./users/admin/pages/ApplicantsListAO/ApplicantsLis
 import JobsDetailsAO from "./users/admin/pages/JobDetailsAO/JobDetailsAO";
 import CustomerSupportsAO from "./users/admin/pages/CustomerSupportsAO/CustomerSupportsAO";
 import FinancialAO from "./users/admin/pages/FinancialAO/FinancialAO";
+import Invoice from "./users/admin/pages/FinancialAO/Invoice";
 
 import AuthenticationAp from "./users/applicant/pages/AuthenticationAp/AuthenticationAp";
 import AuthenticationCo from "./users/company/pages/AuthenticationCo/AuthenticationCo";
@@ -163,10 +164,8 @@ const App = (props) => {
             path="/ad/alphaomega/customer-supports"
             component={CustomerSupportsAO}
           />
-          <Route
-            path="/ad/alphaomega/:companyId/financial"
-            component={FinancialAO}
-          />
+          <Route path="/ad/alphaomega/financial" component={FinancialAO} />
+          <Route path="/ad/alphaomega/:orderid/financial" component={Invoice} />
 
           {/* General Routes */}
           <Route path="/blogs" component={Blogs} />

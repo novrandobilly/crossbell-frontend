@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import ApplicantCard from './ApplicantCard';
-
+import ApplicantCard from "./ApplicantCard";
 
 const ApplicantMap = (props) => {
   return (
     <div>
       <ApplicantCard
         //======================== Applicant Intro
-        key={props.items.applicantId}
-        id={props.items.applicantId}
+        key={props.id}
+        id={props.id}
         firstName={props.items.firstName}
         lastName={props.items.lastName}
         headline={props.items.headline}
@@ -33,7 +32,6 @@ const ApplicantMap = (props) => {
       />
     </div>
   );
-
 };
 
 export default ApplicantMap;
