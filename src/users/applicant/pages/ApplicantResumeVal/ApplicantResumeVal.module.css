@@ -1,7 +1,14 @@
 .Container {
   display: flex;
   flex-direction: column;
+  margin-top: 6rem;
 }
+
+.ContentContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .Flexed {
   display: flex;
   align-self: flex-end;

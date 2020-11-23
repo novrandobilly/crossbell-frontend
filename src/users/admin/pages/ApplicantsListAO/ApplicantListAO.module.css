@@ -26,7 +26,6 @@
 }
 
 .Table th {
-  border-bottom: 0.05rem solid rgb(104, 102, 102);
   padding-left: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -39,12 +38,22 @@
 }
 
 .RowField th {
+  border-bottom: 0.05rem solid rgb(104, 102, 102);
   background-color: #d7e2ff;
   font-weight: bold;
 }
 
 .ColumnField {
   font-size: 0.85rem;
+}
+
+.NameRow {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.ApplicantName {
+  color: black;
 }
 
 .DropButton {

@@ -14,10 +14,6 @@ import classes from "./Skill.module.css";
 const Skill = (props) => {
   const { applicantid } = useParams();
 
-  const applicant = props.applicant.find(
-    (app) => app.applicantId === applicantid
-  );
-
   const [formState, onInputHandler] = useForm(
     {
       skills: {
@@ -33,11 +29,11 @@ const Skill = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     const updatedSkills = {
-      applicantId: applicant.applicantId,
+      applicantId: applicantid,
       skills: formState.inputs.skills.value,
     };
     props.onUpdateAppCertification(updatedSkills);
-    props.history.push(`/ap/${applicant.applicantId}`);
+    props.history.push(`/ap/${applicantid}`);
   };
 
   const addSkill = (e) => {
@@ -91,12 +87,6 @@ const Skill = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    applicant: state.applicant.applicants,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateAppCertification: (updatedSkills) =>
@@ -107,4 +97,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Skill));
+export default connect(null, mapDispatchToProps)(withRouter(Skill));

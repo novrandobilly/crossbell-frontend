@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 
-import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
@@ -16,10 +17,6 @@ import classes from "./EditSummary.module.css";
 
 const EditSummary = (props) => {
   const { applicantid } = useParams();
-
-  const applicant = props.applicant.find(
-    (app) => app.applicantId === applicantid
-  );
 
   const [formState, onInputHandler] = useForm(
     {
@@ -35,57 +32,74 @@ const EditSummary = (props) => {
     false
   );
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    const updatedAppSummary = {
-      applicantId: applicant.applicantId,
+    const updatedSummary = {
+      applicantId: applicantid,
       details: formState.inputs.details.value,
       dateOfBirth: formState.inputs.dateOfBirth.value,
     };
-    props.onUpdateAppSummary(updatedAppSummary);
-    props.history.push(`/ap/${applicant.applicantId}`);
+
+    try {
+      const res = await props.updateApplicantSummary(updatedSummary);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no res detected");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  return (
+  let formContent = (
     <>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Summary</p>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Summary</p>
 
-          <div className={classes.FormRow}>
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="textarea"
-                id="details"
-                inputClass="EditProfileTextArea"
-                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-                onInputHandler={onInputHandler}
-                label="Details*"
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="input"
-                id="dateOfBirth"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Date of Birth*"
-                placeholder="DD/MM/YYYY"
-              />
-            </div>
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="textarea"
+              id="details"
+              inputClass="EditProfileTextArea"
+              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+              onInputHandler={onInputHandler}
+              label="Details*"
+            />
           </div>
 
-          <SaveButton
-            btnClass="SaveButton"
-            disabled={!formState.formIsValid}
-            placeholder="Save"
-          />
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="dateOfBirth"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Date of Birth*"
+              placeholder="DD/MM/YYYY"
+            />
+          </div>
         </div>
-      </form>
+
+        <SaveButton
+          btnClass="SaveButton"
+          disabled={!formState.formIsValid}
+          placeholder="Save"
+        />
+      </div>
     </>
+  );
+
+  if (props.isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      {formContent}
+    </form>
   );
 };
 
@@ -97,11 +111,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdateAppSummary: (updatedAppSummary) =>
-      dispatch({
-        type: actionTypes.EDITAPPLICANTSUMMARY,
-        payload: { updatedAppSummary },
-      }),
+    updateApplicantSummary: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
   };
 };
 

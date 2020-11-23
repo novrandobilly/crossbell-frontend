@@ -11,14 +11,12 @@ import Button from "../../../../shared/UI_Element/Button";
 
 import classes from "./ApplicantResumeVal.module.css";
 
-const ApplicantResumeVal = () => {
+const ApplicantResumeVal = (props) => {
   const { applicantid } = useParams();
 
   return (
     <div className={classes.Container}>
-      <h1>This is Applicant Resume Form page </h1>
-
-      <div className={classes.Container}>
+      <div className={classes.ContentContainer}>
         <Intro />
         <Summary />
         <Education />

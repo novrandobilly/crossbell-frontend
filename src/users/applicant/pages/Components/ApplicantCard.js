@@ -71,7 +71,7 @@ const ApplicantCard = (props) => {
         id={props.id}
         labelName="Education"
         routeEdit={`/ap/${props.id}/education`}
-        routeAdd={`/ap/${props.id}/education`}
+        routeAdd={`/ap/${props.id}/add/education`}
         contents={props.education}
         state="education"
       />
@@ -79,7 +79,7 @@ const ApplicantCard = (props) => {
         id={props.id}
         labelName="Experience"
         routeEdit={`/ap/${props.id}/experience`}
-        routeAdd={`/ap/${props.id}/experience`}
+        routeAdd={`/ap/${props.id}/add/experience`}
         contents={props.experience}
         state="experience"
       />
@@ -87,7 +87,7 @@ const ApplicantCard = (props) => {
         id={props.id}
         labelName="Certification/ Achievement"
         routeEdit={`/ap/${props.id}/certification`}
-        routeAdd={`/ap/${props.id}/certification`}
+        routeAdd={`/ap/${props.id}/add/certification`}
         contents={props.certification}
         state="certification"
       />
@@ -95,7 +95,7 @@ const ApplicantCard = (props) => {
         id={props.id}
         labelName="Skills"
         routeEdit={`/ap/${props.id}/skills`}
-        routeAdd={`/ap/${props.id}/skills`}
+        routeAdd={`/ap/${props.id}/add/skills`}
         skills={props.skills}
       />
     </React.Fragment>

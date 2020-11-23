@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 
-import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
 
@@ -16,10 +17,6 @@ import classes from "./Certification.module.css";
 
 const Certification = (props) => {
   const { applicantid } = useParams();
-
-  const applicant = props.applicant.find(
-    (app) => app.applicantId === applicantid
-  );
 
   const [formState, onInputHandler] = useForm(
     {
@@ -53,122 +50,151 @@ const Certification = (props) => {
     setExpiry(!expiry);
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (expiry) {
       const updatedCertification = {
-        applicantId: applicant.applicantId,
+        applicantId: applicantid,
         title: formState.inputs.title.value,
         organization: formState.inputs.organization.value,
         startDate: formState.inputs.startDate.value,
         endDate: formState.inputs.endDate.value,
         description: formState.inputs.description.value,
       };
-      props.onUpdateAppCertification(updatedCertification);
-      props.history.push(`/ap/${applicant.applicantId}`);
+      try {
+        const res = await props.updateApplicantCertification(
+          updatedCertification
+        );
+
+        if (res) {
+          console.log(res);
+        } else {
+          console.log("no res detected");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       const updatedCertification = {
-        applicantId: applicant.applicantId,
+        applicantId: applicantid,
         title: formState.inputs.title.value,
         organization: formState.inputs.organization.value,
         startDate: formState.inputs.startDate.value,
-        endDate: "12/12/4000",
+        endDate: "12/12/40000",
         description: formState.inputs.description.value,
       };
-      props.onUpdateAppCertification(updatedCertification);
-      props.history.push(`/ap/${applicant.applicantId}`);
+      try {
+        const res = await props.updateApplicantCertification(
+          updatedCertification
+        );
+        if (res) {
+          console.log(res);
+        } else {
+          console.log("no res detected");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
-  return (
+  let formContent = (
     <>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Certification</p>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Certification</p>
 
-          <div className={classes.FormRow}>
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="title"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Certification Title *"
+              placeholder="Ex: Certified Cooperative Communicator"
+            />
+          </div>
+
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="organization"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Issuing Organization*"
+              placeholder="Ex: National Rural Electric Cooperative Association"
+            />
+          </div>
+
+          <div className={classes.CheckboxDiv}>
+            <input
+              type="checkbox"
+              className={classes.Checkbox}
+              onChange={expiryHandler}
+            />
+            <label className={classes.CheckboxText}>No expiry date</label>
+          </div>
+
+          <div className={classes.Period}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="title"
-                inputClass="AddJobInput"
+                id="startDate"
+                inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Certification Title *"
-                placeholder="Ex: Certified Cooperative Communicator"
+                label="Issue Date*"
+                placeholder="DD/MM/YYYY"
               />
             </div>
 
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="input"
-                id="organization"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Issuing Organization*"
-                placeholder="Ex: National Rural Electric Cooperative Association"
-              />
-            </div>
-
-            <div className={classes.CheckboxDiv}>
-              <input
-                type="checkbox"
-                className={classes.Checkbox}
-                onChange={expiryHandler}
-              />
-              <label className={classes.CheckboxText}>No expiry date</label>
-            </div>
-
-            <div className={classes.Period}>
+            {!expiry ? (
               <div className={classes.EditLabel}>
                 <Input
                   inputType="input"
-                  id="startDate"
+                  id="endDate"
                   inputClass="DateInput"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label="Issue Date*"
+                  label="Expiration Date*"
                   placeholder="DD/MM/YYYY"
                 />
               </div>
-
-              {!expiry ? (
-                <div className={classes.EditLabel}>
-                  <Input
-                    inputType="input"
-                    id="endDate"
-                    inputClass="DateInput"
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label="Expiration Date*"
-                    placeholder="DD/MM/YYYY"
-                  />
-                </div>
-              ) : (
-                <div />
-              )}
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="textarea"
-                id="description"
-                inputClass="EditProfileTextArea"
-                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-                onInputHandler={onInputHandler}
-                label="Description*"
-              />
-            </div>
+            ) : (
+              <div />
+            )}
           </div>
 
-          <SaveButton
-            btnClass="SaveButton"
-            disabled={!formState.formIsValid}
-            placeholder="Save"
-          />
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="textarea"
+              id="description"
+              inputClass="EditProfileTextArea"
+              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+              onInputHandler={onInputHandler}
+              label="Description*"
+            />
+          </div>
         </div>
-      </form>
+
+        <SaveButton
+          btnClass="SaveButton"
+          disabled={!formState.formIsValid}
+          placeholder="Save"
+        />
+      </div>
     </>
+  );
+
+  if (props.isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      {formContent}
+    </form>
   );
 };
 
@@ -180,11 +206,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdateAppCertification: (updatedCertification) =>
-      dispatch({
-        type: actionTypes.CREATEAPPLICANTCERTIFICATION,
-        payload: { updatedCertification },
-      }),
+    updateApplicantCertification: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
   };
 };
 
