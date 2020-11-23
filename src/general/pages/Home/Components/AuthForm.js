@@ -16,27 +16,13 @@ const AuthForm = () => {
     setRole(!role);
   };
 
-  if (role) {
-    return (
-      <div>
-        {!sign ? (
-          <CompanyForm sign={toggleSign} role={toggleRole} />
-        ) : (
-          <Login sign={toggleSign} />
-        )}
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        {!sign ? (
-          <Register sign={toggleSign} role={toggleRole} />
-        ) : (
-          <Login sign={toggleSign} />
-        )}
-      </div>
-    );
-  }
+
+	if (role) {
+		return <div>{!sign ? <CompanyForm sign={toggleSign} role={toggleRole} /> : <Login sign={toggleSign} />}</div>;
+	} else {
+		return <div>{!sign ? <Register sign={toggleSign} role={toggleRole} /> : <Login sign={toggleSign} />}</div>;
+	}
+
 };
 
 export default AuthForm;

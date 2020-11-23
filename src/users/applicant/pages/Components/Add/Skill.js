@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
@@ -95,6 +96,7 @@ const mapDispatchToProps = (dispatch) => {
         payload: { updatedSkills },
       }),
   };
+
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(Skill));

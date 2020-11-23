@@ -12,6 +12,10 @@ const formReducer = (state, action) => {
 					formValidity = formValidity && state.inputs[key].isValid;
 				}
 			}
+
+			if (!state.inputs[action.payload.id]) {
+				formValidity = false;
+			}
 			return {
 				...state,
 				inputs: {

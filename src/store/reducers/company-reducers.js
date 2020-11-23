@@ -61,36 +61,45 @@ const initialState = {
 };
 
 const companyReducers = (state = initialState, action) => {
-  switch (action.type) {
-    case actionTypes.CREATECOMPANYSTART: {
-      return {
-        ...state,
-        isLoading: true,
-        error: false,
-      };
-    }
-    case actionTypes.CREATECOMPANY: {
-      const newCompany = {
-        companyId: action.payload.id,
-        logo: "",
-        companyName: action.payload.companyName,
-        email: action.payload.email,
-        password: action.payload.password,
-        size: "",
-        industry: "",
-        address: "",
-        website: "",
-        emailRecipient: "",
-        details: "",
-        mission: "",
-      };
-      return {
-        ...state,
-        isLoading: false,
-        error: false,
-        companies: state.companies.concat(newCompany),
-      };
-    }
+
+	switch (action.type) {
+		case actionTypes.COMPANYRESET: {
+			return {
+				...state,
+				error: false,
+				isLoading: false
+			};
+		}
+		case actionTypes.CREATECOMPANYSTART: {
+			return {
+				...state,
+				isLoading: true,
+				error: false
+			};
+		}
+		case actionTypes.CREATECOMPANY: {
+			const newCompany = {
+				companyId: action.payload.id,
+				logo: '',
+				companyName: action.payload.companyName,
+				email: action.payload.email,
+				password: action.payload.password,
+				size: '',
+				industry: '',
+				address: '',
+				website: '',
+				emailRecipient: '',
+				details: '',
+				mission: ''
+			};
+			return {
+				...state,
+				isLoading: false,
+				error: false,
+				companies: state.companies.concat(newCompany)
+			};
+		}
+
 
     case actionTypes.CREATECOMPANYFAIL: {
       return {
