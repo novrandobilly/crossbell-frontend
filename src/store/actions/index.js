@@ -1,1 +1,1 @@
-export { createCompany } from './company-actions';
+export { createCompany, login } from './company-actions';
