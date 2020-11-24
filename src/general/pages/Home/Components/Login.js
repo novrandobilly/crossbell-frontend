@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actionTypes from '../../../../store/actions/actions';
@@ -6,11 +6,16 @@ import * as actionCreators from '../../../../store/actions';
 import { useForm } from '../../../../shared/utils/useForm';
 
 import Input from '../../../../shared/UI_Element/Input';
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Modal from '../../../../shared/UI_Element/Modal';
+
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
 import classes from './Login.module.css';
 
 const Login = props => {
+	const [ isLoading, setIsLoading ] = useState(false);
+	const [ isError, setIsError ] = useState(false);
 	const [ formState, onInputHandler ] = useForm(
 		{
 			email: {
@@ -27,6 +32,7 @@ const Login = props => {
 
 	const onSubmitHandler = async event => {
 		event.preventDefault();
+		setIsLoading(true);
 		const loginData = {
 			email: formState.inputs.email.value,
 			password: formState.inputs.password.value
@@ -40,63 +46,75 @@ const Login = props => {
 			console.log(err);
 		}
 
-		if (res.foundUser) {
-			if (res.foundUser.isCompany) {
-				props.login();
-				props.isCompany();
-				props.history.push('/jobs-dashboard');
-			} else {
-				props.login();
-				props.history.push('/jobs-dashboard');
-			}
+		if (res.token) {
+			setIsLoading(false);
+			props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });
+			props.history.push('/jobs-dashboard');
 		} else {
 			console.log('error');
+			setIsLoading(false);
+			setIsError(true);
 		}
 	};
+
+	const onCancelHandler = () => {
+		setIsError(false);
+	};
+
+	let formContent = (
+		<div className={classes.ContainerFlex}>
+			<p className={classes.FormTitle}>Login</p>
+
+			<Input
+				inputType='input'
+				id='email'
+				inputClass='Login'
+				validatorMethod={[ VALIDATOR_REQUIRE(), VALIDATOR_EMAIL() ]}
+				onInputHandler={onInputHandler}
+				label='Email*'
+			/>
+
+			<Input
+				inputType='input'
+				id='password'
+				inputClass='Login'
+				validatorMethod={[ VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6) ]}
+				onInputHandler={onInputHandler}
+				label='Password*'
+				type='password'
+			/>
+
+			<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
+				<span>Submit</span>
+			</button>
+
+			<span className={classes.sign}>
+				Don't have an account
+				<button className={classes.ChangeSign} onClick={props.sign} type='button'>
+					Sign Up Here
+				</button>
+			</span>
+
+			<span className={classes.sign}>
+				Forgot password?
+				<button className={classes.ChangeSign} type='button'>
+					Click Here
+				</button>
+			</span>
+		</div>
+	);
+
+	if (isLoading) {
+		formContent = <Spinner />;
+	}
 
 	return (
 		<React.Fragment>
 			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Login</p>
-
-					<Input
-						inputType='input'
-						id='email'
-						inputClass='Login'
-						validatorMethod={[ VALIDATOR_REQUIRE(), VALIDATOR_EMAIL() ]}
-						onInputHandler={onInputHandler}
-						label='Email*'
-					/>
-
-					<Input
-						inputType='input'
-						id='password'
-						inputClass='Login'
-						validatorMethod={[ VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6) ]}
-						onInputHandler={onInputHandler}
-						label='Password*'
-						type='password'
-					/>
-
-					<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
-						<span>Submit</span>
-					</button>
-
-					<span className={classes.sign}>
-						Don't have an account
-						<button className={classes.ChangeSign} onClick={props.sign} type='button'>
-							Sign Up Here
-						</button>
-					</span>
-
-					<span className={classes.sign}>
-						Forgot password?
-						<button className={classes.ChangeSign} type='button'>
-							Click Here
-						</button>
-					</span>
-				</div>
+				<Modal show={isError} onCancel={onCancelHandler}>
+					Email or Password invalid. Please try again.
+				</Modal>
+				{formContent}
 			</form>
 		</React.Fragment>
 	);
@@ -104,7 +122,7 @@ const Login = props => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
+		login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
 		isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
 		admin: () => dispatch({ type: actionTypes.AUTHADMIN }),
 		loginServer: loginData => dispatch(actionCreators.login(loginData))

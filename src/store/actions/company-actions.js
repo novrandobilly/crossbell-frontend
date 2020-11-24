@@ -35,13 +35,30 @@ export const createCompany = companyData => {
 				})
 			});
 			const responseJSON = await response.json();
+			console.log(responseJSON);
 			if (!response.ok) {
 				throw new Error(responseJSON.message);
 			}
-			dispatch(createCompanySuccess(responseJSON.newCompany));
+			dispatch(createCompanySuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {
 			dispatch(createCompanyFail());
+			return err;
+		}
+	};
+};
+
+export const getOneCompany = companyData => {
+	return async dispatch => {
+		try {
+			const res = await fetch(`http://localhost:5000/api/users/co/${companyData.userId}`);
+			console.log(res);
+			if (!res.ok) {
+				throw new Error('Could not find company, please try again');
+			}
+			const responseJSON = res.json();
+			return responseJSON;
+		} catch (err) {
 			return err;
 		}
 	};

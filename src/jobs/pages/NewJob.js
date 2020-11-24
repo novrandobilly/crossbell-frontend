@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useForm } from '../../shared/utils/useForm';
-import * as actionTypes from '../../store/actions/actions';
+import * as actionCreators from '../../store/actions';
 
 import Input from '../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE } from '../../shared/utils/validator';
@@ -12,11 +12,15 @@ import classes from './NewJob.module.css';
 const NewJob = props => {
 	const [ formState, onInputHandler ] = useForm(
 		{
-			jobId: {
+			// jobId: {
+			// 	value: '',
+			// 	isValid: false
+			// },
+			jobTitle: {
 				value: '',
 				isValid: false
 			},
-			jobTitle: {
+			description: {
 				value: '',
 				isValid: false
 			},
@@ -60,10 +64,10 @@ const NewJob = props => {
 				value: '',
 				isValid: false
 			},
-			companyId: {
-				value: '',
-				isValid: false
-			},
+			// companyId: {
+			// 	value: '',
+			// 	isValid: false
+			// },
 			datePosted: {
 				value: '3',
 				isValid: true
@@ -91,24 +95,29 @@ const NewJob = props => {
 
 	const onSubmitHandler = event => {
 		event.preventDefault();
-		const newJob = {
-			jobId: formState.inputs.jobId.value,
+		const jobData = {
 			jobTitle: formState.inputs.jobTitle.value,
-			jobFunction: formState.inputs.jobFunction.value,
+			company: 'testing',
+			description: formState.inputs.description.value,
+			city: formState.inputs.city.value,
+			region: formState.inputs.region.value,
 			jobDescription: formState.inputs.jobDescription.value,
 			jobQualification: formState.inputs.jobQualification.value,
 			technicalRequirement: formState.inputs.technicalRequirement.value,
-			region: formState.inputs.region.value,
-			city: formState.inputs.city.value,
-			benefit: formState.inputs.benefit.value,
-			salary: formState.inputs.salary.value,
 			level: formState.inputs.level.value,
 			employment: formState.inputs.employment.value,
-			datePosted: formState.inputs.datePosted.value,
-			companyId: formState.inputs.companyId.value
+			jobFunction: formState.inputs.jobFunction.value,
+			benefit: formState.inputs.benefit.value,
+			expiredDate: new Date(),
+			salary: formState.inputs.salary.value,
+			datePosted: formState.inputs.datePosted.value
+		};
+		const authData = {
+			token: props.auth.token,
+			userId: props.auth.userId
 		};
 
-		props.createJob(newJob);
+		props.createJob(jobData, authData);
 		props.history.push('/jobs-dashboard');
 	};
 
@@ -120,14 +129,14 @@ const NewJob = props => {
 
 					<div className={classes.FormRow}>
 						<div className={classes.EditLabel}>
-							<Input
+							{/* <Input
 								inputType='input'
 								id='jobId'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
 								label='Job ID*'
-							/>
+							/> */}
 
 							<Input
 								inputType='input'
@@ -138,6 +147,14 @@ const NewJob = props => {
 								label='Job Title*'
 							/>
 
+							<Input
+								inputType='input'
+								id='description'
+								inputClass='AddJobInput'
+								validatorMethod={[ VALIDATOR_REQUIRE() ]}
+								onInputHandler={onInputHandler}
+								label='Description*'
+							/>
 							<Input
 								inputType='input'
 								id='jobFunction'
@@ -251,14 +268,14 @@ const NewJob = props => {
 								label='Benefits*'
 							/>
 
-							<Input
+							{/* <Input
 								inputType='input'
 								id='companyId'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
 								label='Company ID*'
-							/>
+							/> */}
 						</div>
 					</div>
 					<button disabled={!formState.formIsValid} className={classes.SaveButton}>
@@ -270,10 +287,15 @@ const NewJob = props => {
 	);
 };
 
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
 const mapDispatchToProps = dispatch => {
 	return {
-		createJob: newJob => dispatch({ type: actionTypes.CREATEJOB, payload: { newJob } })
+		createJob: (jobData, authData) => dispatch(actionCreators.createJob(jobData, authData))
 	};
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(NewJob));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewJob));

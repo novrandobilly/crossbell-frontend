@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -44,12 +43,12 @@ const CompanyForm = props => {
 
 		try {
 			const res = await props.createCompany(newCompany);
-			if (!res.newCompany) {
+			console.log(res);
+			if (!res) {
 				throw new Error("It's error dude!");
 			}
-			props.login();
-			props.authCompany();
-			props.history.push(`/co/${res.newCompany.id}/compro`);
+			props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });
+			props.history.push(`/co/${res.userId}/compro`);
 		} catch (err) {
 			console.log(err);
 		}
@@ -117,7 +116,7 @@ const CompanyForm = props => {
 	return (
 		<form onSubmit={onSubmitHandler} className={classes.Container}>
 			<Modal show={props.error} onCancel={onCancelHandler}>
-				Error bro
+				Invalid registration value. Please try again.
 			</Modal>
 			{formContent}
 		</form>
@@ -136,13 +135,9 @@ const mapDispatchToProps = dispatch => {
 		createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
 		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
 		// createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
-		login: () => dispatch({ type: actionTypes.AUTHLOGIN }),
+		login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
 		authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY })
 	};
-
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CompanyForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyForm));
