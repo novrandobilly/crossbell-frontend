@@ -15,23 +15,26 @@ const JobDetailMap = props => {
 		<div>
 			<JobContainer
 				key={props.job.id}
-				jobId={props.job.jobId}
-				logo={props.job.logo}
+				jobId={props.job.id}
+				logo={
+					props.job.logo ? props.job.logo : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+				}
 				jobTitle={props.job.jobTitle}
-				companyName={props.job.company}
+				companyName={props.job.companyId.companyName}
 				city={props.job.city}
-				datePosted={props.job.datePosted}
+				datePosted={props.job.datePosted ? props.job.datePosted : '3'}
 				payment={props.job.salary}
 				employment={props.job.employment}
 				level={props.job.level}
+				industry={props.job.companyId.industry}
 				region={props.job.region}
-				industry={props.job.industry}
 				jobFunction={props.job.jobFunction}
+				jobQualification={props.job.jobQualification}
 				jobDescription={props.job.jobDescription}
 				technicalRequirement={props.job.technicalRequirement}
 				benefit={props.job.benefit}
-				benefits={props.job.benefits}
-				companyId={props.job.companyId}
+				companyDetails={props.job.companyId.details}
+				companyId={props.job.companyId.id}
 			/>
 		</div>
 	);
