@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -35,15 +34,7 @@ const CompanyDetails = props => {
 	} else {
 		return <Spinner />;
 	}
-
 };
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-  };
-};
-
 
 const mapDispatchToProps = dispatch => {
 	return {
@@ -51,5 +42,4 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompanyDetails);
-
+export default connect(null, mapDispatchToProps)(CompanyDetails);
