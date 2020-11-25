@@ -17,6 +17,7 @@ import classes from "./Experience.module.css";
 
 const Education = (props) => {
   const { applicantid } = useParams();
+  const push = props.push;
 
   const [formState, onInputHandler] = useForm(
     {
@@ -71,6 +72,7 @@ const Education = (props) => {
       } else {
         console.log("no res detected");
       }
+      !push && props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);
     }
@@ -138,7 +140,7 @@ const Education = (props) => {
                 inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Start Date *"
+                label="Start Date (MM/ DD/ YYYY)*"
                 placeholder="DD/MM/YYYY"
               />
             </div>
@@ -150,7 +152,7 @@ const Education = (props) => {
                 inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="End Date *"
+                label="End Date (MM/ DD/ YYYY)*"
                 placeholder="DD/MM/YYYY"
               />
             </div>
@@ -181,16 +183,12 @@ const Education = (props) => {
   }
 
   return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      {formContent}
-    </form>
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        {formContent}
+      </form>
+    </div>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    applicant: state.applicant.applicants,
-  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -200,7 +198,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Education));
+export default connect(null, mapDispatchToProps)(withRouter(Education));

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import RangeSegmentMap from "./RangeSegmentMap";
 import IconButton from "./IconButton";
@@ -32,8 +33,12 @@ const RangeSegment = (props) => {
                   subTitle={
                     content.major || content.prevCompany || content.organization
                   }
-                  start={content.startDate}
-                  end={content.endDate}
+                  start={moment(content.startDate).format("MMMM D, YYYY")}
+                  end={
+                    moment(content.endDate).year() < 10000
+                      ? moment(content.endDate).format("MMMM D, YYYY")
+                      : "No expiry date"
+                  }
                   description={content.description}
                   routeEdit={`${props.routeEdit}/${i}`}
                   stateName={props.state}

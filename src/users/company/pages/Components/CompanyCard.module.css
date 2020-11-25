@@ -24,7 +24,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  font-size: 1.3rem;
+
+  color: rgba(0, 0, 0, 0.6);
   margin-top: -2rem;
 }
 
@@ -46,6 +47,10 @@
 
 .CompanyIndustry {
   margin-left: 0.5rem;
+}
+
+.CompanyHeadquarter {
+  font-size: 1rem;
 }
 
 .CompanyWebsites {

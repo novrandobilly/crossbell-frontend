@@ -1,60 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { useForm } from "../../../../shared/utils/useForm";
-import * as actionTypes from "../../../../store/actions/actions";
 
+import * as actionCreators from "../../../../store/actions/index";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Input from "../../../../shared/UI_Element/Input";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
 } from "../../../../shared/utils/validator";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 
 import classes from "./EditIntro.module.css";
 
 const EditIntro = (props) => {
   const { companyid } = useParams();
 
-  console.log(companyid);
-  const identifiedCompany = props.company.find(
-    (co) => co.companyId === companyid
-  );
-  console.log(identifiedCompany);
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getOneCompany } = props;
+  useEffect(() => {
+    getOneCompany(companyid).then((res) => {
+      setData(res.company);
+      console.log(res);
+      setIsLoading(false);
+    });
+  }, [getOneCompany, setIsLoading, companyid]);
+
+  let push = props.push;
+
   const [formState, onInputHandler] = useForm(
     {
       companyName: {
-        value: identifiedCompany.companyName,
-        isValid: identifiedCompany.companyName ? true : false,
+        value: data.companyName,
+        isValid: data.companyName ? true : false,
       },
       size: {
-        value: identifiedCompany.size,
-        isValid: identifiedCompany.size ? true : false,
+        value: data.size,
+        isValid: data.size ? true : false,
       },
       industry: {
-        value: identifiedCompany.industry,
-        isValid: identifiedCompany.industry ? true : false,
+        value: data.industry,
+        isValid: data.industry ? true : false,
       },
       address: {
-        value: identifiedCompany.address,
-        isValid: identifiedCompany.address ? true : false,
+        value: data.address,
+        isValid: data.address ? true : false,
       },
       website: {
-        value: identifiedCompany.website,
-        isValid: identifiedCompany.website ? true : false,
+        value: data.website,
+        isValid: data.website ? true : false,
       },
       emailRecipient: {
-        value: identifiedCompany.emailRecipient,
-        isValid: identifiedCompany.emailRecipient ? true : false,
+        value: data.emailRecipient,
+        isValid: data.emailRecipient ? true : false,
       },
     },
     true
   );
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     const updatedIntro = {
-      companyId: identifiedCompany.companyId,
+      companyId: companyid,
       companyName: formState.inputs.companyName.value,
       size: formState.inputs.size.value,
       industry: formState.inputs.industry.value,
@@ -62,123 +72,139 @@ const EditIntro = (props) => {
       website: formState.inputs.website.value,
       emailRecipient: formState.inputs.emailRecipient.value,
     };
-    props.updateCompanyIntro(updatedIntro);
-    props.history.goBack();
+    try {
+      const res = await props.updateCompanyIntro(updatedIntro);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no res detected");
+      }
+      !push && props.history.push(`/co/${companyid}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  return (
+  let formContent = (
     <React.Fragment>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Edit Company Intro</p>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Edit Company Intro</p>
 
-          <div className={classes.FormRow}>
-            <div className={classes.EditLabel}>
-              <div className={classes.ProfilePicture}>
-                <AccountCircleIcon
-                  style={{
-                    fontSize: "15rem",
-                    marginBottom: "1rem",
-                  }}
-                />
-                <label className={classes.InputButton}>
-                  <input type="file"></input>
-                  <span className={classes.InputButtonText}> Upload Logo </span>
-                </label>
-              </div>
-              <Input
-                inputType="input"
-                id="companyName"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Name*"
-                initValue={formState.inputs.companyName.value}
-                initIsValid={formState.inputs.companyName.isValid}
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <div className={classes.ProfilePicture}>
+              <AccountCircleIcon
+                style={{
+                  fontSize: "15rem",
+                  marginBottom: "1rem",
+                }}
               />
-
-              <Input
-                inputType="input"
-                id="size"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Size*"
-                initValue={formState.inputs.size.value}
-                initIsValid={formState.inputs.size.isValid}
-              />
-
-              <Input
-                inputType="input"
-                id="industry"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Industry*"
-                initValue={formState.inputs.industry.value}
-                initIsValid={formState.inputs.industry.isValid}
-              />
-
-              <Input
-                inputType="input"
-                id="address"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Address*"
-                initValue={formState.inputs.address.value}
-                initIsValid={formState.inputs.address.isValid}
-              />
-
-              <Input
-                inputType="input"
-                id="website"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label="Websites*"
-                initValue={formState.inputs.website.value}
-                initIsValid={formState.inputs.website.isValid}
-              />
-
-              <Input
-                inputType="input"
-                id="emailRecipient"
-                inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_EMAIL()]}
-                onInputHandler={onInputHandler}
-                label="Email Recipient*"
-                initValue={formState.inputs.emailRecipient.value}
-                initIsValid={formState.inputs.emailRecipient.isValid}
-              />
+              <label className={classes.InputButton}>
+                <input type="file"></input>
+                <span className={classes.InputButtonText}> Upload Logo </span>
+              </label>
             </div>
-          </div>
+            <Input
+              inputType="input"
+              id="companyName"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Name*"
+              initValue={data.companyName}
+              initIsValid={data.companyName}
+            />
 
-          <button
-            disabled={!formState.formIsValid}
-            className={classes.SaveButton}
-          >
-            <span>Save</span>
-          </button>
+            <Input
+              inputType="input"
+              id="size"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Size*"
+              initValue={data.size}
+              initIsValid={data.size}
+              placeholder="Company Size"
+            />
+
+            <Input
+              inputType="input"
+              id="industry"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Industry*"
+              initValue={data.industry}
+              initIsValid={data.industry}
+              placeholder="Your Company Industry"
+            />
+
+            <Input
+              inputType="input"
+              id="address"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Address*"
+              initValue={data.address}
+              initIsValid={data.address}
+              placeholder="Company address"
+            />
+
+            <Input
+              inputType="input"
+              id="website"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Websites*"
+              initValue={data.website}
+              initIsValid={data.website}
+              placeholder="Company Website"
+            />
+
+            <Input
+              inputType="input"
+              id="emailRecipient"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_EMAIL()]}
+              onInputHandler={onInputHandler}
+              label="Email Recipient*"
+              initValue={data.emailRecipient}
+              initIsValid={data.emailRecipient}
+              placeholder="Email Recipient"
+            />
+          </div>
         </div>
-      </form>
+
+        <button
+          disabled={!formState.formIsValid}
+          className={classes.SaveButton}
+        >
+          <span>Save</span>
+        </button>
+      </div>
     </React.Fragment>
   );
-};
 
-const mapStateToProps = (state) => {
-  return {
-    company: state.company.companies,
-  };
+  if (isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        {formContent}
+      </form>
+    </div>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateCompanyIntro: (payload) =>
-      dispatch({ type: actionTypes.EDITCOMPANYINTRO, payload }),
+    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyIntro: (CompanyData) =>
+      dispatch(actionCreators.updateCompanyIntro(CompanyData)),
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(null, mapDispatchToProps)(withRouter(EditIntro));

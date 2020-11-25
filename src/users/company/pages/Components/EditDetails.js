@@ -1,79 +1,109 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
-import * as actionTypes from '../../../../store/actions/actions';
-import { useForm } from '../../../../shared/utils/useForm';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../shared/utils/useForm";
 
-import Input from '../../../../shared/UI_Element/Input';
-import { VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import * as actionCreators from "../../../../store/actions/index";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Input from "../../../../shared/UI_Element/Input";
+import { VALIDATOR_MINLENGTH } from "../../../../shared/utils/validator";
 
-import classes from './EditDetails.module.css';
+import classes from "./EditDetails.module.css";
 
-const EditDetails = props => {
-	const { companyid } = useParams();
+const EditDetails = (props) => {
+  const { companyid } = useParams();
 
-	const identifiedCompany = props.company.find(co => co.companyId === companyid);
-	const [ formState, onInputHandler ] = useForm(
-		{
-			details: {
-				value: identifiedCompany.details,
-				isValid: identifiedCompany.details ? true : false
-			}
-		},
-		false
-	);
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-	const onSubmitHandler = event => {
-		event.preventDefault();
-		const detailsUpdateData = {
-			companyId: identifiedCompany.companyId,
-			details: formState.inputs.details.value
-		};
+  const { getOneCompany } = props;
+  useEffect(() => {
+    getOneCompany(companyid).then((res) => {
+      setData(res.company);
+      setIsLoading(false);
+    });
+  }, [getOneCompany, setIsLoading, companyid]);
 
-		props.detailsUpdate(detailsUpdateData);
-		props.history.goBack();
-	};
+  let push = props.push;
 
-	return (
-		<React.Fragment>
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Edit Company Details</p>
+  const [formState, onInputHandler] = useForm(
+    {
+      details: {
+        value: data.details,
+        isValid: data.details ? true : false,
+      },
+    },
+    false
+  );
 
-					<div className={classes.FormRow}>
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='textarea'
-								id='details'
-								inputClass='EditProfileTextArea'
-								validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
-								onInputHandler={onInputHandler}
-								label='Details*'
-								initValue={formState.inputs.details.value}
-								initIsValid={formState.inputs.details.isValid}
-							/>
-						</div>
-					</div>
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    const updatedData = {
+      companyId: companyid,
+      details: formState.inputs.details.value,
+    };
+    try {
+      const res = await props.updateCompanyDetail(updatedData);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no res detected");
+      }
+      !push && props.history.push(`/co/${companyid}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-					<button disabled={!formState.formIsValid} className={classes.SaveButton}>
-						<span>Save</span>
-					</button>
-				</div>
-			</form>
-		</React.Fragment>
-	);
+  let formContent = (
+    <React.Fragment>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Edit Company Details</p>
+
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="textarea"
+              id="details"
+              inputClass="EditProfileTextArea"
+              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+              onInputHandler={onInputHandler}
+              label="Details*"
+              initValue={data.details}
+              initIsValid={data.details}
+            />
+          </div>
+        </div>
+
+        <button
+          disabled={!formState.formIsValid}
+          className={classes.SaveButton}
+        >
+          <span>Save</span>
+        </button>
+      </div>
+    </React.Fragment>
+  );
+
+  if (isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        {formContent}
+      </form>
+    </div>
+  );
 };
 
-const mapStateToProps = state => {
-	return {
-		company: state.company.companies
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyDetail: (CompanyData) =>
+      dispatch(actionCreators.updateCompanyDetail(CompanyData)),
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		detailsUpdate: payload => dispatch({ type: actionTypes.EDITCOMPANYDETAILS, payload })
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditDetails));
+export default connect(null, mapDispatchToProps)(withRouter(EditDetails));
