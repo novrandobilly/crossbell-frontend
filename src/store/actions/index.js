@@ -1,4 +1,4 @@
-export { createCompany, login, getOneCompany } from './company-actions';
+export { createCompany, getOneCompany } from './company-actions';
 
 export {
 	createApplicant,
@@ -12,3 +12,5 @@ export {
 } from './applicant-actions';
 
 export { createJob } from './job-actions';
+
+export { login } from './auth-actions';

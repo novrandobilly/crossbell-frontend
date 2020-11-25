@@ -70,8 +70,8 @@ export const createApplicant = ApplicantData => {
 			});
 			const responseJSON = await response.json();
 
-			dispatch(createApplicantSuccess(responseJSON.newApplicant));
-			return responseJSON.newApplicant;
+			dispatch(createApplicantSuccess(responseJSON));
+			return responseJSON;
 		} catch (err) {
 			dispatch(createApplicantFail);
 		}

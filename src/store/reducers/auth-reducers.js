@@ -5,11 +5,27 @@ const initialState = {
 	isCompany: false,
 	isAdmin: false,
 	token: null,
-	userId: null
+	userId: null,
+	isLoading: false,
+	isError: false
 };
 
 const authReducers = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.AUTHLOGINSTART: {
+			return {
+				...state,
+				isLoading: true,
+				isError: false
+			};
+		}
+		case actionTypes.AUTHLOGINFAIL: {
+			return {
+				...state,
+				isLoading: false,
+				isError: true
+			};
+		}
 		case actionTypes.AUTHLOGIN: {
 			console.log(action.payload);
 			return {
@@ -18,7 +34,9 @@ const authReducers = (state = initialState, action) => {
 				isCompany: action.payload.isCompany,
 				isAdmin: false,
 				token: action.payload.token,
-				userId: action.payload.userId
+				userId: action.payload.userId,
+				isLoading: false,
+				isError: false
 			};
 		}
 		case actionTypes.AUTHLOGOUT: {
@@ -28,7 +46,9 @@ const authReducers = (state = initialState, action) => {
 				isCompany: false,
 				isAdmin: false,
 				token: null,
-				userId: null
+				userId: null,
+				isLoading: false,
+				isError: false
 			};
 		}
 		case actionTypes.AUTHCOMPANY: {

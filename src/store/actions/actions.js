@@ -49,4 +49,6 @@ export const DELETEFEEDBACK = 'DELETE_FEEDBACK';
 export const AUTHADMIN = 'AUTH_ADMIN';
 export const AUTHCOMPANY = 'AUTH_COMPANY';
 export const AUTHLOGIN = 'AUTH_LOGIN';
+export const AUTHLOGINSTART = 'AUTH_LOGIN_START';
+export const AUTHLOGINFAIL = 'AUTH_LOGIN_FAIL';
 export const AUTHLOGOUT = 'AUTH_LOGOUT';

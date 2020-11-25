@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actionTypes from '../../../../store/actions/actions';
@@ -14,8 +14,6 @@ import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../.
 import classes from './Login.module.css';
 
 const Login = props => {
-	const [ isLoading, setIsLoading ] = useState(false);
-	const [ isError, setIsError ] = useState(false);
 	const [ formState, onInputHandler ] = useForm(
 		{
 			email: {
@@ -32,7 +30,7 @@ const Login = props => {
 
 	const onSubmitHandler = async event => {
 		event.preventDefault();
-		setIsLoading(true);
+
 		const loginData = {
 			email: formState.inputs.email.value,
 			password: formState.inputs.password.value
@@ -41,24 +39,25 @@ const Login = props => {
 		let res;
 		try {
 			res = await props.loginServer(loginData);
-			console.log(res);
+			if (!res) {
+				throw new Error('Error');
+			}
 		} catch (err) {
 			console.log(err);
 		}
 
-		if (res.token) {
-			setIsLoading(false);
-			props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });
-			props.history.push('/jobs-dashboard');
-		} else {
-			console.log('error');
-			setIsLoading(false);
-			setIsError(true);
-		}
+		// if (res.token) {
+		// 	setIsLoading(false);
+		// 	props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });
+		// 	props.history.push('/jobs-dashboard');
+		// } else {
+		// 	console.log('error');
+
+		// }
 	};
 
 	const onCancelHandler = () => {
-		setIsError(false);
+		props.logout();
 	};
 
 	let formContent = (
@@ -104,14 +103,14 @@ const Login = props => {
 		</div>
 	);
 
-	if (isLoading) {
+	if (props.auth.isLoading) {
 		formContent = <Spinner />;
 	}
 
 	return (
 		<React.Fragment>
 			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<Modal show={isError} onCancel={onCancelHandler}>
+				<Modal show={props.auth.isError} onCancel={onCancelHandler}>
 					Email or Password invalid. Please try again.
 				</Modal>
 				{formContent}
@@ -120,13 +119,19 @@ const Login = props => {
 	);
 };
 
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
+
 const mapDispatchToProps = dispatch => {
 	return {
-		login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
 		isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
 		admin: () => dispatch({ type: actionTypes.AUTHADMIN }),
+		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
 		loginServer: loginData => dispatch(actionCreators.login(loginData))
 	};
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
