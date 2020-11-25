@@ -108,7 +108,6 @@ const EditIntro = (props) => {
         console.log(res);
       } else {
       }
-
       props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);

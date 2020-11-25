@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
+import moment from "moment";
 
 import * as actionCreators from "../../../../../store/actions/index";
 import {
@@ -162,8 +163,8 @@ const Certification = (props) => {
                 inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Issue Date*"
-                initValue={data.startDate}
+                label="Issue Date (MM/ DD/ YYYY)*"
+                initValue={moment(data.startDate).format("MM/ DD/ YYYY")}
                 initIsValid={true}
               />
             </div>
@@ -176,8 +177,8 @@ const Certification = (props) => {
                   inputClass="DateInput"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label="Expiration Date*"
-                  initValue={data.endDate}
+                  label="Expiration Date (MM/ DD/ YYYY)*"
+                  initValue={moment(data.endDate).format("MM/ DD/ YYYY")}
                   initIsValid={true}
                 />
               </div>

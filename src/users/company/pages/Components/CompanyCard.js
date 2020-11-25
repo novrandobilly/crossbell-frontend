@@ -25,7 +25,7 @@ const CompanyCard = (props) => {
 
             <div className={classes.ContainerSizeIn}>
               <p className={classes.CompanySize}>{props.industry}</p>
-              <p>-</p>
+              <p>|</p>
 
               <p className={classes.CompanyIndustry}>
                 {props.size} people working here
