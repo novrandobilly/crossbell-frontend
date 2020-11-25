@@ -1,55 +1,54 @@
-import * as actionTypes from "./actions";
+import * as actionTypes from './actions';
 
-const createCompanySuccess = (payload) => {
-  return {
-    type: actionTypes.CREATECOMPANY,
-    payload: payload,
-  };
+const createCompanySuccess = payload => {
+	return {
+		type: actionTypes.CREATECOMPANY,
+		payload: payload
+	};
 };
 const createCompanyFail = () => {
-  return {
-    type: actionTypes.CREATECOMPANYFAIL,
-  };
+	return {
+		type: actionTypes.CREATECOMPANYFAIL
+	};
 };
 const createCompanyStart = () => {
-
-  return {
-    type: actionTypes.CREATECOMPANYSTART,
-  };
+	return {
+		type: actionTypes.CREATECOMPANYSTART
+	};
 };
 
-const getCompanySuccess = (payload) => {
-  return {
-    type: actionTypes.GETCOMPANY,
-    payload: payload,
-  };
+const getCompanySuccess = payload => {
+	return {
+		type: actionTypes.GETCOMPANY,
+		payload: payload
+	};
 };
 const getCompanyFail = () => {
-  return {
-    type: actionTypes.GETCOMPANYFAIL,
-  };
+	return {
+		type: actionTypes.GETCOMPANYFAIL
+	};
 };
 const getCompanyStart = () => {
-  return {
-    type: actionTypes.GETCOMPANYSTART,
-  };
+	return {
+		type: actionTypes.GETCOMPANYSTART
+	};
 };
 
-const updateCompanySuccess = (payload) => {
-  return {
-    type: actionTypes.UPDATECOMPANY,
-    payload: payload,
-  };
+const updateCompanySuccess = payload => {
+	return {
+		type: actionTypes.UPDATECOMPANY,
+		payload: payload
+	};
 };
 const updateCompanyFail = () => {
-  return {
-    type: actionTypes.UPDATECOMPANYFAIL,
-  };
+	return {
+		type: actionTypes.UPDATECOMPANYFAIL
+	};
 };
 const updateCompanyStart = () => {
-  return {
-    type: actionTypes.UPDATECOMPANYSTART,
-  };
+	return {
+		type: actionTypes.UPDATECOMPANYSTART
+	};
 };
 
 export const createCompany = companyData => {
@@ -83,148 +82,144 @@ export const createCompany = companyData => {
 	};
 };
 
-export const getOneCompany = companyData => {
+export const getOneCompany = CompanyId => {
 	return async dispatch => {
+		dispatch(getCompanyStart());
 		try {
-			const res = await fetch(`http://localhost:5000/api/users/co/${companyData.userId}`);
-			console.log(res);
-			if (!res.ok) {
-				throw new Error('Could not find company, please try again');
-			}
-			const responseJSON = res.json();
+			const response = await fetch(`http://localhost:5000/api/users/co/${CompanyId}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: null
+			});
+			const responseJSON = await response.json();
+
+			dispatch(getCompanySuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {
-			return err;
+			dispatch(getCompanyFail);
 		}
 	};
-
-export const updateCompanyIntro = (CompanyData) => {
-  return async (dispatch) => {
-    dispatch(updateCompanyStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/co/${CompanyData.companyId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: CompanyData.companyId,
-            dateOfBirth: CompanyData.dateOfBirth,
-            logo: CompanyData.logo,
-            companyName: CompanyData.companyName,
-            email: CompanyData.email,
-            password: CompanyData.password,
-            size: CompanyData.size,
-            industry: CompanyData.industry,
-            address: CompanyData.address,
-            website: CompanyData.website,
-            emailRecipient: CompanyData.emailRecipient,
-            details: CompanyData.details,
-            mission: CompanyData.mission,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-
-      dispatch(updateCompanySuccess(responseJSON.foundCompany));
-      return responseJSON.foundCompany;
-    } catch (err) {
-      dispatch(updateCompanyFail);
-    }
-  };
 };
 
-export const updateCompanyDetail = (CompanyData) => {
-  return async (dispatch) => {
-    dispatch(updateCompanyStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/co/${CompanyData.companyId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: CompanyData.companyId,
-            details: CompanyData.details,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
+export const updateCompanyIntro = CompanyData => {
+	return async dispatch => {
+		dispatch(updateCompanyStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/co/${CompanyData.companyId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: CompanyData.companyId,
+					dateOfBirth: CompanyData.dateOfBirth,
+					logo: CompanyData.logo,
+					companyName: CompanyData.companyName,
+					email: CompanyData.email,
+					password: CompanyData.password,
+					size: CompanyData.size,
+					industry: CompanyData.industry,
+					address: CompanyData.address,
+					website: CompanyData.website,
+					emailRecipient: CompanyData.emailRecipient,
+					details: CompanyData.details,
+					mission: CompanyData.mission
+				})
+			});
+			const responseJSON = await response.json();
 
-      dispatch(updateCompanySuccess(responseJSON.foundCompany));
-      return responseJSON.foundCompany;
-    } catch (err) {
-      dispatch(updateCompanyFail);
-    }
-  };
+			dispatch(updateCompanySuccess(responseJSON.foundCompany));
+			return responseJSON.foundCompany;
+		} catch (err) {
+			dispatch(updateCompanyFail);
+		}
+	};
 };
 
-export const updateCompanyMission = (CompanyData) => {
-  return async (dispatch) => {
-    dispatch(updateCompanyStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/co/${CompanyData.companyId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: CompanyData.companyId,
-            mission: CompanyData.mission,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
+export const updateCompanyDetail = CompanyData => {
+	return async dispatch => {
+		dispatch(updateCompanyStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/co/${CompanyData.companyId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: CompanyData.companyId,
+					details: CompanyData.details
+				})
+			});
+			const responseJSON = await response.json();
 
-      dispatch(updateCompanySuccess(responseJSON.foundCompany));
-      return responseJSON.foundCompany;
-    } catch (err) {
-      dispatch(updateCompanyFail);
-    }
-  };
+			dispatch(updateCompanySuccess(responseJSON.foundCompany));
+			return responseJSON.foundCompany;
+		} catch (err) {
+			dispatch(updateCompanyFail);
+		}
+	};
+};
+
+export const updateCompanyMission = CompanyData => {
+	return async dispatch => {
+		dispatch(updateCompanyStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/co/${CompanyData.companyId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: CompanyData.companyId,
+					mission: CompanyData.mission
+				})
+			});
+			const responseJSON = await response.json();
+
+			dispatch(updateCompanySuccess(responseJSON.foundCompany));
+			return responseJSON.foundCompany;
+		} catch (err) {
+			dispatch(updateCompanyFail);
+		}
+	};
 };
 
 //=======================================================================
 
 const loginSuccess = () => {
-  return {
-    type: actionTypes.AUTHLOGIN,
-  };
+	return {
+		type: actionTypes.AUTHLOGIN
+	};
 };
 
-export const login = (loginData) => {
-  return async (dispatch) => {
-    //login
-    try {
-      const res = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginData.email,
-          password: loginData.password,
-        }),
-      });
+export const login = loginData => {
+	return async dispatch => {
+		//login
+		try {
+			const res = await fetch('http://localhost:5000/api/users/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: loginData.email,
+					password: loginData.password
+				})
+			});
 
-      const resJSON = await res.json();
+			const resJSON = await res.json();
 
-      dispatch(loginSuccess);
-      return resJSON;
-    } catch (err) {
-      console.log(err);
-    }
+			dispatch(loginSuccess);
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+		}
 
-    //login success
-    //login fail
-  };
-
+		//login success
+		//login fail
+	};
 };
 
 //=======================================================================

@@ -32,10 +32,10 @@ export const login = loginData => {
 				})
 			});
 			const resJSON = await res.json();
+			console.log(resJSON);
 			if (!resJSON.token) {
 				throw new Error('Error');
 			}
-			console.log(resJSON);
 
 			dispatch(loginSuccess({ token: resJSON.token, userId: resJSON.userId, isCompany: resJSON.isCompany }));
 			return resJSON;
