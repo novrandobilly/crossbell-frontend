@@ -16,16 +16,18 @@ const JobCard = props => {
 	const applyHandler = async () => {
 		setIsLoading(true);
 		try {
-			const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.jobId}/apply`, {
-				// const response = await fetch(`http://localhost:5000/api/jobs/${props.id}/apply`, {
+			// const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.jobId}/apply`, {
+			const response = await fetch(`http://localhost:5000/api/jobs/${props.id}/apply`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${props.auth.token}`
 				},
 				body: JSON.stringify({
 					companyEmail: foundCompany.emailRecipient
 				})
 			});
+			console.log(foundCompany.emailRecipient);
 
 			const responseData = await response.json();
 			console.log(responseData);
@@ -80,7 +82,8 @@ const JobCard = props => {
 
 const mapStateToProps = state => {
 	return {
-		companies: state.company.companies
+		companies: state.company.companies,
+		auth: state.auth
 	};
 };
 

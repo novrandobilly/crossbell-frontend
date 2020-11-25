@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
 
-import * as actionCreators from "../../../../store/actions/index";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import CompanyMap from "../Components/CompanyMap";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const CompanyDetails = (props) => {
-  const { companyid } = useParams();
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import * as actionCreators from '../../../../store/actions/';
+import CompanyMap from '../Components/CompanyMap';
 
-  const { getOneCompany } = props;
-  useEffect(() => {
-    getOneCompany(companyid).then((res) => {
-      setData(res.company);
-      setIsLoading(false);
-    });
-  }, [getOneCompany, setIsLoading, companyid]);
+const CompanyDetails = props => {
+	const { companyid } = useParams();
+	const [ loadedCompany, setLoadedCompany ] = useState(null);
 
-  if (!isLoading) {
-    if (data) {
-      return <CompanyMap items={data} />;
-    } else {
-      return (
-        <div className="centerGlobal">
-          <h2>No Company Available with that ID</h2>
-        </div>
-      );
-    }
-  } else {
-    return <SpinnerCircle />;
-  }
+	const { getOneCompany } = props;
+	useEffect(
+		() => {
+			const getCompany = async () => {
+				try {
+					let res = await getOneCompany({ userId: companyid });
+					console.log(res);
+
+					setLoadedCompany(res.company);
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			getCompany();
+		},
+		[ companyid, getOneCompany ]
+	);
+
+	if (loadedCompany) {
+		// const company = props.company.find(co => co.companyId === companyid);
+		return <CompanyMap items={loadedCompany} />;
+	} else {
+		return <Spinner />;
+	}
+
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -40,4 +44,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CompanyDetails);
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getOneCompany: companyData => dispatch(actionCreators.getOneCompany(companyData))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyDetails);
+

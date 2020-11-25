@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actions";
 
 const initialState = {
+
   isLoading: false,
   error: false,
 };
@@ -59,6 +60,7 @@ const applicantReducers = (state = initialState, action) => {
     default:
       return state;
   }
+
 };
 
 export default applicantReducers;

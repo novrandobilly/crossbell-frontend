@@ -12,6 +12,7 @@ const createCompanyFail = () => {
   };
 };
 const createCompanyStart = () => {
+
   return {
     type: actionTypes.CREATECOMPANYSTART,
   };
@@ -51,59 +52,51 @@ const updateCompanyStart = () => {
   };
 };
 
-export const createCompany = (companyData) => {
-  return async (dispatch) => {
-    dispatch(createCompanyStart());
-    try {
-      const response = await fetch(`http://localhost:5000/api/users/signup`, {
-        // const response = await fetch(`https://crossbell-corps.herokuapp.com/api/users/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          companyName: companyData.companyName,
-          email: companyData.email,
-          password: companyData.password,
-          isCompany: true,
-        }),
-      });
-      const responseJSON = await response.json();
-      if (!response.ok) {
-        throw new Error(responseJSON.message);
-      }
-      dispatch(createCompanySuccess(responseJSON.newCompany));
-      return responseJSON;
-    } catch (err) {
-      dispatch(createCompanyFail());
-      return err;
-    }
-  };
+export const createCompany = companyData => {
+	return async dispatch => {
+		dispatch(createCompanyStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/signup`, {
+				// const response = await fetch(`https://crossbell-corps.herokuapp.com/api/users/signup`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					companyName: companyData.companyName,
+					email: companyData.email,
+					password: companyData.password,
+					isCompany: true
+				})
+			});
+			const responseJSON = await response.json();
+			console.log(responseJSON);
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
+			dispatch(createCompanySuccess(responseJSON));
+			return responseJSON;
+		} catch (err) {
+			dispatch(createCompanyFail());
+			return err;
+		}
+	};
 };
 
-export const getOneCompany = (CompanyId) => {
-  return async (dispatch) => {
-    dispatch(getCompanyStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/co/${CompanyId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: null,
-        }
-      );
-      const responseJSON = await response.json();
-
-      dispatch(getCompanySuccess(responseJSON));
-      return responseJSON;
-    } catch (err) {
-      dispatch(getCompanyFail);
-    }
-  };
-};
+export const getOneCompany = companyData => {
+	return async dispatch => {
+		try {
+			const res = await fetch(`http://localhost:5000/api/users/co/${companyData.userId}`);
+			console.log(res);
+			if (!res.ok) {
+				throw new Error('Could not find company, please try again');
+			}
+			const responseJSON = res.json();
+			return responseJSON;
+		} catch (err) {
+			return err;
+		}
+	};
 
 export const updateCompanyIntro = (CompanyData) => {
   return async (dispatch) => {
@@ -231,4 +224,7 @@ export const login = (loginData) => {
     //login success
     //login fail
   };
+
 };
+
+//=======================================================================
