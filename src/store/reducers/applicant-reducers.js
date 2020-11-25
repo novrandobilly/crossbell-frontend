@@ -1,269 +1,222 @@
 import * as actionTypes from '../actions/actions';
 
 const initialState = {
-
-  isLoading: false,
-  error: false,
+	isLoading: false,
+	error: false
 };
 
 const applicantReducers = (state = initialState, action) => {
-  switch (action.type) {
-    case actionTypes.CREATEAPPLICANTSTART:
-    case actionTypes.UPDATEAPPLICANTSTART: {
-      return {
-        ...state,
-        isLoading: true,
-        error: false,
-      };
-    }
+	switch (action.type) {
+		case actionTypes.CREATEAPPLICANTSTART:
+		case actionTypes.UPDATEAPPLICANTSTART: {
+			return {
+				...state,
+				isLoading: true,
+				error: false
+			};
+		}
 
-    case actionTypes.CREATEAPPLICANTSUCCESS: {
-      return {
-        ...state,
-        isLoading: false,
-        error: false,
-      };
-    }
+		case actionTypes.CREATEAPPLICANTSUCCESS: {
+			return {
+				...state,
+				isLoading: false,
+				error: false
+			};
+		}
 
-    case actionTypes.CREATEAPPLICANTFAIL:
-    case actionTypes.UPDATEAPPLICANTFAIL: {
-      return {
-        ...state,
-        isLoading: false,
-        error: true,
-      };
-    }
+		case actionTypes.CREATEAPPLICANTFAIL:
+		case actionTypes.UPDATEAPPLICANTFAIL: {
+			return {
+				...state,
+				isLoading: false,
+				error: true
+			};
+		}
 
-    case actionTypes.EDITAPPLICANTINTRO: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) => app.applicantId === action.payload.updatedAppIntro.applicantId
-      );
+		case actionTypes.EDITAPPLICANTINTRO: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedAppIntro.applicantId);
 
-      const EditAppIntro = {
-        ...applicantArray[applicantIndex],
-        firstName: action.payload.updatedAppIntro.firstName,
-        lastName: action.payload.updatedAppIntro.lastName,
-        email: action.payload.updatedAppIntro.email,
-        headline: action.payload.updatedAppIntro.headline,
-        address: action.payload.updatedAppIntro.address,
-        city: action.payload.updatedAppIntro.city,
-        state: action.payload.updatedAppIntro.state,
-        zip: action.payload.updatedAppIntro.zip,
-        phone: action.payload.updatedAppIntro.phone,
-        websites: action.payload.updatedAppIntro.websites,
-      };
+			const EditAppIntro = {
+				...applicantArray[applicantIndex],
+				firstName: action.payload.updatedAppIntro.firstName,
+				lastName: action.payload.updatedAppIntro.lastName,
+				email: action.payload.updatedAppIntro.email,
+				headline: action.payload.updatedAppIntro.headline,
+				address: action.payload.updatedAppIntro.address,
+				city: action.payload.updatedAppIntro.city,
+				state: action.payload.updatedAppIntro.state,
+				zip: action.payload.updatedAppIntro.zip,
+				phone: action.payload.updatedAppIntro.phone,
+				websites: action.payload.updatedAppIntro.websites
+			};
 
-      applicantArray[applicantIndex] = EditAppIntro;
+			applicantArray[applicantIndex] = EditAppIntro;
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.CREATEAPPLICANTEDUCATION: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) => app.applicantId === action.payload.updatedEducation.applicantId
-      );
+		case actionTypes.CREATEAPPLICANTEDUCATION: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedEducation.applicantId);
 
-      const newEducation = {
-        school: action.payload.updatedEducation.school,
-        degree: action.payload.updatedEducation.degree,
-        major: action.payload.updatedEducation.major,
-        location: action.payload.updatedEducation.location,
-        startDate: action.payload.updatedEducation.startDate,
-        endDate: action.payload.updatedEducation.endDate,
-        description: action.payload.updatedEducation.description,
-      };
+			const newEducation = {
+				school: action.payload.updatedEducation.school,
+				degree: action.payload.updatedEducation.degree,
+				major: action.payload.updatedEducation.major,
+				location: action.payload.updatedEducation.location,
+				startDate: action.payload.updatedEducation.startDate,
+				endDate: action.payload.updatedEducation.endDate,
+				description: action.payload.updatedEducation.description
+			};
 
-      applicantArray[applicantIndex].education = applicantArray[
-        applicantIndex
-      ].education.concat(newEducation);
+			applicantArray[applicantIndex].education = applicantArray[applicantIndex].education.concat(newEducation);
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.CREATEAPPLICANTEXPERIENCE: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) =>
-          app.applicantId === action.payload.updatedExperience.applicantId
-      );
+		case actionTypes.CREATEAPPLICANTEXPERIENCE: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedExperience.applicantId);
 
-      const newExperience = {
-        prevTitle: action.payload.updatedExperience.prevTitle,
-        prevCompany: action.payload.updatedExperience.prevCompany,
-        prevLocation: action.payload.updatedExperience.prevLocation,
-        startDate: action.payload.updatedExperience.startDate,
-        endDate: action.payload.updatedExperience.endDate,
-        description: action.payload.updatedExperience.description,
-      };
+			const newExperience = {
+				prevTitle: action.payload.updatedExperience.prevTitle,
+				prevCompany: action.payload.updatedExperience.prevCompany,
+				prevLocation: action.payload.updatedExperience.prevLocation,
+				startDate: action.payload.updatedExperience.startDate,
+				endDate: action.payload.updatedExperience.endDate,
+				description: action.payload.updatedExperience.description
+			};
 
-      applicantArray[applicantIndex].experience = applicantArray[
-        applicantIndex
-      ].experience.concat(newExperience);
+			applicantArray[applicantIndex].experience = applicantArray[applicantIndex].experience.concat(newExperience);
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.CREATEAPPLICANTCERTIFICATION: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) =>
-          app.applicantId === action.payload.updatedCertification.applicantId
-      );
+		case actionTypes.CREATEAPPLICANTCERTIFICATION: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedCertification.applicantId);
 
-      const newCertification = {
-        title: action.payload.updatedCertification.title,
-        organization: action.payload.updatedCertification.organization,
-        startDate: action.payload.updatedCertification.startDate,
-        endDate: action.payload.updatedCertification.endDate,
-        description: action.payload.updatedCertification.description,
-      };
+			const newCertification = {
+				title: action.payload.updatedCertification.title,
+				organization: action.payload.updatedCertification.organization,
+				startDate: action.payload.updatedCertification.startDate,
+				endDate: action.payload.updatedCertification.endDate,
+				description: action.payload.updatedCertification.description
+			};
 
-      applicantArray[applicantIndex].certification = applicantArray[
-        applicantIndex
-      ].certification.concat(newCertification);
+			applicantArray[applicantIndex].certification = applicantArray[applicantIndex].certification.concat(newCertification);
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.EDITAPPLICANTSUMMARY: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) =>
-          app.applicantId === action.payload.updatedAppSummary.applicantId
-      );
+		case actionTypes.EDITAPPLICANTSUMMARY: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedAppSummary.applicantId);
 
-      const EditAppSummary = {
-        ...applicantArray[applicantIndex],
-        details: action.payload.updatedAppSummary.details,
-        dateOfBirth: action.payload.updatedAppSummary.dateOfBirth,
-      };
+			const EditAppSummary = {
+				...applicantArray[applicantIndex],
+				details: action.payload.updatedAppSummary.details,
+				dateOfBirth: action.payload.updatedAppSummary.dateOfBirth
+			};
 
-      applicantArray[applicantIndex] = EditAppSummary;
+			applicantArray[applicantIndex] = EditAppSummary;
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.EDITAPPLICANTEDUCATION: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) => app.applicantId === action.payload.updatedEducation.applicantId
-      );
+		case actionTypes.EDITAPPLICANTEDUCATION: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedEducation.applicantId);
 
-      applicantArray[applicantIndex].education[
-        action.payload.updatedEducation.educationindex
-      ] = {
-        ...applicantArray[applicantIndex].education[
-          action.payload.updatedEducation.educationindex
-        ],
-        school: action.payload.updatedEducation.school,
-        degree: action.payload.updatedEducation.degree,
-        major: action.payload.updatedEducation.major,
-        location: action.payload.updatedEducation.location,
-        startDate: action.payload.updatedEducation.startDate,
-        endDate: action.payload.updatedEducation.endDate,
-        description: action.payload.updatedEducation.description,
-      };
+			applicantArray[applicantIndex].education[action.payload.updatedEducation.educationindex] = {
+				...applicantArray[applicantIndex].education[action.payload.updatedEducation.educationindex],
+				school: action.payload.updatedEducation.school,
+				degree: action.payload.updatedEducation.degree,
+				major: action.payload.updatedEducation.major,
+				location: action.payload.updatedEducation.location,
+				startDate: action.payload.updatedEducation.startDate,
+				endDate: action.payload.updatedEducation.endDate,
+				description: action.payload.updatedEducation.description
+			};
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.EDITAPPLICANTEXPERIENCE: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) =>
-          app.applicantId === action.payload.updatedExperience.applicantId
-      );
+		case actionTypes.EDITAPPLICANTEXPERIENCE: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedExperience.applicantId);
 
-      applicantArray[applicantIndex].experience[
-        action.payload.updatedExperience.experienceindex
-      ] = {
-        ...applicantArray[applicantIndex].experience[
-          action.payload.updatedExperience.experienceindex
-        ],
-        prevTitle: action.payload.updatedExperience.prevTitle,
-        prevCompany: action.payload.updatedExperience.prevCompany,
-        prevLocation: action.payload.updatedExperience.prevLocation,
-        startDate: action.payload.updatedExperience.startDate,
-        endDate: action.payload.updatedExperience.endDate,
-        description: action.payload.updatedExperience.description,
-      };
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			applicantArray[applicantIndex].experience[action.payload.updatedExperience.experienceindex] = {
+				...applicantArray[applicantIndex].experience[action.payload.updatedExperience.experienceindex],
+				prevTitle: action.payload.updatedExperience.prevTitle,
+				prevCompany: action.payload.updatedExperience.prevCompany,
+				prevLocation: action.payload.updatedExperience.prevLocation,
+				startDate: action.payload.updatedExperience.startDate,
+				endDate: action.payload.updatedExperience.endDate,
+				description: action.payload.updatedExperience.description
+			};
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.EDITAPPLICANTCERTIFICATION: {
-      const applicantArray = [...state.applicants];
-      const applicantIndex = applicantArray.findIndex(
-        (app) =>
-          app.applicantId === action.payload.updatedCertification.applicantId
-      );
-      applicantArray[applicantIndex].certification[
-        action.payload.updatedCertification.certificationindex
-      ] = {
-        ...applicantArray[applicantIndex].certification[
-          action.payload.updatedCertification.certificationindex
-        ],
-        title: action.payload.updatedCertification.title,
-        organization: action.payload.updatedCertification.organization,
-        startDate: action.payload.updatedCertification.startDate,
-        endDate: action.payload.updatedCertification.endDate,
-        description: action.payload.updatedCertification.description,
-      };
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+		case actionTypes.EDITAPPLICANTCERTIFICATION: {
+			const applicantArray = [ ...state.applicants ];
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.updatedCertification.applicantId);
+			applicantArray[applicantIndex].certification[action.payload.updatedCertification.certificationindex] = {
+				...applicantArray[applicantIndex].certification[action.payload.updatedCertification.certificationindex],
+				title: action.payload.updatedCertification.title,
+				organization: action.payload.updatedCertification.organization,
+				startDate: action.payload.updatedCertification.startDate,
+				endDate: action.payload.updatedCertification.endDate,
+				description: action.payload.updatedCertification.description
+			};
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    case actionTypes.DELETESEGMENT: {
-      let applicantArray = [...state.applicants];
+		case actionTypes.DELETESEGMENT: {
+			let applicantArray = [ ...state.applicants ];
 
-      const applicantIndex = applicantArray.findIndex(
-        (app) => app.applicantId === action.payload.applicantId
-      );
+			const applicantIndex = applicantArray.findIndex(app => app.applicantId === action.payload.applicantId);
 
-      let segmentArray = [
-        ...applicantArray[applicantIndex][action.payload.stateName],
-      ];
+			let segmentArray = [ ...applicantArray[applicantIndex][action.payload.stateName] ];
 
-      segmentArray = segmentArray.filter(
-        (segment, segmentIndex) => segmentIndex !== action.payload.index
-      );
+			segmentArray = segmentArray.filter((segment, segmentIndex) => segmentIndex !== action.payload.index);
 
-      applicantArray[applicantIndex][action.payload.stateName] = segmentArray;
+			applicantArray[applicantIndex][action.payload.stateName] = segmentArray;
 
-      return {
-        ...state,
-        applicants: applicantArray,
-      };
-    }
+			return {
+				...state,
+				applicants: applicantArray
+			};
+		}
 
-    default:
-      return state;
-  }
-
+		default:
+			return state;
+	}
 };
 
 export default applicantReducers;

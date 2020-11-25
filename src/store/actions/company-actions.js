@@ -35,10 +35,11 @@ export const createCompany = companyData => {
 				})
 			});
 			const responseJSON = await response.json();
+			console.log(responseJSON);
 			if (!response.ok) {
 				throw new Error(responseJSON.message);
 			}
-			dispatch(createCompanySuccess(responseJSON.newCompany));
+			dispatch(createCompanySuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {
 			dispatch(createCompanyFail());
@@ -47,38 +48,20 @@ export const createCompany = companyData => {
 	};
 };
 
-//=======================================================================
-
-const loginSuccess = () => {
-	return {
-		type: actionTypes.AUTHLOGIN
-	};
-};
-
-export const login = loginData => {
+export const getOneCompany = companyData => {
 	return async dispatch => {
-		//login
 		try {
-			const res = await fetch('http://localhost:5000/api/users/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					email: loginData.email,
-					password: loginData.password
-				})
-			});
-
-			const resJSON = await res.json();
-
-			dispatch(loginSuccess);
-			return resJSON;
+			const res = await fetch(`http://localhost:5000/api/users/co/${companyData.userId}`);
+			console.log(res);
+			if (!res.ok) {
+				throw new Error('Could not find company, please try again');
+			}
+			const responseJSON = res.json();
+			return responseJSON;
 		} catch (err) {
-			console.log(err);
+			return err;
 		}
-
-		//login success
-		//login fail
 	};
 };
+
+//=======================================================================
