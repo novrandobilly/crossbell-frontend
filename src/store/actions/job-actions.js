@@ -57,3 +57,57 @@ export const createJob = (jobData, authData) => {
 		}
 	};
 };
+
+const fetchingStart = () => {
+	return {
+		type: actionTypes.FETCHINGSTART
+	};
+};
+const fetchingFail = () => {
+	return {
+		type: actionTypes.FETCHINGFAIL
+	};
+};
+const fetchingFinish = () => {
+	return {
+		type: actionTypes.FETCHINGFINISH
+	};
+};
+
+export const getAllAvailableJobs = () => {
+	return async dispatch => {
+		dispatch(fetchingStart());
+		try {
+			const res = await fetch('http://localhost:5000/api/jobs');
+			const responseJSON = await res.json();
+
+			if (!res.ok) {
+				throw new Error('Failed fetching jobs, please try again');
+			}
+
+			dispatch(fetchingFinish());
+			return responseJSON;
+		} catch (err) {
+			dispatch(fetchingFail());
+			return err;
+		}
+	};
+};
+
+export const getOneJob = jobsId => {
+	return async dispatch => {
+		dispatch(fetchingStart());
+		try {
+			const res = await fetch(`http://localhost:5000/api/jobs/${jobsId}`);
+			if (!res.ok) {
+				throw new Error('Could not find specific job');
+			}
+			const responseJSON = await res.json();
+			dispatch(fetchingFinish());
+			return responseJSON;
+		} catch (err) {
+			dispatch(fetchingFail());
+			return err;
+		}
+	};
+};

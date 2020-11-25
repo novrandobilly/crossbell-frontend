@@ -1,6 +1,8 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer, useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions';
 
+import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import JobsList from '../components/JobsList';
 import QueryBar from '../components/QueryBar';
 
@@ -40,7 +42,7 @@ const searchReducer = (state, action) => {
 		case ACTION.SEARCHEMPTY: {
 			return {
 				...state,
-				jobList: action.payload.jobStore
+				jobList: action.payload.jobs
 			};
 		}
 		default: {
@@ -56,15 +58,28 @@ const JobsDashboard = props => {
 			value: '',
 			isValid: ''
 		},
-		jobList: props.jobStore
+		jobList: null
 	});
+
+	const { getAllAvailableJobs } = props;
+
+	useEffect(
+		() => {
+			const getJobs = async () => {
+				const res = await getAllAvailableJobs();
+				dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: res.availableJobs } });
+			};
+			getJobs();
+		},
+		[ getAllAvailableJobs ]
+	);
 
 	const searchHandler = event => {
 		event.preventDefault();
 		if (state.search.value) {
-			dispatch({ type: ACTION.SEARCHEXECUTE, payload: { jobs: props.jobStore } });
+			dispatch({ type: ACTION.SEARCHEXECUTE, payload: { jobs: state.jobList } });
 		} else {
-			dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobStore: props.jobStore } });
+			dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: state.jobList } });
 		}
 	};
 
@@ -79,19 +94,30 @@ const JobsDashboard = props => {
 		});
 	}, []);
 
+	let jobLists = <Spinner />;
+	if (state.jobList) {
+		jobLists = <JobsList items={state.jobList} />;
+	}
+
 	return (
 		<div className={classes.JobsDashboard}>
 			<QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} />
-			<JobsList items={state.jobList} />;
+			{jobLists}
 		</div>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		jobStore: state.job.jobs,
+		jobs: state.job,
 		companyStore: state.company.companies
 	};
 };
 
-export default connect(mapStateToProps)(JobsDashboard);
+const mapDispatchToProps = dispatch => {
+	return {
+		getAllAvailableJobs: () => dispatch(actionCreators.getAllAvailableJobs())
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(JobsDashboard);
