@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Summary from "../Components/Add/EditSummary.js";
@@ -14,15 +14,21 @@ import classes from "./ApplicantResumeVal.module.css";
 const ApplicantResumeVal = (props) => {
   const { applicantid } = useParams();
 
+  const [push, setPush] = useState(true);
+
+  const pushHandler = () => {
+    setPush(!push);
+  };
+
   return (
     <div className={classes.Container}>
       <div className={classes.ContentContainer}>
-        <Intro />
-        <Summary />
-        <Education />
-        <Experience />
-        <Certification />
-        <Skill />
+        <Intro push={push} handler={pushHandler} />
+        <Summary push={push} handler={pushHandler} />
+        <Education push={push} handler={pushHandler} />
+        <Experience push={push} handler={pushHandler} />
+        <Certification push={push} handler={pushHandler} />
+        <Skill push={push} handler={pushHandler} />
       </div>
       <div className={classes.Flexed}>
         <Link to={`/ap/${applicantid}`}>

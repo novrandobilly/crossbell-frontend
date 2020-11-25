@@ -191,7 +191,7 @@ export const updateApplicantEducation = (ApplicantData) => {
               endDate: ApplicantData.endDate,
               description: ApplicantData.description,
             },
-            index: ApplicantData.index ? ApplicantData.index : 0,
+            index: ApplicantData.index ? ApplicantData.index : null,
           }),
         }
       );
@@ -226,7 +226,7 @@ export const updateApplicantExperience = (ApplicantData) => {
               endDate: ApplicantData.endDate,
               description: ApplicantData.description,
             },
-            index: ApplicantData.index ? ApplicantData.index : 0,
+            index: ApplicantData.index ? ApplicantData.index : null,
           }),
         }
       );
@@ -260,7 +260,7 @@ export const updateApplicantCertification = (ApplicantData) => {
               endDate: ApplicantData.endDate,
               description: ApplicantData.description,
             },
-            index: ApplicantData.index ? ApplicantData.index : 0,
+            index: ApplicantData.index ? ApplicantData.index : null,
           }),
         }
       );
@@ -288,7 +288,7 @@ export const updateApplicantSkills = (ApplicantData) => {
           body: JSON.stringify({
             id: ApplicantData.applicantId,
             skills: [ApplicantData.skills],
-            index: ApplicantData.index ? ApplicantData.index : 0,
+            index: ApplicantData.index ? ApplicantData.index : null,
           }),
         }
       );

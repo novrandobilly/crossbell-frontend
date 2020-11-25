@@ -1,5 +1,11 @@
-
-export { createCompany } from "./company-actions";
+export {
+  createCompany,
+  login,
+  getOneCompany,
+  updateCompanyDetail,
+  updateCompanyIntro,
+  updateCompanyMission,
+} from "./company-actions";
 
 export {
   createApplicant,
@@ -11,4 +17,3 @@ export {
   updateApplicantSkills,
   getOneApplicant,
 } from "./applicant-actions";
-

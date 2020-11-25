@@ -17,6 +17,7 @@ import classes from "./EditSummary.module.css";
 
 const EditSummary = (props) => {
   const { applicantid } = useParams();
+  let push = props.push;
 
   const [formState, onInputHandler] = useForm(
     {
@@ -48,6 +49,7 @@ const EditSummary = (props) => {
       } else {
         console.log("no res detected");
       }
+      !push && props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);
     }
@@ -77,8 +79,8 @@ const EditSummary = (props) => {
               inputClass="AddJobInput"
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label="Date of Birth*"
-              placeholder="DD/MM/YYYY"
+              label="Date of Birth (MM/ DD/ YYYY)*"
+              placeholder="MM/DD/YYYY "
             />
           </div>
         </div>
@@ -103,12 +105,6 @@ const EditSummary = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    applicant: state.applicant.applicants,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     updateApplicantSummary: (ApplicantData) =>
@@ -116,7 +112,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditSummary));
+export default connect(null, mapDispatchToProps)(withRouter(EditSummary));

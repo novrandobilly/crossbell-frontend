@@ -20,6 +20,7 @@ const EditIntro = (props) => {
   const { applicantid } = useParams();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  let push = props.push;
 
   const [formState, onInputHandler] = useForm(
     {
@@ -93,6 +94,7 @@ const EditIntro = (props) => {
       } else {
         console.log("no response");
       }
+      !push && props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);
     }

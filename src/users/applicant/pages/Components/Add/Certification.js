@@ -17,6 +17,7 @@ import classes from "./Certification.module.css";
 
 const Certification = (props) => {
   const { applicantid } = useParams();
+  const push = props.push;
 
   const [formState, onInputHandler] = useForm(
     {
@@ -71,6 +72,7 @@ const Certification = (props) => {
         } else {
           console.log("no res detected");
         }
+        !push && props.history.push(`/ap/${applicantid}`);
       } catch (err) {
         console.log(err);
       }
@@ -92,6 +94,7 @@ const Certification = (props) => {
         } else {
           console.log("no res detected");
         }
+        !push && props.history.push(`/ap/${applicantid}`);
       } catch (err) {
         console.log(err);
       }
@@ -144,7 +147,7 @@ const Certification = (props) => {
                 inputClass="DateInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Issue Date*"
+                label="Issue Date (MM/ DD/ YYYY)*"
                 placeholder="DD/MM/YYYY"
               />
             </div>
@@ -157,7 +160,7 @@ const Certification = (props) => {
                   inputClass="DateInput"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label="Expiration Date*"
+                  label="Expiration Date (MM/ DD/ YYYY)*"
                   placeholder="DD/MM/YYYY"
                 />
               </div>
@@ -192,16 +195,12 @@ const Certification = (props) => {
   }
 
   return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      {formContent}
-    </form>
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        {formContent}
+      </form>
+    </div>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    applicant: state.applicant.applicants,
-  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -211,7 +210,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Certification));
+export default connect(null, mapDispatchToProps)(withRouter(Certification));
