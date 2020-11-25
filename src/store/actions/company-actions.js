@@ -82,11 +82,11 @@ export const createCompany = companyData => {
 	};
 };
 
-export const getOneCompany = CompanyId => {
+export const getOneCompany = payload => {
 	return async dispatch => {
 		dispatch(getCompanyStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/co/${CompanyId}`, {
+			const response = await fetch(`http://localhost:5000/api/users/co/${payload.userId}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
