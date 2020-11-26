@@ -28,11 +28,15 @@
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+}
+
+.FeedContact {
+  color: rgba(0, 0, 0, 0.4);
   margin-bottom: 2rem;
 }
 
 .Date {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.8);
   font-size: 0.8rem;
   margin-bottom: 2rem;
   margin-top: 1rem;

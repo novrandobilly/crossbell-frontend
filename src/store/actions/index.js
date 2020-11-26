@@ -1,20 +1,26 @@
-
-export { createCompany, getOneCompany,  updateCompanyDetail,
+export {
+  createCompany,
+  getOneCompany,
+  updateCompanyDetail,
   updateCompanyIntro,
-  updateCompanyMission, } from './company-actions';
+  updateCompanyMission,
+} from "./company-actions";
 
 export {
-	createApplicant,
-	updateApplicantIntro,
-	updateApplicantSummary,
-	updateApplicantEducation,
-	updateApplicantExperience,
-	updateApplicantCertification,
-	updateApplicantSkills,
-	getOneApplicant
-} from './applicant-actions';
+  createApplicant,
+  updateApplicantIntro,
+  updateApplicantSummary,
+  updateApplicantEducation,
+  updateApplicantExperience,
+  updateApplicantCertification,
+  updateApplicantSkills,
+  getOneApplicant,
+} from "./applicant-actions";
 
-export { createJob } from './job-actions';
+export { getAllApplicant, getAllCompany, getAllJob } from "./admin-actions";
 
-export { login } from './auth-actions';
+export { createFeed, getFeedback, deleteFeed } from "./feedback-actions";
 
+export { createJob } from "./job-actions";
+
+export { login } from "./auth-actions";
