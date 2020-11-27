@@ -11,6 +11,6 @@ export {
 	getOneApplicant
 } from './applicant-actions';
 
-export { createJob, getAllAvailableJobs, getOneJob } from './job-actions';
+export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob } from './job-actions';
 
 export { login } from './auth-actions';

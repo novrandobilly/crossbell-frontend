@@ -49,10 +49,7 @@ const JobCard = props => {
 	return (
 		<div className={classes.JobCard}>
 			<div className={classes.Logo}>
-				<img
-					src={props.logo || 'https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'}
-					alt={props.company}
-				/>
+				<img src={props.logo} alt={props.company} />
 			</div>
 			<div className={classes.Content}>
 				<h3>
