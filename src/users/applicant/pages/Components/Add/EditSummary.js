@@ -99,9 +99,11 @@ const EditSummary = (props) => {
   }
 
   return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      {formContent}
-    </form>
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        {formContent}
+      </form>
+    </div>
   );
 };
 

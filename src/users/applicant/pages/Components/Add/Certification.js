@@ -18,6 +18,7 @@ import classes from "./Certification.module.css";
 const Certification = (props) => {
   const { applicantid } = useParams();
   const push = props.push;
+  const [expiry, setExpiry] = useState(false);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -45,10 +46,9 @@ const Certification = (props) => {
     false
   );
 
-  const [expiry, setExpiry] = useState(false);
-
   const expiryHandler = (event) => {
     setExpiry(!expiry);
+    formState.inputs.endDate.isValid = true;
   };
 
   const onSubmitHandler = async (event) => {
