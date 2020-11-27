@@ -1,3 +1,9 @@
+.NavContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .NavLinks {
   list-style: none;
   margin: 0;

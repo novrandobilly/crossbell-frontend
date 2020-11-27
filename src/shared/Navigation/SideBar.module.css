@@ -1,0 +1,50 @@
+.Burger {
+  margin-left: 1rem;
+}
+.Container {
+  position: absolute;
+  top: 4rem;
+  right: -100%;
+  letter-spacing: 0.1rem;
+  line-height: 3.5rem;
+  background: #d7e2ff;
+  text-align: right;
+  transition: 850ms;
+}
+
+.ContainerActive {
+  position: absolute;
+  top: 4rem;
+  right: 0rem;
+  letter-spacing: 0.1rem;
+  line-height: 3.5rem;
+  background: #d7e2ff;
+  text-align: right;
+  transition: 250ms;
+  box-shadow: -0.5rem 1.5rem 2rem 0.1rem rgba(0, 0, 0, 0.3);
+}
+
+.MenuItem {
+  list-style: none;
+  padding: 0 1rem 2rem 3rem;
+}
+
+.MenuItem li {
+  margin-top: 1rem;
+  padding: 0 1rem 0 1rem;
+  border-radius: 0.5rem;
+}
+
+.MenuItem li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.MenuItem a {
+  text-decoration: none;
+}
+
+.MenuItem span {
+  font-weight: bold;
+  color: rgba(58, 81, 153, 1);
+  font-size: 1.3rem;
+}
