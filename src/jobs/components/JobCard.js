@@ -10,8 +10,6 @@ import Button from '../../shared/UI_Element/Button';
 const JobCard = props => {
 	const [ isLoading, setIsLoading ] = useState(false);
 
-	const foundCompany = props.companies.find(co => co.companyId === props.companyId);
-
 	//=====================================INSTANT APPLY=====================================
 	const applyHandler = async () => {
 		setIsLoading(true);
@@ -24,10 +22,9 @@ const JobCard = props => {
 					Authorization: `Bearer ${props.auth.token}`
 				},
 				body: JSON.stringify({
-					companyEmail: foundCompany.emailRecipient
+					companyEmail: props.emailRecipient
 				})
 			});
-			console.log(foundCompany.emailRecipient);
 
 			const responseData = await response.json();
 			console.log(responseData);
@@ -52,10 +49,7 @@ const JobCard = props => {
 	return (
 		<div className={classes.JobCard}>
 			<div className={classes.Logo}>
-				<img
-					src={foundCompany.logo || 'https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'}
-					alt={foundCompany.companyName}
-				/>
+				<img src={props.logo} alt={props.company} />
 			</div>
 			<div className={classes.Content}>
 				<h3>
@@ -65,9 +59,9 @@ const JobCard = props => {
 				</h3>
 
 				<p>
-					<Link to={`/co/${foundCompany.companyId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+					<Link to={`/co/${props.companyId._id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
 						<em>
-							<strong>{foundCompany.companyName} </strong>
+							<strong>{props.company} </strong>
 						</em>
 					</Link>
 					- {props.city}, {props.region}

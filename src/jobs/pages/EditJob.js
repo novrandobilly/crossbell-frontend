@@ -1,58 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from '../../shared/utils/useForm';
-import * as actionTypes from '../../store/actions/actions';
+import * as actionCreators from '../../store/actions';
 
+import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE } from '../../shared/utils/validator';
 import classes from './NewJob.module.css';
 
 const EditJob = props => {
-	const { jobsid } = useParams();
-
-	const identifiedJob = props.jobs.find(job => job.jobId === jobsid);
+	const jobid = useParams().jobsid;
+	const [ identifiedJob, setIdentifiedJob ] = useState(null);
 
 	const [ formState, onInputHandler ] = useForm(
 		{
 			jobQualification: {
-				value: identifiedJob.jobQualification,
-				isValid: true
+				value: identifiedJob ? identifiedJob.jobQualification : '',
+				isValid: identifiedJob ? identifiedJob.jobQualification : false
 			},
 			technicalRequirement: {
-				value: identifiedJob.technicalRequirement,
-				isValid: true
+				value: identifiedJob ? identifiedJob.technicalRequirement : '',
+				isValid: identifiedJob ? identifiedJob.technicalRequirement : false
 			},
 
 			employment: {
-				value: identifiedJob.employment,
-				isValid: true
+				value: identifiedJob ? identifiedJob.employment : '',
+				isValid: identifiedJob ? identifiedJob.employment : false
 			},
 			salary: {
-				value: identifiedJob.salary,
-				isValid: true
+				value: identifiedJob ? identifiedJob.salary : '',
+				isValid: identifiedJob ? identifiedJob.salary : false
 			},
-			benefit: {
-				value: identifiedJob.benefit,
-				isValid: true
+			description: {
+				value: identifiedJob ? identifiedJob.description : '',
+				isValid: identifiedJob ? identifiedJob.description : false
 			}
 		},
 		true
 	);
 
-	const onSubmitHandler = event => {
+	const { getOneJob } = props;
+	useEffect(
+		() => {
+			const fetchJob = async () => {
+				try {
+					const res = await getOneJob(jobid);
+					setIdentifiedJob(res);
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			fetchJob();
+		},
+		[ getOneJob, jobid ]
+	);
+
+	const onSubmitHandler = async event => {
 		event.preventDefault();
-		const updatedJob = {
-			jobId: identifiedJob.jobId,
-			benefit: formState.inputs.benefit.value,
+		const payload = {
+			jobId: jobid,
+			description: formState.inputs.description.value,
 			employment: formState.inputs.employment.value,
 			jobQualification: formState.inputs.jobQualification.value,
 			salary: formState.inputs.salary.value,
-			technicalRequirement: formState.inputs.technicalRequirement.value
+			technicalRequirement: formState.inputs.technicalRequirement.value,
+			token: props.auth.token
 		};
 
-		props.onUpdateJob(updatedJob);
-		props.history.push(`/jobs/${identifiedJob.jobId}`);
+		try {
+			await props.updateJob(payload);
+			props.history.push(`/jobs/${jobid}`);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 	useEffect(
 		() => {
@@ -67,13 +88,24 @@ const EditJob = props => {
 		onInputHandler(elementId, elementValue, true);
 	};
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			<div className={classes.ContainerFlex}>
+	let formContent = <Spinner />;
+	if (identifiedJob && !props.job.isLoading) {
+		formContent = (
+			<React.Fragment>
 				<p className={classes.FormTitle}>Edit Job Ads: </p>
 
 				<div className={classes.FormRow}>
 					<div className={classes.EditLabel}>
+						<Input
+							inputType='input'
+							id='description'
+							inputClass='AddJobInput'
+							validatorMethod={[ VALIDATOR_REQUIRE() ]}
+							onInputHandler={onInputHandler}
+							label='Description*'
+							initValue={identifiedJob.description}
+							initIsValid={true}
+						/>
 						<Input
 							inputType='input'
 							id='jobQualification'
@@ -124,36 +156,33 @@ const EditJob = props => {
 							initValue={identifiedJob.salary}
 							initIsValid={true}
 						/>
-
-						<Input
-							inputType='input'
-							id='benefit'
-							inputClass='AddJobInput'
-							validatorMethod={[ VALIDATOR_REQUIRE() ]}
-							onInputHandler={onInputHandler}
-							label='Benefits*'
-							initValue={identifiedJob.benefit}
-							initIsValid={true}
-						/>
 					</div>
 				</div>
 				<button disabled={!formState.formIsValid} className={classes.SaveButton}>
 					<span>Save</span>
 				</button>
-			</div>
+			</React.Fragment>
+		);
+	}
+
+	return (
+		<form onSubmit={onSubmitHandler} className={classes.Container}>
+			<div className={classes.ContainerFlex}>{formContent}</div>
 		</form>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		jobs: state.job.jobs
+		auth: state.auth,
+		job: state.job
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onUpdateJob: updatedJob => dispatch({ type: actionTypes.EDITJOB, payload: { updatedJob } })
+		updateJob: payload => dispatch(actionCreators.updateJob(payload)),
+		getOneJob: jobId => dispatch(actionCreators.getOneJob(jobId))
 	};
 };
 
