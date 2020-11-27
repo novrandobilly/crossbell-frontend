@@ -14,3 +14,5 @@ export {
 export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob } from './job-actions';
 
 export { login } from './auth-actions';
+
+export { admReg } from './admin-actions';

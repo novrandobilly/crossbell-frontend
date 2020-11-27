@@ -3,7 +3,6 @@ import * as actionTypes from '../actions/actions';
 const initialState = {
 	isLoggedIn: false,
 	isCompany: false,
-	isAdmin: false,
 	token: null,
 	userId: null,
 	isLoading: false,
@@ -32,7 +31,6 @@ const authReducers = (state = initialState, action) => {
 				...state,
 				isLoggedIn: !!action.payload.token,
 				isCompany: action.payload.isCompany,
-				isAdmin: false,
 				token: action.payload.token,
 				userId: action.payload.userId,
 				isLoading: false,
@@ -44,7 +42,6 @@ const authReducers = (state = initialState, action) => {
 				...state,
 				isLoggedIn: false,
 				isCompany: false,
-				isAdmin: false,
 				token: null,
 				userId: null,
 				isLoading: false,
@@ -57,13 +54,7 @@ const authReducers = (state = initialState, action) => {
 				isCompany: true
 			};
 		}
-		case actionTypes.AUTHADMIN: {
-			return {
-				...state,
-				isLogin: true,
-				isAdmin: true
-			};
-		}
+
 		default: {
 			return state;
 		}

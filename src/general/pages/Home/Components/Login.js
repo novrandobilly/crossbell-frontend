@@ -128,7 +128,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
-		admin: () => dispatch({ type: actionTypes.AUTHADMIN }),
 		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
 		loginServer: loginData => dispatch(actionCreators.login(loginData))
 	};
