@@ -1,23 +1,34 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actions';
+import * as actionCreators from '../../store/actions/';
 
+import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './JobContainer.module.css';
+// import { act } from '@testing-library/react';
 
 const JobDetails = props => {
+	const { jobsid } = useParams();
 	const onSaveHandler = event => {
 		event.preventDefault();
 	};
 
-	const onDeleteHandler = event => {
+	const onDeleteHandler = async event => {
 		event.preventDefault();
 
-		props.deleteJob(props.jobId);
-		props.history.push('/jobs-dashboard');
+		const payload = {
+			jobId: jobsid,
+			token: props.auth.token
+		};
+		try {
+			await props.deleteJob(payload);
+			props.history.push('/jobs-dashboard');
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
-	return (
+	let containerContent = (
 		<div className={classes.Container}>
 			<div className={classes.LeftContainer}>
 				<div className={classes.UpperContainer}>
@@ -105,17 +116,24 @@ const JobDetails = props => {
 			</div>
 		</div>
 	);
+
+	if (props.job.isLoading) {
+		containerContent = <Spinner />;
+	}
+
+	return containerContent;
 };
 
 const mapStateToProps = state => {
 	return {
-		companies: state.company.companies
+		auth: state.auth,
+		job: state.job
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		deleteJob: jobId => dispatch({ type: actionTypes.DELETEJOB, payload: { jobId } })
+		deleteJob: payload => dispatch(actionCreators.deleteJob(payload))
 	};
 };
 
