@@ -1,8 +1,10 @@
-import React, { useState, useCallback, useReducer } from "react";
+import React, { useState, useCallback, useReducer, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
+import * as actionCreators from "../../../../store/actions/index";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import QueryBar from "./Component/QueryBar";
-// import ApplicantCard from "./Component/ApplicantCard";
 
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
@@ -12,6 +14,7 @@ const ACTION = {
   SEARCHUPDATE: "update-search",
   SEARCHEXECUTE: "search-execute",
   SEARCHEMPTY: "search-empty",
+  DATAINIT: "data-init",
 };
 
 const searchReducer = (state, action) => {
@@ -27,11 +30,18 @@ const searchReducer = (state, action) => {
         },
       };
     }
+
+    case ACTION.DATAINIT: {
+      return {
+        ...state,
+        applicantList: action.payload.init,
+      };
+    }
+
     case ACTION.SEARCHEXECUTE: {
       const filteredApplicant = action.payload.applicant.filter((app, i) => {
         let searchValidity = false;
         for (const key in app) {
-          console.log(app);
           searchValidity =
             searchValidity ||
             (typeof app[key] === "string" &&
@@ -77,6 +87,7 @@ const searchReducer = (state, action) => {
 
         return searchValidity;
       });
+      console.log(filteredApplicant);
       return {
         ...state,
         applicantList: filteredApplicant,
@@ -97,6 +108,29 @@ const searchReducer = (state, action) => {
 const ApplicantListAO = (props) => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: "" });
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [state, dispatch] = useReducer(searchReducer, {
+    search: {
+      id: "",
+      value: "",
+      isValid: "",
+    },
+    applicantList: [],
+  });
+
+  const { getAllApplicant } = props;
+  useEffect(() => {
+    getAllApplicant().then((res) => {
+      setData(res.wholeApplicants);
+      dispatch({
+        type: ACTION.DATAINIT,
+        payload: { init: res.wholeApplicants },
+      });
+      setIsLoading(false);
+    });
+  }, [getAllApplicant, setIsLoading]);
 
   const handleAll = () => {
     setfind(false);
@@ -117,27 +151,17 @@ const ApplicantListAO = (props) => {
     setfilter("Premium");
   };
 
-  const [state, dispatch] = useReducer(searchReducer, {
-    search: {
-      id: "",
-      value: "",
-      isValid: "",
-    },
-    applicantList: props.applicant,
-  });
-  console.log(state.applicantList);
-
   const searchHandler = (event) => {
     event.preventDefault();
     if (state.search.value) {
       dispatch({
         type: ACTION.SEARCHEXECUTE,
-        payload: { applicant: props.applicant },
+        payload: { applicant: data },
       });
     } else {
       dispatch({
         type: ACTION.SEARCHEMPTY,
-        payload: { applicant: props.applicant },
+        payload: { applicant: data },
       });
     }
   };
@@ -153,15 +177,7 @@ const ApplicantListAO = (props) => {
     });
   }, []);
 
-  if (state.applicantList.length <= 0) {
-    return (
-      <div className="centerGlobal">
-        <h2>No Applicant found!</h2>
-      </div>
-    );
-  }
-
-  return (
+  let content = (
     <div className={classes.FlexContainer}>
       <QueryBar
         searchInputHandler={searchInputHandler}
@@ -223,14 +239,35 @@ const ApplicantListAO = (props) => {
               {state.applicantList
                 .filter((app) => app.status === filter)
                 .map((app) => (
-                  <tr key={app.applicantId}>
-                    <th>{app.applicantId}</th>
+                  <tr key={app.id}>
                     <th>
-                      {app.firstName} {app.lastName}
+                      <Link
+                        to={`/ap/${app.id}`}
+                        style={{ color: "black", textDecoration: "none" }}
+                      >
+                        {app.id}
+                      </Link>
                     </th>
-                    <th>{app.headline}</th>
+
+                    <th>
+                      <div className={classes.NameRow}>
+                        <div className={classes.ApplicantName}>
+                          {app.firstName} {app.lastName}
+                        </div>
+                        <p></p>
+                        {app.headline}
+                      </div>
+                    </th>
                     <th>{app.email}</th>
-                    <th>{app.address}</th>
+                    <th
+                      style={
+                        app.address
+                          ? { color: "black" }
+                          : { color: "rgba(255,0,0,0.7)" }
+                      }
+                    >
+                      {app.address ? app.address : "no data"}
+                    </th>
                     <th
                       style={
                         app.status === "Blocked"
@@ -259,8 +296,17 @@ const ApplicantListAO = (props) => {
           ) : (
             <tbody className={classes.ColumnField}>
               {state.applicantList.map((app) => (
-                <tr key={app.applicantId}>
-                  <th>{app.applicantId}</th>
+                <tr key={app.id}>
+                  <th>
+                    {" "}
+                    <Link
+                      to={`/ap/${app.id}`}
+                      style={{ color: "black", textDecoration: "none" }}
+                    >
+                      {app.id}
+                    </Link>
+                  </th>
+
                   <th>
                     <div className={classes.NameRow}>
                       <div className={classes.ApplicantName}>
@@ -271,7 +317,15 @@ const ApplicantListAO = (props) => {
                     </div>
                   </th>
                   <th>{app.email}</th>
-                  <th>{app.address}</th>
+                  <th
+                    style={
+                      app.address
+                        ? { color: "black" }
+                        : { color: "rgba(255,0,0,0.7)" }
+                    }
+                  >
+                    {app.address ? app.address : "no data"}
+                  </th>
                   <th
                     style={
                       app.status === "Blocked"
@@ -300,15 +354,17 @@ const ApplicantListAO = (props) => {
           )}
         </table>
       </div>
-      {/* <ApplicantCard /> */}
     </div>
   );
+  if (isLoading) {
+    content = <SpinnerCircle />;
+  }
+  return <div>{content};</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    applicant: state.applicant.applicants,
+    getAllApplicant: () => dispatch(actionCreators.getAllApplicant()),
   };
 };
-
-export default connect(mapStateToProps)(ApplicantListAO);
+export default connect(null, mapDispatchToProps)(ApplicantListAO);

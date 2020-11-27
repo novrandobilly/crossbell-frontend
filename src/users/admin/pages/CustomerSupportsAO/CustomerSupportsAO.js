@@ -1,34 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { VALIDATOR_REQUIRE } from "../../../../shared/utils/validator";
-import * as actionTypes from "../../../../store/actions/actions";
+import * as actionCreators from "../../../../store/actions/index";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../shared/UI_Element/Input";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 import classes from "./CustomerSupportsAO.module.css";
 
 const CustomerSupportsAO = (props) => {
-  const onDeleteHandler = (index) => {
-    props.onDeleteFeed(props.feeds[index].feedId);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getFeedback } = props;
+
+  useEffect(() => {
+    getFeedback().then((res) => {
+      setData(res.Feedback);
+      setIsLoading(false);
+    });
+  }, [getFeedback, setIsLoading]);
+
+  const onDeleteHandler = async (id) => {
+    try {
+      const res = await props.deleteFeed(id);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no feed with id:" + { id });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  return (
+  let content = (
     <div className={classes.Container}>
-      {props.feeds.map((feed, i) => {
+      {data.map((feed, i) => {
         return (
-          <div className={classes.FeedCard} key={feed.feedId}>
+          <div className={classes.FeedCard} key={feed._id}>
             <div className={classes.Content}>
               <div className={classes.Header}>
-                <div>Created By: {feed.userId}</div>
+                <div>Created By: {feed.name}</div>
                 <div>
                   <button
                     className={classes.DeleteFeed}
-                    onClick={() => onDeleteHandler(i)}
+                    onClick={() => onDeleteHandler(feed._id)}
                   >
                     <DeleteForeverIcon />
                   </button>
                 </div>
+              </div>
+              <div className={classes.FeedContact}>
+                {feed.email} - {feed.phone}
               </div>
               <div className={classes.Feeds}>{feed.feed}</div>
               <div className={classes.Date}> {feed.datePosted} </div>
@@ -50,22 +75,19 @@ const CustomerSupportsAO = (props) => {
       })}
     </div>
   );
-};
 
-const mapStateToProps = (state) => {
-  return {
-    feeds: state.feed.feedback,
-  };
+  if (isLoading) {
+    content = <SpinnerCircle />;
+  }
+
+  return <div>{content};</div>;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDeleteFeed: (deleteFeed) =>
-      dispatch({
-        type: actionTypes.DELETEFEEDBACK,
-        payload: deleteFeed,
-      }),
+    deleteFeed: (feedId) => dispatch(actionCreators.deleteFeed(feedId)),
+    getFeedback: () => dispatch(actionCreators.getFeedback()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomerSupportsAO);
+export default connect(null, mapDispatchToProps)(CustomerSupportsAO);

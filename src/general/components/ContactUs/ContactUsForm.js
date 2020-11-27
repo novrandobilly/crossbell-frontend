@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "../../../shared/utils/useForm";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import * as actionTypes from "../../../store/actions/actions";
+import * as actionCreators from "../../../store/actions/index";
 import Input from "../../../shared/UI_Element/Input";
 import Button from "../../../shared/UI_Element/Button";
 import {
@@ -30,7 +30,7 @@ const ContactUsForm = (props) => {
         value: "",
         isValid: false,
       },
-      message: {
+      feed: {
         value: "",
         isValid: false,
       },
@@ -38,22 +38,26 @@ const ContactUsForm = (props) => {
     false
   );
 
-  const applicant = props.applicant.find(
-    (app) => app.email === formState.inputs.email.value
-  );
-
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     const newFeed = {
-      feedId: formState.inputs.message.value.slice(0, 3).toUpperCase(),
-      userId: applicant.applicantId,
+      name: formState.inputs.nama.value,
       email: formState.inputs.email.value,
       phone: formState.inputs.phone.value,
-      feed: formState.inputs.message.value,
-      createdAt: "12/12/2020",
+      feed: formState.inputs.feed.value,
     };
-    props.onCreateFeed(newFeed);
-    props.history.push("/ad/alphaomega/customer-supports");
+    try {
+      const res = await props.createFeed(newFeed);
+      console.log(res);
+      if (res) {
+        alert("Success Posting your feed!");
+        console.log(res);
+      } else {
+        throw new Error("Error nih bro");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -84,40 +88,27 @@ const ContactUsForm = (props) => {
           inputType="textarea"
           placeholder="Pesan..."
           rows="10"
-          id="message"
+          id="feed"
           onInputHandler={onInputHandler}
           validatorMethod={[VALIDATOR_MINLENGTH(10)]}
         />
 
-        <Button disabled={!formState.formIsValid} btnType={"Dark"}>
+        <Button
+          disabled={!formState.formIsValid}
+          btnType={"Dark"}
+          onClick={onSubmitHandler}
+        >
           Submit
         </Button>
-
-        <Link to={`/ad/alphaomega/customer-supports`}>
-          <button>Preview</button>
-        </Link>
       </form>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    applicant: state.applicant.applicants,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCreateFeed: (createFeed) =>
-      dispatch({
-        type: actionTypes.CREATEFEEDBACK,
-        payload: createFeed,
-      }),
+    createFeed: (newFeed) => dispatch(actionCreators.createFeed(newFeed)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(ContactUsForm));
+export default connect(null, mapDispatchToProps)(withRouter(ContactUsForm));
