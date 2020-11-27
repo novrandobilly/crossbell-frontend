@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions/actions";
 
 import SideBar from "./SideBar";
 
-
 import classes from "./NavigationLinks.module.css";
 
 const NavigationLinks = (props) => {
+  const [admin, setAdmin] = useState(true);
+
   const logoutHandler = () => {
     props.logout();
     props.history.push("/jobs-dashboard");
   };
-  return (
 
+  return (
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
         <li>
@@ -51,11 +52,8 @@ const NavigationLinks = (props) => {
           </li>
         )}
       </ul>
-      <div activeClassName={classes.active}>
-        <SideBar />
-      </div>
+      <div>{admin && props.auth.isLoggedIn ? <SideBar /> : <div />}</div>
     </div>
-
   );
 };
 

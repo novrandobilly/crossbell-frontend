@@ -103,12 +103,16 @@ const CompaniesListAO = (props) => {
                 .filter((company) => company.status === filter)
                 .map((company) => (
                   <tr key={company.id}>
-                    <Link
-                      to={`/co/${company.id}`}
-                      style={{ color: "black", textDecoration: "none" }}
-                    >
-                      <th>{company.id}</th>
-                    </Link>
+                    <th>
+                      {" "}
+                      <Link
+                        to={`/co/${company.id}`}
+                        style={{ color: "black", textDecoration: "none" }}
+                      >
+                        {company.id}
+                      </Link>
+                    </th>
+
                     <th>{company.companyName}</th>
                     <th>{company.industry ? company.industry : "no data"}</th>
                     <th>{company.email}</th>
@@ -142,12 +146,16 @@ const CompaniesListAO = (props) => {
             <tbody className={classes.ColumnField}>
               {data.map((company) => (
                 <tr key={company.id}>
-                  <Link
-                    to={`/co/${company.id}`}
-                    style={{ color: "black", textDecoration: "none" }}
-                  >
-                    <th>{company.id}</th>
-                  </Link>
+                  <th>
+                    {" "}
+                    <Link
+                      to={`/co/${company.id}`}
+                      style={{ color: "black", textDecoration: "none" }}
+                    >
+                      {company.id}
+                    </Link>
+                  </th>
+
                   <th>{company.companyName}</th>
                   <th
                     style={

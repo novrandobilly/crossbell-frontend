@@ -1,0 +1,47 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.AdminCard {
+  margin-top: 2rem;
+  background-color: rgb(215, 226, 255);
+  border: solid 0.2rem gray;
+  border-radius: 3rem;
+  padding: 2rem 4rem 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.LeftCard {
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: bold;
+  width: 50%;
+}
+
+.Label {
+  font-size: 1rem;
+  color: rgba(58, 81, 153, 1);
+  margin-bottom: -1rem;
+}
+
+.Text {
+  letter-spacing: 0.2rem;
+}
+
+.RightCard {
+  margin: 2rem 4rem 0 0;
+}
+
+.RightCardContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.Picture {
+  width: 15rem;
+  height: 20rem;
+  margin-bottom: 2rem;
+}

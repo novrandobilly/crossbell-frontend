@@ -44,6 +44,7 @@ import AddApplicantExperience from "./users/applicant/pages/Components/Add/Exper
 import AddApplicantCertification from "./users/applicant/pages/Components/Add/Certification";
 import AddApplicantSkills from "./users/applicant/pages/Components/Add/Skill";
 
+import AdminProfile from "./users/admin/pages/AdminProfile/AdminProfile";
 import JobsListAO from "./users/admin/pages/JobsListAO/JobsListAO";
 import CompaniesListAO from "./users/admin/pages/CompaniesListAO/CompaniesListAO";
 import ApplicantsListAO from "./users/admin/pages/ApplicantsListAO/ApplicantsListAO";
@@ -149,6 +150,7 @@ const App = (props) => {
           <Route path="/jobs/:jobsid" component={JobDetails} />
 
           {/* Admin Routes */}
+          <Route path="/ad/alphaomega/profile" component={AdminProfile} />
           <Route
             path="/ad/alphaomega/applicants/:applicantid"
             component={ApplicantDetailsAO}

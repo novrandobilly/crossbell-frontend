@@ -26,12 +26,15 @@
 }
 
 .Table th {
-  border-bottom: 0.05rem solid rgb(104, 102, 102);
   padding-left: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   text-align: left;
   font-weight: normal;
+}
+
+.Table tr {
+  align-items: center;
 }
 
 .Table tr:nth-child(even) {
@@ -41,6 +44,7 @@
 .RowField th {
   background-color: #d7e2ff;
   font-weight: bold;
+  border-bottom: 0.05rem solid rgb(104, 102, 102);
 }
 
 .ColumnField {
