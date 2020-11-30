@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
+import * as actionCreators from "../../../../store/actions/index";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 import classes from "./CompaniesListAO.module.css";
@@ -8,6 +11,16 @@ import classes from "./CompaniesListAO.module.css";
 const CompaniesListAO = (props) => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: "" });
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getAllCompany } = props;
+  useEffect(() => {
+    getAllCompany().then((res) => {
+      setData(res.wholeCompanies);
+      setIsLoading(false);
+    });
+  }, [getAllCompany, setIsLoading]);
 
   const handleAll = () => {
     setfind(false);
@@ -28,7 +41,9 @@ const CompaniesListAO = (props) => {
     setfilter("Premium");
   };
 
-  return (
+  console.log(data);
+
+  let content = (
     <div className={classes.FlexContainer}>
       <div className={classes.Container}>
         <div className={classes.HeaderContainer}>
@@ -84,13 +99,18 @@ const CompaniesListAO = (props) => {
 
           {find ? (
             <tbody className={classes.ColumnField}>
-              {props.company
+              {data
                 .filter((company) => company.status === filter)
                 .map((company) => (
-                  <tr key={company.companyId}>
-                    <th>{company.companyId}</th>
+                  <tr key={company.id}>
+                    <Link
+                      to={`/co/${company.id}`}
+                      style={{ color: "black", textDecoration: "none" }}
+                    >
+                      <th>{company.id}</th>
+                    </Link>
                     <th>{company.companyName}</th>
-                    <th>{company.industry}</th>
+                    <th>{company.industry ? company.industry : "no data"}</th>
                     <th>{company.email}</th>
                     <th>{company.address}</th>
                     <th
@@ -120,13 +140,35 @@ const CompaniesListAO = (props) => {
             </tbody>
           ) : (
             <tbody className={classes.ColumnField}>
-              {props.company.map((company) => (
-                <tr key={company.companyId}>
-                  <th>{company.companyId}</th>
+              {data.map((company) => (
+                <tr key={company.id}>
+                  <Link
+                    to={`/co/${company.id}`}
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    <th>{company.id}</th>
+                  </Link>
                   <th>{company.companyName}</th>
-                  <th>{company.industry}</th>
+                  <th
+                    style={
+                      company.industry
+                        ? { color: "black" }
+                        : { color: "rgba(255,0,0,0.7)", fontWeight: "bold" }
+                    }
+                  >
+                    {company.industry ? company.industry : "no data"}
+                  </th>
                   <th>{company.email}</th>
-                  <th>{company.address}</th>
+                  <th
+                    style={
+                      company.address
+                        ? { color: "black" }
+                        : { color: "rgba(255,0,0,0.7)", fontWeight: "bold" }
+                    }
+                  >
+                    {" "}
+                    {company.address ? company.address : "no data"}
+                  </th>
                   <th
                     style={
                       company.status === "Blocked"
@@ -157,12 +199,18 @@ const CompaniesListAO = (props) => {
       </div>
     </div>
   );
+
+  if (isLoading) {
+    content = <SpinnerCircle />;
+  }
+
+  return <div>{content};</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    company: state.company.companies,
+    getAllCompany: () => dispatch(actionCreators.getAllCompany()),
   };
 };
 
-export default connect(mapStateToProps)(CompaniesListAO);
+export default connect(null, mapDispatchToProps)(CompaniesListAO);

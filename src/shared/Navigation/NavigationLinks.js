@@ -4,71 +4,65 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions/actions';
 
 import classes from './NavigationLinks.module.css';
+import SideBar from './SideBar';
 
 const NavigationLinks = props => {
 	const logoutHandler = () => {
-		if (props.admin.isLoggedIn) {
-			props.admLogout();
-		} else {
-			props.logout();
-		}
+		props.logout();
 		props.history.push('/jobs-dashboard');
 	};
 	return (
-		<ul className={classes.NavLinks}>
-			<li>
-				<NavLink to='/' exact activeClassName={classes.active}>
-					Home
-				</NavLink>
-			</li>
-			<li>
-				<NavLink to='/jobs-dashboard' activeClassName={classes.active}>
-					Explore Jobs
-				</NavLink>
-			</li>
-			<li>
-				<NavLink to='#' activeClassName={classes.active}>
-					Development Pages
-				</NavLink>
-			</li>
-			{props.auth.isLoggedIn &&
-			!props.auth.isCompany && (
+		<div className={classes.NavContainer}>
+			<ul className={classes.NavLinks}>
 				<li>
-					<NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
-						My Profile
+					<NavLink to='/' exact activeClassName={classes.active}>
+						Home
 					</NavLink>
 				</li>
-			)}
-			{props.auth.isLoggedIn &&
-			props.auth.isCompany && (
 				<li>
-					<NavLink to={`/co/${props.auth.userId}`} activeClassName={classes.active}>
-						My Company Profile
+					<NavLink to='/jobs-dashboard' activeClassName={classes.active}>
+						Explore Jobs
 					</NavLink>
 				</li>
-			)}
+				{props.auth.isLoggedIn &&
+				!props.auth.isCompany && (
+					<li>
+						<NavLink to='/ap/:applicantid' activeClassName={classes.active}>
+							My Profile
+						</NavLink>
+					</li>
+				)}
+				{props.auth.isLoggedIn &&
+				props.auth.isCompany && (
+					<li>
+						<NavLink to={`/co/${props.auth.userId}`} activeClassName={classes.active}>
+							My Company Profile
+						</NavLink>
+					</li>
+				)}
 
-			{props.auth.isLoggedIn ||
-				(props.admin.isLoggedIn && (
+				{props.auth.isLoggedIn && (
 					<li onClick={logoutHandler}>
 						<NavLink to='#'>Logout</NavLink>
 					</li>
-				))}
-		</ul>
+				)}
+			</ul>
+			<div activeClassName={classes.active}>
+				<SideBar />
+			</div>
+		</div>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		auth: state.auth,
-		admin: state.admin
+		auth: state.auth
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-		admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT })
+		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT })
 	};
 };
 
