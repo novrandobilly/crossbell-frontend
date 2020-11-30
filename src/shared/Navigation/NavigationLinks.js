@@ -15,6 +15,15 @@ const NavigationLinks = props => {
 		}
 		props.history.push('/jobs-dashboard');
 	};
+
+	let logout = null;
+	if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
+		logout = (
+			<li onClick={logoutHandler}>
+				<NavLink to='#'>Logout</NavLink>
+			</li>
+		);
+	}
 	return (
 		<div className={classes.NavContainer}>
 			<ul className={classes.NavLinks}>
@@ -49,13 +58,7 @@ const NavigationLinks = props => {
 						</NavLink>
 					</li>
 				)}
-
-				{props.auth.isLoggedIn ||
-					(props.admin.isLoggedIn && (
-						<li onClick={logoutHandler}>
-							<NavLink to='/#'>Logout</NavLink>
-						</li>
-					))}
+				{logout}
 			</ul>
 			<div className={classes.active}>
 				<SideBar />
