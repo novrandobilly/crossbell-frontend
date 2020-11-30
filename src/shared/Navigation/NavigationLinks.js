@@ -1,15 +1,11 @@
-import React, { useState } from "react";
-import { NavLink, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions/actions";
+import React from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions/actions';
 
-import SideBar from "./SideBar";
-
-
+import SideBar from './SideBar';
 
 import classes from './NavigationLinks.module.css';
-
-
 
 const NavigationLinks = props => {
 	const logoutHandler = () => {
@@ -70,7 +66,6 @@ const NavigationLinks = props => {
 			</div>
 		</div>
 	);
-
 };
 
 const mapStateToProps = state => {
@@ -85,10 +80,6 @@ const mapDispatchToProps = dispatch => {
 		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
 		admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT })
 	};
-
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(NavigationLinks));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavigationLinks));
