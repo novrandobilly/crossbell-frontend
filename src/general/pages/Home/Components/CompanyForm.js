@@ -44,7 +44,7 @@ const CompanyForm = props => {
 		try {
 			const res = await props.createCompany(newCompany);
 			console.log(res);
-			if (!res) {
+			if (!res.token) {
 				throw new Error("It's error dude!");
 			}
 			props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -184,12 +185,13 @@ const App = (props) => {
       <Footer />
     </Router>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
 };
 
 export default connect(mapStateToProps)(App);
