@@ -17,6 +17,10 @@ export { getAllApplicant, getAllCompany, getAllJob } from "./admin-actions";
 
 export { createFeed, getFeedback, deleteFeed } from "./feedback-actions";
 
+export { getAllApplicant, getAllCompany, getAllJob } from './admin-actions';
+
+export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
+
 export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob } from './job-actions';
 
 

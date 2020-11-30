@@ -6,6 +6,10 @@ import * as actionTypes from "../../store/actions/actions";
 import SideBar from "./SideBar";
 
 
+import classes from './NavigationLinks.module.css';
+
+
+
 const NavigationLinks = props => {
 	const logoutHandler = () => {
 		if (props.admin.isLoggedIn) {
@@ -15,47 +19,55 @@ const NavigationLinks = props => {
 		}
 		props.history.push('/jobs-dashboard');
 	};
-	return (
-		<ul className={classes.NavLinks}>
-			<li>
-				<NavLink to='/' exact activeClassName={classes.active}>
-					Home
-				</NavLink>
-			</li>
-			<li>
-				<NavLink to='/jobs-dashboard' activeClassName={classes.active}>
-					Explore Jobs
-				</NavLink>
-			</li>
-			<li>
-				<NavLink to='#' activeClassName={classes.active}>
-					Development Pages
-				</NavLink>
-			</li>
-			{props.auth.isLoggedIn &&
-			!props.auth.isCompany && (
-				<li>
-					<NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
-						My Profile
-					</NavLink>
-				</li>
-			)}
-			{props.auth.isLoggedIn &&
-			props.auth.isCompany && (
-				<li>
-					<NavLink to={`/co/${props.auth.userId}`} activeClassName={classes.active}>
-						My Company Profile
-					</NavLink>
-				</li>
-			)}
 
-			{props.auth.isLoggedIn ||
-				(props.admin.isLoggedIn && (
-					<li onClick={logoutHandler}>
-						<NavLink to='#'>Logout</NavLink>
+	let logout = null;
+	if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
+		logout = (
+			<li onClick={logoutHandler}>
+				<NavLink to='#'>Logout</NavLink>
+			</li>
+		);
+	}
+	return (
+		<div className={classes.NavContainer}>
+			<ul className={classes.NavLinks}>
+				<li>
+					<NavLink to='/' exact activeClassName={classes.active}>
+						Home
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/jobs-dashboard' activeClassName={classes.active}>
+						Explore Jobs
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='#' activeClassName={classes.active}>
+						Development Pages
+					</NavLink>
+				</li>
+				{props.auth.isLoggedIn &&
+				!props.auth.isCompany && (
+					<li>
+						<NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
+							My Profile
+						</NavLink>
 					</li>
-				))}
-		</ul>
+				)}
+				{props.auth.isLoggedIn &&
+				props.auth.isCompany && (
+					<li>
+						<NavLink to={`/co/${props.auth.userId}`} activeClassName={classes.active}>
+							My Company Profile
+						</NavLink>
+					</li>
+				)}
+				{logout}
+			</ul>
+			<div className={classes.active}>
+				<SideBar />
+			</div>
+		</div>
 	);
 };
 
