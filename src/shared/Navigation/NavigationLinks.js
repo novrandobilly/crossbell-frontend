@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions/actions";
 
 import SideBar from "./SideBar";
+
 
 
 import classes from './NavigationLinks.module.css';
@@ -69,6 +70,7 @@ const NavigationLinks = props => {
 			</div>
 		</div>
 	);
+
 };
 
 const mapStateToProps = state => {

@@ -229,7 +229,6 @@ const ApplicantListAO = (props) => {
               <th>Applicant Name</th>
               <th>Email</th>
               <th>Address</th>
-              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -268,17 +267,7 @@ const ApplicantListAO = (props) => {
                     >
                       {app.address ? app.address : "no data"}
                     </th>
-                    <th
-                      style={
-                        app.status === "Blocked"
-                          ? { color: "Red", fontWeight: "bold" }
-                          : app.status === "Regular"
-                          ? { color: "Green", fontWeight: "bold" }
-                          : { color: "Yellow", fontWeight: "bold" }
-                      }
-                    >
-                      {app.status}
-                    </th>
+
                     <th>
                       <div className={classes.DropDown}>
                         <button className={classes.DropButton}>
@@ -313,7 +302,7 @@ const ApplicantListAO = (props) => {
                         {app.firstName} {app.lastName}
                       </div>
                       <p></p>
-                      {app.headline}
+                      {app.headline ? app.headline : "No info"}
                     </div>
                   </th>
                   <th>{app.email}</th>
@@ -326,17 +315,7 @@ const ApplicantListAO = (props) => {
                   >
                     {app.address ? app.address : "no data"}
                   </th>
-                  <th
-                    style={
-                      app.status === "Blocked"
-                        ? { color: "Red", fontWeight: "bold" }
-                        : app.status === "Regular"
-                        ? { color: "Green", fontWeight: "bold" }
-                        : { color: "Yellow", fontWeight: "bold" }
-                    }
-                  >
-                    {app.status}
-                  </th>
+
                   <th>
                     <div className={classes.DropDown}>
                       <button className={classes.DropButton}>

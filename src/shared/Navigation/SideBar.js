@@ -16,7 +16,7 @@ const SideBar = () => {
     <nav className={sideBar ? classes.ContainerActive : classes.Container}>
       <ul className={classes.MenuItem}>
         <li>
-          <Link to={"/#"}>
+          <Link to={"/ad/alphaomega/profile"}>
             <span>Profile</span>
           </Link>
         </li>
@@ -49,17 +49,19 @@ const SideBar = () => {
     </nav>
   );
 
-  //   if (!sideBar) {
-  //     Content = null;
-  //   }
-
   return (
     <React.Fragment>
       <div className={classes.Burger}>
         {!sideBar ? (
-          <MenuIcon onClick={toggleSideBar} style={{ fontSize: 40 }} />
+          <MenuIcon
+            onClick={toggleSideBar}
+            style={{ fontSize: 40, cursor: "pointer" }}
+          />
         ) : (
-          <CloseIcon onClick={toggleSideBar} style={{ fontSize: 40 }} />
+          <CloseIcon
+            onClick={toggleSideBar}
+            style={{ fontSize: 40, cursor: "pointer" }}
+          />
         )}
       </div>
       {Content}
