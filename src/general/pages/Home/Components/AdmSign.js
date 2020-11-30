@@ -9,11 +9,11 @@ import Input from '../../../../shared/UI_Element/Input';
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Modal from '../../../../shared/UI_Element/Modal';
 
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../../shared/utils/validator';
 
 import classes from './Login.module.css';
 
-const Login = props => {
+const AdmSign = props => {
 	const [ formState, onInputHandler ] = useForm(
 		{
 			email: {
@@ -38,23 +38,27 @@ const Login = props => {
 
 		let res;
 		try {
-			res = await props.loginServer(loginData);
+			res = await props.admSignIn(loginData);
 			if (!res) {
 				throw new Error('Error');
 			}
+			props.history.push('/jobs-dashboard');
 		} catch (err) {
 			console.log(err);
 		}
 
-		if (res.token) {
-			props.history.push('/jobs-dashboard');
-		} else {
-			console.log('error');
-		}
+		// if (res.token) {
+		// 	setIsLoading(false);
+		// 	props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });
+		// 	props.history.push('/jobs-dashboard');
+		// } else {
+		// 	console.log('error');
+
+		// }
 	};
 
 	const onCancelHandler = () => {
-		props.logout();
+		props.admLogout();
 	};
 
 	let formContent = (
@@ -65,7 +69,7 @@ const Login = props => {
 				inputType='input'
 				id='email'
 				inputClass='Login'
-				validatorMethod={[ VALIDATOR_REQUIRE(), VALIDATOR_EMAIL() ]}
+				validatorMethod={[ VALIDATOR_EMAIL() ]}
 				onInputHandler={onInputHandler}
 				label='Email*'
 			/>
@@ -74,7 +78,7 @@ const Login = props => {
 				inputType='input'
 				id='password'
 				inputClass='Login'
-				validatorMethod={[ VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6) ]}
+				validatorMethod={[ VALIDATOR_REQUIRE() ]}
 				onInputHandler={onInputHandler}
 				label='Password*'
 				type='password'
@@ -85,29 +89,21 @@ const Login = props => {
 			</button>
 
 			<span className={classes.sign}>
-				Don't have an account
-				<button className={classes.ChangeSign} onClick={props.sign} type='button'>
-					Sign Up Here
-				</button>
-			</span>
-
-			<span className={classes.sign}>
-				Forgot password?
-				<button className={classes.ChangeSign} type='button'>
-					Click Here
+				<button className={classes.ChangeSign} onClick={props.switchSignUp} type='button'>
+					Admin Registration
 				</button>
 			</span>
 		</div>
 	);
 
-	if (props.auth.isLoading) {
+	if (props.admin.isLoading) {
 		formContent = <Spinner />;
 	}
 
 	return (
 		<React.Fragment>
 			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<Modal show={props.auth.isError} onCancel={onCancelHandler}>
+				<Modal show={props.admin.error} onCancel={onCancelHandler}>
 					Email or Password invalid. Please try again.
 				</Modal>
 				{formContent}
@@ -118,16 +114,15 @@ const Login = props => {
 
 const mapStateToProps = state => {
 	return {
-		auth: state.auth
+		admin: state.admin
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
-		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-		loginServer: loginData => dispatch(actionCreators.login(loginData))
+		admLogout: () => dispatch(actionTypes.ADMINLOGOUT()),
+		admSignIn: payload => dispatch(actionCreators.admSignIn(payload))
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdmSign));
