@@ -157,35 +157,30 @@ export const updateApplicantSummary = ApplicantData => {
 	};
 };
 
-
-export const updateApplicantEducation = (ApplicantData) => {
-  return async (dispatch) => {
-    dispatch(updateApplicantStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: ApplicantData.applicantId,
-            education: {
-              school: ApplicantData.school,
-              degree: ApplicantData.degree,
-              major: ApplicantData.major,
-              location: ApplicantData.location,
-              startDate: ApplicantData.startDate,
-              endDate: ApplicantData.endDate,
-              description: ApplicantData.description,
-            },
-            index: ApplicantData.index ? ApplicantData.index : null,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-
+export const updateApplicantEducation = ApplicantData => {
+	return async dispatch => {
+		dispatch(updateApplicantStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: ApplicantData.applicantId,
+					education: {
+						school: ApplicantData.school,
+						degree: ApplicantData.degree,
+						major: ApplicantData.major,
+						location: ApplicantData.location,
+						startDate: ApplicantData.startDate,
+						endDate: ApplicantData.endDate,
+						description: ApplicantData.description
+					},
+					index: ApplicantData.index ? ApplicantData.index : null
+				})
+			});
+			const responseJSON = await response.json();
 
 			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
 			return responseJSON.foundApplicant;
@@ -195,34 +190,59 @@ export const updateApplicantEducation = (ApplicantData) => {
 	};
 };
 
+export const updateApplicantExperience = ApplicantData => {
+	return async dispatch => {
+		dispatch(updateApplicantStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: ApplicantData.applicantId,
+					experience: {
+						prevTitle: ApplicantData.prevTitle,
+						prevCompany: ApplicantData.prevCompany,
+						prevLocation: ApplicantData.prevLocation,
+						startDate: ApplicantData.startDate,
+						endDate: ApplicantData.endDate,
+						description: ApplicantData.description
+					},
+					index: ApplicantData.index ? ApplicantData.index : null
+				})
+			});
+			const responseJSON = await response.json();
+			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
+			return responseJSON.foundApplicant;
+		} catch (err) {
+			dispatch(updateApplicantFail);
+		}
+	};
+};
 
-export const updateApplicantExperience = (ApplicantData) => {
-  return async (dispatch) => {
-    dispatch(updateApplicantStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: ApplicantData.applicantId,
-            experience: {
-              prevTitle: ApplicantData.prevTitle,
-              prevCompany: ApplicantData.prevCompany,
-              prevLocation: ApplicantData.prevLocation,
-              startDate: ApplicantData.startDate,
-              endDate: ApplicantData.endDate,
-              description: ApplicantData.description,
-            },
-            index: ApplicantData.index ? ApplicantData.index : null,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-
+export const updateApplicantCertification = ApplicantData => {
+	return async dispatch => {
+		dispatch(updateApplicantStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: ApplicantData.applicantId,
+					certification: {
+						title: ApplicantData.title,
+						organization: ApplicantData.organization,
+						startDate: ApplicantData.startDate,
+						endDate: ApplicantData.endDate,
+						description: ApplicantData.description
+					},
+					index: ApplicantData.index ? ApplicantData.index : null
+				})
+			});
+			const responseJSON = await response.json();
 
 			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
 			return responseJSON.foundApplicant;
@@ -232,63 +252,22 @@ export const updateApplicantExperience = (ApplicantData) => {
 	};
 };
 
-
-export const updateApplicantCertification = (ApplicantData) => {
-  return async (dispatch) => {
-    dispatch(updateApplicantStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: ApplicantData.applicantId,
-            certification: {
-              title: ApplicantData.title,
-              organization: ApplicantData.organization,
-              startDate: ApplicantData.startDate,
-              endDate: ApplicantData.endDate,
-              description: ApplicantData.description,
-            },
-            index: ApplicantData.index ? ApplicantData.index : null,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-
-
-			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
-			return responseJSON.foundApplicant;
-		} catch (err) {
-			dispatch(updateApplicantFail);
-		}
-	};
-};
-
-
-export const updateApplicantSkills = (ApplicantData) => {
-  return async (dispatch) => {
-    dispatch(updateApplicantStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: ApplicantData.applicantId,
-            skills: [ApplicantData.skills],
-            index: ApplicantData.index ? ApplicantData.index : null,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-
+export const updateApplicantSkills = ApplicantData => {
+	return async dispatch => {
+		dispatch(updateApplicantStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: ApplicantData.applicantId,
+					skills: [ ApplicantData.skills ],
+					index: ApplicantData.index ? ApplicantData.index : null
+				})
+			});
+			const responseJSON = await response.json();
 
 			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
 			return responseJSON.foundApplicant;

@@ -7,7 +7,11 @@ import classes from './NavigationLinks.module.css';
 
 const NavigationLinks = props => {
 	const logoutHandler = () => {
-		props.logout();
+		if (props.admin.isLoggedIn) {
+			props.admLogout();
+		} else {
+			props.logout();
+		}
 		props.history.push('/jobs-dashboard');
 	};
 	return (
@@ -30,7 +34,7 @@ const NavigationLinks = props => {
 			{props.auth.isLoggedIn &&
 			!props.auth.isCompany && (
 				<li>
-					<NavLink to='/ap/:applicantid' activeClassName={classes.active}>
+					<NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
 						My Profile
 					</NavLink>
 				</li>
@@ -44,24 +48,27 @@ const NavigationLinks = props => {
 				</li>
 			)}
 
-			{props.auth.isLoggedIn && (
-				<li onClick={logoutHandler}>
-					<NavLink to='#'>Logout</NavLink>
-				</li>
-			)}
+			{props.auth.isLoggedIn ||
+				(props.admin.isLoggedIn && (
+					<li onClick={logoutHandler}>
+						<NavLink to='#'>Logout</NavLink>
+					</li>
+				))}
 		</ul>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		auth: state.auth
+		auth: state.auth,
+		admin: state.admin
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT })
+		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
+		admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT })
 	};
 };
 

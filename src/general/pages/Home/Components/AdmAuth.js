@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import AdmReg from './AdmReg';
+import AdmSign from './AdmSign';
 import classes from './AdmAuth.module.css';
 
 const AdmAuth = () => {
+	const [ isSignIn, setIsSignIn ] = useState(true);
+
+	const switchSignUpHandler = () => setIsSignIn(false);
+	const switchSignInHandler = () => setIsSignIn(true);
 	return (
 		<div className={classes.AdmAuth}>
-			<AdmReg />
+			{isSignIn ? <AdmSign switchSignUp={switchSignUpHandler} /> : <AdmReg switchSignIn={switchSignInHandler} />}
 		</div>
 	);
 };

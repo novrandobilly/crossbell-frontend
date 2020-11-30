@@ -198,7 +198,7 @@ const Register = props => {
 				</button>
 
 				<span className={classes.Sign}>
-					<button className={classes.ChangeSign} type='button' onClick={props.sign}>
+					<button className={classes.ChangeSign} type='button' onClick={props.switchSignIn}>
 						Admin Sign In
 					</button>
 				</span>

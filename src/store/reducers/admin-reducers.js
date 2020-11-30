@@ -5,7 +5,8 @@ const initialState = {
 	error: false,
 	token: null,
 	userId: null,
-	isAdmin: false
+	isAdmin: false,
+	isLoggedIn: false
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -17,7 +18,8 @@ const adminReducer = (state = initialState, action) => {
 				error: false,
 				token: null,
 				userId: null,
-				isAdmin: false
+				isAdmin: false,
+				isLoggedIn: false
 			};
 		}
 		case actionTypes.AUTHADMINFINISH: {
@@ -28,7 +30,8 @@ const adminReducer = (state = initialState, action) => {
 				error: false,
 				token: action.payload.token,
 				userId: action.payload.userId,
-				isAdmin: action.payload.isAdmin
+				isAdmin: action.payload.isAdmin,
+				isLoggedIn: true
 			};
 		}
 		case actionTypes.AUTHADMINFAIL: {
@@ -38,7 +41,19 @@ const adminReducer = (state = initialState, action) => {
 				error: true,
 				token: null,
 				userId: null,
-				isAdmin: false
+				isAdmin: false,
+				isLoggedIn: false
+			};
+		}
+		case actionTypes.ADMINLOGOUT: {
+			return {
+				...state,
+				isLoading: false,
+				error: false,
+				token: null,
+				userId: null,
+				isAdmin: false,
+				isLoggedIn: false
 			};
 		}
 		default: {

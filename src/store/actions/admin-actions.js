@@ -57,3 +57,33 @@ export const admReg = payload => {
 		}
 	};
 };
+
+export const admSignIn = loginData => {
+	return async dispatch => {
+		dispatch(adminStart());
+		try {
+			const res = await fetch('http://localhost:5000/api/alphaomega/admsign', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: loginData.email,
+					password: loginData.password
+				})
+			});
+			const resJSON = await res.json();
+			console.log(resJSON);
+			if (!resJSON.token) {
+				throw new Error('Error');
+			}
+
+			dispatch(adminFinish({ token: resJSON.token, userId: resJSON.userId, isAdmin: resJSON.isAdmin }));
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+			dispatch(adminFail());
+			return err;
+		}
+	};
+};
