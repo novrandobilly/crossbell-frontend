@@ -55,7 +55,7 @@ const initJobState = {
 
 const feedbackReducers = (state = initJobState, action) => {
   switch (action.type) {
-    case actionTypes.CREATEFEEDBACK: {
+    case actionTypes.CREATEFEEDBACKSUCCESS: {
       return {
         ...state,
         feedback: state.feedback.concat(action.payload),
