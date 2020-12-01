@@ -1,0 +1,75 @@
+.CarouselHolder {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+/* img {
+  opacity: 0.4;
+  transition: color 0.7s ease-in 0.3s;
+  transition: all 3s;
+}
+
+.Image {
+  width: 100rem;
+  height: 40rem;
+} */
+
+.Carousel {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+.Carousel li {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: repeat;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 15s linear infinite;
+}
+
+.Carousel li:nth-child(1) {
+  background-image: url(../../../../image/carousel_1.png);
+}
+.Carousel li:nth-child(2) {
+  background-image: url(../../../../image/carousel_2.jpg);
+  animation-delay: 15s;
+}
+.Carousel li:nth-child(3) {
+  background-image: url(../../../../image/carousel_3.jpg);
+  animation-delay: 30s;
+}
+
+@keyframes imageAnimation {
+  0% {
+    opacity: 0;
+    animation-timing-function: ease-in;
+  }
+  30% {
+    opacity: 0.7;
+    animation-timing-function: ease-out;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0;
+  }
+}
