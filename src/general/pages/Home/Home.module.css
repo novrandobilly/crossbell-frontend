@@ -1,0 +1,24 @@
+.Content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 4rem;
+  margin-right: 3rem;
+  height: 34rem;
+}
+
+.About {
+  color: white;
+  width: 50rem;
+  text-align: left;
+  font-size: 1.2rem;
+  margin-bottom: 5rem;
+}
+
+.Margin {
+  margin-top: 2rem;
+}
+
+.Search {
+  display: flex;
+}
