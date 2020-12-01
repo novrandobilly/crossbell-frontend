@@ -1,8 +1,4 @@
 import React from "react";
-
-// import Image1 from "../../../../image/carousel_1.png";
-// import Image2 from "../../../../image/carousel_2.jpg";
-// import Image3 from "../../../../image/carousel_3.jpg";
 import classes from "./Carousel.module.css";
 
 const Carousel = (props) => {
