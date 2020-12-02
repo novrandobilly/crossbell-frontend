@@ -14,7 +14,7 @@ const NavigationLinks = props => {
 		} else {
 			props.logout();
 		}
-		props.history.push('/jobs-dashboard');
+		props.history.push('/');
 	};
 
 	let logout = null;
@@ -61,9 +61,12 @@ const NavigationLinks = props => {
 				)}
 				{logout}
 			</ul>
-			<div className={classes.active}>
-				<SideBar />
-			</div>
+			{props.admin.isAdmin &&
+			props.admin.isLoggedIn && (
+				<div className={classes.active}>
+					<SideBar />
+				</div>
+			)}
 		</div>
 	);
 };
