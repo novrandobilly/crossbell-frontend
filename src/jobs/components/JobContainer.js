@@ -66,21 +66,26 @@ const JobDetails = props => {
 						<div className={classes.ContainerThird}>
 							<p className={classes.TextDate}>Posted {props.datePosted} days ago</p>
 							<div className={classes.ButtonContainer}>
-								<Link to={`/jobs/${props.jobId}/edit`}>
-									<button className={classes.InstantButton}>
-										<span>Edit</span>
+								{props.auth.userId === props.companyId && (
+									<Link to={`/jobs/${props.jobId}/edit`}>
+										<button className={classes.InstantButton}>
+											<span>Edit</span>
+										</button>
+									</Link>
+								)}
+								{props.auth.userId === props.companyId && (
+									<button onClick={onDeleteHandler} className={[ classes.InstantButton, classes.DeleteButton ].join(' ')}>
+										<span>Delete</span>
 									</button>
-								</Link>
-
-								<button onClick={onDeleteHandler} className={[ classes.InstantButton, classes.DeleteButton ].join(' ')}>
-									<span>Delete</span>
-								</button>
-
-								<Link to='#'>
-									<button className={classes.InstantButton} onClick={onSaveHandler}>
-										<span>Apply</span>
-									</button>
-								</Link>
+								)}
+								{!props.auth.isCompany &&
+								props.auth.token && (
+									<Link to='#'>
+										<button className={classes.InstantButton} onClick={onSaveHandler}>
+											<span>Apply</span>
+										</button>
+									</Link>
+								)}
 							</div>
 						</div>
 					</div>
