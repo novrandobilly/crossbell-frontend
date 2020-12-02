@@ -4,12 +4,14 @@ import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 import moment from "moment";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import Modal from "../../../../../shared/UI_Element/Modal";
 import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
@@ -19,26 +21,24 @@ import classes from "./EditSummary.module.css";
 const EditSummary = (props) => {
   const { applicantid } = useParams();
 
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState();
 
   const { getOneApplicant } = props;
   useEffect(() => {
     getOneApplicant(applicantid).then((res) => {
       setData(res.applicant);
-      setIsLoading(false);
     });
-  }, [getOneApplicant, setIsLoading, applicantid]);
+  }, [getOneApplicant, applicantid]);
 
   const [formState, onInputHandler] = useForm(
     {
       details: {
-        value: data.details,
-        isValid: true,
+        value: data ? data.details : null,
+        isValid: data && data.details ? true : false,
       },
       dateOfBirth: {
-        value: data.dateOfBirth,
-        isValid: true,
+        value: data ? data.dateOfBirth : null,
+        isValid: data && data.dateOfBirth ? true : false,
       },
     },
     false
@@ -46,6 +46,10 @@ const EditSummary = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
 
     const updatedAppSummary = {
       applicantId: applicantid,
@@ -65,64 +69,85 @@ const EditSummary = (props) => {
     }
   };
 
-  let formContent = (
-    <>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Summary</p>
+  let formContent = <SpinnerCircle />;
 
-        <div className={classes.FormRow}>
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="textarea"
-              id="details"
-              inputClass="EditProfileTextArea"
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-              onInputHandler={onInputHandler}
-              label="Details*"
-              initValue={data.details}
-              initIsValid={true}
-            />
+  if (!props.isLoading && data) {
+    formContent = (
+      <>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Summary</p>
+
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="textarea"
+                id="details"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label="Details*"
+                initValue={data.details}
+                initIsValid={true}
+              />
+            </div>
+
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="input"
+                id="dateOfBirth"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Date of Birth (MM/DD/YYYY)*"
+                initValue={moment(data.dateOfBirth).format("MM/ DD/ YYYY")}
+                initIsValid={true}
+              />
+            </div>
           </div>
 
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="dateOfBirth"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="Date of Birth (MM/DD/YYYY)*"
-              initValue={moment(data.dateOfBirth).format("MM/ DD/ YYYY")}
-              initIsValid={true}
-            />
-          </div>
+          <SaveButton
+            btnClass="SaveButton"
+            disabled={!formState.formIsValid}
+            placeholder="Save"
+          />
         </div>
-
-        <SaveButton
-          btnClass="SaveButton"
-          disabled={!formState.formIsValid}
-          placeholder="Save"
-        />
-      </div>
-    </>
-  );
-  if (isLoading) {
-    formContent = <SpinnerCircle />;
+      </>
+    );
   }
+
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
 
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
       {formContent}
     </form>
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
     updateApplicantSummary: (ApplicantData) =>
       dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(EditSummary));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditSummary));
