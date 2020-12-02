@@ -6,7 +6,8 @@ const initialState = {
 	token: null,
 	userId: null,
 	isAdmin: false,
-	isLoggedIn: false
+	isLoggedIn: false,
+	tokenExpirationDate: null
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -19,11 +20,21 @@ const adminReducer = (state = initialState, action) => {
 				token: null,
 				userId: null,
 				isAdmin: false,
-				isLoggedIn: false
+				isLoggedIn: false,
+				tokenExpirationDate: null
 			};
 		}
 		case actionTypes.AUTHADMINFINISH: {
-			console.log(action);
+			const tokenExpirationDate = action.payload.expiration || new Date(new Date().getTime() + 1000 * 60 * 60 * 3).toISOString();
+			localStorage.setItem(
+				'userData',
+				JSON.stringify({
+					userId: action.payload.userId,
+					token: action.payload.token,
+					isAdmin: action.payload.isAdmin,
+					expiration: tokenExpirationDate
+				})
+			);
 			return {
 				...state,
 				isLoading: false,
@@ -31,7 +42,8 @@ const adminReducer = (state = initialState, action) => {
 				token: action.payload.token,
 				userId: action.payload.userId,
 				isAdmin: action.payload.isAdmin,
-				isLoggedIn: true
+				isLoggedIn: !!action.payload.token,
+				tokenExpirationDate
 			};
 		}
 		case actionTypes.AUTHADMINFAIL: {
@@ -42,10 +54,12 @@ const adminReducer = (state = initialState, action) => {
 				token: null,
 				userId: null,
 				isAdmin: false,
-				isLoggedIn: false
+				isLoggedIn: false,
+				tokenExpirationDate: null
 			};
 		}
 		case actionTypes.ADMINLOGOUT: {
+			localStorage.removeItem('userData');
 			return {
 				...state,
 				isLoading: false,
@@ -53,7 +67,8 @@ const adminReducer = (state = initialState, action) => {
 				token: null,
 				userId: null,
 				isAdmin: false,
-				isLoggedIn: false
+				isLoggedIn: false,
+				tokenExpirationDate: null
 			};
 		}
 		default: {
