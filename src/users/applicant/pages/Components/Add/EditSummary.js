@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import Modal from "../../../../../shared/UI_Element/Modal";
 import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
@@ -35,6 +37,10 @@ const EditSummary = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
 
     const updatedSummary = {
       applicantId: applicantid,
@@ -98,20 +104,40 @@ const EditSummary = (props) => {
     formContent = <SpinnerCircle />;
   }
 
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
+
   return (
     <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <Modal show={props.error} onCancel={onCancelHandler}>
+          Input requirement not fulfilled
+        </Modal>
         {formContent}
       </form>
     </div>
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     updateApplicantSummary: (ApplicantData) =>
       dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(EditSummary));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditSummary));

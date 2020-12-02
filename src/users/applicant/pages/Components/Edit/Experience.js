@@ -4,12 +4,14 @@ import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 import moment from "moment";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import Modal from "../../../../../shared/UI_Element/Modal";
 import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
@@ -20,42 +22,40 @@ const Experience = (props) => {
   const { applicantid } = useParams();
   const { experienceindex } = useParams();
 
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState();
 
   const { getOneApplicant } = props;
   useEffect(() => {
     getOneApplicant(applicantid).then((res) => {
       setData(res.applicant.experience[experienceindex]);
-      setIsLoading(false);
     });
-  }, [getOneApplicant, setIsLoading, applicantid, experienceindex]);
+  }, [getOneApplicant, applicantid, experienceindex]);
 
   const [formState, onInputHandler] = useForm(
     {
       prevTitle: {
-        value: data.prevTitle,
-        isValid: true,
+        value: data ? data.prevTitle : null,
+        isValid: data && data.prevTitle ? true : false,
       },
       prevCompany: {
-        value: data.prevCompany,
-        isValid: true,
+        value: data ? data.prevCompany : null,
+        isValid: data && data.prevCompany ? true : false,
       },
       prevLocation: {
-        value: data.prevLocation,
-        isValid: true,
+        value: data ? data.prevLocation : null,
+        isValid: data && data.prevLocation ? true : false,
       },
       startDate: {
-        value: data.startDate,
-        isValid: true,
+        value: data ? data.startDate : null,
+        isValid: data && data.startDate ? true : false,
       },
       endDate: {
-        value: data.endDate,
-        isValid: true,
+        value: data ? data.endDate : null,
+        isValid: data && data.endDate ? true : false,
       },
       description: {
-        value: data.description,
-        isValid: true,
+        value: data ? data.description : null,
+        isValid: data && data.description ? true : false,
       },
     },
     false
@@ -63,6 +63,11 @@ const Experience = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
+
     const updatedExperience = {
       applicantId: applicantid,
       index: experienceindex,
@@ -87,61 +92,24 @@ const Experience = (props) => {
     }
   };
 
-  let formContent = (
-    <>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Experience</p>
+  let formContent = <SpinnerCircle />;
 
-        <div className={classes.FormRow}>
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="prevTitle"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="Previous Title *"
-              initValue={data.prevTitle}
-              initIsValid={true}
-            />
-          </div>
+  if (!props.isLoading && data) {
+    formContent = (
+      <>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Experience</p>
 
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="prevCompany"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="Company Name*"
-              initValue={data.prevCompany}
-              initIsValid={true}
-            />
-          </div>
-
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="prevLocation"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="Location*"
-              initValue={data.prevLocation}
-              initIsValid={true}
-            />
-          </div>
-
-          <div className={classes.Period}>
+          <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="startDate"
-                inputClass="DateInput"
+                id="prevTitle"
+                inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Start Date(MM/ DD/ YYYY)*"
-                initValue={moment(data.startDate).format("MM/ DD/ YYYY")}
+                label="Previous Title *"
+                initValue={data.prevTitle}
                 initIsValid={true}
               />
             </div>
@@ -149,56 +117,114 @@ const Experience = (props) => {
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="endDate"
-                inputClass="DateInput"
+                id="prevCompany"
+                inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="End Date(MM/ DD/ YYYY)*"
-                initValue={moment(data.endDate).format("MM/ DD/ YYYY")}
+                label="Company Name*"
+                initValue={data.prevCompany}
+                initIsValid={true}
+              />
+            </div>
+
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="input"
+                id="prevLocation"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Location*"
+                initValue={data.prevLocation}
+                initIsValid={true}
+              />
+            </div>
+
+            <div className={classes.Period}>
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="input"
+                  id="startDate"
+                  inputClass="DateInput"
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label="Start Date(MM/ DD/ YYYY)*"
+                  initValue={moment(data.startDate).format("MM/ DD/ YYYY")}
+                  initIsValid={true}
+                />
+              </div>
+
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="input"
+                  id="endDate"
+                  inputClass="DateInput"
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label="End Date(MM/ DD/ YYYY)*"
+                  initValue={moment(data.endDate).format("MM/ DD/ YYYY")}
+                  initIsValid={true}
+                />
+              </div>
+            </div>
+
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="textarea"
+                id="description"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label="Description*"
+                initValue={data.description}
                 initIsValid={true}
               />
             </div>
           </div>
 
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="textarea"
-              id="description"
-              inputClass="EditProfileTextArea"
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-              onInputHandler={onInputHandler}
-              label="Description*"
-              initValue={data.description}
-              initIsValid={true}
-            />
-          </div>
+          <SaveButton
+            btnClass="SaveButton"
+            disabled={!formState.formIsValid}
+            placeholder="Save"
+          />
         </div>
-
-        <SaveButton
-          btnClass="SaveButton"
-          disabled={!formState.formIsValid}
-          placeholder="Save"
-        />
-      </div>
-    </>
-  );
-  if (isLoading) {
-    formContent = <SpinnerCircle />;
+      </>
+    );
   }
+
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
 
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
       {formContent}
     </form>
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
     updateApplicantExperience: (ApplicantData) =>
       dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(Experience));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Experience));

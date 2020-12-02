@@ -72,7 +72,7 @@ export const createFeed = (feedData) => {
       dispatch(createFeedbackSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
-      dispatch(createFeedbackFail);
+      dispatch(createFeedbackFail());
     }
   };
 };
@@ -93,7 +93,7 @@ export const getFeedback = () => {
       dispatch(getFeedbackSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
-      dispatch(getFeedbackFail);
+      dispatch(getFeedbackFail());
     }
   };
 };
@@ -119,7 +119,7 @@ export const deleteFeed = (feedData) => {
       dispatch(deleteFeedbackSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
-      dispatch(deleteFeedbackFail);
+      dispatch(deleteFeedbackFail());
     }
   };
 };
