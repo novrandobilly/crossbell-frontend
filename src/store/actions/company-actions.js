@@ -51,6 +51,22 @@ const updateCompanyStart = () => {
 	};
 };
 
+const fetchCompanyStart = () => {
+	return {
+		type: actionTypes.FETCHCOMPANYSTART
+	};
+};
+const fetchCompanySuccess = () => {
+	return {
+		type: actionTypes.FETCHCOMPANYSUCCESS
+	};
+};
+const fetchCompanyFail = () => {
+	return {
+		type: actionTypes.FETCHCOMPANYFAIL
+	};
+};
+
 export const createCompany = companyData => {
 	return async dispatch => {
 		dispatch(createCompanyStart());
@@ -98,7 +114,7 @@ export const getOneCompany = payload => {
 			dispatch(getCompanySuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {
-			dispatch(getCompanyFail);
+			dispatch(getCompanyFail());
 		}
 	};
 };
@@ -133,7 +149,7 @@ export const updateCompanyIntro = CompanyData => {
 			dispatch(updateCompanySuccess(responseJSON.foundCompany));
 			return responseJSON.foundCompany;
 		} catch (err) {
-			dispatch(updateCompanyFail);
+			dispatch(updateCompanyFail());
 		}
 	};
 };
@@ -157,7 +173,7 @@ export const updateCompanyDetail = CompanyData => {
 			dispatch(updateCompanySuccess(responseJSON.foundCompany));
 			return responseJSON.foundCompany;
 		} catch (err) {
-			dispatch(updateCompanyFail);
+			dispatch(updateCompanyFail());
 		}
 	};
 };
@@ -181,7 +197,7 @@ export const updateCompanyMission = CompanyData => {
 			dispatch(updateCompanySuccess(responseJSON.foundCompany));
 			return responseJSON.foundCompany;
 		} catch (err) {
-			dispatch(updateCompanyFail);
+			dispatch(updateCompanyFail());
 		}
 	};
 };
@@ -191,6 +207,12 @@ export const updateCompanyMission = CompanyData => {
 const loginSuccess = () => {
 	return {
 		type: actionTypes.AUTHLOGIN
+	};
+};
+
+const loginFail = () => {
+	return {
+		type: actionTypes.AUTHLOGOUT
 	};
 };
 
@@ -211,15 +233,61 @@ export const login = loginData => {
 
 			const resJSON = await res.json();
 
-			dispatch(loginSuccess);
+			dispatch(loginSuccess());
 			return resJSON;
 		} catch (err) {
 			console.log(err);
+			dispatch(loginFail());
 		}
-
-		//login success
-		//login fail
 	};
 };
 
-//=======================================================================
+export const activateCompany = payload => {
+	return async dispatch => {
+		dispatch(fetchCompanyStart());
+		try {
+			const res = await fetch(`http://localhost:5000/api/alphaomega/${payload.companyId}/activate`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
+				}
+			});
+			if (!res.ok) {
+				throw new Error('Cannot activate company');
+			}
+			const resJSON = await res.json();
+			dispatch(fetchCompanySuccess());
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+			dispatch(fetchCompanyFail());
+			return err;
+		}
+	};
+};
+
+export const blockCompany = payload => {
+	return async dispatch => {
+		dispatch(fetchCompanyStart());
+		try {
+			const res = await fetch(`http://localhost:5000/api/alphaomega/${payload.companyId}/block`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
+				}
+			});
+			if (!res.ok) {
+				throw new Error('Cannot block company');
+			}
+			const resJSON = await res.json();
+			dispatch(fetchCompanySuccess());
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+			dispatch(fetchCompanyFail());
+			return err;
+		}
+	};
+};

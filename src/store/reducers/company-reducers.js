@@ -148,6 +148,28 @@ const companyReducers = (state = initialState, action) => {
 				companies: companyArray
 			};
 		}
+
+		case actionTypes.FETCHCOMPANYSTART: {
+			return {
+				...state,
+				isLoading: true,
+				error: false
+			};
+		}
+		case actionTypes.FETCHCOMPANYSUCCESS: {
+			return {
+				...state,
+				isLoading: false,
+				error: false
+			};
+		}
+		case actionTypes.FETCHCOMPANYFAIL: {
+			return {
+				...state,
+				isLoading: false,
+				error: true
+			};
+		}
 		default:
 			return state;
 	}
