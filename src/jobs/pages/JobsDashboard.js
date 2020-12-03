@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useEffect } from 'react';
+import React, { useReducer, useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
 
@@ -52,6 +52,7 @@ const searchReducer = (state, action) => {
 };
 
 const JobsDashboard = props => {
+	const [ jobEmpty, setJobEmpty ] = useState(false);
 	const [ state, dispatch ] = useReducer(searchReducer, {
 		search: {
 			id: '',
@@ -66,8 +67,17 @@ const JobsDashboard = props => {
 	useEffect(
 		() => {
 			const getJobs = async () => {
-				const res = await getAllAvailableJobs();
-				dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: res.availableJobs } });
+				setJobEmpty(false);
+				try {
+					const res = await getAllAvailableJobs();
+					if (!res.availableJobs) {
+						throw new Error('No Job avalable at the moment');
+					}
+					dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: res.availableJobs } });
+				} catch (err) {
+					setJobEmpty(true);
+					console.log(err);
+				}
 			};
 			getJobs();
 		},
@@ -97,6 +107,13 @@ const JobsDashboard = props => {
 	let jobLists = <Spinner />;
 	if (state.jobList) {
 		jobLists = <JobsList items={state.jobList} />;
+	}
+	if (jobEmpty && !state.jobLists) {
+		jobLists = (
+			<div className='centerGlobal'>
+				<h2>No Job Available at the moment!</h2>
+			</div>
+		);
 	}
 
 	return (

@@ -7,72 +7,70 @@ import SideBar from "./SideBar";
 
 import classes from "./NavigationLinks.module.css";
 
-const NavigationLinks = (props) => {
-  const logoutHandler = () => {
-    if (props.admin.isLoggedIn) {
-      props.admLogout();
-    } else {
-      props.logout();
-    }
-    props.history.push("/jobs-dashboard");
-  };
 
-  let logout = null;
-  if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
-    logout = (
-      <li onClick={logoutHandler}>
-        <NavLink to="#">Logout</NavLink>
-      </li>
-    );
-  }
+const NavigationLinks = props => {
+	const logoutHandler = () => {
+		if (props.admin.isLoggedIn) {
+			props.admLogout();
+		} else {
+			props.logout();
+		}
+		props.history.push('/');
+	};
 
-  return (
-    <div className={classes.NavContainer}>
-      <ul className={classes.NavLinks}>
-        <li>
-          <NavLink to="/" exact activeClassName={classes.active}>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/jobs-dashboard" activeClassName={classes.active}>
-            Explore Jobs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="#" activeClassName={classes.active}>
-            Development Pages
-          </NavLink>
-        </li>
-        {props.auth.isLoggedIn && !props.auth.isCompany && (
-          <li>
-            <NavLink
-              to={`/ap/${props.auth.userId}`}
-              activeClassName={classes.active}
-            >
-              My Profile
-            </NavLink>
-          </li>
-        )}
-        {props.auth.isLoggedIn && props.auth.isCompany && (
-          <li>
-            <NavLink
-              to={`/co/${props.auth.userId}`}
-              activeClassName={classes.active}
-            >
-              My Company Profile
-            </NavLink>
-          </li>
-        )}
-        {logout}
-      </ul>
-      {props.admin.isadmin && (
-        <div className={classes.active}>
-          <SideBar />
-        </div>
-      )}
-    </div>
-  );
+	let logout = null;
+	if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
+		logout = (
+			<li onClick={logoutHandler}>
+				<NavLink to='#'>Logout</NavLink>
+			</li>
+		);
+	}
+	return (
+		<div className={classes.NavContainer}>
+			<ul className={classes.NavLinks}>
+				<li>
+					<NavLink to='/' exact activeClassName={classes.active}>
+						Home
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/jobs-dashboard' activeClassName={classes.active}>
+						Explore Jobs
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='#' activeClassName={classes.active}>
+						Development Pages
+					</NavLink>
+				</li>
+				{props.auth.isLoggedIn &&
+				!props.auth.isCompany && (
+					<li>
+						<NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
+							My Profile
+						</NavLink>
+					</li>
+				)}
+				{props.auth.isLoggedIn &&
+				props.auth.isCompany && (
+					<li>
+						<NavLink to={`/co/${props.auth.userId}`} activeClassName={classes.active}>
+							My Company Profile
+						</NavLink>
+					</li>
+				)}
+				{logout}
+			</ul>
+			{props.admin.isAdmin &&
+			props.admin.isLoggedIn && (
+				<div className={classes.active}>
+					<SideBar />
+				</div>
+			)}
+		</div>
+	);
+
 };
 
 const mapStateToProps = (state) => {

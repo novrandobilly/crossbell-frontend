@@ -1,9 +1,11 @@
-export const CREATEJOB = "CREATE_JOB";
-export const CREATEJOBSTART = "CREATE_JOB_START";
-export const CREATEJOBSUCCESS = "CREATE_JOB_SUCCESS";
-export const CREATEJOBFAIL = "CREATE_JOB_FAIL";
-export const EDITJOB = "EDIT_JOB";
-export const DELETEJOB = "DELETE_JOB";
+
+export const CREATEJOB = 'CREATE_JOB';
+export const CREATEJOBSTART = 'CREATE_JOB_START';
+export const CREATEJOBSUCCESS = 'CREATE_JOB_SUCCESS';
+export const CREATEJOBFAIL = 'CREATE_JOB_FAIL';
+export const EDITJOB = 'EDIT_JOB';
+export const DELETEJOB = 'DELETE_JOB';
+
 
 //============================= Company ==============================
 export const CREATECOMPANY = "CREATE_COMPANY";
@@ -20,6 +22,10 @@ export const UPDATECOMPANYSTART = "UPDATE_COMPANY_START";
 
 export const DELETECOMPANY = "DELETE_COMPANY";
 export const COMPANYRESET = "COMPANY_RESET";
+
+export const FETCHCOMPANYSTART = 'FETCH_COMPANY_START';
+export const FETCHCOMPANYSUCCESS = 'FETCH_COMPANY_SUCCESS';
+export const FETCHCOMPANYFAIL = 'FETCH_COMPANY_FAIL';
 
 //============================= Applicant ==============================
 export const CREATEAPPLICANTSUCCESS = "CREATE_SUCCESS_APPLICANT";
@@ -71,17 +77,18 @@ export const DELETEFEEDBACKSTART = "DELETE_FEEDBACKS_TART";
 
 //============================= Auth ==============================
 
-export const AUTHADMINSTART = "AUTH_ADMIN_START";
-export const AUTHADMINFINISH = "AUTH_ADMIN_FINISH";
-export const AUTHADMINFAIL = "AUTH_ADMIN_FAIL";
-export const ADMINLOGOUT = "ADMIN_LOGOUT";
-export const AUTHADMIN = "AUTH_ADMIN";
-export const AUTHCOMPANY = "AUTH_COMPANY";
-export const AUTHLOGIN = "AUTH_LOGIN";
-export const AUTHLOGINSTART = "AUTH_LOGIN_START";
-export const AUTHLOGINFAIL = "AUTH_LOGIN_FAIL";
-export const AUTHLOGOUT = "AUTH_LOGOUT";
+export const AUTHADMINSTART = 'AUTH_ADMIN_START';
+export const AUTHADMINFINISH = 'AUTH_ADMIN_FINISH';
+export const AUTHADMINFAIL = 'AUTH_ADMIN_FAIL';
+export const ADMINLOGOUT = 'ADMIN_LOGOUT';
+export const AUTHADMIN = 'AUTH_ADMIN';
+export const AUTHCOMPANY = 'AUTH_COMPANY';
+export const AUTHLOGIN = 'AUTH_LOGIN';
+export const AUTHLOGINSTART = 'AUTH_LOGIN_START';
+export const AUTHLOGINFAIL = 'AUTH_LOGIN_FAIL';
+export const AUTHLOGOUT = 'AUTH_LOGOUT';
 
-export const FETCHINGSTART = "FETCHING_START";
-export const FETCHINGFAIL = "FETCHING_FAIL";
-export const FETCHINGFINISH = "FETCHING_FINISH";
+export const FETCHINGSTART = 'FETCHING_START';
+export const FETCHINGFAIL = 'FETCHING_FAIL';
+export const FETCHINGFINISH = 'FETCHING_FINISH';
+
