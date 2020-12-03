@@ -4,12 +4,14 @@ import { useParams, withRouter } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 import moment from "moment";
 
+import * as actionTypes from "../../../../../store/actions/actions";
 import * as actionCreators from "../../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../../../../shared/utils/validator";
 
+import Modal from "../../../../../shared/UI_Element/Modal";
 import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
@@ -20,38 +22,36 @@ const Certification = (props) => {
   const { applicantid } = useParams();
   const { certificationindex } = useParams();
 
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState();
 
   const { getOneApplicant } = props;
   useEffect(() => {
     getOneApplicant(applicantid).then((res) => {
       setData(res.applicant.certification[certificationindex]);
-      setIsLoading(false);
     });
-  }, [getOneApplicant, setIsLoading, applicantid, certificationindex]);
+  }, [getOneApplicant, applicantid, certificationindex]);
 
   const [formState, onInputHandler] = useForm(
     {
       title: {
-        value: data.title,
-        isValid: true,
+        value: data ? data.title : null,
+        isValid: data && data.title ? true : false,
       },
       organization: {
-        value: data.organization,
-        isValid: true,
+        value: data ? data.organization : null,
+        isValid: data && data.organization ? true : false,
       },
       startDate: {
-        value: data.startDate,
-        isValid: true,
+        value: data ? data.startDate : null,
+        isValid: data && data.startDate ? true : false,
       },
       endDate: {
-        value: data.endDate,
-        isValid: true,
+        value: data ? data.endDate : null,
+        isValid: data && data.endDate ? true : false,
       },
       description: {
-        value: data.description,
-        isValid: true,
+        value: data ? data.description : null,
+        isValid: data && data.description ? true : false,
       },
     },
     false
@@ -65,6 +65,11 @@ const Certification = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
+
     if (expiry) {
       const updatedCertification = {
         applicantId: applicantid,
@@ -114,118 +119,139 @@ const Certification = (props) => {
     }
   };
 
-  let formContent = (
-    <>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Certification</p>
+  let formContent = <SpinnerCircle />;
 
-        <div className={classes.FormRow}>
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="title"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="Certification Title *"
-              initValue={data.title}
-              initIsValid={true}
-            />
-          </div>
+  if (!props.isLoading && data) {
+    formContent = (
+      <>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Certification</p>
 
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="organization"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="Issuing Organization*"
-              initValue={data.organization}
-              initIsValid={true}
-            />
-          </div>
-
-          <div className={classes.CheckboxDiv}>
-            <input
-              type="checkbox"
-              className={classes.Checkbox}
-              onChange={expiryHandler}
-            />
-            <label className={classes.CheckboxText}>No expiry date</label>
-          </div>
-
-          <div className={classes.Period}>
+          <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
                 inputType="input"
-                id="startDate"
-                inputClass="DateInput"
+                id="title"
+                inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Issue Date (MM/ DD/ YYYY)*"
-                initValue={moment(data.startDate).format("MM/ DD/ YYYY")}
+                label="Certification Title *"
+                initValue={data.title}
                 initIsValid={true}
               />
             </div>
 
-            {!expiry ? (
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="input"
+                id="organization"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Issuing Organization*"
+                initValue={data.organization}
+                initIsValid={true}
+              />
+            </div>
+
+            <div className={classes.CheckboxDiv}>
+              <input
+                type="checkbox"
+                className={classes.Checkbox}
+                onChange={expiryHandler}
+              />
+              <label className={classes.CheckboxText}>No expiry date</label>
+            </div>
+
+            <div className={classes.Period}>
               <div className={classes.EditLabel}>
                 <Input
                   inputType="input"
-                  id="endDate"
+                  id="startDate"
                   inputClass="DateInput"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label="Expiration Date (MM/ DD/ YYYY)*"
-                  initValue={moment(data.endDate).format("MM/ DD/ YYYY")}
+                  label="Issue Date (MM/ DD/ YYYY)*"
+                  initValue={moment(data.startDate).format("MM/ DD/ YYYY")}
                   initIsValid={true}
                 />
               </div>
-            ) : (
-              <div />
-            )}
+
+              {!expiry ? (
+                <div className={classes.EditLabel}>
+                  <Input
+                    inputType="input"
+                    id="endDate"
+                    inputClass="DateInput"
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label="Expiration Date (MM/ DD/ YYYY)*"
+                    initValue={moment(data.endDate).format("MM/ DD/ YYYY")}
+                    initIsValid={true}
+                  />
+                </div>
+              ) : (
+                <div />
+              )}
+            </div>
+
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="textarea"
+                id="description"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label="Description*"
+                initValue={data.description}
+                initIsValid={true}
+              />
+            </div>
           </div>
 
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="textarea"
-              id="description"
-              inputClass="EditProfileTextArea"
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-              onInputHandler={onInputHandler}
-              label="Description*"
-              initValue={data.description}
-              initIsValid={true}
-            />
-          </div>
+          <SaveButton
+            btnClass="SaveButton"
+            disabled={!formState.formIsValid}
+            placeholder="Save"
+          />
         </div>
-
-        <SaveButton
-          btnClass="SaveButton"
-          disabled={!formState.formIsValid}
-          placeholder="Save"
-        />
-      </div>
-    </>
-  );
-  if (isLoading) {
-    formContent = <SpinnerCircle />;
+      </>
+    );
   }
+
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
 
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
       {formContent}
     </form>
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
     updateApplicantCertification: (ApplicantData) =>
       dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(Certification));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Certification));

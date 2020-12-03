@@ -4,6 +4,7 @@ import { useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import * as actionTypes from "../../store/actions/actions";
+import * as actionCreators from "../../store/actions/index";
 import IconButton from "./IconButton";
 
 import classes from "./RangeSegmentMap.module.css";
@@ -11,14 +12,23 @@ import classes from "./RangeSegmentMap.module.css";
 const RangeSegmentMap = (props) => {
   const { applicantid } = useParams();
 
-  const onDeleteHandler = (event) => {
+  const onDeleteHandler = async (event) => {
     event.preventDefault();
-    const deleteSegment = {
+    const segmentData = {
       applicantId: applicantid,
       index: props.index,
-      stateName: props.stateName,
+      segment: props.stateName,
     };
-    props.onDeleteSegment(deleteSegment);
+
+    try {
+      const res = await props.deleteSegment(segmentData);
+      if (res) {
+        console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
     props.history.push(`/ap/${applicantid}`);
   };
 
@@ -53,11 +63,8 @@ const RangeSegmentMap = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDeleteSegment: (deleteSegment) =>
-      dispatch({
-        type: actionTypes.DELETESEGMENT,
-        payload: deleteSegment,
-      }),
+    deleteSegment: (segmentData) =>
+      dispatch(actionCreators.deleteSegment(segmentData)),
   };
 };
 

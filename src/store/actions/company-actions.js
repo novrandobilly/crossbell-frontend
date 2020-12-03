@@ -1,51 +1,52 @@
-import * as actionTypes from './actions';
+import * as actionTypes from "./actions";
 
-const createCompanySuccess = payload => {
-	return {
-		type: actionTypes.CREATECOMPANY,
-		payload: payload
-	};
+const createCompanySuccess = (payload) => {
+  return {
+    type: actionTypes.CREATECOMPANY,
+    payload: payload,
+  };
 };
 const createCompanyFail = () => {
-	return {
-		type: actionTypes.CREATECOMPANYFAIL
-	};
+  return {
+    type: actionTypes.CREATECOMPANYFAIL,
+  };
 };
 const createCompanyStart = () => {
-	return {
-		type: actionTypes.CREATECOMPANYSTART
-	};
+  return {
+    type: actionTypes.CREATECOMPANYSTART,
+  };
 };
 
-const getCompanySuccess = payload => {
-	return {
-		type: actionTypes.GETCOMPANY,
-		payload: payload
-	};
+const getCompanySuccess = (payload) => {
+  return {
+    type: actionTypes.GETCOMPANY,
+    payload: payload,
+  };
 };
 const getCompanyFail = () => {
-	return {
-		type: actionTypes.GETCOMPANYFAIL
-	};
+  return {
+    type: actionTypes.GETCOMPANYFAIL,
+  };
 };
 const getCompanyStart = () => {
-	return {
-		type: actionTypes.GETCOMPANYSTART
-	};
+  return {
+    type: actionTypes.GETCOMPANYSTART,
+  };
 };
 
-const updateCompanySuccess = payload => {
-	return {
-		type: actionTypes.UPDATECOMPANY,
-		payload: payload
-	};
+const updateCompanySuccess = (payload) => {
+  return {
+    type: actionTypes.UPDATECOMPANY,
+    payload: payload,
+  };
 };
 const updateCompanyFail = () => {
-	return {
-		type: actionTypes.UPDATECOMPANYFAIL
-	};
+  return {
+    type: actionTypes.UPDATECOMPANYFAIL,
+  };
 };
 const updateCompanyStart = () => {
+
 	return {
 		type: actionTypes.UPDATECOMPANYSTART
 	};
@@ -200,11 +201,13 @@ export const updateCompanyMission = CompanyData => {
 			dispatch(updateCompanyFail());
 		}
 	};
+
 };
 
 //=======================================================================
 
 const loginSuccess = () => {
+
 	return {
 		type: actionTypes.AUTHLOGIN
 	};
@@ -265,6 +268,7 @@ export const activateCompany = payload => {
 			return err;
 		}
 	};
+
 };
 
 export const blockCompany = payload => {
