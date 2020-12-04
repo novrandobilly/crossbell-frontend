@@ -119,7 +119,6 @@ export const updateCompanyIntro = (CompanyData) => {
           },
           body: JSON.stringify({
             id: CompanyData.companyId,
-            dateOfBirth: CompanyData.dateOfBirth,
             logo: CompanyData.logo,
             companyName: CompanyData.companyName,
             email: CompanyData.email,

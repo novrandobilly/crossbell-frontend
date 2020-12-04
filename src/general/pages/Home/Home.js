@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { VALIDATOR_REQUIRE } from "../../../shared/utils/validator";
 
+import CompanyOrderForm from "../../../users/company/pages/CompanyOrderForm/CompanyOrderForm";
 import Carousel from "./Components/Carousel";
 import Input from "../../../shared/UI_Element/Input";
 import Button from "../../../shared/UI_Element/Button";
@@ -11,8 +12,8 @@ import classes from "./Home.module.css";
 const Home = (props) => {
   return (
     <React.Fragment>
-      <Carousel />
       <div className={classes.Content}>
+        <Carousel />
         <div>
           <p className={classes.About}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
