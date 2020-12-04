@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useForm } from '../../shared/utils/useForm';
@@ -6,11 +6,12 @@ import * as actionCreators from '../../store/actions';
 
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE } from '../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_MIN } from '../../shared/utils/validator';
 
 import classes from './NewJob.module.css';
 
 const NewJob = props => {
+	const [ maxSlot, setMaxSlot ] = useState(null);
 	const [ formState, onInputHandler ] = useForm(
 		{
 			// jobId: {
@@ -65,18 +66,14 @@ const NewJob = props => {
 				value: '',
 				isValid: false
 			},
-			// companyId: {
-			// 	value: '',
-			// 	isValid: false
-			// },
-			datePosted: {
-				value: '3',
-				isValid: true
+			slotAllocation: {
+				value: null,
+				isValid: false
 			}
 		},
 		false
 	);
-
+	const { getOneCompany, auth } = props;
 	useEffect(
 		() => {
 			const level = document.getElementById('level');
@@ -84,8 +81,18 @@ const NewJob = props => {
 
 			onInputHandler('level', level.value, true);
 			onInputHandler('employment', employment.value, true);
+
+			const getSlot = async () => {
+				try {
+					const res = await getOneCompany({ userId: auth.userId });
+					setMaxSlot(res.company.slot);
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			getSlot();
 		},
-		[ onInputHandler ]
+		[ onInputHandler, getOneCompany, auth ]
 	);
 
 	const onChangeHandler = e => {
@@ -108,14 +115,14 @@ const NewJob = props => {
 			employment: formState.inputs.employment.value,
 			jobFunction: formState.inputs.jobFunction.value,
 			benefit: formState.inputs.benefit.value,
-			expiredDate: new Date(),
-			salary: formState.inputs.salary.value,
-			datePosted: formState.inputs.datePosted.value
+			slot: formState.inputs.slotAllocation.value,
+			salary: formState.inputs.salary.value
 		};
 		const authData = {
 			token: props.auth.token,
 			userId: props.auth.userId
 		};
+		console.log(jobData);
 		try {
 			const res = await props.createJob(jobData, authData);
 			console.log(res);
@@ -260,6 +267,18 @@ const NewJob = props => {
 						onInputHandler={onInputHandler}
 						label='Benefits*'
 					/>
+					<Input
+						inputType='number'
+						id='slotAllocation'
+						inputClass='AddJobInput'
+						validatorMethod={[ VALIDATOR_MIN(1) ]}
+						onInputHandler={onInputHandler}
+						label='Slot Allocation(s)*'
+						type='number'
+						min='1'
+						max={(maxSlot && maxSlot) || '1'}
+						step='1'
+					/>
 				</div>
 			</div>
 			<button disabled={!formState.formIsValid} className={classes.SaveButton}>
@@ -289,7 +308,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
 	return {
-		createJob: (jobData, authData) => dispatch(actionCreators.createJob(jobData, authData))
+		createJob: (jobData, authData) => dispatch(actionCreators.createJob(jobData, authData)),
+		getOneCompany: payload => dispatch(actionCreators.getOneCompany(payload))
 	};
 };
 

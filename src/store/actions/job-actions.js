@@ -38,15 +38,15 @@ export const createJob = (jobData, authData) => {
 					employment: jobData.employment,
 					jobFunction: jobData.jobFunction,
 					benefit: jobData.benefit,
-					expiredDate: jobData.expiredDate,
 					salary: jobData.salary,
+					slot: jobData.slot,
 					companyId: authData.userId
 				})
 			});
-			if (!res.ok) {
-				throw new Error('Could not create job, please try again');
-			}
 			const responseJSON = await res.json();
+			if (!res.ok) {
+				throw new Error(responseJSON.message);
+			}
 			console.log(responseJSON);
 			dispatch(createJobSuccess());
 			return responseJSON;
@@ -81,7 +81,7 @@ export const getAllAvailableJobs = () => {
 			const responseJSON = await res.json();
 
 			if (!res.ok) {
-				throw new Error('Failed fetching jobs, please try again');
+				throw new Error(responseJSON.message);
 			}
 
 			dispatch(fetchingFinish());
@@ -98,10 +98,10 @@ export const getOneJob = jobId => {
 		dispatch(fetchingStart());
 		try {
 			const res = await fetch(`http://localhost:5000/api/jobs/${jobId}`);
-			if (!res.ok) {
-				throw new Error('Could not find specific job');
-			}
 			const responseJSON = await res.json();
+			if (!res.ok) {
+				throw new Error(responseJSON.message);
+			}
 			dispatch(fetchingFinish());
 			return responseJSON;
 		} catch (err) {
@@ -129,10 +129,10 @@ export const updateJob = payload => {
 					technicalRequirement: payload.technicalRequirement
 				})
 			});
-			if (!res.ok) {
-				throw new Error('Could not update job');
-			}
 			const responseJSON = res.json();
+			if (!res.ok) {
+				throw new Error(responseJSON.message);
+			}
 			dispatch(fetchingFinish());
 			return responseJSON;
 		} catch (err) {
@@ -154,10 +154,10 @@ export const deleteJob = payload => {
 					Authorization: `Bearer ${payload.token}`
 				}
 			});
-			if (!res.ok) {
-				throw new Error('Could not delete job');
-			}
 			const responseJSON = res.json();
+			if (!res.ok) {
+				throw new Error(responseJSON.message);
+			}
 			dispatch(fetchingFinish());
 			return responseJSON;
 		} catch (err) {

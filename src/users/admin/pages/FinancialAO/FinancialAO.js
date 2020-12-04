@@ -1,159 +1,190 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../../../store/actions';
 
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-import classes from "./FinancialAO.module.css";
+import classes from './FinancialAO.module.css';
 
-const FinancialAO = (props) => {
-  let slot = [];
-  let price = [];
-  let total = [];
-  let revenue = 0;
+const FinancialAO = props => {
+	let slot = [];
+	let price = [];
+	let total = [];
+	let revenue = 0;
+	const [ companyData, setCompanyData ] = useState(null);
 
-  return (
-    <div className={classes.FlexContainer}>
-      <div className={classes.Container}>
-        <div className={classes.HeaderContainer}>
-          <h1 className={classes.Header}>CrossBell Finance</h1>
-          <div className={classes.DropDown}>
-            <button className={classes.DropButton}>
-              Filter
-              <ArrowDropDownIcon />
-            </button>
-            <div className={classes.DropDownContent}>
-              <button style={{ color: "black" }}>All</button>
-              <button style={{ color: "rgb(33, 153, 0)" }} value="Active">
-                Active
-              </button>
-              <button style={{ color: "red" }} value="Cancel">
-                Cancel
-              </button>
+	console.log(companyData);
+	const { getWholeCompanies, admin } = props;
+	useEffect(
+		() => {
+			const getWhole = async () => {
+				try {
+					const payload = { token: admin.token };
+					const res = await getWholeCompanies(payload);
+					setCompanyData(res.wholeCompanies);
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			getWhole();
+		},
+		[ getWholeCompanies, admin ]
+	);
 
-              <button style={{ color: "rgb(250, 129, 0)" }} value="Pending">
-                Pending
-              </button>
-            </div>
-          </div>
-        </div>
-        <table className={classes.Table}>
-          <thead className={classes.RowField}>
-            <tr>
-              <th>Order Id</th>
-              <th>Company Id</th>
-              <th>Company Name</th>
-              <th>Package Ads</th>
-              <th>Slot</th>
-              <th>Price/ Slot</th>
-              <th>Total Price</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+	let content = <Spinner />;
 
-          <tbody className={classes.ColumnField}>
-            {props.finance.map((fin, i) => {
-              let company = props.company.find(
-                (comp) => comp.companyId === fin.companyId
-              );
-              return (
-                <tr key={fin.orderId}>
-                  <th>{fin.orderId}</th>
-                  <th>{fin.companyId}</th>
-                  <th>{company.companyName}</th>
-                  <th>{fin.package}</th>
+	if (companyData && !props.company.isLoading) {
+		content = (
+			<div className={classes.FlexContainer}>
+				<div className={classes.Container}>
+					<div className={classes.HeaderContainer}>
+						<h1 className={classes.Header}>CrossBell Finance</h1>
+						<div className={classes.DropDown}>
+							<button className={classes.DropButton}>
+								Filter
+								<ArrowDropDownIcon />
+							</button>
+							<div className={classes.DropDownContent}>
+								<button style={{ color: 'black' }}>All</button>
+								<button style={{ color: 'rgb(33, 153, 0)' }} value='Active'>
+									Active
+								</button>
+								<button style={{ color: 'red' }} value='Cancel'>
+									Cancel
+								</button>
 
-                  {/* ========== Slot ========== */}
-                  {fin.status === "Pending" ? (
-                    <th>{parseInt((slot[i] = 0))}</th>
-                  ) : fin.status === "Cancel" ? (
-                    <th>{parseInt((slot[i] = 0))}</th>
-                  ) : (
-                    <th>{fin.slot}</th>
-                  )}
+								<button style={{ color: 'rgb(250, 129, 0)' }} value='Pending'>
+									Pending
+								</button>
+							</div>
+						</div>
+					</div>
+					<table className={classes.Table}>
+						<thead className={classes.RowField}>
+							<tr>
+								<th>Order Id</th>
+								<th>Company Id</th>
+								<th>Company Name</th>
+								<th>Package Ads</th>
+								<th>Slot</th>
+								<th>Price/ Slot</th>
+								<th>Total Price</th>
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>
 
-                  {/* ========== Price/Slot ========== */}
-                  {fin.status === "Pending" ? (
-                    <th>{parseInt((price[i] = 0))}</th>
-                  ) : fin.status === "Cancel" ? (
-                    <th>{parseInt((price[i] = 0))}</th>
-                  ) : (
-                    <th>{fin.price}</th>
-                  )}
+						<tbody className={classes.ColumnField}>
+							{props.finance.map((fin, i) => {
+								let company = companyData && companyData.find(comp => comp.companyId === fin.companyId);
+								if (company) {
+									return (
+										<tr key={fin.orderId}>
+											<th>{fin.orderId}</th>
+											<th>{fin.companyId}</th>
+											<th>{company.companyName}</th>
+											<th>{fin.package}</th>
 
-                  {/* ========== Total Price ========== */}
-                  {fin.status === "Pending" ? (
-                    <th>{parseInt((slot[i] = 0))}</th>
-                  ) : fin.status === "Cancel" ? (
-                    <th>{parseInt((slot[i] = 0))}</th>
-                  ) : (
-                    <th>
-                      Rp.{" "}
-                      {parseInt(
-                        (total[i] =
-                          (slot[i] || fin.slot) * (price[i] || fin.price))
-                      )}
-                      ,-
-                    </th>
-                  )}
+											{/* ========== Slot ========== */}
+											{fin.status === 'Pending' ? (
+												<th>{parseInt((slot[i] = 0))}</th>
+											) : fin.status === 'Cancel' ? (
+												<th>{parseInt((slot[i] = 0))}</th>
+											) : (
+												<th>{fin.slot}</th>
+											)}
 
-                  <th
-                    style={
-                      fin.status === "Cancel"
-                        ? { color: "Red", fontWeight: "bold" }
-                        : fin.status === "Active"
-                        ? { color: "Green", fontWeight: "bold" }
-                        : fin.status === "Expired"
-                        ? { color: "Gray", fontWeight: "bold" }
-                        : { color: "rgb(250, 129, 0)", fontWeight: "bold" }
-                    }
-                  >
-                    {fin.status}
-                  </th>
-                  <th>
-                    <div className={classes.DropDown}>
-                      <button className={classes.DropButton}>
-                        <ArrowDropDownIcon />
-                      </button>
-                      <div className={classes.DropDownContent}>
-                        <button style={{ color: "Green" }}>Activate</button>
-                        <button style={{ color: "red" }}>Cancel</button>
-                      </div>
-                    </div>
-                  </th>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div className={classes.RevenueContainer}>
-          <div className={classes.RevenueLabel}>
-            <div className={classes.Label}>Revenue/ month</div>
-            <div className={classes.Label}>Revenue/ year</div>
-          </div>
-          <div className={classes.RevenueNumber}>
-            <div className={classes.Label}>
-              {total.map((tot) => {
-                revenue = revenue + tot;
-                return null;
-              })}
-              Rp. {revenue.toLocaleString()},-
-            </div>
-            <div className={classes.Label}>
-              Rp. {(revenue * 12).toLocaleString()},-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+											{/* ========== Price/Slot ========== */}
+											{fin.status === 'Pending' ? (
+												<th>{parseInt((price[i] = 0))}</th>
+											) : fin.status === 'Cancel' ? (
+												<th>{parseInt((price[i] = 0))}</th>
+											) : (
+												<th>{fin.price}</th>
+											)}
+
+											{/* ========== Total Price ========== */}
+											{fin.status === 'Pending' ? (
+												<th>{parseInt((slot[i] = 0))}</th>
+											) : fin.status === 'Cancel' ? (
+												<th>{parseInt((slot[i] = 0))}</th>
+											) : (
+												<th>
+													Rp. {parseInt((total[i] = (slot[i] || fin.slot) * (price[i] || fin.price)))}
+													,-
+												</th>
+											)}
+
+											<th
+												style={
+													fin.status === 'Cancel' ? (
+														{ color: 'Red', fontWeight: 'bold' }
+													) : fin.status === 'Active' ? (
+														{ color: 'Green', fontWeight: 'bold' }
+													) : fin.status === 'Expired' ? (
+														{ color: 'Gray', fontWeight: 'bold' }
+													) : (
+														{ color: 'rgb(250, 129, 0)', fontWeight: 'bold' }
+													)
+												}>
+												{fin.status}
+											</th>
+											<th>
+												<div className={classes.DropDown}>
+													<button className={classes.DropButton}>
+														<ArrowDropDownIcon />
+													</button>
+													<div className={classes.DropDownContent}>
+														<button style={{ color: 'Green' }}>Activate</button>
+														<button style={{ color: 'red' }}>Cancel</button>
+													</div>
+												</div>
+											</th>
+										</tr>
+									);
+								} else {
+									return null;
+								}
+							})}
+						</tbody>
+					</table>
+					<div className={classes.RevenueContainer}>
+						<div className={classes.RevenueLabel}>
+							<div className={classes.Label}>Revenue/ month</div>
+							<div className={classes.Label}>Revenue/ year</div>
+						</div>
+						<div className={classes.RevenueNumber}>
+							<div className={classes.Label}>
+								{total.map(tot => {
+									revenue = revenue + tot;
+									return null;
+								})}
+								Rp. {revenue.toLocaleString()},-
+							</div>
+							<div className={classes.Label}>Rp. {(revenue * 12).toLocaleString()},-</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	return content;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    company: state.company.companies,
-    finance: state.finance.financial,
-  };
+const mapStateToProps = state => {
+	return {
+		finance: state.finance.financial,
+		admin: state.admin,
+		company: state.company
+	};
 };
 
-export default connect(mapStateToProps)(FinancialAO);
+const mapDispatchToProps = dispatch => {
+	return {
+		getWholeCompanies: payload => dispatch(actionCreators.getWholeCompanies(payload))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FinancialAO);

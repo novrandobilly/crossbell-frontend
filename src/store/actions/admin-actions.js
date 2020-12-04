@@ -105,23 +105,6 @@ const getAllApplicantStart = () => {
 	};
 };
 
-const getAllCompanySuccess = payload => {
-	return {
-		type: actionTypes.GETALLCOMPANY,
-		payload: payload
-	};
-};
-const getAllCompanyFail = () => {
-	return {
-		type: actionTypes.GETALLCOMPANYFAIL
-	};
-};
-const getAllCompanyStart = () => {
-	return {
-		type: actionTypes.GETALLCOMPANYSTART
-	};
-};
-
 const getAllJobSuccess = payload => {
 	return {
 		type: actionTypes.GETALLJOB,
@@ -138,45 +121,70 @@ const getAllJobStart = () => {
 		type: actionTypes.GETALLJOBSTART
 	};
 };
+const fetchCompanyStart = () => {
+	return {
+		type: actionTypes.FETCHCOMPANYSTART
+	};
+};
+const fetchCompanySuccess = () => {
+	return {
+		type: actionTypes.FETCHCOMPANYSUCCESS
+	};
+};
+const fetchCompanyFail = () => {
+	return {
+		type: actionTypes.FETCHCOMPANYFAIL
+	};
+};
 
-export const getAllApplicant = () => {
+export const getAllApplicant = payload => {
 	return async dispatch => {
 		dispatch(getAllApplicantStart());
 		try {
 			const response = await fetch(`http://localhost:5000/api/alphaomega/applicants`, {
 				method: 'GET',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
 				},
 				body: null
 			});
 			const responseJSON = await response.json();
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
 
 			dispatch(getAllApplicantSuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {
 			dispatch(getAllApplicantFail);
+			return err;
 		}
 	};
 };
 
-export const getAllCompany = () => {
+export const getWholeCompanies = payload => {
 	return async dispatch => {
-		dispatch(getAllCompanyStart());
+		dispatch(fetchCompanyStart());
 		try {
 			const response = await fetch(`http://localhost:5000/api/alphaomega/companies`, {
 				method: 'GET',
 				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: null
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
+				}
 			});
 			const responseJSON = await response.json();
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
+			console.log(responseJSON);
 
-			dispatch(getAllCompanySuccess(responseJSON));
+			dispatch(fetchCompanySuccess());
 			return responseJSON;
 		} catch (err) {
-			dispatch(getAllCompanyFail);
+			dispatch(fetchCompanyFail());
+			return err;
 		}
 	};
 };
@@ -193,11 +201,65 @@ export const getAllJob = () => {
 				body: null
 			});
 			const responseJSON = await response.json();
-
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
 			dispatch(getAllJobSuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {
 			dispatch(getAllJobFail);
+		}
+	};
+};
+
+//=======================================================================
+
+export const activateCompany = payload => {
+	return async dispatch => {
+		dispatch(fetchCompanyStart());
+		try {
+			const res = await fetch(`http://localhost:5000/api/alphaomega/${payload.companyId}/activate`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
+				}
+			});
+			const resJSON = await res.json();
+			if (!res.ok) {
+				throw new Error(resJSON.message);
+			}
+			dispatch(fetchCompanySuccess());
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+			dispatch(fetchCompanyFail());
+			return err;
+		}
+	};
+};
+
+export const blockCompany = payload => {
+	return async dispatch => {
+		dispatch(fetchCompanyStart());
+		try {
+			const res = await fetch(`http://localhost:5000/api/alphaomega/${payload.companyId}/block`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
+				}
+			});
+			const resJSON = await res.json();
+			if (!res.ok) {
+				throw new Error(resJSON.message);
+			}
+			dispatch(fetchCompanySuccess());
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+			dispatch(fetchCompanyFail());
+			return err;
 		}
 	};
 };

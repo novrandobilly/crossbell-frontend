@@ -13,16 +13,19 @@ const CompaniesListAO = props => {
 	const [ filter, setfilter ] = useState({ value: '' });
 	const [ data, setData ] = useState([]);
 	const [ isLoading, setIsLoading ] = useState(true);
+	const [ indexLoading, setIndexLoading ] = useState(null);
 
-	const { getAllCompany } = props;
+	const { getWholeCompanies, admin } = props;
+
 	useEffect(
 		() => {
-			getAllCompany().then(res => {
+			const payload = { token: admin.token };
+			getWholeCompanies(payload).then(res => {
 				setData(res.wholeCompanies);
 				setIsLoading(false);
 			});
 		},
-		[ getAllCompany, setIsLoading ]
+		[ getWholeCompanies, setIsLoading, admin ]
 	);
 
 	const handleAll = () => {
@@ -45,6 +48,7 @@ const CompaniesListAO = props => {
 	};
 
 	const activateCompanyHandler = async dataInput => {
+		setIndexLoading(dataInput.index);
 		const payload = {
 			token: props.admin.token,
 			companyId: dataInput.companyId
@@ -56,11 +60,14 @@ const CompaniesListAO = props => {
 				tempData[dataInput.index].isActive = true;
 				return tempData;
 			});
+			setIndexLoading(null);
 		} catch (err) {
 			console.log(err);
+			setIndexLoading(null);
 		}
 	};
 	const blockCompanyHandler = async dataInput => {
+		setIndexLoading(dataInput.index);
 		const payload = {
 			token: props.admin.token,
 			companyId: dataInput.companyId
@@ -72,8 +79,10 @@ const CompaniesListAO = props => {
 				tempData[dataInput.index].isActive = false;
 				return tempData;
 			});
+			setIndexLoading(null);
 		} catch (err) {
 			console.log(err);
+			setIndexLoading(null);
 		}
 	};
 
@@ -148,7 +157,7 @@ const CompaniesListAO = props => {
 										{company.status}
 									</th>
 									<th>
-										{props.company.isLoading ? (
+										{props.company.isLoading && indexLoading === index ? (
 											<SpinnerCircle />
 										) : company.isActive ? (
 											<span style={{ color: 'Green', fontWeight: 'bold' }}>Active</span>
@@ -219,7 +228,7 @@ const CompaniesListAO = props => {
 											{company.status}
 										</th>
 										<th>
-											{props.company.isLoading ? (
+											{props.company.isLoading && indexLoading === index ? (
 												<SpinnerCircle />
 											) : company.isActive ? (
 												<span style={{ color: 'Green', fontWeight: 'bold' }}>Active</span>
@@ -272,7 +281,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getAllCompany: () => dispatch(actionCreators.getAllCompany()),
+		getWholeCompanies: payload => dispatch(actionCreators.getWholeCompanies(payload)),
 		activateCo: payload => dispatch(actionCreators.activateCompany(payload)),
 		blockCo: payload => dispatch(actionCreators.blockCompany(payload))
 	};

@@ -7,7 +7,8 @@ const initialState = {
 	userId: null,
 	isLoading: false,
 	isError: false,
-	tokenExpirationDate: null
+	tokenExpirationDate: null,
+	isActive: false
 };
 
 const authReducers = (state = initialState, action) => {
@@ -44,6 +45,7 @@ const authReducers = (state = initialState, action) => {
 					userId: action.payload.userId,
 					token: action.payload.token,
 					isCompany: action.payload.isCompany,
+					isActive: action.payload.isActive,
 					expiration: tokenExpirationDate
 				})
 			);
@@ -54,6 +56,7 @@ const authReducers = (state = initialState, action) => {
 				isCompany: action.payload.isCompany,
 				token: action.payload.token,
 				userId: action.payload.userId,
+				isActive: action.payload.isActive,
 				isLoading: false,
 				isError: false,
 				tokenExpirationDate
@@ -69,6 +72,7 @@ const authReducers = (state = initialState, action) => {
 				userId: null,
 				isLoading: false,
 				isError: false,
+				isActive: false,
 				tokenExpirationDate: null
 			};
 		}

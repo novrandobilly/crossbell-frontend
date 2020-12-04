@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 
 import { validate } from '../utils/validator';
+
 import classes from './Input.module.css';
 
 const ACTION = {
@@ -76,6 +77,26 @@ const Input = props => {
 				/>
 			);
 			break;
+		case 'number':
+			inputElement = (
+				<input
+					className={[ classes.InputElements, classes[props.inputClass] ].join(' ')}
+					style={{
+						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
+					}}
+					id={id}
+					type={props.type || 'text'}
+					name={props.name}
+					value={state.value}
+					onChange={onChangeHandler}
+					onBlur={onBlurHandler}
+					placeholder={props.placeholder || ''}
+					min={props.min}
+					max={props.max}
+					step={props.step}
+				/>
+			);
+			break;
 		case 'textarea':
 			inputElement = (
 				<textarea
@@ -94,7 +115,6 @@ const Input = props => {
 				/>
 			);
 			break;
-
 		case 'date':
 			inputElement = (
 				<input

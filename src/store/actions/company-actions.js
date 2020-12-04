@@ -1,70 +1,74 @@
-import * as actionTypes from "./actions";
+import * as actionTypes from './actions';
 
-const createCompanySuccess = (payload) => {
-  return {
-    type: actionTypes.CREATECOMPANY,
-    payload: payload,
-  };
+const createCompanySuccess = payload => {
+	return {
+		type: actionTypes.CREATECOMPANY,
+		payload: payload
+	};
 };
 const createCompanyFail = () => {
-  return {
-    type: actionTypes.CREATECOMPANYFAIL,
-  };
+	return {
+		type: actionTypes.CREATECOMPANYFAIL
+	};
 };
 const createCompanyStart = () => {
-  return {
-    type: actionTypes.CREATECOMPANYSTART,
-  };
+	return {
+		type: actionTypes.CREATECOMPANYSTART
+	};
 };
 
-const getCompanySuccess = (payload) => {
-  return {
-    type: actionTypes.GETCOMPANY,
-    payload: payload,
-  };
+const getCompanySuccess = payload => {
+	return {
+		type: actionTypes.GETCOMPANY,
+		payload: payload
+	};
 };
 const getCompanyFail = () => {
-  return {
-    type: actionTypes.GETCOMPANYFAIL,
-  };
+	return {
+		type: actionTypes.GETCOMPANYFAIL
+	};
 };
 const getCompanyStart = () => {
-  return {
-    type: actionTypes.GETCOMPANYSTART,
-  };
+	return {
+		type: actionTypes.GETCOMPANYSTART
+	};
 };
 
-const updateCompanySuccess = (payload) => {
-  return {
-    type: actionTypes.UPDATECOMPANY,
-    payload: payload,
-  };
+const updateCompanySuccess = payload => {
+	return {
+		type: actionTypes.UPDATECOMPANY,
+		payload: payload
+	};
 };
 const updateCompanyFail = () => {
-  return {
-    type: actionTypes.UPDATECOMPANYFAIL,
-  };
+	return {
+		type: actionTypes.UPDATECOMPANYFAIL
+	};
 };
 const updateCompanyStart = () => {
-
 	return {
 		type: actionTypes.UPDATECOMPANYSTART
 	};
 };
 
-const fetchCompanyStart = () => {
-	return {
-		type: actionTypes.FETCHCOMPANYSTART
-	};
-};
-const fetchCompanySuccess = () => {
-	return {
-		type: actionTypes.FETCHCOMPANYSUCCESS
-	};
-};
-const fetchCompanyFail = () => {
-	return {
-		type: actionTypes.FETCHCOMPANYFAIL
+export const getOneCompany = payload => {
+	return async dispatch => {
+		dispatch(getCompanyStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/co/${payload.userId}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: null
+			});
+			const responseJSON = await response.json();
+
+			dispatch(getCompanySuccess(responseJSON));
+			return responseJSON;
+		} catch (err) {
+			dispatch(getCompanyFail());
+		}
 	};
 };
 
@@ -95,27 +99,6 @@ export const createCompany = companyData => {
 		} catch (err) {
 			dispatch(createCompanyFail());
 			return err;
-		}
-	};
-};
-
-export const getOneCompany = payload => {
-	return async dispatch => {
-		dispatch(getCompanyStart());
-		try {
-			const response = await fetch(`http://localhost:5000/api/users/co/${payload.userId}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: null
-			});
-			const responseJSON = await response.json();
-
-			dispatch(getCompanySuccess(responseJSON));
-			return responseJSON;
-		} catch (err) {
-			dispatch(getCompanyFail());
 		}
 	};
 };
@@ -199,99 +182,6 @@ export const updateCompanyMission = CompanyData => {
 			return responseJSON.foundCompany;
 		} catch (err) {
 			dispatch(updateCompanyFail());
-		}
-	};
-
-};
-
-//=======================================================================
-
-const loginSuccess = () => {
-
-	return {
-		type: actionTypes.AUTHLOGIN
-	};
-};
-
-const loginFail = () => {
-	return {
-		type: actionTypes.AUTHLOGOUT
-	};
-};
-
-export const login = loginData => {
-	return async dispatch => {
-		//login
-		try {
-			const res = await fetch('http://localhost:5000/api/users/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					email: loginData.email,
-					password: loginData.password
-				})
-			});
-
-			const resJSON = await res.json();
-
-			dispatch(loginSuccess());
-			return resJSON;
-		} catch (err) {
-			console.log(err);
-			dispatch(loginFail());
-		}
-	};
-};
-
-export const activateCompany = payload => {
-	return async dispatch => {
-		dispatch(fetchCompanyStart());
-		try {
-			const res = await fetch(`http://localhost:5000/api/alphaomega/${payload.companyId}/activate`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${payload.token}`
-				}
-			});
-			if (!res.ok) {
-				throw new Error('Cannot activate company');
-			}
-			const resJSON = await res.json();
-			dispatch(fetchCompanySuccess());
-			return resJSON;
-		} catch (err) {
-			console.log(err);
-			dispatch(fetchCompanyFail());
-			return err;
-		}
-	};
-
-};
-
-export const blockCompany = payload => {
-	return async dispatch => {
-		dispatch(fetchCompanyStart());
-		try {
-			const res = await fetch(`http://localhost:5000/api/alphaomega/${payload.companyId}/block`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${payload.token}`
-				}
-			});
-			if (!res.ok) {
-				throw new Error('Cannot block company');
-			}
-			const resJSON = await res.json();
-			dispatch(fetchCompanySuccess());
-			return resJSON;
-		} catch (err) {
-			console.log(err);
-			dispatch(fetchCompanyFail());
-			return err;
 		}
 	};
 };
