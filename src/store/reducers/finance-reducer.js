@@ -1,23 +1,35 @@
 const initJobState = {
   financial: [
-    {
-      orderId: "SSS_O1",
-      companyId: "SSS",
-      orders: [
-        { package: "Regular", slot: 30, price: 20000 },
-        { package: "Premium", slot: 40, price: 18000 },
-        { package: "Lifetime", slot: 60, price: 15000 },
-      ],
-      status: "Active",
-    },
+    // {
+    //   orderId: "SSS_O1",
+    //   companyId: "SSS",
+    //   orders: [
+    //     { package: "Regular", slot: 30, price: 20000 },
+    //     { package: "Premium", slot: 40, price: 18000 },
+    //     { package: "Lifetime", slot: 60, price: 15000 },
+    //   ],
+    //   createdAt: "",
+    //   approvetAt: "",
+    //   status: "Active",
+    // },
+
+    //>>>>>>>>>>>> template <<<<<<<<<<<<<<<
     {
       orderId: "SSS_O2",
+      invoiceId: "5dAO9244gAhKSA",
       companyId: "SSS",
-      package: "Regular",
+      packageName: "Silver",
       status: "Pending",
-      slot: 30,
-      price: 20000,
+      createdAt: "12/04/2020",
+      approvetAt: "12/05/2020",
+      dueDate: "2 minggu dari createdAt",
+      slot: 2,
+      packagePrice: 35000,
+      amount: 3,
+      totalPrice: null,
     },
+    //>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<
+
     {
       orderId: "RCN_O1",
       companyId: "RCN",

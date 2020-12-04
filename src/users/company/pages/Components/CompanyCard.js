@@ -30,6 +30,7 @@ const CompanyCard = props => {
 
 						<p className={classes.CompanyHeadquarter}>{props.address}</p>
 
+
 						<a
 							href={`https://${props.website}`}
 							className={classes.CompanyWebsites}
@@ -56,12 +57,16 @@ const CompanyCard = props => {
 					</div>
 				</div>
 				<div className={classes.ContainerRight}>
+        <Link to={"/co/order"}>
+            <IconButton iconType="Order" />
+          </Link>
 					{props.auth.isCompany &&
 					props.auth.isActive && (
 						<Link to={'/jobs/new'}>
 							<IconButton iconType='NewJob' />
 						</Link>
 					)}
+
 
 					<Link to={`/co/${props.companyId}/compro/intro`}>
 						<IconButton />

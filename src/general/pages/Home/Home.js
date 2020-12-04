@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { VALIDATOR_REQUIRE } from '../../../shared/utils/validator';
 
+
 import Carousel from './Components/Carousel';
 import Input from '../../../shared/UI_Element/Input';
 import Button from '../../../shared/UI_Element/Button';
@@ -36,6 +37,7 @@ const Home = props => {
 			</div>
 		</React.Fragment>
 	);
+
 };
 
 const mapStateToProps = state => {
