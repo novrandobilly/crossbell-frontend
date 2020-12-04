@@ -1,6 +1,21 @@
 import * as actionTypes from "../actions/actions";
 
 const initialState = {
+  companies: [
+    {
+      companyId: "SSS",
+      companyName: "Shielded Should Shout",
+      address: "jl.wijaya kusuma",
+      email: "User@SSS.com",
+      size: "900",
+      industry: "Oil & ore",
+      website: "inicompanyku.sss.com",
+      emailRecipient: "Penerima@SSS.com",
+      details: "Lorem ipsum dolor si amt",
+      mission:
+        "To be the no.1 oil company in the world & mining company underground",
+    },
+  ],
   isLoading: false,
   error: false,
 };

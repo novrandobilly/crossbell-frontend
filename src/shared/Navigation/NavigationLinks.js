@@ -40,10 +40,10 @@ const NavigationLinks = props => {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to='#' activeClassName={classes.active}>
-						Development Pages
-					</NavLink>
-				</li>
+          <NavLink to="/order" activeClassName={classes.active}>
+            Development Pages
+          </NavLink>
+        </li>
 				{props.auth.isLoggedIn &&
 				!props.auth.isCompany && (
 					<li>
@@ -70,6 +70,7 @@ const NavigationLinks = props => {
 			)}
 		</div>
 	);
+
 
 };
 
