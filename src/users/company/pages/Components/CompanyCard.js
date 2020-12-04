@@ -58,6 +58,10 @@ const CompanyCard = (props) => {
           </div>
         </div>
         <div className={classes.ContainerRight}>
+          <Link to={"/co/order"}>
+            <IconButton iconType="Order" />
+          </Link>
+
           <Link to={"/jobs/new"}>
             <IconButton iconType="NewJob" />
           </Link>

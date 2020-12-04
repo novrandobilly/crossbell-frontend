@@ -33,13 +33,38 @@
 }
 
 .Content {
-  padding: 1rem;
+  width: 90%;
+  padding: 2rem 1rem 3rem 3.5rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .CompanyDetail {
   text-align: left;
   color: grey;
-  line-height: 0.7rem;
+  line-height: 1rem;
+}
+.InvoiceRight {
+  text-align: right;
+}
+
+.InvoiceTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.4rem;
+  margin-bottom: 0;
+  margin-top: 1rem;
+}
+
+.InvoiceDetail {
+  display: flex;
+  text-align: right;
+  color: grey;
+  line-height: 1rem;
+}
+
+.DetailLabel {
+  margin-right: 2rem;
 }
 
 .CompanyName {
@@ -73,12 +98,53 @@
   font-weight: normal;
 }
 
-.Amount {
-  width: 30%;
+.Footer {
   display: flex;
-  align-self: flex-end;
   justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.CommentContainer {
+  width: 50%;
+  border: solid 0.1rem rgba(58, 81, 153, 1);
+  text-align: left;
+  margin-left: 3rem;
+}
+
+.CommentHeader {
+  background-color: rgba(58, 81, 153, 1);
+  color: white;
+  font-size: 1.3rem;
+  padding: 0.5rem 0 0.5rem 1rem;
+}
+
+.CommentContent ul {
+  list-style: decimal;
+}
+
+.CommentContent li {
+  font-size: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.AmountContainer {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
   margin-right: 5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  line-height: 0;
+}
+
+.Amount {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.AmountTotal {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   font-weight: bold;
 }
