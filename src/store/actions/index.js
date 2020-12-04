@@ -1,10 +1,14 @@
 export {
-  createCompany,
-  getOneCompany,
-  updateCompanyDetail,
-  updateCompanyIntro,
-  updateCompanyMission,
-} from "./company-actions";
+
+	createCompany,
+	getOneCompany,
+	updateCompanyDetail,
+	updateCompanyIntro,
+	updateCompanyMission,
+	activateCompany,
+	blockCompany
+} from './company-actions';
+
 
 export {
   createApplicant,
@@ -18,7 +22,9 @@ export {
   deleteSegment,
 } from "./applicant-actions";
 
-export { getAllApplicant, getAllCompany, getAllJob } from "./admin-actions";
+
+export { getAllApplicant, getAllCompany, getAllJob, admReg, admSignIn } from './admin-actions';
+
 
 export { createFeed, getFeedback, deleteFeed } from "./feedback-actions";
 
@@ -30,6 +36,6 @@ export {
   deleteJob,
 } from "./job-actions";
 
-export { login } from "./auth-actions";
 
-export { admReg, admSignIn } from "./admin-actions";
+export { login } from './auth-actions';
+

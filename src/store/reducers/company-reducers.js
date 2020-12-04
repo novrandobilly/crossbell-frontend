@@ -52,9 +52,76 @@ const companyReducers = (state = initialState, action) => {
       };
     }
 
-    default:
-      return state;
-  }
+
+		case actionTypes.EDITCOMPANYINTRO: {
+			const companyArray = [ ...state.companies ];
+			const companyIndex = companyArray.findIndex(co => co.companyId === action.payload.companyId);
+			companyArray[companyIndex] = {
+				...companyArray[companyIndex],
+				companyName: action.payload.companyName,
+				size: action.payload.size,
+				industry: action.payload.industry,
+				address: action.payload.address,
+				website: action.payload.website,
+				emailRecipient: action.payload.emailRecipient
+			};
+			return {
+				...state,
+				companies: companyArray
+			};
+		}
+
+		case actionTypes.EDITCOMPANYMISSION: {
+			const companyArray = [ ...state.companies ];
+			const companyIndex = companyArray.findIndex(co => co.companyId === action.payload.companyId);
+			companyArray[companyIndex] = {
+				...companyArray[companyIndex],
+				mission: action.payload.mission
+			};
+			return {
+				...state,
+				companies: companyArray
+			};
+		}
+
+		case actionTypes.EDITCOMPANYDETAILS: {
+			const companyArray = [ ...state.companies ];
+			const companyIndex = companyArray.findIndex(co => co.companyId === action.payload.companyId);
+			companyArray[companyIndex] = {
+				...companyArray[companyIndex],
+				details: action.payload.details
+			};
+			return {
+				...state,
+				companies: companyArray
+			};
+		}
+
+		case actionTypes.FETCHCOMPANYSTART: {
+			return {
+				...state,
+				isLoading: true,
+				error: false
+			};
+		}
+		case actionTypes.FETCHCOMPANYSUCCESS: {
+			return {
+				...state,
+				isLoading: false,
+				error: false
+			};
+		}
+		case actionTypes.FETCHCOMPANYFAIL: {
+			return {
+				...state,
+				isLoading: false,
+				error: true
+			};
+		}
+		default:
+			return state;
+	}
+
 };
 
 export default companyReducers;
