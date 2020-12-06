@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions';
 
 import classes from './JobCard.module.css';
 
@@ -8,30 +9,23 @@ import Spinner from '../../shared/UI_Element/Spinner/Spinner';
 import Button from '../../shared/UI_Element/Button';
 
 const JobCard = props => {
-	const [ isLoading, setIsLoading ] = useState(false);
-
+	const [ jobId, setJobId ] = useState(null);
 	//=====================================INSTANT APPLY=====================================
 	const applyHandler = async () => {
-		setIsLoading(true);
+		setJobId(props.jobId);
+		const payload = {
+			token: props.auth.token,
+			userId: props.auth.userId,
+			jobId: props.jobId
+		};
+		let res;
 		try {
-			// const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.jobId}/apply`, {
-			const response = await fetch(`http://localhost:5000/api/jobs/${props.id}/apply`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${props.auth.token}`
-				},
-				body: JSON.stringify({
-					companyEmail: props.emailRecipient
-				})
-			});
-
-			const responseData = await response.json();
-			console.log(responseData);
-			setIsLoading(false);
+			res = await props.applyJob(payload);
+			console.log(res);
+			setJobId(null);
 		} catch (err) {
 			console.log(err);
-			setIsLoading(false);
+			setJobId(null);
 		}
 	};
 
@@ -41,7 +35,7 @@ const JobCard = props => {
 		</Button>
 	);
 
-	if (isLoading) {
+	if (props.job.isLoading && jobId === props.jobId) {
 		instantApplyButton = <Spinner />;
 	}
 	//=====================================================================================
@@ -68,7 +62,8 @@ const JobCard = props => {
 				</p>
 				<p>${props.salary} /month</p>
 			</div>
-			<div className={classes.InstantSubmit}>{instantApplyButton}</div>
+			{!props.auth.isCompany && props.auth.token && <div className={classes.InstantSubmit}>{instantApplyButton}</div>}
+
 			<footer />
 		</div>
 	);
@@ -77,8 +72,15 @@ const JobCard = props => {
 const mapStateToProps = state => {
 	return {
 		companies: state.company.companies,
-		auth: state.auth
+		auth: state.auth,
+		job: state.job
 	};
 };
 
-export default connect(mapStateToProps)(JobCard);
+const mapDispatchToProps = dispatch => {
+	return {
+		applyJob: payload => dispatch(actionCreators.applyJob(payload))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(JobCard);

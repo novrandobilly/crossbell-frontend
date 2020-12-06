@@ -1,4 +1,4 @@
-export { createCompany, getOneCompany, updateCompanyDetail, updateCompanyIntro, updateCompanyMission } from './company-actions';
+export { createCompany, getOneCompany, updateCompanyBriefDescriptions, updateCompanyIntro, updateCompanyPIC } from './company-actions';
 
 export {
 	createApplicant,
@@ -16,6 +16,6 @@ export { getAllApplicant, getAllJob, admReg, admSignIn, getWholeCompanies, activ
 
 export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
 
-export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob } from './job-actions';
+export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob, applyJob } from './job-actions';
 
 export { login } from './auth-actions';

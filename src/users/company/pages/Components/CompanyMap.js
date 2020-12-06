@@ -14,8 +14,12 @@ const CompanyMap = props => {
 				industry={props.items.industry}
 				address={props.items.address}
 				website={props.items.website}
-				details={props.items.details}
-				mission={props.items.mission}
+				briefDescriptions={props.items.briefDescriptions}
+				picName={props.items.picName}
+				picJobTitle={props.items.picJobTitle}
+				picEmail={props.items.picEmail}
+				picPhone={props.items.picPhone}
+				picOfficePhone={props.items.picOfficePhone}
 				slot={props.items.slot}
 			/>
 		</div>
