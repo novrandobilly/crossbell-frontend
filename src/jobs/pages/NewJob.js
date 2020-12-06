@@ -54,6 +54,10 @@ const NewJob = props => {
 				value: '',
 				isValid: true
 			},
+			emailRecipient: {
+				value: '',
+				isValid: true
+			},
 			employment: {
 				value: '',
 				isValid: true
@@ -112,6 +116,7 @@ const NewJob = props => {
 			jobQualification: formState.inputs.jobQualification.value,
 			technicalRequirement: formState.inputs.technicalRequirement.value,
 			level: formState.inputs.level.value,
+			emailRecipient: formState.inputs.emailRecipient.value,
 			employment: formState.inputs.employment.value,
 			jobFunction: formState.inputs.jobFunction.value,
 			benefit: formState.inputs.benefit.value,
@@ -250,6 +255,14 @@ const NewJob = props => {
 						</option>
 					</select>
 
+					<Input
+						inputType='input'
+						id='emailRecipient'
+						inputClass='AddJobInput'
+						validatorMethod={[ VALIDATOR_REQUIRE() ]}
+						onInputHandler={onInputHandler}
+						label='Email Recipient*'
+					/>
 					<Input
 						inputType='input'
 						id='salary'
