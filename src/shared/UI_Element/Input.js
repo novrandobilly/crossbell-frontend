@@ -1,9 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 
-
 import { validate } from "../utils/validator";
 import classes from "./Input.module.css";
-
 
 const ACTION = {
   ONCHANGE: "onchange",
@@ -56,101 +54,102 @@ const Input = (props) => {
     dispatch({ type: ACTION.ONBLUR });
   };
 
-
-	let inputElement = null;
-	switch (props.inputType) {
-		case 'input':
-			inputElement = (
-				<input
-					className={[ classes.InputElements, classes[props.inputClass] ].join(' ')}
-					style={{
-						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
-					}}
-					id={id}
-					type={props.type || 'text'}
-					name={props.name}
-					value={state.value}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					placeholder={props.placeholder || ''}
-				/>
-			);
-			break;
-		case 'number':
-			inputElement = (
-				<input
-					className={[ classes.InputElements, classes[props.inputClass] ].join(' ')}
-					style={{
-						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
-					}}
-					id={id}
-					type={props.type || 'text'}
-					name={props.name}
-					value={state.value}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					placeholder={props.placeholder || ''}
-					min={props.min}
-					max={props.max}
-					step={props.step}
-				/>
-			);
-			break;
-		case 'textarea':
-			inputElement = (
-				<textarea
-					className={[ classes.InputElements, classes[props.inputClass] ].join(' ')}
-					style={{
-						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
-					}}
-					id={id}
-					cols={props.cols || '30'}
-					rows={props.rows || '5'}
-					name={props.name}
-					value={state.value}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					placeholder={props.placeholder || ''}
-				/>
-			);
-			break;
-		case 'date':
-			inputElement = (
-				<input
-					className={[ classes.InputElements, classes[props.inputClass] ].join(' ')}
-					style={{
-						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
-					}}
-					type='date'
-					id={id}
-					cols={props.cols || '30'}
-					rows={props.rows || '5'}
-					name={props.name}
-					value={state.value}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					placeholder={props.placeholder || ''}
-				/>
-			);
-			break;
-		default:
-			return (inputElement = (
-				<input
-					className={[ classes.InputElements, classes[props.inputClass] ].join(' ')}
-					style={{
-						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
-					}}
-					id={id}
-					type={props.type || 'text'}
-					name={props.name}
-					value={state.value}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					placeholder={props.placeholder || ''}
-				/>
-			));
-	}
-
+  let inputElement = null;
+  switch (props.inputType) {
+    case "input":
+      inputElement = (
+        <input
+          className={[classes.InputElements, classes[props.inputClass]].join(
+            " "
+          )}
+          style={{
+            backgroundColor:
+              state.isValid || !state.isTouched
+                ? "white"
+                : " rgb(215, 226, 255)",
+          }}
+          id={id}
+          type={props.type || "text"}
+          name={props.name}
+          value={state.value}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          placeholder={props.placeholder || ""}
+        />
+      );
+      break;
+    case "number":
+      inputElement = (
+        <input
+          className={[classes.InputElements, classes[props.inputClass]].join(
+            " "
+          )}
+          style={{
+            backgroundColor:
+              state.isValid || !state.isTouched
+                ? "white"
+                : " rgb(215, 226, 255)",
+          }}
+          id={id}
+          type={props.type || "text"}
+          name={props.name}
+          value={state.value}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          placeholder={props.placeholder || ""}
+          min={props.min}
+          max={props.max}
+          step={props.step}
+        />
+      );
+      break;
+    case "textarea":
+      inputElement = (
+        <textarea
+          className={[classes.InputElements, classes[props.inputClass]].join(
+            " "
+          )}
+          style={{
+            backgroundColor:
+              state.isValid || !state.isTouched
+                ? "white"
+                : " rgb(215, 226, 255)",
+          }}
+          id={id}
+          cols={props.cols || "30"}
+          rows={props.rows || "5"}
+          name={props.name}
+          value={state.value}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          placeholder={props.placeholder || ""}
+        />
+      );
+      break;
+    case "date":
+      inputElement = (
+        <input
+          className={[classes.InputElements, classes[props.inputClass]].join(
+            " "
+          )}
+          style={{
+            backgroundColor:
+              state.isValid || !state.isTouched
+                ? "white"
+                : " rgb(215, 226, 255)",
+          }}
+          type="date"
+          id={id}
+          cols={props.cols || "30"}
+          rows={props.rows || "5"}
+          name={props.name}
+          value={state.value}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          placeholder={props.placeholder || ""}
+        />
+      );
+      break;
 
     default:
       return (inputElement = (

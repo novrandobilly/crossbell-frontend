@@ -12,6 +12,7 @@ import EditCompanyIntro from "./users/company/pages/Components/EditIntro";
 import EditCompanyDetails from "./users/company/pages/Components/EditDetails";
 import EditCompanyMission from "./users/company/pages/Components/EditMission";
 import CompanyOrderForm from "./users/company/pages/CompanyOrderForm/CompanyOrderForm";
+import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
 
 import NewJob from "./jobs/pages/NewJob";
 import EditJob from "./jobs/pages/EditJob";
@@ -180,6 +181,7 @@ const App = (props) => {
           />
           <Route path="/co/order" component={CompanyOrderForm} />
           <Route path="/co/:orderid/invoice" component={Invoice} />
+          <Route path="/co/:companyid/listOrder" component={CompanyOrderList} />
           <Route path="/co/:companyid/compro" component={CompanyProfileForm} />
           <Route path="/co/:companyid" component={CompanyDetails} />
           <Route path="/authentication/co" component={AuthenticationCo} />
