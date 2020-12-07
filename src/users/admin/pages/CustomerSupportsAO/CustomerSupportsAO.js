@@ -80,7 +80,7 @@ const CustomerSupportsAO = (props) => {
     content = <SpinnerCircle />;
   }
 
-  return <div>{content};</div>;
+  return <div>{content}</div>;
 };
 
 const mapDispatchToProps = (dispatch) => {

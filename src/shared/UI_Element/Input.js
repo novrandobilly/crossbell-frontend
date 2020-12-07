@@ -1,7 +1,9 @@
-import React, { useReducer, useEffect } from 'react';
 
-import { validate } from '../utils/validator';
-import classes from './Input.module.css';
+import React, { useReducer, useEffect } from "react";
+
+import { validate } from "../utils/validator";
+import classes from "./Input.module.css";
+
 
 const ACTION = {
 	ONCHANGE: 'onchange',
@@ -26,6 +28,7 @@ const inputReducer = (state, action) => {
 			return state;
 	}
 };
+
 
 const Input = props => {
 	const [ state, dispatch ] = useReducer(inputReducer, {
@@ -161,6 +164,7 @@ const Input = props => {
 			{inputElement}
 		</div>
 	);
+
 };
 
 export default Input;

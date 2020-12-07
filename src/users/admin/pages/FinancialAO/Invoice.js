@@ -102,7 +102,7 @@ const Invoice = (props) => {
                   Rp.{(order.packagePrice * order.amount).toLocaleString()},-
                 </p>
               </div>
-              <p>(amount x package price)</p>
+              <p className={classes.SubTotal}>(Qty x package price)</p>
               <div className={classes.Amount}>
                 <p>Discount</p>
                 <p>
@@ -113,7 +113,9 @@ const Invoice = (props) => {
                 </p>
               </div>
               <div className={classes.Amount}>
-                <p>Tax (10%)</p>
+                <p>
+                  Tax <span>(10%)</span>
+                </p>
                 <p>
                   Rp.
                   {(tax =

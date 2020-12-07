@@ -1,21 +1,25 @@
 import * as actionTypes from '../actions/actions';
 
 const initialState = {
-	companies: [
-		{
-			companyId: 'SSS',
-			companyName: 'Shielded Should Shout',
-			address: 'jl.wijaya kusuma',
-			email: 'User@SSS.com',
-			industry: 'Oil & ore',
-			website: 'inicompanyku.sss.com',
-			emailRecipient: 'Penerima@SSS.com',
-			details: 'Lorem ipsum dolor si amt',
-			mission: 'To be the no.1 oil company in the world & mining company underground'
-		}
-	],
-	isLoading: false,
-	error: false
+
+  companies: [
+    {
+      companyId: "5fc7703579182d0c786cc17c",
+      companyName: "Shielded Should Shout",
+      address: "jl.wijaya kusuma",
+      email: "User@SSS.com",
+      size: "900",
+      industry: "Oil & ore",
+      website: "inicompanyku.sss.com",
+      emailRecipient: "Penerima@SSS.com",
+      details: "Lorem ipsum dolor si amt",
+      mission:
+        "To be the no.1 oil company in the world & mining company underground",
+    },
+  ],
+  isLoading: false,
+  error: false,
+
 };
 
 const companyReducers = (state = initialState, action) => {
@@ -40,6 +44,7 @@ const companyReducers = (state = initialState, action) => {
 			};
 		}
 
+
 		case actionTypes.UPDATECOMPANYFAIL:
 		case actionTypes.CREATECOMPANYFAIL:
 		case actionTypes.GETCOMPANYFAIL: {
@@ -50,49 +55,6 @@ const companyReducers = (state = initialState, action) => {
 			};
 		}
 
-		case actionTypes.EDITCOMPANYINTRO: {
-			const companyArray = [ ...state.companies ];
-			const companyIndex = companyArray.findIndex(co => co.companyId === action.payload.companyId);
-			companyArray[companyIndex] = {
-				...companyArray[companyIndex],
-				companyName: action.payload.companyName,
-				size: action.payload.size,
-				industry: action.payload.industry,
-				address: action.payload.address,
-				website: action.payload.website,
-				emailRecipient: action.payload.emailRecipient
-			};
-			return {
-				...state,
-				companies: companyArray
-			};
-		}
-
-		case actionTypes.EDITCOMPANYMISSION: {
-			const companyArray = [ ...state.companies ];
-			const companyIndex = companyArray.findIndex(co => co.companyId === action.payload.companyId);
-			companyArray[companyIndex] = {
-				...companyArray[companyIndex],
-				mission: action.payload.mission
-			};
-			return {
-				...state,
-				companies: companyArray
-			};
-		}
-
-		case actionTypes.EDITCOMPANYDETAILS: {
-			const companyArray = [ ...state.companies ];
-			const companyIndex = companyArray.findIndex(co => co.companyId === action.payload.companyId);
-			companyArray[companyIndex] = {
-				...companyArray[companyIndex],
-				details: action.payload.details
-			};
-			return {
-				...state,
-				companies: companyArray
-			};
-		}
 
 		case actionTypes.FETCHCOMPANYSTART: {
 			return {
@@ -118,6 +80,7 @@ const companyReducers = (state = initialState, action) => {
 		default:
 			return state;
 	}
+
 };
 
 export default companyReducers;
