@@ -118,6 +118,12 @@
   padding: 0.5rem 0 0.5rem 1rem;
 }
 
+.SubTotal {
+  margin-top: 0rem;
+  align-self: flex-start;
+  font-size: 0.8rem;
+}
+
 .CommentContent ul {
   list-style: decimal;
 }
@@ -140,6 +146,10 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.Amount span {
+  font-size: 0.85rem;
 }
 
 .AmountTotal {

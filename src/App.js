@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
@@ -6,7 +7,11 @@ import * as actionTypes from './store/actions/actions';
 import EditCompanyIntro from './users/company/pages/Components/EditIntro';
 import EditCompanyBriefDescriptions from './users/company/pages/Components/EditCompanyBriefDescriptions';
 import EditCompanyPIC from './users/company/pages/Components/EditPIC';
-import CompanyOrderForm from './users/company/pages/CompanyOrderForm/CompanyOrderForm';
+
+// import CompanyOrderForm from './users/company/pages/CompanyOrderForm/CompanyOrderForm';
+  
+import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
+
 
 import NewJob from './jobs/pages/NewJob';
 import EditJob from './jobs/pages/EditJob';
@@ -127,7 +132,10 @@ const App = props => {
 					<Route path='/co/:companyid/compro/intro' component={EditCompanyIntro} />
 					<Route path='/co/:companyid/compro/details' component={EditCompanyBriefDescriptions} />
 					<Route path='/co/:companyid/compro/mission' component={EditCompanyPIC} />
-					<Route path='/co/order' component={CompanyOrderForm} />
+
+					{/* <Route path='/co/order' component={CompanyOrderForm} /> */}
+    <Route path="/co/:companyid/listOrder" component={CompanyOrderList} />
+
 					<Route path='/co/:orderid/invoice' component={Invoice} />
 					<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
 					<Route path='/co/:companyid' component={CompanyBriefDescriptions} />
@@ -166,6 +174,7 @@ const App = props => {
 			<Footer />
 		</Router>
 	);
+
 };
 
 const mapStateToProps = state => {
