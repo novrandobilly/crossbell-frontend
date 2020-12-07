@@ -8,12 +8,12 @@ import * as actionCreators from '../../../../store/actions/index';
 import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
 
 import Modal from '../../../../shared/UI_Element/Modal';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Input from '../../../../shared/UI_Element/Input';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import classes from './EditIntro.module.css';
+import Input from '../../../../shared/UI_Element/Input';
 
-const EditIntro = props => {
+import classes from './EditPIC.module.css';
+
+const EditPIC = props => {
 	const { companyid } = useParams();
 
 	const [ data, setData ] = useState();
@@ -32,24 +32,28 @@ const EditIntro = props => {
 
 	const [ formState, onInputHandler ] = useForm(
 		{
-			companyName: {
-				value: data ? data.companyName : null,
-				isValid: data && data.companyName ? true : false
+			picName: {
+				value: data ? data.picName : null,
+				isValid: data && data.picName ? true : false
 			},
-			industry: {
-				value: data ? data.industry : null,
-				isValid: data && data.industry ? true : false
+			picJobTitle: {
+				value: data ? data.picJobTitle : null,
+				isValid: data && data.picJobTitle ? true : false
 			},
-			address: {
-				value: data ? data.address : null,
-				isValid: data && data.address ? true : false
+			picEmail: {
+				value: data ? data.picEmail : null,
+				isValid: data && data.picEmail ? true : false
 			},
-			website: {
-				value: data ? data.website : null,
-				isValid: data && data.website ? true : false
+			picPhone: {
+				value: data ? data.picPhone : null,
+				isValid: data && data.picPhone ? true : false
+			},
+			picOfficePhone: {
+				value: data ? data.picOfficePhone : null,
+				isValid: data && data.picOfficePhone ? true : false
 			}
 		},
-		true
+		false
 	);
 
 	const onSubmitHandler = async event => {
@@ -59,15 +63,16 @@ const EditIntro = props => {
 			return props.updateCompanyFail();
 		}
 
-		const updatedIntro = {
+		const updatedData = {
 			companyId: companyid,
-			companyName: formState.inputs.companyName.value,
-			industry: formState.inputs.industry.value,
-			address: formState.inputs.address.value,
-			website: formState.inputs.website.value
+			picName: formState.inputs.picName.value,
+			picJobTitle: formState.inputs.picJobTitle.value,
+			picEmail: formState.inputs.picEmail.value,
+			picPhone: formState.inputs.picPhone.value,
+			picOfficePhone: formState.inputs.picOfficePhone.value
 		};
 		try {
-			const res = await props.updateCompanyIntro(updatedIntro);
+			const res = await props.updateCompanyPIC(updatedData);
 			if (res) {
 				console.log(res);
 			} else {
@@ -85,67 +90,59 @@ const EditIntro = props => {
 		formContent = (
 			<React.Fragment>
 				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Edit Company Intro</p>
+					<p className={classes.FormTitle}>Edit Company PIC (Person In Charge)</p>
 
 					<div className={classes.FormRow}>
 						<div className={classes.EditLabel}>
-							<div className={classes.ProfilePicture}>
-								<AccountCircleIcon
-									style={{
-										fontSize: '15rem',
-										marginBottom: '1rem'
-									}}
-								/>
-								<label className={classes.InputButton}>
-									<input type='file' />
-									<span className={classes.InputButtonText}> Upload Logo </span>
-								</label>
-							</div>
 							<Input
 								inputType='input'
-								id='companyName'
+								id='picName'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
-								label='Name*'
-								initValue={data.companyName}
-								initIsValid={data.companyName}
+								label='PIC Name*'
+								initValue={data.picName}
+								initIsValid={data.picName}
 							/>
-
 							<Input
 								inputType='input'
-								id='industry'
+								id='picJobTitle'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
-								label='Industry*'
-								initValue={data.industry}
-								initIsValid={data.industry}
-								placeholder='Your Company Industry'
+								label='PIC Job Title*'
+								initValue={data.picJobTitle}
+								initIsValid={data.picJobTitle}
 							/>
-
 							<Input
 								inputType='input'
-								id='address'
+								id='picEmail'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
-								label='Address*'
-								initValue={data.address}
-								initIsValid={data.address}
-								placeholder='Company address'
+								label='PIC Email*'
+								initValue={data.picEmail}
+								initIsValid={data.picEmail}
 							/>
-
 							<Input
 								inputType='input'
-								id='website'
+								id='picPhone'
 								inputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
-								label='Websites*'
-								initValue={data.website}
-								initIsValid={data.website}
-								placeholder='Company Website'
+								label='PIC Phone Number / Whatsapp*'
+								initValue={data.picPhone}
+								initIsValid={data.picPhone}
+							/>
+							<Input
+								inputType='input'
+								id='picOfficePhone'
+								inputClass='AddJobInput'
+								validatorMethod={[ VALIDATOR_REQUIRE() ]}
+								onInputHandler={onInputHandler}
+								label='PIC Office Phone Number*'
+								initValue={data.picPhone}
+								initIsValid={data.picPhone}
 							/>
 						</div>
 					</div>
@@ -157,7 +154,6 @@ const EditIntro = props => {
 			</React.Fragment>
 		);
 	}
-
 	const onCancelHandler = () => {
 		props.resetCompany();
 	};
@@ -186,7 +182,8 @@ const mapDispatchToProps = dispatch => {
 		updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
 		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
 		getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
-		updateCompanyIntro: CompanyData => dispatch(actionCreators.updateCompanyIntro(CompanyData))
+		updateCompanyPIC: CompanyData => dispatch(actionCreators.updateCompanyPIC(CompanyData))
 	};
 };
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditPIC));

@@ -30,7 +30,6 @@ const CompanyCard = props => {
 
 						<p className={classes.CompanyHeadquarter}>{props.address}</p>
 
-
 						<a
 							href={`https://${props.website}`}
 							className={classes.CompanyWebsites}
@@ -57,16 +56,15 @@ const CompanyCard = props => {
 					</div>
 				</div>
 				<div className={classes.ContainerRight}>
-        <Link to={"/co/order"}>
-            <IconButton iconType="Order" />
-          </Link>
+					<Link to={'/co/order'}>
+						<IconButton iconType='Order' />
+					</Link>
 					{props.auth.isCompany &&
 					props.auth.isActive && (
 						<Link to={'/jobs/new'}>
 							<IconButton iconType='NewJob' />
 						</Link>
 					)}
-
 
 					<Link to={`/co/${props.companyId}/compro/intro`}>
 						<IconButton />
@@ -76,17 +74,12 @@ const CompanyCard = props => {
 
 			<TextOnly
 				id={props.companyId}
-				labelName='Company Detail'
+				labelName='Company Brief Descriptions'
 				route={`/co/${props.companyId}/compro/details`}
-				text={props.details}
+				text={props.briefDescriptions}
 			/>
 
-			<TextOnly
-				id={props.companyId}
-				labelName='Company Mission'
-				route={`/co/${props.companyId}/compro/mission`}
-				text={props.mission}
-			/>
+			<TextOnly id={props.companyId} labelName='Company PIC' route={`/co/${props.companyId}/compro/mission`} text={props.picName} />
 		</React.Fragment>
 	);
 };

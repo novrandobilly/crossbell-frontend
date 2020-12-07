@@ -6,7 +6,7 @@ import * as actionCreators from '../../store/actions';
 
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_MIN } from '../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../shared/utils/validator';
 
 import classes from './NewJob.module.css';
 
@@ -14,23 +14,11 @@ const NewJob = props => {
 	const [ maxSlot, setMaxSlot ] = useState(null);
 	const [ formState, onInputHandler ] = useForm(
 		{
-			// jobId: {
-			// 	value: '',
-			// 	isValid: false
-			// },
 			jobTitle: {
 				value: '',
 				isValid: false
 			},
-			description: {
-				value: '',
-				isValid: false
-			},
-			jobFunction: {
-				value: '',
-				isValid: false
-			},
-			jobDescription: {
+			jobDescriptions: {
 				value: '',
 				isValid: false
 			},
@@ -42,15 +30,12 @@ const NewJob = props => {
 				value: '',
 				isValid: false
 			},
-			city: {
+			placementLocation: {
 				value: '',
 				isValid: false
 			},
-			region: {
-				value: '',
-				isValid: false
-			},
-			level: {
+
+			emailRecipient: {
 				value: '',
 				isValid: true
 			},
@@ -60,11 +45,11 @@ const NewJob = props => {
 			},
 			salary: {
 				value: '',
-				isValid: false
+				isValid: true
 			},
 			benefit: {
 				value: '',
-				isValid: false
+				isValid: true
 			},
 			slotAllocation: {
 				value: null,
@@ -76,16 +61,20 @@ const NewJob = props => {
 	const { getOneCompany, auth } = props;
 	useEffect(
 		() => {
-			const level = document.getElementById('level');
 			const employment = document.getElementById('employment');
+			const salary = document.getElementById('salary');
+			const benefit = document.getElementById('benefit');
 
-			onInputHandler('level', level.value, true);
 			onInputHandler('employment', employment.value, true);
+			onInputHandler('salary', salary.value, true);
+			onInputHandler('benefit', benefit.value, true);
 
 			const getSlot = async () => {
 				try {
-					const res = await getOneCompany({ userId: auth.userId });
-					setMaxSlot(res.company.slot);
+					if (auth.userId) {
+						const res = await getOneCompany({ userId: auth.userId });
+						setMaxSlot(res.company.slot);
+					}
 				} catch (err) {
 					console.log(err);
 				}
@@ -105,15 +94,12 @@ const NewJob = props => {
 		event.preventDefault();
 		const jobData = {
 			jobTitle: formState.inputs.jobTitle.value,
-			description: formState.inputs.description.value,
-			city: formState.inputs.city.value,
-			region: formState.inputs.region.value,
-			jobDescription: formState.inputs.jobDescription.value,
+			placementLocation: formState.inputs.placementLocation.value,
+			jobDescriptions: formState.inputs.jobDescriptions.value,
 			jobQualification: formState.inputs.jobQualification.value,
 			technicalRequirement: formState.inputs.technicalRequirement.value,
-			level: formState.inputs.level.value,
+			emailRecipient: formState.inputs.emailRecipient.value,
 			employment: formState.inputs.employment.value,
-			jobFunction: formState.inputs.jobFunction.value,
 			benefit: formState.inputs.benefit.value,
 			slot: formState.inputs.slotAllocation.value,
 			salary: formState.inputs.salary.value
@@ -134,7 +120,7 @@ const NewJob = props => {
 
 	let formContent = (
 		<div className={classes.ContainerFlex}>
-			<p className={classes.FormTitle}>New Job Ads</p>
+			<p className={classes.FormTitle}>New Job Advertisement</p>
 
 			<div className={classes.FormRow}>
 				<div className={classes.EditLabel}>
@@ -149,28 +135,11 @@ const NewJob = props => {
 
 					<Input
 						inputType='input'
-						id='description'
+						id='jobDescriptions'
 						inputClass='AddJobInput'
 						validatorMethod={[ VALIDATOR_REQUIRE() ]}
 						onInputHandler={onInputHandler}
-						label='Description*'
-					/>
-					<Input
-						inputType='input'
-						id='jobFunction'
-						inputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_REQUIRE() ]}
-						onInputHandler={onInputHandler}
-						label='Job Function*'
-					/>
-
-					<Input
-						inputType='input'
-						id='jobDescription'
-						inputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_REQUIRE() ]}
-						onInputHandler={onInputHandler}
-						label='Job Description*'
+						label='Job Descriptions*'
 					/>
 
 					<Input
@@ -193,44 +162,12 @@ const NewJob = props => {
 
 					<Input
 						inputType='input'
-						id='city'
+						id='placementLocation'
 						inputClass='AddJobInput'
 						validatorMethod={[ VALIDATOR_REQUIRE() ]}
 						onInputHandler={onInputHandler}
-						label='City*'
+						label='Lokasi Penempatan*'
 					/>
-					<Input
-						inputType='input'
-						id='region'
-						inputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_REQUIRE() ]}
-						onInputHandler={onInputHandler}
-						label='Region*'
-					/>
-
-					<label className={classes.LabelName}>Job Level*</label>
-					<select
-						id='level'
-						name='level'
-						value={formState.inputs.level.value}
-						onChange={onChangeHandler}
-						className={classes.DropDown}>
-						<option id='level_1' value='entryLevel'>
-							Entry Level
-						</option>
-						<option id='2' value='juniorApp'>
-							Junior Apprentice
-						</option>
-						<option id='3' value='assoc'>
-							Associate/ Supervisor
-						</option>
-						<option id='4' value='midSenior'>
-							Mid-Senior/ Manager
-						</option>
-						<option id='5' value='director'>
-							Director/ Executive
-						</option>
-					</select>
 
 					<label className={classes.LabelName}>Employment Type*</label>
 					<select
@@ -239,8 +176,8 @@ const NewJob = props => {
 						value={formState.inputs.employment.value}
 						onChange={onChangeHandler}
 						className={classes.DropDown}>
-						<option id='0' value='fullTime'>
-							Full Time
+						<option id='0' value='permanent'>
+							Permanent
 						</option>
 						<option id='1' value='contract'>
 							Contract
@@ -252,20 +189,28 @@ const NewJob = props => {
 
 					<Input
 						inputType='input'
-						id='salary'
+						id='emailRecipient'
 						inputClass='AddJobInput'
 						validatorMethod={[ VALIDATOR_REQUIRE() ]}
 						onInputHandler={onInputHandler}
-						label='Salary*'
+						label='Email Recipient*'
+					/>
+					<Input
+						inputType='input'
+						id='salary'
+						inputClass='AddJobInput'
+						validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
+						onInputHandler={onInputHandler}
+						label='Salary (optional)'
 					/>
 
 					<Input
 						inputType='input'
 						id='benefit'
 						inputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_REQUIRE() ]}
+						validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
 						onInputHandler={onInputHandler}
-						label='Benefits*'
+						label='Benefits (optional)'
 					/>
 					<Input
 						inputType='number'
@@ -273,11 +218,11 @@ const NewJob = props => {
 						inputClass='AddJobInput'
 						validatorMethod={[ VALIDATOR_MIN(1) ]}
 						onInputHandler={onInputHandler}
-						label='Slot Allocation(s)*'
+						label='Durasi Penayangan* (dalam Minggu)'
 						type='number'
-						min='1'
-						max={(maxSlot && maxSlot) || '1'}
-						step='1'
+						min='0'
+						max={parseInt(maxSlot) * 2 || '0'}
+						step='2'
 					/>
 				</div>
 			</div>

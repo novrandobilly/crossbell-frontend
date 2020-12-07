@@ -21,7 +21,7 @@ const JobDetailMap = props => {
 				}
 				jobTitle={props.job.jobTitle}
 				companyName={props.job.companyId.companyName}
-				city={props.job.city}
+				placementLocation={props.job.placementLocation}
 				datePosted={props.job.datePosted ? props.job.datePosted : '3'}
 				payment={props.job.salary}
 				employment={props.job.employment}

@@ -28,15 +28,12 @@ export const createJob = (jobData, authData) => {
 				},
 				body: JSON.stringify({
 					jobTitle: jobData.jobTitle,
-					description: jobData.description,
-					city: jobData.city,
-					region: jobData.region,
-					jobDescription: jobData.jobDescription,
+					placementLocation: jobData.placementLocation,
+					jobDescriptions: jobData.jobDescriptions,
 					jobQualification: jobData.jobQualification,
 					technicalRequirement: jobData.technicalRequirement,
-					level: jobData.level,
+					emailRecipient: jobData.emailRecipient,
 					employment: jobData.employment,
-					jobFunction: jobData.jobFunction,
 					benefit: jobData.benefit,
 					salary: jobData.salary,
 					slot: jobData.slot,
@@ -156,6 +153,34 @@ export const deleteJob = payload => {
 			});
 			const responseJSON = res.json();
 			if (!res.ok) {
+				throw new Error(responseJSON.message);
+			}
+			dispatch(fetchingFinish());
+			return responseJSON;
+		} catch (err) {
+			dispatch(fetchingFail());
+			return err;
+		}
+	};
+};
+
+export const applyJob = payload => {
+	return async dispatch => {
+		dispatch(fetchingStart());
+		try {
+			// const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.jobId}/apply`, {
+			const response = await fetch(`http://localhost:5000/api/jobs/${payload.jobId}/apply`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${payload.token}`
+				},
+				body: JSON.stringify({
+					applicantId: payload.userId
+				})
+			});
+			const responseJSON = await response.json();
+			if (!response.ok) {
 				throw new Error(responseJSON.message);
 			}
 			dispatch(fetchingFinish());
