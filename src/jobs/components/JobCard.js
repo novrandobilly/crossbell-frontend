@@ -58,9 +58,9 @@ const JobCard = props => {
 							<strong>{props.company} </strong>
 						</em>
 					</Link>
-					- {props.city}, {props.region}
+					- {props.placementLocation}
 				</p>
-				<p>${props.salary} /month</p>
+				{props.salary ? <p>${props.salary} /month</p> : <p>Salary Undisclosed</p>}
 			</div>
 			{!props.auth.isCompany && props.auth.token && <div className={classes.InstantSubmit}>{instantApplyButton}</div>}
 

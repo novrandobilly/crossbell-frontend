@@ -6,6 +6,7 @@ const VALIDATOR_TYPE_MAX = 'MAX';
 const VALIDATOR_TYPE_EMAIL = 'EMAIL';
 const VALIDATOR_TYPE_FILE = 'FILE';
 const VALIDATOR_TYPE_NUMSTR = 'NUMSTR';
+const VALIDATOR_TYPE_ALWAYS_TRUE = 'ALWAYSTRUE';
 
 export const VALIDATOR_REQUIRE = () => ({
 	type: VALIDATOR_TYPE_REQUIRE
@@ -25,6 +26,7 @@ export const VALIDATOR_MIN = val => ({ type: VALIDATOR_TYPE_MIN, val: val });
 export const VALIDATOR_MAX = val => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
 export const VALIDATOR_NUMSTR = () => ({ type: VALIDATOR_TYPE_NUMSTR });
+export const VALIDATOR_ALWAYSTRUE = () => ({ type: VALIDATOR_TYPE_ALWAYS_TRUE });
 
 export const validate = (inputValue, validators) => {
 	let isValid = true;
@@ -50,6 +52,9 @@ export const validate = (inputValue, validators) => {
 		}
 		if (validator.type === VALIDATOR_TYPE_NUMSTR) {
 			isValid = isValid && !isNaN(parseInt(inputValue));
+		}
+		if (validator.type === VALIDATOR_TYPE_ALWAYS_TRUE) {
+			isValid = isValid && true;
 		}
 	}
 	return isValid;
