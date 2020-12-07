@@ -173,8 +173,7 @@ export const updateApplicantIntro = ApplicantData => {
 					city: ApplicantData.city,
 					state: ApplicantData.state,
 					zip: ApplicantData.zip,
-					phone: ApplicantData.phone,
-					website: ApplicantData.website
+					phone: ApplicantData.phone
 				})
 			});
 			const responseJSON = await response.json();
