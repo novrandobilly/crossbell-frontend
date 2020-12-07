@@ -20,7 +20,7 @@ import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi'
 import CompanyProfileForm from './users/company/pages/CompanyProfileForm/CompanyProfileForm';
 
 import PackageAds from './jobs/pages/PackageAds';
-import CompanyDetails from './users/company/pages/CompanyDetails/CompanyBriefDescriptions';
+import CompanyBriefDescriptions from './users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions';
 import JobDetails from './jobs/pages/JobDetails';
 
 import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
@@ -130,7 +130,7 @@ const App = props => {
 					{/* <Route path='/co/order' component={CompanyOrderForm} /> */}
 					<Route path='/co/:orderid/invoice' component={Invoice} />
 					<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
-					<Route path='/co/:companyid' component={CompanyDetails} />
+					<Route path='/co/:companyid' component={CompanyBriefDescriptions} />
 					<Route path='/authentication/co' component={AuthenticationCo} />
 
 					{/* Jobs Routes */}
