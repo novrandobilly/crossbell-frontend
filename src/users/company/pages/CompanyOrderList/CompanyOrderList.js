@@ -1,74 +1,90 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import moment from "moment";
 
 // import * as actionTypes from "../../../../store/actions/actions";
-// import * as actionCreators from "../../../../store/actions/index";
-// import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import * as actionCreators from "../../../../store/actions/index";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 
 import classes from "./CompanyOrderList.module.css";
 
 const CompanyOrderList = (props) => {
   const { companyid } = useParams();
 
-  let companyOrder = props.order.filter(
-    (order) => order.companyId === companyid
-  );
+  const [data, setData] = useState();
 
-  let content = (
-    <div className={classes.Container}>
-      <div className={classes.Header}>
-        <div className={classes.OrderHeader}>
-          <p className={classes.Content}>ORDER ID</p>
-          <p className={classes.Content}>PACKAGE</p>
-          <p className={classes.Content}>ORDERED AT</p>
-          <p className={classes.Content}>DUE DATE</p>
-          <p className={classes.Content}>STATUS</p>
+  const { getOrder } = props;
+
+  useEffect(() => {
+    if (props.auth.token) {
+      getOrder({ userId: companyid, token: props.auth.token }).then((res) => {
+        setData(res.orderreg);
+        console.log(res);
+      });
+    }
+  }, [getOrder, companyid, props.auth]);
+
+  let content = <SpinnerCircle />;
+
+  if (!props.isLoading && data) {
+    content = (
+      <div className={classes.Container}>
+        <div className={classes.Header}>
+          <div className={classes.OrderHeader}>
+            <p className={classes.ContentIdLabel}>ORDER ID</p>
+            <p className={classes.Content}>PACKAGE</p>
+            <p className={classes.Content}>ORDERED AT</p>
+            <p className={classes.Content}>DUE DATE</p>
+            <p className={classes.Content}>STATUS</p>
+          </div>
         </div>
-      </div>
-      {companyOrder.map((order, i) => {
-        return (
-          <Link to={`/co/${order.orderId}/invoice`} key={i}>
-            <div className={classes.OrderCard}>
-              <p className={classes.Content}>{order.orderId}</p>
-              <p className={classes.Content}>{order.packageName}</p>
-              <p className={classes.Content}>{order.createdAt}</p>
-              <p
-                className={classes.Content}
-                style={
-                  order.dueDate === 0
-                    ? { color: "gray" }
-                    : order.dueDate <= 3
-                    ? { color: "red" }
-                    : order.dueDate <= 7
-                    ? { color: "#FF8C00" }
-                    : { color: "green" }
-                }
-              >
-                {order.dueDate} day
-              </p>
-              <p
-                className={classes.Content}
-                style={
-                  order.status === "expired"
-                    ? { color: "gray" }
-                    : order.status === "pending"
-                    ? { color: "#FF8C00" }
-                    : { color: "green" }
-                }
-              >
-                {order.status}
-              </p>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
-  );
+        {data.map((order, i) => {
+          let dueDate = Math.ceil(
+            moment(order.dueDate).diff(moment(), "days", true)
+          );
 
-  //   if (isLoading) {
-  //     content = <SpinnerCircle />;
-  //   }
+          return (
+            <Link to={`/co/${order._id}/invoice`} key={i}>
+              <div className={classes.OrderCard}>
+                <p className={classes.ContentId}>{order._id}</p>
+                <p className={classes.Content}>{order.packageName}</p>
+                <p className={classes.Content}>
+                  {moment(order.createdAt).format("D MMM YYYY")}
+                </p>
+                <p
+                  className={classes.Content}
+                  style={
+                    dueDate === 0
+                      ? { color: "gray" }
+                      : dueDate <= 3
+                      ? { color: "red" }
+                      : dueDate <= 7
+                      ? { color: "#FF8C00" }
+                      : { color: "green" }
+                  }
+                >
+                  {order.status === "Pending" ? dueDate : 0} day
+                </p>
+                <p
+                  className={classes.Content}
+                  style={
+                    order.status === "expired"
+                      ? { color: "gray" }
+                      : order.status === "Pending"
+                      ? { color: "#FF8C00" }
+                      : { color: "green" }
+                  }
+                >
+                  {order.status}
+                </p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
 
   return <div>{content}</div>;
 };
@@ -76,8 +92,15 @@ const CompanyOrderList = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    order: state.finance.financial,
+    isLoading: state.finance.isLoading,
+    error: state.finance.error,
   };
 };
 
-export default connect(mapStateToProps)(CompanyOrderList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getOrder: (data) => dispatch(actionCreators.getOrder(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyOrderList);
