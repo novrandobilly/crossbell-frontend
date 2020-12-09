@@ -20,7 +20,7 @@ const CompanyMap = props => {
 				picEmail={props.items.picEmail}
 				picPhone={props.items.picPhone}
 				picOfficePhone={props.items.picOfficePhone}
-				slot={props.items.slot}
+				slotREG={props.items.slotREG}
 			/>
 		</div>
 	);

@@ -50,8 +50,8 @@ const CompanyCard = props => {
 							/>
 							{props.website}
 						</a>
-						<h2 style={props.slot < 1 ? { color: 'rgb(192,18,18)' } : { color: 'rgb(57,255,70)' }}>
-							Remaining Slot: {props.slot}
+						<h2 style={props.slotREG < 1 ? { color: 'rgb(192,18,18)' } : { color: 'rgb(57,255,70)' }}>
+							Remaining Slot: {props.slotREG}
 						</h2>
 					</div>
 				</div>

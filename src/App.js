@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
@@ -8,10 +7,9 @@ import EditCompanyIntro from './users/company/pages/Components/EditIntro';
 import EditCompanyBriefDescriptions from './users/company/pages/Components/EditCompanyBriefDescriptions';
 import EditCompanyPIC from './users/company/pages/Components/EditPIC';
 
-// import CompanyOrderForm from './users/company/pages/CompanyOrderForm/CompanyOrderForm';
-  
-import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
-
+import CompanyOrderForm from './users/company/pages/CompanyOrderForm/CompanyOrderForm';
+import CompanyOrderList from './users/company/pages/CompanyOrderList/CompanyOrderList';
+// import CompanyExecutiveSearch from './users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch';
 
 import NewJob from './jobs/pages/NewJob';
 import EditJob from './jobs/pages/EditJob';
@@ -72,7 +70,6 @@ const App = props => {
 			const authData = JSON.parse(localStorage.getItem('userData'));
 			if (authData && authData.token && !authData.isAdmin && new Date(authData.expiration) > new Date()) {
 				login(authData);
-				console.log(authData);
 			} else if (authData && authData.token && authData.isAdmin) {
 				loginAdmin(authData);
 			} else {
@@ -129,12 +126,13 @@ const App = props => {
 					<Route path='/authentication/ap' component={AuthenticationAp} />
 
 					{/* Users Routes: Company */}
+					{/* <Route path='/co/order/es' component={CompanyExecutiveSearch} /> */}
+					<Route path='/co/order' component={CompanyOrderForm} />
 					<Route path='/co/:companyid/compro/intro' component={EditCompanyIntro} />
 					<Route path='/co/:companyid/compro/details' component={EditCompanyBriefDescriptions} />
 					<Route path='/co/:companyid/compro/mission' component={EditCompanyPIC} />
 
-					{/* <Route path='/co/order' component={CompanyOrderForm} /> */}
-    <Route path="/co/:companyid/listOrder" component={CompanyOrderList} />
+					<Route path='/co/:companyid/listOrder' component={CompanyOrderList} />
 
 					<Route path='/co/:orderid/invoice' component={Invoice} />
 					<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
@@ -174,7 +172,6 @@ const App = props => {
 			<Footer />
 		</Router>
 	);
-
 };
 
 const mapStateToProps = state => {
