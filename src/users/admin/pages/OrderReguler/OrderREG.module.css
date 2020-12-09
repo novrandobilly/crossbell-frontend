@@ -1,0 +1,123 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(245, 245, 245, 0.726);
+  margin-bottom: -2rem;
+}
+
+.Container a {
+  text-decoration: none;
+  color: black;
+}
+
+.OrderContainer {
+  width: 80%;
+  border: solid 0.05rem rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.Header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(58, 81, 153, 1);
+}
+
+.OrderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 1rem 0 1rem;
+  background-color: rgba(58, 81, 153, 1);
+  width: 74rem;
+  height: 3rem;
+  color: white;
+}
+
+.OrderCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem 0 1rem;
+  margin-top: 1rem;
+  /* box-shadow: 0 0 0.3rem 0.01rem rgb(107, 107, 107); */
+  background-color: #d7e2ff;
+  width: 72rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.Content {
+  width: 5rem;
+  text-align: left;
+  margin-left: 2rem;
+}
+
+.ContentDate {
+  margin-right: 1rem;
+  margin-left: 0.5rem;
+}
+
+.ContentIdLabel {
+  margin-right: 3rem;
+  margin-left: 2rem;
+}
+
+.ContentId {
+  width: 11rem;
+  margin-right: 0rem;
+}
+
+.DropButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 2rem;
+  margin-left: -2rem;
+  font-size: 1rem;
+}
+
+.DropDown {
+  position: relative;
+  display: inline-block;
+  align-self: center;
+}
+
+.DropDownContent {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0rem 0.8rem 1rem 0rem rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.DropDownContent button {
+  background-color: transparent;
+  border: none;
+  display: block;
+  padding: 1rem;
+  width: 8rem;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+}
+
+.DropDownContent button:hover {
+  border: none;
+  background-color: rgb(236, 236, 236);
+}
+
+.DropDown:hover .DropDownContent {
+  display: block;
+}
+
+.DropDown:hover .DropButton {
+  background-color: #d7e2ff;
+}

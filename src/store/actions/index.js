@@ -1,6 +1,9 @@
-
 export {
-  createCompany, getOneCompany, updateCompanyBriefDescriptions, updateCompanyIntro, updateCompanyPIC
+  createCompany,
+  getOneCompany,
+  updateCompanyBriefDescriptions,
+  updateCompanyIntro,
+  updateCompanyPIC,
 } from "./company-actions";
 
 export {
@@ -15,7 +18,6 @@ export {
   deleteSegment,
 } from "./applicant-actions";
 
-
 export {
   getAllApplicant,
   getAllJob,
@@ -28,10 +30,21 @@ export {
 
 export { createFeed, getFeedback, deleteFeed } from "./feedback-actions";
 
-export { createOrder, getOrder, getOneOrder } from "./order-actions";
+export {
+  createOrder,
+  getOrder,
+  getOrderInvoice,
+  getOrderReguler,
+  approveOrder,
+} from "./order-actions";
 
-
-export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob, applyJob } from './job-actions';
-
+export {
+  createJob,
+  getAllAvailableJobs,
+  getOneJob,
+  updateJob,
+  deleteJob,
+  applyJob,
+} from "./job-actions";
 
 export { login } from "./auth-actions";

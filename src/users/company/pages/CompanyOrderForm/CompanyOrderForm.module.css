@@ -1,6 +1,58 @@
 .Container {
   margin-top: 2rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   font-family: sans-serif;
+}
+
+.PackageList {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.FormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 2rem 1rem 2rem;
+  background-color: rgb(216, 216, 216);
+  margin-bottom: -1rem;
+  margin-top: 2rem;
+  border: solid 0.05rem rgba(0, 0, 0, 0.5);
+  width: 25rem;
+  border-radius: 1rem;
+  line-height: 0.5rem;
+  color: rgba(58, 81, 153, 1);
+  font-size: 1.1rem;
+}
+
+.InputAmount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Label {
+  margin-right: 1rem;
+}
+
+.PricePerSlot span {
+  color: black;
+}
+
+.PurchaseButton {
+  margin-top: 1rem;
+  width: 25rem;
+  height: 3rem;
+  color: white;
+  background-color: rgba(58, 81, 153, 1);
+  font-size: 1rem;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.2rem;
 }
