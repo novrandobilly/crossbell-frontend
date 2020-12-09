@@ -1,9 +1,10 @@
+import React, { useReducer, useEffect } from 'react';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment';
 
-import React, { useReducer, useEffect } from "react";
-
-import { validate } from "../utils/validator";
-import classes from "./Input.module.css";
-
+import { validate } from '../utils/validator';
+import classes from './Input.module.css';
 
 const ACTION = {
 	ONCHANGE: 'onchange',
@@ -29,7 +30,6 @@ const inputReducer = (state, action) => {
 	}
 };
 
-
 const Input = props => {
 	const [ state, dispatch ] = useReducer(inputReducer, {
 		value: props.initValue || '',
@@ -51,6 +51,17 @@ const Input = props => {
 			type: ACTION.ONCHANGE,
 			payload: {
 				value: event.target.value,
+				validatorMethod: props.validatorMethod
+			}
+		});
+	};
+
+	const onCustomDateHandler = payload => {
+		console.log(moment(payload).format('L'));
+		dispatch({
+			type: ACTION.ONCHANGE,
+			payload: {
+				value: moment(payload),
 				validatorMethod: props.validatorMethod
 			}
 		});
@@ -136,6 +147,23 @@ const Input = props => {
 				/>
 			);
 			break;
+		case 'customdate':
+			inputElement = (
+				<MuiPickersUtilsProvider utils={DateFnsUtils}>
+					<DatePicker
+						views={props.views || [ 'year', 'month', 'date' ]}
+						value={moment(state.value)}
+						style={props.style}
+						onChange={eventValue => onCustomDateHandler(eventValue)}
+						minDate={props.minDate}
+						maxDate={props.maxDate}
+						helperText={props.helperText}
+						id={id}
+						format={props.format}
+					/>
+				</MuiPickersUtilsProvider>
+			);
+			break;
 		default:
 			return (inputElement = (
 				<input
@@ -164,7 +192,6 @@ const Input = props => {
 			{inputElement}
 		</div>
 	);
-
 };
 
 export default Input;

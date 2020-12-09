@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from '../../../../../shared/utils/useForm';
 import { withRouter, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
 
 import Modal from '../../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
@@ -31,8 +32,15 @@ const EditIntro = props => {
 				value: data ? data.lastName : null,
 				isValid: data && data.lastName ? true : false
 			},
-
 			headline: {
+				value: '',
+				isValid: false
+			},
+			dateOfBirth: {
+				value: '',
+				isValid: false
+			},
+			gender: {
 				value: '',
 				isValid: false
 			},
@@ -59,6 +67,14 @@ const EditIntro = props => {
 			phone: {
 				value: '',
 				isValid: false
+			},
+			outOfTown: {
+				value: false,
+				isValid: true
+			},
+			workShifts: {
+				value: false,
+				isValid: true
 			}
 		},
 		false
@@ -76,13 +92,16 @@ const EditIntro = props => {
 			firstName: formState.inputs.firstName.value,
 			lastName: formState.inputs.lastName.value,
 			headline: formState.inputs.headline.value,
+			dateOfBirth: formState.inputs.dateOfBirth.value,
+			gender: formState.inputs.gender.value,
 			email: formState.inputs.email.value,
 			address: formState.inputs.address.value,
 			city: formState.inputs.city.value,
 			state: formState.inputs.state.value,
 			zip: formState.inputs.zip.value,
 			phone: formState.inputs.phone.value,
-			websites: formState.inputs.websites.value
+			outOfTown: formState.inputs.outOfTown.value,
+			workShifts: formState.inputs.workShifts.value
 		};
 
 		try {
@@ -107,6 +126,13 @@ const EditIntro = props => {
 		},
 		[ getOneApplicant, applicantid ]
 	);
+
+	const onManualInputHandler = e => {
+		const elementId = e.target.name;
+		const elementValue = e.target.value;
+
+		onInputHandler(elementId, elementValue, true);
+	};
 
 	let formContent = <SpinnerCircle />;
 
@@ -161,7 +187,30 @@ const EditIntro = props => {
 								label='Headline*'
 								placeholder='Ex: Full stack developer'
 							/>
-
+							<Input
+								inputType='customdate'
+								id='dateOfBirth'
+								style={{ marginBottom: '1rem' }}
+								validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
+								onInputHandler={onInputHandler}
+								views={[ 'year', 'month', 'date' ]}
+								label='Tanggal Lahir'
+								maxDate={moment()}
+								initValue={moment()}
+								format='dd/MM/yyyy'
+							/>
+							<div
+								id='gender'
+								onChange={onManualInputHandler}
+								style={{ textAlign: 'start', marginBottom: '1rem', color: 'rgba(58, 81, 153, 1)', fontSize: '.9rem' }}>
+								Jenis Kelamin:
+								<label>
+									<input type='radio' value='male' name='gender' /> Pria
+								</label>
+								<label>
+									<input type='radio' value='female' name='gender' /> Wanita
+								</label>
+							</div>
 							<Input
 								inputType='input'
 								id='address'
@@ -223,6 +272,15 @@ const EditIntro = props => {
 								label='Phone*'
 								placeholder='Ex: 08179192342'
 							/>
+
+							<label onChange={onManualInputHandler}>
+								<input id='outOfTown' type='checkbox' name='outOfTown' value={true} /> Bersedia ditempatkan di luar kota
+								asal
+							</label>
+							<label onChange={onManualInputHandler}>
+								<input id='workShifts' type='checkbox' name='workShifts' value={true} /> Bersedia bekerja dengan sistem
+								shift
+							</label>
 						</div>
 					</div>
 

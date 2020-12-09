@@ -156,6 +156,7 @@ export const getOneApplicant = ApplicantId => {
 export const updateApplicantIntro = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
+		console.log(ApplicantData);
 		try {
 			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
@@ -169,11 +170,15 @@ export const updateApplicantIntro = ApplicantData => {
 					lastName: ApplicantData.lastName,
 					email: ApplicantData.email,
 					headline: ApplicantData.headline,
+					dateOfBirth: ApplicantData.dateOfBirth,
+					gender: ApplicantData.gender,
 					address: ApplicantData.address,
 					city: ApplicantData.city,
 					state: ApplicantData.state,
 					zip: ApplicantData.zip,
-					phone: ApplicantData.phone
+					phone: ApplicantData.phone,
+					outOfTown: ApplicantData.outOfTown,
+					workShifts: ApplicantData.workShifts
 				})
 			});
 			const responseJSON = await response.json();
@@ -184,6 +189,7 @@ export const updateApplicantIntro = ApplicantData => {
 			return responseJSON.foundApplicant;
 		} catch (err) {
 			dispatch(updateApplicantFail());
+			return err;
 		}
 	};
 };
@@ -199,8 +205,7 @@ export const updateApplicantSummary = ApplicantData => {
 				},
 				body: JSON.stringify({
 					id: ApplicantData.applicantId,
-					details: ApplicantData.details,
-					dateOfBirth: ApplicantData.dateOfBirth
+					details: ApplicantData.details
 				})
 			});
 			const responseJSON = await response.json();
@@ -287,6 +292,7 @@ export const updateApplicantExperience = ApplicantData => {
 export const updateApplicantCertification = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
+		console.log(ApplicantData);
 		try {
 			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
@@ -299,7 +305,7 @@ export const updateApplicantCertification = ApplicantData => {
 						title: ApplicantData.title,
 						organization: ApplicantData.organization,
 						startDate: ApplicantData.startDate,
-						endDate: ApplicantData.endDate,
+						endDate: ApplicantData.endDate ? ApplicantData.endDate : null,
 						description: ApplicantData.description
 					},
 					index: ApplicantData.index ? ApplicantData.index : null

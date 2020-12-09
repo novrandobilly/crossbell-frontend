@@ -9,7 +9,6 @@ import classes from './RangeSegment.module.css';
 
 const RangeSegment = props => {
 	const [ segmentArray, setSegmentArray ] = useState(props.contents);
-	console.log(segmentArray);
 
 	const deleteSegmentHandler = elementId => {
 		let tempSegment = [ ...segmentArray ];
