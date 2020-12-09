@@ -46,3 +46,14 @@
 .Content {
   width: 9rem;
 }
+
+.ContentId {
+  width: 9rem;
+  margin-right: 5rem;
+}
+
+.ContentIdLabel {
+  width: 9rem;
+  margin-right: 2rem;
+  margin-left: 3rem;
+}

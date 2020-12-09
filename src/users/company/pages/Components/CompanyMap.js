@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import CompanyCard from './CompanyCard';
+import CompanyCard from "./CompanyCard";
+
 
 const CompanyMap = props => {
 	return (
@@ -24,6 +25,7 @@ const CompanyMap = props => {
 			/>
 		</div>
 	);
+
 };
 
 export default CompanyMap;

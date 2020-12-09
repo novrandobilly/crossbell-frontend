@@ -25,6 +25,7 @@ const NavigationLinks = (props) => {
       </li>
     );
   }
+
   return (
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
@@ -67,6 +68,7 @@ const NavigationLinks = (props) => {
         )}
         {logout}
       </ul>
+      {props.auth.isLoggedIn && props.auth.isCompany && <SideBar />}
       {props.admin.isAdmin && props.admin.isLoggedIn && (
         <div className={classes.active}>
           <SideBar />
