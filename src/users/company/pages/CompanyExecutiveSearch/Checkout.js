@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useForm } from '../../../../shared/utils/useForm';
 import { validate } from '../../../../shared/utils/validator';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../../../store/actions';
 
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
@@ -12,8 +14,8 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import FormOne from './FormOne';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
+import FormTwo from './FormTwo';
+import FormThree from './FormThree';
 
 function Copyright (){
 	return (
@@ -85,6 +87,26 @@ const Checkout = props => {
 			authority: {
 				value: '',
 				isValid: false
+			},
+			minSalary: {
+				value: '',
+				isValid: false
+			},
+			maxSalary: {
+				value: '',
+				isValid: false
+			},
+			experience: {
+				value: '',
+				isValid: false
+			},
+			expertise: {
+				value: '',
+				isValid: false
+			},
+			specification: {
+				value: '',
+				isValid: true
 			}
 		},
 		false
@@ -97,8 +119,6 @@ const Checkout = props => {
 		[ onInputHandler ]
 	);
 
-	console.log(formState);
-
 	const onManualHandler = (event, payload) => {
 		const value = event.target.value;
 		const id = event.target.name;
@@ -106,10 +126,42 @@ const Checkout = props => {
 
 		onInputHandler(id, value, isValid);
 	};
+
+	const onSalaryRangeHandler = useCallback(
+		payload => {
+			onInputHandler('minSalary', payload[0] * 1000000, true);
+			onInputHandler('maxSalary', payload[1] * 1000000, true);
+		},
+		[ onInputHandler ]
+	);
+
 	const classes = useStyles();
 	const [ activeStep, setActiveStep ] = React.useState(0);
 
-	const handleNext = () => {
+	const handleNext = async () => {
+		if (activeStep === 2) {
+			const payload = {
+				positionLevel: formState.inputs.positionLevel.value,
+				mainTask: formState.inputs.mainTask.value,
+				responsibility: formState.inputs.responsibility.value,
+				authority: formState.inputs.authority.value,
+				salaryRange: {
+					max: formState.inputs.maxSalary.value,
+					min: formState.inputs.minSalary.value
+				},
+				experience: formState.inputs.experience.value,
+				expertise: formState.inputs.expertise.value,
+				specification: formState.inputs.specification.value,
+				token: props.auth.token,
+				companyId: props.auth.userId
+			};
+			try {
+				const res = await props.createRequest(payload);
+				console.log(res);
+			} catch (err) {
+				console.log(err);
+			}
+		}
 		setActiveStep(activeStep + 1);
 	};
 
@@ -120,11 +172,11 @@ const Checkout = props => {
 	const getStepContent = step => {
 		switch (step) {
 			case 0:
-				return <FormOne onManualHandler={onManualHandler} formState={formState} />;
+				return <FormOne onManualHandler={onManualHandler} formState={formState} onSalaryRangeHandler={onSalaryRangeHandler} />;
 			case 1:
-				return <PaymentForm />;
+				return <FormTwo onManualHandler={onManualHandler} formState={formState} />;
 			case 2:
-				return <Review />;
+				return <FormThree onManualHandler={onManualHandler} formState={formState} />;
 			default:
 				throw new Error('Unknown step');
 		}
@@ -149,11 +201,11 @@ const Checkout = props => {
 						{activeStep === steps.length ? (
 							<React.Fragment>
 								<Typography variant='h5' gutterBottom>
-									Thank you for your order.
+									Terima kasih atas pengajuan Executive Search.
 								</Typography>
 								<Typography variant='subtitle1'>
-									Your order number is #2001539. We have emailed your order confirmation, and will send you an update when
-									your order has shipped.
+									Tim admin Crossbell akan segera memproses dan menghubungi penanggung jawab (PIC) akun untuk
+									menindak-lanjuti proses program Executive Search ini.
 								</Typography>
 							</React.Fragment>
 						) : (
@@ -179,4 +231,16 @@ const Checkout = props => {
 	);
 };
 
-export default Checkout;
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		createRequest: payload => dispatch(actionCreators.createOrderES(payload))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
