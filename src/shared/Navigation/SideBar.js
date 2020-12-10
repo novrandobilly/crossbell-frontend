@@ -39,7 +39,7 @@ const SideBar = (props) => {
         </li>
 
         <li>
-          <Link to={"#"}>
+          <Link to={"/co/order/candidate"}>
             <span>Order Bulk Candidate</span>
             <AssignmentIndIcon
               fontSize="large"
@@ -52,7 +52,7 @@ const SideBar = (props) => {
         </li>
 
         <li>
-          <Link to={"#"}>
+          <Link to={"/co/order/headhunter"}>
             <span>Order Headhunter</span>
             <DescriptionIcon
               fontSize="large"

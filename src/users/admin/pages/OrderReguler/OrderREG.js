@@ -12,12 +12,11 @@ const OrderREG = (props) => {
   const [data, setData] = useState();
 
   const { getOrderReguler } = props;
-
-  const [indexLoading, setIndexLoading] = useState(null);
+  const [index, setIndex] = useState(null);
 
   useEffect(() => {
     if (props.admin.token) {
-      getOrderReguler().then((res) => {
+      getOrderReguler(props.admin.token).then((res) => {
         setData(res.orderreg);
         console.log(res);
       });
@@ -25,7 +24,7 @@ const OrderREG = (props) => {
   }, [getOrderReguler, props.admin]);
 
   const approveOrderHandler = async (dataInput) => {
-    setIndexLoading(dataInput.i);
+    setIndex(dataInput.i);
     const payload = {
       token: props.admin.token,
       companyId: dataInput.companyId,
@@ -35,33 +34,30 @@ const OrderREG = (props) => {
       await props.approveOrder(payload);
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.i].isActive = true;
+        tempData[dataInput.i].status = "Paid";
         return tempData;
       });
-      setIndexLoading(null);
+      setIndex(null);
     } catch (err) {
       console.log(err);
-      setIndexLoading(null);
+      setIndex(null);
     }
   };
 
   // const cancelOrderHandler = async (dataInput) => {
-  //   setIndexLoading(dataInput.index);
+  //   setIndex(dataInput.i);
   //   const payload = {
   //     token: props.admin.token,
   //     companyId: dataInput.companyId,
+  //     orderId: dataInput.orderId,
   //   };
   //   try {
-  //     await props.cancelOrderHandler(payload);
-  //     setData((prevData) => {
-  //       const tempData = [...prevData];
-  //       tempData[dataInput.index].isActive = false;
-  //       return tempData;
-  //     });
-  //     setIndexLoading(null);
+  //     await props.cancelOrder(payload);
+
+  //     setIndex(null);
   //   } catch (err) {
   //     console.log(err);
-  //     setIndexLoading(null);
+  //     setIndex(null);
   //   }
   // };
 
@@ -82,10 +78,6 @@ const OrderREG = (props) => {
             </div>
           </div>
           {data.map((order, i) => {
-            let dueDate = Math.ceil(
-              moment(order.dueDate).diff(moment(), "days", true)
-            );
-
             return (
               <div className={classes.OrderCard} key={i}>
                 <Link to={`/co/${order._id}/invoice`}>
@@ -95,54 +87,52 @@ const OrderREG = (props) => {
                 <p className={classes.ContentDate}>
                   {moment(order.createdAt).format("D MMM YYYY")}
                 </p>
-                <p
-                  className={classes.Content}
-                  style={
-                    dueDate === 0
-                      ? { color: "gray" }
-                      : dueDate <= 3
-                      ? { color: "red" }
-                      : dueDate <= 7
-                      ? { color: "#FF8C00" }
-                      : { color: "green" }
-                  }
-                >
-                  {moment(order.createdAt).format("D MMM YYYY")}
+                <p className={classes.Content}>
+                  {order.approvedAt
+                    ? moment(order.approvedAt).format("D MMM YYYY")
+                    : "not approved"}
                 </p>
-                <p
-                  className={classes.Content}
-                  style={
-                    order.status === "expired"
-                      ? { color: "gray" }
-                      : order.status === "Pending"
-                      ? { color: "#FF8C00" }
-                      : { color: "green" }
-                  }
-                >
-                  {props.isLoading && indexLoading === i ? (
-                    <SpinnerCircle />
-                  ) : (
-                    order.status
-                  )}
-                </p>
+                {props.indexIsLoading && index === i ? (
+                  <SpinnerCircle />
+                ) : (
+                  <p
+                    className={classes.Content}
+                    style={
+                      order.status === "expired"
+                        ? { color: "gray" }
+                        : order.status === "Pending"
+                        ? { color: "#FF8C00" }
+                        : order.status === "Cancel"
+                        ? { color: "red" }
+                        : { color: "green" }
+                    }
+                  >
+                    {order.status}
+                  </p>
+                )}
                 <div className={classes.DropDown}>
                   <button className={classes.DropButton}>
                     <ArrowDropDownIcon />
                   </button>
                   <div className={classes.DropDownContent}>
-                    <button
-                      style={{ color: "Green" }}
-                      onClick={() =>
-                        approveOrderHandler({
-                          orderId: order._id,
-                          companyId: order.companyId,
-                          i,
-                        })
-                      }
-                    >
-                      setujui
-                    </button>
-                    <button style={{ color: "red" }}>batalkan</button>
+                    {order.status === "Paid" ? (
+                      <p style={{ color: "gray", width: "10rem" }}>
+                        telah disetujui
+                      </p>
+                    ) : (
+                      <button
+                        style={{ color: "Green" }}
+                        onClick={() =>
+                          approveOrderHandler({
+                            orderId: order._id,
+                            companyId: order.companyId,
+                            i,
+                          })
+                        }
+                      >
+                        setujui
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -158,6 +148,7 @@ const OrderREG = (props) => {
 const mapStateToProps = (state) => {
   return {
     admin: state.admin,
+    indexIsLoading: state.finance.indexIsLoading,
     isLoading: state.finance.isLoading,
     error: state.finance.error,
   };
@@ -167,6 +158,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getOrderReguler: (data) => dispatch(actionCreators.getOrderReguler(data)),
     approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
+    cancelOrder: (payload) => dispatch(actionCreators.cancelOrder(payload)),
   };
 };
 

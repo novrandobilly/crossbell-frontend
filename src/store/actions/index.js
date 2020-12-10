@@ -36,6 +36,10 @@ export {
   getOrderInvoice,
   getOrderReguler,
   approveOrder,
+  cancelOrder,
+  getOrderCandidate,
+  createOrderCandidate,
+  getCompanyBC,
 } from "./order-actions";
 
 export {

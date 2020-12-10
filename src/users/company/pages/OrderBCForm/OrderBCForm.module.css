@@ -1,0 +1,164 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ContainerFlex {
+  margin-top: 2rem;
+  width: 50rem;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.05rem solid rgba(128, 128, 128, 0.1);
+  padding-bottom: 2rem;
+  background-color: rgba(235, 235, 235, 0.7);
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0.4rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+.FormTitle {
+  font-size: 1.4rem;
+  color: black;
+  align-self: flex-start;
+  margin-left: 5rem;
+}
+
+.FormRow {
+  display: flex;
+  border-top: solid 0.1rem rgba(124, 124, 124, 0.4);
+  padding-top: 2rem;
+}
+
+.RadioGroup {
+  width: 12rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.RadioLabel {
+  font-size: 1rem;
+  color: rgba(58, 81, 153, 1);
+  margin-bottom: -0.5rem;
+  margin-left: 0.3rem;
+}
+
+.RadioGroupInput {
+  display: flex;
+  align-items: center;
+}
+
+.RadioValue {
+  margin-right: 0.2rem;
+}
+
+.RadioText {
+  margin-top: 1rem;
+  margin-right: 1rem;
+  text-align: left;
+}
+
+.RadioTextGender {
+  width: 5rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.Inputs {
+  display: flex;
+  justify-content: space-between;
+  /* border: solid 0.1rem black; */
+}
+
+.CheckInputs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.CandidateAmount {
+  margin-top: 1rem;
+  margin-right: 2rem;
+}
+
+.CheckGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.CheckValue {
+  margin-right: 0.4rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.CheckText {
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.AgeLabel {
+  text-align: left;
+  color: rgba(58, 81, 153, 1);
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.AgeGroup {
+  display: flex;
+  margin-right: 5rem;
+}
+
+.SaveButton {
+  align-self: flex-end;
+  margin-right: 2.5rem;
+  margin-top: 2.5rem;
+  width: 8rem;
+  height: 2rem;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  background-color: rgba(58, 81, 153, 1);
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.5s;
+  outline: none;
+  cursor: pointer;
+}
+
+.SaveButton:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background-color: gray;
+}
+
+.SaveButton:enabled span {
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.SaveButton:enabled span:after {
+  content: ">>";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -2rem;
+  transition: 0.5s;
+}
+
+.SaveButton:hover:enabled span {
+  padding-right: 1.5rem;
+}
+
+.SaveButton:hover:enabled span:after {
+  opacity: 1;
+  right: 0;
+}

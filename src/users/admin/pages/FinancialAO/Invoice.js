@@ -19,11 +19,8 @@ const Invoice = (props) => {
     if (props.auth.token) {
       getOrderInvoice({ orderId: orderid, token: props.auth.token }).then(
         (res) => {
-          if (res.orderreg) {
-            setOrderData(res.orderreg);
-            console.log(res);
-          } else if (res.orderbc) {
-            setOrderData(res.orderbc);
+          if (res) {
+            setOrderData(res.order);
             console.log(res);
           } else {
             throw new Error();
@@ -35,6 +32,7 @@ const Invoice = (props) => {
 
   let tax = 0;
   let dis = 0;
+  let subTotal = 0;
 
   let content = <SpinnerCircle />;
 
@@ -48,10 +46,12 @@ const Invoice = (props) => {
             </p>
             <div className={classes.Content}>
               <div className={classes.CompanyDetail}>
-                <p className={classes.CompanyName}>{orderData.companyName}</p>
-                <p>{orderData.address}</p>
-                <p>{orderData.email}</p>
-                <p>{orderData.website}</p>
+                <p className={classes.CompanyName}>
+                  {orderData.companyId.companyName}
+                </p>
+                <p>{orderData.companyId.address}</p>
+                <p>{orderData.companyId.email}</p>
+                <p>{orderData.companyId.website}</p>
               </div>
               <div className={classes.InvoiceRight}>
                 <p className={classes.InvoiceTitle}>INVOICE</p>
@@ -70,20 +70,38 @@ const Invoice = (props) => {
             <table className={classes.Table}>
               <thead>
                 <tr>
-                  <th>Package Ads</th>
-                  <th>Slot</th>
-                  <th>Amount/ Qty</th>
-                  <th>Package Price</th>
-                  <th>Total Slot</th>
+                  {orderData.packageName ? (
+                    <th>package ads</th>
+                  ) : (
+                    <th>order</th>
+                  )}
+                  <th>jumlah</th>
+                  <th>harga satuan</th>
+                  <th>sub total</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th>{orderData.packageName}</th>
-                  <th>{orderData.slot}</th>
-                  <th>{orderData.amount}</th>
-                  <th>Rp. {orderData.pricePerSlot},-</th>
-                  <th>{orderData.amount * orderData.slot}</th>
+                  <th>
+                    {orderData.packageName
+                      ? orderData.packageName
+                      : "bulk candidate"}
+                  </th>
+                  <th>{orderData.slot ? orderData.slot : orderData.amount}</th>
+                  <th>
+                    Rp.{" "}
+                    {orderData.pricePerSlot
+                      ? orderData.pricePerSlot
+                      : orderData.price}
+                    ,-
+                  </th>
+                  <th>
+                    Rp.{" "}
+                    {orderData.packageName
+                      ? (subTotal = orderData.pricePerSlot * orderData.slot)
+                      : (subTotal = orderData.price * orderData.amount)}
+                    ,-
+                  </th>
                 </tr>
               </tbody>
             </table>
@@ -123,9 +141,7 @@ const Invoice = (props) => {
                   <p>SubTotal</p>
                   <p>
                     Rp.
-                    {(
-                      orderData.packagePrice * orderData.amount
-                    ).toLocaleString()}
+                    {subTotal.toLocaleString()}
                     ,-
                   </p>
                 </div>
@@ -133,11 +149,8 @@ const Invoice = (props) => {
                 <div className={classes.Amount}>
                   <p>Discount</p>
                   <p>
-                    Rp.
-                    {(dis =
-                      orderData.packagePrice *
-                      orderData.amount *
-                      0.2).toLocaleString()}
+                    - Rp.
+                    {(dis = subTotal * 0.2).toLocaleString()}
                     ,-
                   </p>
                 </div>
@@ -147,10 +160,7 @@ const Invoice = (props) => {
                   </p>
                   <p>
                     Rp.
-                    {(tax =
-                      orderData.packagePrice *
-                      orderData.amount *
-                      0.1).toLocaleString()}
+                    {(tax = subTotal * 0.1).toLocaleString()}
                     ,-
                   </p>
                 </div>
@@ -158,11 +168,7 @@ const Invoice = (props) => {
                   <p>Total</p>
                   <p>
                     Rp.
-                    {(
-                      orderData.packagePrice * orderData.amount +
-                      tax -
-                      dis
-                    ).toLocaleString()}
+                    {(subTotal + tax - dis).toLocaleString()}
                     ,-
                   </p>
                 </div>

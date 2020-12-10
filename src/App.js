@@ -12,6 +12,7 @@ import EditCompanyIntro from "./users/company/pages/Components/EditIntro";
 import EditCompanyBriefDescriptions from "./users/company/pages/Components/EditCompanyBriefDescriptions";
 import EditCompanyPIC from "./users/company/pages/Components/EditPIC";
 
+import OrderBCForm from "./users/company/pages/OrderBCForm/OrderBCForm";
 import CompanyOrderForm from "./users/company/pages/CompanyOrderForm/CompanyOrderForm";
 import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
 
@@ -184,6 +185,7 @@ const App = (props) => {
             component={EditCompanyPIC}
           />
 
+          <Route path="/co/order/candidate" component={OrderBCForm} />
           <Route path="/co/order/reguler" component={CompanyOrderForm} />
           <Route path="/co/:companyid/listOrder" component={CompanyOrderList} />
           <Route path="/co/:orderid/invoice" component={Invoice} />
