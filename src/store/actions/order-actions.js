@@ -17,6 +17,23 @@ const createOrderStart = () => {
 	};
 };
 
+const createOrderCandidateSuccess = (payload) => {
+  return {
+    type: actionTypes.CREATEORDERCANDIDATE,
+    payload: payload,
+  };
+};
+const createOrderCandidateFail = () => {
+  return {
+    type: actionTypes.CREATEORDERCANDIDATEFAIL,
+  };
+};
+const createOrderCandidateStart = () => {
+  return {
+    type: actionTypes.CREATEORDERCANDIDATESTART,
+  };
+};
+
 const getOrderSuccess = () => {
 	return {
 		type: actionTypes.GETORDER
@@ -49,6 +66,22 @@ const getOrderRegulerStart = () => {
 	};
 };
 
+const getOrderCandidateSuccess = () => {
+  return {
+    type: actionTypes.GETORDERCANDIDATE,
+  };
+};
+const getOrderCandidateFail = () => {
+  return {
+    type: actionTypes.GETORDERCANDIDATEFAIL,
+  };
+};
+const getOrderCandidateStart = () => {
+  return {
+    type: actionTypes.GETORDERCANDIDATESTART,
+  };
+};
+
 const getOrderInvoiceSuccess = () => {
 	return {
 		type: actionTypes.GETORDERINVOICE
@@ -59,6 +92,7 @@ const getOrderInvoiceFail = () => {
 		type: actionTypes.GETORDERINVOICEFAIL
 	};
 };
+
 const getOrderInvoiceStart = () => {
 	return {
 		type: actionTypes.GETORDERINVOICESTART
@@ -76,6 +110,7 @@ const approveOrderFail = () => {
 	};
 };
 const approveOrderStart = () => {
+
 	return {
 		type: actionTypes.APPROVEORDERSTART
 	};
@@ -382,4 +417,125 @@ export const updateOrderStatusES = payload => {
 			return err;
 		}
 	};
+
+};
+
+export const cancelOrder = (orderData) => {
+  return async (dispatch) => {
+    dispatch(cancelOrderStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/cancel/reg`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${orderData.token}`,
+          },
+          body: JSON.stringify({
+            orderId: orderData.orderId,
+            companyId: orderData.companyId,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      dispatch(cancelOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(cancelOrderFail());
+    }
+  };
+};
+
+export const createOrderCandidate = (orderData) => {
+  return async (dispatch) => {
+    dispatch(createOrderCandidateStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/order/bc`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${orderData.token}`,
+          },
+          body: JSON.stringify({
+            invoiceId: orderData.invoiceId,
+            companyId: orderData.companyId,
+            note: orderData.note,
+            jobFunction: orderData.jobFunction,
+            amount: orderData.amount,
+            education: orderData.education,
+            gender: orderData.gender,
+            location: orderData.location,
+            shift: orderData.shift,
+            min: orderData.min,
+            max: orderData.max,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      dispatch(createOrderCandidateSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(createOrderCandidateFail());
+    }
+  };
+};
+
+export const getOrderCandidate = (payload) => {
+  return async (dispatch) => {
+    dispatch(getOrderCandidateStart());
+    console.log(payload);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/order/bc`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getOrderCandidateSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getOrderCandidateFail());
+      console.log(err);
+      return err;
+    }
+  };
+};
+
+export const getCompanyBC = (payload) => {
+  return async (dispatch) => {
+    dispatch(getOrderStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/${payload.userId}/order/bc`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+
+      dispatch(getOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getOrderFail());
+    }
+  };
 };

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
@@ -8,6 +9,7 @@ import EditCompanyBriefDescriptions from './users/company/pages/Components/EditC
 import EditCompanyPIC from './users/company/pages/Components/EditPIC';
 
 import CompanyOrderForm from './users/company/pages/CompanyOrderForm/CompanyOrderForm';
+  import OrderBCForm from "./users/company/pages/OrderBCForm/OrderBCForm";
 import CompanyOrderList from './users/company/pages/CompanyOrderList/CompanyOrderList';
 import CompanyExecutiveSearch from './users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch';
 
@@ -136,6 +138,7 @@ const App = props => {
 					<Route path='/co/order/es' component={CompanyExecutiveSearch} />
 
 					<Route path='/co/order/reguler' component={CompanyOrderForm} />
+    <Route path="/co/order/candidate" component={OrderBCForm} />
 					<Route path='/co/:companyid/listOrder' component={CompanyOrderList} />
 					<Route path='/co/:orderid/invoice' component={Invoice} />
 					<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
@@ -161,6 +164,7 @@ const App = props => {
 					<Route path='/ad/alphaomega/financial' component={FinancialAO} />
 					<Route path='/ad/alphaomega/order/reguler' component={OrderREG} />
 					<Route path='/ad/alphaomega/order/candidate' component={OrderBC} />
+    
 					<Route path='/ad/alphaomega/order/headhunter' component={OrderHeadhunter} />
 
 					{/* General Routes */}
@@ -178,6 +182,7 @@ const App = props => {
 			<Footer />
 		</Router>
 	);
+
 };
 
 const mapStateToProps = state => {

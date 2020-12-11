@@ -1,3 +1,4 @@
+
 import React, { useReducer, useEffect } from 'react';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -6,29 +7,31 @@ import moment from 'moment';
 import { validate } from '../utils/validator';
 import classes from './Input.module.css';
 
+
 const ACTION = {
-	ONCHANGE: 'onchange',
-	ONBLUR: 'onblur'
+  ONCHANGE: "onchange",
+  ONBLUR: "onblur",
 };
 
 const inputReducer = (state, action) => {
-	switch (action.type) {
-		case ACTION.ONCHANGE:
-			return {
-				...state,
-				value: action.payload.value,
-				isValid: validate(action.payload.value, action.payload.validatorMethod)
-			};
-		case ACTION.ONBLUR: {
-			return {
-				...state,
-				isTouched: true
-			};
-		}
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case ACTION.ONCHANGE:
+      return {
+        ...state,
+        value: action.payload.value,
+        isValid: validate(action.payload.value, action.payload.validatorMethod),
+      };
+    case ACTION.ONBLUR: {
+      return {
+        ...state,
+        isTouched: true,
+      };
+    }
+    default:
+      return state;
+  }
 };
+
 
 const Input = props => {
 	const [ state, dispatch ] = useReducer(inputReducer, {
@@ -46,15 +49,10 @@ const Input = props => {
 		[ id, state.value, state.isValid, onInputHandler ]
 	);
 
-	const onChangeHandler = event => {
-		dispatch({
-			type: ACTION.ONCHANGE,
-			payload: {
-				value: event.target.value,
-				validatorMethod: props.validatorMethod
-			}
-		});
-	};
+
+  useEffect(() => {
+    onInputHandler && onInputHandler(id, state.value, state.isValid);
+  }, [id, state.value, state.isValid, onInputHandler]);
 
 	const onCustomDateHandler = payload => {
 		console.log(moment(payload).format('L'));
@@ -192,6 +190,7 @@ const Input = props => {
 			{inputElement}
 		</div>
 	);
+
 };
 
 export default Input;

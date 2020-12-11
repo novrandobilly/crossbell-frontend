@@ -17,6 +17,7 @@ export { getAllApplicant, getAllJob, admReg, admSignIn, getWholeCompanies, activ
 export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
 
 export {
+
 	createOrder,
 	getOrder,
 	getOrderInvoice,
@@ -27,8 +28,12 @@ export {
 	updateOrderStatusES,
 	getOneOrderES,
 	addCandidateES,
-	updateCandidateStatusES
+	updateCandidateStatusES,
+getOrderCandidate,
+  createOrderCandidate,
+  getCompanyBC,
 } from './order-actions';
+
 
 export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob, applyJob } from './job-actions';
 

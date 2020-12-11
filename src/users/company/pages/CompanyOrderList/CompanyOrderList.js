@@ -12,22 +12,28 @@ import classes from "./CompanyOrderList.module.css";
 const CompanyOrderList = (props) => {
   const { companyid } = useParams();
 
-  const [data, setData] = useState();
+  const [orderData, setOrderData] = useState();
 
-  const { getOrder } = props;
+  const { getOrder, getCompanyBC } = props;
 
   useEffect(() => {
     if (props.auth.token) {
       getOrder({ userId: companyid, token: props.auth.token }).then((res) => {
-        setData(res.orderreg);
+        setOrderData(res.orderreg);
         console.log(res);
       });
+      getCompanyBC({ userId: companyid, token: props.auth.token }).then(
+        (res) => {
+          setOrderData(res.orderbc);
+          console.log(res);
+        }
+      );
     }
-  }, [getOrder, companyid, props.auth]);
+  }, [getOrder, getCompanyBC, companyid, props.auth]);
 
   let content = <SpinnerCircle />;
 
-  if (!props.isLoading && data) {
+  if (!props.isLoading && orderData) {
     content = (
       <div className={classes.Container}>
         <div className={classes.Header}>
@@ -39,7 +45,7 @@ const CompanyOrderList = (props) => {
             <p className={classes.Content}>STATUS</p>
           </div>
         </div>
-        {data.map((order, i) => {
+        {orderData.map((order, i) => {
           let dueDate = Math.ceil(
             moment(order.dueDate).diff(moment(), "days", true)
           );
@@ -100,6 +106,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getOrder: (data) => dispatch(actionCreators.getOrder(data)),
+    getCompanyBC: (data) => dispatch(actionCreators.getCompanyBC(data)),
   };
 };
 
