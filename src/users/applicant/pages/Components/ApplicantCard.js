@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IconButton from '../../../../shared/UI_Element/IconButton';
@@ -37,6 +38,7 @@ const ApplicantCard = props => {
 						<div className={classes.ContainerHouse}>
 							<p className={classes.Email}>{props.email}</p>
 							<p className={classes.Email}>{props.phone}</p>
+							<p className={classes.Email}>{moment().diff(props.dateOfBirth, 'years', false)} tahun</p>
 						</div>
 
 						<a href={props.website} className={classes.Websites}>

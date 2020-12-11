@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -172,6 +173,7 @@ const mapDispatchToProps = (dispatch) => {
     approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
     // cancelOrder: (payload) => dispatch(actionCreators.cancelOrder(payload)),
   };
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderREG);

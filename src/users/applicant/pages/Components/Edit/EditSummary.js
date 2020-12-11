@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
-import moment from 'moment';
 
 import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../../../../shared/utils/validator';
+import { VALIDATOR_MINLENGTH } from '../../../../../shared/utils/validator';
 
 import Modal from '../../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
@@ -35,10 +34,6 @@ const EditSummary = props => {
 			details: {
 				value: data ? data.details : null,
 				isValid: data && data.details ? true : false
-			},
-			dateOfBirth: {
-				value: data ? data.dateOfBirth : null,
-				isValid: data && data.dateOfBirth ? true : false
 			}
 		},
 		false
@@ -53,8 +48,7 @@ const EditSummary = props => {
 
 		const updatedAppSummary = {
 			applicantId: applicantid,
-			details: formState.inputs.details.value,
-			dateOfBirth: formState.inputs.dateOfBirth.value
+			details: formState.inputs.details.value
 		};
 		try {
 			const res = await props.updateApplicantSummary(updatedAppSummary);
@@ -88,19 +82,6 @@ const EditSummary = props => {
 								onInputHandler={onInputHandler}
 								label='Details*'
 								initValue={data.details}
-								initIsValid={true}
-							/>
-						</div>
-
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='input'
-								id='dateOfBirth'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Date of Birth (MM/DD/YYYY)*'
-								initValue={moment(data.dateOfBirth).format('MM/ DD/ YYYY')}
 								initIsValid={true}
 							/>
 						</div>

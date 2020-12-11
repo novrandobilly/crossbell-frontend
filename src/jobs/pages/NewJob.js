@@ -73,7 +73,7 @@ const NewJob = props => {
 				try {
 					if (auth.userId) {
 						const res = await getOneCompany({ userId: auth.userId });
-						setMaxSlot(res.company.slot);
+						setMaxSlot(res.company.slotREG);
 					}
 				} catch (err) {
 					console.log(err);

@@ -5,7 +5,7 @@ import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../../shared/utils/validator';
 
 import Modal from '../../../../shared/UI_Element/Modal';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -36,6 +36,10 @@ const EditIntro = props => {
 				value: data ? data.companyName : null,
 				isValid: data && data.companyName ? true : false
 			},
+			email: {
+				value: data ? data.email : null,
+				isValid: data && data.email ? true : false
+			},
 			industry: {
 				value: data ? data.industry : null,
 				isValid: data && data.industry ? true : false
@@ -62,9 +66,9 @@ const EditIntro = props => {
 		const updatedIntro = {
 			companyId: companyid,
 			companyName: formState.inputs.companyName.value,
+			email: formState.inputs.email.value,
 			industry: formState.inputs.industry.value,
-			address: formState.inputs.address.value,
-			website: formState.inputs.website.value
+			address: formState.inputs.address.value
 		};
 		try {
 			const res = await props.updateCompanyIntro(updatedIntro);
@@ -110,6 +114,16 @@ const EditIntro = props => {
 								label='Name*'
 								initValue={data.companyName}
 								initIsValid={data.companyName}
+							/>
+							<Input
+								inputType='input'
+								id='email'
+								inputClass='AddJobInput'
+								validatorMethod={[ VALIDATOR_EMAIL() ]}
+								onInputHandler={onInputHandler}
+								label='Company Email* (This is your email account for login)'
+								initValue={data.email}
+								initIsValid={data.email}
 							/>
 
 							<Input
