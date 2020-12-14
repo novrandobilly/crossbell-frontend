@@ -29,7 +29,6 @@ const SideBar = (props) => {
           <Link to={"/co/order/reguler"}>
             <span>Purchase Job Ads Slot</span>
             <LocalOfferIcon
-              fontSize="large"
               style={{
                 margin: "0.5rem 0rem -0.5rem 1rem",
                 color: "black",
@@ -42,7 +41,6 @@ const SideBar = (props) => {
           <Link to={"/co/order/candidate"}>
             <span>Order Bulk Candidate</span>
             <AssignmentIndIcon
-              fontSize="large"
               style={{
                 margin: "0.5rem 0rem -0.5rem 1rem",
                 color: "black",
@@ -52,10 +50,9 @@ const SideBar = (props) => {
         </li>
 
         <li>
-          <Link to={"/co/order/headhunter"}>
+          <Link to={"/co/order/es"}>
             <span>Order Headhunter</span>
             <DescriptionIcon
-              fontSize="large"
               style={{
                 margin: "0.5rem 0rem -0.5rem 1rem",
                 color: "black",
@@ -76,7 +73,6 @@ const SideBar = (props) => {
               <span>Profile</span>
             </Link>
             <PersonIcon
-              fontSize="large"
               style={{ margin: "0.5rem 0rem -0.5rem 1rem", color: "black" }}
             />
           </li>
@@ -85,7 +81,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/companies"}>
               <span>Company List</span>
               <BusinessIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -97,7 +92,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/applicants"}>
               <span>Applicant List </span>
               <GroupIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -109,7 +103,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/jobs"}>
               <span>Job List</span>
               <WorkIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -121,7 +114,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/financial"}>
               <span>Finance</span>
               <AttachMoneyIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -133,7 +125,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/customer-supports"}>
               <span>Feedback List</span>
               <FeedbackIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -145,7 +136,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/order/reguler"}>
               <span>Order Reguler</span>
               <LocalOfferIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -157,7 +147,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/order/candidate"}>
               <span>Order Bulk Candidate</span>
               <AssignmentIndIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",
@@ -169,7 +158,6 @@ const SideBar = (props) => {
             <Link to={"/ad/alphaomega/order/headhunter"}>
               <span>Order Headhunter</span>
               <DescriptionIcon
-                fontSize="large"
                 style={{
                   margin: "0.5rem 0rem -0.5rem 1rem",
                   color: "black",

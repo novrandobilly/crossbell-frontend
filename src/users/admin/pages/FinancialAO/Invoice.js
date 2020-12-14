@@ -85,7 +85,9 @@ const Invoice = (props) => {
                   <th>
                     {orderData.packageName
                       ? orderData.packageName
-                      : "bulk candidate"}
+                      : orderData.amount
+                      ? "bulk candidate"
+                      : "executive search"}
                   </th>
                   <th>{orderData.slot ? orderData.slot : orderData.amount}</th>
                   <th>
@@ -125,12 +127,6 @@ const Invoice = (props) => {
                       eos qui ratione voluptatem sequi nesciunt. Neque porro
                       quisquam est, qui dolorem ipsum quia dolor sit amet,
                       consectetur, adipisci velit,
-                    </li>
-                    <li>
-                      sed quia non numquam eius modi tempora incidunt ut labore
-                      et dolore magnam aliquam quaerat voluptatem. Ut enim ad
-                      minima veniam, quis nostrum exercitationem ullam corporis
-                      suscipit laboriosam,
                     </li>
                   </ul>
                 </div>

@@ -4,7 +4,8 @@
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 5rem;
-  border: solid 0.05rem rgba(0, 0, 0, 0.4);
+  /* border: solid 0.05rem rgba(0, 0, 0, 0.4); */
+  border: none;
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
@@ -13,12 +14,14 @@
   font-weight: bold;
   position: relative;
   transition: all 0.5s;
+  box-shadow: 0.15rem 0.15rem 0.2rem 0.01rem rgba(0, 0, 0, 0.2);
 }
 
 .IconButton:hover {
   width: 5rem;
   position: relative;
   padding-right: 4rem;
+  box-shadow: 0.15rem 0.15rem 0.2rem 0.01rem rgba(0, 0, 0, 0.2);
 }
 
 .IconButton::after {

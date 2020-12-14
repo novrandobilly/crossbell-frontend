@@ -44,23 +44,6 @@ const OrderREG = (props) => {
     }
   };
 
-  // const cancelOrderHandler = async (dataInput) => {
-  //   setIndex(dataInput.i);
-  //   const payload = {
-  //     token: props.admin.token,
-  //     companyId: dataInput.companyId,
-  //     orderId: dataInput.orderId,
-  //   };
-  //   try {
-  //     await props.cancelOrder(payload);
-
-  //     setIndex(null);
-  //   } catch (err) {
-  //     console.log(err);
-  //     setIndex(null);
-  //   }
-  // };
-
   let content = <SpinnerCircle />;
 
   if (!props.isLoading && data) {

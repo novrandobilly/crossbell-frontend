@@ -1,12 +1,12 @@
-import React from 'react';
-import Checkout from './Checkout';
+import React from "react";
+import Checkout from "./Checkout";
 
 const CompanyExecutiveSearch = () => {
-	return (
-		<div>
-			<Checkout />
-		</div>
-	);
+  return (
+    <div style={{ marginTop: "6rem" }}>
+      <Checkout />
+    </div>
+  );
 };
 
 export default CompanyExecutiveSearch;

@@ -221,7 +221,7 @@ export const getOrderReguler = (payload) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${payload.token}`,
+            Authorization: `Bearer ${payload}`,
           },
           body: null,
         }
@@ -280,7 +280,7 @@ export const getWholeOrderES = (payload) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${payload.token}`,
+          Authorization: `Bearer ${payload}`,
         },
       });
       const resJSON = await res.json();
@@ -292,6 +292,30 @@ export const getWholeOrderES = (payload) => {
     } catch (err) {
       dispatch(getOrderFail());
       return err;
+    }
+  };
+};
+
+export const getCompanyES = (payload) => {
+  return async (dispatch) => {
+    dispatch(getOrderStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/${payload.userId}/order/es`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      dispatch(getOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getOrderFail());
     }
   };
 };
