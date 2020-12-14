@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import classes from './OrderREG.module.css';
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import * as actionCreators from "../../../../store/actions/index";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import classes from "./OrderREG.module.css";
 
-const OrderREG = props => {
-	const [ data, setData ] = useState();
-
+const OrderREG = (props) => {
+  const [data, setData] = useState();
 
   const { getOrderReguler } = props;
   const [index, setIndex] = useState(null);
@@ -45,26 +44,7 @@ const OrderREG = props => {
     }
   };
 
-  // const cancelOrderHandler = async (dataInput) => {
-  //   setIndex(dataInput.i);
-  //   const payload = {
-  //     token: props.admin.token,
-  //     companyId: dataInput.companyId,
-  //     orderId: dataInput.orderId,
-  //   };
-  //   try {
-  //     await props.cancelOrder(payload);
-
-  //     setIndex(null);
-  //   } catch (err) {
-  //     console.log(err);
-  //     setIndex(null);
-  //   }
-  // };
-
-
-	let content = <SpinnerCircle />;
-
+  let content = <SpinnerCircle />;
 
   if (!props.isLoading && data) {
     content = (
@@ -161,9 +141,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getOrderReguler: (data) => dispatch(actionCreators.getOrderReguler(data)),
     approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
-    cancelOrder: (payload) => dispatch(actionCreators.cancelOrder(payload)),
+    // cancelOrder: (payload) => dispatch(actionCreators.cancelOrder(payload)),
   };
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderREG);

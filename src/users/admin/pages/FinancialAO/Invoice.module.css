@@ -1,26 +1,28 @@
 .Container {
   display: flex;
   justify-content: center;
+  background-color: rgb(250, 250, 250);
 }
 
 .InvoiceContainer {
-  width: 70rem;
-  border: solid 0.5rem rgba(0, 0, 0, 0.3);
+  width: 50rem;
+  box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
   border-radius: 1rem;
-  margin: 5rem;
+  margin-top: 2rem;
   background-color: rgb(215, 226, 255);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  overflow: hidden;
 }
 
 .Id {
-  width: 98.8%;
-  border-radius: 0.5rem 0.5rem 0 0;
+  /* box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214); */
+  width: 50rem;
+  border-radius: 1rem 1rem 0 0;
   background-color: rgba(58, 81, 153, 1);
   margin: 0rem;
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 1.2rem;
   color: white;
   padding-top: 0.5rem;
   padding-bottom: 1rem;
@@ -49,7 +51,7 @@
 }
 
 .InvoiceTitle {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   letter-spacing: 0.4rem;
   margin-bottom: 0;
@@ -94,8 +96,8 @@
 .Table tbody th {
   padding-top: 1.5rem;
   padding-bottom: 1rem;
-
   font-weight: normal;
+  font-size: 1rem;
 }
 
 .Footer {
@@ -114,23 +116,19 @@
 .CommentHeader {
   background-color: rgba(58, 81, 153, 1);
   color: white;
-  font-size: 1.3rem;
-  padding: 0.5rem 0 0.5rem 1rem;
-}
-
-.SubTotal {
-  margin-top: 0rem;
-  align-self: flex-start;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  padding: 0.4rem 0 0.4rem 1rem;
 }
 
 .CommentContent ul {
   list-style: decimal;
+  margin-left: -0.5rem;
+  margin-right: 1rem;
 }
 
 .CommentContent li {
   font-size: 0.9rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 1rem;
 }
 
 .AmountContainer {
@@ -138,10 +136,15 @@
   display: flex;
   flex-direction: column;
   margin-right: 5rem;
-  font-size: 1.1rem;
-  line-height: 0;
+  font-size: 1rem;
+  line-height: 0.5rem;
 }
 
+.SubTotal {
+  margin-top: 0rem;
+  align-self: flex-start;
+  font-size: 0.7rem;
+}
 .Amount {
   width: 100%;
   display: flex;

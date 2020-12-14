@@ -35,43 +35,44 @@ const CompanyCard = (props) => {
 
             <p className={classes.CompanyHeadquarter}>{props.address}</p>
 
-
-						<a
-							href={`https://${props.website}`}
-							className={classes.CompanyWebsites}
-							style={{
-								display: 'flex',
-								justifyContent: 'space-around',
-								alignItems: 'center',
-								width: '80%',
-								textDecoration: 'none',
-								fontSize: '0.8rem',
-								fontWeight: 'bold',
-								color: 'rgba(58, 81, 153, 1)'
-							}}>
-							<img
-								className={classes.LinkIcon}
-								alt='web-icon'
-								src='https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'
-							/>
-							{props.website}
-						</a>
-						<h2 style={props.slotREG < 1 ? { color: 'rgb(192,18,18)' } : { color: 'rgb(57,255,70)' }}>
-							Remaining Slot: {props.slotREG}
-						</h2>
-					</div>
-				</div>
-				<div className={classes.ContainerRight}>
-					<Link to={'/co/order'}>
-						<IconButton iconType='Order' />
-					</Link>
-					{props.auth.isCompany &&
-					props.auth.isActive && (
-						<Link to={'/jobs/new'}>
-							<IconButton iconType='NewJob' />
-						</Link>
-					)}
-
+            <a
+              href={`https://${props.website}`}
+              className={classes.CompanyWebsites}
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+                width: "80%",
+                textDecoration: "none",
+                fontSize: "0.8rem",
+                fontWeight: "bold",
+                color: "rgba(58, 81, 153, 1)",
+              }}
+            >
+              <img
+                className={classes.LinkIcon}
+                alt="web-icon"
+                src="https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png"
+              />
+              {props.website}
+            </a>
+            <h2
+              style={
+                props.slotREG < 1
+                  ? { color: "rgb(192,18,18)" }
+                  : { color: "rgb(57,255,70)" }
+              }
+            >
+              Remaining Slot: {props.slotREG}
+            </h2>
+          </div>
+        </div>
+        <div className={classes.ContainerRight}>
+          {props.auth.isCompany && props.auth.isActive && (
+            <Link to={"/jobs/new"}>
+              <IconButton iconType="NewJob" />
+            </Link>
+          )}
 
           <Link to={`/co/${props.companyId}/compro/intro`}>
             <IconButton />

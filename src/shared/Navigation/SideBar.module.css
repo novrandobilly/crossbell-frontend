@@ -5,8 +5,7 @@
   position: absolute;
   top: 4rem;
   right: -100%;
-  letter-spacing: 0.1rem;
-  line-height: 2.5rem;
+  line-height: 2rem;
   background: #d7e2ff;
   text-align: right;
   transition: 850ms;
@@ -16,22 +15,21 @@
   position: absolute;
   top: 4rem;
   right: 0rem;
-  letter-spacing: 0.1rem;
-  line-height: 2.5rem;
+  line-height: 2rem;
   background: #d7e2ff;
   text-align: right;
   transition: 250ms;
-  box-shadow: -0.2rem 0.3rem 1rem 0.01rem rgba(0, 0, 0, 0.2);
+  box-shadow: -0.2rem 0.5rem 0.5rem 0.01rem rgba(0, 0, 0, 0.2);
 }
 
 .MenuItem {
   list-style: none;
-  padding: 0 1rem 2rem 3rem;
+  padding: 0 0.5rem 0 1rem;
 }
 
 .MenuItem li {
   margin-top: 1rem;
-  padding: 0 1rem 0 1rem;
+  padding: 0.2rem 1rem 0.2rem 1rem;
   border-radius: 0.5rem;
 }
 
@@ -46,5 +44,5 @@
 .MenuItem span {
   font-weight: bold;
   color: rgba(58, 81, 153, 1);
-  font-size: 1.2rem;
+  font-size: 1rem;
 }

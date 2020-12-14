@@ -14,22 +14,49 @@ const CompanyOrderList = (props) => {
 
   const [orderData, setOrderData] = useState();
 
-  const { getOrder, getCompanyBC } = props;
+  const { getOrder, getCompanyBC, getCompanyES } = props;
 
   useEffect(() => {
+    let orderReg = [];
+    let orderBC = [];
+    let orderES = [];
+    let allOrder = [];
     if (props.auth.token) {
-      getOrder({ userId: companyid, token: props.auth.token }).then((res) => {
-        setOrderData(res.orderreg);
-        console.log(res);
-      });
-      getCompanyBC({ userId: companyid, token: props.auth.token }).then(
-        (res) => {
-          setOrderData(res.orderbc);
-          console.log(res);
+      const fetchData = async () => {
+        let resreg;
+        let resbc;
+        let reses;
+        try {
+          resreg = await getOrder({
+            userId: companyid,
+            token: props.auth.token,
+          });
+          resbc = await getCompanyBC({
+            userId: companyid,
+            token: props.auth.token,
+          });
+          reses = await getCompanyES({
+            userId: companyid,
+            token: props.auth.token,
+          });
+        } catch (err) {
+          console.log(err);
         }
-      );
+        orderReg = resreg.orderreg;
+        orderBC = resbc.orderbc;
+        orderES = reses.orderes;
+        allOrder = [...orderReg, ...orderBC, ...orderES];
+        console.log(allOrder);
+        allOrder = allOrder.sort(
+          (a, b) => moment(b.createdAt) - moment(a.createdAt)
+        );
+        setOrderData(allOrder);
+      };
+      fetchData();
     }
-  }, [getOrder, getCompanyBC, companyid, props.auth]);
+  }, [getOrder, getCompanyBC, getCompanyES, companyid, props.auth]);
+
+  console.log(orderData);
 
   let content = <SpinnerCircle />;
 
@@ -39,7 +66,7 @@ const CompanyOrderList = (props) => {
         <div className={classes.Header}>
           <div className={classes.OrderHeader}>
             <p className={classes.ContentIdLabel}>ORDER ID</p>
-            <p className={classes.Content}>PACKAGE</p>
+            <p className={classes.Content}>TYPE</p>
             <p className={classes.Content}>ORDERED AT</p>
             <p className={classes.Content}>DUE DATE</p>
             <p className={classes.Content}>STATUS</p>
@@ -54,7 +81,13 @@ const CompanyOrderList = (props) => {
             <Link to={`/co/${order._id}/invoice`} key={i}>
               <div className={classes.OrderCard}>
                 <p className={classes.ContentId}>{order._id}</p>
-                <p className={classes.Content}>{order.packageName}</p>
+                <p className={classes.Content}>
+                  {order.slot
+                    ? "Reguler"
+                    : order.amount
+                    ? "Bulk Candidate"
+                    : "Executive Search"}
+                </p>
                 <p className={classes.Content}>
                   {moment(order.createdAt).format("D MMM YYYY")}
                 </p>
@@ -70,7 +103,11 @@ const CompanyOrderList = (props) => {
                       : { color: "green" }
                   }
                 >
-                  {order.status === "Pending" ? dueDate : 0} day
+                  {order.status === "Pending"
+                    ? `${dueDate} day`
+                    : order.status === "Open"
+                    ? "no due"
+                    : "0 day"}
                 </p>
                 <p
                   className={classes.Content}
@@ -107,6 +144,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getOrder: (data) => dispatch(actionCreators.getOrder(data)),
     getCompanyBC: (data) => dispatch(actionCreators.getCompanyBC(data)),
+    getCompanyES: (data) => dispatch(actionCreators.getCompanyES(data)),
   };
 };
 

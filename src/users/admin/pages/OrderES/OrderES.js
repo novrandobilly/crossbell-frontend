@@ -6,27 +6,27 @@ import moment from "moment";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import * as actionCreators from "../../../../store/actions/index";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import classes from "./OrderBC.module.css";
+import classes from "./OrderES.module.css";
 
 const OrderREG = (props) => {
   const [data, setData] = useState();
 
-  const { getOrderCandidate } = props;
+  const { getWholeOrderES } = props;
   const [index, setIndex] = useState(null);
 
   useEffect(() => {
     const token = props.admin.token;
     if (token) {
-      getOrderCandidate(token)
+      getWholeOrderES(token)
         .then((res) => {
-          setData(res.orderbc);
+          setData(res.orders);
           console.log(res);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [getOrderCandidate, props.admin]);
+  }, [getWholeOrderES, props.admin]);
 
   const approveOrderHandler = async (dataInput) => {
     setIndex(dataInput.i);
@@ -92,12 +92,8 @@ const OrderREG = (props) => {
                   <p
                     className={classes.Content}
                     style={
-                      order.status === "expired"
+                      order.status === "Closed"
                         ? { color: "gray" }
-                        : order.status === "Pending"
-                        ? { color: "#FF8C00" }
-                        : order.status === "Cancel"
-                        ? { color: "red" }
                         : { color: "green" }
                     }
                   >
@@ -150,8 +146,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOrderCandidate: (data) =>
-      dispatch(actionCreators.getOrderCandidate(data)),
+    getWholeOrderES: (data) => dispatch(actionCreators.getWholeOrderES(data)),
     approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
   };
 };
