@@ -8,7 +8,7 @@ import * as actionCreators from "../../../../store/actions/index";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import classes from "./OrderES.module.css";
 
-const OrderREG = (props) => {
+const OrderES = (props) => {
   const [data, setData] = useState();
 
   const { getWholeOrderES } = props;
@@ -17,10 +17,13 @@ const OrderREG = (props) => {
   useEffect(() => {
     const token = props.admin.token;
     if (token) {
+      let sort = [];
       getWholeOrderES(token)
         .then((res) => {
-          setData(res.orders);
+          sort = res.orders;
+          sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           console.log(res);
+          setData(sort);
         })
         .catch((err) => {
           console.log(err);
@@ -28,18 +31,18 @@ const OrderREG = (props) => {
     }
   }, [getWholeOrderES, props.admin]);
 
-  const approveOrderHandler = async (dataInput) => {
+  const updateStatusHandler = async (dataInput) => {
     setIndex(dataInput.i);
     const payload = {
       token: props.admin.token,
-      companyId: dataInput.companyId,
       orderId: dataInput.orderId,
+      status: dataInput.status,
     };
     try {
-      await props.approveOrder(payload);
+      await props.updateOrderStatusES(payload);
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.i].status = "Paid";
+        tempData[dataInput.i].status = dataInput.status;
         return tempData;
       });
       setIndex(null);
@@ -72,7 +75,7 @@ const OrderREG = (props) => {
           {data.map((order, i) => {
             return (
               <div className={classes.OrderCard} key={i}>
-                <Link to={`/co/${order._id}/invoice`}>
+                <Link to={`/ad/alphaomega/order/${order._id}/es`}>
                   <p className={classes.ContentId}>{order._id}</p>{" "}
                 </Link>
                 <p className={classes.ContentCompany}>
@@ -105,24 +108,30 @@ const OrderREG = (props) => {
                     <ArrowDropDownIcon />
                   </button>
                   <div className={classes.DropDownContent}>
-                    {order.status === "Paid" ? (
-                      <p style={{ color: "gray", width: "10rem" }}>
-                        telah disetujui
-                      </p>
-                    ) : (
-                      <button
-                        style={{ color: "Green" }}
-                        onClick={() =>
-                          approveOrderHandler({
-                            orderId: order._id,
-                            companyId: order.companyId,
-                            i,
-                          })
-                        }
-                      >
-                        setujui
-                      </button>
-                    )}
+                    <button
+                      style={{ color: "Green" }}
+                      onClick={() =>
+                        updateStatusHandler({
+                          orderId: order._id,
+                          status: "Open",
+                          i,
+                        })
+                      }
+                    >
+                      Open
+                    </button>
+                    <button
+                      style={{ color: "Red" }}
+                      onClick={() =>
+                        updateStatusHandler({
+                          orderId: order._id,
+                          status: "Closed",
+                          i,
+                        })
+                      }
+                    >
+                      Closed
+                    </button>
                   </div>
                 </div>
               </div>
@@ -147,8 +156,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getWholeOrderES: (data) => dispatch(actionCreators.getWholeOrderES(data)),
-    approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
+    updateOrderStatusES: (payload) =>
+      dispatch(actionCreators.updateOrderStatusES(payload)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderREG);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderES);

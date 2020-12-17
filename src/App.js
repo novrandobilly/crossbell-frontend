@@ -60,9 +60,11 @@ import JobsDetailsAO from "./users/admin/pages/JobDetailsAO/JobDetailsAO";
 import CustomerSupportsAO from "./users/admin/pages/CustomerSupportsAO/CustomerSupportsAO";
 import FinancialAO from "./users/admin/pages/FinancialAO/FinancialAO";
 import Invoice from "./users/admin/pages/FinancialAO/Invoice";
-import OrderREG from "./users/admin/pages/OrderReguler/OrderREG";
+import OrderREG from "./users/admin/pages/OrderREG/OrderREG";
 import OrderBC from "./users/admin/pages/OrderBC/OrderBC";
 import OrderES from "./users/admin/pages/OrderES/OrderES";
+import DetailBC from "./users/admin/pages/OrderBC/DetailBC";
+import DetailES from "./users/admin/pages/OrderES/DetailES";
 
 import AuthenticationAp from "./users/applicant/pages/AuthenticationAp/AuthenticationAp";
 import AuthenticationCo from "./users/company/pages/AuthenticationCo/AuthenticationCo";
@@ -224,9 +226,12 @@ const App = (props) => {
           <Route path="/ad/alphaomega/financial" component={FinancialAO} />
           <Route path="/ad/alphaomega/order/reguler" component={OrderREG} />
           <Route path="/ad/alphaomega/order/candidate" component={OrderBC} />
-
-          <Route path="/ad/alphaomega/order/headhunter" component={OrderES} />
-
+          <Route path="/ad/alphaomega/order/es" component={OrderES} />
+          <Route
+            path="/ad/alphaomega/order/:orderid/candidate"
+            component={DetailBC}
+          />
+          <Route path="/ad/alphaomega/order/:orderid/es" component={DetailES} />
           {/* General Routes */}
           <Route path="/blogs" component={Blogs} />
           <Route path="/about-us" component={AboutUs} />

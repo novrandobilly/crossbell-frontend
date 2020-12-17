@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import QueryBar from './Component/QueryBar';
-
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import classes from './ApplicantListAO.module.css';

@@ -155,7 +155,7 @@ const SideBar = (props) => {
             </Link>
           </li>
           <li>
-            <Link to={"/ad/alphaomega/order/headhunter"}>
+            <Link to={"/ad/alphaomega/order/es"}>
               <span>Order Headhunter</span>
               <DescriptionIcon
                 style={{
