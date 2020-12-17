@@ -56,9 +56,9 @@
 }
 
 .Content {
-  width: 5rem;
+  width: 6rem;
   text-align: left;
-  margin-left: 2rem;
+  margin-left: 3rem;
 }
 
 .ContentDate {
@@ -76,6 +76,12 @@
   margin-right: 0rem;
 }
 
+.DropDown {
+  position: relative;
+  display: inline-block;
+  align-self: center;
+}
+
 .DropButton {
   background-color: transparent;
   border: none;
@@ -84,12 +90,6 @@
   margin-right: 2rem;
   margin-left: -2rem;
   font-size: 1rem;
-}
-
-.DropDown {
-  position: relative;
-  display: inline-block;
-  align-self: center;
 }
 
 .DropDownContent {

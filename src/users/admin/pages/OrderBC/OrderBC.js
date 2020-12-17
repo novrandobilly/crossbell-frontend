@@ -8,7 +8,7 @@ import * as actionCreators from "../../../../store/actions/index";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import classes from "./OrderBC.module.css";
 
-const OrderREG = (props) => {
+const OrderBC = (props) => {
   const [data, setData] = useState();
 
   const { getOrderCandidate } = props;
@@ -17,10 +17,13 @@ const OrderREG = (props) => {
   useEffect(() => {
     const token = props.admin.token;
     if (token) {
+      let sort = [];
       getOrderCandidate(token)
         .then((res) => {
-          setData(res.orderbc);
+          sort = res.orderbc;
+          sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           console.log(res);
+          setData(sort);
         })
         .catch((err) => {
           console.log(err);
@@ -72,7 +75,7 @@ const OrderREG = (props) => {
           {data.map((order, i) => {
             return (
               <div className={classes.OrderCard} key={i}>
-                <Link to={`/co/${order._id}/invoice`}>
+                <Link to={`/ad/alphaomega/order/${order._id}/candidate`}>
                   <p className={classes.ContentId}>{order._id}</p>{" "}
                 </Link>
                 <p className={classes.ContentCompany}>
@@ -156,4 +159,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderREG);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderBC);

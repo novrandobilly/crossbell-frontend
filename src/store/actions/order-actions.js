@@ -385,7 +385,7 @@ export const createOrderES = (payload) => {
 
 export const addCandidateES = (payload) => {
   return async (dispatch) => {
-    dispatch(getOrderStart());
+    dispatch(createOrderStart());
     console.log(payload);
     try {
       const res = await fetch(
@@ -409,10 +409,10 @@ export const addCandidateES = (payload) => {
       if (!res.ok) {
         throw new Error(resJSON.message);
       }
-      dispatch(getOrderSuccess());
+      dispatch(createOrderSuccess());
       return resJSON;
     } catch (err) {
-      dispatch(getOrderFail());
+      dispatch(createOrderFail());
       return err;
     }
   };
@@ -420,7 +420,7 @@ export const addCandidateES = (payload) => {
 
 export const updateCandidateStatusES = (payload) => {
   return async (dispatch) => {
-    dispatch(getOrderStart());
+    dispatch(approveOrderStart());
     console.log(payload);
     try {
       const res = await fetch(
@@ -432,9 +432,11 @@ export const updateCandidateStatusES = (payload) => {
             Authorization: `Bearer ${payload.token}`,
           },
           body: JSON.stringify({
+            index: payload.index,
             orderId: payload.orderId,
             candidateId: payload.candidateId,
             status: payload.status,
+            note: payload.note,
           }),
         }
       );
@@ -443,10 +445,10 @@ export const updateCandidateStatusES = (payload) => {
       if (!res.ok) {
         throw new Error(resJSON.message);
       }
-      dispatch(getOrderSuccess());
+      dispatch(approveOrderSuccess());
       return resJSON;
     } catch (err) {
-      dispatch(getOrderFail());
+      dispatch(approveOrderFail());
       return err;
     }
   };
@@ -454,7 +456,7 @@ export const updateCandidateStatusES = (payload) => {
 
 export const updateOrderStatusES = (payload) => {
   return async (dispatch) => {
-    dispatch(getOrderStart());
+    dispatch(approveOrderStart());
     console.log(payload);
     try {
       const res = await fetch(
@@ -476,10 +478,10 @@ export const updateOrderStatusES = (payload) => {
       if (!res.ok) {
         throw new Error(resJSON.message);
       }
-      dispatch(getOrderSuccess());
+      dispatch(approveOrder());
       return resJSON;
     } catch (err) {
-      dispatch(getOrderFail());
+      dispatch(approveOrderFail());
       return err;
     }
   };

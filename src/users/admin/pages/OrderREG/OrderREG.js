@@ -16,8 +16,11 @@ const OrderREG = (props) => {
 
   useEffect(() => {
     if (props.admin.token) {
+      let sort = [];
       getOrderReguler(props.admin.token).then((res) => {
-        setData(res.orderreg);
+        sort = res.orderreg;
+        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+        setData(sort);
         console.log(res);
       });
     }
