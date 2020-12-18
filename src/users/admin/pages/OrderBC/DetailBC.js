@@ -15,8 +15,9 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import classes from "./DetailBC.module.css";
 
-const DetailBC = (props) => {
-  const { orderid } = useParams();
+
+const DetailBC = props => {
+	const { orderid } = useParams();
 
   const [genderFilter, setGenderFilter] = useState([]);
   const [educationFilter, setEducationFilter] = useState([]);
@@ -25,8 +26,9 @@ const DetailBC = (props) => {
   const [locationFilter, setLocationFilter] = useState(null);
   const [displayData, setDisplayData] = useState();
 
-  const [dataBC, setDataBC] = useState();
-  const [dataApplicant, setDataApplicant] = useState();
+
+	const [ dataBC, setDataBC ] = useState();
+	const [ dataApplicant, setDataApplicant ] = useState();
 
   const [formState, onInputHandler] = useForm(
     {
@@ -44,33 +46,38 @@ const DetailBC = (props) => {
 
   const { getOrderInvoice, getAllApplicant } = props;
 
-  useEffect(() => {
-    const token = props.admin.token;
-    if (token) {
-      const dataBC = {
-        token: token,
-        orderId: orderid,
-      };
 
-      getOrderInvoice(dataBC)
-        .then((res) => {
-          console.log(res);
-          setDataBC(res.order);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+	useEffect(
+		() => {
+			const token = props.admin.token;
+			if (token) {
+				const dataBC = {
+					token: token,
+					orderId: orderid
+				};
 
-      getAllApplicant(dataBC)
-        .then((res) => {
-          console.log(res);
-          setDataApplicant(res.wholeApplicants);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [getOrderInvoice, getAllApplicant, orderid, props.admin]);
+				getOrderInvoice(dataBC)
+					.then(res => {
+						console.log(res);
+						setDataBC(res.order);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+
+				getAllApplicant(dataBC)
+					.then(res => {
+						console.log(res);
+						setDataApplicant(res.wholeApplicants);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			}
+		},
+		[ getOrderInvoice, getAllApplicant, orderid, props.admin ]
+	);
+
 
   useEffect(() => {
     if (dataApplicant && dataApplicant.length > 0) {
@@ -267,9 +274,11 @@ const DetailBC = (props) => {
   };
   let content = <SpinnerCircle />;
 
-  // if (!props.isLoading && data.length < 1) {
-  //   content = <h1>tidak ada order untuk saat ini</h1>;
-  // }
+
+	// if (!props.isLoading && data.length < 1) {
+	//   content = <h1>tidak ada order untuk saat ini</h1>;
+	// }
+
 
   if (!props.isLoading && displayData && dataBC) {
     content = (
@@ -588,22 +597,23 @@ const DetailBC = (props) => {
     );
   }
 
-  return <div>{content}</div>;
+
+	return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    admin: state.admin,
-    isLoading: state.finance.isLoading,
-    error: state.finance.error,
-  };
+const mapStateToProps = state => {
+	return {
+		admin: state.admin,
+		isLoading: state.finance.isLoading,
+		error: state.finance.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
-    getAllApplicant: (token) => dispatch(actionCreators.getAllApplicant(token)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		getOrderInvoice: data => dispatch(actionCreators.getOrderInvoice(data)),
+		getAllApplicant: token => dispatch(actionCreators.getAllApplicant(token))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailBC);
