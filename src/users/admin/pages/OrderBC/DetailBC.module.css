@@ -39,6 +39,12 @@
   margin-right: 1rem;
 }
 
+.InputHolder {
+  display: flex;
+  font-size: 0.9rem;
+  color: gray;
+}
+
 .OrderContainer {
   margin-top: 2rem;
   width: 100%;
