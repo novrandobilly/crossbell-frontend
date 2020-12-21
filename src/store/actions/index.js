@@ -34,7 +34,7 @@ export {
   createOrder,
   getOrder,
   getOrderInvoice,
-  getOrderReguler,
+  getWholeOrderREG,
   approveOrder,
   createOrderES,
   getWholeOrderES,
@@ -43,9 +43,10 @@ export {
   addCandidateES,
   updateCandidateStatusES,
   getCompanyES,
-  getOrderCandidate,
+  getWholeOrderBC,
   createOrderCandidate,
   getCompanyBC,
+  deleteCandidateES,
 } from "./order-actions";
 
 export {
