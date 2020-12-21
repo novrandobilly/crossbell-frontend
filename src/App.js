@@ -232,6 +232,7 @@ const App = (props) => {
             component={DetailBC}
           />
           <Route path="/ad/alphaomega/order/:orderid/es" component={DetailES} />
+
           {/* General Routes */}
           <Route path="/blogs" component={Blogs} />
           <Route path="/about-us" component={AboutUs} />

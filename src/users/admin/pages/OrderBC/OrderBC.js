@@ -11,14 +11,14 @@ import classes from "./OrderBC.module.css";
 const OrderBC = (props) => {
   const [data, setData] = useState();
 
-  const { getOrderCandidate } = props;
+  const { getWholeOrderBC } = props;
   const [index, setIndex] = useState(null);
 
   useEffect(() => {
     const token = props.admin.token;
     if (token) {
       let sort = [];
-      getOrderCandidate(token)
+      getWholeOrderBC(token)
         .then((res) => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
@@ -29,7 +29,7 @@ const OrderBC = (props) => {
           console.log(err);
         });
     }
-  }, [getOrderCandidate, props.admin]);
+  }, [getWholeOrderBC, props.admin]);
 
   const approveOrderHandler = async (dataInput) => {
     setIndex(dataInput.i);
@@ -153,8 +153,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOrderCandidate: (data) =>
-      dispatch(actionCreators.getOrderCandidate(data)),
+    getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
     approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
   };
 };
