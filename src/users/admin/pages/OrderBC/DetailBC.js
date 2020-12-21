@@ -139,26 +139,36 @@ const DetailBC = (props) => {
 
   //================= Education Filter ===========================
 
-  const onEducationHandler = (e) => {
-    setEducationFilter((prevState) => {
-      let tempArray = [...prevState];
-      if (e.target.checked) {
-        tempArray = [...tempArray, e.target.value];
-      } else {
-        tempArray = tempArray.filter((el) => el !== e.target.value);
-      }
-      return tempArray;
-    });
-  };
 
-  //================= Loc/Shift Filter ===========================
-  const onLocationHandler = (e) => {
-    setLocationFilter(e.target.checked ? true : false);
-  };
-  const onShiftHandler = (e) => {
-    setShiftFilter(e.target.checked ? true : false);
-  };
-  let content = <SpinnerCircle />;
+	//================= Loc/Shift Filter ===========================
+	const onLocationHandler = e => {
+		setLocationFilter(e.target.checked ? true : false);
+	};
+	const onShiftHandler = e => {
+		setShiftFilter(e.target.checked ? true : false);
+	};
+
+	//================= Element Component ===========================
+	let content = <SpinnerCircle />;
+
+	if (!props.isLoading && displayData && dataBC) {
+		content = (
+			<div className={classes.Container}>
+				<div className={classes.FilterContainer}>
+					<div className={classes.CheckboxCriteria}>
+						<p className={classes.FilterLabel}>gender</p>
+						<div onChange={onGenderHandler}>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' value='male' id='pria' />
+								<p>Pria</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' value='female' id='wanita' />
+								<p>Wanita</p>
+							</div>
+						</div>
+					</div>
+
 
   //================= Element Component ===========================
   if (!props.isLoading && displayData && dataBC) {
