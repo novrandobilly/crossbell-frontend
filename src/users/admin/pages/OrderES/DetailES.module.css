@@ -75,7 +75,7 @@
   justify-content: space-between;
   font-size: 0.9rem;
   border-bottom: solid 0.05rem rgba(0, 0, 0, 0.2);
-  margin: 0 2rem 0 2rem;
+  margin: 0 2rem 0.5rem 2rem;
 }
 
 .CandidateHead {
@@ -83,6 +83,12 @@
   justify-content: space-between;
   text-align: left;
 }
+
+.DeleteCandidate {
+  display: flex;
+  align-items: center;
+}
+
 .CandidateBody {
   display: flex;
   text-align: left;

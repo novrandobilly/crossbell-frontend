@@ -211,12 +211,12 @@ export const getOrderInvoice = (payload) => {
   };
 };
 
-export const getOrderReguler = (payload) => {
+export const getWholeOrderREG = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderRegulerStart());
     try {
       const response = await fetch(
-        `http://localhost:5000/api/alphaomega/order/reguler`,
+        `http://localhost:5000/api/alphaomega/order/reg`,
         {
           method: "GET",
           headers: {
@@ -515,6 +515,8 @@ export const cancelOrder = (orderData) => {
   };
 };
 
+//======================== Order Candidate ==================================
+
 export const createOrderCandidate = (orderData) => {
   return async (dispatch) => {
     dispatch(createOrderCandidateStart());
@@ -552,7 +554,7 @@ export const createOrderCandidate = (orderData) => {
   };
 };
 
-export const getOrderCandidate = (payload) => {
+export const getWholeOrderBC = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderCandidateStart());
     console.log(payload);
@@ -599,6 +601,34 @@ export const getCompanyBC = (payload) => {
       );
       const responseJSON = await response.json();
 
+      dispatch(getOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getOrderFail());
+    }
+  };
+};
+
+export const deleteCandidateES = (payload) => {
+  return async (dispatch) => {
+    dispatch(getOrderStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/order/es/deletecandidate`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: JSON.stringify({
+            candidateESId: payload.candidateESId,
+            orderId: payload.orderId,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
       dispatch(getOrderSuccess(responseJSON));
       return responseJSON;
     } catch (err) {

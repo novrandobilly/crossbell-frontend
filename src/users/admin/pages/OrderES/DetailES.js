@@ -11,6 +11,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import classes from "./DetailES.module.css";
 
@@ -72,6 +73,21 @@ const DetailES = (props) => {
     }
   };
 
+  const onDeleteHandler = async (event, payload) => {
+    event.preventDefault();
+    const deleteCandidate = {
+      token: props.admin.token,
+      orderId: orderid,
+      candidateESId: payload,
+    };
+    try {
+      const res = await props.deleteCandidateES(deleteCandidate);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     const token = props.admin.token;
     if (token) {
@@ -126,6 +142,7 @@ const DetailES = (props) => {
     };
     try {
       await props.updateCandidateStatusES(updatedNote);
+      setReply(false);
     } catch (err) {
       console.log(err);
     }
@@ -260,8 +277,28 @@ const DetailES = (props) => {
               return (
                 <div className={classes.CandidateCard} key={i}>
                   <div className={classes.CandidateHead}>
-                    <p>{can.candidateName}</p>
-
+                    <div className={classes.DeleteCandidate}>
+                      <button
+                        onClick={(e) => onDeleteHandler(e, can.id)}
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          backgroundColor: "transparent",
+                          margin: "0.2rem 0.5rem -0.2rem 0",
+                          padding: "0",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <CloseIcon
+                          style={{
+                            color: "gray",
+                            fontSize: "1rem",
+                            margin: "0",
+                          }}
+                        />
+                      </button>
+                      <p>{can.candidateName}</p>
+                    </div>
                     <div className={classes.DropDown}>
                       {props.indexIsLoading && statusIndex === i ? (
                         <SpinnerCircle />
@@ -322,6 +359,7 @@ const DetailES = (props) => {
                           rowsMax={4}
                           variant="outlined"
                           size="small"
+                          defaultValue={can.note}
                           inputProps={{
                             style: {
                               fontSize: "0.8rem",
@@ -338,7 +376,6 @@ const DetailES = (props) => {
                             })
                           }
                         />
-
                         <Button
                           color="primary"
                           style={{ height: "2.5rem" }}
@@ -392,6 +429,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
     addCandidateES: (data) => dispatch(actionCreators.addCandidateES(data)),
+    deleteCandidateES: (data) =>
+      dispatch(actionCreators.deleteCandidateES(data)),
     updateCandidateStatusES: (data) =>
       dispatch(actionCreators.updateCandidateStatusES(data)),
   };

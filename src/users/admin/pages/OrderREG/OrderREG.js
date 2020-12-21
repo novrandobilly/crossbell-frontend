@@ -11,20 +11,20 @@ import classes from "./OrderREG.module.css";
 const OrderREG = (props) => {
   const [data, setData] = useState();
 
-  const { getOrderReguler } = props;
+  const { getWholeOrderREG } = props;
   const [index, setIndex] = useState(null);
 
   useEffect(() => {
     if (props.admin.token) {
       let sort = [];
-      getOrderReguler(props.admin.token).then((res) => {
+      getWholeOrderREG(props.admin.token).then((res) => {
         sort = res.orderreg;
         sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setData(sort);
         console.log(res);
       });
     }
-  }, [getOrderReguler, props.admin]);
+  }, [getWholeOrderREG, props.admin]);
 
   const approveOrderHandler = async (dataInput) => {
     setIndex(dataInput.i);
@@ -142,9 +142,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOrderReguler: (data) => dispatch(actionCreators.getOrderReguler(data)),
+    getWholeOrderREG: (data) => dispatch(actionCreators.getWholeOrderREG(data)),
     approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
-    // cancelOrder: (payload) => dispatch(actionCreators.cancelOrder(payload)),
   };
 };
 

@@ -22,11 +22,12 @@
 
 .Table {
   border-collapse: collapse;
-  box-shadow: 0 0 0.5rem 0.01rem rgb(146, 146, 146);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .Table th {
-  border-bottom: 0.05rem solid rgb(104, 102, 102);
+  border-bottom: 0.05rem solid rgb(104, 102, 102, 0.3);
   padding-left: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -47,60 +48,14 @@
   font-size: 0.85rem;
 }
 
-.DropButton {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.DropDown {
-  position: relative;
-  display: inline-block;
-  align-self: center;
-}
-
-.DropDownContent {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  box-shadow: 0rem 0.8rem 1rem 0rem rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.DropDownContent button {
-  background-color: transparent;
-  border: none;
-  display: block;
-  padding: 1rem;
-  width: 8rem;
-  font-weight: bold;
-  outline: none;
-  cursor: pointer;
-}
-
-.DropDownContent button:hover {
-  border: none;
-  background-color: rgb(236, 236, 236);
-}
-
-.DropDown:hover .DropDownContent {
-  display: block;
-}
-
-.DropDown:hover .DropButton {
-  background-color: #d7e2ff;
-}
-
 .RevenueContainer {
   margin-top: 2rem;
   display: flex;
-  border: solid 0.1rem gray;
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #d7e2ff;
-  box-shadow: 0 0 0.5rem 0.01rem rgb(146, 146, 146);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   font-weight: bold;
 }
 
