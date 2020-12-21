@@ -157,9 +157,10 @@ const DetailBC = props => {
 	const onShiftHandler = e => {
 		setShiftFilter(e.target.checked ? true : false);
 	};
-	let content = <SpinnerCircle />;
 
 	//================= Element Component ===========================
+	let content = <SpinnerCircle />;
+
 	if (!props.isLoading && displayData && dataBC) {
 		content = (
 			<div className={classes.Container}>
