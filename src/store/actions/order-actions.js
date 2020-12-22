@@ -115,22 +115,6 @@ const approveOrderStart = () => {
   };
 };
 
-const cancelOrderSuccess = () => {
-  return {
-    type: actionTypes.CANCELORDER,
-  };
-};
-const cancelOrderFail = () => {
-  return {
-    type: actionTypes.CANCELORDERFAIL,
-  };
-};
-const cancelOrderStart = () => {
-  return {
-    type: actionTypes.CANCELORDERSTART,
-  };
-};
-
 export const createOrder = (orderData) => {
   return async (dispatch) => {
     dispatch(createOrderStart());
@@ -242,7 +226,7 @@ export const getWholeOrderREG = (payload) => {
   };
 };
 
-export const approveOrder = (orderData) => {
+export const approveOrderREG = (orderData) => {
   return async (dispatch) => {
     dispatch(approveOrderStart());
     try {
@@ -478,39 +462,11 @@ export const updateOrderStatusES = (payload) => {
       if (!res.ok) {
         throw new Error(resJSON.message);
       }
-      dispatch(approveOrder());
+      dispatch(approveOrderSuccess());
       return resJSON;
     } catch (err) {
       dispatch(approveOrderFail());
       return err;
-    }
-  };
-};
-
-export const cancelOrder = (orderData) => {
-  return async (dispatch) => {
-    dispatch(cancelOrderStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/alphaomega/cancel/reg`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${orderData.token}`,
-          },
-          body: JSON.stringify({
-            orderId: orderData.orderId,
-            companyId: orderData.companyId,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-      console.log(responseJSON);
-      dispatch(cancelOrderSuccess(responseJSON));
-      return responseJSON;
-    } catch (err) {
-      dispatch(cancelOrderFail());
     }
   };
 };
@@ -633,6 +589,35 @@ export const deleteCandidateES = (payload) => {
       return responseJSON;
     } catch (err) {
       dispatch(getOrderFail());
+    }
+  };
+};
+
+export const approveOrderBC = (orderData) => {
+  return async (dispatch) => {
+    dispatch(approveOrderStart());
+    console.log(orderData);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/approve/bc`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${orderData.token}`,
+          },
+          body: JSON.stringify({
+            orderId: orderData.orderId,
+            companyId: orderData.companyId,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      dispatch(approveOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(approveOrderFail());
     }
   };
 };
