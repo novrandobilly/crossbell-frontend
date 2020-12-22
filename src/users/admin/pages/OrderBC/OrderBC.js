@@ -31,15 +31,16 @@ const OrderBC = (props) => {
     }
   }, [getWholeOrderBC, props.admin]);
 
-  const approveOrderHandler = async (dataInput) => {
+  const approveOrderBCHandler = async (dataInput) => {
     setIndex(dataInput.i);
     const payload = {
       token: props.admin.token,
       companyId: dataInput.companyId,
       orderId: dataInput.orderId,
     };
+    console.log(payload);
     try {
-      await props.approveOrder(payload);
+      await props.approveOrderBC(payload);
       setData((prevData) => {
         const tempData = [...prevData];
         tempData[dataInput.i].status = "Paid";
@@ -120,9 +121,9 @@ const OrderBC = (props) => {
                       <button
                         style={{ color: "Green" }}
                         onClick={() =>
-                          approveOrderHandler({
+                          approveOrderBCHandler({
                             orderId: order._id,
-                            companyId: order.companyId,
+                            companyId: order.companyId._id,
                             i,
                           })
                         }
@@ -154,7 +155,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
-    approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
+    approveOrderBC: (payload) =>
+      dispatch(actionCreators.approveOrderBC(payload)),
   };
 };
 

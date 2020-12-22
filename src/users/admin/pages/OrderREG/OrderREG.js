@@ -26,15 +26,16 @@ const OrderREG = (props) => {
     }
   }, [getWholeOrderREG, props.admin]);
 
-  const approveOrderHandler = async (dataInput) => {
+  const approveOrderREGHandler = async (dataInput) => {
     setIndex(dataInput.i);
     const payload = {
       token: props.admin.token,
       companyId: dataInput.companyId,
       orderId: dataInput.orderId,
     };
+
     try {
-      await props.approveOrder(payload);
+      await props.approveOrderREG(payload);
       setData((prevData) => {
         const tempData = [...prevData];
         tempData[dataInput.i].status = "Paid";
@@ -109,9 +110,9 @@ const OrderREG = (props) => {
                       <button
                         style={{ color: "Green" }}
                         onClick={() =>
-                          approveOrderHandler({
+                          approveOrderREGHandler({
                             orderId: order._id,
-                            companyId: order.companyId,
+                            companyId: order.companyId._id,
                             i,
                           })
                         }
@@ -143,7 +144,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getWholeOrderREG: (data) => dispatch(actionCreators.getWholeOrderREG(data)),
-    approveOrder: (payload) => dispatch(actionCreators.approveOrder(payload)),
+    approveOrderREG: (payload) =>
+      dispatch(actionCreators.approveOrderREG(payload)),
   };
 };
 

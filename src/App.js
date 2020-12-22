@@ -15,6 +15,7 @@ import ContactUs from "./general/pages/ContactUs/ContactUs";
 import SyaratKetentuan from "./general/pages/SyaratKetentuan/SyaratKetentuan";
 import KebijakanPrivasi from "./general/pages/KebijakanPrivasi/KebijakanPrivasi";
 
+//==================================== jobs =========================================================
 import NewJob from "./jobs/pages/NewJob";
 import EditJob from "./jobs/pages/EditJob";
 import JobsDashboard from "./jobs/pages/JobsDashboard";
@@ -22,6 +23,7 @@ import JobsDashboard from "./jobs/pages/JobsDashboard";
 import PackageAds from "./jobs/pages/PackageAds";
 import JobDetails from "./jobs/pages/JobDetails";
 
+//==================================== company =========================================================
 import CompanyProfileForm from "./users/company/pages/CompanyProfileForm/CompanyProfileForm";
 import EditCompanyIntro from "./users/company/pages/Components/EditIntro";
 import CompanyBriefDescriptions from "./users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions";
@@ -32,7 +34,9 @@ import CompanyOrderForm from "./users/company/pages/CompanyOrderForm/CompanyOrde
 import OrderBCForm from "./users/company/pages/OrderBCForm/OrderBCForm";
 import CompanyExecutiveSearch from "./users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch";
 import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
+import ExecutiveSearchDetail from "./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail";
 
+//==================================== applicant =========================================================
 import ApplicantResumeVal from "./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal";
 import ApplicantDetails from "./users/applicant/pages/ApplicantDetails/ApplicantDetails";
 import ApplicantDetailsAO from "./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO";
@@ -43,7 +47,6 @@ import EditApplicantEducation from "./users/applicant/pages/Components/Edit/Educ
 import EditApplicantExperience from "./users/applicant/pages/Components/Edit/Experience";
 import EditApplicantCertification from "./users/applicant/pages/Components/Edit/Certification";
 import EditApplicantSkills from "./users/applicant/pages/Components/Edit/Skill";
-
 import AddApplicantIntro from "./users/applicant/pages/Components/Add/EditIntro";
 import AddApplicantSummary from "./users/applicant/pages/Components/Add/EditSummary";
 import AddApplicantEducation from "./users/applicant/pages/Components/Add/Education";
@@ -51,6 +54,7 @@ import AddApplicantExperience from "./users/applicant/pages/Components/Add/Exper
 import AddApplicantCertification from "./users/applicant/pages/Components/Add/Certification";
 import AddApplicantSkills from "./users/applicant/pages/Components/Add/Skill";
 
+//==================================== admin =========================================================
 import AdmAuth from "./general/pages/Home/Components/AdmAuth";
 import AdminProfile from "./users/admin/pages/AdminProfile/AdminProfile";
 import JobsListAO from "./users/admin/pages/JobsListAO/JobsListAO";
@@ -189,7 +193,10 @@ const App = (props) => {
             component={EditCompanyPIC}
           />
           <Route path="/co/order/es" component={CompanyExecutiveSearch} />
-
+          <Route
+            path="/co/order/:orderid/es"
+            component={ExecutiveSearchDetail}
+          />
           <Route path="/co/order/reguler" component={CompanyOrderForm} />
           <Route path="/co/order/candidate" component={OrderBCForm} />
           <Route path="/co/:companyid/listOrder" component={CompanyOrderList} />
