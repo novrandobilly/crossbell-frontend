@@ -50,106 +50,105 @@ const FinancialAO = (props) => {
         <div className={classes.Container}>
           <div className={classes.HeaderContainer}>
             <h1 className={classes.Header}>CrossBell Finance</h1>
-            {/* <div className={classes.DropDown}>
-              <button className={classes.DropButton}>
-                Filter
-                <ArrowDropDownIcon />
-              </button>
-              <div className={classes.DropDownContent}>
-                <button style={{ color: "black" }}>All</button>
-                <button style={{ color: "rgb(33, 153, 0)" }} value="Active">
-                  Active
-                </button>
-                <button style={{ color: "red" }} value="Cancel">
-                  Cancel
-                </button>
-
-                <button style={{ color: "rgb(250, 129, 0)" }} value="Pending">
-                  Pending
-                </button>
-              </div>
-            </div> */}
           </div>
-          <table className={classes.Table}>
-            <thead className={classes.RowField}>
-              <tr>
-                <th>No</th>
-                <th>Company Name</th>
-                <th>Order type</th>
-                <th>Slot/ Amount</th>
-                <th>Price</th>
-                <th>Total Price</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+          <div className={classes.TableHolder}>
+            <table className={classes.Table}>
+              <thead className={classes.RowField}>
+                <tr>
+                  <th>No</th>
+                  <th>Company name</th>
+                  <th>Order ID</th>
+                  <th>Order type</th>
+                  <th>Package name</th>
+                  <th>Created at</th>
+                  <th>Approved at</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total price</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
 
-            <tbody className={classes.ColumnField}>
-              {displayData.map((fin, i) => {
-                return (
-                  <tr key={fin._id}>
-                    <th>{i + 1}</th>
-                    <th>{fin.companyId.companyName}</th>
-                    <th>
-                      {" "}
-                      {fin.slot ? "order reguler" : "order bulk candidate"}
-                    </th>
-
-                    {/* ========== Slot ========== */}
-                    {fin.status === "Pending" ? (
-                      <th style={{ fontSize: "0.9rem" }}>0</th>
-                    ) : (
-                      <th style={{ fontSize: "0.9rem" }}>
-                        <p style={{ margin: "-0.5rem 0 -1rem 0" }}>
-                          {fin.slot || fin.amount}
-                          <span style={{ margin: "0 0 0 1rem" }}>
-                            {fin.slot ? "slot" : "candidate"}
-                          </span>
-                        </p>
-                      </th>
-                    )}
-
-                    {/* ========== Price/Slot ========== */}
-                    {fin.status === "Pending" ? (
-                      <th>0</th>
-                    ) : (
+              <tbody className={classes.ColumnField}>
+                {displayData.map((fin, i) => {
+                  return (
+                    <tr key={fin._id}>
+                      <th>{i + 1}</th>
+                      <th>{fin.companyId.companyName}</th>
+                      <th>{fin._id}</th>
                       <th>
-                        Rp. {(fin.pricePerSlot || fin.price).toLocaleString()}
+                        {" "}
+                        {fin.slot ? "order reguler" : "order bulk candidate"}
                       </th>
-                    )}
+                      <th>{fin.slot ? fin.packageName : "-"}</th>
+                      <th>{moment(fin.createdAt).format("D MMM YYYY")}</th>
+                      <th>{moment(fin.approvedAt).format("D MMM YYYY")}</th>
+                      {/* ========== Slot ========== */}
+                      {fin.status === "Pending" ? (
+                        <th
+                          style={{
+                            fontSize: "0.9rem",
+                            color: "rgb(250, 129, 0)",
+                          }}
+                        >
+                          pending
+                        </th>
+                      ) : (
+                        <th style={{ fontSize: "0.9rem" }}>
+                          <p style={{ margin: "-0.5rem 0 -1rem 0" }}>
+                            {fin.slot || fin.amount}
+                            <span style={{ margin: "0 0 0 1rem" }}>
+                              {fin.slot ? "slot" : "candidate"}
+                            </span>
+                          </p>
+                        </th>
+                      )}
 
-                    {/* ========== Total Price ========== */}
-                    {fin.status === "Pending" ? (
-                      <th>
-                        {/* {() => {
+                      {/* ========== Price/Slot ========== */}
+                      {fin.status === "Pending" ? (
+                        <th style={{ color: "rgb(250, 129, 0)" }}>pending</th>
+                      ) : (
+                        <th>
+                          Rp. {(fin.pricePerSlot || fin.price).toLocaleString()}
+                        </th>
+                      )}
+
+                      {/* ========== Total Price ========== */}
+                      {fin.status === "Pending" ? (
+                        <th style={{ color: "rgb(250, 129, 0)" }}>
+                          {/* {() => {
                           parseInt((total[i] = 0));
                           return null;
                         }}
                         {fin.totalPrice.toLocaleString()} */}
-                        Pending
-                      </th>
-                    ) : (
-                      <th>
-                        Rp.{" "}
-                        {parseInt((total[i] = fin.totalPrice)).toLocaleString()}
-                      </th>
-                    )}
+                          pending
+                        </th>
+                      ) : (
+                        <th>
+                          Rp.{" "}
+                          {parseInt(
+                            (total[i] = fin.totalPrice)
+                          ).toLocaleString()}
+                        </th>
+                      )}
 
-                    <th
-                      style={
-                        fin.status === "Pending"
-                          ? { color: "rgb(250, 129, 0)", fontWeight: "bold" }
-                          : fin.status === "Expired"
-                          ? { color: "Gray", fontWeight: "bold" }
-                          : { color: "green", fontWeight: "bold" }
-                      }
-                    >
-                      {fin.status}
-                    </th>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      <th
+                        style={
+                          fin.status === "Pending"
+                            ? { color: "rgb(250, 129, 0)", fontWeight: "bold" }
+                            : fin.status === "Expired"
+                            ? { color: "Gray", fontWeight: "bold" }
+                            : { color: "green", fontWeight: "bold" }
+                        }
+                      >
+                        {fin.status}
+                      </th>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
           <div className={classes.RevenueContainer}>
             <div className={classes.RevenueLabel}>
               <div className={classes.Label}>Revenue/ month</div>

@@ -78,7 +78,14 @@ const CompanyOrderList = (props) => {
           );
 
           return (
-            <Link to={`/co/${order._id}/invoice`} key={i}>
+            <Link
+              to={
+                order.slot || order.amount
+                  ? `/co/${order._id}/invoice`
+                  : `/co/order/${order._id}/es`
+              }
+              key={i}
+            >
               <div className={classes.OrderCard}>
                 <p className={classes.ContentId}>{order._id}</p>
                 <p className={classes.Content}>

@@ -17,23 +17,26 @@ export { getAllApplicant, getAllJob, admReg, admSignIn, getWholeCompanies, activ
 export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
 
 export {
-	createOrder,
-	getOrder,
-	getOrderInvoice,
-	getWholeOrderREG,
-	approveOrder,
-	createOrderES,
-	getWholeOrderES,
-	updateOrderStatusES,
-	getOneOrderES,
-	addCandidateES,
-	updateCandidateStatusES,
-	getCompanyES,
-	getWholeOrderBC,
-	createOrderCandidate,
-	getCompanyBC,
-	deleteCandidateES
-} from './order-actions';
+
+  createOrder,
+  getOrder,
+  getOrderInvoice,
+  getWholeOrderREG,
+  approveOrderREG,
+  createOrderES,
+  getWholeOrderES,
+  updateOrderStatusES,
+  getOneOrderES,
+  addCandidateES,
+  updateCandidateStatusES,
+  getCompanyES,
+  getWholeOrderBC,
+  createOrderCandidate,
+  getCompanyBC,
+  deleteCandidateES,
+  approveOrderBC,
+} from "./order-actions";
+
 
 export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob, applyJob } from './job-actions';
 
