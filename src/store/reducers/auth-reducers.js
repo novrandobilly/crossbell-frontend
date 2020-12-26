@@ -82,6 +82,27 @@ const authReducers = (state = initialState, action) => {
 				isCompany: true
 			};
 		}
+		case actionTypes.AUTHSTART: {
+			return {
+				...state,
+				isLoading: true,
+				isError: false
+			};
+		}
+		case actionTypes.AUTHFAIL: {
+			return {
+				...state,
+				isLoading: false,
+				isError: true
+			};
+		}
+		case actionTypes.AUTHSUCCESS: {
+			return {
+				...state,
+				isLoading: false,
+				isError: false
+			};
+		}
 
 		default: {
 			return state;
