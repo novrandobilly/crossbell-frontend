@@ -13,6 +13,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import BusinessIcon from "@material-ui/icons/Business";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
+import ListIcon from "@material-ui/icons/List";
 import classes from "./SideBar.module.css";
 
 const SideBar = (props) => {
@@ -30,7 +31,7 @@ const SideBar = (props) => {
             <span>Purchase Job Ads Slot</span>
             <LocalOfferIcon
               style={{
-                margin: "0.5rem 0rem -0.5rem 1rem",
+                margin: "0.4rem 0rem -0.4rem 1rem",
                 color: "black",
               }}
             />
@@ -42,7 +43,7 @@ const SideBar = (props) => {
             <span>Order Bulk Candidate</span>
             <AssignmentIndIcon
               style={{
-                margin: "0.5rem 0rem -0.5rem 1rem",
+                margin: "0.4rem 0rem -0.4rem 1rem",
                 color: "black",
               }}
             />
@@ -54,7 +55,30 @@ const SideBar = (props) => {
             <span>Order Headhunter</span>
             <DescriptionIcon
               style={{
-                margin: "0.5rem 0rem -0.5rem 1rem",
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+
+        <li>
+          <Link to={`/co/${props.auth.userId}/listOrder`}>
+            <span>Order List</span>
+            <ListIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to={`/co/${props.auth.userId}/jobList`}>
+            <span>Job list</span>
+            <WorkIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
                 color: "black",
               }}
             />
@@ -73,7 +97,7 @@ const SideBar = (props) => {
               <span>Profile</span>
             </Link>
             <PersonIcon
-              style={{ margin: "0.5rem 0rem -0.5rem 1rem", color: "black" }}
+              style={{ margin: "0.4rem 0rem -0.4rem 1rem", color: "black" }}
             />
           </li>
 
@@ -82,7 +106,7 @@ const SideBar = (props) => {
               <span>Company List</span>
               <BusinessIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -93,7 +117,7 @@ const SideBar = (props) => {
               <span>Applicant List </span>
               <GroupIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -104,7 +128,7 @@ const SideBar = (props) => {
               <span>Job List</span>
               <WorkIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -115,7 +139,7 @@ const SideBar = (props) => {
               <span>Finance</span>
               <AttachMoneyIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -126,7 +150,7 @@ const SideBar = (props) => {
               <span>Feedback List</span>
               <FeedbackIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -137,7 +161,7 @@ const SideBar = (props) => {
               <span>Order Reguler</span>
               <LocalOfferIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -148,7 +172,7 @@ const SideBar = (props) => {
               <span>Order Bulk Candidate</span>
               <AssignmentIndIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />
@@ -159,7 +183,7 @@ const SideBar = (props) => {
               <span>Order Headhunter</span>
               <DescriptionIcon
                 style={{
-                  margin: "0.5rem 0rem -0.5rem 1rem",
+                  margin: "0.4rem 0rem -0.4rem 1rem",
                   color: "black",
                 }}
               />

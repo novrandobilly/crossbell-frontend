@@ -37,6 +37,7 @@ import OrderBCForm from "./users/company/pages/OrderBCForm/OrderBCForm";
 import CompanyExecutiveSearch from "./users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch";
 import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
 import ExecutiveSearchDetail from "./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail";
+import CompanyJobList from "./users/company/pages/CompanyJobList/CompanyJobList";
 
 //==================================== applicant =========================================================
 import ApplicantResumeVal from "./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal";
@@ -202,6 +203,7 @@ const App = (props) => {
           <Route path="/co/order/reguler" component={CompanyOrderForm} />
           <Route path="/co/order/candidate" component={OrderBCForm} />
           <Route path="/co/:companyid/listOrder" component={CompanyOrderList} />
+          <Route path="/co/:companyid/jobList" component={CompanyJobList} />
           <Route path="/co/:orderid/invoice" component={Invoice} />
           <Route path="/co/:companyid/compro" component={CompanyProfileForm} />
           <Route path="/co/:companyid" component={CompanyBriefDescriptions} />

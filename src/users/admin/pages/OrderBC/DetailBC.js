@@ -138,6 +138,7 @@ const DetailBC = props => {
 
 	//================= Education Filter ===========================
 
+
 	const onEducationHandler = e => {
 		setEducationFilter(prevState => {
 			let tempArray = [ ...prevState ];
@@ -207,6 +208,7 @@ const DetailBC = props => {
 							</div>
 						</div>
 					</div>
+
 
 					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>umur</p>

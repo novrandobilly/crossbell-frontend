@@ -39,7 +39,6 @@ const NavigationLinks = (props) => {
             Explore Jobs
           </NavLink>
         </li>
-        <li></li>
         {props.auth.isLoggedIn && !props.auth.isCompany && (
           <li>
             <NavLink
@@ -57,12 +56,6 @@ const NavigationLinks = (props) => {
               activeClassName={classes.active}
             >
               My Company Profile
-            </NavLink>
-            <NavLink
-              to={`/co/${props.auth.userId}/listOrder`}
-              activeClassName={classes.active}
-            >
-              Order List
             </NavLink>
           </li>
         )}

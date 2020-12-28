@@ -186,16 +186,12 @@ const CompanyOrderForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    // isLoading: state.finance.isLoading,
-    // error: state.finance.error,
     auth: state.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // createOrder: (data) =>
-    //   dispatch({ type: actionTypes.CREATEORDER, payload: data }),
     createOrder: (orderData) => dispatch(actionCreators.createOrder(orderData)),
   };
 };

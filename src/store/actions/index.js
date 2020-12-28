@@ -38,6 +38,10 @@ export {
 } from "./order-actions";
 
 
-export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob, applyJob } from './job-actions';
+
+export { createJob, getAllAvailableJobs, getOneJob, updateJob, deleteJob, applyJob,getJobsInCompany,
+  saveJobDraft,
+  releaseJob, } from './job-actions';
 
 export { login, forgotPwd, getResetPwd, resetPwd } from './auth-actions';
+
