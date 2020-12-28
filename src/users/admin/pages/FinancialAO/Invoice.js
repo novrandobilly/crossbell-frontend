@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
-// import moment from "moment";
+import { useReactToPrint } from "react-to-print";
+import moment from "moment";
 
 // import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import Button from "@material-ui/core/Button";
 
 import classes from "./Invoice.module.css";
 
@@ -30,6 +33,12 @@ const Invoice = (props) => {
     }
   }, [getOrderInvoice, orderid, props.auth]);
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    documentTitle: `invoice_${orderid}`,
+    content: () => componentRef.current,
+  });
+
   let tax = 0;
   let dis = 0;
   let subTotal = 0;
@@ -40,7 +49,18 @@ const Invoice = (props) => {
     content = (
       <React.Fragment>
         <div className={classes.Container}>
-          <div className={classes.InvoiceContainer}>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            className={classes.margin}
+            onClick={handlePrint}
+            startIcon={<GetAppIcon />}
+            style={{ marginTop: "2rem", marginRight: "-41rem" }}
+          >
+            dowload PDF
+          </Button>
+          <div className={classes.InvoiceContainer} ref={componentRef}>
             <p className={classes.Id}>
               Order Id: <span>{orderData._id}</span>
             </p>
@@ -61,7 +81,7 @@ const Invoice = (props) => {
                     <p>InvoiceId</p>
                   </div>
                   <div>
-                    <p>{orderData.createdAt}</p>
+                    <p>{moment(orderData.createdAt).format("D MMMM  YYYY")}</p>
                     <p>{orderData.invoiceId}</p>
                   </div>
                 </div>
@@ -114,19 +134,20 @@ const Invoice = (props) => {
                 <div className={classes.CommentContent}>
                   <ul>
                     <li>
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium, totam rem
-                      aperiam, eaque ipsa quae ab illo inventore veritatis et
+                      Pembayaran harus dilakukan sebelum tanggal jatuh tempo
+                      yaitu 14 hari dari tanggal pemesanan.
                     </li>
                     <li>
-                      quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                      enim ipsam voluptatem quia voluptas sit aspernatur aut
-                      odit aut fugit, sed quia consequuntur magni dolores
+                      pembayaran melalui atm dapat transfer pada rekening BCA{" "}
+                      <span style={{ fontWeight: "bold" }}>1234567xxx</span> a/n
+                      Bagong
                     </li>
                     <li>
-                      eos qui ratione voluptatem sequi nesciunt. Neque porro
-                      quisquam est, qui dolorem ipsum quia dolor sit amet,
-                      consectetur, adipisci velit,
+                      pembayaran melalui virtual account dapat transfer melalui
+                      bank BCA dengan nomor VA{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        807770817329xxx
+                      </span>
                     </li>
                   </ul>
                 </div>

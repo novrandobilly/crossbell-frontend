@@ -1,6 +1,7 @@
 .Container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   background-color: rgb(250, 250, 250);
 }
 
@@ -160,4 +161,32 @@
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+}
+
+@media all {
+  .page-break {
+    display: none;
+  }
+}
+
+@media print {
+  html,
+  body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: auto;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 20mm;
 }
