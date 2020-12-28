@@ -14,6 +14,8 @@ import AboutUs from "./general/pages/AboutUs/AboutUs";
 import ContactUs from "./general/pages/ContactUs/ContactUs";
 import SyaratKetentuan from "./general/pages/SyaratKetentuan/SyaratKetentuan";
 import KebijakanPrivasi from "./general/pages/KebijakanPrivasi/KebijakanPrivasi";
+  import ForgotPwd from './general/pages/Home/Components/ForgotPwd';
+import ResetPwd from './general/pages/Home/Components/ResetPwd';
 
 //==================================== jobs =========================================================
 import NewJob from "./jobs/pages/NewJob";
@@ -248,6 +250,8 @@ const App = (props) => {
           <Route path="/contact-us" component={ContactUs} />
           <Route path="/syarat-ketentuan" component={SyaratKetentuan} />
           <Route path="/kebijakan-privasi" component={KebijakanPrivasi} />
+    <Route path='/forgot' component={ForgotPwd} />
+					<Route path='/reset/:token' component={ResetPwd} />
           <Route path="/" component={Home} />
 
           {/* Absurd Routes */}
@@ -257,23 +261,23 @@ const App = (props) => {
       <Footer />
     </Router>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    admin: state.admin,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		admin: state.admin
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
-    loginAdmin: (payload) =>
-      dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
-    logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-    logoutAdmin: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+		loginAdmin: payload => dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
+		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
+		logoutAdmin: () => dispatch({ type: actionTypes.ADMINLOGOUT })
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
