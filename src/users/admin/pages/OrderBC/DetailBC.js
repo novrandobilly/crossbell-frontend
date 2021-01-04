@@ -135,28 +135,7 @@ const DetailBC = props => {
 		});
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (formState.inputs.max.value > 0) {
-	// 			filteredArray = filteredArray.filter(el => {
-	// 				let tempAge = moment().diff(moment(el.dateOfBirth), 'year');
-	// 				return tempAge <= formState.inputs.max.value;
-	// 			});
-	// 		}
-	// 		if (locationFilter) {
-	// 			filteredArray = filteredArray.filter(el => {
-	// 				return el.outOfTown === true;
-	// 			});
-	// 		}
-	// 		if (shiftFilter) {
-	// 			filteredArray = filteredArray.filter(el => {
-	// 				return el.workShifts === true;
-	// 			});
-	// 		}
-	// 		setDisplayData(filteredArray);
-	// 	},
-	// 	[ dataApplicant, genderFilter, educationFilter, locationFilter, shiftFilter, formState ]
-	// );
+	//================= Education Filter ===========================
 
 	const onEducationHandler = e => {
 		setEducationFilter(prevState => {
@@ -244,6 +223,38 @@ const DetailBC = props => {
 					</div>
 
 					<div className={classes.CheckboxCriteria}>
+						<p className={classes.FilterLabel}>umur</p>
+						<div className={classes.InputHolder}>
+							<Input
+								inputType='number'
+								id='min'
+								inputClass='Age'
+								validatorMethod={[ VALIDATOR_ALWAYSTRUE ]}
+								onInputHandler={onInputHandler}
+								type='number'
+								initValue='0'
+								min='0'
+								step='1'
+							/>
+							<p>Min</p>
+						</div>
+						<div className={classes.InputHolder}>
+							<Input
+								inputType='number'
+								id='max'
+								inputClass='Age'
+								validatorMethod={[ VALIDATOR_ALWAYSTRUE ]}
+								onInputHandler={onInputHandler}
+								type='number'
+								initValue='0'
+								min='0'
+								step='1'
+							/>
+							<p>Max</p>
+						</div>
+					</div>
+
+					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>ketersediaan</p>
 						<div className={classes.CheckboxHolder}>
 							<Checkbox color='primary' size='small' id='location' value='location' onChange={onLocationHandler} />
@@ -318,11 +329,8 @@ const DetailBC = props => {
 						</p>
 						<p>Catatan: {dataBC.note}</p>
 						<div className={classes.CriteriaFooter}>
-							<p style={{ color: 'white' }}>Jumlah kandidat: {dataBC.amount}</p>
-							<div style={{ lineHeight: '0', fontSize: '0.8rem' }}>
-								<p>{dataBC.companyId.companyName}</p>
-								<p>{dataBC.companyId.emailRecipient}</p>
-							</div>
+							<p className={classes.CriteriaRight}>{dataBC.companyId.companyName}</p>
+							<p className={classes.CriteriaRight}>{dataBC.companyId.emailRecipient}</p>
 						</div>
 					</div>
 					<div className={classes.ApplicantSearch}>
