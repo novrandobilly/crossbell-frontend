@@ -156,42 +156,42 @@ export const getOneApplicant = ApplicantId => {
 export const updateApplicantIntro = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
-		console.log(ApplicantData);
+		console.log('from action', ApplicantData);
 		try {
+			const formData = new FormData();
+			formData.append('id', ApplicantData.applicantId);
+			formData.append('picture', ApplicantData.picture);
+			formData.append('firstName', ApplicantData.firstName);
+			formData.append('lastName', ApplicantData.lastName);
+			formData.append('email', ApplicantData.email);
+			formData.append('headline', ApplicantData.headline);
+			formData.append('dateOfBirth', ApplicantData.dateOfBirth);
+			formData.append('gender', ApplicantData.gender);
+			formData.append('address', ApplicantData.address);
+			formData.append('city', ApplicantData.city);
+			formData.append('state', ApplicantData.state);
+			formData.append('zip', ApplicantData.zip);
+			formData.append('phone', ApplicantData.phone);
+			formData.append('outOfTown', ApplicantData.outOfTown);
+			formData.append('workShifts', ApplicantData.workShifts);
+			formData.append('autoSend', ApplicantData.autoSend);
+			formData.append('autoRemind', ApplicantData.autoRemind);
+			formData.append('headhunterProgram', ApplicantData.headhunterProgram);
+			formData.append('interest', ApplicantData.interest);
+
 			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					id: ApplicantData.applicantId,
-					picture: ApplicantData.picture,
-					firstName: ApplicantData.firstName,
-					lastName: ApplicantData.lastName,
-					email: ApplicantData.email,
-					headline: ApplicantData.headline,
-					dateOfBirth: ApplicantData.dateOfBirth,
-					gender: ApplicantData.gender,
-					address: ApplicantData.address,
-					city: ApplicantData.city,
-					state: ApplicantData.state,
-					zip: ApplicantData.zip,
-					phone: ApplicantData.phone,
-					outOfTown: ApplicantData.outOfTown,
-					workShifts: ApplicantData.workShifts,
-					autoSend: ApplicantData.autoSend,
-					autoRemind: ApplicantData.autoRemind,
-					headhunterProgram: ApplicantData.headhunterProgram,
-					interest: ApplicantData.interest
-				})
+				body: formData
 			});
 			const responseJSON = await response.json();
+			console.log(response, responseJSON);
 			if (!response.ok) {
 				throw new Error(responseJSON.message);
 			}
 			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
 			return responseJSON.foundApplicant;
 		} catch (err) {
+			console.log(err, typeof err);
 			dispatch(updateApplicantFail());
 			return err;
 		}
