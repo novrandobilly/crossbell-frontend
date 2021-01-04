@@ -18,13 +18,11 @@ import classes from './DetailBC.module.css';
 const DetailBC = props => {
 	const { orderid } = useParams();
 
-
-  const [genderFilter, setGenderFilter] = useState([]);
-  const [educationFilter, setEducationFilter] = useState([]);
-  const [shiftFilter, setShiftFilter] = useState(null);
-  const [locationFilter, setLocationFilter] = useState(null);
-  const [displayData, setDisplayData] = useState();
-
+	const [ genderFilter, setGenderFilter ] = useState([]);
+	const [ educationFilter, setEducationFilter ] = useState([]);
+	const [ shiftFilter, setShiftFilter ] = useState(null);
+	const [ locationFilter, setLocationFilter ] = useState(null);
+	const [ displayData, setDisplayData ] = useState();
 
 	const [ dataBC, setDataBC ] = useState();
 	const [ dataApplicant, setDataApplicant ] = useState();
@@ -137,48 +135,28 @@ const DetailBC = props => {
 		});
 	};
 
-
-      if (formState.inputs.max.value > 0) {
-        filteredArray = filteredArray.filter((el) => {
-          let tempAge = moment().diff(moment(el.dateOfBirth), "year");
-          return tempAge <= formState.inputs.max.value;
-        });
-      }
-      if (locationFilter) {
-        filteredArray = filteredArray.filter((el) => {
-          return el.outOfTown === true;
-        });
-      }
-      if (shiftFilter) {
-        filteredArray = filteredArray.filter((el) => {
-          return el.workShifts === true;
-        });
-      }
-      setDisplayData(filteredArray);
-    }
-  }, [
-    dataApplicant,
-    genderFilter,
-    educationFilter,
-    locationFilter,
-    shiftFilter,
-    formState,
-  ]);
-
-  //================= Gender Filter ===========================
-  const onGenderHandler = (e) => {
-    setGenderFilter((prevState) => {
-      let tempArray = [...prevState];
-      if (e.target.checked) {
-        tempArray = [...tempArray, e.target.value];
-      } else {
-        tempArray = tempArray.filter((el) => el !== e.target.value);
-      }
-      return tempArray;
-    });
-  };
-
-
+	// useEffect(
+	// 	() => {
+	// 		if (formState.inputs.max.value > 0) {
+	// 			filteredArray = filteredArray.filter(el => {
+	// 				let tempAge = moment().diff(moment(el.dateOfBirth), 'year');
+	// 				return tempAge <= formState.inputs.max.value;
+	// 			});
+	// 		}
+	// 		if (locationFilter) {
+	// 			filteredArray = filteredArray.filter(el => {
+	// 				return el.outOfTown === true;
+	// 			});
+	// 		}
+	// 		if (shiftFilter) {
+	// 			filteredArray = filteredArray.filter(el => {
+	// 				return el.workShifts === true;
+	// 			});
+	// 		}
+	// 		setDisplayData(filteredArray);
+	// 	},
+	// 	[ dataApplicant, genderFilter, educationFilter, locationFilter, shiftFilter, formState ]
+	// );
 
 	const onEducationHandler = e => {
 		setEducationFilter(prevState => {
@@ -192,55 +170,48 @@ const DetailBC = props => {
 		});
 	};
 
+	//================= Loc/Shift Filter ===========================
+	const onLocationHandler = e => {
+		setLocationFilter(e.target.checked ? true : false);
+	};
+	const onShiftHandler = e => {
+		setShiftFilter(e.target.checked ? true : false);
+	};
 
-  //================= Loc/Shift Filter ===========================
-  const onLocationHandler = (e) => {
-    setLocationFilter(e.target.checked ? true : false);
-  };
-  const onShiftHandler = (e) => {
-    setShiftFilter(e.target.checked ? true : false);
-  };
+	//================= Sent Function ===========================
+	const onSentHandler = async dataBC => {
+		const applicantBC = {
+			token: props.admin.token,
+			applicantId: dataBC.applicantId,
+			orderId: orderid
+		};
+		try {
+			await props.sentApplicantBC(applicantBC);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-  //================= Sent Function ===========================
-  const onSentHandler = async (dataBC) => {
-    const applicantBC = {
-      token: props.admin.token,
-      applicantId: dataBC.applicantId,
-      orderId: orderid,
-    };
-    try {
-      await props.sentApplicantBC(applicantBC);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+	//================= Element Component ===========================
+	let content = <SpinnerCircle />;
 
-  //================= Element Component ===========================
-  let content = <SpinnerCircle />;
-
-  if (!props.isLoading && displayData && dataBC) {
-    content = (
-      <div className={classes.Container}>
-        <div className={classes.FilterContainer}>
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>gender</p>
-            <div onChange={onGenderHandler}>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color="primary" size="small" value="male" id="pria" />
-                <p>Pria</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox
-                  color="primary"
-                  size="small"
-                  value="female"
-                  id="wanita"
-                />
-                <p>Wanita</p>
-              </div>
-            </div>
-          </div>
-
+	if (!props.isLoading && displayData && dataBC) {
+		content = (
+			<div className={classes.Container}>
+				<div className={classes.FilterContainer}>
+					<div className={classes.CheckboxCriteria}>
+						<p className={classes.FilterLabel}>gender</p>
+						<div onChange={onGenderHandler}>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' value='male' id='pria' />
+								<p>Pria</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' value='female' id='wanita' />
+								<p>Wanita</p>
+							</div>
+						</div>
+					</div>
 
 					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>pendidikan</p>
@@ -271,205 +242,6 @@ const DetailBC = props => {
 							</div>
 						</div>
 					</div>
-
-
-
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>ketersediaan</p>
-            <div className={classes.CheckboxHolder}>
-              <Checkbox
-                color="primary"
-                size="small"
-                id="location"
-                value="location"
-                onChange={onLocationHandler}
-              />
-              <p>Luar kota</p>
-            </div>
-            <div className={classes.CheckboxHolder}>
-              <Checkbox
-                color="primary"
-                size="small"
-                id="shift"
-                value="shift"
-                onChange={onShiftHandler}
-              />
-              <p>Bekerja shift</p>
-            </div>
-          </div>
-        </div>
-        <div className={classes.OrderContainer}>
-          <div className={classes.CriteriaContainer}>
-            <div className={classes.CriteriaTop}>
-              <div className={classes.CriteriaHeader}>
-                <p>Criteria </p>
-              </div>
-              <div className={classes.CriteriaHolder}>
-                <p>posisi </p>
-                <p className={classes.CriteriaRight}>{dataBC.jobFunction}</p>
-              </div>
-              <div className={classes.CriteriaHolder}>
-                <p>gender </p>
-                <p className={classes.CriteriaRight}>{dataBC.gender}</p>
-              </div>
-              <div className={classes.CriteriaHolder}>
-                <p>pendidikan </p>
-                <p className={classes.CriteriaRight}>{dataBC.education}</p>
-              </div>
-              <div className={classes.CriteriaHolder}>
-                <p>umur</p>
-                <p className={classes.CriteriaRight}>
-                  {dataBC.age.min} - {dataBC.age.max}
-                </p>
-              </div>
-            </div>
-            <p>
-              ditempatkan di kota lain
-              {dataBC.location ? (
-                <CheckCircleOutlineIcon
-                  style={{
-                    color: "#90ee90",
-                    margin: "0 0.4rem -0.4rem 0.5rem",
-                  }}
-                />
-              ) : (
-                <HighlightOffIcon
-                  style={{
-                    color: "#D41E21",
-                    margin: "0 0.4rem -0.4rem 0.5rem",
-                  }}
-                />
-              )}
-            </p>
-            <p>
-              bekerja secara shift
-              {dataBC.location ? (
-                <CheckCircleOutlineIcon
-                  style={{
-                    color: "#90ee90",
-                    margin: "0 0.5rem -0.4rem 0.5rem",
-                  }}
-                />
-              ) : (
-                <HighlightOffIcon
-                  style={{
-                    color: "#D41E21",
-                    margin: "0 0.5rem -0.4rem 0.5rem",
-                  }}
-                />
-              )}
-            </p>
-            <p>Catatan: {dataBC.note}</p>
-            <div className={classes.CriteriaFooter}>
-              <p style={{ color: "white" }}>Jumlah kandidat: {dataBC.amount}</p>
-              <div style={{ lineHeight: "0", fontSize: "0.8rem" }}>
-                <p>{dataBC.companyId.companyName}</p>
-                <p>{dataBC.companyId.emailRecipient}</p>
-              </div>
-            </div>
-          </div>
-          <div className={classes.ApplicantSearch}>
-            <table>
-              <thead className={classes.TableRow}>
-                <tr>
-                  <th>no</th>
-                  <th>nama</th>
-                  <th>gender</th>
-                  <th>pendidikan</th>
-                  <th>Umur</th>
-                  <th>luar kota</th>
-                  <th>shift</th>
-                  <th>Kirim</th>
-                </tr>
-              </thead>
-              <tbody className={classes.TableColumn}>
-                {displayData.map((app, i) => {
-                  return (
-                    <tr key={app.id}>
-                      <th>{i + 1}</th>
-                      <th>
-                        {app.firstName} {app.lastName}
-                      </th>
-                      <th>{app.gender}</th>
-                      <th>
-                        <div className={classes.EducationField}>
-                          {app.education.map((edu, i) => {
-                            return (
-                              <p key={i}>
-                                {edu.degree}
-                                <span>, </span>
-                              </p>
-                            );
-                          })}
-                        </div>
-                      </th>
-                      <th style={app.dateOfBirth ? null : { color: "gray" }}>
-                        {app.dateOfBirth
-                          ? moment().diff(moment(app.dateOfBirth), "year")
-                          : "null"}
-                      </th>
-                      <th>
-                        {app.outOfTown ? (
-                          <CheckCircleOutlineIcon
-                            style={{
-                              color: "#90ee90",
-                              margin: "0 0.5rem -0.4rem 0.5rem",
-                            }}
-                          />
-                        ) : (
-                          <HighlightOffIcon
-                            style={{
-                              color: "#D41E21",
-                              margin: "0 0.5rem -0.4rem 0.5rem",
-                            }}
-                          />
-                        )}
-                      </th>
-                      <th>
-                        {app.workShifts ? (
-                          <CheckCircleOutlineIcon
-                            style={{
-                              color: "#90ee90",
-                              margin: "0 0.5rem -0.4rem 0.5rem",
-                            }}
-                          />
-                        ) : (
-                          <HighlightOffIcon
-                            style={{
-                              color: "#D41E21",
-                              margin: "0 0.5rem -0.4rem 0.5rem",
-                            }}
-                          />
-                        )}
-                      </th>
-                      <th>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}
-                          size="small"
-                          endIcon={<SendIcon />}
-                          onClick={() =>
-                            onSentHandler({
-                              applicantId: app.id,
-                              i,
-                            })
-                          }
-                        >
-                          Send
-                        </Button>
-                      </th>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
 
 					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>ketersediaan</p>
@@ -546,8 +318,11 @@ const DetailBC = props => {
 						</p>
 						<p>Catatan: {dataBC.note}</p>
 						<div className={classes.CriteriaFooter}>
-							<p className={classes.CriteriaRight}>{dataBC.companyId.companyName}</p>
-							<p className={classes.CriteriaRight}>{dataBC.companyId.emailRecipient}</p>
+							<p style={{ color: 'white' }}>Jumlah kandidat: {dataBC.amount}</p>
+							<div style={{ lineHeight: '0', fontSize: '0.8rem' }}>
+								<p>{dataBC.companyId.companyName}</p>
+								<p>{dataBC.companyId.emailRecipient}</p>
+							</div>
 						</div>
 					</div>
 					<div className={classes.ApplicantSearch}>
@@ -628,7 +403,12 @@ const DetailBC = props => {
 													color='primary'
 													className={classes.button}
 													size='small'
-													endIcon={<SendIcon />}>
+													endIcon={<SendIcon />}
+													onClick={() =>
+														onSentHandler({
+															applicantId: app.id,
+															i
+														})}>
 													Send
 												</Button>
 											</th>
@@ -654,13 +434,12 @@ const mapStateToProps = state => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
-    getAllApplicant: (token) => dispatch(actionCreators.getAllApplicant(token)),
-    sentApplicantBC: (data) => dispatch(actionCreators.sentApplicantBC(data)),
-  };
-
+const mapDispatchToProps = dispatch => {
+	return {
+		getOrderInvoice: data => dispatch(actionCreators.getOrderInvoice(data)),
+		getAllApplicant: token => dispatch(actionCreators.getAllApplicant(token)),
+		sentApplicantBC: data => dispatch(actionCreators.sentApplicantBC(data))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailBC);
