@@ -1,61 +1,59 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from "react-router-dom";
-import * as actionTypes from "./store/actions/actions";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import * as actionTypes from './store/actions/actions';
 
-import Home from "./general/pages/Home/Home";
-import Blogs from "./general/pages/Blogs/Blogs";
-import AboutUs from "./general/pages/AboutUs/AboutUs";
-import ContactUs from "./general/pages/ContactUs/ContactUs";
-import SyaratKetentuan from "./general/pages/SyaratKetentuan/SyaratKetentuan";
-import KebijakanPrivasi from "./general/pages/KebijakanPrivasi/KebijakanPrivasi";
+import Home from './general/pages/Home/Home';
+import Blogs from './general/pages/Blogs/Blogs';
+import AboutUs from './general/pages/AboutUs/AboutUs';
+import ContactUs from './general/pages/ContactUs/ContactUs';
+import SyaratKetentuan from './general/pages/SyaratKetentuan/SyaratKetentuan';
+import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi';
+import ForgotPwd from './general/pages/Home/Components/ForgotPwd';
+import ResetPwd from './general/pages/Home/Components/ResetPwd';
 
 //==================================== jobs =========================================================
-import NewJob from "./jobs/pages/NewJob";
-import EditJob from "./jobs/pages/EditJob";
-import JobsDashboard from "./jobs/pages/JobsDashboard";
+import NewJob from './jobs/pages/NewJob';
+import EditJob from './jobs/pages/EditJob';
+import JobsDashboard from './jobs/pages/JobsDashboard';
 
-import PackageAds from "./jobs/pages/PackageAds";
-import JobDetails from "./jobs/pages/JobDetails";
+import PackageAds from './jobs/pages/PackageAds';
+import JobDetails from './jobs/pages/JobDetails';
 
 //==================================== company =========================================================
-import CompanyProfileForm from "./users/company/pages/CompanyProfileForm/CompanyProfileForm";
-import EditCompanyIntro from "./users/company/pages/Components/EditIntro";
-import CompanyBriefDescriptions from "./users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions";
-import EditCompanyBriefDescriptions from "./users/company/pages/Components/EditCompanyBriefDescriptions";
-import EditCompanyPIC from "./users/company/pages/Components/EditPIC";
+import CompanyProfileForm from './users/company/pages/CompanyProfileForm/CompanyProfileForm';
+import EditCompanyIntro from './users/company/pages/Components/EditIntro';
+import CompanyBriefDescriptions from './users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions';
+import EditCompanyBriefDescriptions from './users/company/pages/Components/EditCompanyBriefDescriptions';
+import EditCompanyPIC from './users/company/pages/Components/EditPIC';
 
-import CompanyOrderForm from "./users/company/pages/CompanyOrderForm/CompanyOrderForm";
-import OrderBCForm from "./users/company/pages/OrderBCForm/OrderBCForm";
-import CompanyExecutiveSearch from "./users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch";
-import CompanyOrderList from "./users/company/pages/CompanyOrderList/CompanyOrderList";
-import ExecutiveSearchDetail from "./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail";
-import CompanyJobList from "./users/company/pages/CompanyJobList/CompanyJobList";
+import CompanyOrderForm from './users/company/pages/CompanyOrderForm/CompanyOrderForm';
+import OrderBCForm from './users/company/pages/OrderBCForm/OrderBCForm';
+import CompanyExecutiveSearch from './users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch';
+import CompanyOrderList from './users/company/pages/CompanyOrderList/CompanyOrderList';
+import ExecutiveSearchDetail from './users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail';
+import CompanyJobList from './users/company/pages/CompanyJobList/CompanyJobList';
 
 //==================================== applicant =========================================================
-import ApplicantResumeVal from "./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal";
-import ApplicantDetails from "./users/applicant/pages/ApplicantDetails/ApplicantDetails";
-import ApplicantDetailsAO from "./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO";
+import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
+import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
+import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
 
-import EditApplicantIntro from "./users/applicant/pages/Components/Edit/EditIntro";
-import EditApplicantSummary from "./users/applicant/pages/Components/Edit/EditSummary";
-import EditApplicantEducation from "./users/applicant/pages/Components/Edit/Education";
-import EditApplicantExperience from "./users/applicant/pages/Components/Edit/Experience";
-import EditApplicantCertification from "./users/applicant/pages/Components/Edit/Certification";
-import EditApplicantSkills from "./users/applicant/pages/Components/Edit/Skill";
-import AddApplicantIntro from "./users/applicant/pages/Components/Add/EditIntro";
-import AddApplicantSummary from "./users/applicant/pages/Components/Add/EditSummary";
-import AddApplicantEducation from "./users/applicant/pages/Components/Add/Education";
-import AddApplicantExperience from "./users/applicant/pages/Components/Add/Experience";
-import AddApplicantCertification from "./users/applicant/pages/Components/Add/Certification";
-import AddApplicantSkills from "./users/applicant/pages/Components/Add/Skill";
+import EditApplicantIntro from './users/applicant/pages/Components/Edit/EditIntro';
+import EditApplicantSummary from './users/applicant/pages/Components/Edit/EditSummary';
+import EditApplicantEducation from './users/applicant/pages/Components/Edit/Education';
+import EditApplicantExperience from './users/applicant/pages/Components/Edit/Experience';
+import EditApplicantCertification from './users/applicant/pages/Components/Edit/Certification';
+import EditApplicantSkills from './users/applicant/pages/Components/Edit/Skill';
+import AddApplicantIntro from './users/applicant/pages/Components/Add/EditIntro';
+import AddApplicantSummary from './users/applicant/pages/Components/Add/EditSummary';
+import AddApplicantEducation from './users/applicant/pages/Components/Add/Education';
+import AddApplicantExperience from './users/applicant/pages/Components/Add/Experience';
+import AddApplicantCertification from './users/applicant/pages/Components/Add/Certification';
+import AddApplicantSkills from './users/applicant/pages/Components/Add/Skill';
 
 //==================================== admin =========================================================
+
 import AdmAuth from "./general/pages/Home/Components/AdmAuth";
 import AdminProfile from "./users/admin/pages/AdminProfile/AdminProfile";
 import JobsListAO from "./users/admin/pages/JobsListAO/JobsListAO";
@@ -259,23 +257,23 @@ const App = (props) => {
       <Footer />
     </Router>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    admin: state.admin,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		admin: state.admin
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
-    loginAdmin: (payload) =>
-      dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
-    logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-    logoutAdmin: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+		loginAdmin: payload => dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
+		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
+		logoutAdmin: () => dispatch({ type: actionTypes.ADMINLOGOUT })
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
