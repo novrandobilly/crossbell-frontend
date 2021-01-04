@@ -22,6 +22,7 @@ const ApplicantMap = props => {
 				websites={props.items.websites}
 				details={props.items.details}
 				dob={props.items.dob}
+				picture={props.items.picture}
 				// ======================================== Applicant Education
 				education={props.items.education}
 				//============================================= Applicant Experience

@@ -16,12 +16,26 @@ const ApplicantCard = props => {
 		<React.Fragment>
 			<div className={classes.Container}>
 				<div className={classes.ContainerLeft}>
-					<AccountCircleIcon
-						style={{
-							fontSize: '15rem',
-							marginBottom: '1rem'
-						}}
-					/>
+					{props.picture ? (
+						<div
+							className={classes.Avatar}
+							style={{
+								backgroundImage: `url('${props.picture.url}')`
+							}}>
+							{/* <img
+								style={{ verticalAlign: 'middle', width: '20rem', height: '20rem', borderRadius: '50%'  }}
+								src={props.picture.url}
+								alt='avatar'
+							/> */}
+						</div>
+					) : (
+						<AccountCircleIcon
+							style={{
+								fontSize: '15rem',
+								marginBottom: '1rem'
+							}}
+						/>
+					)}
 
 					<div className={classes.ContainerLeftDivider}>
 						<p className={classes.Name}>
@@ -45,7 +59,7 @@ const ApplicantCard = props => {
 							<img
 								className={classes.LinkIcon}
 								alt='web-icon'
-								src='https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'
+								src={'https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'}
 							/>
 						</a>
 					</div>

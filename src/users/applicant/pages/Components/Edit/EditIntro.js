@@ -31,7 +31,6 @@ const EditIntro = props => {
 	useEffect(
 		() => {
 			getOneApplicant(applicantid).then(res => {
-				console.log(res);
 				setData(res.applicant);
 			});
 		},
@@ -40,6 +39,11 @@ const EditIntro = props => {
 
 	const [ formState, onInputHandler ] = useForm(
 		{
+			picture: {
+				value: data ? data.picture : null,
+				isValid: true
+			},
+
 			firstName: {
 				value: data ? data.firstName : null,
 				isValid: data && data.firstName ? true : false
@@ -116,7 +120,7 @@ const EditIntro = props => {
 			},
 			interest: {
 				value: data ? data.interest : false,
-				isValid: data && data.interest ? true : false
+				isValid: true
 			}
 		},
 		false
@@ -156,6 +160,7 @@ const EditIntro = props => {
 
 		const ApplicantData = {
 			applicantId: applicantid,
+			picture: formState.inputs.picture.value,
 			firstName: formState.inputs.firstName.value,
 			lastName: formState.inputs.lastName.value,
 			headline: formState.inputs.headline.value,
@@ -178,7 +183,7 @@ const EditIntro = props => {
 		try {
 			const res = await props.updateApplicantIntro(ApplicantData);
 			if (res) {
-				console.log(res);
+				// console.log(res);
 			}
 
 			props.history.push(`/ap/${applicantid}`);
@@ -214,6 +219,11 @@ const EditIntro = props => {
 
 		onInputHandler(elementId, elementValue, true);
 	};
+	const onUploadHandler = e => {
+		const elementId = e.target.name;
+		const elementFile = e.target.files[0];
+		onInputHandler(elementId, elementFile, true);
+	};
 
 	let formContent = <SpinnerCircle />;
 
@@ -233,7 +243,7 @@ const EditIntro = props => {
 									}}
 								/>
 								<label className={classes.InputButton}>
-									<input type='file' />
+									<input type='file' name='picture' id='picture' onChange={onUploadHandler} accept='.jpg, .jpeg, .png' />
 									<span className={classes.InputButtonText}> Upload File </span>
 								</label>
 							</div>
