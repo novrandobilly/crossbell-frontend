@@ -1,6 +1,51 @@
+.Container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.FilterContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.FilterLabel {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.CheckboxCriteria {
+  display: flex;
+  flex-direction: column;
+  /* line-height: 1rem; */
+  align-items: flex-start;
+}
+
+.FlexWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.CheckboxHolder {
+  display: flex;
+  font-size: 0.9rem;
+  align-items: center;
+  margin-bottom: -0.5rem;
+  margin-right: 1rem;
+}
+
+.InputHolder {
+  display: flex;
+  font-size: 0.9rem;
+  color: gray;
+}
+
 .JobList {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  width: 50%;
 }

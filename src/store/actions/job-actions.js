@@ -37,6 +37,7 @@ export const createJob = (jobData, authData) => {
           benefit: jobData.benefit,
           salary: jobData.salary,
           slot: jobData.slot,
+          fieldOfWork: jobData.fieldOfWork,
           companyId: authData.userId,
         }),
       });
@@ -75,6 +76,7 @@ export const saveJobDraft = (jobData, authData) => {
           benefit: jobData.benefit,
           salary: jobData.salary,
           slot: jobData.slot,
+          fieldOfWork: jobData.fieldOfWork,
           companyId: authData.userId,
         }),
       });
@@ -114,7 +116,6 @@ export const getAllAvailableJobs = () => {
     try {
       const res = await fetch("http://localhost:5000/api/jobs");
       const responseJSON = await res.json();
-
       if (!res.ok) {
         throw new Error(responseJSON.message);
       }

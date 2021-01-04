@@ -20,7 +20,6 @@ const DetailBC = (props) => {
 
   const [genderFilter, setGenderFilter] = useState([]);
   const [educationFilter, setEducationFilter] = useState([]);
-  // const [ageFilter, setAgeFilter] = useState([]);
   const [shiftFilter, setShiftFilter] = useState(null);
   const [locationFilter, setLocationFilter] = useState(null);
   const [displayData, setDisplayData] = useState();
@@ -123,7 +122,7 @@ const DetailBC = (props) => {
     shiftFilter,
     formState,
   ]);
-  console.log(educationFilter);
+
   //================= Gender Filter ===========================
   const onGenderHandler = (e) => {
     setGenderFilter((prevState) => {
@@ -158,9 +157,24 @@ const DetailBC = (props) => {
   const onShiftHandler = (e) => {
     setShiftFilter(e.target.checked ? true : false);
   };
-  let content = <SpinnerCircle />;
+
+  //================= Sent Function ===========================
+  const onSentHandler = async (dataBC) => {
+    const applicantBC = {
+      token: props.admin.token,
+      applicantId: dataBC.applicantId,
+      orderId: orderid,
+    };
+    try {
+      await props.sentApplicantBC(applicantBC);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //================= Element Component ===========================
+  let content = <SpinnerCircle />;
+
   if (!props.isLoading && displayData && dataBC) {
     content = (
       <div className={classes.Container}>
@@ -421,6 +435,12 @@ const DetailBC = (props) => {
                           className={classes.button}
                           size="small"
                           endIcon={<SendIcon />}
+                          onClick={() =>
+                            onSentHandler({
+                              applicantId: app.id,
+                              i,
+                            })
+                          }
                         >
                           Send
                         </Button>
@@ -451,6 +471,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
     getAllApplicant: (token) => dispatch(actionCreators.getAllApplicant(token)),
+    sentApplicantBC: (data) => dispatch(actionCreators.sentApplicantBC(data)),
   };
 };
 

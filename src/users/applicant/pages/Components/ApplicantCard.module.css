@@ -9,6 +9,10 @@
   justify-content: space-between;
 }
 
+.Container a {
+  text-decoration: none;
+}
+
 .ContainerLeft {
   display: flex;
   flex-direction: row;

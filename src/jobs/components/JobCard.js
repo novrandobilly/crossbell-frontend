@@ -39,6 +39,7 @@ const JobCard = (props) => {
     instantApplyButton = <Spinner />;
   }
   //=====================================================================================
+  let salary = parseInt(props.salary);
 
   return (
     <div className={classes.JobCard}>
@@ -67,7 +68,7 @@ const JobCard = (props) => {
           - {props.placementLocation}
         </p>
         {props.salary ? (
-          <p>${props.salary} /month</p>
+          <p>$ {salary.toLocaleString()} /month</p>
         ) : (
           <p>Salary Undisclosed</p>
         )}

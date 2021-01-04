@@ -75,6 +75,7 @@ import AuthenticationAp from "./users/applicant/pages/AuthenticationAp/Authentic
 import AuthenticationCo from "./users/company/pages/AuthenticationCo/AuthenticationCo";
 import MainNavigation from "./shared/Navigation/MainNavigation";
 import Footer from "./shared/Navigation/Footer";
+import ContactIcon from "./shared/UI_Element/ContactIcon";
 
 import "./App.css";
 
@@ -254,6 +255,7 @@ const App = (props) => {
           <Redirect to="/" />
         </Switch>
       </main>
+      <ContactIcon />
       <Footer />
     </Router>
   );

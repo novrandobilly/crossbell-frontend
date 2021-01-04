@@ -596,7 +596,6 @@ export const deleteCandidateES = (payload) => {
 export const approveOrderBC = (orderData) => {
   return async (dispatch) => {
     dispatch(approveOrderStart());
-    console.log(orderData);
     try {
       const response = await fetch(
         `http://localhost:5000/api/alphaomega/approve/bc`,

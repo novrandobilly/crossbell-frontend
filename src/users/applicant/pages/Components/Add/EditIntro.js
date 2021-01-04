@@ -21,6 +21,7 @@ import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircl
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Input from "../../../../../shared/UI_Element/Input";
 import SaveButton from "../../../../../shared/UI_Element/SaveButton";
+import WorkFieldData from "../../../../../shared/UI_Element/WorkFieldData";
 
 import classes from "./EditIntro.module.css";
 
@@ -343,18 +344,18 @@ const EditIntro = (props) => {
                   <MenuItem value="" style={{ fontSize: "0.9rem" }}>
                     <em>Belum ada untuk saat ini</em>
                   </MenuItem>
-                  <MenuItem value={"perhotelan"} style={{ fontSize: "0.9rem" }}>
-                    Perhotelan
-                  </MenuItem>
-                  <MenuItem
-                    value={"digitalMark"}
-                    style={{ fontSize: "0.9rem" }}
-                  >
-                    Digital marketing
-                  </MenuItem>
-                  <MenuItem value={"digimon"} style={{ fontSize: "0.9rem" }}>
-                    digimon
-                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: "0.9rem" }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
 

@@ -1,12 +1,57 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+// import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 
 import classes from "./IconButton.module.css";
 
-const IconButton = (props) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    borderRadius: "3rem",
+    marginLeft: "1rem",
+    width: "2.5rem",
+    height: "2.5rem",
+  },
+  delete: {
+    marginLeft: "1rem",
+    width: "2.5rem",
+    height: "2.5rem",
+    backgroundColor: "rgba(245, 0, 87, 0.05)",
+    "&:hover": {
+      backgroundColor: "rgba(245, 0, 87, 0.05)",
+    },
+  },
+  edit: {
+    marginLeft: "1rem",
+    width: "2.5rem",
+    height: "2.5rem",
+    backgroundColor: "rgba(0,0,0,0.05)",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.05)",
+    },
+  },
+  add: {
+    marginLeft: "1rem",
+    width: "2.5rem",
+    height: "2.5rem",
+    backgroundColor: "rgba(63, 81, 181,0.05)",
+    "&:hover": {
+      backgroundColor: "rgba(63, 81, 181, 0.05)",
+    },
+  },
+  label: {
+    textTransform: "lowercase",
+  },
+}));
+
+const ButtonIcon = (props) => {
+  const styles = useStyles();
+
   switch (props.iconType) {
     case "NewJob":
       return (
@@ -24,31 +69,24 @@ const IconButton = (props) => {
 
     case "NewSegment":
       return (
-        <button
-          className={[
-            classes.IconAddButton,
-            classes[props.IconButtonClass],
-          ].join(" ")}
+        <IconButton
+          color="primary"
+          classes={{ root: styles.add, label: styles.label }}
+          onClick={props.onClick}
         >
-          <span className={classes.AddButton}>
-            <AddIcon />
-          </span>
-        </button>
+          <AddIcon />
+        </IconButton>
       );
 
     case "Delete":
       return (
-        <button
-          className={[
-            classes.IconDeleteButton,
-            classes[props.IconButtonClass],
-          ].join(" ")}
+        <IconButton
+          color="secondary"
+          classes={{ root: styles.delete, label: styles.label }}
           onClick={props.onClick}
         >
-          <span className={classes.DeleteButton}>
-            <CloseIcon />
-          </span>
-        </button>
+          <CloseIcon />
+        </IconButton>
       );
 
     case "Order":
@@ -68,16 +106,23 @@ const IconButton = (props) => {
 
     default:
       return (
-        <button
-          className={[classes.IconButton, classes[props.IconButtonClass]].join(
-            " "
-          )}
+        <IconButton
+          classes={{ root: styles.edit, label: styles.label }}
+          onClick={props.onClick}
         >
-          <span className={classes.EditButton}>
-            <EditIcon />
-          </span>
-        </button>
+          <EditIcon />
+        </IconButton>
+
+        // <button
+        //   className={[classes.IconButton, classes[props.IconButtonClass]].join(
+        //     " "
+        //   )}
+        // >
+        //   <span className={classes.EditButton}>
+        //     <EditIcon />
+        //   </span>
+        // </button>
       );
   }
 };
-export default IconButton;
+export default ButtonIcon;

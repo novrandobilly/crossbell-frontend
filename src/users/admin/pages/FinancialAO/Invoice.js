@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
+import terbilang from "angka-menjadi-terbilang";
 import moment from "moment";
 
 // import * as actionTypes from "../../../../store/actions/actions";
@@ -56,9 +57,9 @@ const Invoice = (props) => {
             className={classes.margin}
             onClick={handlePrint}
             startIcon={<GetAppIcon />}
-            style={{ marginTop: "2rem", marginRight: "-41rem" }}
+            style={{ marginTop: "2rem", marginRight: "-40rem" }}
           >
-            dowload PDF
+            dowload/ print
           </Button>
           <div className={classes.InvoiceContainer} ref={componentRef}>
             <p className={classes.Id}>
@@ -130,7 +131,7 @@ const Invoice = (props) => {
 
             <div className={classes.Footer}>
               <div className={classes.CommentContainer}>
-                <div className={classes.CommentHeader}>Comment</div>
+                <div className={classes.CommentHeader}>cara pembayaran</div>
                 <div className={classes.CommentContent}>
                   <ul>
                     <li>
@@ -148,6 +149,11 @@ const Invoice = (props) => {
                       <span style={{ fontWeight: "bold" }}>
                         807770817329xxx
                       </span>
+                    </li>
+                    <li>
+                      setelah melakukan pembayaran, mohon kirimkan bukti
+                      transfer kepada nomor wa{" "}
+                      <span style={{ fontWeight: "bold" }}>081732954xxx</span>
                     </li>
                   </ul>
                 </div>
@@ -188,6 +194,16 @@ const Invoice = (props) => {
                     {(subTotal + tax - dis).toLocaleString()}
                     ,-
                   </p>
+                </div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    lineHeight: "1.5rem",
+                    textAlign: "left",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {terbilang(subTotal + tax - dis)} rupiah
                 </div>
               </div>
             </div>
