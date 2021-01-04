@@ -11,6 +11,10 @@
   size: 90rem;
 }
 
+.Container a {
+  text-decoration: none;
+}
+
 .Header {
   display: flex;
   flex-direction: row;

@@ -150,3 +150,14 @@
 .Range {
 	color: gray;
 }
+
+.Salary {
+  font-size: 0.9rem;
+  width: 7rem;
+  height: 1.5rem;
+  border: solid 0.05rem rgba(124, 124, 124, 0.4);
+  outline: none;
+  padding: 0 0.2rem 0 0.5rem;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}

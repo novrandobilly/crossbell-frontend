@@ -4,6 +4,10 @@ import { withRouter } from "react-router-dom";
 import { useForm } from "../../shared/utils/useForm";
 import * as actionCreators from "../../store/actions";
 
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Spinner from "../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../shared/UI_Element/Input";
@@ -12,11 +16,16 @@ import {
   VALIDATOR_MIN,
   VALIDATOR_ALWAYSTRUE,
 } from "../../shared/utils/validator";
+import WorkFieldData from "../../shared/UI_Element/WorkFieldData";
 
 import classes from "./NewJob.module.css";
 
 const NewJob = (props) => {
   const [maxSlot, setMaxSlot] = useState(null);
+
+  const [fieldOfWork, setFieldOfWork] = useState("");
+  const [open, setOpen] = useState(false);
+
   const [formState, onInputHandler] = useForm(
     {
       jobTitle: {
@@ -57,6 +66,10 @@ const NewJob = (props) => {
         isValid: true,
       },
       slotAllocation: {
+        value: null,
+        isValid: false,
+      },
+      fieldOfWork: {
         value: null,
         isValid: false,
       },
@@ -106,6 +119,7 @@ const NewJob = (props) => {
       benefit: formState.inputs.benefit.value,
       slot: formState.inputs.slotAllocation.value,
       salary: formState.inputs.salary.value,
+      fieldOfWork: formState.inputs.fieldOfWork.value,
     };
     const authData = {
       token: props.auth.token,
@@ -134,6 +148,7 @@ const NewJob = (props) => {
       benefit: formState.inputs.benefit.value,
       slot: formState.inputs.slotAllocation.value,
       salary: formState.inputs.salary.value,
+      fieldOfWork: formState.inputs.fieldOfWork.value,
     };
     const authData = {
       token: props.auth.token,
@@ -147,6 +162,21 @@ const NewJob = (props) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleChange = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    onInputHandler(elementId, elementValue, true);
+    setFieldOfWork(e.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
   };
 
   let formContent = (
@@ -244,6 +274,45 @@ const NewJob = (props) => {
             onInputHandler={onInputHandler}
             label="Benefits (optional)"
           />
+          <FormControl
+            className={classes.formControl}
+            style={{ marginBottom: "1rem" }}
+          >
+            <InputLabel id="fieldOfWork" style={{ fontSize: "1rem" }}>
+              Bidang pekerjaan
+            </InputLabel>
+
+            <Select
+              labelId="fieldOfWork"
+              id="fieldOfWork"
+              name="fieldOfWork"
+              open={open}
+              onClose={handleClose}
+              onOpen={handleOpen}
+              value={fieldOfWork}
+              onChange={handleChange}
+              style={{
+                fontSize: "0.9rem",
+                textAlign: "left",
+              }}
+            >
+              <MenuItem value="" style={{ fontSize: "0.9rem" }}>
+                <em>Belum ada untuk saat ini</em>
+              </MenuItem>
+              {WorkFieldData.sort().map((work, i) => {
+                return (
+                  <MenuItem
+                    id={i}
+                    value={work}
+                    style={{ fontSize: "0.9rem" }}
+                    key={i}
+                  >
+                    {work}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
           <Input
             inputType="number"
             id="slotAllocation"
@@ -276,7 +345,7 @@ const NewJob = (props) => {
           save draft
         </Button>
 
-        {formState.inputs.slotAllocation.value <= maxSlot && (
+        {formState.inputs.slotAllocation.value <= maxSlot * 2 && (
           <Button
             variant="contained"
             color="primary"

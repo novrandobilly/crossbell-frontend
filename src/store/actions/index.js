@@ -12,7 +12,18 @@ export {
 	deleteSegment
 } from './applicant-actions';
 
-export { getAllApplicant, getAllJob, admReg, admSignIn, getWholeCompanies, activateCompany, blockCompany } from './admin-actions';
+
+export {
+  getAllApplicant,
+  getAllJob,
+  admReg,
+  admSignIn,
+  getWholeCompanies,
+  activateCompany,
+  blockCompany,
+  sentApplicantBC,
+} from "./admin-actions";
+
 
 export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
 

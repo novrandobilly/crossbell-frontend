@@ -28,7 +28,7 @@ const CompanyJobList = (props) => {
       });
     }
   }, [getJobsInCompany, companyid, props.auth]);
-  console.log(data);
+
   let Content = <SpinnerCircle />;
 
   if (data && !props.isLoading) {

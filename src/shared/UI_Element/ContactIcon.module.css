@@ -1,0 +1,16 @@
+.Container {
+  position: fixed;
+  bottom: 50%;
+  left: 0;
+}
+
+.IconContainer {
+  background-color: rgba(58, 81, 153, 1);
+  width: 2.35rem;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 0 0.5rem 0.5rem 0;
+}

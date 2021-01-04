@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
@@ -14,18 +13,17 @@ import classes from "./Skill.module.css";
 
 const Skill = (props) => {
   const { applicantid } = useParams();
+  const [skills, setSkills] = useState([]);
 
   const [formState, onInputHandler] = useForm(
     {
-      skills: {
+      skill: {
         value: [],
         isValid: false,
       },
     },
     false
   );
-
-  const [skills, setSkills] = useState([]);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -38,7 +36,7 @@ const Skill = (props) => {
   };
 
   const addSkill = (e) => {
-    setSkills((skills) => [...skills, formState.inputs.skill.value]);
+    setSkills((prevState) => [...prevState, formState.inputs.skill.value]);
   };
 
   return (
@@ -74,7 +72,7 @@ const Skill = (props) => {
           })}
         </div>
 
-        <button onClick={(e) => addSkill(e)} className={classes.AddButton}>
+        <button type="button" onClick={addSkill} className={classes.AddButton}>
           Add Skill
         </button>
 
@@ -96,7 +94,6 @@ const mapDispatchToProps = (dispatch) => {
         payload: { updatedSkills },
       }),
   };
-
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(Skill));

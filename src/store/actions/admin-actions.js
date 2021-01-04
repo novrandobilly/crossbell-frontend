@@ -284,3 +284,32 @@ export const blockCompany = (payload) => {
     }
   };
 };
+
+export const sentApplicantBC = (InputBC) => {
+  return async (dispatch) => {
+    dispatch(getAllApplicantStart());
+    console.log(InputBC);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/order/bc/applicant`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${InputBC.token}`,
+          },
+          body: JSON.stringify({
+            orderId: InputBC.orderId,
+            applicantId: InputBC.applicantId,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      dispatch(getAllApplicantSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAllApplicantFail());
+    }
+  };
+};
