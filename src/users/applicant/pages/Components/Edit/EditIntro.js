@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -18,7 +17,7 @@ import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircl
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Input from '../../../../../shared/UI_Element/Input';
 import SaveButton from '../../../../../shared/UI_Element/SaveButton';
-import WorkFieldData from "../../../../../shared/UI_Element/WorkFieldData";
+import WorkFieldData from '../../../../../shared/UI_Element/WorkFieldData';
 
 import classes from './EditIntro.module.css';
 
@@ -238,12 +237,22 @@ const EditIntro = props => {
 					<div className={classes.FormRow}>
 						<div className={classes.EditLabel}>
 							<div className={classes.ProfilePicture}>
-								<AccountCircleIcon
-									style={{
-										fontSize: '15rem',
-										marginBottom: '1rem'
-									}}
-								/>
+								{data.picture && data.picture.url ? (
+									<div
+										className={classes.Avatar}
+										style={{
+											backgroundImage: `url('${data.picture.url}')`
+										}}
+									/>
+								) : (
+									<AccountCircleIcon
+										style={{
+											fontSize: '15rem',
+											marginBottom: '1rem'
+										}}
+									/>
+								)}
+
 								<label className={classes.InputButton}>
 									<input type='file' name='picture' id='picture' onChange={onUploadHandler} accept='.jpg, .jpeg, .png' />
 									<span className={classes.InputButtonText}> Upload File </span>
@@ -381,50 +390,41 @@ const EditIntro = props => {
 								initIsValid={true}
 							/>
 
-							<FormControl
-                className={classes.formControl}
-                style={{ marginBottom: "1rem" }}
-              >
-                {data.interest ? (
-                  <InputLabel id="interest" style={{ fontSize: "1rem" }}>
-                    {data.interest}
-                  </InputLabel>
-                ) : (
-                  <InputLabel id="interest" style={{ fontSize: "1rem" }}>
-                    Bidang minat
-                  </InputLabel>
-                )}
-                <Select
-                  labelId="interest"
-                  id="interest"
-                  name="interest"
-                  open={open}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={interest}
-                  onChange={handleChange}
-                  style={{
-                    fontSize: "0.9rem",
-                    textAlign: "left",
-                  }}
-                >
-                  <MenuItem value="" style={{ fontSize: "0.9rem" }}>
-                    <em>Belum ada untuk saat ini</em>
-                  </MenuItem>
-                  {WorkFieldData.sort().map((work, i) => {
-                    return (
-                      <MenuItem
-                        id={i}
-                        value={work}
-                        style={{ fontSize: "0.9rem" }}
-                        key={i}
-                      >
-                        {work}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
+							<FormControl className={classes.formControl} style={{ marginBottom: '1rem' }}>
+								{data.interest ? (
+									<InputLabel id='interest' style={{ fontSize: '1rem' }}>
+										{data.interest}
+									</InputLabel>
+								) : (
+									<InputLabel id='interest' style={{ fontSize: '1rem' }}>
+										Bidang minat
+									</InputLabel>
+								)}
+								<Select
+									labelId='interest'
+									id='interest'
+									name='interest'
+									open={open}
+									onClose={handleClose}
+									onOpen={handleOpen}
+									value={interest}
+									onChange={handleChange}
+									style={{
+										fontSize: '0.9rem',
+										textAlign: 'left'
+									}}>
+									<MenuItem value='' style={{ fontSize: '0.9rem' }}>
+										<em>Belum ada untuk saat ini</em>
+									</MenuItem>
+									{WorkFieldData.sort().map((work, i) => {
+										return (
+											<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
+												{work}
+											</MenuItem>
+										);
+									})}
+								</Select>
+							</FormControl>
 
 							<label onChange={onCheckedInputHandler}>
 								<input id='outOfTown' type='checkbox' name='outOfTown' /> Bersedia ditempatkan di luar kota asal
@@ -465,7 +465,6 @@ const EditIntro = props => {
 			{formContent}
 		</form>
 	);
-
 };
 
 const mapStateToProps = state => {
