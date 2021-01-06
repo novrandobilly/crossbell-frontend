@@ -147,6 +147,14 @@ const DetailBC = props => {
 		});
 	};
 
+	//================= Loc/Shift Filter ===========================
+	const onLocationHandler = e => {
+		setLocationFilter(e.target.checked ? true : false);
+	};
+	const onShiftHandler = e => {
+		setShiftFilter(e.target.checked ? true : false);
+	};
+
 	//================= Sent Function ===========================
 	const onSentHandler = async dataBC => {
 		const applicantBC = {
