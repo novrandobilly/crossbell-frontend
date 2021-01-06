@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -34,6 +35,10 @@ const EditIntro = (props) => {
 
   const [formState, onInputHandler] = useForm(
     {
+      logo: {
+				value: data ? data.logo : null,
+				isValid: true
+			},
       companyName: {
         value: data ? data.companyName : null,
         isValid: data && data.companyName ? true : false,
@@ -65,14 +70,15 @@ const EditIntro = (props) => {
       return props.updateCompanyFail();
     }
 
-    const updatedIntro = {
-      companyId: companyid,
-      companyName: formState.inputs.companyName.value,
-      email: formState.inputs.email.value,
-      industry: formState.inputs.industry.value,
-      address: formState.inputs.address.value,
-      website: formState.inputs.website.value,
-    };
+   const updatedIntro = {
+			companyId: companyid,
+			companyName: formState.inputs.companyName.value,
+			email: formState.inputs.email.value,
+			industry: formState.inputs.industry.value,
+			address: formState.inputs.address.value,
+			logo: formState.inputs.logo.value,
+     website: formState.inputs.website.value
+		};
 
     try {
       const res = await props.updateCompanyIntro(updatedIntro);
@@ -109,15 +115,11 @@ const EditIntro = (props) => {
                   }}
                 />
 
-                <label className={classes.InputButton}>
-                  <input
-                    type="file"
-                    name="image"
-                    // onChange={handleFileInputChange}
-                    // value={fileInputState}
-                  />
-                  <span className={classes.InputButtonText}> Upload Logo </span>
-                </label>
+                	<label className={classes.InputButton}>
+									<input type='file' name='logo' id='logo' onChange={onUploadHandler} accept='.jpg, .jpeg, .png' />
+									<span className={classes.InputButtonText}> Upload File </span>
+								</label>
+                
               </div>
 
               <Input
@@ -210,25 +212,22 @@ const EditIntro = (props) => {
       </form>
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.company.isLoading,
-    error: state.company.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.company.isLoading,
+		error: state.company.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
-    resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyIntro: (CompanyData) =>
-      dispatch(actionCreators.updateCompanyIntro(CompanyData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
+		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
+		getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
+		updateCompanyIntro: CompanyData => dispatch(actionCreators.updateCompanyIntro(CompanyData))
+	};
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));

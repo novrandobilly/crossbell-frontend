@@ -1,10 +1,11 @@
 .Container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 .ContainerFlex {
+
   width: 50rem;
   height: auto;
   display: flex;
@@ -20,30 +21,34 @@
   font-size: 0.8rem;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.5);
+
 }
 
 .FormTitle {
-  font-size: 1.4rem;
-  color: black;
-  align-self: flex-start;
-  margin-left: 5rem;
+	font-size: 1.4rem;
+	color: black;
+	align-self: flex-start;
+	margin-left: 5rem;
 }
 
 .FormRow {
+
   display: flex;
   border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
   padding-top: 2rem;
+
 }
 
 .ProfilePicture {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  align-items: center;
-  margin-bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+	align-items: center;
+	margin-bottom: 2rem;
 }
 
 .InputButton {
+
   border: none;
   border-radius: 0.2rem;
   background-color: rgba(58, 81, 153, 1);
@@ -54,17 +59,29 @@
   width: 6rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+
 }
 
 .EditLabel {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
 }
+
 
 .Footer {
   width: 80%;
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
+
+
+.Avatar {
+	width: 12rem;
+	height: 12rem;
+	border-radius: 50%;
+	background-position: center;
+	background-size: cover;
+	margin-right: 2rem;
+
 }

@@ -1,11 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import IconButton from "../../../../shared/UI_Element/IconButton";
-import TextOnly from "../../../../shared/UI_Element/TextOnly";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import IconButton from '../../../../shared/UI_Element/IconButton';
+import TextOnly from '../../../../shared/UI_Element/TextOnly';
 
-import classes from "./CompanyCard.module.css";
+import classes from './CompanyCard.module.css';
+
 
 const CompanyCard = (props) => {
   return (
@@ -21,19 +23,19 @@ const CompanyCard = (props) => {
             className={classes.Logo}
           />
 
-          <div className={classes.ContainerLeftDivider}>
-            <p className={classes.CompanyName}>{props.companyName}</p>
 
-            <div className={classes.ContainerSizeIn}>
-              <p className={classes.CompanySize}>{props.industry}</p>
-              <p>|</p>
+					<div className={classes.ContainerLeftDivider}>
+						<p className={classes.CompanyName}>{props.companyName}</p>
 
-              <p className={classes.CompanyIndustry}>
-                {props.size} people working here
-              </p>
-            </div>
+						<div className={classes.ContainerSizeIn}>
+							<p className={classes.CompanySize}>{props.industry}</p>
+							<p>|</p>
 
-            <p className={classes.CompanyHeadquarter}>{props.address}</p>
+							<p className={classes.CompanyIndustry}>{props.size} people working here</p>
+						</div>
+
+						<p className={classes.CompanyHeadquarter}>{props.address}</p>
+
 
             <a
               href={`https://${props.website}`}
@@ -74,12 +76,14 @@ const CompanyCard = (props) => {
         </div>
       </div>
 
-      <TextOnly
-        id={props.companyId}
-        labelName="Company Brief Descriptions"
-        route={`/co/${props.companyId}/compro/details`}
-        text={props.briefDescriptions}
-      />
+
+			<TextOnly
+				id={props.companyId}
+				labelName='Company Brief Descriptions'
+				route={`/co/${props.companyId}/compro/details`}
+				text={props.briefDescriptions}
+			/>
+
 
       <TextOnly
         id={props.companyId}
@@ -89,11 +93,12 @@ const CompanyCard = (props) => {
       />
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
 };
 export default connect(mapStateToProps)(CompanyCard);

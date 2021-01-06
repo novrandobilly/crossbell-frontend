@@ -1,4 +1,5 @@
 .Container {
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,31 +42,41 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+
 }
 
 .ProfilePicture {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  align-items: center;
-  margin-bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+	align-items: center;
+	margin-bottom: 2rem;
 }
 
 input[type="file"] {
-  display: none;
+	display: none;
 }
 
 .InputButton {
-  border: none;
-  border-radius: 1rem;
-  background-color: rgba(58, 81, 153, 1);
-  color: white;
-  outline: none;
-  cursor: pointer;
-  font-weight: bold;
-  width: 6rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+	border: none;
+	border-radius: 1rem;
+	background-color: rgba(58, 81, 153, 1);
+	color: white;
+	outline: none;
+	cursor: pointer;
+	font-weight: bold;
+	width: 6rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.Avatar {
+	width: 12rem;
+	height: 12rem;
+	border-radius: 50%;
+	background-position: center;
+	background-size: cover;
+	margin-right: 2rem;
 }
 
 .ContentLeft {

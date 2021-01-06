@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -60,6 +61,7 @@ const DetailBC = (props) => {
           console.log(err);
         });
 
+
       getAllApplicant(dataBC)
         .then((res) => {
           console.log(res);
@@ -80,6 +82,7 @@ const DetailBC = (props) => {
           return genderFilter.some((gen) => gen === el.gender);
         });
       }
+
 
       if (educationFilter && educationFilter.length > 0) {
         filteredArray = filteredArray.filter((app) => {
@@ -148,53 +151,24 @@ const DetailBC = (props) => {
     });
   };
 
-  //================= Loc/Shift Filter ===========================
-  const onLocationHandler = (e) => {
-    setLocationFilter(e.target.checked ? true : false);
-  };
-  const onShiftHandler = (e) => {
-    setShiftFilter(e.target.checked ? true : false);
-  };
 
-  //================= Sent Function ===========================
-  const onSentHandler = async (dataBC) => {
-    const applicantBC = {
-      token: props.admin.token,
-      applicantId: dataBC.applicantId,
-      orderId: orderid,
-    };
-    try {
-      await props.sentApplicantBC(applicantBC);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+	//================= Sent Function ===========================
+	const onSentHandler = async dataBC => {
+		const applicantBC = {
+			token: props.admin.token,
+			applicantId: dataBC.applicantId,
+			orderId: orderid
+		};
+		try {
+			await props.sentApplicantBC(applicantBC);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-  //================= Element Component ===========================
-  let content = <SpinnerCircle />;
+	//================= Element Component ===========================
+	let content = <SpinnerCircle />;
 
-  if (!props.isLoading && displayData && dataBC) {
-    content = (
-      <div className={classes.Container}>
-        <div className={classes.FilterContainer}>
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>gender</p>
-            <div onChange={onGenderHandler}>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color="primary" size="small" value="male" id="pria" />
-                <p>Pria</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox
-                  color="primary"
-                  size="small"
-                  value="female"
-                  id="wanita"
-                />
-                <p>Wanita</p>
-              </div>
-            </div>
-          </div>
 
           <div className={classes.CheckboxCriteria}>
             <p className={classes.FilterLabel}>pendidikan</p>
@@ -423,6 +397,7 @@ const DetailBC = (props) => {
   }
 
   return <div>{content}</div>;
+
 };
 
 const mapStateToProps = (state) => {
@@ -439,6 +414,7 @@ const mapDispatchToProps = (dispatch) => {
     getAllApplicant: (token) => dispatch(actionCreators.getAllApplicant(token)),
     sentApplicantBC: (data) => dispatch(actionCreators.sentApplicantBC(data)),
   };
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailBC);

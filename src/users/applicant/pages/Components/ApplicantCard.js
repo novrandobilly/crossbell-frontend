@@ -11,6 +11,7 @@ import SkillsMap from "../Components/SkillsMap";
 
 import classes from "./ApplicantCard.module.css";
 
+
 const ApplicantCard = (props) => {
   return (
     <React.Fragment>
@@ -32,6 +33,7 @@ const ApplicantCard = (props) => {
                 }}
               />
             )}
+
 
             <div className={classes.ContainerLeftDivider}>
               <p className={classes.Name}>

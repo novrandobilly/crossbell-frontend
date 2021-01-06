@@ -107,21 +107,18 @@ export const updateCompanyIntro = CompanyData => {
 	return async dispatch => {
 		dispatch(updateCompanyStart());
 		try {
+			const formData = new FormData();
+			formData.append('id', CompanyData.companyId);
+			formData.append('logo', CompanyData.logo);
+			formData.append('companyName', CompanyData.companyName);
+			formData.append('email', CompanyData.email);
+			formData.append('industry', CompanyData.industry);
+			formData.append('address', CompanyData.address);
+			formData.append('website', CompanyData.website);
+
 			const response = await fetch(`http://localhost:5000/api/users/co/${CompanyData.companyId}`, {
 				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					id: CompanyData.companyId,
-					logo: CompanyData.logo,
-					companyName: CompanyData.companyName,
-					email: CompanyData.email,
-					password: CompanyData.password,
-					industry: CompanyData.industry,
-					address: CompanyData.address,
-					website: CompanyData.website
-				})
+				body: formData
 			});
 			const responseJSON = await response.json();
 

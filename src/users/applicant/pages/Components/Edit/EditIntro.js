@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -501,6 +502,7 @@ const EditIntro = (props) => {
       {formContent}
     </form>
   );
+
 };
 
 const mapStateToProps = (state) => {
