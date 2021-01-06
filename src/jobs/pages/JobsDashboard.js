@@ -55,6 +55,7 @@ const searchReducer = (state, action) => {
 
 const JobsDashboard = props => {
 	const [ jobEmpty, setJobEmpty ] = useState(false);
+	const [ allAvailableJobs, setAllAvailableJobs ] = useState();
 	const [ state, dispatch ] = useReducer(searchReducer, {
 		search: {
 			id: '',
@@ -79,6 +80,7 @@ const JobsDashboard = props => {
 						type: ACTION.SEARCHEMPTY,
 						payload: { jobs: res.availableJobs }
 					});
+					setAllAvailableJobs(res.availableJobs);
 				} catch (err) {
 					setJobEmpty(true);
 					console.log(err);
@@ -97,7 +99,7 @@ const JobsDashboard = props => {
 				payload: { jobs: state.jobList }
 			});
 		} else {
-			dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: state.jobList } });
+			dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: allAvailableJobs } });
 		}
 	};
 
