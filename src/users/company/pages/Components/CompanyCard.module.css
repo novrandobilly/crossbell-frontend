@@ -1,12 +1,18 @@
+.Wraper {
+  background-color: white;
+  padding: 2rem 4rem 4rem 2rem;
+}
+
 .Container {
-	display: flex;
-	flex-direction: row;
-	font-family: sans-serif;
-	height: 15rem;
-	margin-left: 2rem;
-	margin-right: 5.2rem;
-	margin-top: 7rem;
-	justify-content: space-between;
+
+  display: flex;
+  flex-direction: row;
+  font-family: sans-serif;
+  height: 15rem;
+  margin-left: 2rem;
+  margin-right: 5.2rem;
+  justify-content: space-between;
+
 }
 
 .Container a {

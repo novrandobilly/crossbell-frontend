@@ -1,129 +1,157 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
-import { useForm } from '../../../../shared/utils/useForm';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../shared/utils/useForm";
 
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import * as actionTypes from "../../../../store/actions/actions";
+import * as actionCreators from "../../../../store/actions/index";
+import { VALIDATOR_MINLENGTH } from "../../../../shared/utils/validator";
 
-import Modal from '../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../shared/UI_Element/Input';
-import classes from './EditCompanyBriefDescriptions.module.css';
+import Button from "@material-ui/core/Button";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import Modal from "../../../../shared/UI_Element/Modal";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Input from "../../../../shared/UI_Element/Input";
+import classes from "./EditCompanyBriefDescriptions.module.css";
 
-const BriefDescriptions = props => {
-	const { companyid } = useParams();
+const BriefDescriptions = (props) => {
+  const { companyid } = useParams();
 
-	const [ data, setData ] = useState();
+  const [data, setData] = useState();
 
-	const { getOneCompany } = props;
-	useEffect(
-		() => {
-			getOneCompany({ userId: companyid }).then(res => {
-				setData(res.company);
-			});
-		},
-		[ getOneCompany, companyid ]
-	);
+  const { getOneCompany } = props;
+  useEffect(() => {
+    getOneCompany({ userId: companyid }).then((res) => {
+      setData(res.company);
+    });
+  }, [getOneCompany, companyid]);
 
-	let push = props.push;
+  let push = props.push;
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			briefDescriptions: {
-				value: data ? data.briefDescriptions : null,
-				isValid: data && data.briefDescriptions ? true : false
-			}
-		},
-		false
-	);
+  const [formState, onInputHandler] = useForm(
+    {
+      briefDescriptions: {
+        value: data ? data.briefDescriptions : null,
+        isValid: data && data.briefDescriptions ? true : false,
+      },
+    },
+    false
+  );
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-		if (!formState.formIsValid) {
-			return props.updateCompanyFail();
-		}
+    if (!formState.formIsValid) {
+      return props.updateCompanyFail();
+    }
 
-		const updatedData = {
-			companyId: companyid,
-			briefDescriptions: formState.inputs.briefDescriptions.value
-		};
-		try {
-			const res = await props.updateCompanyBriefDescriptions(updatedData);
-			if (res) {
-				console.log(res);
-			} else {
-				console.log('no res detected');
-			}
-			!push && props.history.push(`/co/${companyid}`);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    const updatedData = {
+      companyId: companyid,
+      briefDescriptions: formState.inputs.briefDescriptions.value,
+    };
+    try {
+      const res = await props.updateCompanyBriefDescriptions(updatedData);
+      if (res) {
+        console.log(res);
+        if (push) {
+          return props.onNextHandler();
+        }
+      } else {
+        console.log("no res detected");
+      }
 
-	let formContent = <SpinnerCircle />;
+      !push && props.history.push(`/co/${companyid}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	if (!props.isLoading && data) {
-		formContent = (
-			<React.Fragment>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Edit Company Brief Descriptions</p>
+  let formContent = <SpinnerCircle />;
 
-					<div className={classes.FormRow}>
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='textarea'
-								id='briefDescriptions'
-								inputClass='EditProfileTextArea'
-								validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
-								onInputHandler={onInputHandler}
-								label='Brief Descriptions*'
-								initValue={data.briefDescriptions}
-								initIsValid={data.briefDescriptions}
-							/>
-						</div>
-					</div>
+  if (!props.isLoading && data) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Edit Company Brief Descriptions</p>
 
-					<button disabled={!formState.formIsValid} className={classes.SaveButton}>
-						<span>Save</span>
-					</button>
-				</div>
-			</React.Fragment>
-		);
-	}
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="textarea"
+                id="briefDescriptions"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label="Deskripsikan perusahaan anda*"
+                initValue={data.briefDescriptions}
+                initIsValid={data.briefDescriptions}
+              />
+            </div>
+          </div>
 
-	const onCancelHandler = () => {
-		props.resetCompany();
-	};
+          <div className={classes.Footer}>
+            {push && (
+              <Button
+                className={classes.button}
+                startIcon={<NavigateBeforeIcon />}
+                onClick={props.onBackHandler}
+                style={{ marginRight: "2rem" }}
+              >
+                Back
+              </Button>
+            )}
 
-	return (
-		<div style={!push ? { marginTop: '6rem' } : { marginTop: '0' }}>
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<Modal show={props.error} onCancel={onCancelHandler}>
-					Could not update changes at the moment, please try again later
-				</Modal>
-				{formContent}
-			</form>
-		</div>
-	);
+            <Button
+              disabled={!formState.formIsValid}
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.button}
+              endIcon={<NavigateNextIcon />}
+            >
+              {push ? "Next" : "Save"}
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  const onCancelHandler = () => {
+    props.resetCompany();
+  };
+
+  return (
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <Modal show={props.error} onCancel={onCancelHandler}>
+          Could not update changes at the moment, please try again later
+        </Modal>
+        {formContent}
+      </form>
+    </div>
+  );
 };
 
-const mapStateToProps = state => {
-	return {
-		isLoading: state.company.isLoading,
-		error: state.company.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.company.isLoading,
+    error: state.company.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
-		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-		getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
-		updateCompanyBriefDescriptions: CompanyData => dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
+    resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
+    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyBriefDescriptions: (CompanyData) =>
+      dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BriefDescriptions));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(BriefDescriptions));

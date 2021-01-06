@@ -19,7 +19,7 @@ import Select from "@material-ui/core/Select";
 import Modal from "../../../../../shared/UI_Element/Modal";
 import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../../shared/UI_Element/SaveButton";
+import Button from "@material-ui/core/Button";
 
 import classes from "./Education.module.css";
 
@@ -109,134 +109,138 @@ const Education = (props) => {
   };
 
   let formContent = (
-    <React.Fragment>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Education</p>
+    <div className={classes.ContainerFlex}>
+      <p className={classes.FormTitle}>Pendidikan</p>
 
-        <div className={classes.FormRow}>
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="school"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label="School *"
-              placeholder="Ex: University of Indonesia"
-            />
-          </div>
+      <div className={classes.FormRow}>
+        <div className={classes.EditLabel}>
+          <Input
+            inputType="input"
+            id="school"
+            inputClass="AddJobInput"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="School *"
+            initIsValid={true}
+          />
+        </div>
 
-          <FormControl
-            className={classes.formControl}
-            style={{ marginBottom: "1rem" }}
+        <FormControl
+          className={classes.formControl}
+          style={{ margin: "0.8rem 0" }}
+        >
+          <InputLabel id="degree" style={{ fontSize: "1rem" }}>
+            Tingkat Pendidikan
+          </InputLabel>
+
+          <Select
+            labelId="degree"
+            id="degree"
+            name="degree"
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            value={degree}
+            onChange={handleChange}
+            style={{ fontSize: "0.9rem", textAlign: "left" }}
           >
-            <InputLabel id="degree" style={{ fontSize: "1rem" }}>
-              Tingkat
-            </InputLabel>
+            <MenuItem value={"SMA"} style={{ fontSize: "0.9rem" }}>
+              SMA
+            </MenuItem>
+            <MenuItem value={"SMK"} style={{ fontSize: "0.9rem" }}>
+              SMK
+            </MenuItem>
+            <MenuItem value={"D3"} style={{ fontSize: "0.9rem" }}>
+              D3
+            </MenuItem>
+            <MenuItem value={"S1"} style={{ fontSize: "0.9rem" }}>
+              S1
+            </MenuItem>
+            <MenuItem value={"S2"} style={{ fontSize: "0.9rem" }}>
+              S2
+            </MenuItem>
+            <MenuItem value={"S3"} style={{ fontSize: "0.9rem" }}>
+              S3
+            </MenuItem>
+          </Select>
+        </FormControl>
 
-            <Select
-              labelId="degree"
-              id="degree"
-              name="degree"
-              open={open}
-              onClose={handleClose}
-              onOpen={handleOpen}
-              value={degree}
-              onChange={handleChange}
-              style={{ fontSize: "0.9rem", textAlign: "left" }}
-            >
-              <MenuItem value={"SMA"} style={{ fontSize: "0.9rem" }}>
-                SMA
-              </MenuItem>
-              <MenuItem value={"SMK"} style={{ fontSize: "0.9rem" }}>
-                SMK
-              </MenuItem>
-              <MenuItem value={"D3"} style={{ fontSize: "0.9rem" }}>
-                D3
-              </MenuItem>
-              <MenuItem value={"S1"} style={{ fontSize: "0.9rem" }}>
-                S1
-              </MenuItem>
-              <MenuItem value={"S2"} style={{ fontSize: "0.9rem" }}>
-                S2
-              </MenuItem>
-              <MenuItem value={"S3"} style={{ fontSize: "0.9rem" }}>
-                S3
-              </MenuItem>
-            </Select>
-          </FormControl>
+        <div className={classes.EditLabel}>
+          <Input
+            inputType="input"
+            id="major"
+            inputClass="AddJobInput"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="Bidang Studi *"
+            initIsValid={true}
+          />
+        </div>
 
+        <div className={classes.EditLabel}>
+          <Input
+            inputType="input"
+            id="location"
+            inputClass="AddJobInput"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="Lokasi *"
+            initIsValid={true}
+          />
+        </div>
+
+        <div className={classes.Period}>
           <div className={classes.EditLabel}>
+            <p className={classes.Text}>Tahun Mulai *</p>
             <Input
-              inputType="input"
-              id="major"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
+              inputType="customdate"
+              id="startDate"
+              validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label="Field of Study *"
-              placeholder="Ex: International Relations"
+              views={["year"]}
+              maxDate={moment()}
+              initIsValid={true}
             />
           </div>
 
           <div className={classes.EditLabel}>
+            <p className={classes.Text}>Tahun Selesai *</p>
             <Input
-              inputType="input"
-              id="location"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
+              inputType="customdate"
+              id="endDate"
+              validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label="Location *"
-              placeholder="Ex: Depok, West Java"
-            />
-          </div>
-
-          <div className={classes.Period}>
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="customdate"
-                id="startDate"
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                views={["year"]}
-                label="Tahun Mulai"
-                maxDate={moment()}
-                initValue={moment()}
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType="customdate"
-                id="endDate"
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                views={["year"]}
-                label="Tahun Selesai"
-                maxDate={moment()}
-                initValue={moment()}
-              />
-            </div>
-          </div>
-
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="textarea"
-              id="description"
-              inputClass="EditProfileTextArea"
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-              onInputHandler={onInputHandler}
-              label="Description *"
+              views={["year"]}
+              maxDate={moment()}
+              initIsValid={true}
             />
           </div>
         </div>
 
-        <SaveButton
-          btnClass="SaveButton"
-          disabled={!formState.formIsValid}
-          placeholder="Save"
-        />
+        <div className={classes.EditLabel}>
+          <Input
+            inputType="textarea"
+            id="description"
+            inputClass="EditProfileTextArea"
+            validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+            onInputHandler={onInputHandler}
+            label="Deskripsi Pendidikan *"
+            initIsValid={true}
+          />
+        </div>
       </div>
-    </React.Fragment>
+
+      <div className={classes.Footer}>
+        <Button
+          disabled={!formState.formIsValid}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Save
+        </Button>
+      </div>
+    </div>
   );
 
   if (props.isLoading) {

@@ -27,6 +27,20 @@ const SideBar = (props) => {
     <nav className={sideBar ? classes.ContainerActive : classes.Container}>
       <ul className={classes.MenuItem}>
         <li>
+          {props.auth.isCompany && props.auth.isActive && (
+            <Link to={"/jobs/new"}>
+              <span>Add New Job</span>
+              <WorkIcon
+                style={{
+                  margin: "0.4rem 0rem -0.4rem 1rem",
+                  color: "black",
+                }}
+              />
+            </Link>
+          )}
+        </li>
+
+        <li>
           <Link to={"/co/order/reguler"}>
             <span>Purchase Job Ads Slot</span>
             <LocalOfferIcon
