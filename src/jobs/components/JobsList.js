@@ -425,16 +425,17 @@ const JobsList = (props) => {
           />
         </div>
       </div>
+
       <FormControl
         className={classes.formControl}
-        // style={{ position: "absolute", right: "5rem" }}
+        style={{ width: "8rem", textAlign: "left" }}
       >
         <InputLabel id="sort">filter</InputLabel>
         <Select labelId="sort" id="sort" value={sort} onChange={handleChange}>
-          <MenuItem value="newest">newest - latest</MenuItem>
-          <MenuItem value="latest">latest - newest</MenuItem>
-          <MenuItem value="highSalary">highest - lowest salary</MenuItem>
-          <MenuItem value="lowSalary">lowest - highest salary</MenuItem>
+          <MenuItem value="newest">terbaru</MenuItem>
+          <MenuItem value="latest">terlawas</MenuItem>
+          <MenuItem value="highSalary">gaji tertinggi</MenuItem>
+          <MenuItem value="lowSalary">gaji terendah</MenuItem>
         </Select>
       </FormControl>
     </div>

@@ -2,8 +2,10 @@ import React, { useReducer, useEffect } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
+// import { makeStyles } from '@material-ui/core/styles';
 
 import { validate } from "../utils/validator";
+import TextField from "@material-ui/core/TextField";
 import classes from "./Input.module.css";
 
 const ACTION = {
@@ -72,23 +74,18 @@ const Input = (props) => {
   switch (props.inputType) {
     case "input":
       inputElement = (
-        <input
+        <TextField
+          id={id}
           className={[classes.InputElements, classes[props.inputClass]].join(
             " "
           )}
-          style={{
-            backgroundColor:
-              state.isValid || !state.isTouched
-                ? "white"
-                : " rgb(215, 226, 255)",
-          }}
-          id={id}
-          type={props.type || "text"}
+          style={{ margin: "0.5rem 0" }}
+          label={props.label}
           name={props.name}
           value={state.value}
+          type={props.type || "text"}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          placeholder={props.placeholder || ""}
         />
       );
       break;
@@ -119,24 +116,21 @@ const Input = (props) => {
       break;
     case "textarea":
       inputElement = (
-        <textarea
+        <TextField
+          id={id}
           className={[classes.InputElements, classes[props.inputClass]].join(
             " "
           )}
-          style={{
-            backgroundColor:
-              state.isValid || !state.isTouched
-                ? "white"
-                : " rgb(215, 226, 255)",
-          }}
-          id={id}
-          cols={props.cols || "30"}
-          rows={props.rows || "5"}
+          style={{ margin: "0.5rem 0" }}
+          label={props.label}
           name={props.name}
           value={state.value}
+          type={props.type || "text"}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          placeholder={props.placeholder || ""}
+          multiline
+          rows={12}
+          variant="outlined"
         />
       );
       break;
@@ -183,37 +177,25 @@ const Input = (props) => {
       break;
     default:
       return (inputElement = (
-        <input
+        <TextField
+          size="small"
+          variant="outlined"
+          id={id}
           className={[classes.InputElements, classes[props.inputClass]].join(
             " "
           )}
-          style={{
-            backgroundColor:
-              state.isValid || !state.isTouched
-                ? "white"
-                : " rgb(215, 226, 255)",
-          }}
-          id={id}
-          type={props.type || "text"}
+          style={{ width: "28rem", margin: "0" }}
+          label={props.label}
           name={props.name}
           value={state.value}
+          type={props.type || "text"}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          placeholder={props.placeholder || ""}
         />
       ));
   }
 
-  return (
-    <div className={classes.inputContainer}>
-      {props.label && (
-        <label className={classes.inputLabel} htmlFor={id}>
-          {props.label}
-        </label>
-      )}
-      {inputElement}
-    </div>
-  );
+  return <div className={classes.inputContainer}>{inputElement}</div>;
 };
 
 export default Input;

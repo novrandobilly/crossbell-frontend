@@ -3,6 +3,8 @@ import { useParams, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { useForm } from "../../../../shared/utils/useForm";
 
+import Button from "@material-ui/core/Button";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 import {
@@ -69,15 +71,20 @@ const EditIntro = (props) => {
       email: formState.inputs.email.value,
       industry: formState.inputs.industry.value,
       address: formState.inputs.address.value,
+      website: formState.inputs.website.value,
     };
 
     try {
       const res = await props.updateCompanyIntro(updatedIntro);
       if (res) {
         console.log(res);
+        if (push) {
+          return props.onNextHandler();
+        }
       } else {
         console.log("no res detected");
       }
+
       !push && props.history.push(`/co/${companyid}`);
     } catch (err) {
       console.log(err);
@@ -172,12 +179,18 @@ const EditIntro = (props) => {
             </div>
           </div>
 
-          <button
-            disabled={!formState.formIsValid}
-            className={classes.SaveButton}
-          >
-            <span>Save</span>
-          </button>
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.button}
+              endIcon={<NavigateNextIcon />}
+            >
+              {push ? "Next" : "Save"}
+            </Button>
+          </div>
         </div>
       </React.Fragment>
     );

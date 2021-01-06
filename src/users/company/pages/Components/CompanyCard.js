@@ -9,7 +9,7 @@ import classes from "./CompanyCard.module.css";
 
 const CompanyCard = (props) => {
   return (
-    <React.Fragment>
+    <div className={classes.Wraper}>
       <div className={classes.Container}>
         <div className={classes.ContainerLeft}>
           <img
@@ -68,12 +68,6 @@ const CompanyCard = (props) => {
           </div>
         </div>
         <div className={classes.ContainerRight}>
-          {props.auth.isCompany && props.auth.isActive && (
-            <Link to={"/jobs/new"}>
-              <IconButton iconType="NewJob" />
-            </Link>
-          )}
-
           <Link to={`/co/${props.companyId}/compro/intro`}>
             <IconButton />
           </Link>
@@ -93,7 +87,7 @@ const CompanyCard = (props) => {
         route={`/co/${props.companyId}/compro/mission`}
         text={props.picName}
       />
-    </React.Fragment>
+    </div>
   );
 };
 
