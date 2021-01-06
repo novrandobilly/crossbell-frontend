@@ -5,6 +5,8 @@ import { useForm } from "../../../../shared/utils/useForm";
 import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import Button from "@material-ui/core/Button";
 import Modal from "../../../../shared/UI_Element/Modal";
 import Input from "../../../../shared/UI_Element/Input";
 import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
@@ -63,61 +65,81 @@ const CompanyForm = (props) => {
   let formContent = (
     <React.Fragment>
       <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Company Sign Up</p>
+        <div className={classes.Header}>
+          <p className={classes.FormTitle}>Company Sign Up</p>
+        </div>
 
-        <button
-          className={classes.ApplicantRegister}
-          onClick={props.role}
-          type="button"
-        >
-          Applicant sign up
-        </button>
+        <div className={classes.Content}>
+          <Input
+            inputType="input"
+            id="companyName"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="Company Name*"
+          />
 
-        <Input
-          inputType="input"
-          id="companyName"
-          inputClass="Register"
-          validatorMethod={[VALIDATOR_REQUIRE()]}
-          onInputHandler={onInputHandler}
-          label="Company Name*"
-        />
+          <Input
+            inputType="input"
+            id="email"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_EMAIL()]}
+            onInputHandler={onInputHandler}
+            label="Company Email*"
+          />
 
-        <Input
-          inputType="input"
-          id="email"
-          inputClass="Register"
-          validatorMethod={[VALIDATOR_EMAIL()]}
-          onInputHandler={onInputHandler}
-          label="Company Email*"
-        />
+          <Input
+            inputType="input"
+            id="password"
+            inputClass="Register"
+            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+            onInputHandler={onInputHandler}
+            label="Password*"
+            type="password"
+          />
 
-        <Input
-          inputType="input"
-          id="password"
-          inputClass="Register"
-          validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-          onInputHandler={onInputHandler}
-          label="Password*"
-          type="password"
-        />
-
-        <button
-          disabled={!formState.formIsValid}
-          className={classes.SubmitButton}
-        >
-          <span>Submit</span>
-        </button>
-
-        <span className={classes.sign}>
-          Already have an account?
-          <button
-            className={classes.ChangeSign}
-            onClick={props.sign}
-            type="button"
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disableElevation
+            disabled={!formState.formIsValid}
+            style={{
+              marginTop: "1rem",
+            }}
           >
-            Sign In Here
-          </button>
-        </span>
+            submit
+          </Button>
+
+          <span className={classes.sign}>
+            Already have an account?
+            <button
+              className={classes.ChangeSign}
+              onClick={props.sign}
+              type="button"
+            >
+              Sign In Here
+            </button>
+          </span>
+        </div>
+
+        <div className={classes.Footer}>
+          <Button
+            color="primary"
+            onClick={props.role}
+            disableElevation
+            style={{
+              padding: "0",
+              fontSize: "0.7rem",
+              alignSelf: "flex-start",
+              backgroundColor: "transparent",
+              marginLeft: "1.5rem",
+            }}
+            startIcon={<ArrowBackIcon />}
+          >
+            Applicant sign up
+          </Button>
+        </div>
       </div>
     </React.Fragment>
   );
