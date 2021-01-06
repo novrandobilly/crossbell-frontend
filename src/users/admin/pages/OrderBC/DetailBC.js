@@ -169,7 +169,7 @@ const DetailBC = (props) => {
 	//================= Element Component ===========================
 	let content = <SpinnerCircle />;
 
-
+    <div>
           <div className={classes.CheckboxCriteria}>
             <p className={classes.FilterLabel}>pendidikan</p>
             <div className={classes.FlexWrap} onChange={onEducationHandler}>
