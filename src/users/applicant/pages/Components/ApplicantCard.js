@@ -16,18 +16,13 @@ const ApplicantCard = props => {
 		<React.Fragment>
 			<div className={classes.Container}>
 				<div className={classes.ContainerLeft}>
-					{props.picture ? (
+					{props.picture && props.picture.url ? (
 						<div
 							className={classes.Avatar}
 							style={{
 								backgroundImage: `url('${props.picture.url}')`
-							}}>
-							{/* <img
-								style={{ verticalAlign: 'middle', width: '20rem', height: '20rem', borderRadius: '50%'  }}
-								src={props.picture.url}
-								alt='avatar'
-							/> */}
-						</div>
+							}}
+						/>
 					) : (
 						<AccountCircleIcon
 							style={{
