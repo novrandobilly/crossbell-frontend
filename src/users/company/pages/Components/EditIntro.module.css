@@ -5,23 +5,20 @@
 }
 
 .ContainerFlex {
-
-  width: 50rem;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: none;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  border-radius: 0.5rem;
-  padding-bottom: 2rem;
-  background-color: white;
-  font-family: sans-serif;
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
-
+	width: 50rem;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border: none;
+	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+	border-radius: 0.5rem;
+	padding-bottom: 2rem;
+	background-color: white;
+	font-family: sans-serif;
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .FormTitle {
@@ -32,11 +29,9 @@
 }
 
 .FormRow {
-
-  display: flex;
-  border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
-  padding-top: 2rem;
-
+	display: flex;
+	border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
+	padding-top: 2rem;
 }
 
 .ProfilePicture {
@@ -48,18 +43,16 @@
 }
 
 .InputButton {
-
-  border: none;
-  border-radius: 0.2rem;
-  background-color: rgba(58, 81, 153, 1);
-  color: white;
-  outline: none;
-  cursor: pointer;
-  font-weight: bold;
-  width: 6rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-
+	border: none;
+	border-radius: 0.2rem;
+	background-color: rgba(58, 81, 153, 1);
+	color: white;
+	outline: none;
+	cursor: pointer;
+	font-weight: bold;
+	width: 6rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 }
 
 .EditLabel {
@@ -68,13 +61,12 @@
 	align-self: flex-start;
 }
 
-
 .Footer {
-  width: 80%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-
+	width: 80%;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 1rem;
+}
 
 .Avatar {
 	width: 12rem;
@@ -83,5 +75,4 @@
 	background-position: center;
 	background-size: cover;
 	margin-right: 2rem;
-
 }
