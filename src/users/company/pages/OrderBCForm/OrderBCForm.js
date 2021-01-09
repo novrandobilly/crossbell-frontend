@@ -13,6 +13,7 @@ import {
 
 // import Modal from "../../../../shared/UI_Element/Modal";
 // import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Button from "@material-ui/core/Button";
 import Input from "../../../../shared/UI_Element/Input";
 
 import classes from "./OrderBCForm.module.css";
@@ -161,6 +162,7 @@ const OrderBCForm = (props) => {
                   <p className={classes.RadioText}>D3</p>
                 </div>
               </div>
+
               <div>
                 <p className={classes.AgeLabel}>Umur</p>
                 <div className={classes.AgeGroup}>
@@ -193,6 +195,7 @@ const OrderBCForm = (props) => {
                 </div>
               </div>
             </div>
+
             <div className={classes.Inputs}>
               <div onChange={onChangeHandler} className={classes.RadioGroup}>
                 <p className={classes.RadioLabel}>Jenis kelamin</p>
@@ -220,6 +223,7 @@ const OrderBCForm = (props) => {
                   <p className={classes.RadioTextGender}>no criteria</p>
                 </div>
               </div>
+
               <div className={classes.CandidateAmount}>
                 <Input
                   inputType="number"
@@ -235,6 +239,7 @@ const OrderBCForm = (props) => {
                 />
               </div>
             </div>
+
             <div className={classes.CheckInputs}>
               <div className={classes.CheckGroup}>
                 <input
@@ -264,17 +269,15 @@ const OrderBCForm = (props) => {
               </div>
             </div>
 
-            <div className={classes.Inputs}>
-              <div>
-                <Input
-                  inputType="input"
-                  id="jobFunction"
-                  inputClass="Position"
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label="Posisi pekerjaan yang ditawarkan*"
-                />
-              </div>
+            <div style={{ marginBottom: "1rem" }}>
+              <Input
+                inputType="input"
+                id="jobFunction"
+                inputClass="Position"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Posisi pekerjaan yang ditawarkan*"
+              />
             </div>
 
             <Input
@@ -288,12 +291,16 @@ const OrderBCForm = (props) => {
           </div>
         </div>
 
-        <button
-          disabled={!formState.formIsValid}
-          className={classes.SaveButton}
-        >
-          <span>Place order</span>
-        </button>
+        <div className={classes.Footer}>
+          <Button
+            disabled={!formState.formIsValid}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </React.Fragment>
   );

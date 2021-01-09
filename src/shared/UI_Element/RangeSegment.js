@@ -43,10 +43,10 @@ const RangeSegment = (props) => {
                   subTitle={
                     content.major || content.prevCompany || content.organization
                   }
-                  start={moment(content.startDate).format("MMMM D, YYYY")}
+                  start={moment(content.startDate).format("MMMM YYYY")}
                   end={
                     moment(content.endDate).year() < 10000
-                      ? moment(content.endDate).format("MMMM D, YYYY")
+                      ? moment(content.endDate).format("MMMM  YYYY")
                       : "No expiry date"
                   }
                   description={content.description}

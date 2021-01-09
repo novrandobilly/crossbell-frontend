@@ -61,83 +61,82 @@ const OrderES = (props) => {
   if (!props.isLoading && data) {
     content = (
       <div className={classes.Container}>
-        <div className={classes.OrderContainer}>
-          <div className={classes.Header}>
-            <div className={classes.OrderHeader}>
-              <p className={classes.ContentIdLabel}>ORDER ID</p>
-              <p className={classes.ContentLabel}>NAMA PERUSAHAAN</p>
-              <p className={classes.ContentLabel}>TANGGAL ORDER</p>
-              <p className={classes.ContentLabel}>TANGGAL DISETUJUI</p>
-              <p className={classes.ContentLabel}>STATUS</p>
-              <p className={classes.ContentLabel}>AKSI</p>
-            </div>
-          </div>
-          {data.map((order, i) => {
-            return (
-              <div className={classes.OrderCard} key={i}>
-                <Link to={`/ad/alphaomega/order/${order._id}/es`}>
-                  <p className={classes.ContentId}>{order._id}</p>{" "}
-                </Link>
-                <p className={classes.ContentCompany}>
-                  {order.companyId.companyName}
-                </p>
-                <p className={classes.ContentDate}>
-                  {moment(order.createdAt).format("D MMM YYYY")}
-                </p>
-                <p className={classes.ContentCompany}>
+        <table className={classes.Table}>
+          <thead className={classes.RowField}>
+            <tr>
+              <th>No</th>
+              <th>Order Id</th>
+              <th>Nama Perusahaan</th>
+              <th>Tanggal Order</th>
+              <th>Tanggal Disetujui</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody className={classes.ColumnField}>
+            {data.map((order, i) => (
+              <tr key={order._id}>
+                <th> {i + 1}</th>
+                <th>{order._id}</th>
+                <th>
+                  {" "}
+                  <Link
+                    to={`/co/${order.id}`}
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    {order.companyId.companyName}
+                  </Link>
+                </th>
+                <th>{moment(order.createdAt).format("D MMM YYYY")}</th>
+                <th>
                   {order.approvedAt
                     ? moment(order.approvedAt).format("D MMM YYYY")
                     : "not approved"}
-                </p>
-                {props.indexIsLoading && index === i ? (
-                  <SpinnerCircle />
-                ) : (
-                  <p
-                    className={classes.Content}
-                    style={
-                      order.status === "Closed"
-                        ? { color: "gray" }
-                        : { color: "green" }
-                    }
-                  >
-                    {order.status}
-                  </p>
-                )}
-                <div className={classes.DropDown}>
-                  <button className={classes.DropButton}>
-                    <ArrowDropDownIcon />
-                  </button>
-                  <div className={classes.DropDownContent}>
-                    <button
-                      style={{ color: "Green" }}
-                      onClick={() =>
-                        updateStatusHandler({
-                          orderId: order._id,
-                          status: "Open",
-                          i,
-                        })
+                </th>
+
+                <th>
+                  {props.indexIsLoading && index === i ? (
+                    <SpinnerCircle />
+                  ) : (
+                    <p
+                      className={classes.Content}
+                      style={
+                        order.status === "Closed"
+                          ? { color: "gray" }
+                          : { color: "green" }
                       }
                     >
-                      Open
+                      {order.status}
+                    </p>
+                  )}
+                </th>
+
+                <th>
+                  <div className={classes.DropDown}>
+                    <button className={classes.DropButton}>
+                      <ArrowDropDownIcon />
                     </button>
-                    <button
-                      style={{ color: "Red" }}
-                      onClick={() =>
-                        updateStatusHandler({
-                          orderId: order._id,
-                          status: "Closed",
-                          i,
-                        })
-                      }
-                    >
-                      Closed
-                    </button>
+                    <div className={classes.DropDownContent}>
+                      <button
+                        style={{ color: "Red" }}
+                        onClick={() =>
+                          updateStatusHandler({
+                            orderId: order._id,
+                            status: "Closed",
+                            i,
+                          })
+                        }
+                      >
+                        Closed
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }

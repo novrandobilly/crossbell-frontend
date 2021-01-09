@@ -8,8 +8,6 @@ import classes from "./TextOnly.module.css";
 const Button = (props) => {
   return (
     <div className={classes.Wraper}>
-      <div className={classes.Line}></div>
-
       <div className={classes.Container}>
         <div className={classes.Header}>
           {props.labelName && (

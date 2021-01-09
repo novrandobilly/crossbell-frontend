@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
+  position: relative;
 }
 
 .Square {
@@ -14,7 +15,8 @@
   background-color: rgba(58, 81, 153, 1);
   transform: rotate(45deg);
   position: absolute;
-  left: 4.47rem;
+  left: -0.95rem;
+  /* border-radius: 1rem; */
 }
 
 .Title {

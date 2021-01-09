@@ -313,3 +313,87 @@ export const sentApplicantBC = (InputBC) => {
     }
   };
 };
+
+const updateAdminSuccess = (payload) => {
+  return {
+    type: actionTypes.UPDATEADMINSUCCESS,
+    payload: payload,
+  };
+};
+const updateAdminFail = () => {
+  return {
+    type: actionTypes.UPDATEADMINFAIL,
+  };
+};
+const updateAdminStart = () => {
+  return {
+    type: actionTypes.UPDATEADMINSTART,
+  };
+};
+
+export const updateAdminIntro = (payload) => {
+  return async (dispatch) => {
+    dispatch(updateAdminStart());
+    console.log("from action", payload);
+    try {
+      const formData = new FormData();
+      formData.append("picture", payload.picture);
+      formData.append("email", payload.email);
+      formData.append("dateOfBirth", payload.dateOfBirth);
+      formData.append("address", payload.address);
+      formData.append("password", payload.password);
+      formData.append("phoneNumber", payload.phoneNumber);
+      formData.append("role", payload.role);
+
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/${payload.applicantId}/profile`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: formData,
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(response, responseJSON);
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(updateAdminSuccess(responseJSON.foundAdmin));
+      return responseJSON.foundAdmin;
+    } catch (err) {
+      console.log(err, typeof err);
+      dispatch(updateAdminFail());
+      return err;
+    }
+  };
+};
+
+export const getAdmin = (payload) => {
+  return async (dispatch) => {
+    dispatch(updateAdminStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/${payload.userId}/profile`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(updateAdminSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(updateAdminFail);
+    }
+  };
+};

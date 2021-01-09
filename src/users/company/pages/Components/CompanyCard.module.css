@@ -1,16 +1,20 @@
 .Wraper {
-  background-color: white;
-  padding: 2rem 4rem 4rem 2rem;
+  padding: 2rem 2rem 4rem 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .Container {
+  background-color: white;
+  border-radius: 0.2rem;
   display: flex;
-  flex-direction: row;
-  font-family: sans-serif;
-  height: 15rem;
-  margin-left: 2rem;
-  margin-right: 5.2rem;
-  justify-content: space-between;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  padding: 1rem;
+  margin-right: 1rem;
 }
 
 .Container a {
@@ -19,143 +23,96 @@
 
 .ContainerLeft {
   display: flex;
-  flex-direction: row;
-}
-
-.ContainerLeftDivider {
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-}
-
-.ContainerSizeIn {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  color: rgba(0, 0, 0, 0.6);
-  margin-top: -2rem;
+  text-align: left;
 }
 
 .Logo {
   width: 15rem;
-  height: auto;
-  margin-right: 2rem;
-  margin-left: 3rem;
+  height: 15rem;
 }
 
 .CompanyName {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-}
-
-.CompanySize {
-  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
 }
 
 .CompanyIndustry {
-  margin-left: 0.5rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.8rem;
 }
 
 .CompanyHeadquarter {
-  font-size: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.1rem;
 }
 
 .CompanyWebsites {
   cursor: pointer;
-  margin-left: -1.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgba(58, 81, 153, 1);
+}
+
+.EditProfile {
+  align-self: flex-end;
+  margin-top: 1rem;
 }
 
 .LinkIcon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.7rem;
+  height: 1.7rem;
   opacity: 0.8;
 }
 
-.DetailContainer {
-  margin-left: 5rem;
-  margin-right: 5rem;
-  size: 90rem;
-}
-
-.CompanyDetail {
-  font-size: 1rem;
-  text-align: left;
-}
-
-.DetailLabel {
-  font-size: 1.7rem;
-  font-weight: bold;
-}
-
-.MissionContainer {
-  margin-left: 5rem;
-  margin-right: 5rem;
-  size: 90rem;
-}
-
-.CompanyMission {
-  font-size: 1rem;
-  text-align: left;
-}
-
-.MissionLabel {
-  font-size: 1.7rem;
-  font-weight: bold;
-}
-
-.Line {
-  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
-  margin-left: 2rem;
-  margin-right: 2rem;
-  padding-bottom: 3rem;
-}
-
-.ContainerRight {
-  margin-left: 2rem;
-  margin-top: 2rem;
-}
-
-.AddJob {
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 5rem;
-  border: solid 0.1rem rgba(0, 0, 0, 0.4);
-  margin-left: 1rem;
-  transition: all 0.5s;
-  cursor: pointer;
-  outline: none;
-}
-
-.AddJob span {
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.AddJob span:after {
-  content: "Edit";
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: 0rem;
-  transition: 0.5s;
-}
-
-.AddJob:hover span {
-  padding-right: 2rem;
-}
-
-.AddJob:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-.AddJob:hover {
-  width: 5rem;
-}
-
-.Header {
+.PicContainer {
+  background-color: white;
+  border-radius: 0.2rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  padding: 1rem 4rem 4rem 4rem;
+  text-align: left;
+  width: auto;
+}
+
+.PicHeader {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.Title {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.PicContent {
+  display: flex;
+  line-height: 0;
+  font-size: 0.9rem;
+}
+
+.TextHolder {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10rem;
+}
+
+.TextWraper {
+  display: flex;
+}
+
+.PicLabel {
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 1rem;
 }

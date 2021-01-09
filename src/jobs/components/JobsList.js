@@ -337,7 +337,7 @@ const JobsList = (props) => {
                 value="intern"
                 id="intern"
               />
-              <p>intern</p>
+              <p>intern/ magang</p>
             </div>
           </div>
         </div>
@@ -377,7 +377,7 @@ const JobsList = (props) => {
       </div>
 
       <div className={classes.JobList}>
-        {displayJobs && displayJobs.length > 0 ? (
+        {displayJobs.length > 0 && displayData.length > 0 ? (
           displayJobs.map((job) => (
             <JobCard
               key={job._id}

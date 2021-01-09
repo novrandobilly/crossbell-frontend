@@ -4,6 +4,7 @@
 
 .OrderCard {
   margin-right: 2rem;
+  background-color: white;
 }
 
 .CardHolder {
@@ -12,12 +13,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 0 0.5rem 0.1rem rgb(107, 107, 107);
+  box-shadow: 1px 1px 10px rgb(0, 0, 0, 0.4);
   transition: all 0.5s;
-}
-
-.CardHolder:hover {
-  box-shadow: 0 0 1rem 0.01rem rgb(3, 3, 3);
+  border-radius: 0.2rem;
+  overflow: hidden;
 }
 
 .CardHeader {

@@ -5,8 +5,8 @@ import { useForm } from "../../../../shared/utils/useForm";
 import moment from "moment";
 
 import * as actionCreators from "../../../../store/actions/index";
-import { VALIDATOR_ALWAYSTRUE } from "../../../../shared/utils/validator";
-import Input from "../../../../shared/UI_Element/Input";
+// import { VALIDATOR_ALWAYSTRUE } from "../../../../shared/utils/validator";
+// import Input from "../../../../shared/UI_Element/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import SendIcon from "@material-ui/icons/Send";
@@ -42,6 +42,8 @@ const DetailBC = (props) => {
   );
 
   const { getOrderInvoice, getAllApplicant } = props;
+
+  console.log(onInputHandler);
 
   useEffect(() => {
     const token = props.admin.token;
