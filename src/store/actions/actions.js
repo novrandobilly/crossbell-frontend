@@ -64,10 +64,13 @@ export const GETALLJOB = "GET_ALL_JOB";
 export const GETALLJOBFAIL = "GET_ALL_JOB_FAIL";
 export const GETALLJOBSTART = "GET_ALL_JOB_START";
 
-export const UPDATEADMINSUCCESS = "UPDATE_SUCCESS_ADMIN";
+export const UPDATEADMINSUCCESS = "UPDATE_ADMIN_SUCCESS";
 export const UPDATEADMINFAIL = "UPDATE_ADMIN_FAIL";
 export const UPDATEADMINSTART = "UPDATE_ADMIN_START";
 
+export const GETADMIN = "GET_ADMIN";
+export const GETADMINFAIL = "GET_ADMIN_FAIL";
+export const GETADMINSTART = "GET_ADMIN_START";
 //============================= FeedBack ==============================
 export const CREATEFEEDBACKSUCCESS = "CREATE_FEEDBACK_SUCCESS";
 export const CREATEFEEDBACKFAIL = "CREATE_FEEDBACK_FAIL";

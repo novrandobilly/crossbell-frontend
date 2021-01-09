@@ -73,21 +73,24 @@ const adminReducer = (state = initialState, action) => {
         tokenExpirationDate: null,
       };
     }
-    case actionTypes.UPDATEADMINSTART: {
+    case actionTypes.UPDATEADMINSTART:
+    case actionTypes.GETADMINSTART: {
       return {
         ...state,
         isLoading: true,
         error: false,
       };
     }
-    case actionTypes.UPDATEADMINSUCCESS: {
+    case actionTypes.UPDATEADMINSUCCESS:
+    case actionTypes.GETADMIN: {
       return {
         ...state,
         isLoading: false,
         error: false,
       };
     }
-    case actionTypes.UPDATEADMINFAIL: {
+    case actionTypes.UPDATEADMINFAIL:
+    case actionTypes.GETADMINFAIL: {
       return {
         ...state,
         isLoading: false,

@@ -52,6 +52,7 @@ const getAllJobStart = () => {
     type: actionTypes.GETALLJOBSTART,
   };
 };
+
 const fetchCompanyStart = () => {
   return {
     type: actionTypes.FETCHCOMPANYSTART,
@@ -68,6 +69,39 @@ const fetchCompanyFail = () => {
   };
 };
 
+const getAdminStart = () => {
+  return {
+    type: actionTypes.GETADMINSTART,
+  };
+};
+const getAdminSuccess = () => {
+  return {
+    type: actionTypes.GETADMIN,
+  };
+};
+const getAdminFail = () => {
+  return {
+    type: actionTypes.GETADMINFAIL,
+  };
+};
+
+const updateAdminSuccess = (payload) => {
+  return {
+    type: actionTypes.UPDATEADMINSUCCESS,
+    payload: payload,
+  };
+};
+const updateAdminFail = () => {
+  return {
+    type: actionTypes.UPDATEADMINFAIL,
+  };
+};
+const updateAdminStart = () => {
+  return {
+    type: actionTypes.UPDATEADMINSTART,
+  };
+};
+
 export const admReg = (payload) => {
   return async (dispatch) => {
     dispatch(adminStart());
@@ -81,7 +115,7 @@ export const admReg = (payload) => {
       dateOfBirth: payload.dateOfBirth,
       address: payload.address,
       phoneNumber: payload.phoneNumber,
-      jobTitle: payload.jobTitle,
+      role: payload.role,
       verificationKey: payload.verificationKey,
     };
     console.log(newAdminData);
@@ -314,23 +348,6 @@ export const sentApplicantBC = (InputBC) => {
   };
 };
 
-const updateAdminSuccess = (payload) => {
-  return {
-    type: actionTypes.UPDATEADMINSUCCESS,
-    payload: payload,
-  };
-};
-const updateAdminFail = () => {
-  return {
-    type: actionTypes.UPDATEADMINFAIL,
-  };
-};
-const updateAdminStart = () => {
-  return {
-    type: actionTypes.UPDATEADMINSTART,
-  };
-};
-
 export const updateAdminIntro = (payload) => {
   return async (dispatch) => {
     dispatch(updateAdminStart());
@@ -339,18 +356,17 @@ export const updateAdminIntro = (payload) => {
       const formData = new FormData();
       formData.append("picture", payload.picture);
       formData.append("email", payload.email);
-      formData.append("dateOfBirth", payload.dateOfBirth);
       formData.append("address", payload.address);
       formData.append("password", payload.password);
       formData.append("phoneNumber", payload.phoneNumber);
       formData.append("role", payload.role);
 
       const response = await fetch(
-        `http://localhost:5000/api/alphaomega/${payload.applicantId}/profile`,
+        `http://localhost:5000/api/alphaomega/${payload.userId}/profile`,
         {
           method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${payload.token}`,
           },
           body: formData,
@@ -373,7 +389,7 @@ export const updateAdminIntro = (payload) => {
 
 export const getAdmin = (payload) => {
   return async (dispatch) => {
-    dispatch(updateAdminStart());
+    dispatch(getAdminStart());
     try {
       const response = await fetch(
         `http://localhost:5000/api/alphaomega/${payload.userId}/profile`,
@@ -390,10 +406,10 @@ export const getAdmin = (payload) => {
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
-      dispatch(updateAdminSuccess(responseJSON));
+      dispatch(getAdminSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
-      dispatch(updateAdminFail);
+      dispatch(getAdminFail());
     }
   };
 };

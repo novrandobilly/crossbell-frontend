@@ -181,9 +181,8 @@ const EditIntro = (props) => {
     try {
       const res = await props.updateApplicantIntro(ApplicantData);
       if (res) {
-        // console.log(res);
+        console.log(res);
       }
-
       props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);
