@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(250, 250, 250);
-  margin-bottom: -2rem;
+  background-color: rgba(250, 250, 250);
 }
 
 .Container a {
@@ -11,75 +10,50 @@
   color: black;
 }
 
-.OrderContainer {
+.Table {
   width: 80%;
-  border: solid 0.05rem rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  border-collapse: collapse;
+  box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
   background-color: white;
+  border-radius: 10px;
+  margin-top: 2rem;
 }
 
-.Header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: rgba(58, 81, 153, 1);
-}
-
-.OrderHeader {
-  display: flex;
+.Table tr {
   align-items: center;
-  justify-content: space-around;
-  padding: 0 1rem 0 1rem;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.Table th {
+  text-align: left;
+  font-weight: normal;
+}
+
+Table tr:first-child th:first-child,
+Table.Info tr:first-child td:first-child {
+  border-top-left-radius: 6px;
+}
+
+Table tr:first-child th:last-child,
+Table.Info tr:first-child td:last-child {
+  border-top-right-radius: 6px;
+}
+
+Table tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}
+
+.RowField th {
+  padding: 1rem;
+  background-color: #d7e2ff;
+  font-weight: 500;
   background-color: rgba(58, 81, 153, 1);
-  width: 74rem;
-  height: 3rem;
   color: white;
 }
 
-.OrderCard {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.ColumnField th {
+  font-size: 0.85rem;
   padding: 0 1rem 0 1rem;
-  margin-top: 1rem;
-  /* box-shadow: 0 0 0.3rem 0.01rem rgb(107, 107, 107); */
-  background-color: #d7e2ff;
-  width: 72rem;
-  height: 3rem;
-  font-size: 1rem;
-}
-
-.ContentCompany {
-  width: 8rem;
-  text-align: left;
-  margin-left: 3rem;
-}
-
-.Content {
-  text-align: left;
-  margin-right: 2rem;
-  text-align: center;
-}
-
-.ContentDate {
-  margin-right: 1rem;
-  margin-left: 2rem;
-}
-
-.ContentIdLabel {
-  margin-right: 3rem;
-  margin-left: 2rem;
-}
-
-.ContentId {
-  width: 10rem;
-  margin-right: 0rem;
 }
 
 .DropButton {
@@ -87,8 +61,6 @@
   border: none;
   cursor: pointer;
   font-weight: bold;
-  margin-right: 2rem;
-  margin-left: -2rem;
   font-size: 1rem;
 }
 

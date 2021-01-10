@@ -52,6 +52,7 @@ const getAllJobStart = () => {
 		type: actionTypes.GETALLJOBSTART
 	};
 };
+
 const fetchCompanyStart = () => {
 	return {
 		type: actionTypes.FETCHCOMPANYSTART
@@ -68,6 +69,78 @@ const fetchCompanyFail = () => {
 	};
 };
 
+<<<<<<< HEAD
+const getAdminStart = () => {
+  return {
+    type: actionTypes.GETADMINSTART,
+  };
+};
+const getAdminSuccess = () => {
+  return {
+    type: actionTypes.GETADMIN,
+  };
+};
+const getAdminFail = () => {
+  return {
+    type: actionTypes.GETADMINFAIL,
+  };
+};
+
+const updateAdminSuccess = (payload) => {
+  return {
+    type: actionTypes.UPDATEADMINSUCCESS,
+    payload: payload,
+  };
+};
+const updateAdminFail = () => {
+  return {
+    type: actionTypes.UPDATEADMINFAIL,
+  };
+};
+const updateAdminStart = () => {
+  return {
+    type: actionTypes.UPDATEADMINSTART,
+  };
+};
+
+export const admReg = (payload) => {
+  return async (dispatch) => {
+    dispatch(adminStart());
+    const newAdminData = {
+      NIK: payload.NIK,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email,
+      password: payload.password,
+      gender: payload.gender,
+      dateOfBirth: payload.dateOfBirth,
+      address: payload.address,
+      phoneNumber: payload.phoneNumber,
+      role: payload.role,
+      verificationKey: payload.verificationKey,
+    };
+    console.log(newAdminData);
+    try {
+      const res = await fetch("http://localhost:5000/api/alphaomega/admreg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newAdminData),
+      });
+      const responseJSON = await res.json();
+      console.log(responseJSON);
+      if (!res.ok) {
+        throw new Error("Admin sign up failed");
+      }
+      dispatch(adminFinish(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(adminFail());
+      return err;
+    }
+  };
+=======
 export const admReg = payload => {
 	return async dispatch => {
 		dispatch(adminStart());
@@ -104,6 +177,7 @@ export const admReg = payload => {
 			return err;
 		}
 	};
+>>>>>>> master
 };
 
 export const admSignIn = loginData => {
@@ -292,4 +366,70 @@ export const sentApplicantBC = InputBC => {
 			dispatch(getAllApplicantFail());
 		}
 	};
+};
+
+export const updateAdminIntro = (payload) => {
+  return async (dispatch) => {
+    dispatch(updateAdminStart());
+    console.log("from action", payload);
+    try {
+      const formData = new FormData();
+      formData.append("picture", payload.picture);
+      formData.append("email", payload.email);
+      formData.append("address", payload.address);
+      formData.append("password", payload.password);
+      formData.append("phoneNumber", payload.phoneNumber);
+      formData.append("role", payload.role);
+
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/${payload.userId}/profile`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: formData,
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(response, responseJSON);
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(updateAdminSuccess(responseJSON.foundAdmin));
+      return responseJSON.foundAdmin;
+    } catch (err) {
+      console.log(err, typeof err);
+      dispatch(updateAdminFail());
+      return err;
+    }
+  };
+};
+
+export const getAdmin = (payload) => {
+  return async (dispatch) => {
+    dispatch(getAdminStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/${payload.userId}/profile`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getAdminSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAdminFail());
+    }
+  };
 };

@@ -1,9 +1,22 @@
 .Wraper {
-  background-color: white;
-  padding: 2rem 4rem 4rem 2rem;
+  padding: 2rem 2rem 4rem 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .Container {
+<<<<<<< HEAD
+  background-color: white;
+  border-radius: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  padding: 1rem;
+  margin-right: 1rem;
+=======
 
   display: flex;
   flex-direction: row;
@@ -13,6 +26,7 @@
   margin-right: 5.2rem;
   justify-content: space-between;
 
+>>>>>>> master
 }
 
 .Container a {
@@ -20,6 +34,101 @@
 }
 
 .ContainerLeft {
+<<<<<<< HEAD
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.Logo {
+  width: 15rem;
+  height: 15rem;
+}
+
+.CompanyName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.CompanyIndustry {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.8rem;
+}
+
+.CompanyHeadquarter {
+  font-size: 0.75rem;
+  line-height: 1.1rem;
+}
+
+.CompanyWebsites {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgba(58, 81, 153, 1);
+}
+
+.EditProfile {
+  align-self: flex-end;
+  margin-top: 1rem;
+}
+
+.LinkIcon {
+  width: 1.7rem;
+  height: 1.7rem;
+  opacity: 0.8;
+}
+
+.PicContainer {
+  background-color: white;
+  border-radius: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  padding: 1rem 4rem 4rem 4rem;
+  text-align: left;
+  width: auto;
+}
+
+.PicHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Title {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.PicContent {
+  display: flex;
+  line-height: 0;
+  font-size: 0.9rem;
+}
+
+.TextHolder {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10rem;
+}
+
+.TextWraper {
+  display: flex;
+}
+
+.PicLabel {
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 1rem;
+=======
 	display: flex;
 	flex-direction: row;
 }
@@ -169,4 +278,5 @@
 	background-position: center;
 	background-size: cover;
 	margin-right: 2rem;
+>>>>>>> master
 }

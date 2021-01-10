@@ -1,108 +1,70 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .ContainerFlex {
-	width: 20rem;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	border: 0.1rem solid grey;
-	border-radius: 1rem;
-	padding-bottom: 2rem;
-	background-color: rgba(213, 214, 210, 1);
-	font-family: sans-serif;
-	padding-left: 1.7rem;
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: none;
+  border-radius: 1rem;
+  background-color: white;
+  font-family: sans-serif;
+  padding: 0rem 2rem 1rem 2rem;
+  margin-top: 2rem;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .FormTitle {
-	font-size: 1.4rem;
-	font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 0;
 }
 
-.SubmitButton {
-	margin-top: 1rem;
-	width: 18.25rem;
-	height: 3rem;
-	border: none;
-	border-radius: 0.5rem;
-	color: white;
-	background-color: rgba(58, 81, 153, 1);
-	font-size: 1rem;
-	font-weight: bold;
-	transition: all 0.5s;
-	cursor: pointer;
-	outline: none;
+.Content {
+  width: 100%;
 }
 
-.SubmitButton:disabled {
-	color: #ccc;
-	cursor: not-allowed;
-	background-color: gray;
+.ContentTop {
+  display: flex;
+  justify-content: space-between;
 }
 
-.SubmitButton:enabled span {
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
+.ContentLeft {
+  width: 100%;
+  padding: 0 2rem 0 0;
 }
 
-.SubmitButton:enabled span:after {
-	content: "\2192";
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -2rem;
-	transition: 0.5s;
+.ContentRight {
+  width: 100%;
+  padding: 0 0 0 2rem;
 }
 
-.SubmitButton:hover:enabled span {
-	padding-right: 1.5rem;
-}
-
-.SubmitButton:hover:enabled span:after {
-	opacity: 1;
-	right: 0;
+.ContentBottom {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 1rem 0;
 }
 
 .ChangeSign {
-	margin-top: 1.5rem;
-	border: none;
-	color: blue;
-	background-color: transparent;
-	font-size: 0.8rem;
-	font-weight: bold;
-	cursor: pointer;
-	outline: none;
+  margin-top: 1.5rem;
+  border: none;
+  color: blue;
+  background-color: transparent;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
 }
 
 .Sign {
-	color: black;
-	font-size: 0.8rem;
-	font-weight: bold;
-	margin-bottom: -0.5rem;
-}
-
-.CompanyRegister {
-	outline: none;
-	border: solid 0.1rem rgba(0, 0, 0, 0.5);
-	border-radius: 0.5rem;
-	background-color: rgba(47, 46, 51, 1);
-	color: white;
-	align-self: flex-end;
-	margin-right: 1.7rem;
-	font-size: 0.8rem;
-	font-weight: bold;
-	opacity: 0.6;
-	transition: 0.3s;
-	margin-bottom: 1rem;
-	cursor: pointer;
-}
-
-.CompanyRegister:hover {
-	opacity: 1;
-	background-color: rgba(58, 81, 153, 1);
-	border-color: rgba(58, 81, 153, 1);
+  color: black;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: -0.5rem;
 }

@@ -91,25 +91,21 @@ const Input = (props) => {
       break;
     case "number":
       inputElement = (
-        <input
+        <TextField
+          size="small"
+          id={id}
           className={[classes.InputElements, classes[props.inputClass]].join(
             " "
           )}
-          style={{
-            backgroundColor:
-              state.isValid || !state.isTouched
-                ? "white"
-                : " rgb(215, 226, 255)",
-          }}
-          id={id}
-          type={props.type || "text"}
+          style={{ margin: "0.6rem 0" }}
+          label={props.label}
           name={props.name}
+          type={props.type || "text"}
           value={state.value}
+          // type={props.type || "text"}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          placeholder={props.placeholder || ""}
-          min={props.min}
-          max={props.max}
+          InputProps={{ inputProps: { min: props.min, max: props.max } }}
           step={props.step}
         />
       );
@@ -129,7 +125,7 @@ const Input = (props) => {
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
           multiline
-          rows={12}
+          rows={props.rows || 4}
           variant="outlined"
         />
       );

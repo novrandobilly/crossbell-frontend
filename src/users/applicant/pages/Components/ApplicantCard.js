@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import IconButton from "../../../../shared/UI_Element/IconButton";
@@ -14,7 +13,7 @@ import classes from "./ApplicantCard.module.css";
 
 const ApplicantCard = (props) => {
   return (
-    <React.Fragment>
+    <div className={classes.Wraper}>
       <div className={classes.Container}>
         <div className={classes.ApplicantContainer}>
           <div className={classes.ContainerLeft}>
@@ -40,30 +39,10 @@ const ApplicantCard = (props) => {
                 {props.firstName} {props.lastName}
               </p>
               <p className={classes.Title}>{props.headline}</p>
+              <p className={classes.Address}>{props.address}</p>
 
-              <div className={classes.ContainerHouse}>
-                <p className={classes.Address}>{props.address}</p>
-                <p>-</p>
-                <p className={classes.City}>{props.city}</p>
-              </div>
-
-              <div className={classes.ContainerHouse}>
-                <p className={classes.Email}>{props.email}</p>
-                <p className={classes.Email}>{props.phone}</p>
-                <p className={classes.Email}>
-                  {moment().diff(props.dateOfBirth, "years", false)} tahun
-                </p>
-              </div>
-
-              <a href={props.website} className={classes.Websites}>
-                <img
-                  className={classes.LinkIcon}
-                  alt="web-icon"
-                  src={
-                    "https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png"
-                  }
-                />
-              </a>
+              <p className={classes.Email}>{props.email}</p>
+              <p className={classes.Email}>{props.phone}</p>
             </div>
           </div>
 
@@ -80,47 +59,49 @@ const ApplicantCard = (props) => {
         </div>
       </div>
 
-      <TextOnly
-        id={props.id}
-        labelName="Summary"
-        route={`/ap/${props.id}/summary`}
-        text={props.details}
-      />
-      <RangeSegment
-        id={props.id}
-        labelName="Education"
-        routeEdit={`/ap/${props.id}/education`}
-        routeAdd={`/ap/${props.id}/add/education`}
-        contents={props.education}
-        state="education"
-        isLoading={props.applicant.isLoading}
-      />
-      <RangeSegment
-        id={props.id}
-        labelName="Experience"
-        routeEdit={`/ap/${props.id}/experience`}
-        routeAdd={`/ap/${props.id}/add/experience`}
-        contents={props.experience}
-        state="experience"
-        isLoading={props.applicant.isLoading}
-      />
-      <RangeSegment
-        id={props.id}
-        labelName="Certification/ Achievement"
-        routeEdit={`/ap/${props.id}/certification`}
-        routeAdd={`/ap/${props.id}/add/certification`}
-        contents={props.certification}
-        state="certification"
-        isLoading={props.applicant.isLoading}
-      />
-      <SkillsMap
-        id={props.id}
-        labelName="Skills"
-        routeEdit={`/ap/${props.id}/skills`}
-        routeAdd={`/ap/${props.id}/add/skills`}
-        skills={props.skills}
-      />
-    </React.Fragment>
+      <div className={classes.SegmentContainer}>
+        <TextOnly
+          id={props.id}
+          labelName="Summary"
+          route={`/ap/${props.id}/summary`}
+          text={props.details}
+        />
+        <RangeSegment
+          id={props.id}
+          labelName="Experience"
+          routeEdit={`/ap/${props.id}/experience`}
+          routeAdd={`/ap/${props.id}/add/experience`}
+          contents={props.experience}
+          state="experience"
+          isLoading={props.applicant.isLoading}
+        />
+        <RangeSegment
+          id={props.id}
+          labelName="Education"
+          routeEdit={`/ap/${props.id}/education`}
+          routeAdd={`/ap/${props.id}/add/education`}
+          contents={props.education}
+          state="education"
+          isLoading={props.applicant.isLoading}
+        />
+        <RangeSegment
+          id={props.id}
+          labelName="Certification/ Achievement"
+          routeEdit={`/ap/${props.id}/certification`}
+          routeAdd={`/ap/${props.id}/add/certification`}
+          contents={props.certification}
+          state="certification"
+          isLoading={props.applicant.isLoading}
+        />
+        <SkillsMap
+          id={props.id}
+          labelName="Skills"
+          routeEdit={`/ap/${props.id}/skills`}
+          routeAdd={`/ap/${props.id}/add/skills`}
+          skills={props.skills}
+        />
+      </div>
+    </div>
   );
 };
 

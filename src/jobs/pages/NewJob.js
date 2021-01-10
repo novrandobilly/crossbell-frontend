@@ -24,7 +24,9 @@ const NewJob = (props) => {
   const [maxSlot, setMaxSlot] = useState(null);
 
   const [fieldOfWork, setFieldOfWork] = useState("");
+  const [employment, setEmployment] = useState("");
   const [open, setOpen] = useState(false);
+  const [employmentOpen, setEmploymentOpen] = useState(false);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -100,12 +102,6 @@ const NewJob = (props) => {
     getSlot();
   }, [onInputHandler, getOneCompany, auth]);
 
-  const onChangeHandler = (e) => {
-    const elementId = e.target.id;
-    const elementValue = e.target.value;
-    onInputHandler(elementId, elementValue, true);
-  };
-
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const jobData = {
@@ -171,6 +167,13 @@ const NewJob = (props) => {
     setFieldOfWork(e.target.value);
   };
 
+  const handleEmploymentChange = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    onInputHandler(elementId, elementValue, true);
+    setEmployment(e.target.value);
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -179,12 +182,20 @@ const NewJob = (props) => {
     setOpen(true);
   };
 
+  const handleEmploymentClose = () => {
+    setEmploymentOpen(false);
+  };
+
+  const handleEmploymentOpen = () => {
+    setEmploymentOpen(true);
+  };
+
   let formContent = (
     <div className={classes.ContainerFlex}>
       <p className={classes.FormTitle}>New Job Advertisement</p>
 
-      <div className={classes.FormRow}>
-        <div className={classes.EditLabel}>
+      <div className={classes.Content}>
+        <div className={classes.ContentLeft}>
           <Input
             inputType="input"
             id="jobTitle"
@@ -196,20 +207,81 @@ const NewJob = (props) => {
 
           <Input
             inputType="input"
-            id="jobDescriptions"
-            inputClass="AddJobInput"
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label="Job Descriptions*"
-          />
-
-          <Input
-            inputType="input"
             id="jobQualification"
             inputClass="AddJobInput"
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
             label="Job Qualification*"
+          />
+
+          <Input
+            inputType="number"
+            id="slotAllocation"
+            inputClass="AddJobInput"
+            validatorMethod={[VALIDATOR_MIN(1)]}
+            onInputHandler={onInputHandler}
+            label="Durasi Penayangan* (dalam Minggu)"
+            type="number"
+            min={0}
+            max={parseInt(maxSlot) * 2 || 0}
+            step="2"
+          />
+
+          <Input
+            inputType="input"
+            id="benefit"
+            inputClass="AddJobInput"
+            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+            onInputHandler={onInputHandler}
+            label="Benefits (optional)"
+          />
+
+          <FormControl
+            className={classes.formControl}
+            style={{
+              width: "100%",
+              marginTop: "0.5rem",
+            }}
+          >
+            <InputLabel id="employment" style={{ fontSize: "1rem" }}>
+              Jenis Pekerjaan*
+            </InputLabel>
+
+            <Select
+              labelId="fieldOfWork"
+              id="employment"
+              name="employment"
+              open={employmentOpen}
+              onClose={handleEmploymentClose}
+              onOpen={handleEmploymentOpen}
+              value={employment}
+              onChange={handleEmploymentChange}
+              style={{
+                fontSize: "0.9rem",
+                textAlign: "left",
+              }}
+            >
+              <MenuItem id={0} value="permanent" style={{ fontSize: "0.9rem" }}>
+                Permanent
+              </MenuItem>
+              <MenuItem id={0} value="contract" style={{ fontSize: "0.9rem" }}>
+                Contract
+              </MenuItem>
+              <MenuItem id={0} value="intern" style={{ fontSize: "0.9rem" }}>
+                intern
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
+        <div className={classes.ContentRight}>
+          <Input
+            inputType="input"
+            id="placementLocation"
+            inputClass="AddJobInput"
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label="Lokasi Penempatan*"
           />
 
           <Input
@@ -223,40 +295,13 @@ const NewJob = (props) => {
 
           <Input
             inputType="input"
-            id="placementLocation"
-            inputClass="AddJobInput"
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label="Lokasi Penempatan*"
-          />
-
-          <label className={classes.LabelName}>Employment Type*</label>
-          <select
-            id="employment"
-            name="employment"
-            value={formState.inputs.employment.value}
-            onChange={onChangeHandler}
-            className={classes.DropDown}
-          >
-            <option id="0" value="permanent">
-              Permanent
-            </option>
-            <option id="1" value="contract">
-              Contract
-            </option>
-            <option id="2" value="intern">
-              Internship
-            </option>
-          </select>
-
-          <Input
-            inputType="input"
             id="emailRecipient"
             inputClass="AddJobInput"
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
             label="Email Recipient*"
           />
+
           <Input
             inputType="input"
             id="salary"
@@ -266,20 +311,12 @@ const NewJob = (props) => {
             label="Salary (optional)"
           />
 
-          <Input
-            inputType="input"
-            id="benefit"
-            inputClass="AddJobInput"
-            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-            onInputHandler={onInputHandler}
-            label="Benefits (optional)"
-          />
           <FormControl
             className={classes.formControl}
-            style={{ marginBottom: "1rem" }}
+            style={{ width: "100%", marginTop: "0.5rem", marginBottom: "1rem" }}
           >
             <InputLabel id="fieldOfWork" style={{ fontSize: "1rem" }}>
-              Bidang pekerjaan
+              Bidang pekerjaan*
             </InputLabel>
 
             <Select
@@ -297,7 +334,7 @@ const NewJob = (props) => {
               }}
             >
               <MenuItem value="" style={{ fontSize: "0.9rem" }}>
-                <em>Belum ada untuk saat ini</em>
+                <em>Pilih</em>
               </MenuItem>
               {WorkFieldData.sort().map((work, i) => {
                 return (
@@ -313,25 +350,24 @@ const NewJob = (props) => {
               })}
             </Select>
           </FormControl>
-          <Input
-            inputType="number"
-            id="slotAllocation"
-            inputClass="AddJobInput"
-            validatorMethod={[VALIDATOR_MIN(1)]}
-            onInputHandler={onInputHandler}
-            label="Durasi Penayangan* (dalam Minggu)"
-            type="number"
-            min="0"
-            max={parseInt(maxSlot) * 2 || "0"}
-            step="2"
-          />
         </div>
+      </div>
+
+      <div style={{ width: "95%", marginTop: "0.5rem" }}>
+        <Input
+          inputType="textarea"
+          id="jobDescriptions"
+          inputClass="AddJobInput"
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label="Job Descriptions*"
+        />
       </div>
       <div
         style={{
           alignSelf: "flex-end",
-          marginRight: "4.9rem",
-          marginTop: "1rem",
+          marginRight: "1rem",
+          marginTop: "2rem",
         }}
       >
         <Button
@@ -341,6 +377,7 @@ const NewJob = (props) => {
           size="small"
           disableElevation
           onClick={onSaveHandler}
+          disabled={!formState.formIsValid}
         >
           save draft
         </Button>
@@ -353,6 +390,7 @@ const NewJob = (props) => {
             size="small"
             disableElevation
             onClick={onSubmitHandler}
+            disabled={!formState.formIsValid}
             style={{ marginLeft: "1rem" }}
           >
             save & publish

@@ -32,4 +32,12 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(ApplicantDetails);
+const mapStateToProps = (state) => {
+  return {
+    login: state.auth.isLogin,
+    admin: state.auth.isAdmin,
+    applicant: state.applicant,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicantDetails);

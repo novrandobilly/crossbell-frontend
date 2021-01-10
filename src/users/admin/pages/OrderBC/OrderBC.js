@@ -62,64 +62,62 @@ const OrderBC = (props) => {
   if (!props.isLoading && data) {
     content = (
       <div className={classes.Container}>
-        <div className={classes.OrderContainer}>
-          <div className={classes.Header}>
-            <div className={classes.OrderHeader}>
-              <p className={classes.ContentIdLabel}>ORDER ID</p>
-              <p className={classes.ContentLabel}>NAMA PERUSAHAAN</p>
-              <p className={classes.ContentLabel}>TANGGAL ORDER</p>
-              <p className={classes.ContentLabel}>TANGGAL DISETUJUI</p>
-              <p className={classes.ContentLabel}>STATUS</p>
-              <p className={classes.ContentLabel}>AKSI</p>
-            </div>
-          </div>
-          {data.map((order, i) => {
-            return (
-              <div className={classes.OrderCard} key={i}>
-                <Link to={`/ad/alphaomega/order/${order._id}/candidate`}>
-                  <p className={classes.ContentId}>{order._id}</p>{" "}
-                </Link>
-                <p className={classes.ContentCompany}>
-                  {order.companyId.companyName}
-                </p>
-                <p className={classes.ContentDate}>
-                  {moment(order.createdAt).format("D MMM YYYY")}
-                </p>
-                <p className={classes.ContentCompany}>
+        <table className={classes.Table}>
+          <thead className={classes.RowField}>
+            <tr>
+              <th>No</th>
+              <th>Order Id</th>
+              <th>Nama Perusahaan</th>
+              <th>Tanggal Order</th>
+              <th>Tanggal Disetujui</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody className={classes.ColumnField}>
+            {data.map((order, i) => (
+              <tr key={order._id}>
+                <th> {i + 1}</th>
+                <th>{order._id}</th>
+                <th>
+                  {" "}
+                  <Link
+                    to={`/co/${order.id}`}
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    {order.companyId.companyName}
+                  </Link>
+                </th>
+                <th>{moment(order.createdAt).format("D MMM YYYY")}</th>
+                <th>
                   {order.approvedAt
                     ? moment(order.approvedAt).format("D MMM YYYY")
                     : "not approved"}
-                </p>
-                {props.indexIsLoading && index === i ? (
-                  <SpinnerCircle />
-                ) : (
-                  <p
-                    className={classes.Content}
-                    style={
-                      order.status === "expired"
-                        ? { color: "gray" }
-                        : order.status === "Pending"
-                        ? { color: "#FF8C00" }
-                        : order.status === "Cancel"
-                        ? { color: "red" }
-                        : { color: "green" }
-                    }
-                  >
-                    {order.status}
-                  </p>
-                )}
-                <div className={classes.DropDown}>
-                  <button className={classes.DropButton}>
-                    <ArrowDropDownIcon />
-                  </button>
-                  <div className={classes.DropDownContent}>
-                    {order.status === "Paid" ? (
-                      <p style={{ color: "gray", width: "10rem" }}>
-                        telah disetujui
-                      </p>
-                    ) : (
+                </th>
+
+                <th>
+                  {props.isLoading && index === i ? (
+                    <SpinnerCircle />
+                  ) : order.status === "Paid" ? (
+                    <span style={{ color: "Green", fontWeight: "bold" }}>
+                      Paid
+                    </span>
+                  ) : (
+                    <span style={{ color: "Orange", fontWeight: "bold" }}>
+                      Pending
+                    </span>
+                  )}
+                </th>
+
+                <th>
+                  <div className={classes.DropDown}>
+                    <button className={classes.DropButton}>
+                      <ArrowDropDownIcon />
+                    </button>
+                    <div className={classes.DropDownContent}>
                       <button
-                        style={{ color: "Green" }}
+                        style={{ color: "green" }}
                         onClick={() =>
                           approveOrderBCHandler({
                             orderId: order._id,
@@ -128,15 +126,15 @@ const OrderBC = (props) => {
                           })
                         }
                       >
-                        setujui
+                        Approve
                       </button>
-                    )}
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
