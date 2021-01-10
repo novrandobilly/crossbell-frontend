@@ -345,6 +345,7 @@ export const updateApplicantCertification = (ApplicantData) => {
   };
 };
 
+<<<<<<< HEAD
 export const updateApplicantSkills = (ApplicantData) => {
   return async (dispatch) => {
     dispatch(updateApplicantStart());
@@ -373,4 +374,30 @@ export const updateApplicantSkills = (ApplicantData) => {
       dispatch(updateApplicantFail);
     }
   };
+=======
+export const updateApplicantSkills = ApplicantData => {
+	return async dispatch => {
+		dispatch(updateApplicantStart());
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: ApplicantData.applicantId,
+					skills: [ ...ApplicantData.skillsData ]
+				})
+			});
+			const responseJSON = await response.json();
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
+			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
+			return responseJSON.foundApplicant;
+		} catch (err) {
+			dispatch(updateApplicantFail);
+		}
+	};
+>>>>>>> master
 };

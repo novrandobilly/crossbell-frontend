@@ -1,99 +1,78 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { useParams, withRouter } from "react-router-dom";
-import { useForm } from "../../../../../shared/utils/useForm";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { useParams, withRouter } from 'react-router-dom';
+import { useForm } from '../../../../../shared/utils/useForm';
 
-import * as actionTypes from "../../../../../store/actions/actions";
-import { VALIDATOR_REQUIRE } from "../../../../../shared/utils/validator";
+import * as actionCreators from '../../../../../store/actions';
+import { VALIDATOR_REQUIRE } from '../../../../../shared/utils/validator';
 
-import Input from "../../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../../shared/UI_Element/SaveButton";
+import Input from '../../../../../shared/UI_Element/Input';
+import SaveButton from '../../../../../shared/UI_Element/SaveButton';
 
-import classes from "./Skill.module.css";
+import classes from './Skill.module.css';
 
-const Skill = (props) => {
-  const { applicantid } = useParams();
-  const [skills, setSkills] = useState([]);
+const Skill = props => {
+	const [ skills, setSkills ] = useState([ 'skill' ]);
 
-  const [formState, onInputHandler] = useForm(
-    {
-      skill: {
-        value: [],
-        isValid: false,
-      },
-    },
-    false
-  );
+	const [ formState, onInputHandler ] = useForm({}, false);
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    const updatedSkills = {
-      applicantId: applicantid,
-      skills: formState.inputs.skills.value,
-    };
-    props.onUpdateAppCertification(updatedSkills);
-    props.history.push(`/ap/${applicantid}`);
-  };
+	const { applicantid } = useParams();
 
-  const addSkill = (e) => {
-    setSkills((prevState) => [...prevState, formState.inputs.skill.value]);
-  };
+	const onSubmitHandler = event => {
+		event.preventDefault();
+		let skillsData = [];
+		for (const key in formState.inputs) {
+			skillsData = skillsData.concat(formState.inputs[key].value);
+		}
+		const updatedData = {
+			applicantId: applicantid,
+			skillsData
+		};
+		props.updateSkills(updatedData);
+		props.history.push(`/ap/${applicantid}`);
+	};
 
-  return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Skills</p>
+	const addSkill = e => {
+		e.preventDefault();
+		setSkills(skills => [ ...skills, 'skill' ]);
+	};
+	console.log(formState);
+	return (
+		<form onSubmit={onSubmitHandler} className={classes.Container}>
+			<div className={classes.ContainerFlex}>
+				<p className={classes.FormTitle}>Skills</p>
 
-        <div className={classes.FormRow}>
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="input"
-              id="skill"
-              inputClass="AddJobInput"
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              placeholder="Ex: Communication"
-            />
-          </div>
+				<div className={classes.FormRow}>
+					{skills.map((skill, i) => {
+						return (
+							<div className={classes.EditLabel} key={i}>
+								<Input
+									inputType='input'
+									id={`skill_${i}`}
+									inputClass='AddJobInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									placeholder='Ex: Communication'
+								/>
+							</div>
+						);
+					})}
+				</div>
 
-          {skills.map((skill, i) => {
-            return (
-              <div className={classes.EditLabel} key={i}>
-                <Input
-                  inputType="input"
-                  id="skill"
-                  inputClass="AddJobInput"
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  placeholder="Ex: Communication"
-                />
-              </div>
-            );
-          })}
-        </div>
+				<button type='button' onClick={addSkill} className={classes.AddButton}>
+					Add Skill
+				</button>
 
-        <button type="button" onClick={addSkill} className={classes.AddButton}>
-          Add Skill
-        </button>
-
-        <SaveButton
-          btnClass="SaveButton"
-          disabled={!formState.formIsValid}
-          placeholder="Save"
-        />
-      </div>
-    </form>
-  );
+				<SaveButton btnClass='SaveButton' disabled={!formState.formIsValid} placeholder='Save' />
+			</div>
+		</form>
+	);
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onUpdateAppCertification: (updatedSkills) =>
-      dispatch({
-        type: actionTypes.CREATEAPPLICANTSKILL,
-        payload: { updatedSkills },
-      }),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		updateSkills: payload => dispatch(actionCreators.updateApplicantSkills(payload))
+	};
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(Skill));
