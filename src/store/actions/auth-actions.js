@@ -48,6 +48,7 @@ export const login = loginData => {
 				})
 			});
 			const resJSON = await res.json();
+			console.log(resJSON);
 			if (!resJSON.token) {
 				throw new Error('Error');
 			}
