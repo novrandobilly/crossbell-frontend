@@ -5,26 +5,7 @@
 }
 
 .ContainerFlex {
-<<<<<<< HEAD
-  width: 40rem;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: none;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  border-radius: 0.5rem;
-  padding-bottom: 2rem;
-  background-color: white;
-  font-family: sans-serif;
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
-
-  padding: 0.5rem 3rem 2rem 3rem;
-=======
-	width: 50rem;
+	width: 40rem;
 	height: auto;
 	display: flex;
 	flex-direction: column;
@@ -38,7 +19,8 @@
 	font-size: 0.8rem;
 	font-weight: bold;
 	color: rgba(0, 0, 0, 0.5);
->>>>>>> master
+
+	padding: 0.5rem 3rem 2rem 3rem;
 }
 
 .FormTitle {
@@ -49,17 +31,11 @@
 }
 
 .FormRow {
-<<<<<<< HEAD
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
-  justify-content: center;
-=======
+	width: 100%;
 	display: flex;
+	flex-direction: row;
 	border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
-	padding-top: 2rem;
->>>>>>> master
+	justify-content: center;
 }
 
 .ProfilePicture {
@@ -84,25 +60,13 @@
 }
 
 .EditLabel {
-<<<<<<< HEAD
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.Footer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-=======
 	display: flex;
 	flex-direction: column;
-	align-self: flex-start;
+	width: 100%;
 }
 
 .Footer {
-	width: 80%;
+	width: 100%;
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 1rem;
@@ -115,5 +79,4 @@
 	background-position: center;
 	background-size: cover;
 	margin-right: 2rem;
->>>>>>> master
 }

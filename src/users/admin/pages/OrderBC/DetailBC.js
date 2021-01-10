@@ -4,18 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
-<<<<<<< HEAD
-import * as actionCreators from "../../../../store/actions/index";
-// import { VALIDATOR_ALWAYSTRUE } from "../../../../shared/utils/validator";
-// import Input from "../../../../shared/UI_Element/Input";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import SendIcon from "@material-ui/icons/Send";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import classes from "./DetailBC.module.css";
-=======
 import * as actionCreators from '../../../../store/actions/index';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Input from '../../../../shared/UI_Element/Input';
@@ -26,7 +14,6 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './DetailBC.module.css';
->>>>>>> master
 
 const DetailBC = props => {
 	const { orderid } = useParams();
@@ -56,17 +43,8 @@ const DetailBC = props => {
 
 	const { getOrderInvoice, getAllApplicant } = props;
 
-<<<<<<< HEAD
-  console.log(onInputHandler);
+	console.log(onInputHandler);
 
-  useEffect(() => {
-    const token = props.admin.token;
-    if (token) {
-      const dataBC = {
-        token: token,
-        orderId: orderid,
-      };
-=======
 	useEffect(
 		() => {
 			const token = props.admin.token;
@@ -75,7 +53,6 @@ const DetailBC = props => {
 					token: token,
 					orderId: orderid
 				};
->>>>>>> master
 
 				getOrderInvoice(dataBC)
 					.then(res => {
