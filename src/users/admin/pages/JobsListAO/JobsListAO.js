@@ -39,18 +39,21 @@ const JobsListAO = props => {
 		setfilter('Expired');
 	};
 
-	const { getAllJob, getWholeCompanies } = props;
+	const { getAllJob, getWholeCompanies, admin } = props;
 	useEffect(
 		() => {
-			getAllJob().then(res => {
-				setData(res.wholeJobs);
-			});
-			getWholeCompanies().then(res => {
-				setCompanyData(res.wholeCompanies);
-				setIsLoading(false);
-			});
+			const payload = { token: admin.token };
+			if (admin.token) {
+				getAllJob(payload).then(res => {
+					setData(res.wholeJobs);
+				});
+				getWholeCompanies().then(res => {
+					setCompanyData(res.wholeCompanies);
+					setIsLoading(false);
+				});
+			}
 		},
-		[ getAllJob, getWholeCompanies, setIsLoading ]
+		[ getAllJob, getWholeCompanies, setIsLoading, admin ]
 	);
 
 	console.log(companyData);
@@ -214,11 +217,17 @@ const JobsListAO = props => {
 	return <div>{content};</div>;
 };
 
+const mapStateToProps = state => {
+	return {
+		admin: state.admin
+	};
+};
+
 const mapDispatchToProps = dispatch => {
 	return {
-		getAllJob: () => dispatch(actionCreators.getAllJob()),
+		getAllJob: payload => dispatch(actionCreators.getAllJob(payload)),
 		getWholeCompanies: () => dispatch(actionCreators.getWholeCompanies())
 	};
 };
 
-export default connect(null, mapDispatchToProps)(JobsListAO);
+export default connect(mapStateToProps, mapDispatchToProps)(JobsListAO);
