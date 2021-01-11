@@ -63,6 +63,85 @@ const CompanyOrderList = (props) => {
   if (!props.isLoading && orderData) {
     content = (
       <div className={classes.Container}>
+        <table className={classes.Table}>
+          <thead className={classes.RowField}>
+            <tr>
+              <th>No</th>
+              <th>Order Id</th>
+              <th>Jenis Pesanan</th>
+              <th>Tanggal Order</th>
+              <th>Jatuh Tempo</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody className={classes.ColumnField}>
+            {orderData.map((order, i) => {
+              let dueDate = Math.ceil(
+                moment(order.dueDate).diff(moment(), "days", true)
+              );
+              return (
+                <tr key={order._id}>
+                  <th> {i + 1}</th>
+                  <th>
+                    <Link
+                      to={
+                        order.slot || order.amount
+                          ? `/co/${order._id}/invoice`
+                          : `/co/order/${order._id}/es`
+                      }
+                      key={i}
+                    >
+                      {order._id}
+                    </Link>
+                  </th>
+
+                  <th>
+                    {order.slot
+                      ? "Reguler"
+                      : order.amount
+                      ? "Bulk Candidate"
+                      : "Executive Search"}
+                  </th>
+                  <th>{moment(order.createdAt).format("D MMM YYYY")}</th>
+                  <th>
+                    <p
+                      style={
+                        dueDate === 0
+                          ? { color: "gray" }
+                          : dueDate <= 3
+                          ? { color: "red" }
+                          : dueDate <= 7
+                          ? { color: "#FF8C00" }
+                          : { color: "green" }
+                      }
+                    >
+                      {order.status === "Pending"
+                        ? `${dueDate} day`
+                        : order.status === "Open"
+                        ? "no due"
+                        : "0 day"}
+                    </p>
+                  </th>
+
+                  <th>
+                    <p
+                      className={classes.Content}
+                      style={
+                        order.status === "Closed"
+                          ? { color: "gray" }
+                          : { color: "green" }
+                      }
+                    >
+                      {order.status}
+                    </p>
+                  </th>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        )
         <div className={classes.Header}>
           <div className={classes.OrderHeader}>
             <p className={classes.ContentIdLabel}>ORDER ID</p>
@@ -72,66 +151,6 @@ const CompanyOrderList = (props) => {
             <p className={classes.Content}>STATUS</p>
           </div>
         </div>
-        {orderData.map((order, i) => {
-          let dueDate = Math.ceil(
-            moment(order.dueDate).diff(moment(), "days", true)
-          );
-
-          return (
-            <Link
-              to={
-                order.slot || order.amount
-                  ? `/co/${order._id}/invoice`
-                  : `/co/order/${order._id}/es`
-              }
-              key={i}
-            >
-              <div className={classes.OrderCard}>
-                <p className={classes.ContentId}>{order._id}</p>
-                <p className={classes.Content}>
-                  {order.slot
-                    ? "Reguler"
-                    : order.amount
-                    ? "Bulk Candidate"
-                    : "Executive Search"}
-                </p>
-                <p className={classes.Content}>
-                  {moment(order.createdAt).format("D MMM YYYY")}
-                </p>
-                <p
-                  className={classes.Content}
-                  style={
-                    dueDate === 0
-                      ? { color: "gray" }
-                      : dueDate <= 3
-                      ? { color: "red" }
-                      : dueDate <= 7
-                      ? { color: "#FF8C00" }
-                      : { color: "green" }
-                  }
-                >
-                  {order.status === "Pending"
-                    ? `${dueDate} day`
-                    : order.status === "Open"
-                    ? "no due"
-                    : "0 day"}
-                </p>
-                <p
-                  className={classes.Content}
-                  style={
-                    order.status === "expired"
-                      ? { color: "gray" }
-                      : order.status === "Pending"
-                      ? { color: "#FF8C00" }
-                      : { color: "green" }
-                  }
-                >
-                  {order.status}
-                </p>
-              </div>
-            </Link>
-          );
-        })}
       </div>
     );
   }

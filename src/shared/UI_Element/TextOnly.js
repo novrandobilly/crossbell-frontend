@@ -7,9 +7,7 @@ import classes from "./TextOnly.module.css";
 
 const Button = (props) => {
   return (
-    <>
-      <div className={classes.Line}></div>
-
+    <div className={classes.Wraper}>
       <div className={classes.Container}>
         <div className={classes.Header}>
           {props.labelName && (
@@ -20,9 +18,9 @@ const Button = (props) => {
           </Link>
         </div>
 
-        <p className={classes.Description}>{props.text}</p>
+        <div className={classes.Description}>{props.text}</div>
       </div>
-    </>
+    </div>
   );
 };
 export default Button;

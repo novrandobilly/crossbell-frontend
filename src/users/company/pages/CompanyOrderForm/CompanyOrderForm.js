@@ -7,6 +7,7 @@ import OrderComponent from "./OrderComponent";
 // import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 import { VALIDATOR_MIN } from "../../../../shared/utils/validator";
+import Button from "@material-ui/core/Button";
 
 // import Modal from "../../../../shared/UI_Element/Modal";
 // import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
@@ -16,9 +17,6 @@ import classes from "./CompanyOrderForm.module.css";
 
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem("userData"));
-
-  // const [price, setPrice] = useState(20000);
-  const price = 20000;
 
   const [formState, onInputHandler] = useForm(
     {
@@ -67,24 +65,21 @@ const CompanyOrderForm = (props) => {
     } catch (err) {
       console.log(err);
     }
-
-    // props.createOrder(orderData);
   };
 
-  // if (formState.inputs.slot.value < 2) {
-  //   setPrice(20000);
-  // }
-  // if (formState.inputs.slot.value < 5) {
-  //   setPrice(17500);
-  // }
-  // if (formState.inputs.slot.value < 10) {
-  //   setPrice(16000);
-  // }
-  // if (formState.inputs.slot.value >= 10) {
-  //   setPrice(15000);
-  // } else {
-  //   setPrice(20000);
-  // }
+  let price;
+
+  if (formState.inputs.slot.value > 4) {
+    price = 17500;
+    if (formState.inputs.slot.value > 10) {
+      price = 16000;
+      if (formState.inputs.slot.value >= 15) {
+        price = 15000;
+      }
+    }
+  } else {
+    price = 20000;
+  }
 
   let formContent = (
     <React.Fragment>
@@ -174,8 +169,16 @@ const CompanyOrderForm = (props) => {
         <p className={classes.PricePerSlot}>
           harga per slot: <span> IDR {price.toLocaleString()}</span>
         </p>
-        <div>
-          <button className={classes.PurchaseButton}>Beli sekarang</button>
+        <div style={{ width: "100%" }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disableElevation
+            style={{ width: "100%", marginTop: "1rem" }}
+          >
+            Submit
+          </Button>
         </div>
       </form>
     </React.Fragment>

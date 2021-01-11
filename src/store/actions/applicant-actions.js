@@ -338,8 +338,7 @@ export const updateApplicantSkills = ApplicantData => {
 				},
 				body: JSON.stringify({
 					id: ApplicantData.applicantId,
-					skills: [ ApplicantData.skills ],
-					index: ApplicantData.index ? ApplicantData.index : null
+					skills: [ ...ApplicantData.skillsData ]
 				})
 			});
 			const responseJSON = await response.json();

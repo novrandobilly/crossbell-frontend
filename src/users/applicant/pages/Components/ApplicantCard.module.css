@@ -1,159 +1,118 @@
+.Wraper {
+  padding: 2rem 2rem 4rem 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 .Container {
-	display: flex;
-	flex-direction: row;
-	font-family: sans-serif;
-	height: 15rem;
-	margin-left: 2rem;
-	margin-right: 5.2rem;
-	margin-top: 6rem;
-	justify-content: space-between;
+  background-color: white;
+  border-radius: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  padding: 1rem;
+  margin-right: 1rem;
 }
 
 .Container a {
   text-decoration: none;
 }
 
+.ApplicantContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .ContainerLeft {
-	display: flex;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .ContainerLeftDivider {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-}
-
-.ContainerHouse {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	font-size: 0.9rem;
-	text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: flex-start;
 }
 
 .Name {
-	font-size: 2rem;
-	font-weight: bold;
-	margin-bottom: -0.6rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
 }
 
 .Title {
-	font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 400;
 }
 
-.Address {
-	margin-right: 0.5rem;
+.ProfileLabel {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 400;
+  padding-bottom: 0.5rem;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.6);
 }
 
 .Email {
-	color: gray;
-	font-size: 0.8rem;
-	margin-right: 2rem;
-}
-
-.City {
-	margin-left: 0.5rem;
-}
-
-.Websites {
-	cursor: pointer;
-}
-
-.LinkIcon {
-	width: 2rem;
-	height: 2rem;
-	opacity: 0.8;
-}
-
-.DetailContainer {
-	margin-left: 5rem;
-	margin-right: 5rem;
-	size: 90rem;
-}
-
-.CompanyDetail {
-	font-size: 1rem;
-	text-align: left;
-}
-
-.DetailLabel {
-	font-size: 1.7rem;
-	font-weight: bold;
-}
-
-.MissionContainer {
-	margin-left: 5rem;
-	margin-right: 5rem;
-	size: 90rem;
-}
-
-.CompanyMission {
-	font-size: 1rem;
-	text-align: left;
-}
-
-.MissionLabel {
-	font-size: 1.7rem;
-	font-weight: bold;
-}
-
-.Line {
-	border-bottom: solid 0.1rem rgba(0, 0, 0, 0.4);
-	margin-left: 2rem;
-	margin-right: 2rem;
-	padding-bottom: 3rem;
+  color: gray;
+  font-size: 0.8rem;
+  line-height: 0;
 }
 
 .ContainerRight {
-	margin-left: 2rem;
-	margin-top: 2rem;
+  align-self: flex-end;
+  margin-top: 1rem;
 }
 
 .AddJob {
-	height: 2.5rem;
-	width: 2.5rem;
-	border-radius: 5rem;
-	border: solid 0.1rem rgba(0, 0, 0, 0.4);
-	margin-left: 1rem;
-	transition: all 0.5s;
-	cursor: pointer;
-	outline: none;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 5rem;
+  border: solid 0.1rem rgba(0, 0, 0, 0.4);
+  margin-left: 1rem;
+  transition: all 0.5s;
+  cursor: pointer;
+  outline: none;
 }
 
 .AddJob span {
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
 }
 
 .AddJob span:after {
-	content: "Edit";
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: 0rem;
-	transition: 0.5s;
+  content: "Edit";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0rem;
+  transition: 0.5s;
 }
 
 .AddJob:hover span {
-	padding-right: 2rem;
+  padding-right: 2rem;
 }
 
 .AddJob:hover span:after {
-	opacity: 1;
-	right: 0;
+  opacity: 1;
+  right: 0;
 }
 
 .AddJob:hover {
-	width: 5rem;
+  width: 5rem;
 }
 
 .Avatar {
-	width: 12rem;
-	height: 12rem;
-	border-radius: 50%;
-	background-position: center;
-	background-size: cover;
-	margin-right: 2rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  margin-right: 2rem;
 }

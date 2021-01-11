@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -9,6 +8,7 @@ import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
 
+import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -17,8 +17,7 @@ import Modal from '../../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Input from '../../../../../shared/UI_Element/Input';
-import SaveButton from '../../../../../shared/UI_Element/SaveButton';
-import WorkFieldData from "../../../../../shared/UI_Element/WorkFieldData";
+import WorkFieldData from '../../../../../shared/UI_Element/WorkFieldData';
 
 import classes from './EditIntro.module.css';
 
@@ -34,6 +33,7 @@ const EditIntro = props => {
 		() => {
 			getOneApplicant(applicantid).then(res => {
 				setData(res.applicant);
+				console.log(res.applicant.interest);
 			});
 		},
 		[ getOneApplicant, applicantid ]
@@ -90,12 +90,10 @@ const EditIntro = props => {
 				value: data ? data.state : null,
 				isValid: data && data.state ? true : false
 			},
-
 			zip: {
 				value: data ? data.zip : null,
 				isValid: data && data.zip ? true : false
 			},
-
 			phone: {
 				value: data ? data.phone : null,
 				isValid: data && data.phone ? true : false
@@ -121,7 +119,7 @@ const EditIntro = props => {
 				isValid: data && data.headhunterProgram ? true : false
 			},
 			interest: {
-				value: data ? data.interest : false,
+				value: data ? data.interest : null,
 				isValid: true
 			}
 		},
@@ -153,9 +151,9 @@ const EditIntro = props => {
 		},
 		[ data, onInputHandler ]
 	);
+
 	const onSubmitHandler = async event => {
 		event.preventDefault();
-
 		if (!formState.formIsValid) {
 			return props.updateApplicantFail();
 		}
@@ -185,9 +183,8 @@ const EditIntro = props => {
 		try {
 			const res = await props.updateApplicantIntro(ApplicantData);
 			if (res) {
-				// console.log(res);
+				console.log(res);
 			}
-
 			props.history.push(`/ap/${applicantid}`);
 		} catch (err) {
 			console.log(err);
@@ -215,12 +212,14 @@ const EditIntro = props => {
 
 		onInputHandler(elementId, elementValue, true);
 	};
+
 	const onCheckedInputHandler = e => {
 		const elementId = e.target.name;
 		const elementValue = e.target.checked;
 
 		onInputHandler(elementId, elementValue, true);
 	};
+
 	const onUploadHandler = e => {
 		const elementId = e.target.name;
 		const elementFile = e.target.files[0];
@@ -235,197 +234,195 @@ const EditIntro = props => {
 				<div className={classes.ContainerFlex}>
 					<p className={classes.FormTitle}>About Me</p>
 
-					<div className={classes.FormRow}>
-						<div className={classes.EditLabel}>
-							<div className={classes.ProfilePicture}>
+					<div className={classes.Content}>
+						<div className={classes.ProfilePicture}>
+							{data.picture && data.picture.url ? (
+								<div
+									className={classes.Avatar}
+									style={{
+										backgroundImage: `url('${data.picture.url}')`
+									}}
+								/>
+							) : (
 								<AccountCircleIcon
 									style={{
 										fontSize: '15rem',
 										marginBottom: '1rem'
 									}}
 								/>
-								<label className={classes.InputButton}>
-									<input type='file' name='picture' id='picture' onChange={onUploadHandler} accept='.jpg, .jpeg, .png' />
-									<span className={classes.InputButtonText}> Upload File </span>
-								</label>
+							)}
+							<label className={classes.InputButton}>
+								<input type='file' name='picture' id='picture' onChange={onUploadHandler} accept='.jpg, .jpeg, .png' />
+								<span className={classes.InputButtonText}> Upload File </span>
+							</label>
+						</div>
+
+						<div className={classes.ContentTop}>
+							<div className={classes.ContentLeft}>
+								<Input
+									inputType='input'
+									id='firstName'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='First Name*'
+									initValue={data.firstName}
+									initIsValid={true}
+								/>
+								<Input
+									inputType='input'
+									id='headline'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='Headline*'
+									initValue={data.headline}
+									initIsValid={true}
+								/>
+
+								<Input
+									inputType='input'
+									id='phone'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='Phone*'
+									initValue={data.phone}
+									initIsValid={true}
+								/>
+
+								<Input
+									inputType='input'
+									id='city'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='City*'
+									initValue={data.city}
+									initIsValid={true}
+								/>
+
+								<Input
+									inputType='input'
+									id='zip'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='Zip*'
+									initValue={data.zip}
+									initIsValid={true}
+								/>
+
+								<p className={classes.Text} style={{ marginBottom: '0.2rem' }}>
+									Tanggal Lahir*
+								</p>
+								<Input
+									inputType='customdate'
+									id='dateOfBirth'
+									validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
+									onInputHandler={onInputHandler}
+									views={[ 'year', 'month', 'date' ]}
+									label='Tanggal Lahir'
+									maxDate={moment()}
+									initValue={data.dateOfBirth}
+									initIsValid={true}
+									format='dd/MM/yyyy'
+								/>
 							</div>
 
-							<Input
-								inputType='input'
-								id='firstName'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='First Name*'
-								initValue={data.firstName}
-								initIsValid={true}
-							/>
+							<div className={classes.ContentRight}>
+								<Input
+									inputType='input'
+									id='lastName'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='Last Name*'
+									initValue={data.lastName}
+									initIsValid={true}
+								/>
 
-							<Input
-								inputType='input'
-								id='lastName'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Last Name*'
-								initValue={data.lastName}
-								initIsValid={true}
-							/>
+								<Input
+									inputType='input'
+									id='email'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_EMAIL() ]}
+									onInputHandler={onInputHandler}
+									label='Email*'
+									initValue={data.email}
+									initIsValid={true}
+								/>
 
-							<Input
-								inputType='input'
-								id='headline'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Headline*'
-								initValue={data.headline}
-								initIsValid={true}
-							/>
+								<Input
+									inputType='input'
+									id='address'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='Address*'
+									initValue={data.address}
+									initIsValid={true}
+								/>
 
-							<Input
-								inputType='customdate'
-								id='dateOfBirth'
-								style={{ marginBottom: '1rem' }}
-								validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-								onInputHandler={onInputHandler}
-								views={[ 'year', 'month', 'date' ]}
-								label='Tanggal Lahir'
-								maxDate={moment()}
-								initValue={data.dateOfBirth}
-								initIsValid={true}
-								format='dd/MM/yyyy'
-							/>
+								<Input
+									inputType='input'
+									id='state'
+									inputClass='AppInput'
+									validatorMethod={[ VALIDATOR_REQUIRE() ]}
+									onInputHandler={onInputHandler}
+									label='State*'
+									initValue={data.state}
+									initIsValid={true}
+								/>
 
-							<div
-								id='gender'
-								onChange={onManualInputHandler}
-								style={{
-									textAlign: 'start',
-									marginBottom: '1rem',
-									color: 'rgba(58, 81, 153, 1)',
-									fontSize: '.9rem'
-								}}>
-								Jenis Kelamin:
-								<label>
-									<input type='radio' value='male' name='gender' id='male' /> Pria
-								</label>
-								<label>
-									<input type='radio' value='female' name='gender' id='female' /> Wanita
-								</label>
+								<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem' }}>
+									<InputLabel shrink id='interest'>
+										Bidang minat
+									</InputLabel>
+
+									<Select
+										labelId='interest'
+										id='interest'
+										name='interest'
+										open={open}
+										onClose={handleClose}
+										onOpen={handleOpen}
+										value={data.interest ? data.interest : interest}
+										onChange={handleChange}
+										style={{
+											fontSize: '0.9rem',
+											textAlign: 'left',
+											paddingBottom: '0.15rem',
+											color: 'black'
+										}}>
+										<MenuItem value='' style={{ fontSize: '0.9rem' }}>
+											<em>Belum ada untuk saat ini</em>
+										</MenuItem>
+										{WorkFieldData.sort().map((work, i) => {
+											return (
+												<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
+													{work}
+												</MenuItem>
+											);
+										})}
+									</Select>
+								</FormControl>
+
+								<div id='gender' onChange={onManualInputHandler} style={{ marginTop: '1.3rem' }}>
+									<p className={classes.Text}>Jenis Kelamin*</p>
+									<div className={classes.RadioHolder}>
+										<label style={{ marginRight: '2rem' }} className={classes.RadioButton}>
+											<input type='radio' value='male' name='gender' id='male' /> Pria
+										</label>
+										<label className={classes.RadioButton}>
+											<input type='radio' value='female' name='gender' id='female' /> Wanita
+										</label>
+									</div>
+								</div>
 							</div>
+						</div>
 
-							<Input
-								inputType='input'
-								id='address'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Address*'
-								initValue={data.address}
-								initIsValid={true}
-							/>
-
-							<Input
-								inputType='input'
-								id='city'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='City*'
-								initValue={data.city}
-								initIsValid={true}
-							/>
-
-							<Input
-								inputType='input'
-								id='state'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='State*'
-								initValue={data.state}
-								initIsValid={true}
-							/>
-
-							<Input
-								inputType='input'
-								id='zip'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Zip*'
-								initValue={data.zip}
-								initIsValid={true}
-							/>
-
-							<Input
-								inputType='input'
-								id='email'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_EMAIL() ]}
-								onInputHandler={onInputHandler}
-								label='Email*'
-								initValue={data.email}
-								initIsValid={true}
-							/>
-
-							<Input
-								inputType='input'
-								id='phone'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Phone*'
-								initValue={data.phone}
-								initIsValid={true}
-							/>
-
-							<FormControl
-                className={classes.formControl}
-                style={{ marginBottom: "1rem" }}
-              >
-                {data.interest ? (
-                  <InputLabel id="interest" style={{ fontSize: "1rem" }}>
-                    {data.interest}
-                  </InputLabel>
-                ) : (
-                  <InputLabel id="interest" style={{ fontSize: "1rem" }}>
-                    Bidang minat
-                  </InputLabel>
-                )}
-                <Select
-                  labelId="interest"
-                  id="interest"
-                  name="interest"
-                  open={open}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={interest}
-                  onChange={handleChange}
-                  style={{
-                    fontSize: "0.9rem",
-                    textAlign: "left",
-                  }}
-                >
-                  <MenuItem value="" style={{ fontSize: "0.9rem" }}>
-                    <em>Belum ada untuk saat ini</em>
-                  </MenuItem>
-                  {WorkFieldData.sort().map((work, i) => {
-                    return (
-                      <MenuItem
-                        id={i}
-                        value={work}
-                        style={{ fontSize: "0.9rem" }}
-                        key={i}
-                      >
-                        {work}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-
+						<div className={classes.ContentBottom}>
 							<label onChange={onCheckedInputHandler}>
 								<input id='outOfTown' type='checkbox' name='outOfTown' /> Bersedia ditempatkan di luar kota asal
 							</label>
@@ -447,7 +444,11 @@ const EditIntro = props => {
 						</div>
 					</div>
 
-					<SaveButton btnClass='SaveButton' disabled={!formState.formIsValid} placeholder='Save' />
+					<div className={classes.Footer}>
+						<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
+							Save
+						</Button>
+					</div>
 				</div>
 			</React.Fragment>
 		);
@@ -465,7 +466,6 @@ const EditIntro = props => {
 			{formContent}
 		</form>
 	);
-
 };
 
 const mapStateToProps = state => {

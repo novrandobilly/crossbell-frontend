@@ -19,7 +19,7 @@ import Select from "@material-ui/core/Select";
 import Modal from "../../../../../shared/UI_Element/Modal";
 import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Input from "../../../../../shared/UI_Element/Input";
-import SaveButton from "../../../../../shared/UI_Element/SaveButton";
+import Button from "@material-ui/core/Button";
 
 import classes from "./Education.module.css";
 
@@ -125,7 +125,7 @@ const Education = (props) => {
   if (!props.isLoading && data) {
     formContent = (
       <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Education</p>
+        <p className={classes.FormTitle}>Pendidikan</p>
 
         <div className={classes.FormRow}>
           <div className={classes.EditLabel}>
@@ -143,17 +143,11 @@ const Education = (props) => {
 
           <FormControl
             className={classes.formControl}
-            style={{ marginBottom: "1rem" }}
+            style={{ margin: "0.8rem 0" }}
           >
-            {data.degree ? (
-              <InputLabel id="degree" style={{ fontSize: "1rem" }}>
-                {data.degree}
-              </InputLabel>
-            ) : (
-              <InputLabel id="degree" style={{ fontSize: "1rem" }}>
-                Tingkat
-              </InputLabel>
-            )}
+            <InputLabel shrink id="degree" style={{ fontSize: "1rem" }}>
+              Tingkat Pendidikan
+            </InputLabel>
 
             <Select
               labelId="degree"
@@ -162,7 +156,7 @@ const Education = (props) => {
               open={open}
               onClose={handleClose}
               onOpen={handleOpen}
-              value={degree}
+              value={degree ? degree : data.degree}
               onChange={handleChange}
               style={{ fontSize: "0.9rem", textAlign: "left" }}
             >
@@ -194,7 +188,7 @@ const Education = (props) => {
               inputClass="AddJobInput"
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label="Field of Study *"
+              label="Bidang Studi *"
               initValue={data.major}
               initIsValid={true}
             />
@@ -207,7 +201,7 @@ const Education = (props) => {
               inputClass="AddJobInput"
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label="Location *"
+              label="Lokasi *"
               initValue={data.location}
               initIsValid={true}
             />
@@ -215,13 +209,13 @@ const Education = (props) => {
 
           <div className={classes.Period}>
             <div className={classes.EditLabel}>
+              <p className={classes.Text}>Tahun Mulai *</p>
               <Input
                 inputType="customdate"
                 id="startDate"
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
                 views={["year"]}
-                label="Tahun Mulai"
                 maxDate={moment()}
                 initValue={data.startDate}
                 initIsValid={true}
@@ -229,13 +223,13 @@ const Education = (props) => {
             </div>
 
             <div className={classes.EditLabel}>
+              <p className={classes.Text}>Tahun Selesai *</p>
               <Input
                 inputType="customdate"
                 id="endDate"
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
                 views={["year"]}
-                label="Tahun Selesai"
                 maxDate={moment()}
                 initValue={data.endDate}
                 initIsValid={true}
@@ -250,18 +244,23 @@ const Education = (props) => {
               inputClass="EditProfileTextArea"
               validatorMethod={[VALIDATOR_MINLENGTH(20)]}
               onInputHandler={onInputHandler}
-              label="Description *"
+              label="Deskripsi Pendidikan *"
               initValue={data.description}
               initIsValid={true}
             />
           </div>
         </div>
 
-        <SaveButton
-          btnClass="SaveButton"
-          disabled={!formState.formIsValid}
-          placeholder="Save"
-        />
+        <div className={classes.Footer}>
+          <Button
+            disabled={!formState.formIsValid}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Save
+          </Button>
+        </div>
       </div>
     );
   }

@@ -1,24 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import EditIntro from '../Components/EditIntro';
-import EditCompanyBriefDescriptions from '../Components/EditCompanyBriefDescriptions';
-import EditPIC from '../Components/EditPIC';
-import classes from './CompanyProfileForm.module.css';
+import EditIntro from "../Components/EditIntro";
+import EditCompanyBriefDescriptions from "../Components/EditCompanyBriefDescriptions";
+import EditPIC from "../Components/EditPIC";
 
-const CompanyProfileForm = props => {
-	const [ push, setPush ] = useState(true);
+import classes from "./CompanyProfileForm.module.css";
 
-	const pushHandler = () => {
-		setPush(!push);
-	};
+const CompanyProfileForm = (props) => {
+  const [push, setPush] = useState(true);
+  const [counter, setCounter] = useState(0);
 
-	return (
-		<div className={classes.Form}>
-			<EditIntro FlexClass='FlexContainer' push={push} pushHandler={pushHandler} />
-			<EditCompanyBriefDescriptions push={push} pushHandler={pushHandler} />
-			<EditPIC push={push} pushHandler={pushHandler} />
-		</div>
-	);
+  const pushHandler = () => {
+    setPush(!push);
+  };
+
+  const onNextHandler = () => {
+    setCounter((prevState) => {
+      return prevState + 1;
+    });
+  };
+
+  const onBackHandler = () => {
+    setCounter((prevState) => {
+      return prevState - 1;
+    });
+  };
+
+  return (
+    <div className={classes.Form}>
+      {counter === 0 ? (
+        <EditIntro
+          FlexClass="FlexContainer"
+          push={push}
+          pushHandler={pushHandler}
+          onNextHandler={onNextHandler}
+        />
+      ) : counter === 1 ? (
+        <EditCompanyBriefDescriptions
+          push={push}
+          pushHandler={pushHandler}
+          onNextHandler={onNextHandler}
+          onBackHandler={onBackHandler}
+        />
+      ) : (
+        <EditPIC
+          push={push}
+          pushHandler={pushHandler}
+          onBackHandler={onBackHandler}
+        />
+      )}
+    </div>
+  );
 };
 
 export default CompanyProfileForm;

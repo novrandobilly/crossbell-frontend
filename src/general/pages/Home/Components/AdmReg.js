@@ -1,232 +1,267 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { useForm } from '../../../../shared/utils/useForm';
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { useForm } from "../../../../shared/utils/useForm";
+import * as actionTypes from "../../../../store/actions/actions";
+import * as actionCreators from "../../../../store/actions/index";
 
-import Input from '../../../../shared/UI_Element/Input';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import Button from "@material-ui/core/Button";
+import Input from "../../../../shared/UI_Element/Input";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+} from "../../../../shared/utils/validator";
 
-import classes from './Register.module.css';
+import classes from "./AdmReg.module.css";
 
-const Register = props => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			NIK: {
-				value: '',
-				isValid: false
-			},
-			firstName: {
-				value: '',
-				isValid: false
-			},
-			lastName: {
-				value: '',
-				isValid: false
-			},
-			email: {
-				value: '',
-				isValid: false
-			},
-			password: {
-				value: '',
-				isValid: false
-			},
-			gender: {
-				value: '',
-				isValid: false
-			},
-			dateOfBirth: {
-				value: '',
-				isValid: false
-			},
-			address: {
-				value: '',
-				isValid: false
-			},
-			phoneNumber: {
-				value: '',
-				isValid: false
-			},
-			jobTitle: {
-				value: '',
-				isValid: false
-			},
-			verificationKey: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+const Register = (props) => {
+  const [formState, onInputHandler] = useForm(
+    {
+      NIK: {
+        value: "",
+        isValid: false,
+      },
+      firstName: {
+        value: "",
+        isValid: false,
+      },
+      lastName: {
+        value: "",
+        isValid: false,
+      },
+      email: {
+        value: "",
+        isValid: false,
+      },
+      password: {
+        value: "",
+        isValid: false,
+      },
+      gender: {
+        value: "",
+        isValid: false,
+      },
+      dateOfBirth: {
+        value: "",
+        isValid: false,
+      },
+      address: {
+        value: "",
+        isValid: false,
+      },
+      phoneNumber: {
+        value: "",
+        isValid: false,
+      },
+      jobTitle: {
+        value: "",
+        isValid: false,
+      },
+      verificationKey: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
-		const newAdmin = {
-			NIK: formState.inputs.NIK.value,
-			firstName: formState.inputs.firstName.value,
-			lastName: formState.inputs.lastName.value,
-			email: formState.inputs.email.value,
-			password: formState.inputs.password.value,
-			gender: formState.inputs.gender.value,
-			dateOfBirth: formState.inputs.dateOfBirth.value,
-			address: formState.inputs.address.value,
-			phoneNumber: formState.inputs.phoneNumber.value,
-			jobTitle: formState.inputs.jobTitle.value,
-			verificationKey: formState.inputs.verificationKey.value
-		};
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    const newAdmin = {
+      NIK: formState.inputs.NIK.value,
+      firstName: formState.inputs.firstName.value,
+      lastName: formState.inputs.lastName.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+      gender: formState.inputs.gender.value,
+      dateOfBirth: formState.inputs.dateOfBirth.value,
+      address: formState.inputs.address.value,
+      phoneNumber: formState.inputs.phoneNumber.value,
+      jobTitle: formState.inputs.jobTitle.value,
+      verificationKey: formState.inputs.verificationKey.value,
+    };
 
-		try {
-			const res = await props.admReg(newAdmin);
-			console.log(res);
-			if (res) {
-				props.history.push(`/jobs-dashboard`);
-			} else {
-				throw new Error('Error nih bro');
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    try {
+      const res = await props.admReg(newAdmin);
+      console.log(res);
+      if (res) {
+        props.history.push(`/jobs-dashboard`);
+      } else {
+        throw new Error("Error nih bro");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	let formContent = (
-		<React.Fragment>
-			<div className={classes.ContainerFlex}>
-				<p className={classes.FormTitle}>Admin Sign Up</p>
+  let formContent = (
+    <React.Fragment>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Admin Sign Up</p>
 
-				<Input
-					inputType='input'
-					id='NIK'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='NIK*'
-				/>
+        <div className={classes.Content}>
+          <div className={classes.ContentTop}>
+            <div className={classes.ContentLeft}>
+              <Input
+                inputType="input"
+                id="NIK"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="NIK*"
+              />
 
-				<Input
-					inputType='input'
-					id='firstName'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='First Name*'
-				/>
+              <Input
+                inputType="input"
+                id="firstName"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Nama Depan*"
+              />
 
-				<Input
-					inputType='input'
-					id='lastName'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Last Name*'
-				/>
+              <Input
+                inputType="input"
+                id="gender"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Jenis Kelamin*"
+              />
 
-				<Input
-					inputType='input'
-					id='email'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_EMAIL() ]}
-					onInputHandler={onInputHandler}
-					label='Email*'
-				/>
+              <Input
+                inputType="input"
+                id="jobTitle"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Pekerjaan*"
+              />
 
-				<Input
-					inputType='input'
-					id='password'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_MINLENGTH(8) ]}
-					onInputHandler={onInputHandler}
-					label='Password*'
-					type='password'
-				/>
+              <Input
+                inputType="input"
+                id="email"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_EMAIL()]}
+                onInputHandler={onInputHandler}
+                label="Email*"
+              />
+            </div>
 
-				<Input
-					inputType='input'
-					id='gender'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Gender*'
-				/>
-				<Input
-					inputType='input'
-					id='dateOfBirth'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Date Of Birth*'
-				/>
-				<Input
-					inputType='input'
-					id='address'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Address*'
-				/>
-				<Input
-					inputType='input'
-					id='phoneNumber'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Phone Number*'
-				/>
-				<Input
-					inputType='input'
-					id='jobTitle'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Job Title*'
-				/>
+            <div className={classes.ContentRight}>
+              <Input
+                inputType="input"
+                id="dateOfBirth"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Tanggal Lahir*"
+              />
 
-				<Input
-					inputType='input'
-					id='verificationKey'
-					inputClass='Register'
-					validatorMethod={[ VALIDATOR_REQUIRE() ]}
-					onInputHandler={onInputHandler}
-					label='Verification Key*'
-					type='password'
-				/>
+              <Input
+                inputType="input"
+                id="lastName"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Nama Belakang*"
+              />
 
-				<button disabled={!formState.formIsValid} className={classes.SubmitButton}>
-					<span>Submit</span>
-				</button>
+              <Input
+                inputType="input"
+                id="phoneNumber"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Nomor Telepon*"
+              />
 
-				<span className={classes.Sign}>
-					<button className={classes.ChangeSign} type='button' onClick={props.switchSignIn}>
-						Admin Sign In
-					</button>
-				</span>
-			</div>
-		</React.Fragment>
-	);
+              <Input
+                inputType="input"
+                id="address"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Alamat*"
+              />
 
-	if (props.isLoading) {
-		formContent = <SpinnerCircle />;
-	}
+              <Input
+                inputType="input"
+                id="password"
+                inputClass="Register"
+                validatorMethod={[VALIDATOR_MINLENGTH(8)]}
+                onInputHandler={onInputHandler}
+                label="Password*"
+                type="password"
+              />
+            </div>
+          </div>
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			{formContent}
-		</form>
-	);
+          <div className={classes.ContentBottom}>
+            <Input
+              inputType="input"
+              id="verificationKey"
+              inputClass="Register"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Kode Verifikasi*"
+              type="password"
+            />
+
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              disableElevation
+              disabled={!formState.formIsValid}
+              style={{
+                marginTop: "1rem",
+              }}
+            >
+              submit
+            </Button>
+
+            <span className={classes.Sign}>
+              <button
+                className={classes.ChangeSign}
+                type="button"
+                onClick={props.switchSignIn}
+              >
+                Admin Sign In
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+
+  if (props.isLoading) {
+    formContent = <SpinnerCircle />;
+  }
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      {formContent}
+    </form>
+  );
 };
-const mapStateToProps = state => {
-	return {
-		isLoading: state.admin.isLoading
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.admin.isLoading,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		admReg: payload => dispatch(actionCreators.admReg(payload)),
-		login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    admReg: (payload) => dispatch(actionCreators.admReg(payload)),
+    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Register));

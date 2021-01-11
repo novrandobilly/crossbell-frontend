@@ -46,6 +46,7 @@ const paginationReducer = (state, action) => {
 };
 
 const JobsList = props => {
+	const totaAvailableJobs = useState(props.items)[0];
 	const [ displayJobs, setDisplayJobs ] = useState([]);
 	const [ displayData, setDisplayData ] = useState();
 
@@ -73,11 +74,11 @@ const JobsList = props => {
 		true
 	);
 
-	const { items } = props;
 	useEffect(
 		() => {
-			if (items && items.length > 0) {
-				let filteredArray = [ ...items ];
+			if (totaAvailableJobs && totaAvailableJobs.length > 0) {
+				let filteredArray = [ ...totaAvailableJobs ];
+
 				if (employmentFilter && employmentFilter.length > 0) {
 					filteredArray = filteredArray.filter(el => {
 						return employmentFilter.some(gen => gen === el.employment);
@@ -112,14 +113,13 @@ const JobsList = props => {
 				setDisplayData(filteredArray);
 			}
 		},
-		[ items, employmentFilter, fieldOfWorkFilter, locationFilter, formState ]
+		[ totaAvailableJobs, employmentFilter, fieldOfWorkFilter, locationFilter, formState ]
 	);
 
 	useEffect(
 		() => {
-			let filteredJobs = [];
 			if (displayData && displayData.length > 0) {
-				filteredJobs = [ ...displayData ].sort((a, b) => {
+				let filteredJobs = [ ...displayData ].sort((a, b) => {
 					if (sort === 'newest') {
 						return moment(b.createdAt) - moment(a.createdAt);
 					}
@@ -134,13 +134,15 @@ const JobsList = props => {
 					}
 					return console.log('changed');
 				});
+
 				let pageCount = Math.ceil(filteredJobs.length / state.rowsPerPage);
 				dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
 				//Slicing all jobs based on the number jobs may appear in one page
 				filteredJobs = filteredJobs.slice(state.startIndex, state.startIndex + state.rowsPerPage);
+
+				setDisplayJobs(filteredJobs);
 			}
-			setDisplayJobs(filteredJobs);
 		},
 		[ sort, displayData, state.startIndex, state.rowsPerPage, state.pageNumber ]
 	);
@@ -177,7 +179,6 @@ const JobsList = props => {
 	const onEmploymentHandler = e => {
 		setEmploymentFilter(prevState => {
 			let tempArray = [ ...prevState ];
-
 			if (e.target.checked) {
 				tempArray = [ ...tempArray, e.target.value ];
 			} else {
@@ -215,6 +216,7 @@ const JobsList = props => {
 	};
 
 	//================= Element Component ===========================
+
 	let content = (
 		<div className={classes.Container}>
 			<div className={classes.FilterContainer}>
@@ -333,7 +335,7 @@ const JobsList = props => {
 			</div>
 
 			<div className={classes.JobList}>
-				{displayJobs && displayJobs.length > 0 ? (
+				{displayJobs.length > 0 && displayData.length > 0 ? (
 					displayJobs.map(job => (
 						<JobCard
 							key={job._id}
@@ -369,6 +371,7 @@ const JobsList = props => {
 					<Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
 				</div>
 			</div>
+
 			<FormControl className={classes.formControl} style={{ width: '8rem', textAlign: 'left' }}>
 				<InputLabel id='sort'>filter</InputLabel>
 				<Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
