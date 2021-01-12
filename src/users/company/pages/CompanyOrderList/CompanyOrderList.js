@@ -141,16 +141,6 @@ const CompanyOrderList = (props) => {
             })}
           </tbody>
         </table>
-        )
-        <div className={classes.Header}>
-          <div className={classes.OrderHeader}>
-            <p className={classes.ContentIdLabel}>ORDER ID</p>
-            <p className={classes.Content}>TYPE</p>
-            <p className={classes.Content}>ORDERED AT</p>
-            <p className={classes.Content}>DUE DATE</p>
-            <p className={classes.Content}>STATUS</p>
-          </div>
-        </div>
       </div>
     );
   }

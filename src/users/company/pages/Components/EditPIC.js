@@ -90,9 +90,7 @@ const EditPIC = (props) => {
     formContent = (
       <React.Fragment>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>
-            Edit Company PIC (Person In Charge)
-          </p>
+          <p className={classes.FormTitle}>Edit Contact Person</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>

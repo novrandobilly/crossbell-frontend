@@ -34,6 +34,10 @@ const EditIntro = (props) => {
 
   const [formState, onInputHandler] = useForm(
     {
+      logo: {
+        value: data ? data.logo : null,
+        isValid: data && data.logo ? true : false,
+      },
       companyName: {
         value: data ? data.companyName : null,
         isValid: data && data.companyName ? true : false,
@@ -67,6 +71,7 @@ const EditIntro = (props) => {
 
     const updatedIntro = {
       companyId: companyid,
+      logo: formState.inputs.logo.value,
       companyName: formState.inputs.companyName.value,
       email: formState.inputs.email.value,
       industry: formState.inputs.industry.value,
@@ -91,6 +96,12 @@ const EditIntro = (props) => {
     }
   };
 
+  const onUploadHandler = (e) => {
+    const elementId = e.target.name;
+    const elementFile = e.target.files[0];
+    onInputHandler(elementId, elementFile, true);
+  };
+
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading && data) {
@@ -102,19 +113,26 @@ const EditIntro = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <div className={classes.ProfilePicture}>
-                <AccountCircleIcon
-                  style={{
-                    fontSize: "15rem",
-                    marginBottom: "1rem",
-                  }}
-                />
+                {data.logo ? (
+                  data.logo.url
+                ) : (
+                  <AccountCircleIcon
+                    style={{
+                      fontSize: "15rem",
+                      marginBottom: "1rem",
+                    }}
+                  />
+                )}
 
                 <label className={classes.InputButton}>
                   <input
+                    accept=".jpg, .jpeg, .png"
+                    name="logo"
+                    className={classes.input}
+                    id="logo"
                     type="file"
-                    name="image"
-                    // onChange={handleFileInputChange}
-                    // value={fileInputState}
+                    style={{ display: "none" }}
+                    onChange={onUploadHandler}
                   />
                   <span className={classes.InputButtonText}> Upload Logo </span>
                 </label>

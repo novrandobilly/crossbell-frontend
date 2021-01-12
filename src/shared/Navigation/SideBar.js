@@ -27,22 +27,72 @@ const SideBar = (props) => {
     <nav className={sideBar ? classes.ContainerActive : classes.Container}>
       <ul className={classes.MenuItem}>
         <li>
-          {props.auth.isCompany && props.auth.isActive && (
-            <Link to={"/jobs/new"}>
-              <span>Add New Job</span>
-              <WorkIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          )}
+          <Link to={"/ad/alphaomega/profile"}>
+            <span>Profile</span>
+          </Link>
+          <PersonIcon
+            style={{ margin: "0.4rem 0rem -0.4rem 1rem", color: "black" }}
+          />
         </li>
 
         <li>
-          <Link to={"/co/order/reguler"}>
-            <span>Purchase Job Ads Slot</span>
+          <Link to={"/ad/alphaomega/companies"}>
+            <span>Company List</span>
+            <BusinessIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/ad/alphaomega/applicants"}>
+            <span>Applicant List </span>
+            <GroupIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/ad/alphaomega/jobs"}>
+            <span>Job List</span>
+            <WorkIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/ad/alphaomega/financial"}>
+            <span>Finance</span>
+            <AttachMoneyIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/ad/alphaomega/customer-supports"}>
+            <span>Feedback List</span>
+            <FeedbackIcon
+              style={{
+                margin: "0.4rem 0rem -0.4rem 1rem",
+                color: "black",
+              }}
+            />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/ad/alphaomega/order/reguler"}>
+            <span>Order Reguler</span>
             <LocalOfferIcon
               style={{
                 margin: "0.4rem 0rem -0.4rem 1rem",
@@ -51,9 +101,8 @@ const SideBar = (props) => {
             />
           </Link>
         </li>
-
         <li>
-          <Link to={"/co/order/candidate"}>
+          <Link to={"/ad/alphaomega/order/candidate"}>
             <span>Order Bulk Candidate</span>
             <AssignmentIndIcon
               style={{
@@ -63,34 +112,10 @@ const SideBar = (props) => {
             />
           </Link>
         </li>
-
         <li>
-          <Link to={"/co/order/es"}>
+          <Link to={"/ad/alphaomega/order/es"}>
             <span>Order Headhunter</span>
             <DescriptionIcon
-              style={{
-                margin: "0.4rem 0rem -0.4rem 1rem",
-                color: "black",
-              }}
-            />
-          </Link>
-        </li>
-
-        <li>
-          <Link to={`/co/${props.auth.userId}/listOrder`}>
-            <span>Order List</span>
-            <ListIcon
-              style={{
-                margin: "0.4rem 0rem -0.4rem 1rem",
-                color: "black",
-              }}
-            />
-          </Link>
-        </li>
-        <li>
-          <Link to={`/co/${props.auth.userId}/jobList`}>
-            <span>Job list</span>
-            <WorkIcon
               style={{
                 margin: "0.4rem 0rem -0.4rem 1rem",
                 color: "black",
@@ -101,112 +126,6 @@ const SideBar = (props) => {
       </ul>
     </nav>
   );
-
-  if (props.admin.isAdmin && props.admin.isLoggedIn) {
-    content = (
-      <nav className={sideBar ? classes.ContainerActive : classes.Container}>
-        <ul className={classes.MenuItem}>
-          <li>
-            <Link to={"/ad/alphaomega/profile"}>
-              <span>Profile</span>
-            </Link>
-            <PersonIcon
-              style={{ margin: "0.4rem 0rem -0.4rem 1rem", color: "black" }}
-            />
-          </li>
-
-          <li>
-            <Link to={"/ad/alphaomega/companies"}>
-              <span>Company List</span>
-              <BusinessIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/applicants"}>
-              <span>Applicant List </span>
-              <GroupIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/jobs"}>
-              <span>Job List</span>
-              <WorkIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/financial"}>
-              <span>Finance</span>
-              <AttachMoneyIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/customer-supports"}>
-              <span>Feedback List</span>
-              <FeedbackIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/order/reguler"}>
-              <span>Order Reguler</span>
-              <LocalOfferIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/order/candidate"}>
-              <span>Order Bulk Candidate</span>
-              <AssignmentIndIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-          <li>
-            <Link to={"/ad/alphaomega/order/es"}>
-              <span>Order Headhunter</span>
-              <DescriptionIcon
-                style={{
-                  margin: "0.4rem 0rem -0.4rem 1rem",
-                  color: "black",
-                }}
-              />
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
 
   return (
     <React.Fragment>
