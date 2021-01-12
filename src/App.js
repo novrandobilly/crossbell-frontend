@@ -86,7 +86,6 @@ const App = props => {
 			const authData = JSON.parse(localStorage.getItem('userData'));
 			if (authData && authData.token && !authData.isAdmin && new Date(authData.expiration) > new Date()) {
 				login(authData);
-				console.log(authData);
 			} else if (authData && authData.token && authData.isAdmin) {
 				loginAdmin(authData);
 			} else {

@@ -348,7 +348,31 @@ export const updateApplicantSkills = ApplicantData => {
 			dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
 			return responseJSON.foundApplicant;
 		} catch (err) {
-			dispatch(updateApplicantFail);
+			dispatch(updateApplicantFail());
+			return err;
+		}
+	};
+};
+
+export const updateResume = payload => {
+	return async dispatch => {
+		dispatch(updateApplicantStart());
+		const resumeData = new FormData();
+		resumeData.append('resume', payload.resume);
+		try {
+			const response = await fetch(`http://localhost:5000/api/users/ap/${payload.applicantId}/resume`, {
+				method: 'PATCH',
+				body: resumeData
+			});
+			const responseJSON = await response.json();
+			if (!response.ok) {
+				throw new Error(responseJSON.message);
+			}
+			dispatch(updateApplicantSuccess());
+			return responseJSON;
+		} catch (err) {
+			dispatch(updateApplicantFail());
+			return err;
 		}
 	};
 };
