@@ -9,8 +9,8 @@ import AboutUs from './general/pages/AboutUs/AboutUs';
 import ContactUs from './general/pages/ContactUs/ContactUs';
 import SyaratKetentuan from './general/pages/SyaratKetentuan/SyaratKetentuan';
 import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi';
-// import ForgotPwd from './general/pages/Home/Components/ForgotPwd';
-// import ResetPwd from './general/pages/Home/Components/ResetPwd';
+import ForgotPwd from './general/pages/Home/Components/ForgotPwd';
+import ResetPwd from './general/pages/Home/Components/ResetPwd';
 
 //==================================== jobs =========================================================
 import NewJob from './jobs/pages/NewJob';
@@ -86,7 +86,6 @@ const App = props => {
 			const authData = JSON.parse(localStorage.getItem('userData'));
 			if (authData && authData.token && !authData.isAdmin && new Date(authData.expiration) > new Date()) {
 				login(authData);
-				console.log(authData);
 			} else if (authData && authData.token && authData.isAdmin) {
 				loginAdmin(authData);
 			} else {
@@ -186,6 +185,8 @@ const App = props => {
 					<Route path='/contact-us' component={ContactUs} />
 					<Route path='/syarat-ketentuan' component={SyaratKetentuan} />
 					<Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
+					<Route path='/forgot' component={ForgotPwd} />
+					<Route path='/reset/:token' component={ResetPwd} />
 					<Route path='/' component={Home} />
 
 					{/* Absurd Routes */}
