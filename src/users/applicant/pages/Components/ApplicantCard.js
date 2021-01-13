@@ -32,6 +32,7 @@ const ApplicantCard = props => {
 			console.log(err);
 		}
 	};
+	console.log(props.resume);
 
 	return (
 		<div className={classes.Wraper}>
@@ -79,7 +80,14 @@ const ApplicantCard = props => {
 									</span>
 								</div>
 							)}
-							{props.resume && <a href={props.resume.url}> Resume </a>}
+							<p>
+								{props.resume && (
+									<a href={props.resume.url} target='_blank' rel='noopener noreferrer'>
+										{' '}
+										My Resume{' '}
+									</a>
+								)}
+							</p>
 						</div>
 					</div>
 

@@ -13,8 +13,6 @@ import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Button from "@material-ui/core/Button";
 import classes from "./AdminProfile.module.css";
 
-//==============Push Testing
-
 const AdminProfile = (props) => {
   const [data, setData] = useState();
   const [edit, setEdit] = useState(false);
@@ -93,6 +91,14 @@ const AdminProfile = (props) => {
     e.preventDefault();
     setEdit(true);
   };
+
+  const onUploadHandler = (e) => {
+    const elementId = e.target.name;
+    const elementFile = e.target.files[0];
+    onInputHandler(elementId, elementFile, true);
+  };
+
+  console.log(formState);
 
   let content = <SpinnerCircle />;
 
@@ -180,21 +186,36 @@ const AdminProfile = (props) => {
           <div className={classes.RightCard}>
             <img
               src={
-                data.picture ||
-                "data:image/png;base64,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"
+                data.picture.url ||
+                "https://image.flaticon.com/icons/png/512/64/64572.png"
               }
               className={classes.Picture}
               alt="Profile"
             />
             {edit ? (
-              <Button
-                variant="outlined"
-                color="primary"
-                disableElevation
-                style={{ marginBottom: "1rem" }}
-              >
-                upload
-              </Button>
+              <div>
+                <input
+                  accept=".jpg, .jpeg, .png"
+                  name="picture"
+                  className={classes.input}
+                  id="picture"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={onUploadHandler}
+                />
+                <label htmlFor="picture">
+                  {" "}
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    disableElevation
+                    style={{ marginBottom: "1rem" }}
+                    component="span"
+                  >
+                    upload
+                  </Button>
+                </label>
+              </div>
             ) : null}
             {edit ? (
               <Button
