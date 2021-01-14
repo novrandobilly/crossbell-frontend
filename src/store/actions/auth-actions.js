@@ -69,6 +69,41 @@ export const login = loginData => {
 		}
 	};
 };
+export const googleLogin = payload => {
+	return async dispatch => {
+		dispatch(loginStart());
+		try {
+			const res = await fetch('http://localhost:5000/api/users/login/google', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					idToken: payload.idToken
+				})
+			});
+			const resJSON = await res.json();
+			console.log(resJSON);
+			if (!resJSON.token) {
+				throw new Error('Error');
+			}
+
+			dispatch(
+				loginSuccess({
+					token: resJSON.token,
+					userId: resJSON.userId,
+					isCompany: resJSON.isCompany,
+					isActive: resJSON.isActive
+				})
+			);
+			return resJSON;
+		} catch (err) {
+			console.log(err);
+			dispatch(loginFail());
+			return err;
+		}
+	};
+};
 
 export const forgotPwd = payload => {
 	return async dispatch => {
