@@ -60,4 +60,4 @@ export {
 	releaseJob
 } from './job-actions';
 
-export { login, forgotPwd, getResetPwd, resetPwd } from './auth-actions';
+export { login, googleLogin, forgotPwd, getResetPwd, resetPwd } from './auth-actions';
