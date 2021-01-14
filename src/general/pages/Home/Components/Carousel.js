@@ -9,21 +9,21 @@ const Carousel = (props) => {
   // let Imej = image[counter];
 
   // useEffect(() => {
-  //   // let car = document.getElementById("carousel");
-  //   // let index = 0;
-  //   // let i = 0;
+  //   let car = document.getElementById("carousel");
+  //   let index = 0;
+  //   let i = 0;
   //   const interval = setInterval(() => {
   //     if (counter < image.length - 1) {
   //       setCounter(counter + 1);
   //     } else {
   //       setCounter(0);
   //     }
-  //     // if (++i % 2) {
-  //     //   car.style.opacity = 0.3;
-  //     // } else {
-  //     //   car.src = image[(index = (index + 1) % image.length)];
-  //     //   car.style.opacity = 0.4;
-  //     // }
+  //     if (++i % 2) {
+  //       car.style.opacity = 0.3;
+  //     } else {
+  //       car.src = image[(index = (index + 1) % image.length)];
+  //       car.style.opacity = 0.4;
+  //     }
   //   }, 5000);
   //   return () => clearInterval(interval);
   // }, [counter, image]);
@@ -32,17 +32,17 @@ const Carousel = (props) => {
     <React.Fragment>
       <div className={classes.Container}>
         <div className={classes.CarouselHolder}>
-          {/* <img
+          <img
             alt={`carousel`}
-            src={Imej}
+            src="https://www.slashgear.com/wp-content/uploads/2020/04/star-wars-backgrounds-14.jpg"
             className={classes.Image}
             id="carousel"
-          /> */}
-          <ul className={classes.Carousel}>
+          />
+          {/* <ul className={classes.Carousel}>
             <li></li>
             <li></li>
             <li></li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </React.Fragment>

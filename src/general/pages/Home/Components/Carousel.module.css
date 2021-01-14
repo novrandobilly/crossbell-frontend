@@ -7,17 +7,17 @@
   z-index: -1;
 }
 
-/* img {
-  opacity: 0.4;
+img {
+  opacity: 0.7;
   transition: color 0.7s ease-in 0.3s;
   transition: all 3s;
 }
 
 .Image {
-  width: 100rem;
+  width: 100%;
   height: 40rem;
-} */
-
+}
+/* 
 .Carousel {
   position: fixed;
   width: 100%;
@@ -72,4 +72,4 @@
   90% {
     opacity: 0;
   }
-}
+} */

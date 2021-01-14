@@ -46,7 +46,9 @@ const AdmSign = (props) => {
       if (!res) {
         throw new Error("Error");
       }
-      props.history.push("/jobs-dashboard");
+      if (res.isAdmin) {
+        props.history.push("/jobs-dashboard");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -138,7 +140,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    admLogout: () => dispatch(actionTypes.ADMINLOGOUT()),
+    admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
     admSignIn: (payload) => dispatch(actionCreators.admSignIn(payload)),
   };
 };

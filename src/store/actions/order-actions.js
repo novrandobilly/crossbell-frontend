@@ -497,6 +497,7 @@ export const createOrderCandidate = (orderData) => {
             shift: orderData.shift,
             min: orderData.min,
             max: orderData.max,
+            emailRecipient: orderData.emailRecipient,
           }),
         }
       );

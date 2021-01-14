@@ -2,15 +2,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 4rem;
-  margin-right: 3rem;
+  padding: 1rem 5rem;
   height: 34rem;
 }
 
-.About {
+.ContentHolder {
+  text-align: justify;
+  width: 70%;
   color: white;
-  width: 50rem;
-  text-align: left;
+}
+
+.About {
   font-size: 1.2rem;
   margin-bottom: 5rem;
 }
@@ -19,6 +21,17 @@
   margin-top: 2rem;
 }
 
-.Search {
-  display: flex;
+.LinkRef {
+  width: fit-content;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.LinkRef a:hover {
+  color: white;
+}
+
+.LinkRef a {
+  text-decoration: none;
+  color: rgba(58, 81, 153, 1);
 }

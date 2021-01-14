@@ -70,7 +70,7 @@ const Invoice = (props) => {
                 <p className={classes.CompanyName}>
                   {orderData.companyId.companyName}
                 </p>
-                <p>{orderData.companyId.address}</p>
+                <p className={classes.Address}>{orderData.companyId.address}</p>
                 <p>{orderData.companyId.email}</p>
                 <p>{orderData.companyId.website}</p>
               </div>
@@ -92,13 +92,13 @@ const Invoice = (props) => {
               <thead>
                 <tr>
                   {orderData.packageName ? (
-                    <th>package ads</th>
+                    <th>Package Ads</th>
                   ) : (
-                    <th>order</th>
+                    <th>Order</th>
                   )}
-                  <th>jumlah</th>
-                  <th>harga satuan</th>
-                  <th>sub total</th>
+                  <th>Jumlah</th>
+                  <th>Harga Satuan</th>
+                  <th>Sub Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,21 +139,19 @@ const Invoice = (props) => {
                       yaitu 14 hari dari tanggal pemesanan.
                     </li>
                     <li>
-                      pembayaran melalui atm dapat transfer pada rekening BCA{" "}
-                      <span style={{ fontWeight: "bold" }}>1234567xxx</span> a/n
+                      Pembayaran dapat di transfer ke rekening BCA{" "}
+                      <span style={{ fontWeight: "500" }}>1234567xxx</span> a/n
                       Bagong
                     </li>
                     <li>
-                      pembayaran melalui virtual account dapat transfer melalui
+                      Pembayaran melalui virtual account dapat transfer melalui
                       bank BCA dengan nomor VA{" "}
-                      <span style={{ fontWeight: "bold" }}>
-                        807770817329xxx
-                      </span>
+                      <span style={{ fontWeight: "500" }}>807770817329xxx</span>
                     </li>
                     <li>
-                      setelah melakukan pembayaran, mohon kirimkan bukti
+                      Setelah melakukan pembayaran, mohon kirimkan bukti
                       transfer kepada nomor wa{" "}
-                      <span style={{ fontWeight: "bold" }}>081732954xxx</span>
+                      <span style={{ fontWeight: "500" }}>081732954xxx</span>
                     </li>
                   </ul>
                 </div>
@@ -200,7 +198,9 @@ const Invoice = (props) => {
                     marginTop: "1rem",
                     lineHeight: "1.5rem",
                     textAlign: "left",
-                    textDecoration: "underline",
+                    border: "solid 1px rgba(0,0,0,0.3)",
+                    borderRadius: "0.2rem",
+                    padding: "0.5rem",
                   }}
                 >
                   {terbilang(subTotal + tax - dis)} rupiah

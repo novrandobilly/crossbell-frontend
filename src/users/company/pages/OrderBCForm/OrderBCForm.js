@@ -8,6 +8,7 @@ import * as actionCreators from "../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MIN,
+  VALIDATOR_EMAIL,
   VALIDATOR_ALWAYSTRUE,
 } from "../../../../shared/utils/validator";
 
@@ -34,6 +35,10 @@ const OrderBCForm = (props) => {
         isValid: true,
       },
       jobFunction: {
+        value: "",
+        isValid: false,
+      },
+      emailRecipient: {
         value: "",
         isValid: false,
       },
@@ -76,6 +81,7 @@ const OrderBCForm = (props) => {
       max: formState.inputs.max.value,
       note: formState.inputs.note.value,
       jobFunction: formState.inputs.jobFunction.value,
+      emailRecipient: formState.inputs.emailRecipient.value,
       amount: formState.inputs.amount.value,
     };
     try {
@@ -134,6 +140,13 @@ const OrderBCForm = (props) => {
                   <p className={classes.RadioText}>SMK</p>
                   <input
                     type="radio"
+                    value="D3"
+                    name="education"
+                    className={classes.RadioValue}
+                  />{" "}
+                  <p className={classes.RadioText}>D3</p>
+                  <input
+                    type="radio"
                     value="S1"
                     name="education"
                     className={classes.RadioValue}
@@ -153,13 +166,6 @@ const OrderBCForm = (props) => {
                     className={classes.RadioValue}
                   />{" "}
                   <p className={classes.RadioText}>S3</p>
-                  <input
-                    type="radio"
-                    value="D3"
-                    name="education"
-                    className={classes.RadioValue}
-                  />{" "}
-                  <p className={classes.RadioText}>D3</p>
                 </div>
               </div>
 
@@ -269,7 +275,7 @@ const OrderBCForm = (props) => {
               </div>
             </div>
 
-            <div style={{ marginBottom: "1rem" }}>
+            <div>
               <Input
                 inputType="input"
                 id="jobFunction"
@@ -277,6 +283,16 @@ const OrderBCForm = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label="Posisi pekerjaan yang ditawarkan*"
+              />
+            </div>
+            <div style={{ marginBottom: "1rem" }}>
+              <Input
+                inputType="input"
+                id="emailRecipient"
+                inputClass="Position"
+                validatorMethod={[VALIDATOR_EMAIL()]}
+                onInputHandler={onInputHandler}
+                label="Email Penerima*"
               />
             </div>
 

@@ -62,9 +62,8 @@ const CustomerSupportsAO = (props) => {
                 <Input
                   inputType="textarea"
                   id="reply"
-                  inputClass="Reply"
+                  label="Reply Here"
                   validatorMethod={[VALIDATOR_REQUIRE()]}
-                  placeholder="Reply Here"
                 />
 
                 <button className={classes.ReplyButton}>Reply</button>

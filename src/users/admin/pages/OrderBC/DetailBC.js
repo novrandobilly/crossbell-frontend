@@ -26,6 +26,7 @@ const DetailBC = (props) => {
 
   const [dataBC, setDataBC] = useState();
   const [dataApplicant, setDataApplicant] = useState();
+  const [index, setIndex] = useState(null);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -160,6 +161,7 @@ const DetailBC = (props) => {
 
   //================= Sent Function ===========================
   const onSentHandler = async (dataBC) => {
+    setIndex(dataBC.i);
     const applicantBC = {
       token: props.admin.token,
       applicantId: dataBC.applicantId,
@@ -167,8 +169,10 @@ const DetailBC = (props) => {
     };
     try {
       await props.sentApplicantBC(applicantBC);
+      setIndex(null);
     } catch (err) {
       console.log(err);
+      setIndex(null);
     }
   };
 
@@ -396,23 +400,27 @@ const DetailBC = (props) => {
                           />
                         )}
                       </th>
-                      <th>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}
-                          size="small"
-                          endIcon={<SendIcon />}
-                          onClick={() =>
-                            onSentHandler({
-                              applicantId: app.id,
-                              i,
-                            })
-                          }
-                        >
-                          Send
-                        </Button>
-                      </th>
+                      {props.isLoading && index === i ? (
+                        <SpinnerCircle />
+                      ) : (
+                        <th>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            size="small"
+                            endIcon={<SendIcon />}
+                            onClick={() =>
+                              onSentHandler({
+                                applicantId: app.id,
+                                i,
+                              })
+                            }
+                          >
+                            Send
+                          </Button>
+                        </th>
+                      )}
                     </tr>
                   );
                 })}

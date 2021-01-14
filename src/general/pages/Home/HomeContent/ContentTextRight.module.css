@@ -1,0 +1,26 @@
+.Content {
+  display: flex;
+  padding: 5rem 5rem 2rem 5rem;
+  align-items: center;
+  background-color: white;
+}
+
+.ContentLeft {
+  width: 30%;
+  height: 25rem;
+  border: solid 0.1rem black;
+  margin-right: 5%;
+}
+
+.ContentRight {
+  text-align: left;
+  width: 65%;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.Title {
+  font-size: 2rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+}

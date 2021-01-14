@@ -1,16 +1,12 @@
-.ContactUsContent {
-  box-sizing: border-box;
-  background-color: white;
-}
-
-.Section1 {
+.Content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 4rem 5rem;
+  background-color: white;
 }
 
 .HelpArticles {
   text-align: start;
-  margin-top: 3rem;
 }
 
 .HelpArticlesLink {
@@ -29,12 +25,17 @@
   color: black;
 }
 
+.HeaderTitle {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
 .SeeAllArticles a {
   text-decoration: none;
   color: rgb(122, 148, 221);
   font-size: 0.8rem;
   font-style: italic;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .SeeAllArticles a:hover,
@@ -43,21 +44,28 @@
 }
 
 .NeedSupport > * {
-  margin: 0.5rem 0;
-  margin-top: 3rem;
+  text-align: left;
 }
 
-.Section2 {
-  width: 100%;
-  background-color: rgb(215, 226, 255);
-  margin: 4rem 0;
-  padding: 2rem 5rem;
+.ContactUsForm {
+  width: 25rem;
   display: flex;
-  justify-content: space-around;
+  flex-flow: column;
+  justify-content: flex-start;
   align-items: center;
-  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.5rem 2rem 1rem 2rem;
 }
 
-.Section2 > div {
-  width: 40%;
+.ContactUsForm > * {
+  margin: 0.3rem 0;
+}
+
+.Footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }

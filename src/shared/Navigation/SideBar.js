@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import DescriptionIcon from '@material-ui/icons/Description';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import WorkIcon from '@material-ui/icons/Work';
-import GroupIcon from '@material-ui/icons/Group';
-import PersonIcon from '@material-ui/icons/Person';
-import BusinessIcon from '@material-ui/icons/Business';
-import CloseIcon from '@material-ui/icons/Close';
-import MenuIcon from '@material-ui/icons/Menu';
-// import ListIcon from "@material-ui/icons/List";
-import classes from './SideBar.module.css';
+
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import DescriptionIcon from "@material-ui/icons/Description";
+import FeedbackIcon from "@material-ui/icons/Feedback";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import WorkIcon from "@material-ui/icons/Work";
+import GroupIcon from "@material-ui/icons/Group";
+import PersonIcon from "@material-ui/icons/Person";
+import BusinessIcon from "@material-ui/icons/Business";
+import CloseIcon from "@material-ui/icons/Close";
+import MenuIcon from "@material-ui/icons/Menu";
+import classes from "./SideBar.module.css";
+
 
 const SideBar = props => {
 	const [ sideBar, setSideBar ] = useState(false);
