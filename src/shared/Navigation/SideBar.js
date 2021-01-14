@@ -13,7 +13,6 @@ import PersonIcon from "@material-ui/icons/Person";
 import BusinessIcon from "@material-ui/icons/Business";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
-import ListIcon from "@material-ui/icons/List";
 import classes from "./SideBar.module.css";
 
 const SideBar = (props) => {

@@ -188,7 +188,7 @@ export const updateJob = (payload) => {
             Authorization: `Bearer ${payload.token}`,
           },
           body: JSON.stringify({
-            description: payload.description,
+            jobDescriptions: payload.jobDescriptions,
             employment: payload.employment,
             jobQualification: payload.jobQualification,
             salary: payload.salary,

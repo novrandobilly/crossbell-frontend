@@ -1,0 +1,33 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.FormContainer {
+  width: 35rem;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 0.5rem 3rem 2rem 3rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.FormTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.Footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

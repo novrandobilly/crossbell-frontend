@@ -3,7 +3,6 @@ import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions/actions";
 
-import SideBar from "./SideBar";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 import classes from "./NavigationLinks.module.css";
@@ -12,6 +11,8 @@ const NavigationLinks = (props) => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
   const [companyMyList, setCompanyMyList] = useState(false);
 
+  const [adminDropdown, setAdminDropdown] = useState(false);
+  const [adminMyList, setAdminMyList] = useState(false);
   const logoutHandler = () => {
     if (props.admin.isLoggedIn) {
       props.admLogout();
@@ -36,8 +37,18 @@ const NavigationLinks = (props) => {
   };
 
   const DropdownList = () => {
-    setCompanyMyList(!companyMyList);
     setCompanyDropdown(false);
+    setCompanyMyList(!companyMyList);
+  };
+
+  const DropdownOrderAdmin = () => {
+    setAdminMyList(false);
+    setAdminDropdown(!adminDropdown);
+  };
+
+  const DropdownListAdmin = () => {
+    setAdminDropdown(false);
+    setAdminMyList(!adminMyList);
   };
 
   return (
@@ -147,13 +158,114 @@ const NavigationLinks = (props) => {
             </li>
           </>
         )}
+
+        {props.admin.isAdmin && props.admin.isLoggedIn && (
+          <>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/profile`}
+                activeClassName={classes.active}
+              >
+                My Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/customer-supports`}
+                activeClassName={classes.active}
+              >
+                Feedback
+              </NavLink>
+            </li>
+            <li>
+              <div className={classes.dropdown}>
+                <button
+                  className={classes.dropbtn}
+                  onClick={DropdownOrderAdmin}
+                >
+                  Order & Finance
+                  <ArrowDropDownIcon
+                    style={{ alignSelf: "center", marginBottom: "-0.4rem" }}
+                  />
+                </button>
+
+                <div
+                  className={
+                    adminDropdown
+                      ? classes.dropdownShow
+                      : classes.dropdownContent
+                  }
+                  id="dropdownCompany"
+                >
+                  <NavLink
+                    to={`/ad/alphaomega/order/reguler`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Order Reguler List</p>
+                  </NavLink>
+                  <NavLink
+                    to={`/ad/alphaomega/order/candidate`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Order Bulk Candidate List</p>
+                  </NavLink>
+                  <NavLink
+                    to={`/ad/alphaomega/order/es`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Order Executive Search List</p>
+                  </NavLink>
+                  <NavLink
+                    to={`/ad/alphaomega/financial`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Finance</p>
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div className={classes.dropdown}>
+                <button className={classes.dropbtn} onClick={DropdownListAdmin}>
+                  List
+                  <ArrowDropDownIcon
+                    style={{ alignSelf: "center", marginBottom: "-0.4rem" }}
+                  />
+                </button>
+
+                <div
+                  className={
+                    adminMyList ? classes.dropdownShow : classes.dropdownContent
+                  }
+                  id="dropdownCompany"
+                >
+                  <NavLink
+                    to={`/ad/alphaomega/applicants`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Applicant List</p>
+                  </NavLink>
+
+                  <NavLink
+                    to={`/ad/alphaomega/companies`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Company list</p>
+                  </NavLink>
+
+                  <NavLink
+                    to={`/ad/alphaomega/jobs`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Job list</p>
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+          </>
+        )}
         {logout}
       </ul>
-      {props.admin.isAdmin && props.admin.isLoggedIn && (
-        <div className={classes.active}>
-          <SideBar />
-        </div>
-      )}
     </div>
   );
 };

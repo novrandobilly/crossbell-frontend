@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, withRouter, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions/";
+import moment from "moment";
 
+import * as actionCreators from "../../store/actions/";
 import Spinner from "../../shared/UI_Element/Spinner/SpinnerCircle";
 import classes from "./JobContainer.module.css";
-// import { act } from '@testing-library/react';
 
 const JobDetails = (props) => {
   const { jobsid } = useParams();
@@ -54,7 +54,13 @@ const JobDetails = (props) => {
           />
 
           <div className={classes.ContainerIntro}>
-            <p className={classes.JobTitle}>{props.jobTitle}</p>
+            <div className={classes.Header}>
+              <p className={classes.JobTitle}>{props.jobTitle} </p>
+              <p className={classes.TextDate}>
+                Posted {moment().diff(moment(props.releasedAt), "days")} days
+                ago
+              </p>
+            </div>
             <div className={classes.ContainerFirst}>
               <Link
                 to={`/co/${props.companyId}`}
@@ -66,27 +72,22 @@ const JobDetails = (props) => {
                 <p className={classes.TextLeft}>{props.companyName}</p>
               </Link>
               <p>-</p>
-              <p className={classes.TextMiddle}>{props.industry}</p>
-              <p>-</p>
-              <p className={classes.TextMiddle}>{props.city}</p>
-              <p>-</p>
-              <p className={classes.TextRight}>{props.region}</p>
+              <p className={classes.TextMiddle}>{props.fieldOfWork}</p>
             </div>
 
             <div className={classes.ContainerSecond}>
-              <p className={classes.TextLeft}>Salary: {props.payment}</p>
+              <p className={classes.TextLeft}>
+                Salary: IDR {props.payment.toLocaleString()}
+              </p>
               <p>-</p>
               <p className={classes.TextMiddle}>{props.employment}</p>
-              <p>-</p>
-              <p className={classes.TextMiddle}>{props.level}</p>
-              <p>-</p>
-              <p className={classes.TextRight}>{props.jobFunction}</p>
             </div>
 
             <div className={classes.ContainerThird}>
-              <p className={classes.TextDate}>
-                Posted {props.datePosted} days ago
+              <p className={classes.TextLeft}>
+                email HR: {props.emailRecipient}
               </p>
+
               <div className={classes.ButtonContainer}>
                 {props.auth.userId === props.companyId && (
                   <Link to={`/jobs/${props.jobId}/edit`}>
@@ -133,16 +134,21 @@ const JobDetails = (props) => {
 
         <div className={classes.LowerContainer}>
           <div className={classes.JobDesc}>
-            <p className={classes.TextLabel}>Job Description</p>
-            <p className={classes.TextDetail}>{props.jobDescription}</p>
+            <p className={classes.TextLabel}>Deskripsi Pekerjaan</p>
+            <p className={classes.TextDetail}>{props.jobDescriptions}</p>
           </div>
 
           <div className={classes.JobDesc}>
-            <p className={classes.TextLabel}>Technical Requirement</p>
+            <p className={classes.TextLabel}>Kualifikasi Pekerjaan</p>
+            <p className={classes.TextDetail}>{props.jobQualification}</p>
+          </div>
+
+          <div className={classes.JobDesc}>
+            <p className={classes.TextLabel}>Syarat Teknis</p>
             <p className={classes.TextDetail}>{props.technicalRequirement}</p>
           </div>
 
-          <div className={classes.JobDesc}>
+          <div>
             <p className={classes.TextLabel}>Benefits</p>
             <p className={classes.TextDetail}>{props.benefit}</p>
           </div>

@@ -55,10 +55,9 @@ const CompanyOrderForm = (props) => {
         throw new Error("jumlah pembelian tidak boleh dibawah 1");
       }
       const res = await props.createOrder(orderData);
-      console.log(res);
       if (res) {
-        props.history.push(`/co/${res.order.id}/invoice`);
         console.log(res);
+        props.history.push(`/co/${res.orderreg.id}/invoice`);
       } else {
         throw new Error("Error nih bro");
       }

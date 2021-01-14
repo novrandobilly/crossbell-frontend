@@ -22,6 +22,7 @@ const DetailES = (props) => {
   const [replyIndex, setReplyIndex] = useState();
   const [statusIndex, setStatusIndex] = useState();
   const [dataES, setDataES] = useState();
+  const [displayData, setDisplayData] = useState();
 
   const { getOrderInvoice } = props;
 
@@ -64,24 +65,33 @@ const DetailES = (props) => {
       candidateEmail: formState.inputs.candidateEmail.value,
       candidateContact: formState.inputs.candidateContact.value,
     };
-    console.log(executiveCandidate);
+
+    const CandidateState = {
+      status: "Open",
+      candidateName: formState.inputs.candidateName.value,
+      candidateEmail: formState.inputs.candidateEmail.value,
+      candidateContact: formState.inputs.candidateContact.value,
+    };
+
     try {
       const res = await props.addCandidateES(executiveCandidate);
       console.log(res);
+      setDisplayData((prevState) => [...prevState, CandidateState]);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const onDeleteHandler = async (event, payload) => {
+  const onDeleteHandler = async (event, id, name) => {
     event.preventDefault();
     const deleteCandidate = {
       token: props.admin.token,
       orderId: orderid,
-      candidateESId: payload,
+      candidateESId: id,
     };
     try {
       const res = await props.deleteCandidateES(deleteCandidate);
+      setDisplayData(displayData.filter((fil) => fil.candidateName !== name));
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -100,6 +110,7 @@ const DetailES = (props) => {
         .then((res) => {
           console.log(res);
           setDataES(res.order);
+          setDisplayData(res.order.candidates);
         })
         .catch((err) => {
           console.log(err);
@@ -119,9 +130,9 @@ const DetailES = (props) => {
     try {
       await props.updateCandidateStatusES(updatedStatus);
 
-      setDataES((prevData) => {
-        const tempData = { ...prevData };
-        tempData.candidates[dataInput.i].status = dataInput.value;
+      setDisplayData((prevData) => {
+        const tempData = [...prevData];
+        tempData[dataInput.i].status = dataInput.value;
         return tempData;
       });
 
@@ -159,7 +170,7 @@ const DetailES = (props) => {
   //   content = <h1>tidak ada order untuk saat ini</h1>;
   // }
 
-  if (!props.isLoading && dataES) {
+  if (!props.isLoading && dataES && displayData) {
     content = (
       <div className={classes.Container}>
         <div className={classes.PageContainer}>
@@ -230,7 +241,7 @@ const DetailES = (props) => {
               }}
             />
             <TextField
-              label="email kandidat"
+              label="email"
               id="candidateEmail"
               name="candidateEmail"
               size="small"
@@ -246,7 +257,7 @@ const DetailES = (props) => {
               }}
             />
             <TextField
-              label="kontak kandidat"
+              label="No.HP"
               id="candidateContact"
               name="candidateContact"
               size="small"
@@ -273,13 +284,15 @@ const DetailES = (props) => {
             </Button>
           </form>
           <div className={classes.CadidateContainer}>
-            {dataES.candidates.map((can, i) => {
+            {displayData.map((can, i) => {
               return (
                 <div className={classes.CandidateCard} key={i}>
                   <div className={classes.CandidateHead}>
                     <div className={classes.DeleteCandidate}>
                       <button
-                        onClick={(e) => onDeleteHandler(e, can.id)}
+                        onClick={(e) =>
+                          onDeleteHandler(e, can.id, can.candidateName)
+                        }
                         style={{
                           border: "none",
                           outline: "none",

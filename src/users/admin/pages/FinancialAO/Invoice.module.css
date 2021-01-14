@@ -18,7 +18,6 @@
 }
 
 .Id {
-  /* box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214); */
   width: 50rem;
   border-radius: 1rem 1rem 0 0;
   background-color: rgba(58, 81, 153, 1);
@@ -37,16 +36,22 @@
 
 .Content {
   width: 90%;
-  padding: 2rem 1rem 3rem 3.5rem;
+  padding: 2rem 1rem 2rem 3.5rem;
   display: flex;
   justify-content: space-between;
 }
 
 .CompanyDetail {
   text-align: left;
-  color: grey;
+  color: rgba(0, 0, 0, 0.7);
   line-height: 1rem;
+  width: 65%;
 }
+
+.Address {
+  line-height: 1.2rem;
+}
+
 .InvoiceRight {
   text-align: right;
 }
@@ -62,7 +67,7 @@
 .InvoiceDetail {
   display: flex;
   text-align: right;
-  color: grey;
+  color: rgba(0, 0, 0, 0.7);
   line-height: 1rem;
 }
 
@@ -86,7 +91,7 @@
 .Table thead th {
   border-top: 0.2rem solid rgba(58, 81, 153, 1);
   border-bottom: 0.2rem solid rgba(58, 81, 153, 1);
-  font-weight: bold;
+  font-weight: 500;
   padding: 0.5rem;
 }
 
@@ -160,7 +165,11 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
+  font-weight: 500;
+}
+
+hr.UnderLine {
+  border: 1px solid red;
 }
 
 @media all {

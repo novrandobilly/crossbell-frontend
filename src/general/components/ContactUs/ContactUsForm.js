@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import * as actionCreators from "../../../store/actions/index";
 import Input from "../../../shared/UI_Element/Input";
-import Button from "../../../shared/UI_Element/Button";
+import Button from "@material-ui/core/Button";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -65,41 +65,50 @@ const ContactUsForm = (props) => {
       <form onSubmit={onSubmitHandler} className={classes.ContactUsForm}>
         <Input
           inputType="input"
-          placeholder="Nama"
+          label="Nama Lengkap"
           id="nama"
+          name="nama"
           onInputHandler={onInputHandler}
           validatorMethod={[VALIDATOR_REQUIRE()]}
         />
         <Input
           inputType="input"
-          placeholder="Email"
+          label="Email"
           id="email"
+          name="email"
           onInputHandler={onInputHandler}
           validatorMethod={[VALIDATOR_EMAIL()]}
         />
         <Input
           inputType="input"
-          placeholder="No Telephone"
+          label="No Telephone"
           id="phone"
+          name="phone"
           onInputHandler={onInputHandler}
           validatorMethod={[VALIDATOR_NUMSTR()]}
         />
         <Input
           inputType="textarea"
-          placeholder="Pesan..."
-          rows="10"
+          label="Pesan..."
+          rows={10}
           id="feed"
+          name="feed"
           onInputHandler={onInputHandler}
           validatorMethod={[VALIDATOR_MINLENGTH(10)]}
         />
 
-        <Button
-          disabled={!formState.formIsValid}
-          btnType={"Dark"}
-          onClick={onSubmitHandler}
-        >
-          Submit
-        </Button>
+        <div className={classes.Footer}>
+          <Button
+            disabled={!formState.formIsValid}
+            btnType={"Dark"}
+            onClick={onSubmitHandler}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Submit
+          </Button>
+        </div>
       </form>
     </div>
   );

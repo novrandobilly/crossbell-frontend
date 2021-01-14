@@ -248,7 +248,6 @@ const NewJob = (props) => {
             </InputLabel>
 
             <Select
-              labelId="fieldOfWork"
               id="employment"
               name="employment"
               open={employmentOpen}
