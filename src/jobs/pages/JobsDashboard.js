@@ -64,7 +64,6 @@ const JobsDashboard = props => {
 		},
 		jobList: null
 	});
-	console.log(state);
 	const { getAllAvailableJobs } = props;
 
 	useEffect(
