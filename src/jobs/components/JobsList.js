@@ -341,9 +341,7 @@ const JobsList = props => {
 							jobTitle={job.jobTitle}
 							placementLocation={job.placementLocation}
 							company={job.companyId.companyName}
-							logo={
-								job.logo ? job.logo : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-							}
+							logo={job.companyId.logo}
 							salary={job.salary}
 							emailRecipient={job.companyId.emailRecipient}
 							companyId={job.companyId}
