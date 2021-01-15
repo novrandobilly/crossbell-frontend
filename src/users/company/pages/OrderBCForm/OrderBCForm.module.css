@@ -74,7 +74,6 @@
 }
 
 .RadioTextGender {
-  width: 5rem;
   margin-top: 1rem;
   margin-right: 1rem;
   color: black;
@@ -86,19 +85,20 @@
   color: rgba(0, 0, 0, 0.54);
   font-size: 1rem;
   margin-bottom: 0.3rem;
+  font-weight: 400;
 }
 
 .AgeGroup {
   display: flex;
   justify-content: space-between;
   width: 10rem;
-  margin-right: 3.5rem;
+  margin-right: 2.8rem;
 }
 
 .CandidateAmount {
   margin-top: 1rem;
   width: 10rem;
-  margin-right: 3.5rem;
+  margin-right: 2.8rem;
 }
 
 .CheckInputs {
@@ -123,6 +123,8 @@
 .CheckText {
   margin-top: 1rem;
   margin-right: 1rem;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 400;
 }
 
 .Footer {

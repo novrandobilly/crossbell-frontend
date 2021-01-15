@@ -73,6 +73,7 @@ const adminReducer = (state = initialState, action) => {
         tokenExpirationDate: null,
       };
     }
+    case actionTypes.GETALLAPPLICANTSTART:
     case actionTypes.UPDATEADMINSTART:
     case actionTypes.GETADMINSTART: {
       return {
@@ -81,6 +82,7 @@ const adminReducer = (state = initialState, action) => {
         error: false,
       };
     }
+    case actionTypes.GETALLAPPLICANT:
     case actionTypes.UPDATEADMINSUCCESS:
     case actionTypes.GETADMIN: {
       return {
@@ -89,6 +91,7 @@ const adminReducer = (state = initialState, action) => {
         error: false,
       };
     }
+    case actionTypes.GETALLAPPLICANTFAIL:
     case actionTypes.UPDATEADMINFAIL:
     case actionTypes.GETADMINFAIL: {
       return {

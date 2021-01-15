@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { useForm } from "../../../../shared/utils/useForm";
@@ -19,6 +19,8 @@ import {
 import classes from "./Register.module.css";
 
 const Register = (props) => {
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [formState, onInputHandler] = useForm(
     {
       firstName: {
@@ -54,6 +56,7 @@ const Register = (props) => {
       const res = await props.createApplicant(newApplicant);
       console.log(res);
       if (!res.token) {
+        setErrorMessage(res.message);
         throw new Error(res.message);
       }
       props.login({
@@ -168,7 +171,8 @@ const Register = (props) => {
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
       <Modal show={props.error} onCancel={onCancelHandler}>
-        Invalid registration value. Please try again.
+        {/* Invalid registration value. Please try again. */}
+        {errorMessage}
       </Modal>
       {formContent}
     </form>

@@ -44,8 +44,6 @@ const DetailBC = (props) => {
 
   const { getOrderInvoice, getAllApplicant } = props;
 
-  console.log(onInputHandler);
-
   useEffect(() => {
     const token = props.admin.token;
     if (token) {
@@ -72,7 +70,7 @@ const DetailBC = (props) => {
           console.log(err);
         });
     }
-  }, [getOrderInvoice, getAllApplicant, orderid, props.admin]);
+  }, [getOrderInvoice, getAllApplicant, orderid, props.admin.token]);
 
   useEffect(() => {
     if (dataApplicant && dataApplicant.length > 0) {
@@ -400,10 +398,11 @@ const DetailBC = (props) => {
                           />
                         )}
                       </th>
-                      {props.isLoading && index === i ? (
-                        <SpinnerCircle />
-                      ) : (
-                        <th>
+
+                      <th>
+                        {props.isLoading && index === i ? (
+                          <SpinnerCircle />
+                        ) : (
                           <Button
                             variant="contained"
                             color="primary"
@@ -419,8 +418,8 @@ const DetailBC = (props) => {
                           >
                             Send
                           </Button>
-                        </th>
-                      )}
+                        )}
+                      </th>
                     </tr>
                   );
                 })}
@@ -438,8 +437,8 @@ const DetailBC = (props) => {
 const mapStateToProps = (state) => {
   return {
     admin: state.admin,
-    isLoading: state.finance.isLoading,
-    error: state.finance.error,
+    isLoading: state.admin.isLoading,
+    error: state.admin.error,
   };
 };
 

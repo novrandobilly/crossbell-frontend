@@ -10,6 +10,7 @@ import * as actionCreators from "../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
+  VALIDATOR_ALWAYSTRUE,
 } from "../../../../shared/utils/validator";
 
 import Modal from "../../../../shared/UI_Element/Modal";
@@ -36,7 +37,7 @@ const EditIntro = (props) => {
     {
       logo: {
         value: data ? data.logo : null,
-        isValid: data && data.logo ? true : false,
+        isValid: true,
       },
       companyName: {
         value: data ? data.companyName : null,
@@ -56,7 +57,7 @@ const EditIntro = (props) => {
       },
       website: {
         value: data ? data.website : null,
-        isValid: data && data.website ? true : false,
+        isValid: true,
       },
     },
     true
@@ -144,13 +145,14 @@ const EditIntro = (props) => {
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Name*"
+                label="Company Name*"
                 initValue={data.companyName}
                 initIsValid={data.companyName}
               />
               <Input
                 inputType="input"
                 id="email"
+                name="email"
                 inputClass="AddJobInput"
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
@@ -168,7 +170,6 @@ const EditIntro = (props) => {
                 label="Industry*"
                 initValue={data.industry}
                 initIsValid={data.industry}
-                placeholder="Your Company Industry"
               />
 
               <Input
@@ -180,19 +181,17 @@ const EditIntro = (props) => {
                 label="Address*"
                 initValue={data.address}
                 initIsValid={data.address}
-                placeholder="Company address"
               />
 
               <Input
                 inputType="input"
                 id="website"
                 inputClass="AddJobInput"
-                validatorMethod={[VALIDATOR_REQUIRE()]}
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
                 label="Websites*"
                 initValue={data.website}
                 initIsValid={data.website}
-                placeholder="Company Website"
               />
             </div>
           </div>

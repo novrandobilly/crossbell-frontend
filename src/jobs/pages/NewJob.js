@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { useForm } from "../../shared/utils/useForm";
-import * as actionCreators from "../../store/actions";
 
+import * as actionTypes from "../../store/actions/actions";
+import * as actionCreators from "../../store/actions";
+import Modal from "../../shared/UI_Element/Modal";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -104,6 +106,10 @@ const NewJob = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    if (!formState.formIsValid) {
+      return props.createJobFail();
+    }
+
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
@@ -403,8 +409,15 @@ const NewJob = (props) => {
     formContent = <Spinner />;
   }
 
+  const onCancelHandler = () => {
+    props.resetJob();
+  };
+
   return (
     <React.Fragment>
+      <Modal show={props.job.error} onCancel={onCancelHandler}>
+        Tidak dapat memasang iklan pekerjaan saat ini{" "}
+      </Modal>
       <form className={classes.Container}>{formContent}</form>
     </React.Fragment>
   );
@@ -423,6 +436,8 @@ const mapDispatchToProps = (dispatch) => {
     saveJobDraft: (jobData, authData) =>
       dispatch(actionCreators.saveJobDraft(jobData, authData)),
     getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
+    createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
+    resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
   };
 };
 

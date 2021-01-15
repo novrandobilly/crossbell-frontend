@@ -33,7 +33,8 @@ const financeReducers = (state = initJobState, action) => {
     case actionTypes.GETORDERCANDIDATE:
     case actionTypes.CREATEORDERCANDIDATE:
     case actionTypes.GETORDER:
-    case actionTypes.CREATEORDER: {
+    case actionTypes.CREATEORDER:
+    case actionTypes.ORDERRESET: {
       return {
         ...state,
         error: false,

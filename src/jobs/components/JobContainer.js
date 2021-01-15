@@ -77,7 +77,10 @@ const JobDetails = (props) => {
 
             <div className={classes.ContainerSecond}>
               <p className={classes.TextLeft}>
-                Salary: IDR {props.payment.toLocaleString()}
+                Salary: IDR{" "}
+                {props.payment
+                  ? props.payment.toLocaleString()
+                  : "tidak dipaparkan oleh perusahaan"}
               </p>
               <p>-</p>
               <p className={classes.TextMiddle}>{props.employment}</p>

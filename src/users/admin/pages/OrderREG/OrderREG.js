@@ -88,7 +88,7 @@ const OrderREG = (props) => {
                 </th>
 
                 <th>
-                  {props.isLoading && index === i ? (
+                  {props.indexIsLoading && index === i ? (
                     <SpinnerCircle />
                   ) : order.status === "Paid" ? (
                     <span style={{ color: "Green", fontWeight: "bold" }}>

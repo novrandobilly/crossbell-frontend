@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { useForm } from "../../../../shared/utils/useForm";
 
-// import * as actionTypes from "../../../../store/actions/actions";
+import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 import {
   VALIDATOR_REQUIRE,
@@ -12,7 +12,7 @@ import {
   VALIDATOR_ALWAYSTRUE,
 } from "../../../../shared/utils/validator";
 
-// import Modal from "../../../../shared/UI_Element/Modal";
+import Modal from "../../../../shared/UI_Element/Modal";
 // import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Button from "@material-ui/core/Button";
 import Input from "../../../../shared/UI_Element/Input";
@@ -69,6 +69,10 @@ const OrderBCForm = (props) => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
+    if (!formState.formIsValid) {
+      return props.createOrderFail();
+    }
+
     const orderData = {
       invoiceId: props.auth.userId.slice(0, 6),
       companyId: props.auth.userId,
@@ -107,6 +111,7 @@ const OrderBCForm = (props) => {
     const element = document.getElementById(e.target.name);
     onInputHandler(e.target.name, element.checked, true);
   };
+
   // let formContent = <SpinnerCircle />;
 
   // if (!props.isLoading && data) {
@@ -183,7 +188,7 @@ const OrderBCForm = (props) => {
                     initValue="0"
                     min="0"
                     step="1"
-                    label="min"
+                    label="Min"
                   />
                   <Input
                     inputType="number"
@@ -196,7 +201,7 @@ const OrderBCForm = (props) => {
                     initValue="0"
                     min="0"
                     step="1"
-                    label="max"
+                    label="Max"
                   />
                 </div>
               </div>
@@ -212,21 +217,21 @@ const OrderBCForm = (props) => {
                     name="gender"
                     className={classes.RadioValue}
                   />{" "}
-                  <p className={classes.RadioText}>pria</p>
+                  <p className={classes.RadioText}>Pria</p>
                   <input
                     type="radio"
                     value="wanita"
                     name="gender"
                     className={classes.RadioValue}
                   />{" "}
-                  <p className={classes.RadioText}>wanita</p>
+                  <p className={classes.RadioText}>Wanita</p>
                   <input
                     type="radio"
                     value="bebas"
                     name="gender"
                     className={classes.RadioValue}
                   />{" "}
-                  <p className={classes.RadioTextGender}>no criteria</p>
+                  <p className={classes.RadioTextGender}>Keduanya</p>
                 </div>
               </div>
 
@@ -257,7 +262,7 @@ const OrderBCForm = (props) => {
                   onChange={checkHandler}
                 />
                 <p className={classes.CheckText}>
-                  Bersedia ditempatkan diluar kota
+                  Bersedia ditempatkan diluar kota asal
                 </p>
               </div>
               <div className={classes.CheckGroup}>
@@ -292,7 +297,7 @@ const OrderBCForm = (props) => {
                 inputClass="Position"
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
-                label="Email Penerima*"
+                label="Email penerima*"
               />
             </div>
 
@@ -309,7 +314,7 @@ const OrderBCForm = (props) => {
 
         <div className={classes.Footer}>
           <Button
-            disabled={!formState.formIsValid}
+            // disabled={!formState.formIsValid}
             variant="contained"
             color="primary"
             type="submit"
@@ -321,16 +326,15 @@ const OrderBCForm = (props) => {
     </React.Fragment>
   );
 
-  // }
-  // const onCancelHandler = () => {
-  //   props.resetCompany();
-  // };
+  const onCancelHandler = () => {
+    props.resetOrder();
+  };
 
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
-      {/* <Modal show={props.error} onCancel={onCancelHandler}>
-          Could not update changes at the moment, please try again later
-        </Modal> */}
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Tidak dapat melakukan pembelian saat ini{" "}
+      </Modal>
       {formContent}
     </form>
   );
@@ -348,6 +352,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createOrderCandidate: (data) =>
       dispatch(actionCreators.createOrderCandidate(data)),
+    createOrderFail: () =>
+      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
   };
 };
 

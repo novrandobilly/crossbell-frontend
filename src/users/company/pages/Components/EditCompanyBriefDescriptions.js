@@ -38,7 +38,7 @@ const BriefDescriptions = (props) => {
     },
     false
   );
-
+  console.log(formState);
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
@@ -50,6 +50,7 @@ const BriefDescriptions = (props) => {
       companyId: companyid,
       briefDescriptions: formState.inputs.briefDescriptions.value,
     };
+
     try {
       const res = await props.updateCompanyBriefDescriptions(updatedData);
       if (res) {
@@ -86,6 +87,7 @@ const BriefDescriptions = (props) => {
                 label="Deskripsikan perusahaan anda*"
                 initValue={data.briefDescriptions}
                 initIsValid={data.briefDescriptions}
+                rows={11}
               />
             </div>
           </div>

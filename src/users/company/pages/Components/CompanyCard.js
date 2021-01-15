@@ -70,7 +70,7 @@ const CompanyCard = (props) => {
               src="https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png"
               style={{ marginRight: "1rem" }}
             />
-            {props.website}
+            {props.website ? props.website : "-"}
           </a>
         </div>
 
@@ -94,7 +94,7 @@ const CompanyCard = (props) => {
             <p className={classes.Title}>Contact Person</p>
 
             <div className={classes.EditPIC}>
-              <Link to={`/co/${props.companyId}/compro/intro`}>
+              <Link to={`/co/${props.companyId}/compro/personincharge`}>
                 <IconButton />
               </Link>
             </div>

@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import { useForm } from "../../../../shared/utils/useForm";
 
 import OrderComponent from "./OrderComponent";
-// import * as actionTypes from "../../../../store/actions/actions";
+import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 import { VALIDATOR_MIN } from "../../../../shared/utils/validator";
 import Button from "@material-ui/core/Button";
 
-// import Modal from "../../../../shared/UI_Element/Modal";
 // import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Modal from "../../../../shared/UI_Element/Modal";
 import Input from "../../../../shared/UI_Element/Input";
 
 import classes from "./CompanyOrderForm.module.css";
@@ -30,6 +30,10 @@ const CompanyOrderForm = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    if (!formState.formIsValid) {
+      return props.createOrderFail();
+    }
+
     let title = "bronze";
 
     if (formState.inputs.slot.value > 1) {
@@ -174,6 +178,7 @@ const CompanyOrderForm = (props) => {
             variant="contained"
             color="primary"
             disableElevation
+            disabled={!formState.formIsValid}
             style={{ width: "100%", marginTop: "1rem" }}
           >
             Submit
@@ -183,18 +188,35 @@ const CompanyOrderForm = (props) => {
     </React.Fragment>
   );
 
-  return <div className={classes.Container}>{formContent}</div>;
+  const onCancelHandler = () => {
+    props.resetOrder();
+  };
+
+  return (
+    <div className={classes.Container}>
+      {" "}
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Tidak dapat melakukan Pembelian untuk saat ini
+      </Modal>
+      {formContent}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    isLoading: state.finance.isLoading,
+    error: state.finance.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createOrder: (orderData) => dispatch(actionCreators.createOrder(orderData)),
+    createOrderFail: () =>
+      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
   };
 };
 
