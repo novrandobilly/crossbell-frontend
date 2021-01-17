@@ -6,7 +6,7 @@ import Intro from "../Components/Add/EditIntro.js";
 import Experience from "../Components/Add/Experience.js";
 import Education from "../Components/Add/Education.js";
 import Certification from "../Components/Add/Certification.js";
-import Skill from "../Components/Add/Skill";
+import Skill from "../Components/Edit/Skill";
 import Button from "../../../../shared/UI_Element/Button";
 
 import classes from "./ApplicantResumeVal.module.css";

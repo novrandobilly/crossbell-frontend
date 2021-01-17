@@ -1,122 +1,123 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	margin-top: 7rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 7rem;
 }
 
 .ContainerFlex {
-	width: 40rem;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border: none;
-	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-	border-radius: 0.5rem;
-	background-color: white;
-	font-family: sans-serif;
-	font-size: 0.8rem;
-	font-weight: bold;
-	color: rgba(0, 0, 0, 0.5);
-	padding: 0.5rem 3rem 2rem 3rem;
+  width: 40rem;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  background-color: white;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 3rem 2rem 3rem;
 }
 
 .FormTitle {
-	font-size: 1.4rem;
-	color: black;
-	align-self: flex-start;
+  font-size: 1.4rem;
+  color: black;
+  align-self: flex-start;
 }
 
 .Content {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
-	padding-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
+  padding-top: 2rem;
 }
 
 .ContentTop {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ProfilePicture {
-	display: flex;
-	flex-direction: column;
-	align-self: flex-start;
-	align-items: center;
-	margin-bottom: 2rem;
-}
-
-input[type="file"] {
-	display: none;
-}
-
-.InputButton {
-	border: none;
-	border-radius: 1rem;
-	background-color: rgba(58, 81, 153, 1);
-	color: white;
-	outline: none;
-	cursor: pointer;
-	font-weight: bold;
-	width: 6rem;
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
-}
-
-.ContentLeft {
-	width: 100%;
-	padding: 0 1rem;
-}
-
-.ContentRight {
-	width: 100%;
-	padding: 0 1rem;
-}
-
-.Text {
-	font-family: "Roboto", Arial, Helvetica, sans-serif;
-	font-size: 0.7rem;
-	font-weight: 400;
-	color: rgba(0, 0, 0, 0.54);
-	line-height: 1;
-	letter-spacing: 0.00938em;
-	text-align: left;
-}
-
-.RadioHolder {
-	display: flex;
-	justify-content: flex-start;
-}
-
-.RadioButton {
-	align-items: center;
-}
-
-.ContentBottom {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin-top: 1rem;
-	padding-left: 1rem;
-}
-
-.Footer {
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 2rem;
-	margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .Avatar {
-	width: 15rem;
-	height: 15rem;
-	border-radius: 50%;
-	background-position: center;
-	background-size: cover;
-	margin-right: 2rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.InputButton {
+  border: none;
+  border-radius: 1rem;
+  background-color: rgba(58, 81, 153, 1);
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 6rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.ContentLeft {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.ContentRight {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.Text {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 1;
+  letter-spacing: 0.00938em;
+  text-align: left;
+}
+
+.RadioHolder {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.RadioButton {
+  align-items: center;
+}
+
+.ContentBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.Footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  margin-right: 2rem;
 }

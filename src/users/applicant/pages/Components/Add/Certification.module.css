@@ -35,17 +35,12 @@
   padding-top: 1rem;
 }
 
-.EditLabel {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-}
-
 .Period {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  margin-top: 1rem;
 }
 
 .CheckboxDiv {

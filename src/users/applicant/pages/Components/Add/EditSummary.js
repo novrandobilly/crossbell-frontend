@@ -67,6 +67,7 @@ const EditSummary = (props) => {
               validatorMethod={[VALIDATOR_MINLENGTH(20)]}
               onInputHandler={onInputHandler}
               label="Details*"
+              rows={12}
             />
           </div>
         </div>

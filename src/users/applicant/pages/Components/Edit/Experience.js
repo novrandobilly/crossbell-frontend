@@ -185,6 +185,7 @@ const Experience = (props) => {
                 label="Description*"
                 initValue={data.description}
                 initIsValid={true}
+                rows={12}
               />
             </div>
           </div>

@@ -247,6 +247,7 @@ const Education = (props) => {
               label="Deskripsi Pendidikan *"
               initValue={data.description}
               initIsValid={true}
+              rows={12}
             />
           </div>
         </div>

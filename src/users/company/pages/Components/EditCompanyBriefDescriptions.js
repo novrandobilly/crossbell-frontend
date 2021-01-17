@@ -38,7 +38,7 @@ const BriefDescriptions = (props) => {
     },
     false
   );
-  console.log(formState);
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
@@ -58,8 +58,6 @@ const BriefDescriptions = (props) => {
         if (push) {
           return props.onNextHandler();
         }
-      } else {
-        console.log("no res detected");
       }
 
       !push && props.history.push(`/co/${companyid}`);

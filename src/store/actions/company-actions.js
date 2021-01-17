@@ -109,48 +109,16 @@ export const createCompany = (companyData) => {
 export const updateCompanyIntro = (CompanyData) => {
   return async (dispatch) => {
     dispatch(updateCompanyStart());
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/users/co/${CompanyData.companyId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: CompanyData.companyId,
-            logo: CompanyData.logo,
-            companyName: CompanyData.companyName,
-            email: CompanyData.email,
-            password: CompanyData.password,
-            industry: CompanyData.industry,
-            address: CompanyData.address,
-            website: CompanyData.website,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-
-      dispatch(updateCompanySuccess(responseJSON.foundCompany));
-      return responseJSON.foundCompany;
-    } catch (err) {
-      dispatch(updateCompanyFail);
-    }
-  };
-};
-
-export const updateCompanyBriefDescriptions = (CompanyData) => {
-  return async (dispatch) => {
-    dispatch(updateCompanyStart());
     console.log("from action", CompanyData);
     try {
       const formData = new FormData();
       formData.append("logo", CompanyData.logo);
+      formData.append("companyName", CompanyData.companyName);
       formData.append("email", CompanyData.email);
       formData.append("address", CompanyData.address);
       formData.append("password", CompanyData.password);
-      formData.append("phoneNumber", CompanyData.phoneNumber);
-      formData.append("role", CompanyData.role);
+      formData.append("industry", CompanyData.industry);
+      formData.append("website", CompanyData.website);
 
       const response = await fetch(
         `http://localhost:5000/api/users/co/${CompanyData.companyId}`,
@@ -160,11 +128,49 @@ export const updateCompanyBriefDescriptions = (CompanyData) => {
         }
       );
       const responseJSON = await response.json();
+      console.log(response, responseJSON);
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
 
       dispatch(updateCompanySuccess(responseJSON.foundCompany));
       return responseJSON.foundCompany;
     } catch (err) {
+      console.log(err, typeof err);
       dispatch(updateCompanyFail());
+      return err;
+    }
+  };
+};
+
+export const updateCompanyBriefDescriptions = (CompanyData) => {
+  return async (dispatch) => {
+    dispatch(updateCompanyStart());
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/users/co/${CompanyData.companyId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            briefDescriptions: CompanyData.briefDescriptions,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(response, responseJSON);
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+
+      dispatch(updateCompanySuccess(responseJSON.foundCompany));
+      return responseJSON.foundCompany;
+    } catch (err) {
+      console.log(err, typeof err);
+      dispatch(updateCompanyFail());
+      return err;
     }
   };
 };

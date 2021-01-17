@@ -35,12 +35,6 @@
   padding-top: 1rem;
 }
 
-.EditLabel {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-}
-
 .Period {
   display: flex;
   flex-direction: row;

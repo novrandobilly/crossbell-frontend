@@ -96,8 +96,7 @@ const Experience = (props) => {
               inputClass="AddJobInput"
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label="Previous Title *"
-              placeholder="Ex: Marketing Chief"
+              label="Previous Title*"
             />
           </div>
 
@@ -120,7 +119,6 @@ const Experience = (props) => {
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
               label="Location*"
-              placeholder="Ex: Bandung, West Java"
             />
           </div>
 
@@ -164,6 +162,7 @@ const Experience = (props) => {
               validatorMethod={[VALIDATOR_MINLENGTH(20)]}
               onInputHandler={onInputHandler}
               label="Description*"
+              rows={12}
             />
           </div>
         </div>

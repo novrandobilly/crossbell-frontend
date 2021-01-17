@@ -68,7 +68,7 @@ const JobCard = (props) => {
           - {props.placementLocation}
         </p>
         {props.salary ? (
-          <p>$ {salary.toLocaleString()} /month</p>
+          <p>IDR {salary.toLocaleString()} /month</p>
         ) : (
           <p>Salary Undisclosed</p>
         )}

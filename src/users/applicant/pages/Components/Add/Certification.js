@@ -177,7 +177,7 @@ const Certification = (props) => {
           </div>
 
           <div className={classes.CheckboxDiv}>
-            <Checkbox defaultChecked size="small" onChange={expiryHandler} />
+            <Checkbox color="primary" size="small" onChange={expiryHandler} />
             <label className={classes.CheckboxText}>No expiry date</label>
           </div>
 
@@ -189,6 +189,7 @@ const Certification = (props) => {
               validatorMethod={[VALIDATOR_MINLENGTH(20)]}
               onInputHandler={onInputHandler}
               label="Description*"
+              rows={12}
             />
           </div>
         </div>

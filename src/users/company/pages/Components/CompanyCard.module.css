@@ -74,7 +74,7 @@
 }
 
 .Content {
-  width: 70%;
+  width: 82.5%;
 }
 
 .PicContainer {
@@ -157,7 +157,7 @@
 .JobCard {
   padding: 1rem;
   margin: 0.5rem 0.3rem;
-  width: 14rem;
+  width: 13.94rem;
   height: 17rem;
   border-radius: 0.2rem;
   border: solid 0.05rem rgba(0, 0, 0, 0.2);

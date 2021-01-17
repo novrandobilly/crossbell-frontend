@@ -226,6 +226,7 @@ const Education = (props) => {
             onInputHandler={onInputHandler}
             label="Deskripsi Pendidikan *"
             initIsValid={true}
+            rows={12}
           />
         </div>
       </div>
