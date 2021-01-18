@@ -209,18 +209,21 @@ const Education = props => {
 					</div>
 				</div>
 
-				<div className={classes.EditLabel}>
-					<Input
-						inputType='textarea'
-						id='description'
-						InputClass='EditProfileTextArea'
-						validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
-						onInputHandler={onInputHandler}
-						label='Deskripsi Pendidikan *'
-						initIsValid={true}
-					/>
-				</div>
-			</div>
+
+        <div className={classes.EditLabel}>
+          <Input
+            inputType="textarea"
+            id="description"
+            inputClass="EditProfileTextArea"
+            validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+            onInputHandler={onInputHandler}
+            label="Deskripsi Pendidikan *"
+            initIsValid={true}
+            rows={12}
+          />
+        </div>
+      </div>
+
 
 			<div className={classes.Footer}>
 				<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>

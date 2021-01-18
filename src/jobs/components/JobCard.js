@@ -80,9 +80,32 @@ const JobCard = props => {
 			</div>
 			{!props.auth.isCompany && props.auth.token && <div className={classes.InstantSubmit}>{instantApplyButton}</div>}
 
-			<footer />
-		</div>
-	);
+
+        <p>
+          <Link
+            to={`/co/${props.companyId._id}`}
+            style={{ textDecoration: "inherit", color: "inherit" }}
+          >
+            <em>
+              <strong>{props.company} </strong>
+            </em>
+          </Link>
+          - {props.placementLocation}
+        </p>
+        {props.salary ? (
+          <p>IDR {salary.toLocaleString()} /month</p>
+        ) : (
+          <p>Salary Undisclosed</p>
+        )}
+      </div>
+      {!props.auth.isCompany && props.auth.token && (
+        <div className={classes.InstantSubmit}>{instantApplyButton}</div>
+      )}
+
+      <footer />
+    </div>
+  );
+
 };
 
 const mapStateToProps = state => {

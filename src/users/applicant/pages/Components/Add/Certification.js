@@ -1,217 +1,233 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
-import moment from 'moment';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH, VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../../shared/utils/useForm";
+import moment from "moment";
 
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
+import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions/index";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_ALWAYSTRUE,
+} from "../../../../../shared/utils/validator";
 
-import classes from './Certification.module.css';
+import Modal from "../../../../../shared/UI_Element/Modal";
+import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Input from "../../../../../shared/UI_Element/Input";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
 
-const Certification = props => {
-	const { applicantid } = useParams();
-	const push = props.push;
-	const [ expiry, setExpiry ] = useState(true);
+import classes from "./Certification.module.css";
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			title: {
-				value: '',
-				isValid: false
-			},
-			organization: {
-				value: '',
-				isValid: false
-			},
-			startDate: {
-				value: '',
-				isValid: false
-			},
-			endDate: {
-				value: '',
-				isValid: false
-			},
-			description: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+const Certification = (props) => {
+  const { applicantid } = useParams();
+  const push = props.push;
+  const [expiry, setExpiry] = useState(true);
 
-	const expiryHandler = event => {
-		setExpiry(!expiry);
-		formState.inputs.endDate.isValid = true;
-	};
+  const [formState, onInputHandler] = useForm(
+    {
+      title: {
+        value: "",
+        isValid: false,
+      },
+      organization: {
+        value: "",
+        isValid: false,
+      },
+      startDate: {
+        value: "",
+        isValid: false,
+      },
+      endDate: {
+        value: "",
+        isValid: false,
+      },
+      description: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+  const expiryHandler = (event) => {
+    setExpiry(!expiry);
+    formState.inputs.endDate.isValid = true;
+  };
 
-		if (!formState.formIsValid) {
-			return props.updateApplicantFail();
-		}
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-		if (expiry) {
-			const updatedCertification = {
-				applicantId: applicantid,
-				title: formState.inputs.title.value,
-				organization: formState.inputs.organization.value,
-				startDate: formState.inputs.startDate.value,
-				endDate: formState.inputs.endDate.value,
-				description: formState.inputs.description.value
-			};
-			try {
-				const res = await props.updateApplicantCertification(updatedCertification);
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
 
-				if (res) {
-					console.log(res);
-				} else {
-					console.log('no res detected');
-				}
-				!push && props.history.push(`/ap/${applicantid}`);
-			} catch (err) {
-				console.log(err);
-			}
-		} else {
-			console.log('this one runs');
-			const updatedCertification = {
-				applicantId: applicantid,
-				title: formState.inputs.title.value,
-				organization: formState.inputs.organization.value,
-				startDate: formState.inputs.startDate.value,
-				endDate: null,
-				description: formState.inputs.description.value
-			};
-			try {
-				const res = await props.updateApplicantCertification(updatedCertification);
-				if (res) {
-					console.log(res);
-				} else {
-					console.log('no res detected');
-				}
-				!push && props.history.push(`/ap/${applicantid}`);
-			} catch (err) {
-				console.log(err);
-			}
-		}
-	};
+    if (expiry) {
+      const updatedCertification = {
+        applicantId: applicantid,
+        title: formState.inputs.title.value,
+        organization: formState.inputs.organization.value,
+        startDate: formState.inputs.startDate.value,
+        endDate: formState.inputs.endDate.value,
+        description: formState.inputs.description.value,
+      };
+      try {
+        const res = await props.updateApplicantCertification(
+          updatedCertification
+        );
 
-	let formContent = (
-		<React.Fragment>
-			<div className={classes.ContainerFlex}>
-				<p className={classes.FormTitle}>Certification</p>
+        if (res) {
+          console.log(res);
+        } else {
+          console.log("no res detected");
+        }
+        !push && props.history.push(`/ap/${applicantid}`);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("this one runs");
+      const updatedCertification = {
+        applicantId: applicantid,
+        title: formState.inputs.title.value,
+        organization: formState.inputs.organization.value,
+        startDate: formState.inputs.startDate.value,
+        endDate: null,
+        description: formState.inputs.description.value,
+      };
+      try {
+        const res = await props.updateApplicantCertification(
+          updatedCertification
+        );
+        if (res) {
+          console.log(res);
+        } else {
+          console.log("no res detected");
+        }
+        !push && props.history.push(`/ap/${applicantid}`);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
-				<div className={classes.FormRow}>
-					<div className={classes.EditLabel}>
-						<Input
-							inputType='input'
-							id='title'
-							InputClass='AddJobInput'
-							validatorMethod={[ VALIDATOR_REQUIRE() ]}
-							onInputHandler={onInputHandler}
-							label='Certification Title *'
-							placeholder='Ex: Certified Cooperative Communicator'
-						/>
-					</div>
+  let formContent = (
+    <React.Fragment>
+      <div className={classes.ContainerFlex}>
+        <p className={classes.FormTitle}>Certification</p>
 
-					<div className={classes.EditLabel}>
-						<Input
-							inputType='input'
-							id='organization'
-							InputClass='AddJobInput'
-							validatorMethod={[ VALIDATOR_REQUIRE() ]}
-							onInputHandler={onInputHandler}
-							label='Issuing Organization*'
-							placeholder='Ex: National Rural Electric Cooperative Association'
-						/>
-					</div>
+        <div className={classes.FormRow}>
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="title"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Certification Title *"
+              placeholder="Ex: Certified Cooperative Communicator"
+            />
+          </div>
 
-					<div className={classes.Period}>
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='customdate'
-								id='startDate'
-								validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-								onInputHandler={onInputHandler}
-								views={[ 'year', 'month' ]}
-								label='Tahun Mulai'
-								maxDate={moment()}
-								initValue={moment()}
-								style={{ marginBottom: '1rem' }}
-							/>
-						</div>
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="input"
+              id="organization"
+              inputClass="AddJobInput"
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label="Issuing Organization*"
+              placeholder="Ex: National Rural Electric Cooperative Association"
+            />
+          </div>
 
-						{expiry ? (
-							<div className={classes.EditLabel}>
-								<Input
-									inputType='customdate'
-									id='endDate'
-									validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-									onInputHandler={onInputHandler}
-									views={[ 'year', 'month' ]}
-									label='Tahun Selesai'
-									maxDate={moment()}
-									initValue={moment()}
-									style={{ marginBottom: '1rem' }}
-								/>
-							</div>
-						) : (
-							<div />
-						)}
-					</div>
+          <div className={classes.Period}>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="customdate"
+                id="startDate"
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onInputHandler={onInputHandler}
+                views={["year", "month"]}
+                label="Tahun Mulai"
+                maxDate={moment()}
+                initValue={moment()}
+                style={{ marginBottom: "1rem" }}
+              />
+            </div>
 
-					<div className={classes.CheckboxDiv}>
-						<Checkbox defaultChecked size='small' onChange={expiryHandler} />
-						<label className={classes.CheckboxText}>No expiry date</label>
-					</div>
+            {expiry ? (
+              <div className={classes.EditLabel}>
+                <Input
+                  inputType="customdate"
+                  id="endDate"
+                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                  onInputHandler={onInputHandler}
+                  views={["year", "month"]}
+                  label="Tahun Selesai"
+                  maxDate={moment()}
+                  initValue={moment()}
+                  style={{ marginBottom: "1rem" }}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+          </div>
 
-					<div className={classes.EditLabel}>
-						<Input
-							inputType='textarea'
-							id='description'
-							InputClass='EditProfileTextArea'
-							validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
-							onInputHandler={onInputHandler}
-							label='Description*'
-						/>
-					</div>
-				</div>
+          <div className={classes.CheckboxDiv}>
+            <Checkbox color="primary" size="small" onChange={expiryHandler} />
+            <label className={classes.CheckboxText}>No expiry date</label>
+          </div>
 
-				<div className={classes.Footer}>
-					<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
-						Save
-					</Button>
-				</div>
-			</div>
-		</React.Fragment>
-	);
+          <div className={classes.EditLabel}>
+            <Input
+              inputType="textarea"
+              id="description"
+              inputClass="EditProfileTextArea"
+              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+              onInputHandler={onInputHandler}
+              label="Description*"
+              rows={12}
+            />
+          </div>
+        </div>
 
-	if (props.isLoading) {
-		formContent = <SpinnerCircle />;
-	}
+        <div className={classes.Footer}>
+          <Button
+            disabled={!formState.formIsValid}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Save
+          </Button>
+        </div>
+      </div>
+    </React.Fragment>
+  );
 
-	const onCancelHandler = () => {
-		props.resetApplicant();
-	};
+  if (props.isLoading) {
+    formContent = <SpinnerCircle />;
+  }
 
-	return (
-		<div style={!push ? { marginTop: '6rem' } : { marginTop: '0' }}>
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<Modal show={props.error} onCancel={onCancelHandler}>
-					Input requirement not fulfilled
-				</Modal>
-				{formContent}
-			</form>
-		</div>
-	);
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
+
+  return (
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <Modal show={props.error} onCancel={onCancelHandler}>
+          Input requirement not fulfilled
+        </Modal>
+        {formContent}
+      </form>
+    </div>
+  );
+
 };
 
 const mapStateToProps = state => {

@@ -35,9 +35,9 @@
 }
 
 .EditLabel {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-self: flex-start;
+  align-self: flex-start; */
   margin-top: 0.3rem;
 }
 

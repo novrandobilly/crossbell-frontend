@@ -1,114 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import { VALIDATOR_MINLENGTH } from '../../../../../shared/utils/validator';
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
+import { useForm } from "../../../../../shared/utils/useForm";
 
-import Button from '@material-ui/core/Button';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions/index";
+import { VALIDATOR_MINLENGTH } from "../../../../../shared/utils/validator";
 
-import classes from './EditSummary.module.css';
+import Button from "@material-ui/core/Button";
+import Modal from "../../../../../shared/UI_Element/Modal";
+import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Input from "../../../../../shared/UI_Element/Input";
 
-const EditSummary = props => {
-	const { applicantid } = useParams();
+import classes from "./EditSummary.module.css";
 
-	const [ data, setData ] = useState();
+const EditSummary = (props) => {
+  const { applicantid } = useParams();
 
-	const { getOneApplicant } = props;
-	useEffect(
-		() => {
-			getOneApplicant(applicantid).then(res => {
-				setData(res.applicant);
-			});
-		},
-		[ getOneApplicant, applicantid ]
-	);
+  const [data, setData] = useState();
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			details: {
-				value: data ? data.details : null,
-				isValid: data && data.details ? true : false
-			}
-		},
-		false
-	);
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    getOneApplicant(applicantid).then((res) => {
+      setData(res.applicant);
+    });
+  }, [getOneApplicant, applicantid]);
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+  const [formState, onInputHandler] = useForm(
+    {
+      details: {
+        value: data ? data.details : null,
+        isValid: data && data.details ? true : false,
+      },
+    },
+    false
+  );
 
-		if (!formState.formIsValid) {
-			return props.updateApplicantFail();
-		}
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-		const updatedAppSummary = {
-			applicantId: applicantid,
-			details: formState.inputs.details.value
-		};
-		try {
-			const res = await props.updateApplicantSummary(updatedAppSummary);
-			console.log(res);
-			if (res) {
-				console.log(res);
-			} else {
-				console.log('no res detected');
-			}
-			props.history.push(`/ap/${applicantid}`);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
 
-	let formContent = <SpinnerCircle />;
+    const updatedAppSummary = {
+      applicantId: applicantid,
+      details: formState.inputs.details.value,
+    };
+    try {
+      const res = await props.updateApplicantSummary(updatedAppSummary);
+      console.log(res);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log("no res detected");
+      }
+      props.history.push(`/ap/${applicantid}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	if (!props.isLoading && data) {
-		formContent = (
-			<React.Fragment>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Summary</p>
+  let formContent = <SpinnerCircle />;
 
-					<div className={classes.FormRow}>
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='textarea'
-								id='details'
-								InputClass='EditProfileTextArea'
-								validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
-								onInputHandler={onInputHandler}
-								label='Details*'
-								initValue={data.details}
-								initIsValid={true}
-							/>
-						</div>
-					</div>
+  if (!props.isLoading && data) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Summary</p>
 
-					<div className={classes.Footer}>
-						<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
-							Save
-						</Button>
-					</div>
-				</div>
-			</React.Fragment>
-		);
-	}
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType="textarea"
+                id="details"
+                inputClass="EditProfileTextArea"
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label="Details*"
+                initValue={data.details}
+                initIsValid={true}
+                rows={12}
+              />
+            </div>
+          </div>
 
-	const onCancelHandler = () => {
-		props.resetApplicant();
-	};
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Could not update changes at the moment, please try again later
-			</Modal>
-			{formContent}
-		</form>
-	);
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
+      {formContent}
+    </form>
+  );
+
 };
 
 const mapStateToProps = state => {

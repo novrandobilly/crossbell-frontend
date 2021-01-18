@@ -193,16 +193,7 @@ const Invoice = (props) => {
                     ,-
                   </p>
                 </div>
-                <div
-                  style={{
-                    marginTop: "1rem",
-                    lineHeight: "1.5rem",
-                    textAlign: "left",
-                    border: "solid 1px rgba(0,0,0,0.3)",
-                    borderRadius: "0.2rem",
-                    padding: "0.5rem",
-                  }}
-                >
+                <div className={classes.NumberToText}>
                   {terbilang(subTotal + tax - dis)} rupiah
                 </div>
               </div>
