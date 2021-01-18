@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -421,13 +422,14 @@ const NewJob = (props) => {
       <form className={classes.Container}>{formContent}</form>
     </React.Fragment>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    job: state.job,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		job: state.job
+	};
 };
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -439,6 +441,7 @@ const mapDispatchToProps = (dispatch) => {
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
   };
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewJob));

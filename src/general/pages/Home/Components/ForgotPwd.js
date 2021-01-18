@@ -44,7 +44,7 @@ const ForgotPwd = props => {
 				<Input
 					inputType='input'
 					id='email'
-					inputClass='Forgot_Password'
+					InputClass='Forgot_Password'
 					validatorMethod={[ VALIDATOR_EMAIL() ]}
 					onInputHandler={onInputHandler}
 					label='Email*'

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "../../../../../shared/utils/useForm";
 import { withRouter, useParams, Link } from "react-router-dom";
@@ -478,27 +479,23 @@ const EditIntro = (props) => {
       {formContent}
     </form>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.applicant.isLoading,
-    error: state.applicant.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.applicant.isLoading,
+		error: state.applicant.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantIntro: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantIntro(ApplicantData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+		getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+		updateApplicantIntro: ApplicantData => dispatch(actionCreators.updateApplicantIntro(ApplicantData))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -227,25 +228,22 @@ const EditIntro = (props) => {
       </form>
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.company.isLoading,
-    error: state.company.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.company.isLoading,
+		error: state.company.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
-    resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyIntro: (CompanyData) =>
-      dispatch(actionCreators.updateCompanyIntro(CompanyData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
+		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
+		getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
+		updateCompanyIntro: CompanyData => dispatch(actionCreators.updateCompanyIntro(CompanyData))
+	};
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));

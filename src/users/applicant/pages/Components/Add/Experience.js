@@ -1,3 +1,4 @@
+
 import React from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
@@ -199,26 +200,22 @@ const Experience = (props) => {
       </form>
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.applicant.isLoading,
-    error: state.applicant.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.applicant.isLoading,
+		error: state.applicant.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantExperience: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+		updateApplicantExperience: ApplicantData => dispatch(actionCreators.updateApplicantExperience(ApplicantData))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Experience));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Experience));

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter, Link } from "react-router-dom";
@@ -118,26 +119,22 @@ const EditSummary = (props) => {
       </form>
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.applicant.isLoading,
-    error: state.applicant.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.applicant.isLoading,
+		error: state.applicant.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantSummary: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+		updateApplicantSummary: ApplicantData => dispatch(actionCreators.updateApplicantSummary(ApplicantData))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditSummary));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditSummary));

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
@@ -241,27 +242,23 @@ const Certification = (props) => {
       {formContent}
     </form>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.applicant.isLoading,
-    error: state.applicant.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.applicant.isLoading,
+		error: state.applicant.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantCertification: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+		getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+		updateApplicantCertification: ApplicantData => dispatch(actionCreators.updateApplicantCertification(ApplicantData))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Certification));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Certification));
