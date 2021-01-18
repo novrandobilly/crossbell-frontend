@@ -262,7 +262,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='firstName'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='First Name*'
@@ -272,7 +272,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='headline'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='Headline*'
@@ -283,7 +283,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='phone'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='Phone*'
@@ -294,7 +294,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='city'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='City*'
@@ -305,7 +305,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='zip'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='Zip*'
@@ -334,7 +334,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='lastName'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='Last Name*'
@@ -345,7 +345,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='email'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_EMAIL() ]}
 									onInputHandler={onInputHandler}
 									label='Email*'
@@ -356,7 +356,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='address'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='Address*'
@@ -367,7 +367,7 @@ const EditIntro = props => {
 								<Input
 									inputType='input'
 									id='state'
-									inputClass='AppInput'
+									InputClass='AppInput'
 									validatorMethod={[ VALIDATOR_REQUIRE() ]}
 									onInputHandler={onInputHandler}
 									label='State*'

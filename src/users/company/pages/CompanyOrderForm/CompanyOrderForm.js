@@ -1,13 +1,15 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { useForm } from "../../../../shared/utils/useForm";
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useForm } from '../../../../shared/utils/useForm';
+
 
 import OrderComponent from "./OrderComponent";
 import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from "../../../../store/actions/index";
 import { VALIDATOR_MIN } from "../../../../shared/utils/validator";
 import Button from "@material-ui/core/Button";
+
 
 // import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 import Modal from "../../../../shared/UI_Element/Modal";
@@ -218,9 +220,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
     resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
   };
+
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CompanyOrderForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyOrderForm));

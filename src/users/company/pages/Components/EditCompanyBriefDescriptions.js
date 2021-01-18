@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
@@ -134,26 +135,23 @@ const BriefDescriptions = (props) => {
       </form>
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.company.isLoading,
-    error: state.company.error,
-  };
+const mapStateToProps = state => {
+	return {
+		isLoading: state.company.isLoading,
+		error: state.company.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
-    resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyBriefDescriptions: (CompanyData) =>
-      dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
+		resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
+		getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
+		updateCompanyBriefDescriptions: CompanyData => dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(BriefDescriptions));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BriefDescriptions));

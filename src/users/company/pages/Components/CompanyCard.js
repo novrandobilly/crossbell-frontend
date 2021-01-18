@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
@@ -195,21 +196,21 @@ const CompanyCard = (props) => {
       </div>
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    isLoading: state.job.isLoading,
-    error: state.job.error,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		isLoading: state.job.isLoading,
+		error: state.job.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getJobsInCompany: (payload) =>
-      dispatch(actionCreators.getJobsInCompany(payload)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		getJobsInCompany: payload => dispatch(actionCreators.getJobsInCompany(payload))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyCard);

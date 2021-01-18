@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, withRouter, useParams } from "react-router-dom";
 import { connect } from "react-redux";
@@ -176,23 +177,21 @@ const JobDetails = (props) => {
   }
 
   return containerContent;
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    job: state.job,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		job: state.job
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteJob: (payload) => dispatch(actionCreators.deleteJob(payload)),
-    releaseJob: (payload) => dispatch(actionCreators.releaseJob(payload)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
+		releaseJob: payload => dispatch(actionCreators.releaseJob(payload))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(JobDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(JobDetails));
