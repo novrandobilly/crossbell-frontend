@@ -126,6 +126,7 @@ const EditPIC = props => {
 								label='PIC Email*'
 								initValue={data.picEmail}
 								initIsValid={data.picEmail}
+								helperText='Please input a valid email address'
 							/>
 							<Input
 								inputType='input'

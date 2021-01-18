@@ -88,35 +88,20 @@ const Input = props => {
 					onBlur={onBlurHandler}
 					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
 					error={!state.isValid && state.isTouched}
-					InputProps={{ style: { fontSize: 15 } }}
+					InputProps={{
+						style: { fontSize: 15 },
+						inputProps: { min: props.min && props.min, max: props.max && props.max, step: props.step && props.step }
+					}}
 					style={{ margin: '.6rem 0' }}
 				/>
 			);
 			break;
-		case 'number':
-			inputElement = (
-				<TextField
-					size='small'
-					id={id}
-					className={[ classes.InputElements, classes[props.InputClass] ].join(' ')}
-					style={{ margin: '0.6rem 0' }}
-					label={props.label}
-					name={props.name}
-					type={props.type || 'text'}
-					value={state.value}
-					// type={props.type || "text"}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					InputProps={{ inputProps: { min: props.min, max: props.max } }}
-					step={props.step}
-				/>
-			);
-			break;
+
 		case 'textarea':
 			inputElement = (
 				<TextField
 					id={id}
-					className={[ classes.InputElements, classes[props.InputClass] ].join(' ')}
+					className={[ classes.TextareaElements, classes[props.InputClass] ].join(' ')}
 					style={{ margin: '0.5rem 0' }}
 					label={props.label}
 					name={props.name}
@@ -127,6 +112,8 @@ const Input = props => {
 					multiline
 					rows={props.rows || 4}
 					variant='outlined'
+					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+					error={!state.isValid && state.isTouched}
 				/>
 			);
 			break;
@@ -146,6 +133,7 @@ const Input = props => {
 					onChange={onChangeHandler}
 					onBlur={onBlurHandler}
 					placeholder={props.placeholder || ''}
+					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
 				/>
 			);
 			break;
@@ -159,9 +147,9 @@ const Input = props => {
 						onChange={eventValue => onCustomDateHandler(eventValue)}
 						minDate={props.minDate}
 						maxDate={props.maxDate}
-						helperText={props.helperText}
 						id={id}
 						format={props.format}
+						helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
 					/>
 				</MuiPickersUtilsProvider>
 			);
@@ -169,17 +157,18 @@ const Input = props => {
 		default:
 			return (inputElement = (
 				<TextField
-					size='small'
-					variant='outlined'
 					id={id}
 					className={[ classes.InputElements, classes[props.InputClass] ].join(' ')}
-					style={{ width: '28rem', margin: '0' }}
 					label={props.label}
 					name={props.name}
 					value={state.value}
 					type={props.type || 'text'}
 					onChange={onChangeHandler}
 					onBlur={onBlurHandler}
+					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+					error={!state.isValid && state.isTouched}
+					InputProps={{ style: { fontSize: 15 } }}
+					style={{ margin: '.6rem 0' }}
 				/>
 			));
 	}
