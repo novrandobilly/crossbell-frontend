@@ -22,6 +22,10 @@
   padding: 0.5rem 3rem 2rem 3rem;
 }
 
+.ContainerFlex a {
+  text-decoration: none;
+}
+
 .FormTitle {
   font-size: 1.4rem;
   color: black;

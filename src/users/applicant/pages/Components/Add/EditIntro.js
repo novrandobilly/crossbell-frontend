@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "../../../../../shared/utils/useForm";
-import { withRouter, useParams } from "react-router-dom";
+import { withRouter, useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
 
@@ -142,7 +142,11 @@ const EditIntro = (props) => {
       } else {
         console.log("no response");
       }
-      !push && props.history.push(`/ap/${applicantid}`);
+      if (!push) {
+        props.history.push(`/ap/${applicantid}`);
+      } else {
+        props.onNextHandler();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -438,13 +442,23 @@ const EditIntro = (props) => {
           </div>
 
           <div className={classes.Footer}>
+            <Link to={`/ap/${applicantid}`}>
+              <Button
+                color="primary"
+                type="submit"
+                style={{ marginRight: "1rem" }}
+              >
+                Skip this step
+              </Button>
+            </Link>
+
             <Button
               disabled={!formState.formIsValid}
               variant="contained"
               color="primary"
               type="submit"
             >
-              Save
+              {push ? "Next" : "Save"}
             </Button>
           </div>
         </div>

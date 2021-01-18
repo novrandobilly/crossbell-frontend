@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { useParams, withRouter } from "react-router-dom";
+import { useParams, withRouter, Link } from "react-router-dom";
 import { useForm } from "../../../../../shared/utils/useForm";
 
 import * as actionTypes from "../../../../../store/actions/actions";
@@ -47,7 +47,11 @@ const EditSummary = (props) => {
       } else {
         console.log("no res detected");
       }
-      !push && props.history.push(`/ap/${applicantid}`);
+      if (!push) {
+        props.history.push(`/ap/${applicantid}`);
+      } else {
+        props.onNextHandler();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -73,13 +77,23 @@ const EditSummary = (props) => {
         </div>
 
         <div className={classes.Footer}>
+          <Link to={`/ap/${applicantid}`}>
+            <Button
+              color="primary"
+              type="submit"
+              style={{ marginRight: "1rem" }}
+            >
+              Skip this step
+            </Button>
+          </Link>
+
           <Button
             disabled={!formState.formIsValid}
             variant="contained"
             color="primary"
             type="submit"
           >
-            Save
+            {push ? "Next" : "Save"}
           </Button>
         </div>
       </div>
