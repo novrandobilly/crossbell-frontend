@@ -77,7 +77,7 @@ const ResetPwd = props => {
 						inputType='input'
 						type='password'
 						id='newPassword'
-						inputClass='Forgot_Password'
+						InputClass='Forgot_Password'
 						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
 						onInputHandler={onInputHandler}
 						label='New Password*'
@@ -86,7 +86,7 @@ const ResetPwd = props => {
 						inputType='input'
 						type='password'
 						id='confirmPassword'
-						inputClass='Forgot_Password'
+						InputClass='Forgot_Password'
 						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
 						onInputHandler={onInputHandler}
 						label='Confirm Password*'

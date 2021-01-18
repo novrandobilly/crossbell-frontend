@@ -304,7 +304,7 @@ const JobsList = props => {
 						<Input
 							inputType='number'
 							id='min'
-							inputClass='Salary'
+							InputClass='Salary'
 							validatorMethod={[ VALIDATOR_ALWAYSTRUE ]}
 							onInputHandler={onInputHandler}
 							type='number'
@@ -319,7 +319,7 @@ const JobsList = props => {
 						<Input
 							inputType='number'
 							id='max'
-							inputClass='Salary'
+							InputClass='Salary'
 							validatorMethod={[ VALIDATOR_ALWAYSTRUE ]}
 							onInputHandler={onInputHandler}
 							type='number'

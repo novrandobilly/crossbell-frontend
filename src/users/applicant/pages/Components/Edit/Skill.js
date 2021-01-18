@@ -69,7 +69,7 @@ const EditDetails = props => {
 									<Input
 										inputType='input'
 										id={`skill_${i}`}
-										inputClass='AddJobInput'
+										InputClass='AddJobInput'
 										validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
 										onInputHandler={onInputHandler}
 										initValue={skillsList[i]}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import GoogleLoginButton from './GoogleLoginButton';
 import Login from './Login';
 import CompanyForm from '../Components/CompanyForm';
 import Register from './Register';
@@ -21,14 +20,12 @@ const AuthForm = () => {
 		return (
 			<React.Fragment>
 				<div>{!sign ? <CompanyForm sign={toggleSign} role={toggleRole} /> : <Login sign={toggleSign} />}</div>
-				<GoogleLoginButton />
 			</React.Fragment>
 		);
 	} else {
 		return (
 			<React.Fragment>
 				<div>{!sign ? <Register sign={toggleSign} role={toggleRole} /> : <Login sign={toggleSign} />}</div>
-				<GoogleLoginButton />
 			</React.Fragment>
 		);
 	}

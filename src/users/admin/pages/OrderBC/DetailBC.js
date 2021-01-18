@@ -5,8 +5,8 @@ import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-// import { VALIDATOR_ALWAYSTRUE } from "../../../../shared/utils/validator";
-// import Input from "../../../../shared/UI_Element/Input";
+import { VALIDATOR_MIN } from '../../../../shared/utils/validator';
+import Input from '../../../../shared/UI_Element/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
@@ -26,7 +26,6 @@ const DetailBC = props => {
 
 	const [ dataBC, setDataBC ] = useState();
 	const [ dataApplicant, setDataApplicant ] = useState();
-	const [ index, setIndex ] = useState(null);
 
 	const [ formState, onInputHandler ] = useForm(
 		{
@@ -44,7 +43,7 @@ const DetailBC = props => {
 
 	const { getOrderInvoice, getAllApplicant } = props;
 
-	// console.log(onInputHandler);
+	console.log(onInputHandler);
 
 	useEffect(
 		() => {
@@ -160,7 +159,6 @@ const DetailBC = props => {
 
 	//================= Sent Function ===========================
 	const onSentHandler = async dataBC => {
-		setIndex(dataBC.i);
 		const applicantBC = {
 			token: props.admin.token,
 			applicantId: dataBC.applicantId,
@@ -168,10 +166,8 @@ const DetailBC = props => {
 		};
 		try {
 			await props.sentApplicantBC(applicantBC);
-			setIndex(null);
 		} catch (err) {
 			console.log(err);
-			setIndex(null);
 		}
 	};
 
@@ -183,7 +179,7 @@ const DetailBC = props => {
 			<div className={classes.Container}>
 				<div className={classes.FilterContainer}>
 					<div className={classes.CheckboxCriteria}>
-						<p className={classes.FilterLabel}>gender</p>
+						<p className={classes.FilterLabel}>Jenis Kelamin</p>
 						<div onChange={onGenderHandler}>
 							<div className={classes.CheckboxHolder}>
 								<Checkbox color='primary' size='small' value='male' id='pria' />
@@ -197,7 +193,7 @@ const DetailBC = props => {
 					</div>
 
 					<div className={classes.CheckboxCriteria}>
-						<p className={classes.FilterLabel}>pendidikan</p>
+						<p className={classes.FilterLabel}>Pendidikan</p>
 						<div className={classes.FlexWrap} onChange={onEducationHandler}>
 							<div className={classes.CheckboxHolder}>
 								<Checkbox color='primary' size='small' id='SMK' value='SMK' />
@@ -227,7 +223,7 @@ const DetailBC = props => {
 					</div>
 
 					<div className={classes.CheckboxCriteria}>
-						<p className={classes.FilterLabel}>ketersediaan</p>
+						<p className={classes.FilterLabel}>Ketersediaan</p>
 						<div className={classes.CheckboxHolder}>
 							<Checkbox color='primary' size='small' id='location' value='location' onChange={onLocationHandler} />
 							<p>Luar kota</p>
@@ -237,29 +233,69 @@ const DetailBC = props => {
 							<p>Bekerja shift</p>
 						</div>
 					</div>
+
+					<div className={classes.CheckboxCriteria}>
+						<p className={classes.FilterLabel}>Usia</p>
+						<div className={classes.AgeGroup}>
+							<Input
+								inputType='number'
+								id='min'
+								InputClass='Age'
+								labelClass='Range'
+								validatorMethod={[ VALIDATOR_MIN(1) ]}
+								onInputHandler={onInputHandler}
+								type='number'
+								initValue='0'
+								min='0'
+								step='1'
+								label='min'
+							/>
+							<Input
+								inputType='number'
+								id='max'
+								InputClass='Age'
+								labelClass='Range'
+								validatorMethod={[ VALIDATOR_MIN(1) ]}
+								onInputHandler={onInputHandler}
+								type='number'
+								initValue='0'
+								min='0'
+								step='1'
+								label='max'
+							/>
+						</div>
+					</div>
 				</div>
 				<div className={classes.OrderContainer}>
 					<div className={classes.CriteriaContainer}>
 						<div className={classes.CriteriaTop}>
 							<div className={classes.CriteriaHeader}>
-								<p>Criteria </p>
+								<p>Kriteria </p>
 							</div>
 							<div className={classes.CriteriaHolder}>
-								<p>posisi </p>
-								<p className={classes.CriteriaRight}>{dataBC.jobFunction}</p>
-							</div>
-							<div className={classes.CriteriaHolder}>
-								<p>gender </p>
-								<p className={classes.CriteriaRight}>{dataBC.gender}</p>
-							</div>
-							<div className={classes.CriteriaHolder}>
-								<p>pendidikan </p>
-								<p className={classes.CriteriaRight}>{dataBC.education}</p>
-							</div>
-							<div className={classes.CriteriaHolder}>
-								<p>umur</p>
+								<p>Posisi </p>
 								<p className={classes.CriteriaRight}>
-									{dataBC.age.min} - {dataBC.age.max}
+									<strong>{dataBC.jobFunction}</strong>
+								</p>
+							</div>
+							<div className={classes.CriteriaHolder}>
+								<p>Jenis Kelamin </p>
+								<p className={classes.CriteriaRight}>
+									<strong>{dataBC.gender}</strong>
+								</p>
+							</div>
+							<div className={classes.CriteriaHolder}>
+								<p>Pendidikan </p>
+								<p className={classes.CriteriaRight}>
+									<strong>{dataBC.education}</strong>
+								</p>
+							</div>
+							<div className={classes.CriteriaHolder}>
+								<p>Usia</p>
+								<p className={classes.CriteriaRight}>
+									<strong>
+										{dataBC.age.min} - {dataBC.age.max}
+									</strong>
 								</p>
 							</div>
 						</div>
@@ -380,25 +416,21 @@ const DetailBC = props => {
 													/>
 												)}
 											</th>
-											{props.isLoading && index === i ? (
-												<SpinnerCircle />
-											) : (
-												<th>
-													<Button
-														variant='contained'
-														color='primary'
-														className={classes.button}
-														size='small'
-														endIcon={<SendIcon />}
-														onClick={() =>
-															onSentHandler({
-																applicantId: app.id,
-																i
-															})}>
-														Send
-													</Button>
-												</th>
-											)}
+											<th>
+												<Button
+													variant='contained'
+													color='primary'
+													className={classes.button}
+													size='small'
+													endIcon={<SendIcon />}
+													onClick={() =>
+														onSentHandler({
+															applicantId: app.id,
+															i
+														})}>
+													Send
+												</Button>
+											</th>
 										</tr>
 									);
 								})}
