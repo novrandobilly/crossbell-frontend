@@ -1,26 +1,23 @@
 .JobCard {
-
-  display: flex;
-  margin: 1rem;
-  height: 8rem;
-  width: 80%;
-  padding: 20px;
-  border-radius: 5px;
-  position: relative;
-  border: none;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  background-color: white;
+	display: flex;
+	margin: 1rem;
+	height: 8rem;
+	width: 80%;
+	padding: 20px;
+	border-radius: 5px;
+	position: relative;
+	border: none;
+	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+	background-color: white;
 }
 
 .Logo {
-  height: 7rem;
-  width: 7rem;
-  border: none;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-
+	height: 7rem;
+	width: 7rem;
+	border: none;
+	background-size: cover;
+	background-position: center;
+	display: flex;
 }
 
 .Logo:hover {
@@ -28,18 +25,17 @@
 }
 
 .Logo img {
-  width: 100%;
-  height: auto;
+	width: 100%;
+	height: auto;
 }
 
 .Content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 100%;
-  padding-left: 3%;
-  text-align: start;
-
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	height: 100%;
+	padding-left: 3%;
+	text-align: start;
 }
 
 .Content > * {
@@ -47,9 +43,8 @@
 }
 
 .Content > p:nth-of-type(2) {
-  color: rgba(0, 0, 0, 0.5);
-  font-style: italic;
-
+	color: rgba(0, 0, 0, 0.5);
+	font-style: italic;
 }
 
 .Content > h3 {
