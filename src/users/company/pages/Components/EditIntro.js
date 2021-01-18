@@ -146,7 +146,7 @@ const EditIntro = props => {
 							<Input
 								inputType='input'
 								id='companyName'
-								inputClass='AddJobInput'
+								InputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
 								label='Name*'
@@ -156,7 +156,7 @@ const EditIntro = props => {
 							<Input
 								inputType='input'
 								id='email'
-								inputClass='AddJobInput'
+								InputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_EMAIL() ]}
 								onInputHandler={onInputHandler}
 								label='Company Email* (This is your email account for login)'
@@ -167,7 +167,7 @@ const EditIntro = props => {
 							<Input
 								inputType='input'
 								id='industry'
-								inputClass='AddJobInput'
+								InputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
 								label='Industry*'
@@ -179,7 +179,7 @@ const EditIntro = props => {
 							<Input
 								inputType='input'
 								id='address'
-								inputClass='AddJobInput'
+								InputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
 								label='Address*'
@@ -191,7 +191,7 @@ const EditIntro = props => {
 							<Input
 								inputType='input'
 								id='website'
-								inputClass='AddJobInput'
+								InputClass='AddJobInput'
 								validatorMethod={[ VALIDATOR_REQUIRE() ]}
 								onInputHandler={onInputHandler}
 								label='Websites*'

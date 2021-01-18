@@ -82,7 +82,10 @@ const ApplicantCard = props => {
 							)}
 							<p>
 								{props.resume && (
-									<a href={props.resume.url} target='_blank' rel='noopener noreferrer'>
+									<a
+										href={props.resume.url.slice(0, props.resume.url.length - 4) + '.jpg'}
+										target='_blank'
+										rel='noopener noreferrer'>
 										{' '}
 										My Resume{' '}
 									</a>

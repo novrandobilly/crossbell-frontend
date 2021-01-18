@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actionCreators from '../../../../store/actions';
 
+import classes from './GoogleLoginButton.module.css';
+
 const GoogleLoginButton = props => {
 	const responseSuccessGoogle = async response => {
 		console.log(response);
@@ -20,7 +22,7 @@ const GoogleLoginButton = props => {
 	};
 	const responseErrorGoogle = response => {};
 	return (
-		<div>
+		<div className={classes.GoogleLogin}>
 			<GoogleLogin
 				clientId='968047575665-o4ugi6bco8pp3j4ba10cs55av6cms52c.apps.googleusercontent.com'
 				buttonText='Login with Google'
