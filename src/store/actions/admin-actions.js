@@ -229,28 +229,30 @@ export const getWholeCompanies = payload => {
 	};
 };
 
-export const getAllJob = payload => {
-	return async dispatch => {
-		dispatch(getAllJobStart());
-		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/jobs`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${payload.token}`
-				},
-				body: null
-			});
-			const responseJSON = await response.json();
-			if (!response.ok) {
-				throw new Error(responseJSON.message);
-			}
-			dispatch(getAllJobSuccess(responseJSON));
-			return responseJSON;
-		} catch (err) {
-			dispatch(getAllJobFail);
-		}
-	};
+
+export const getAllJob = (payload) => {
+  return async (dispatch) => {
+    dispatch(getAllJobStart());
+    try {
+      const response = await fetch(`http://localhost:5000/api/jobs`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: null,
+      });
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getAllJobSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAllJobFail);
+    }
+  };
+
 };
 
 //=======================================================================
@@ -305,30 +307,35 @@ export const blockCompany = payload => {
 	};
 };
 
-export const sentApplicantBC = InputBC => {
-	return async dispatch => {
-		dispatch(getAllApplicantStart());
-		console.log(InputBC);
-		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/bc/applicant`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${InputBC.token}`
-				},
-				body: JSON.stringify({
-					orderId: InputBC.orderId,
-					applicantId: InputBC.applicantId
-				})
-			});
-			const responseJSON = await response.json();
-			console.log(responseJSON);
-			dispatch(getAllApplicantSuccess(responseJSON));
-			return responseJSON;
-		} catch (err) {
-			dispatch(getAllApplicantFail());
-		}
-	};
+
+export const sentApplicantBC = (InputBC) => {
+  return async (dispatch) => {
+    dispatch(getAdminStart());
+    console.log(InputBC);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/alphaomega/order/bc/applicant`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${InputBC.token}`,
+          },
+          body: JSON.stringify({
+            orderId: InputBC.orderId,
+            applicantId: InputBC.applicantId,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      dispatch(getAdminSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAdminFail());
+    }
+  };
+
 };
 
 export const updateAdminIntro = payload => {

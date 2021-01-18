@@ -22,10 +22,10 @@
 }
 
 .FormTitle {
-	font-size: 1.4rem;
-	color: black;
-	align-self: flex-start;
-	margin-left: 5rem;
+  font-size: 1.4rem;
+  color: black;
+  align-self: flex-start;
+
 }
 
 .FormRow {

@@ -1,109 +1,149 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../../../../store/actions';
-import { useForm } from '../../../../../shared/utils/useForm';
 
-import { VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
+import React, { useState, useEffect } from "react";
+import { useParams, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { useForm } from "../../../../../shared/utils/useForm";
 
-import Spinner from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
-import SaveButton from '../../../../../shared/UI_Element/SaveButton';
+import * as actionTypes from "../../../../../store/actions/actions";
+import * as actionCreators from "../../../../../store/actions";
+import { VALIDATOR_ALWAYSTRUE } from "../../../../../shared/utils/validator";
+import Button from "@material-ui/core/Button";
+import Modal from "../../../../../shared/UI_Element/Modal";
+import Spinner from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import Input from "../../../../../shared/UI_Element/Input";
 
-import classes from './Skill.module.css';
+import classes from "./Skill.module.css";
 
-const EditDetails = props => {
-	const [ skills, setSkills ] = useState([ 'skill' ]);
-	const [ skillsList, setSkillsList ] = useState();
-	const [ formState, onInputHandler ] = useForm({}, true);
-	const { applicantid } = useParams();
+const EditDetails = (props) => {
+  const [skills, setSkills] = useState(["skill"]);
+  const [skillsList, setSkillsList] = useState();
+  const [formState, onInputHandler] = useForm({}, true);
+  const { applicantid } = useParams();
 
-	const { getOneApplicant } = props;
-	useEffect(
-		() => {
-			let res;
-			const fetchApp = async () => {
-				res = await getOneApplicant(applicantid);
-				res.applicant.skills.forEach((skill, i) => {
-					setSkills(prevState => [ ...prevState, 'skill' ]);
-					onInputHandler(`skill_${i}`, skill, true);
-				});
-				setSkillsList(res.applicant.skills);
-			};
-			fetchApp();
-		},
-		[ getOneApplicant, applicantid, onInputHandler ]
-	);
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    let res;
+    const fetchApp = async () => {
+      res = await getOneApplicant(applicantid);
+      res.applicant.skills.forEach((skill, i) => {
+        setSkills((prevState) => [...prevState, "skill"]);
+        onInputHandler(`skill_${i}`, skill, true);
+      });
+      setSkillsList(res.applicant.skills);
+    };
+    fetchApp();
+  }, [getOneApplicant, applicantid, onInputHandler]);
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
-		let skillsData = [];
-		for (const key in formState.inputs) {
-			skillsData = skillsData.concat(formState.inputs[key].value);
-		}
-		skillsData = skillsData.filter(skill => !!skill.trim());
-		const updatedData = {
-			applicantId: applicantid,
-			skillsData
-		};
-		await props.updateSkills(updatedData);
-		props.history.push(`/ap/${applicantid}`);
-	};
+  const onSubmitHandler = async (event) => {
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
 
-	const addSkill = e => {
-		e.preventDefault();
-		setSkills(skills => [ ...skills, 'skill' ]);
-	};
-	let formSkills = <Spinner />;
+    event.preventDefault();
+    let skillsData = [];
+    for (const key in formState.inputs) {
+      skillsData = skillsData.concat(formState.inputs[key].value);
+    }
+    skillsData = skillsData.filter((skill) => !!skill.trim());
+    const updatedData = {
+      applicantId: applicantid,
+      skillsData,
+    };
+    await props.updateSkills(updatedData);
+    props.history.push(`/ap/${applicantid}`);
+  };
 
-	if (skillsList && !props.applicant.isLoading) {
-		formSkills = (
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Skills edit</p>
+  const addSkill = (e) => {
+    e.preventDefault();
+    setSkills((skills) => [...skills, "skill"]);
+  };
+  let formSkills = <Spinner />;
 
-					<div className={classes.FormRow}>
-						{skills.map((skill, i) => {
-							return (
-								<div className={classes.EditLabel} key={i}>
-									<Input
-										inputType='input'
-										id={`skill_${i}`}
-										InputClass='AddJobInput'
-										validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-										onInputHandler={onInputHandler}
-										initValue={skillsList[i]}
-										initIsValid={true}
-										placeholder='Ex: Communication'
-									/>
-								</div>
-							);
-						})}
-					</div>
+  if (skillsList && !props.applicant.isLoading) {
+    formSkills = (
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Skills edit</p>
 
-					<button type='button' onClick={addSkill} className={classes.AddButton}>
-						Add Skill
-					</button>
+          {skills.map((skill, i) => {
+            return (
+              <div className={classes.FormRow} key={i}>
+                <Input
+                  inputType="input"
+                  id={`skill_${i}`}
+                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                  onInputHandler={onInputHandler}
+                  initValue={skillsList[i]}
+                  initIsValid={true}
+                  label="Input skills"
+                />
+              </div>
+            );
+          })}
 
-					<SaveButton btnClass='SaveButton' disabled={!formState.formIsValid} placeholder='Save' />
-				</div>
-			</form>
-		);
-	}
-	return formSkills;
+          <Button
+            variant="contained"
+            color="primary"
+            type="button"
+            disableElevation
+            onClick={addSkill}
+            size="small"
+          >
+            Add Input
+          </Button>
+
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </form>
+    );
+  }
+
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
+
+  return (
+    <React.Fragment>
+      {" "}
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
+      {formSkills}
+    </React.Fragment>
+  );
+
 };
 
-const mapStateToProps = state => {
-	return {
-		applicant: state.applicant
-	};
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant,
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateSkills: payload => dispatch(actionCreators.updateApplicantSkills(payload)),
-		getOneApplicant: applicantid => dispatch(actionCreators.getOneApplicant(applicantid))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSkills: (payload) =>
+      dispatch(actionCreators.updateApplicantSkills(payload)),
+    getOneApplicant: (applicantid) =>
+      dispatch(actionCreators.getOneApplicant(applicantid)),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditDetails));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditDetails));

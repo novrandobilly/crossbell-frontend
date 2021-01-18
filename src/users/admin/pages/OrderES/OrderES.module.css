@@ -56,6 +56,10 @@ Table tr:last-child td:last-child {
   padding: 0 1rem 0 1rem;
 }
 
+.Content {
+  font-weight: 600;
+}
+
 .DropButton {
   background-color: transparent;
   border: none;

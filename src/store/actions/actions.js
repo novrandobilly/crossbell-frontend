@@ -4,6 +4,7 @@ export const CREATEJOBSUCCESS = "CREATE_JOB_SUCCESS";
 export const CREATEJOBFAIL = "CREATE_JOB_FAIL";
 export const EDITJOB = "EDIT_JOB";
 export const DELETEJOB = "DELETE_JOB";
+export const JOBRESET = "JOB_RESET";
 
 //============================= Company ==============================
 export const CREATECOMPANY = "CREATE_COMPANY";
@@ -71,6 +72,7 @@ export const UPDATEADMINSTART = "UPDATE_ADMIN_START";
 export const GETADMIN = "GET_ADMIN";
 export const GETADMINFAIL = "GET_ADMIN_FAIL";
 export const GETADMINSTART = "GET_ADMIN_START";
+
 //============================= FeedBack ==============================
 export const CREATEFEEDBACKSUCCESS = "CREATE_FEEDBACK_SUCCESS";
 export const CREATEFEEDBACKFAIL = "CREATE_FEEDBACK_FAIL";
@@ -116,6 +118,9 @@ export const APPROVEORDERSTART = "APPROVE_ORDER_START";
 export const CANCELORDER = "CANCEL_ORDER";
 export const CANCELORDERFAIL = "CANCEL_ORDER_FAIL";
 export const CANCELORDERSTART = "CANCEL_ORDER_START";
+
+export const ORDERRESET = "ORDER_RESET";
+
 //============================= Auth ==============================
 
 export const AUTHADMINSTART = "AUTH_ADMIN_START";

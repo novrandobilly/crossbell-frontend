@@ -5,8 +5,10 @@ import { useForm } from "../../../../shared/utils/useForm";
 import { validate } from "../../../../shared/utils/validator";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as actionCreators from "../../../../store/actions";
 
+import * as actionTypes from "../../../../store/actions/actions";
+import * as actionCreators from "../../../../store/actions";
+import Modal from "../../../../shared/UI_Element/Modal";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -143,6 +145,10 @@ const Checkout = (props) => {
 
   const handleNext = async () => {
     if (activeStep === 2) {
+      if (!formState.formIsValid) {
+        return props.createOrderFail();
+      }
+
       const payload = {
         positionLevel: formState.inputs.positionLevel.value,
         mainTask: formState.inputs.mainTask.value,
@@ -196,7 +202,7 @@ const Checkout = (props) => {
     }
   };
 
-  return (
+  let content = (
     <React.Fragment>
       <CssBaseline />
       <main className={classes.layout} style={{ width: "650px" }}>
@@ -258,17 +264,36 @@ const Checkout = (props) => {
       </main>
     </React.Fragment>
   );
+
+  const onCancelHandler = () => {
+    props.resetOrder();
+  };
+
+  return (
+    <React.Fragment>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Tidak dapat melakukan pemesanan saat ini, mohon periksa kembali detail
+        pesanan{" "}
+      </Modal>
+      {content}
+    </React.Fragment>
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    isLoading: state.finance.isLoading,
+    error: state.finance.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createRequest: (payload) => dispatch(actionCreators.createOrderES(payload)),
+    createOrderFail: () =>
+      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
   };
 };
 

@@ -1,237 +1,234 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { useForm } from '../../../../shared/utils/useForm';
 
-import Button from '@material-ui/core/Button';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../../shared/utils/validator';
+import React, { useEffect, useState } from "react";
+import { useParams, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { useForm } from "../../../../shared/utils/useForm";
 
-import Modal from '../../../../shared/UI_Element/Modal';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Input from '../../../../shared/UI_Element/Input';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import classes from './EditIntro.module.css';
+import Button from "@material-ui/core/Button";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import * as actionTypes from "../../../../store/actions/actions";
+import * as actionCreators from "../../../../store/actions/index";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_ALWAYSTRUE,
+} from "../../../../shared/utils/validator";
 
-const EditIntro = props => {
-	const { companyid } = useParams();
+import Modal from "../../../../shared/UI_Element/Modal";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Input from "../../../../shared/UI_Element/Input";
+import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import classes from "./EditIntro.module.css";
 
-	const [ data, setData ] = useState();
+const EditIntro = (props) => {
+  const { companyid } = useParams();
 
-	const { getOneCompany } = props;
-	useEffect(
-		() => {
-			getOneCompany({ userId: companyid }).then(res => {
-				setData(res.company);
-			});
-		},
-		[ getOneCompany, companyid ]
-	);
+  const [data, setData] = useState();
 
-	let push = props.push;
+  const { getOneCompany } = props;
+  useEffect(() => {
+    getOneCompany({ userId: companyid }).then((res) => {
+      setData(res.company);
+    });
+  }, [getOneCompany, companyid]);
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			logo: {
-				value: data ? data.logo : null,
-				isValid: data && data.logo ? true : false
-			},
-			companyName: {
-				value: data ? data.companyName : null,
-				isValid: data && data.companyName ? true : false
-			},
-			email: {
-				value: data ? data.email : null,
-				isValid: data && data.email ? true : false
-			},
-			industry: {
-				value: data ? data.industry : null,
-				isValid: data && data.industry ? true : false
-			},
-			address: {
-				value: data ? data.address : null,
-				isValid: data && data.address ? true : false
-			},
-			website: {
-				value: data ? data.website : null,
-				isValid: data && data.website ? true : false
-			}
-		},
-		true
-	);
+  let push = props.push;
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+  const [formState, onInputHandler] = useForm(
+    {
+      logo: {
+        value: data ? data.logo : null,
+        isValid: true,
+      },
+      companyName: {
+        value: data ? data.companyName : null,
+        isValid: data && data.companyName ? true : false,
+      },
+      email: {
+        value: data ? data.email : null,
+        isValid: data && data.email ? true : false,
+      },
+      industry: {
+        value: data ? data.industry : null,
+        isValid: data && data.industry ? true : false,
+      },
+      address: {
+        value: data ? data.address : null,
+        isValid: data && data.address ? true : false,
+      },
+      website: {
+        value: data ? data.website : null,
+        isValid: true,
+      },
+    },
+    true
+  );
 
-		if (!formState.formIsValid) {
-			return props.updateCompanyFail();
-		}
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-		const updatedIntro = {
-			companyId: companyid,
-			logo: formState.inputs.logo.value,
-			companyName: formState.inputs.companyName.value,
-			email: formState.inputs.email.value,
-			industry: formState.inputs.industry.value,
-			address: formState.inputs.address.value,
-			website: formState.inputs.website.value
-		};
+    if (!formState.formIsValid) {
+      return props.updateCompanyFail();
+    }
 
-		try {
-			const res = await props.updateCompanyIntro(updatedIntro);
-			if (res) {
-				console.log(res);
-				if (push) {
-					return props.onNextHandler();
-				}
-			} else {
-				console.log('no res detected');
-			}
+    const updatedIntro = {
+      companyId: companyid,
+      logo: formState.inputs.logo.value,
+      companyName: formState.inputs.companyName.value,
+      email: formState.inputs.email.value,
+      industry: formState.inputs.industry.value,
+      address: formState.inputs.address.value,
+      website: formState.inputs.website.value,
+    };
 
-			!push && props.history.push(`/co/${companyid}`);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    try {
+      const res = await props.updateCompanyIntro(updatedIntro);
+      if (res) {
+        console.log(res);
+        if (push) {
+          return props.onNextHandler();
+        }
+      } else {
+        console.log("no res detected");
+      }
 
-	const onUploadHandler = e => {
-		const elementId = e.target.name;
-		const elementFile = e.target.files[0];
-		onInputHandler(elementId, elementFile, true);
-	};
+      !push && props.history.push(`/co/${companyid}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	let formContent = <SpinnerCircle />;
+  const onUploadHandler = (e) => {
+    const elementId = e.target.name;
+    const elementFile = e.target.files[0];
+    onInputHandler(elementId, elementFile, true);
+  };
 
-	if (!props.isLoading && data) {
-		formContent = (
-			<React.Fragment>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Edit Company Intro</p>
+  let formContent = <SpinnerCircle />;
 
-					<div className={classes.FormRow}>
-						<div className={classes.EditLabel}>
-							<div className={classes.ProfilePicture}>
-								{data.logo && data.logo.url ? (
-									<div
-										className={classes.Avatar}
-										style={{
-											backgroundImage: `url('${data.logo.url}')`
-										}}
-									/>
-								) : (
-									<AccountCircleIcon
-										style={{
-											fontSize: '15rem',
-											marginBottom: '1rem'
-										}}
-									/>
-								)}
+  if (!props.isLoading && data) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Edit Company Intro</p>
 
-								<label className={classes.InputButton}>
-									<input
-										accept='.jpg, .jpeg, .png'
-										name='logo'
-										className={classes.input}
-										id='logo'
-										type='file'
-										style={{ display: 'none' }}
-										onChange={onUploadHandler}
-									/>
-									<span className={classes.InputButtonText}> Upload Logo </span>
-								</label>
-							</div>
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <div className={classes.ProfilePicture}>
+                {data.logo ? (
+                  data.logo.url
+                ) : (
+                  <AccountCircleIcon
+                    style={{
+                      fontSize: "15rem",
+                      marginBottom: "1rem",
+                    }}
+                  />
+                )}
 
-							<Input
-								inputType='input'
-								id='companyName'
-								InputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Name*'
-								initValue={data.companyName}
-								initIsValid={data.companyName}
-							/>
-							<Input
-								inputType='input'
-								id='email'
-								InputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_EMAIL() ]}
-								onInputHandler={onInputHandler}
-								label='Company Email* (This is your email account for login)'
-								initValue={data.email}
-								initIsValid={data.email}
-							/>
+                <label className={classes.InputButton}>
+                  <input
+                    accept=".jpg, .jpeg, .png"
+                    name="logo"
+                    className={classes.input}
+                    id="logo"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={onUploadHandler}
+                  />
+                  <span className={classes.InputButtonText}> Upload Logo </span>
+                </label>
+              </div>
 
-							<Input
-								inputType='input'
-								id='industry'
-								InputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Industry*'
-								initValue={data.industry}
-								initIsValid={data.industry}
-								placeholder='Your Company Industry'
-							/>
+              <Input
+                inputType="input"
+                id="companyName"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Company Name*"
+                initValue={data.companyName}
+                initIsValid={data.companyName}
+              />
+              <Input
+                inputType="input"
+                id="email"
+                name="email"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_EMAIL()]}
+                onInputHandler={onInputHandler}
+                label="Company Email* (This is your email account for login)"
+                initValue={data.email}
+                initIsValid={data.email}
+              />
 
-							<Input
-								inputType='input'
-								id='address'
-								InputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Address*'
-								initValue={data.address}
-								initIsValid={data.address}
-								placeholder='Company address'
-							/>
+              <Input
+                inputType="input"
+                id="industry"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Industry*"
+                initValue={data.industry}
+                initIsValid={data.industry}
+              />
 
-							<Input
-								inputType='input'
-								id='website'
-								InputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Websites*'
-								initValue={data.website}
-								initIsValid={data.website}
-								placeholder='Company Website'
-							/>
-						</div>
-					</div>
+              <Input
+                inputType="input"
+                id="address"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label="Address*"
+                initValue={data.address}
+                initIsValid={data.address}
+              />
 
-					<div className={classes.Footer}>
-						<Button
-							disabled={!formState.formIsValid}
-							variant='contained'
-							color='primary'
-							type='submit'
-							className={classes.button}
-							endIcon={<NavigateNextIcon />}>
-							{push ? 'Next' : 'Save'}
-						</Button>
-					</div>
-				</div>
-			</React.Fragment>
-		);
-	}
+              <Input
+                inputType="input"
+                id="website"
+                inputClass="AddJobInput"
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onInputHandler={onInputHandler}
+                label="Websites*"
+                initValue={data.website}
+                initIsValid={data.website}
+              />
+            </div>
+          </div>
 
-	const onCancelHandler = () => {
-		props.resetCompany();
-	};
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.button}
+              endIcon={<NavigateNextIcon />}
+            >
+              {push ? "Next" : "Save"}
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
 
-	return (
-		<div style={!push ? { marginTop: '6rem' } : { marginTop: '0' }}>
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<Modal show={props.error} onCancel={onCancelHandler}>
-					Could not update changes at the moment, please try again later
-				</Modal>
-				{formContent}
-			</form>
-		</div>
-	);
+  const onCancelHandler = () => {
+    props.resetCompany();
+  };
+
+  return (
+    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <Modal show={props.error} onCancel={onCancelHandler}>
+          Could not update changes at the moment, please try again later
+        </Modal>
+        {formContent}
+      </form>
+    </div>
+  );
+
 };
 
 const mapStateToProps = state => {

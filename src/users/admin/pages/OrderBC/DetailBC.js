@@ -43,7 +43,7 @@ const DetailBC = props => {
 
 	const { getOrderInvoice, getAllApplicant } = props;
 
-	console.log(onInputHandler);
+
 
 	useEffect(
 		() => {
@@ -63,6 +63,7 @@ const DetailBC = props => {
 						console.log(err);
 					});
 
+
 				getAllApplicant(dataBC)
 					.then(res => {
 						console.log(res);
@@ -75,6 +76,7 @@ const DetailBC = props => {
 		},
 		[ getOrderInvoice, getAllApplicant, orderid, props.admin ]
 	);
+
 
 	useEffect(
 		() => {
@@ -222,17 +224,208 @@ const DetailBC = props => {
 						</div>
 					</div>
 
-					<div className={classes.CheckboxCriteria}>
-						<p className={classes.FilterLabel}>Ketersediaan</p>
-						<div className={classes.CheckboxHolder}>
-							<Checkbox color='primary' size='small' id='location' value='location' onChange={onLocationHandler} />
-							<p>Luar kota</p>
-						</div>
-						<div className={classes.CheckboxHolder}>
-							<Checkbox color='primary' size='small' id='shift' value='shift' onChange={onShiftHandler} />
-							<p>Bekerja shift</p>
-						</div>
-					</div>
+
+          <div className={classes.CheckboxCriteria}>
+            <p className={classes.FilterLabel}>ketersediaan</p>
+            <div className={classes.CheckboxHolder}>
+              <Checkbox
+                color="primary"
+                size="small"
+                id="location"
+                value="location"
+                onChange={onLocationHandler}
+              />
+              <p>Luar kota</p>
+            </div>
+            <div className={classes.CheckboxHolder}>
+              <Checkbox
+                color="primary"
+                size="small"
+                id="shift"
+                value="shift"
+                onChange={onShiftHandler}
+              />
+              <p>Bekerja shift</p>
+            </div>
+          </div>
+        </div>
+        <div className={classes.OrderContainer}>
+          <div className={classes.CriteriaContainer}>
+            <div className={classes.CriteriaTop}>
+              <div className={classes.CriteriaHeader}>
+                <p>Criteria </p>
+              </div>
+              <div className={classes.CriteriaHolder}>
+                <p>posisi </p>
+                <p className={classes.CriteriaRight}>{dataBC.jobFunction}</p>
+              </div>
+              <div className={classes.CriteriaHolder}>
+                <p>gender </p>
+                <p className={classes.CriteriaRight}>{dataBC.gender}</p>
+              </div>
+              <div className={classes.CriteriaHolder}>
+                <p>pendidikan </p>
+                <p className={classes.CriteriaRight}>{dataBC.education}</p>
+              </div>
+              <div className={classes.CriteriaHolder}>
+                <p>umur</p>
+                <p className={classes.CriteriaRight}>
+                  {dataBC.age.min} - {dataBC.age.max}
+                </p>
+              </div>
+            </div>
+            <p>
+              ditempatkan di kota lain
+              {dataBC.location ? (
+                <CheckCircleOutlineIcon
+                  style={{
+                    color: "#90ee90",
+                    margin: "0 0.4rem -0.4rem 0.5rem",
+                  }}
+                />
+              ) : (
+                <HighlightOffIcon
+                  style={{
+                    color: "#D41E21",
+                    margin: "0 0.4rem -0.4rem 0.5rem",
+                  }}
+                />
+              )}
+            </p>
+            <p>
+              bekerja secara shift
+              {dataBC.location ? (
+                <CheckCircleOutlineIcon
+                  style={{
+                    color: "#90ee90",
+                    margin: "0 0.5rem -0.4rem 0.5rem",
+                  }}
+                />
+              ) : (
+                <HighlightOffIcon
+                  style={{
+                    color: "#D41E21",
+                    margin: "0 0.5rem -0.4rem 0.5rem",
+                  }}
+                />
+              )}
+            </p>
+            <p>Catatan: {dataBC.note}</p>
+            <div className={classes.CriteriaFooter}>
+              <p style={{ color: "white" }}>Jumlah kandidat: {dataBC.amount}</p>
+              <div style={{ lineHeight: "0", fontSize: "0.8rem" }}>
+                <p>{dataBC.companyId.companyName}</p>
+                <p>{dataBC.companyId.emailRecipient}</p>
+              </div>
+            </div>
+          </div>
+          <div className={classes.ApplicantSearch}>
+            <table>
+              <thead className={classes.TableRow}>
+                <tr>
+                  <th>no</th>
+                  <th>nama</th>
+                  <th>gender</th>
+                  <th>pendidikan</th>
+                  <th>Umur</th>
+                  <th>luar kota</th>
+                  <th>shift</th>
+                  <th>Kirim</th>
+                </tr>
+              </thead>
+              <tbody className={classes.TableColumn}>
+                {displayData.map((app, i) => {
+                  return (
+                    <tr key={app.id}>
+                      <th>{i + 1}</th>
+                      <th>
+                        {app.firstName} {app.lastName}
+                      </th>
+                      <th>{app.gender}</th>
+                      <th>
+                        <div className={classes.EducationField}>
+                          {app.education.map((edu, i) => {
+                            return (
+                              <p key={i}>
+                                {edu.degree}
+                                <span>, </span>
+                              </p>
+                            );
+                          })}
+                        </div>
+                      </th>
+                      <th style={app.dateOfBirth ? null : { color: "gray" }}>
+                        {app.dateOfBirth
+                          ? moment().diff(moment(app.dateOfBirth), "year")
+                          : "null"}
+                      </th>
+                      <th>
+                        {app.outOfTown ? (
+                          <CheckCircleOutlineIcon
+                            style={{
+                              color: "#90ee90",
+                              margin: "0 0.5rem -0.4rem 0.5rem",
+                            }}
+                          />
+                        ) : (
+                          <HighlightOffIcon
+                            style={{
+                              color: "#D41E21",
+                              margin: "0 0.5rem -0.4rem 0.5rem",
+                            }}
+                          />
+                        )}
+                      </th>
+                      <th>
+                        {app.workShifts ? (
+                          <CheckCircleOutlineIcon
+                            style={{
+                              color: "#90ee90",
+                              margin: "0 0.5rem -0.4rem 0.5rem",
+                            }}
+                          />
+                        ) : (
+                          <HighlightOffIcon
+                            style={{
+                              color: "#D41E21",
+                              margin: "0 0.5rem -0.4rem 0.5rem",
+                            }}
+                          />
+                        )}
+                      </th>
+
+                      <th>
+                        {props.isLoading && index === i ? (
+                          <SpinnerCircle />
+                        ) : (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            size="small"
+                            endIcon={<SendIcon />}
+                            onClick={() =>
+                              onSentHandler({
+                                applicantId: app.id,
+                                i,
+                              })
+                            }
+                          >
+                            Send
+                          </Button>
+                        )}
+                      </th>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
 
 					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>Usia</p>
@@ -445,12 +638,14 @@ const DetailBC = props => {
 	return <div>{content}</div>;
 };
 
-const mapStateToProps = state => {
-	return {
-		admin: state.admin,
-		isLoading: state.finance.isLoading,
-		error: state.finance.error
-	};
+
+const mapStateToProps = (state) => {
+  return {
+    admin: state.admin,
+    isLoading: state.admin.isLoading,
+    error: state.admin.error,
+  };
+
 };
 
 const mapDispatchToProps = dispatch => {
