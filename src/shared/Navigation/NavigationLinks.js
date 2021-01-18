@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { NavLink, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions/actions";
+import React, { useState, useEffect } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import * as actionTypes from '../../store/actions/actions';
+import * as actionCreators from '../../store/actions/index';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-import classes from "./NavigationLinks.module.css";
+import classes from './NavigationLinks.module.css';
 
 const NavigationLinks = (props) => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
@@ -19,14 +20,14 @@ const NavigationLinks = (props) => {
     } else {
       props.logout();
     }
-    props.history.push("/");
+    props.history.push('/');
   };
 
   let logout = null;
   if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
     logout = (
       <li onClick={logoutHandler}>
-        <NavLink to="#">Logout</NavLink>
+        <NavLink to='#'>Logout</NavLink>
       </li>
     );
   }
@@ -51,29 +52,51 @@ const NavigationLinks = (props) => {
     setAdminMyList(!adminMyList);
   };
 
+  const [data, setData] = useState('');
+
+  const { getOneApplicant } = props;
+
+  useEffect(() => {
+    if (props.auth.isLoggedIn && !props.auth.isCompany) {
+      const applicantid = props.auth.userId;
+      getOneApplicant(applicantid).then((res) => {
+        setData(res.applicant.firstName);
+      });
+    }
+  }, [
+    getOneApplicant,
+    props.auth.isLoggedIn,
+    props.auth.isCompany,
+    props.auth.userId,
+  ]);
+
   return (
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
+        {props.auth.isLoggedIn && !props.auth.isCompany && (
+          <li>
+            <span>
+              Welcome,{' '}
+              <NavLink
+                to={`/ap/${props.auth.userId}`}
+                activeClassName={classes.active}
+              >
+                {data}
+              </NavLink>
+            </span>
+          </li>
+        )}
         <li>
-          <NavLink to="/" exact activeClassName={classes.active}>
+          <NavLink to='/' exact activeClassName={classes.active}>
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/jobs-dashboard" activeClassName={classes.active}>
+          <NavLink to='/jobs-dashboard' activeClassName={classes.active}>
             Explore Jobs
           </NavLink>
         </li>
-        {props.auth.isLoggedIn && !props.auth.isCompany && (
-          <li>
-            <NavLink
-              to={`/ap/${props.auth.userId}`}
-              activeClassName={classes.active}
-            >
-              My Profile
-            </NavLink>
-          </li>
-        )}
+
         {props.auth.isLoggedIn && props.auth.isCompany && (
           <>
             <li>
@@ -94,7 +117,7 @@ const NavigationLinks = (props) => {
                 <button className={classes.dropbtn} onClick={DropdownOrder}>
                   Place Order
                   <ArrowDropDownIcon
-                    style={{ alignSelf: "center", marginBottom: "-0.4rem" }}
+                    style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
                 </button>
 
@@ -104,7 +127,7 @@ const NavigationLinks = (props) => {
                       ? classes.dropdownShow
                       : classes.dropdownContent
                   }
-                  id="dropdownCompany"
+                  id='dropdownCompany'
                 >
                   <NavLink
                     to={`/co/order/reguler`}
@@ -129,7 +152,7 @@ const NavigationLinks = (props) => {
                 <button className={classes.dropbtn} onClick={DropdownList}>
                   My List
                   <ArrowDropDownIcon
-                    style={{ alignSelf: "center", marginBottom: "-0.4rem" }}
+                    style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
                 </button>
 
@@ -139,7 +162,7 @@ const NavigationLinks = (props) => {
                       ? classes.dropdownShow
                       : classes.dropdownContent
                   }
-                  id="dropdownCompany"
+                  id='dropdownCompany'
                 >
                   <NavLink
                     to={`/co/${props.auth.userId}/listOrder`}
@@ -185,7 +208,7 @@ const NavigationLinks = (props) => {
                 >
                   Order & Finance
                   <ArrowDropDownIcon
-                    style={{ alignSelf: "center", marginBottom: "-0.4rem" }}
+                    style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
                 </button>
 
@@ -195,7 +218,7 @@ const NavigationLinks = (props) => {
                       ? classes.dropdownShow
                       : classes.dropdownContent
                   }
-                  id="dropdownCompany"
+                  id='dropdownCompany'
                 >
                   <NavLink
                     to={`/ad/alphaomega/order/reguler`}
@@ -229,7 +252,7 @@ const NavigationLinks = (props) => {
                 <button className={classes.dropbtn} onClick={DropdownListAdmin}>
                   List
                   <ArrowDropDownIcon
-                    style={{ alignSelf: "center", marginBottom: "-0.4rem" }}
+                    style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
                 </button>
 
@@ -237,7 +260,7 @@ const NavigationLinks = (props) => {
                   className={
                     adminMyList ? classes.dropdownShow : classes.dropdownContent
                   }
-                  id="dropdownCompany"
+                  id='dropdownCompany'
                 >
                   <NavLink
                     to={`/ad/alphaomega/applicants`}
@@ -274,6 +297,7 @@ const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
+    applicant: state.applicant,
   };
 };
 
@@ -281,6 +305,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
     admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
   };
 };
 

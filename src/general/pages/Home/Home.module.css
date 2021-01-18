@@ -1,38 +1,39 @@
 .Content {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1rem 5rem;
-	height: 34rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 5rem;
+  height: 34rem;
+  background-color: black;
 }
 
 .ContentHolder {
-	text-align: justify;
-	width: 55%;
-	color: white;
+  text-align: justify;
+  width: 55%;
+  color: white;
 }
 
 .About {
-	font-size: 1.2rem;
-	margin-bottom: 5rem;
+  font-size: 1.2rem;
+  margin-bottom: 5rem;
 }
 
 .AuthForm {
-	margin-top: 2rem;
-	width: 27%;
+  margin-top: 2rem;
+  width: 27%;
 }
 
 .LinkRef {
-	width: fit-content;
-	font-size: 2rem;
-	font-weight: bold;
+  width: fit-content;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .LinkRef a:hover {
-	color: white;
+  color: white;
 }
 
 .LinkRef a {
-	text-decoration: none;
-	color: rgba(58, 81, 153, 1);
+  text-decoration: none;
+  color: rgba(58, 81, 153, 1);
 }

@@ -6,7 +6,8 @@
 }
 
 .ContainerFlex {
-  height: auto;
+  width: 40rem;
+  height: 25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,12 +34,14 @@
   flex-direction: column;
   border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
   padding-top: 2rem;
+  width: 100%;
 }
 
 .EditLabel {
   display: flex;
   flex-direction: column;
   align-self: flex-start;
+  width: 100%;
 }
 
 .Footer {

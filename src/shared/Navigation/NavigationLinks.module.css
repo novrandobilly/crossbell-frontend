@@ -25,9 +25,14 @@
   border: 1px solid transparent;
   color: rgba(58, 81, 153, 1);
   text-decoration: none;
-  padding: 1rem;
+  padding: 1rem 1.5rem 1rem 0;
   font-weight: bold;
   transition: all 0.1s ease-in;
+}
+
+.NavLinks a:hover,
+.NavLinks a:active {
+  color: rgb(0, 0, 0);
 }
 
 .NavLinks button {

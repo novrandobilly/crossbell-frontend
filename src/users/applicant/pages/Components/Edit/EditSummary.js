@@ -1,19 +1,18 @@
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useParams, withRouter } from 'react-router-dom';
+import { useForm } from '../../../../../shared/utils/useForm';
 
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useParams, withRouter } from "react-router-dom";
-import { useForm } from "../../../../../shared/utils/useForm";
+import * as actionTypes from '../../../../../store/actions/actions';
+import * as actionCreators from '../../../../../store/actions/index';
+import { VALIDATOR_MINLENGTH } from '../../../../../shared/utils/validator';
 
-import * as actionTypes from "../../../../../store/actions/actions";
-import * as actionCreators from "../../../../../store/actions/index";
-import { VALIDATOR_MINLENGTH } from "../../../../../shared/utils/validator";
+import Button from '@material-ui/core/Button';
+import Modal from '../../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../../shared/UI_Element/Input';
 
-import Button from "@material-ui/core/Button";
-import Modal from "../../../../../shared/UI_Element/Modal";
-import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import Input from "../../../../../shared/UI_Element/Input";
-
-import classes from "./EditSummary.module.css";
+import classes from './EditSummary.module.css';
 
 const EditSummary = (props) => {
   const { applicantid } = useParams();
@@ -54,7 +53,7 @@ const EditSummary = (props) => {
       if (res) {
         console.log(res);
       } else {
-        console.log("no res detected");
+        console.log('no res detected');
       }
       props.history.push(`/ap/${applicantid}`);
     } catch (err) {
@@ -73,25 +72,24 @@ const EditSummary = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
-                inputType="textarea"
-                id="details"
-                inputClass="EditProfileTextArea"
+                inputType='textarea'
+                id='details'
+                inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label="Details*"
+                label='Details*'
                 initValue={data.details}
                 initIsValid={true}
-                rows={12}
+                rows={10}
               />
             </div>
           </div>
-
           <div className={classes.Footer}>
             <Button
               disabled={!formState.formIsValid}
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
             >
               Save
             </Button>
@@ -113,23 +111,27 @@ const EditSummary = (props) => {
       {formContent}
     </form>
   );
-
 };
 
-const mapStateToProps = state => {
-	return {
-		isLoading: state.applicant.isLoading,
-		error: state.applicant.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-		getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-		updateApplicantSummary: ApplicantData => dispatch(actionCreators.updateApplicantSummary(ApplicantData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantSummary: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditSummary));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditSummary));
