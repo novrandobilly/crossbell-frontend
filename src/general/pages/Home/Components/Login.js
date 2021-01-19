@@ -63,7 +63,7 @@ const Login = props => {
 		<React.Fragment>
 			<div className={classes.ContainerFlex}>
 				<div className={classes.Header}>
-					<p className={classes.FormTitle}>Login</p>
+					<p className={classes.FormTitle}>Sign In</p>
 				</div>
 
 				<div className={classes.Content}>
@@ -97,7 +97,7 @@ const Login = props => {
 						style={{
 							marginTop: '1rem'
 						}}>
-						submit
+						Sign in
 					</Button>
 
 					<GoogleLoginButton />
@@ -105,7 +105,7 @@ const Login = props => {
 					<span className={classes.Sign}>
 						Don't have an account
 						<button className={classes.ChangeSign} onClick={props.sign} type='button'>
-							Sign Up Here
+							Register Here
 						</button>
 					</span>
 
