@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -15,6 +15,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../.
 import classes from './CompanyForm.module.css';
 
 const CompanyForm = props => {
+	const [ errorMessage, setErrorMessage ] = useState(null);
 	const [ formState, onInputHandler ] = useForm(
 		{
 			companyName: {
@@ -32,7 +33,6 @@ const CompanyForm = props => {
 		},
 		false
 	);
-
 	const onSubmitHandler = async event => {
 		event.preventDefault();
 		const newCompany = {
@@ -43,9 +43,9 @@ const CompanyForm = props => {
 
 		try {
 			const res = await props.createCompany(newCompany);
-			console.log(res);
+
 			if (!res.token) {
-				throw new Error("It's error dude!");
+				throw new Error(res.message);
 			}
 			props.login({
 				token: res.token,
@@ -54,7 +54,7 @@ const CompanyForm = props => {
 			});
 			props.history.push(`/co/${res.userId}/compro`);
 		} catch (err) {
-			console.log(err);
+			setErrorMessage(err.message);
 		}
 	};
 
@@ -62,7 +62,7 @@ const CompanyForm = props => {
 		<React.Fragment>
 			<div className={classes.ContainerFlex}>
 				<div className={classes.Header}>
-					<p className={classes.FormTitle}>Company Sign Up</p>
+					<p className={classes.FormTitle}>Company Register</p>
 				</div>
 
 				<div className={classes.Content}>
@@ -103,7 +103,7 @@ const CompanyForm = props => {
 						style={{
 							marginTop: '1rem'
 						}}>
-						submit
+						Register
 					</Button>
 
 					<span className={classes.sign}>
@@ -115,19 +115,8 @@ const CompanyForm = props => {
 				</div>
 
 				<div className={classes.Footer}>
-					<Button
-						color='primary'
-						onClick={props.role}
-						disableElevation
-						style={{
-							padding: '0',
-							fontSize: '0.7rem',
-							alignSelf: 'flex-start',
-							backgroundColor: 'transparent',
-							marginLeft: '1.5rem'
-						}}
-						startIcon={<ArrowBackIcon />}>
-						Applicant sign up
+					<Button color='primary' onClick={props.role} disableElevation startIcon={<ArrowBackIcon />}>
+						Applicant Register
 					</Button>
 				</div>
 			</div>
@@ -140,12 +129,13 @@ const CompanyForm = props => {
 
 	const onCancelHandler = () => {
 		props.resetCompany();
+		setErrorMessage(null);
 	};
 
 	return (
 		<form onSubmit={onSubmitHandler} className={classes.Container}>
 			<Modal show={props.error} onCancel={onCancelHandler}>
-				Invalid registration value. Please try again.
+				{errorMessage && errorMessage}
 			</Modal>
 			{formContent}
 		</form>

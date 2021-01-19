@@ -59,5 +59,14 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	background-color: rgb(245, 245, 245);
-	padding: 1rem 0;
+	padding: .5rem 0;
+}
+
+.Footer button {
+	font-size: 1rem;
+	padding: 0;
+	align-self: flex-end;
+	background-color: transparent;
+	margin-right: 1.5rem;
+	font-weight: bold;
 }

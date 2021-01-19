@@ -110,6 +110,8 @@ const JobsList = props => {
 				}
 
 				setDisplayData(filteredArray);
+			} else {
+				setDisplayData(items);
 			}
 		},
 		[ items, employmentFilter, fieldOfWorkFilter, locationFilter, formState ]
@@ -347,6 +349,8 @@ const JobsList = props => {
 							companyId={job.companyId}
 						/>
 					))
+				) : props.jobEmpty ? (
+					<h2>Tidak ada lowongan pekerjaan yang tersedia</h2>
 				) : (
 					<h2>Tidak ada pekerjaan sesuai pencarian</h2>
 				)}

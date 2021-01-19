@@ -1,4 +1,5 @@
 .JobCard {
+
   display: flex;
   margin: 1rem;
   height: 8rem;
@@ -19,6 +20,7 @@
   background-size: cover;
   background-position: center;
   display: flex;
+
 }
 
 .Logo:hover {
@@ -26,11 +28,12 @@
 }
 
 .Logo img {
-  width: 100%;
-  height: auto;
+	width: 60%;
+	height: auto;
 }
 
 .Content {
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -38,11 +41,13 @@
   width: 76%;
   padding-left: 4%;
   text-align: start;
+
 }
 
 .Content > * {
   margin: 0;
 }
+
 
 .Content h3 {
   margin: 0 0 1rem 0;
@@ -68,6 +73,7 @@
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+
 }
 
 .TextLeft {
@@ -109,6 +115,7 @@
 }
 
 .Avatar {
+
   height: 5rem;
   width: 5rem;
   position: absolute;
@@ -122,6 +129,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 /* @media screen and (min-width: 768px) {

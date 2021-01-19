@@ -44,9 +44,11 @@ const JobCard = (props) => {
   //=====================================================================================
   let salary = parseInt(props.salary);
 
+
   const onCancelHandler = () => {
     props.resetJob();
   };
+
 
   return (
     <div className={classes.JobCard}>
@@ -103,6 +105,7 @@ const JobCard = (props) => {
       <footer />
     </div>
   );
+
 };
 
 const mapStateToProps = (state) => {
