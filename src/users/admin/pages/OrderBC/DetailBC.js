@@ -195,6 +195,36 @@ const DetailBC = props => {
 					</div>
 
 					<div className={classes.CheckboxCriteria}>
+						<p className={classes.FilterLabel}>Pendidikan</p>
+						<div className={classes.FlexWrap} onChange={onEducationHandler}>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' id='SMK' value='SMK' />
+								<p>SMK</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' id='SMA' value='SMA' />
+								<p>SMA</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' id='D3' value='D3' />
+								<p>D3</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' id='S1' value='S1' />
+								<p>S1</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' id='S2' value='S2' />
+								<p>S2</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' id='S3' value='S3' />
+								<p>S3</p>
+							</div>
+						</div>
+					</div>
+
+					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>ketersediaan</p>
 						<div className={classes.CheckboxHolder}>
 							<Checkbox color='primary' size='small' id='location' value='location' onChange={onLocationHandler} />
