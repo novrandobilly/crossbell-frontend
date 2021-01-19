@@ -5,8 +5,8 @@ import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-// import { VALIDATOR_ALWAYSTRUE } from "../../../../shared/utils/validator";
-// import Input from "../../../../shared/UI_Element/Input";
+import { VALIDATOR_MIN } from '../../../../shared/utils/validator';
+import Input from '../../../../shared/UI_Element/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
@@ -14,7 +14,6 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './DetailBC.module.css';
-
 
 const DetailBC = props => {
 	const { orderid } = useParams();
@@ -149,72 +148,51 @@ const DetailBC = props => {
 		});
 	};
 
+	//================= Loc/Shift Filter ===========================
+	const onLocationHandler = e => {
+		setLocationFilter(e.target.checked ? true : false);
+	};
+	const onShiftHandler = e => {
+		setShiftFilter(e.target.checked ? true : false);
+	};
 
-  const onEducationHandler = (e) => {
-    setEducationFilter((prevState) => {
-      let tempArray = [...prevState];
-      if (e.target.checked) {
-        tempArray = [...tempArray, e.target.value];
-      } else {
-        tempArray = tempArray.filter((el) => el !== e.target.value);
-      }
-      return tempArray;
-    });
-  };
+	//================= Sent Function ===========================
+	const onSentHandler = async dataBC => {
+		setIndex(dataBC.i);
+		const applicantBC = {
+			token: props.admin.token,
+			applicantId: dataBC.applicantId,
+			orderId: orderid
+		};
+		try {
+			await props.sentApplicantBC(applicantBC);
+			setIndex(null);
+		} catch (err) {
+			console.log(err);
+			setIndex(null);
+		}
+	};
 
+	//================= Element Component ===========================
+	let content = <SpinnerCircle />;
 
-  //================= Loc/Shift Filter ===========================
-  const onLocationHandler = (e) => {
-    setLocationFilter(e.target.checked ? true : false);
-  };
-  const onShiftHandler = (e) => {
-    setShiftFilter(e.target.checked ? true : false);
-  };
-
-
-  //================= Sent Function ===========================
-  const onSentHandler = async (dataBC) => {
-    setIndex(dataBC.i);
-    const applicantBC = {
-      token: props.admin.token,
-      applicantId: dataBC.applicantId,
-      orderId: orderid,
-    };
-    try {
-      await props.sentApplicantBC(applicantBC);
-      setIndex(null);
-    } catch (err) {
-      console.log(err);
-      setIndex(null);
-    }
-  };
-
-  //================= Element Component ===========================
-  let content = <SpinnerCircle />;
-
-  if (!props.isLoading && displayData && dataBC) {
-    content = (
-      <div className={classes.Container}>
-        <div className={classes.FilterContainer}>
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>gender</p>
-            <div onChange={onGenderHandler}>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' value='male' id='pria' />
-                <p>Pria</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox
-                  color='primary'
-                  size='small'
-                  value='female'
-                  id='wanita'
-                />
-                <p>Wanita</p>
-              </div>
-            </div>
-          </div>
-
+	if (!props.isLoading && displayData && dataBC) {
+		content = (
+			<div className={classes.Container}>
+				<div className={classes.FilterContainer}>
+					<div className={classes.CheckboxCriteria}>
+						<p className={classes.FilterLabel}>gender</p>
+						<div onChange={onGenderHandler}>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' value='male' id='pria' />
+								<p>Pria</p>
+							</div>
+							<div className={classes.CheckboxHolder}>
+								<Checkbox color='primary' size='small' value='female' id='wanita' />
+								<p>Wanita</p>
+							</div>
+						</div>
+					</div>
 
 					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>ketersediaan</p>
@@ -615,15 +593,14 @@ const mapStateToProps = state => {
 		isLoading: state.admin.isLoading,
 		error: state.admin.error
 	};
-
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
-    getAllApplicant: (token) => dispatch(actionCreators.getAllApplicant(token)),
-    sentApplicantBC: (data) => dispatch(actionCreators.sentApplicantBC(data)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		getOrderInvoice: data => dispatch(actionCreators.getOrderInvoice(data)),
+		getAllApplicant: token => dispatch(actionCreators.getAllApplicant(token)),
+		sentApplicantBC: data => dispatch(actionCreators.sentApplicantBC(data))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailBC);
