@@ -1,21 +1,20 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useForm } from '../../../../../shared/utils/useForm';
 
-import React, { useState, useEffect } from "react";
-import { useParams, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { useForm } from "../../../../../shared/utils/useForm";
+import * as actionTypes from '../../../../../store/actions/actions';
+import * as actionCreators from '../../../../../store/actions';
+import { VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
+import Button from '@material-ui/core/Button';
+import Modal from '../../../../../shared/UI_Element/Modal';
+import Spinner from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../../shared/UI_Element/Input';
 
-import * as actionTypes from "../../../../../store/actions/actions";
-import * as actionCreators from "../../../../../store/actions";
-import { VALIDATOR_ALWAYSTRUE } from "../../../../../shared/utils/validator";
-import Button from "@material-ui/core/Button";
-import Modal from "../../../../../shared/UI_Element/Modal";
-import Spinner from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import Input from "../../../../../shared/UI_Element/Input";
-
-import classes from "./Skill.module.css";
+import classes from './Skill.module.css';
 
 const EditDetails = (props) => {
-  const [skills, setSkills] = useState(["skill"]);
+  const [skills, setSkills] = useState(['skill']);
   const [skillsList, setSkillsList] = useState();
   const [formState, onInputHandler] = useForm({}, true);
   const { applicantid } = useParams();
@@ -26,7 +25,7 @@ const EditDetails = (props) => {
     const fetchApp = async () => {
       res = await getOneApplicant(applicantid);
       res.applicant.skills.forEach((skill, i) => {
-        setSkills((prevState) => [...prevState, "skill"]);
+        setSkills((prevState) => [...prevState, 'skill']);
         onInputHandler(`skill_${i}`, skill, true);
       });
       setSkillsList(res.applicant.skills);
@@ -55,7 +54,7 @@ const EditDetails = (props) => {
 
   const addSkill = (e) => {
     e.preventDefault();
-    setSkills((skills) => [...skills, "skill"]);
+    setSkills((skills) => [...skills, 'skill']);
   };
   let formSkills = <Spinner />;
 
@@ -69,25 +68,25 @@ const EditDetails = (props) => {
             return (
               <div className={classes.FormRow} key={i}>
                 <Input
-                  inputType="input"
+                  inputType='input'
                   id={`skill_${i}`}
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}
                   initValue={skillsList[i]}
                   initIsValid={true}
-                  label="Input skills"
+                  label='Input skills'
                 />
               </div>
             );
           })}
 
           <Button
-            variant="contained"
-            color="primary"
-            type="button"
+            variant='contained'
+            color='primary'
+            type='button'
             disableElevation
             onClick={addSkill}
-            size="small"
+            size='small'
           >
             Add Input
           </Button>
@@ -95,9 +94,9 @@ const EditDetails = (props) => {
           <div className={classes.Footer}>
             <Button
               disabled={!formState.formIsValid}
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
             >
               Save
             </Button>
@@ -113,14 +112,13 @@ const EditDetails = (props) => {
 
   return (
     <React.Fragment>
-      {" "}
+      {' '}
       <Modal show={props.error} onCancel={onCancelHandler}>
         Could not update changes at the moment, please try again later
       </Modal>
       {formSkills}
     </React.Fragment>
   );
-
 };
 
 const mapStateToProps = (state) => {

@@ -9,49 +9,52 @@ import QueryBar from '../components/QueryBar';
 import classes from './JobsDashboard.module.css';
 
 const ACTION = {
-	SEARCHUPDATE: 'update-search',
-	SEARCHEXECUTE: 'search-execute',
-	SEARCHEMPTY: 'search-empty'
+  SEARCHUPDATE: 'update-search',
+  SEARCHEXECUTE: 'search-execute',
+  SEARCHEMPTY: 'search-empty',
 };
 const searchReducer = (state, action) => {
-	switch (action.type) {
-		case ACTION.SEARCHUPDATE: {
-			return {
-				...state,
-				search: {
-					...state.search,
-					id: action.payload.id,
-					value: action.payload.value,
-					isValid: action.payload.isValid
-				}
-			};
-		}
-		case ACTION.SEARCHEXECUTE: {
-			const filteredJob = action.payload.jobs.filter(job => {
-				let searchValidity = false;
-				for (const key in job) {
-					if (typeof job[key] === 'string') {
-						searchValidity = searchValidity || job[key].toLowerCase().includes(state.search.value.toLowerCase());
-					}
-				}
-				return searchValidity;
-			});
-			return {
-				...state,
-				jobList: filteredJob
-			};
-		}
-		case ACTION.SEARCHEMPTY: {
-			return {
-				...state,
-				jobList: action.payload.jobs
-			};
-		}
-		default: {
-			return state;
-		}
-	}
+  switch (action.type) {
+    case ACTION.SEARCHUPDATE: {
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          id: action.payload.id,
+          value: action.payload.value,
+          isValid: action.payload.isValid,
+        },
+      };
+    }
+    case ACTION.SEARCHEXECUTE: {
+      const filteredJob = action.payload.jobs.filter((job) => {
+        let searchValidity = false;
+        for (const key in job) {
+          if (typeof job[key] === 'string') {
+            searchValidity =
+              searchValidity ||
+              job[key].toLowerCase().includes(state.search.value.toLowerCase());
+          }
+        }
+        return searchValidity;
+      });
+      return {
+        ...state,
+        jobList: filteredJob,
+      };
+    }
+    case ACTION.SEARCHEMPTY: {
+      return {
+        ...state,
+        jobList: action.payload.jobs,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
 };
+
 
 const JobsDashboard = props => {
 	const [ jobEmpty, setJobEmpty ] = useState(false);
@@ -107,16 +110,18 @@ const JobsDashboard = props => {
 		}
 	};
 
-	const searchInputHandler = useCallback((id, value, isValid) => {
-		dispatch({
-			type: ACTION.SEARCHUPDATE,
-			payload: {
-				id,
-				value,
-				isValid
-			}
-		});
-	}, []);
+
+  const searchInputHandler = useCallback((id, value, isValid) => {
+    dispatch({
+      type: ACTION.SEARCHUPDATE,
+      payload: {
+        id,
+        value,
+        isValid,
+      },
+    });
+  }, []);
+
 
 	let jobLists = <Spinner />;
 	if (state.jobList) {
@@ -129,19 +134,20 @@ const JobsDashboard = props => {
 			{jobLists}
 		</div>
 	);
+
 };
 
-const mapStateToProps = state => {
-	return {
-		jobs: state.job,
-		companyStore: state.company.companies
-	};
+const mapStateToProps = (state) => {
+  return {
+    jobs: state.job,
+    companyStore: state.company.companies,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		getAllAvailableJobs: () => dispatch(actionCreators.getAllAvailableJobs())
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllAvailableJobs: () => dispatch(actionCreators.getAllAvailableJobs()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobsDashboard);

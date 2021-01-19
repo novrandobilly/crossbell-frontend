@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
+import * as actionTypes from '../../store/actions/actions';
 
-import classes from './JobCard.module.css';
-
+import Modal from '../../shared/UI_Element/Modal';
 import Spinner from '../../shared/UI_Element/Spinner/Spinner';
 import Button from '../../shared/UI_Element/Button';
+
+import classes from './JobCard.module.css';
 
 const JobCard = (props) => {
   const [jobId, setJobId] = useState(null);
@@ -26,6 +28,7 @@ const JobCard = (props) => {
     } catch (err) {
       console.log(err);
       setJobId(null);
+      return props.createJobFail();
     }
   };
 
@@ -42,34 +45,55 @@ const JobCard = (props) => {
   let salary = parseInt(props.salary);
 
 
+  const onCancelHandler = () => {
+    props.resetJob();
+  };
+
+
   return (
     <div className={classes.JobCard}>
+      <Modal show={props.job.error} onCancel={onCancelHandler}>
+        Tidak dapat melamar pekerjaan untuk saat ini{' '}
+      </Modal>
       <div className={classes.Logo}>
-        <img src={props.logo} alt={props.company} />
+        <img src={props.logo.url} alt={props.company} />
       </div>
       <div className={classes.Content}>
-        <h3>
+        <div className={classes.ContentHeader}>
+          <h3>
+            <Link
+              to={`/jobs/${props.jobId}`}
+              style={{ textDecoration: 'inherit', color: 'inherit' }}
+            >
+              {props.jobTitle}
+            </Link>
+          </h3>
           <Link
             to={`/jobs/${props.jobId}`}
-            style={{ textDecoration: 'inherit', color: 'inherit' }}
+            style={{
+              textDecoration: 'inherit',
+              fontWeight: '500',
+              color: 'rgba(0,0,0,0.6)',
+            }}
           >
-            {props.jobTitle}
+            Details
           </Link>
-        </h3>
+        </div>
 
-        <p>
+        <div className={classes.TopContent}>
           <Link
             to={`/co/${props.companyId._id}`}
             style={{ textDecoration: 'inherit', color: 'inherit' }}
           >
-            <em>
-              <strong>{props.company} </strong>
-            </em>
+            <p className={classes.TextLeft}>
+              {props.company} - <span>{props.placementLocation}</span>
+            </p>
           </Link>
-          - {props.placementLocation}
-        </p>
+        </div>
         {props.salary ? (
-          <p>IDR {salary.toLocaleString()} /month</p>
+          <p className={classes.BottomContent}>
+            IDR {salary.toLocaleString()} /month
+          </p>
         ) : (
           <p>Salary Undisclosed</p>
         )}
@@ -95,6 +119,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
+    createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
+    resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
   };
 };
 

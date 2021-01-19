@@ -29,7 +29,7 @@ const EditIntro = (props) => {
   const { applicantid } = useParams();
 
   const [data, setData] = useState();
-  const [interest, setInterest] = useState('');
+  const [interest, setInterest] = useState(['', '', '']);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -38,7 +38,11 @@ const EditIntro = (props) => {
   useEffect(() => {
     getOneApplicant(applicantid).then((res) => {
       setData(res.applicant);
-      console.log(res.applicant.interest);
+      setInterest([
+        res.applicant.interest[0] ? res.applicant.interest[0] : '',
+        res.applicant.interest[1] ? res.applicant.interest[1] : '',
+        res.applicant.interest[2] ? res.applicant.interest[2] : '',
+      ]);
     });
   }, [getOneApplicant, applicantid]);
 
@@ -48,47 +52,38 @@ const EditIntro = (props) => {
         value: data ? data.picture : null,
         isValid: true,
       },
-
       firstName: {
         value: data ? data.firstName : null,
         isValid: data && data.firstName ? true : false,
       },
-
       lastName: {
         value: data ? data.lastName : null,
         isValid: data && data.lastName ? true : false,
       },
-
       email: {
         value: data ? data.email : null,
         isValid: data && data.email ? true : false,
       },
-
       headline: {
         value: data ? data.headline : null,
         isValid: data && data.headline ? true : false,
       },
-
       dateOfBirth: {
         value: data ? data.dateOfBirth : null,
         isValid: data && data.dateOfBirth ? true : false,
       },
-
       gender: {
         value: data ? data.gender : null,
         isValid: data && data.gender ? true : false,
       },
-
       address: {
         value: data ? data.address : null,
         isValid: data && data.address ? true : false,
       },
-
       city: {
         value: data ? data.city : null,
         isValid: data && data.city ? true : false,
       },
-
       state: {
         value: data ? data.state : null,
         isValid: data && data.state ? true : false,
@@ -123,11 +118,13 @@ const EditIntro = (props) => {
       },
       interest: {
         value: data ? data.interest : null,
-        isValid: true,
+        isValid: true, //required
       },
     },
     false
   );
+
+  console.log(interest);
 
   useEffect(() => {
     if (data) {
@@ -191,13 +188,6 @@ const EditIntro = (props) => {
     }
   };
 
-  const handleChange = (e) => {
-    const elementId = e.target.name;
-    const elementValue = e.target.value;
-    onInputHandler(elementId, elementValue, true);
-    setInterest(e.target.value);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -220,6 +210,13 @@ const EditIntro = (props) => {
 
   const handleOpen3 = () => {
     setOpen3(true);
+  };
+
+  const handleChange = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    setInterest((prevState) => [...prevState, elementValue]);
+    onInputHandler(elementId, interest, true);
   };
 
   const onManualInputHandler = (e) => {
@@ -350,7 +347,7 @@ const EditIntro = (props) => {
                     open={open2}
                     onClose={handleClose2}
                     onOpen={handleOpen2}
-                    value={interest || data.interest}
+                    value={interest[1]}
                     onChange={handleChange}
                     style={{
                       fontSize: '0.9rem',
@@ -455,7 +452,7 @@ const EditIntro = (props) => {
                     open={open}
                     onClose={handleClose}
                     onOpen={handleOpen}
-                    value={interest || data.interest}
+                    value={interest[0]}
                     onChange={handleChange}
                     style={{
                       fontSize: '0.9rem',
@@ -497,7 +494,7 @@ const EditIntro = (props) => {
                     open={open3}
                     onClose={handleClose3}
                     onOpen={handleOpen3}
-                    value={interest || data.interest}
+                    value={interest[2]}
                     onChange={handleChange}
                     style={{
                       fontSize: '0.9rem',
