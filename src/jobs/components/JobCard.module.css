@@ -1,5 +1,4 @@
 .JobCard {
-
   display: flex;
   margin: 1rem;
   height: 8rem;
@@ -20,11 +19,10 @@
   background-size: cover;
   background-position: center;
   display: flex;
-
 }
 
 .Logo:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .Logo img {
@@ -37,68 +35,93 @@
   flex-direction: column;
   align-items: flex-start;
   height: 100%;
-  padding-left: 3%;
+  width: 76%;
+  padding-left: 4%;
   text-align: start;
-
 }
 
 .Content > * {
-	margin: 0;
+  margin: 0;
 }
 
-.Content > p:nth-of-type(2) {
-  color: rgba(0, 0, 0, 0.5);
-  font-style: italic;
-
-}
-
-.Content > h3 {
-	margin-bottom: 0.8rem;
-	height: 2rem;
-	box-sizing: border-box;
+.Content h3 {
+  margin: 0 0 1rem 0;
 }
 
 .Content > h3:hover {
-	cursor: pointer;
-	color: rgb(84, 103, 161, 1);
-	border-bottom: solid 1px rgb(84, 103, 161, 1);
+  cursor: pointer;
+  color: rgb(84, 103, 161, 1);
+  border-bottom: solid 1px rgb(84, 103, 161, 1);
+}
+
+.ContentHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.TopContent {
+  display: flex;
+  margin-top: -1rem;
+  margin-bottom: 0.8rem;
+  height: 3.5rem;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.TextLeft {
+  font-weight: bold;
+  color: rgb(84, 103, 161, 1);
+}
+
+.TextLeft span {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+}
+
+.BottomContent {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .JobCard > footer {
-	align-items: center;
-	background: rgba(58, 81, 153, 1);
-	color: white;
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	height: 20px;
-	padding: 0 20px;
-	margin-left: -20px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	box-sizing: border-box;
+  align-items: center;
+  background: rgba(58, 81, 153, 1);
+  color: white;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 20px;
+  padding: 0 20px;
+  margin-left: -20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-sizing: border-box;
 }
 
 .InstantSubmit {
-	width: fit-content;
-	position: absolute;
-	bottom: 0.8rem;
-	right: 0;
+  width: fit-content;
+  position: absolute;
+  bottom: 0.8rem;
+  right: 0.5rem;
 }
 
 .Avatar {
-	height: 5rem;
-	width: 5rem;
-	position: absolute;
-	border: none;
-	border-radius: 50%;
-	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-	background-color: rgb(215, 226, 255);
-	background-size: cover;
-	background-position: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  height: 5rem;
+  width: 5rem;
+  position: absolute;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  background-color: rgb(215, 226, 255);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* @media screen and (min-width: 768px) {
