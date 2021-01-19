@@ -70,107 +70,146 @@ const Input = (props) => {
     dispatch({ type: ACTION.ONBLUR });
   };
 
+  let inputElement;
+  switch (props.inputType) {
+    case 'input':
+      inputElement = (
+        <TextField
+          id={id}
+          className={[classes.InputElements, classes[props.InputClass]].join(
+            ' '
+          )}
+          label={props.label}
+          name={props.name}
+          value={state.value}
+          type={props.type || 'text'}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          helperText={
+            props.helperText &&
+            !state.isValid &&
+            state.isTouched &&
+            props.helperText
+          }
+          error={!state.isValid && state.isTouched}
+          InputProps={{
+            style: { fontSize: 15 },
+            inputProps: {
+              min: props.min && props.min,
+              max: props.max && props.max,
+              step: props.step && props.step,
+            },
+          }}
+          style={{ margin: '0.6rem 0' }}
+        />
+      );
+      break;
 
-	let inputElement;
-	switch (props.inputType) {
-		case 'input':
-			inputElement = (
-				<TextField
-					id={id}
-					className={[ classes.InputElements, classes[props.InputClass] ].join(' ')}
-					label={props.label}
-					name={props.name}
-					value={state.value}
-					type={props.type || 'text'}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-					error={!state.isValid && state.isTouched}
-					InputProps={{
-						style: { fontSize: 15 },
-						inputProps: { min: props.min && props.min, max: props.max && props.max, step: props.step && props.step }
-					}}
-					style={{ margin: '.6rem 0' }}
-				/>
-			);
-			break;
-
-		case 'textarea':
-			inputElement = (
-				<TextField
-					id={id}
-					className={[ classes.TextareaElements, classes[props.InputClass] ].join(' ')}
-					style={{ margin: '0.5rem 0' }}
-					label={props.label}
-					name={props.name}
-					value={state.value}
-					type={props.type || 'text'}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					multiline
-					rows={props.rows || 4}
-					variant='outlined'
-					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-					error={!state.isValid && state.isTouched}
-				/>
-			);
-			break;
-		case 'date':
-			inputElement = (
-				<input
-					className={[ classes.InputElements, classes[props.InputClass] ].join(' ')}
-					style={{
-						backgroundColor: state.isValid || !state.isTouched ? 'white' : ' rgb(215, 226, 255)'
-					}}
-					type='date'
-					id={id}
-					cols={props.cols || '30'}
-					rows={props.rows || '5'}
-					name={props.name}
-					value={state.value}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					placeholder={props.placeholder || ''}
-					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-				/>
-			);
-			break;
-		case 'customdate':
-			inputElement = (
-				<MuiPickersUtilsProvider utils={DateFnsUtils}>
-					<DatePicker
-						views={props.views || [ 'year', 'month', 'date' ]}
-						value={moment(state.value)}
-						style={props.style}
-						onChange={eventValue => onCustomDateHandler(eventValue)}
-						minDate={props.minDate}
-						maxDate={props.maxDate}
-						id={id}
-						format={props.format}
-						helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-					/>
-				</MuiPickersUtilsProvider>
-			);
-			break;
-		default:
-			return (inputElement = (
-				<TextField
-					id={id}
-					className={[ classes.InputElements, classes[props.InputClass] ].join(' ')}
-					label={props.label}
-					name={props.name}
-					value={state.value}
-					type={props.type || 'text'}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-					error={!state.isValid && state.isTouched}
-					InputProps={{ style: { fontSize: 15 } }}
-					style={{ margin: '.6rem 0' }}
-				/>
-			));
-	}
-
+    case 'textarea':
+      inputElement = (
+        <TextField
+          id={id}
+          className={[classes.TextareaElements, classes[props.InputClass]].join(
+            ' '
+          )}
+          style={{ margin: '0.5rem 0' }}
+          label={props.label}
+          name={props.name}
+          value={state.value}
+          type={props.type || 'text'}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          multiline
+          rows={props.rows || 4}
+          variant='outlined'
+          helperText={
+            props.helperText &&
+            !state.isValid &&
+            state.isTouched &&
+            props.helperText
+          }
+          error={!state.isValid && state.isTouched}
+        />
+      );
+      break;
+    case 'date':
+      inputElement = (
+        <input
+          className={[classes.InputElements, classes[props.InputClass]].join(
+            ' '
+          )}
+          style={{
+            backgroundColor:
+              state.isValid || !state.isTouched
+                ? 'white'
+                : ' rgb(215, 226, 255)',
+            margin: '0.6rem 0',
+          }}
+          type='date'
+          id={id}
+          cols={props.cols || '30'}
+          rows={props.rows || '5'}
+          name={props.name}
+          value={state.value}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          placeholder={props.placeholder || ''}
+          helperText={
+            props.helperText &&
+            !state.isValid &&
+            state.isTouched &&
+            props.helperText
+          }
+        />
+      );
+      break;
+    case 'customdate':
+      inputElement = (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <DatePicker
+            views={props.views || ['year', 'month', 'date']}
+            value={moment(state.value)}
+            style={props.style}
+            onChange={(eventValue) => onCustomDateHandler(eventValue)}
+            minDate={props.minDate}
+            maxDate={props.maxDate}
+            id={id}
+            format={props.format}
+            helperText={
+              props.helperText &&
+              !state.isValid &&
+              state.isTouched &&
+              props.helperText
+            }
+          />
+        </MuiPickersUtilsProvider>
+      );
+      break;
+    default:
+      return (inputElement = (
+        <TextField
+          id={id}
+          className={[classes.InputElements, classes[props.InputClass]].join(
+            ' '
+          )}
+          label={props.label}
+          name={props.name}
+          value={state.value}
+          type={props.type || 'text'}
+          onChange={onChangeHandler}
+          onBlur={onBlurHandler}
+          helperText={
+            props.helperText &&
+            !state.isValid &&
+            state.isTouched &&
+            props.helperText
+          }
+          error={!state.isValid && state.isTouched}
+          InputProps={{ style: { fontSize: 15 } }}
+          style={{ margin: '.6rem 0' }}
+        />
+      ));
+  }
 
   return (
     <div

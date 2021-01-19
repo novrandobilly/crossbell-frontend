@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import * as actionCreators from "../../../../store/actions/index";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import classes from "./OrderREG.module.css";
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import * as actionCreators from '../../../../store/actions/index';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
+
+import classes from './OrderREG.module.css';
 
 const OrderREG = (props) => {
   const [data, setData] = useState();
@@ -38,7 +40,7 @@ const OrderREG = (props) => {
       await props.approveOrderREG(payload);
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.i].status = "Paid";
+        tempData[dataInput.i].status = 'Paid';
         return tempData;
       });
       setIndex(null);
@@ -58,6 +60,8 @@ const OrderREG = (props) => {
             <tr>
               <th>No</th>
               <th>Order Id</th>
+              <th>Perusahaan</th>
+              <th>Slot</th>
               <th>Nama Paket</th>
               <th>Tanggal Order</th>
               <th>Tanggal Disetujui</th>
@@ -70,32 +74,49 @@ const OrderREG = (props) => {
             {data.map((order, i) => (
               <tr key={order._id}>
                 <th> {i + 1}</th>
-                <th>{order._id}</th>
                 <th>
-                  {" "}
+                  <Link
+                    to={`/co/${order._id}/invoice`}
+                    style={{ color: 'black', textDecoration: 'none' }}
+                  >
+                    {order._id}
+                  </Link>
+                </th>
+                <th>
+                  <Link
+                    to={`/co/${order.companyId._id}`}
+                    style={{ color: 'black', textDecoration: 'none' }}
+                  >
+                    {order.companyId.companyName}
+                  </Link>
+                </th>
+                <th>{order.slot}</th>
+
+                <th>
+                  {' '}
                   <Link
                     to={`/co/${order.id}`}
-                    style={{ color: "black", textDecoration: "none" }}
+                    style={{ color: 'black', textDecoration: 'none' }}
                   >
                     {order.packageName}
                   </Link>
                 </th>
-                <th>{moment(order.createdAt).format("D MMM YYYY")}</th>
+                <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
                 <th>
                   {order.approvedAt
-                    ? moment(order.approvedAt).format("D MMM YYYY")
-                    : "not approved"}
+                    ? moment(order.approvedAt).format('D MMM YYYY')
+                    : 'not approved'}
                 </th>
 
                 <th>
                   {props.indexIsLoading && index === i ? (
-                    <SpinnerCircle />
-                  ) : order.status === "Paid" ? (
-                    <span style={{ color: "Green", fontWeight: "bold" }}>
+                    <Spinner />
+                  ) : order.status === 'Paid' ? (
+                    <span style={{ color: 'Green', fontWeight: 'bold' }}>
                       Paid
                     </span>
                   ) : (
-                    <span style={{ color: "Orange", fontWeight: "bold" }}>
+                    <span style={{ color: 'Orange', fontWeight: 'bold' }}>
                       Pending
                     </span>
                   )}
@@ -108,7 +129,7 @@ const OrderREG = (props) => {
                     </button>
                     <div className={classes.DropDownContent}>
                       <button
-                        style={{ color: "green" }}
+                        style={{ color: 'green' }}
                         onClick={() =>
                           approveOrderREGHandler({
                             orderId: order._id,

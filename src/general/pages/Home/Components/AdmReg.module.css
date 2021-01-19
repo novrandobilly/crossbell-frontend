@@ -68,3 +68,22 @@
   font-weight: bold;
   margin-bottom: -0.5rem;
 }
+
+.Text {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 1;
+  letter-spacing: 0.00938em;
+  text-align: left;
+}
+
+.RadioHolder {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.RadioButton {
+  align-items: center;
+}
