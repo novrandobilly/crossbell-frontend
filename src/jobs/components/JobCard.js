@@ -41,6 +41,7 @@ const JobCard = (props) => {
   //=====================================================================================
   let salary = parseInt(props.salary);
 
+
   return (
     <div className={classes.JobCard}>
       <div className={classes.Logo}>
@@ -80,6 +81,7 @@ const JobCard = (props) => {
       <footer />
     </div>
   );
+
 };
 
 const mapStateToProps = (state) => {

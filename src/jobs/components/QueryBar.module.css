@@ -1,11 +1,19 @@
 .QueryBar {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  padding: 3rem 0 1rem 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	padding: 3rem 0 1rem 0;
 }
 
 .SearchForm {
-  display: flex;
-  margin-right: -3rem;
+	display: flex;
+	margin-right: -3rem;
+}
+
+.SearchContainer {
+	width: 30%;
+}
+
+.ButtonContainer {
+	align-self: center;
 }

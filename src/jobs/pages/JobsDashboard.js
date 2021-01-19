@@ -65,7 +65,6 @@ const JobsDashboard = props => {
 		jobList: null
 	});
 	const { getAllAvailableJobs } = props;
-
 	useEffect(
 		() => {
 			const getJobs = async () => {
@@ -73,7 +72,7 @@ const JobsDashboard = props => {
 				try {
 					const res = await getAllAvailableJobs();
 					if (!res.availableJobs) {
-						throw new Error('No Job avalable at the moment');
+						throw new Error('No Job available at the moment');
 					}
 					dispatch({
 						type: ACTION.SEARCHEMPTY,
@@ -82,6 +81,11 @@ const JobsDashboard = props => {
 					setAllAvailableJobs(res.availableJobs);
 				} catch (err) {
 					setJobEmpty(true);
+					setAllAvailableJobs([]);
+					dispatch({
+						type: ACTION.SEARCHEMPTY,
+						payload: { jobs: [] }
+					});
 					console.log(err);
 				}
 			};
@@ -92,6 +96,7 @@ const JobsDashboard = props => {
 
 	const searchHandler = event => {
 		event.preventDefault();
+
 		if (state.search.value) {
 			dispatch({
 				type: ACTION.SEARCHEXECUTE,
@@ -115,14 +120,7 @@ const JobsDashboard = props => {
 
 	let jobLists = <Spinner />;
 	if (state.jobList) {
-		jobLists = <JobsList items={state.jobList} />;
-	}
-	if (jobEmpty && !state.jobLists) {
-		jobLists = (
-			<div className='centerGlobal'>
-				<h2>No Job Available at the moment!</h2>
-			</div>
-		);
+		jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} />;
 	}
 
 	return (

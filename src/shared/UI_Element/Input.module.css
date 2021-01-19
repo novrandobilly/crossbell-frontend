@@ -10,6 +10,13 @@
 	height: 3rem;
 }
 
+.TextareaElements {
+	border-radius: 5px;
+	outline: none;
+	width: 100%;
+	border: 2px solid rgba(58, 81, 153, 1);
+}
+
 .InputLabel {
 	font-size: 14px;
 	font-weight: bold;
@@ -47,7 +54,7 @@
 
 .EditProfileTextArea {
 	align-content: flex-start;
-	width: 40rem;
+	width: 100%;
 	height: 15rem;
 	border: solid 0.05rem;
 	margin-bottom: 1rem;

@@ -18,137 +18,133 @@ import {
 
 import classes from './Login.module.css';
 
-const Login = (props) => {
-  const [formState, onInputHandler] = useForm(
-    {
-      email: {
-        value: '',
-        isValid: false,
-      },
-      password: {
-        value: '',
-        isValid: false,
-      },
-    },
-    false
-  );
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
+const Login = props => {
+	const [ formState, onInputHandler ] = useForm(
+		{
+			email: {
+				value: '',
+				isValid: false
+			},
+			password: {
+				value: '',
+				isValid: false
+			}
+		},
+		false
+	);
 
-    const loginData = {
-      email: formState.inputs.email.value,
-      password: formState.inputs.password.value,
-    };
+	const onSubmitHandler = async event => {
+		event.preventDefault();
 
-    let res;
-    try {
-      res = await props.loginServer(loginData);
-      if (!res) {
-        throw new Error('Error');
-      }
-    } catch (err) {
-      console.log(err);
-    }
+		const loginData = {
+			email: formState.inputs.email.value,
+			password: formState.inputs.password.value
+		};
 
-    if (res.token) {
-      props.history.push('/jobs-dashboard');
-    } else {
-      console.log('error');
-    }
-  };
+		let res;
+		try {
+			res = await props.loginServer(loginData);
+			if (!res) {
+				throw new Error('Error');
+			}
+		} catch (err) {
+			console.log(err);
+		}
 
-  const onCancelHandler = () => {
-    props.logout();
-  };
+		if (res.token) {
+			props.history.push('/jobs-dashboard');
+		} else {
+			console.log('error');
+		}
+	};
 
-  let formContent = (
-    <React.Fragment>
-      <div className={classes.ContainerFlex}>
-        <div className={classes.Header}>
-          <p className={classes.FormTitle}>Login</p>
-        </div>
+	const onCancelHandler = () => {
+		props.logout();
+	};
 
-        <div className={classes.Content}>
-          <Input
-            inputType='input'
-            id='email'
-            InputClass='Login'
-            validatorMethod={[VALIDATOR_EMAIL()]}
-            onInputHandler={onInputHandler}
-            label='Email'
-            helperText='Please input a valid email address.'
-          />
+	let formContent = (
+		<React.Fragment>
+			<div className={classes.ContainerFlex}>
+				<div className={classes.Header}>
+					<p className={classes.FormTitle}>Sign In</p>
+				</div>
 
-          <Input
-            inputType='input'
-            id='password'
-            InputClass='Login'
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label='Password'
-            type='password'
-            helperText='Password contains min. 6 characters.'
-          />
+				<div className={classes.Content}>
+					<Input
+						inputType='input'
+						id='email'
+						InputClass='Login'
+						validatorMethod={[ VALIDATOR_EMAIL() ]}
+						onInputHandler={onInputHandler}
+						label='Email'
+						helperText='Please input a valid email address.'
+					/>
 
-          <Button
-            variant='contained'
-            color='primary'
-            type='submit'
-            disableElevation
-            disabled={!formState.formIsValid}
-            style={{
-              marginTop: '1rem',
-            }}
-          >
-            submit
-          </Button>
+					<Input
+						inputType='input'
+						id='password'
+						InputClass='Login'
+						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
+						onInputHandler={onInputHandler}
+						label='Password'
+						type='password'
+						helperText='Password contains min. 6 characters.'
+					/>
 
-          <GoogleLoginButton />
+					<Button
+						variant='contained'
+						color='primary'
+						type='submit'
+						disableElevation
+						disabled={!formState.formIsValid}
+						style={{
+							marginTop: '1rem'
+						}}>
+						Sign in
+					</Button>
 
-          <span className={classes.Sign}>
-            Don't have an account
-            <button
-              className={classes.ChangeSign}
-              onClick={props.sign}
-              type='button'
-            >
-              Sign Up Here
-            </button>
-          </span>
+					<GoogleLoginButton />
 
-          <span className={classes.Sign}>
-            Forgot password?
-            <button className={classes.ChangeSign} type='button'>
-              <Link
-                style={{
-                  textDecoration: 'none',
-                  color: 'rgba(58, 81, 153, 1)',
-                }}
-                to='/forgot'
-              >
-                Click Here
-              </Link>
-            </button>
-          </span>
-        </div>
+					<span className={classes.Sign}>
+						Don't have an account
+						<button className={classes.ChangeSign} onClick={props.sign} type='button'>
+							Register Here
+						</button>
+					</span>
 
-        <div className={classes.Footer} />
-      </div>
-    </React.Fragment>
-  );
+					<span className={classes.Sign}>
+						Forgot password?
+						<button className={classes.ChangeSign} type='button'>
+							<Link
+								style={{
+									textDecoration: 'none',
+									color: 'rgba(58, 81, 153, 1)'
+								}}
+								to='/forgot'>
+								Click Here
+							</Link>
+						</button>
+					</span>
+				</div>
 
-  if (props.auth.isLoading) {
-    formContent = <Spinner />;
-  }
-  return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      <Modal show={props.auth.isError} onCancel={onCancelHandler}>
-        Email or Password invalid. Please try again.
-      </Modal>
-      {formContent}
-    </form>
-  );
+				<div className={classes.Footer} />
+			</div>
+		</React.Fragment>
+	);
+
+	if (props.auth.isLoading) {
+		formContent = <Spinner />;
+	}
+	return (
+		<form onSubmit={onSubmitHandler} className={classes.Container}>
+			<Modal show={props.auth.isError} onCancel={onCancelHandler}>
+				Email or Password invalid. Please try again.
+			</Modal>
+			{formContent}
+		</form>
+	);
+
 };
 
 const mapStateToProps = (state) => {

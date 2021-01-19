@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -16,6 +15,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../.
 import classes from './Register.module.css';
 
 const Register = props => {
+	const [ errorMessage, setErrorMessage ] = useState(null);
 	const [ formState, onInputHandler ] = useForm(
 		{
 			firstName: {
@@ -60,7 +60,7 @@ const Register = props => {
 			});
 			props.history.push(`/ap/${res.userId}/res-val`);
 		} catch (err) {
-			console.log(err);
+			setErrorMessage(err.message);
 		}
 	};
 
@@ -68,7 +68,7 @@ const Register = props => {
 		<React.Fragment>
 			<div className={classes.ContainerFlex}>
 				<div className={classes.Header}>
-					<p className={classes.FormTitle}>Register</p>
+					<p className={classes.FormTitle}>Applicant Register</p>
 				</div>
 				<div className={classes.Content}>
 					<Input
@@ -121,7 +121,7 @@ const Register = props => {
 						style={{
 							marginTop: '1rem'
 						}}>
-						submit
+						Register
 					</Button>
 
 					<span className={classes.Sign}>
@@ -133,19 +133,8 @@ const Register = props => {
 				</div>
 
 				<div className={classes.Footer}>
-					<Button
-						color='primary'
-						onClick={props.role}
-						disableElevation
-						style={{
-							padding: '0',
-							fontSize: '0.7rem',
-							alignSelf: 'flex-end',
-							backgroundColor: 'transparent',
-							marginRight: '1.5rem'
-						}}
-						endIcon={<ArrowForwardIcon />}>
-						Company sign up
+					<Button color='primary' onClick={props.role} disableElevation endIcon={<ArrowForwardIcon />}>
+						Company Register
 					</Button>
 				</div>
 			</div>
@@ -163,12 +152,11 @@ const Register = props => {
 	return (
 		<form onSubmit={onSubmitHandler} className={classes.Container}>
 			<Modal show={props.error} onCancel={onCancelHandler}>
-				Invalid registration value. Please try again.
+				{errorMessage && errorMessage}
 			</Modal>
 			{formContent}
 		</form>
 	);
-
 };
 
 const mapStateToProps = state => {
