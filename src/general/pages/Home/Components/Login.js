@@ -11,9 +11,13 @@ import Button from '@material-ui/core/Button';
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Modal from '../../../../shared/UI_Element/Modal';
 
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+} from '../../../../shared/utils/validator';
 
 import classes from './Login.module.css';
+
 
 const Login = props => {
 	const [ formState, onInputHandler ] = useForm(
@@ -140,20 +144,21 @@ const Login = props => {
 			{formContent}
 		</form>
 	);
+
 };
 
-const mapStateToProps = state => {
-	return {
-		auth: state.auth
-	};
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
-		logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-		loginServer: loginData => dispatch(actionCreators.login(loginData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
+    logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
+    loginServer: (loginData) => dispatch(actionCreators.login(loginData)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

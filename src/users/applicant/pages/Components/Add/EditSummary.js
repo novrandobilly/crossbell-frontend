@@ -1,29 +1,36 @@
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useParams, withRouter } from 'react-router-dom';
+import { useForm } from '../../../../../shared/utils/useForm';
 
-import React from "react";
-import { connect } from "react-redux";
-import { useParams, withRouter, Link } from "react-router-dom";
-import { useForm } from "../../../../../shared/utils/useForm";
+import * as actionTypes from '../../../../../store/actions/actions';
+import * as actionCreators from '../../../../../store/actions/index';
+import { VALIDATOR_MINLENGTH } from '../../../../../shared/utils/validator';
 
-import * as actionTypes from "../../../../../store/actions/actions";
-import * as actionCreators from "../../../../../store/actions/index";
-import { VALIDATOR_MINLENGTH } from "../../../../../shared/utils/validator";
+import Button from '@material-ui/core/Button';
+import Modal from '../../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../../shared/UI_Element/Input';
 
-import Modal from "../../../../../shared/UI_Element/Modal";
-import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import Input from "../../../../../shared/UI_Element/Input";
-import Button from "@material-ui/core/Button";
-
-import classes from "./EditSummary.module.css";
+import classes from './EditSummary.module.css';
 
 const EditSummary = (props) => {
   const { applicantid } = useParams();
-  let push = props.push;
+
+  const [data, setData] = useState();
+
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    getOneApplicant(applicantid).then((res) => {
+      setData(res.applicant);
+    });
+  }, [getOneApplicant, applicantid]);
 
   const [formState, onInputHandler] = useForm(
     {
       details: {
-        value: "",
-        isValid: false,
+        value: data ? data.details : null,
+        isValid: data && data.details ? true : false,
       },
     },
     false
@@ -36,73 +43,61 @@ const EditSummary = (props) => {
       return props.updateApplicantFail();
     }
 
-    const updatedSummary = {
+    const updatedAppSummary = {
       applicantId: applicantid,
       details: formState.inputs.details.value,
     };
-
     try {
-      const res = await props.updateApplicantSummary(updatedSummary);
+      const res = await props.updateApplicantSummary(updatedAppSummary);
+      console.log(res);
       if (res) {
         console.log(res);
       } else {
-        console.log("no res detected");
+        console.log('no res detected');
       }
-      if (!push) {
-        props.history.push(`/ap/${applicantid}`);
-      } else {
-        props.onNextHandler();
-      }
+      props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);
     }
   };
 
-  let formContent = (
-    <React.Fragment>
-      <div className={classes.ContainerFlex}>
-        <p className={classes.FormTitle}>Summary</p>
+  let formContent = <SpinnerCircle />;
 
-        <div className={classes.FormRow}>
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="textarea"
-              id="details"
-              inputClass="EditProfileTextArea"
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-              onInputHandler={onInputHandler}
-              label="Details*"
-              rows={12}
-            />
+  if (!props.isLoading && data) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Summary</p>
+
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType='textarea'
+                id='details'
+                inputClass='EditProfileTextArea'
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label='Details*'
+                initValue={data.details}
+                initIsValid={true}
+                rows={12}
+              />
+            </div>
+          </div>
+
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant='contained'
+              color='primary'
+              type='submit'
+            >
+              Save
+            </Button>
           </div>
         </div>
-
-        <div className={classes.Footer}>
-          <Link to={`/ap/${applicantid}`}>
-            <Button
-              color="primary"
-              type="submit"
-              style={{ marginRight: "1rem" }}
-            >
-              Skip this step
-            </Button>
-          </Link>
-
-          <Button
-            disabled={!formState.formIsValid}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            {push ? "Next" : "Save"}
-          </Button>
-        </div>
-      </div>
-    </React.Fragment>
-  );
-
-  if (props.isLoading) {
-    formContent = <SpinnerCircle />;
+      </React.Fragment>
+    );
   }
 
   const onCancelHandler = () => {
@@ -110,31 +105,34 @@ const EditSummary = (props) => {
   };
 
   return (
-    <div style={!push ? { marginTop: "6rem" } : { marginTop: "0" }}>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <Modal show={props.error} onCancel={onCancelHandler}>
-          Input requirement not fulfilled
-        </Modal>
-        {formContent}
-      </form>
-    </div>
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
+      {formContent}
+    </form>
   );
-
 };
 
-const mapStateToProps = state => {
-	return {
-		isLoading: state.applicant.isLoading,
-		error: state.applicant.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-		updateApplicantSummary: ApplicantData => dispatch(actionCreators.updateApplicantSummary(ApplicantData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantSummary: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditSummary));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditSummary));

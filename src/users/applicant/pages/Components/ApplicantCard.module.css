@@ -70,43 +70,8 @@
   margin-top: 1rem;
 }
 
-.AddJob {
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 5rem;
-  border: solid 0.1rem rgba(0, 0, 0, 0.4);
-  margin-left: 1rem;
-  transition: all 0.5s;
-  cursor: pointer;
-  outline: none;
-}
-
-.AddJob span {
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.AddJob span:after {
-  content: "Edit";
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: 0rem;
-  transition: 0.5s;
-}
-
-.AddJob:hover span {
-  padding-right: 2rem;
-}
-
-.AddJob:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-.AddJob:hover {
-  width: 5rem;
+.SegmentContainer {
+  width: 100%;
 }
 
 .Avatar {
@@ -117,9 +82,10 @@
   background-size: cover;
   margin-right: 2rem;
 }
+
 .InputButton {
   border: none;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   background-color: rgba(58, 81, 153, 1);
   color: white;
   outline: none;
@@ -132,19 +98,55 @@
   align-items: center;
   margin-top: 1rem;
 }
+
 .InputButtonText {
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   color: white;
   line-height: 1.5rem;
 }
+
+.FilePreview {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .SaveText {
   color: green;
   font-weight: 400;
   display: flex;
-  justify-content: center;
   align-items: center;
   cursor: pointer;
-  text-align: center;
+  font-size: 0.9rem;
+}
+
+.ResumePreview {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.ResumePreview a {
+  background-color: rgba(58, 81, 153, 1);
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  width: 32%;
+  color: white;
+}
+
+.ResumeHolder {
+  display: flex;
+  flex-direction: column;
+}
+
+.ResumePicture {
+  width: 10rem;
+  height: 12rem;
+  background-position: center;
+  background-size: cover;
+  margin-right: 2rem;
+  border: solid 0.5px black;
+  margin-bottom: 1rem;
 }
