@@ -15,7 +15,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './DetailBC.module.css';
 
-
 const DetailBC = props => {
 	const { orderid } = useParams();
 
@@ -124,28 +123,30 @@ const DetailBC = props => {
 		[ dataApplicant, genderFilter, educationFilter, locationFilter, shiftFilter, formState ]
 	);
 
+	//================= Gender Filter ===========================
+	const onGenderHandler = e => {
+		setGenderFilter(prevState => {
+			let tempArray = [ ...prevState ];
+			if (e.target.checked) {
+				tempArray = [ ...tempArray, e.target.value ];
+			} else {
+				tempArray = tempArray.filter(el => el !== e.target.value);
+			}
+			return tempArray;
+		});
+	};
 
-      if (genderFilter && genderFilter.length > 0) {
-        filteredArray = filteredArray.filter((el) => {
-          return genderFilter.some((gen) => gen === el.gender);
-        });
-      }
-
-      if (educationFilter && educationFilter.length > 0) {
-        filteredArray = filteredArray.filter((app) => {
-          return app.education.some((edu) => {
-            return educationFilter.some((fil) => fil === edu.degree);
-          });
-        });
-      }
-      if (formState.inputs.min.value > 0) {
-        filteredArray = filteredArray.filter((el) => {
-          let tempAge = moment().diff(moment(el.dateOfBirth), 'year');
-          console.log(tempAge);
-          return tempAge >= formState.inputs.min.value;
-        });
-      }
-
+	const onEducationHandler = e => {
+		setEducationFilter(prevState => {
+			let tempArray = [ ...prevState ];
+			if (e.target.checked) {
+				tempArray = [ ...tempArray, e.target.value ];
+			} else {
+				tempArray = tempArray.filter(el => el !== e.target.value);
+			}
+			return tempArray;
+		});
+	};
 
 	//================= Loc/Shift Filter ===========================
 	const onLocationHandler = e => {
@@ -170,7 +171,6 @@ const DetailBC = props => {
 		}
 	};
 
-
 	//================= Element Component ===========================
 	let content = <SpinnerCircle />;
 
@@ -191,7 +191,6 @@ const DetailBC = props => {
 							</div>
 						</div>
 					</div>
-
 
 					<div className={classes.CheckboxCriteria}>
 						<p className={classes.FilterLabel}>Pendidikan</p>
@@ -448,10 +447,8 @@ const DetailBC = props => {
 		);
 	}
 
-
-  return <div>{content}</div>;
+	return <div>{content}</div>;
 };
-
 
 const mapStateToProps = state => {
 	return {
@@ -459,7 +456,6 @@ const mapStateToProps = state => {
 		isLoading: state.admin.isLoading,
 		error: state.admin.error
 	};
-
 };
 
 const mapDispatchToProps = dispatch => {
