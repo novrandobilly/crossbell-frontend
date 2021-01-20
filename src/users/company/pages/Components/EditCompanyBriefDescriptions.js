@@ -124,7 +124,7 @@ const BriefDescriptions = props => {
 	};
 
 	return (
-		<div style={!push ? { marginTop: '6rem' } : { marginTop: '0' }}>
+		<div style={!push ? { marginTop: '6rem', width: '100%' } : { marginTop: '0', width: '100%' }}>
 			<form onSubmit={onSubmitHandler} className={classes.Container}>
 				<Modal show={props.error} onCancel={onCancelHandler}>
 					Could not update changes at the moment, please try again later

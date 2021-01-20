@@ -5,7 +5,7 @@ import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../../shared/utils/validator';
 
 import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -121,7 +121,7 @@ const EditPIC = props => {
 								inputType='input'
 								id='picEmail'
 								InputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
+								validatorMethod={[ VALIDATOR_EMAIL() ]}
 								onInputHandler={onInputHandler}
 								label='PIC Email*'
 								initValue={data.picEmail}
