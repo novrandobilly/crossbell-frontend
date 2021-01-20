@@ -1,62 +1,66 @@
 .Container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgba(250, 250, 250);
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	align-items: center;
+	background-color: rgba(250, 250, 250);
+	width: 80%;
 }
 
 .Container a {
-  text-decoration: none;
-  color: black;
+	text-decoration: none;
+	color: black;
+}
+.Container h2 {
+	align-self: start;
 }
 
 .Table {
-  width: 80%;
-  border-collapse: collapse;
-  box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
-  background-color: white;
-  border-radius: 10px;
-  margin-top: 2rem;
-  overflow: hidden;
+	width: 100%;
+	border-collapse: collapse;
+	box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
+	background-color: white;
+	border-radius: 10px;
+	overflow: hidden;
 }
 
 .Table tr {
-  align-items: center;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+	align-items: center;
+	border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .Table th {
-  text-align: left;
-  font-weight: normal;
+	text-align: left;
+	font-weight: normal;
 }
 
 Table tr:first-child th:first-child,
 Table.Info tr:first-child td:first-child {
-  border-top-left-radius: 6px;
+	border-top-left-radius: 6px;
 }
 
 Table tr:first-child th:last-child,
 Table.Info tr:first-child td:last-child {
-  border-top-right-radius: 6px;
+	border-top-right-radius: 6px;
 }
 
 Table tr:last-child td:last-child {
-  border-bottom-right-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
 
 .RowField th {
-  padding: 1rem;
-  background-color: #d7e2ff;
-  font-weight: 500;
-  background-color: rgba(58, 81, 153, 1);
-  color: white;
+	padding: 1rem;
+	background-color: #d7e2ff;
+	font-weight: 500;
+	background-color: rgba(58, 81, 153, 1);
+	color: white;
 }
 
 .ColumnField th {
-  font-size: 0.85rem;
-  padding: 0 1rem 0 1rem;
+	font-size: 0.85rem;
+	padding: 0 1rem 0 1rem;
 }
 
 .ColumnField tr:hover {
-  background-color: rgba(170, 170, 170, 0.1);
+	background-color: rgba(170, 170, 170, 0.1);
 }

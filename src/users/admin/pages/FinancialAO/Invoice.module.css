@@ -1,213 +1,212 @@
 .Container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgb(250, 250, 250);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: rgb(250, 250, 250);
 }
 
 .InvoiceContainer {
-  width: 50rem;
-  box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
-  border-radius: 1rem;
-  margin-top: 2rem;
-  background-color: rgb(215, 226, 255);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  overflow: hidden;
+	width: 50rem;
+	box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
+	border-radius: 1rem;
+	margin-top: 2rem;
+	background-color: rgb(215, 226, 255);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	overflow: hidden;
 }
 
 .Id {
-  width: 50rem;
-  border-radius: 1rem 1rem 0 0;
-  background-color: rgba(58, 81, 153, 1);
-  margin: 0rem;
-  font-size: 1.2rem;
-  color: white;
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  text-align: left;
+	width: 50rem;
+	border-radius: 1rem 1rem 0 0;
+	background-color: rgba(58, 81, 153, 1);
+	margin: 0rem;
+	font-size: 1.2rem;
+	color: white;
+	padding-top: 0.5rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	text-align: left;
 }
 
 .Id span {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .Content {
-  width: 90%;
-  padding: 2rem 1rem 2rem 3.5rem;
-  display: flex;
-  justify-content: space-between;
+	width: 90%;
+	padding: 2rem 1rem 2rem 3.5rem;
+	display: flex;
+	justify-content: space-between;
 }
 
 .CompanyDetail {
-  text-align: left;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 1rem;
-  width: 65%;
+	text-align: left;
+	color: rgba(0, 0, 0, 0.7);
+	line-height: 1rem;
+	width: 65%;
 }
 
 .Address {
-  line-height: 1.2rem;
+	line-height: 1.2rem;
 }
 
 .InvoiceRight {
-  text-align: right;
+	text-align: right;
 }
 
 .InvoiceTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 0.4rem;
-  margin-bottom: 0;
-  margin-top: 1rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+	letter-spacing: 0.4rem;
+	margin-bottom: 0;
+	margin-top: 1rem;
 }
 
 .InvoiceDetail {
-  display: flex;
-  text-align: right;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 1rem;
+	display: flex;
+	text-align: right;
+	color: rgba(0, 0, 0, 0.7);
+	line-height: 1rem;
 }
 
 .DetailLabel {
-  margin-right: 2rem;
+	margin-right: 2rem;
 }
 
 .CompanyName {
-  color: black;
-  font-size: 1.2rem;
-  font-weight: bold;
+	color: black;
+	font-size: 1.2rem;
+	font-weight: bold;
 }
 
 .Table {
-  width: 90%;
-  border-collapse: collapse;
-  margin-bottom: 2rem;
-  align-self: center;
+	width: 90%;
+	border-collapse: collapse;
+	margin-bottom: 2rem;
+	align-self: center;
 }
 
 .Table thead th {
-  border-top: 0.2rem solid rgba(58, 81, 153, 1);
-  border-bottom: 0.2rem solid rgba(58, 81, 153, 1);
-  font-weight: 500;
-  padding: 0.5rem;
+	border-top: 0.2rem solid rgba(58, 81, 153, 1);
+	border-bottom: 0.2rem solid rgba(58, 81, 153, 1);
+	font-weight: 500;
+	padding: 0.5rem;
 }
 
 .Table tbody {
-  border-bottom: 0.1rem solid rgba(58, 81, 153, 1);
+	border-bottom: 0.1rem solid rgba(58, 81, 153, 1);
 }
 
 .Table tbody th {
-  padding-top: 1.5rem;
-  padding-bottom: 1rem;
-  font-weight: normal;
-  font-size: 1rem;
+	padding-top: 1.5rem;
+	padding-bottom: 1rem;
+	font-weight: normal;
+	font-size: 1rem;
 }
 
 .Footer {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2rem;
 }
 
 .CommentContainer {
-  width: 50%;
-  border: solid 0.1rem rgba(58, 81, 153, 1);
-  text-align: left;
-  margin-left: 3rem;
+	width: 50%;
+	border: solid 0.1rem rgba(58, 81, 153, 1);
+	text-align: left;
+	margin-left: 3rem;
 }
 
 .CommentHeader {
-  background-color: rgba(58, 81, 153, 1);
-  color: white;
-  font-size: 1.2rem;
-  padding: 0.4rem 0 0.4rem 1rem;
+	background-color: rgba(58, 81, 153, 1);
+	color: white;
+	font-size: 1.2rem;
+	padding: 0.4rem 0 0.4rem 1rem;
 }
 
 .CommentContent ul {
-  list-style: decimal;
-  margin-left: -0.5rem;
-  margin-right: 1rem;
+	list-style: decimal;
+	margin-left: -0.5rem;
+	margin-right: 1rem;
 }
 
 .CommentContent li {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+	font-size: 0.9rem;
+	margin-bottom: 1rem;
 }
 
 .AmountContainer {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  margin-right: 2.5rem;
-  font-size: 1rem;
-  line-height: 0.5rem;
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	margin-right: 2.5rem;
+	font-size: 1rem;
+	line-height: 0.5rem;
 }
 
 .SubTotal {
-  margin-top: 0rem;
-  align-self: flex-start;
-  font-size: 0.7rem;
+	margin-top: 0rem;
+	align-self: flex-start;
+	font-size: 0.7rem;
 }
 .Amount {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
 }
 
 .Amount span {
-  font-size: 0.85rem;
+	font-size: 0.85rem;
 }
 
 .AmountTotal {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 500;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	font-weight: 500;
 }
 
 hr.UnderLine {
-  border: 1px solid red;
+	border: 1px solid red;
 }
 
 .NumberToText {
-  margin-top: 1rem;
-  line-height: 1.5rem;
-  text-align: left;
-  border: solid 1px rgba(0, 0, 0, 0.3);
-  border-radius: 0.2rem;
-  padding: 0.5rem;
-  font-style: italic;
-  background-color: white;
-  height: 3.8rem;
+	margin-top: 1rem;
+	line-height: 1.5rem;
+	text-align: left;
+	border: solid 1px rgba(0, 0, 0, 0.3);
+	border-radius: 0.2rem;
+	padding: 0.5rem;
+	font-style: italic;
+	background-color: white;
 }
 
 @media all {
-  .page-break {
-    display: none;
-  }
+	.page-break {
+		display: none;
+	}
 }
 
 @media print {
-  html,
-  body {
-    height: initial !important;
-    overflow: initial !important;
-    -webkit-print-color-adjust: exact;
-  }
+	html,
+	body {
+		height: initial !important;
+		overflow: initial !important;
+		-webkit-print-color-adjust: exact;
+	}
 }
 
 @media print {
-  .page-break {
-    margin-top: 1rem;
-    display: block;
-    page-break-before: auto;
-  }
+	.page-break {
+		margin-top: 1rem;
+		display: block;
+		page-break-before: auto;
+	}
 }
 
 @page {
-  size: auto;
-  margin: 20mm;
+	size: auto;
+	margin: 20mm;
 }

@@ -9,67 +9,69 @@ import TextField from '@material-ui/core/TextField';
 import classes from './Input.module.css';
 
 const ACTION = {
-  ONCHANGE: 'onchange',
-  ONBLUR: 'onblur',
+	ONCHANGE: 'onchange',
+	ONBLUR: 'onblur'
 };
 
 const inputReducer = (state, action) => {
-  switch (action.type) {
-    case ACTION.ONCHANGE:
-      return {
-        ...state,
-        value: action.payload.value,
-        isValid: validate(action.payload.value, action.payload.validatorMethod),
-      };
-    case ACTION.ONBLUR: {
-      return {
-        ...state,
-        isTouched: true,
-      };
-    }
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case ACTION.ONCHANGE:
+			return {
+				...state,
+				value: action.payload.value,
+				isValid: validate(action.payload.value, action.payload.validatorMethod)
+			};
+		case ACTION.ONBLUR: {
+			return {
+				...state,
+				isTouched: true
+			};
+		}
+		default:
+			return state;
+	}
 };
 
-const Input = (props) => {
-  const [state, dispatch] = useReducer(inputReducer, {
-    value: props.initValue || '',
-    isValid: props.initIsValid || false,
-    isTouched: false,
-  });
+const Input = props => {
+	const [ state, dispatch ] = useReducer(inputReducer, {
+		value: props.initValue || '',
+		isValid: props.initIsValid || false,
+		isTouched: false
+	});
 
-  const { id, onInputHandler } = props;
+	const { id, onInputHandler } = props;
 
-  useEffect(() => {
-    onInputHandler && onInputHandler(id, state.value, state.isValid);
-  }, [id, state.value, state.isValid, onInputHandler]);
+	useEffect(
+		() => {
+			onInputHandler && onInputHandler(id, state.value, state.isValid);
+		},
+		[ id, state.value, state.isValid, onInputHandler ]
+	);
 
-  const onChangeHandler = (event) => {
-    dispatch({
-      type: ACTION.ONCHANGE,
-      payload: {
-        value: event.target.value,
-        validatorMethod: props.validatorMethod,
-      },
-    });
-  };
+	const onChangeHandler = event => {
+		dispatch({
+			type: ACTION.ONCHANGE,
+			payload: {
+				value: event.target.value,
+				validatorMethod: props.validatorMethod
+			}
+		});
+	};
 
-  const onCustomDateHandler = (payload) => {
-    console.log(moment(payload).format('L'));
-    dispatch({
-      type: ACTION.ONCHANGE,
-      payload: {
-        value: moment(payload),
-        validatorMethod: props.validatorMethod,
-      },
-    });
-  };
+	const onCustomDateHandler = payload => {
+		console.log(moment(payload).format('L'));
+		dispatch({
+			type: ACTION.ONCHANGE,
+			payload: {
+				value: moment(payload),
+				validatorMethod: props.validatorMethod
+			}
+		});
+	};
 
-  const onBlurHandler = () => {
-    dispatch({ type: ACTION.ONBLUR });
-  };
-
+	const onBlurHandler = () => {
+		dispatch({ type: ACTION.ONBLUR });
+	};
 
 	let inputElement;
 	switch (props.inputType) {
@@ -171,17 +173,12 @@ const Input = (props) => {
 			));
 	}
 
-
-  return (
-    <div
-      className={`${classes.InputContainer} ${
-        !state.isValid && state.isTouched && classes.InputInvalid
-      }`}
-    >
-      {inputElement}
-      {/* {!state.isValid && state.isTouched && props.errorText && <p>{props.errorText}</p>} */}
-    </div>
-  );
+	return (
+		<div className={`${classes.InputContainer} ${!state.isValid && state.isTouched && classes.InputInvalid}`}>
+			{inputElement}
+			{/* {!state.isValid && state.isTouched && props.errorText && <p>{props.errorText}</p>} */}
+		</div>
+	);
 };
 
 export default Input;

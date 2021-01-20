@@ -78,7 +78,6 @@ const EditIntro = props => {
 			address: formState.inputs.address.value,
 			website: formState.inputs.website.value
 		};
-
 		try {
 			const res = await props.updateCompanyIntro(updatedIntro);
 			if (res) {
@@ -128,7 +127,6 @@ const EditIntro = props => {
 										}}
 									/>
 								)}
-
 								<label className={classes.InputButton}>
 									<input
 										accept='.jpg, .jpeg, .png'
@@ -141,6 +139,15 @@ const EditIntro = props => {
 									/>
 									<span className={classes.InputButtonText}> Upload Logo </span>
 								</label>
+								{formState.inputs.logo.value ? formState.inputs.logo.value.size > 500000 ? (
+									<span>
+										<em style={{ color: 'red' }}>File is too large. Please provide max. 500kb image</em>
+									</span>
+								) : (
+									<span>
+										<em>{formState.inputs.logo.value.name}</em>
+									</span>
+								) : null}
 							</div>
 
 							<Input
