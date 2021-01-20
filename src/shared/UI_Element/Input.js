@@ -69,6 +69,7 @@ const Input = props => {
 		});
 	};
 
+
 	const onBlurHandler = () => {
 		dispatch({ type: ACTION.ONBLUR });
 	};
