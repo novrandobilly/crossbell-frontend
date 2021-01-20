@@ -12,12 +12,14 @@ const QueryBar = props => {
 			<div className={classes.SearchContainer}>
 				<form onSubmit={props.searchHandler} action='/jobs-dashboard' method='GET' className={classes.SearchForm}>
 					<Input
+						inputType='input'
 						id='search'
 						type='text'
 						label='Job search'
 						validatorMethod={[ VALIDATOR_REQUIRE() ]}
 						name='search'
 						onInputHandler={props.searchInputHandler}
+						error={false}
 					/>
 					<div className={classes.ButtonContainer}>
 						<Button

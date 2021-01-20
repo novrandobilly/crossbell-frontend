@@ -15,20 +15,20 @@ const JobDetails = props => {
 		event.preventDefault();
 	};
 
-	const onDeleteHandler = async event => {
-		event.preventDefault();
+	// const onDeleteHandler = async event => {
+	// 	event.preventDefault();
 
-		const payload = {
-			jobId: jobsid,
-			token: props.auth.token
-		};
-		try {
-			await props.deleteJob(payload);
-			props.history.push('/jobs-dashboard');
-		} catch (err) {
-			console.log(err);
-		}
-	};
+	// 	const payload = {
+	// 		jobId: jobsid,
+	// 		token: props.auth.token
+	// 	};
+	// 	try {
+	// 		await props.deleteJob(payload);
+	// 		props.history.push('/jobs-dashboard');
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// };
 
 	const onReleaseHandler = async event => {
 		event.preventDefault();
@@ -111,11 +111,11 @@ const JobDetails = props => {
 									</button>
 								)}
 
-								{props.auth.userId === props.companyId && (
+								{/* {props.auth.userId === props.companyId && (
 									<button onClick={onDeleteHandler} className={[ classes.InstantButton, classes.DeleteButton ].join(' ')}>
 										<span>Delete</span>
 									</button>
-								)}
+								)} */}
 
 								{!props.auth.isCompany &&
 								props.auth.token && (
@@ -182,7 +182,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
+		// deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
 		releaseJob: payload => dispatch(actionCreators.releaseJob(payload))
 	};
 };

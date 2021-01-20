@@ -221,9 +221,9 @@ const JobsList = props => {
 		<div className={classes.Container}>
 			<div className={classes.FilterContainer}>
 				<div className={classes.CheckboxCriteria}>
-					<p className={classes.FilterLabel}>bidang pekerjaan</p>
+					<p className={classes.FilterLabel}>Bidang pekerjaan</p>
 					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '-0.5rem' }}>
-						<InputLabel id='fieldOfWorkFilter'>pilih</InputLabel>
+						<InputLabel id='fieldOfWorkFilter'>Pilih</InputLabel>
 						<Select
 							labelId='fieldOfWorkFilter'
 							id='fieldOfWorkFilter'
@@ -252,9 +252,9 @@ const JobsList = props => {
 				</div>
 
 				<div className={classes.CheckboxCriteria}>
-					<p className={classes.FilterLabel}>lokasi</p>
+					<p className={classes.FilterLabel}>Lokasi</p>
 					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '-0.5rem' }}>
-						<InputLabel id='locationFilter'>pilih</InputLabel>
+						<InputLabel id='locationFilter'>Pilih</InputLabel>
 						<Select
 							labelId='locationFilter'
 							id='locationFilter'
@@ -283,25 +283,25 @@ const JobsList = props => {
 				</div>
 
 				<div className={classes.CheckboxCriteria}>
-					<p className={classes.FilterLabel}>level</p>
+					<p className={classes.FilterLabel}>Kontrak Kerja</p>
 					<div onChange={onEmploymentHandler}>
 						<div className={classes.CheckboxHolder}>
 							<Checkbox color='primary' size='small' value='contract' id='contract' />
-							<p>contract</p>
+							<p>Kontrak</p>
 						</div>
 						<div className={classes.CheckboxHolder}>
 							<Checkbox color='primary' size='small' value='permanent' id='permanent' />
-							<p>permanent</p>
+							<p>Permanen</p>
 						</div>
 						<div className={classes.CheckboxHolder}>
 							<Checkbox color='primary' size='small' value='intern' id='intern' />
-							<p>intern/ magang</p>
+							<p>Intern/Magang</p>
 						</div>
 					</div>
 				</div>
 
 				<div className={classes.CheckboxCriteria}>
-					<p className={classes.FilterLabel}>gaji</p>
+					<p className={classes.FilterLabel}>Gaji</p>
 					<div className={classes.InputHolder}>
 						<Input
 							inputType='number'
@@ -372,12 +372,12 @@ const JobsList = props => {
 				</div>
 			</div>
 			<FormControl className={classes.formControl} style={{ width: '8rem', textAlign: 'left' }}>
-				<InputLabel id='sort'>filter</InputLabel>
+				<InputLabel id='sort'>Filter</InputLabel>
 				<Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
-					<MenuItem value='newest'>terbaru</MenuItem>
-					<MenuItem value='latest'>terlawas</MenuItem>
-					<MenuItem value='highSalary'>gaji tertinggi</MenuItem>
-					<MenuItem value='lowSalary'>gaji terendah</MenuItem>
+					<MenuItem value='newest'>Terbaru</MenuItem>
+					<MenuItem value='latest'>Terlama</MenuItem>
+					<MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
+					<MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
 				</Select>
 			</FormControl>
 		</div>
