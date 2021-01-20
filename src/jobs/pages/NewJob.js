@@ -21,7 +21,7 @@ import classes from './NewJob.module.css';
 const NewJob = props => {
 	const [ maxSlot, setMaxSlot ] = useState(null);
 
-	const [ fieldOfWork, setFieldOfWork ] = useState('');
+	// const [ fieldOfWork, setFieldOfWork ] = useState('');
 	const [ employment, setEmployment ] = useState('');
 	const [ open, setOpen ] = useState(false);
 	const [ employmentOpen, setEmploymentOpen ] = useState(false);
@@ -70,12 +70,14 @@ const NewJob = props => {
 				isValid: false
 			},
 			fieldOfWork: {
-				value: null,
+				value: [ '', '', '' ],
 				isValid: false
 			}
 		},
 		false
 	);
+
+	console.log(formState.inputs.fieldOfWork);
 
 	const { getOneCompany, auth } = props;
 	useEffect(
@@ -165,11 +167,27 @@ const NewJob = props => {
 		}
 	};
 
-	const handleChange = e => {
-		const elementId = e.target.name;
-		const elementValue = e.target.value;
-		onInputHandler(elementId, elementValue, true);
-		setFieldOfWork(e.target.value);
+	const fowHandler = e => {
+		let indexFow;
+		console.log(e.target.name);
+		switch (e.target.name) {
+			case 'fieldOfWork-1':
+				indexFow = 0;
+				break;
+			case 'fieldOfWork-2':
+				indexFow = 1;
+				break;
+			case 'fieldOfWork-3':
+				indexFow = 2;
+				break;
+			default:
+				indexFow = 0;
+		}
+		const elementId = 'fieldOfWork';
+		const elementArray = [ ...formState.inputs.fieldOfWork.value ];
+		elementArray[indexFow] = e.target.value;
+		onInputHandler(elementId, elementArray, true);
+		// setFieldOfWork(e.target.value);
 	};
 
 	const handleEmploymentChange = e => {
@@ -315,19 +333,79 @@ const NewJob = props => {
 					/>
 
 					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem', marginBottom: '1rem' }}>
-						<InputLabel id='fieldOfWork' style={{ fontSize: '1rem' }}>
+						<InputLabel id='fieldOfWorkLabel1' style={{ fontSize: '1rem' }}>
 							Bidang pekerjaan*
 						</InputLabel>
 
 						<Select
-							labelId='fieldOfWork'
-							id='fieldOfWork'
-							name='fieldOfWork'
+							labelId='fieldOfWorkLabel1'
+							id='fieldOfWork-1'
+							name='fieldOfWork-1'
 							open={open}
 							onClose={handleClose}
 							onOpen={handleOpen}
-							value={fieldOfWork}
-							onChange={handleChange}
+							value={formState.inputs.fieldOfWork.value[0]}
+							onChange={fowHandler}
+							style={{
+								fontSize: '0.9rem',
+								textAlign: 'left'
+							}}>
+							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
+								<em>Pilih</em>
+							</MenuItem>
+							{WorkFieldData.sort().map((work, i) => {
+								return (
+									<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
+										{work}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
+					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem', marginBottom: '1rem' }}>
+						<InputLabel id='fieldOfWorkLabel2' style={{ fontSize: '1rem' }}>
+							Bidang pekerjaan*
+						</InputLabel>
+
+						<Select
+							labelId='fieldOfWorkLabel2'
+							id='fieldOfWork-2'
+							name='fieldOfWork-2'
+							open={open}
+							onClose={handleClose}
+							onOpen={handleOpen}
+							value={formState.inputs.fieldOfWork.value[1]}
+							onChange={fowHandler}
+							style={{
+								fontSize: '0.9rem',
+								textAlign: 'left'
+							}}>
+							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
+								<em>Pilih</em>
+							</MenuItem>
+							{WorkFieldData.sort().map((work, i) => {
+								return (
+									<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
+										{work}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
+					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem', marginBottom: '1rem' }}>
+						<InputLabel id='fieldOfWorkLabel3' style={{ fontSize: '1rem' }}>
+							Bidang pekerjaan*
+						</InputLabel>
+
+						<Select
+							labelId='fieldOfWorkLabel3'
+							id='fieldOfWork-3'
+							name='fieldOfWork-3'
+							open={open}
+							onClose={handleClose}
+							onOpen={handleOpen}
+							value={formState.inputs.fieldOfWork.value[2]}
+							onChange={fowHandler}
 							style={{
 								fontSize: '0.9rem',
 								textAlign: 'left'
