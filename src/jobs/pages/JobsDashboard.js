@@ -67,8 +67,6 @@ const JobsDashboard = (props) => {
     jobList: null,
   });
 
-  console.log(allAvailableJobs);
-
   const { getAllAvailableJobs } = props;
   useEffect(() => {
     const getJobs = async () => {
