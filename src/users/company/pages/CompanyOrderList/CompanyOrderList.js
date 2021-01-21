@@ -113,7 +113,15 @@ const CompanyOrderList = props => {
 									<th>
 										<p
 											className={classes.Content}
-											style={order.status === 'Closed' ? { color: 'gray' } : { color: 'green' }}>
+											style={
+												order.status === 'Closed' ? (
+													{ color: 'gray' }
+												) : order.status === 'Pending' ? (
+													{ color: 'orange' }
+												) : (
+													{ color: 'green' }
+												)
+											}>
 											{order.status}
 										</p>
 									</th>
