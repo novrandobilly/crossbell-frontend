@@ -15,24 +15,24 @@
   justify-content: center;
   background-color: rgb(255, 255, 255);
   padding: 1rem;
-  margin: 2rem 10rem;
+  margin: 2rem 0;
+  width: 72.6%;
   border-radius: 1rem;
-  /* overflow: hidden; */
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3),
     0px 1px 1px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.22);
 }
 
 .DivContainer {
   display: flex;
-  justify-content: "flex-start";
+  justify-content: 'flex-start';
   flex-wrap: wrap;
 }
 
 .JobCard {
-  padding: 1rem;
+  padding: 0 1rem 0.5rem 1rem;
   margin: 0.5rem 0.56rem;
-  width: 15rem;
-  height: 18rem;
+  width: 14rem;
+  height: 17rem;
   border-radius: 0.2rem;
   border: solid 0.05rem rgba(0, 0, 0, 0.2);
   text-align: left;
@@ -62,4 +62,24 @@
   color: rgba(0, 0, 0, 0.5);
   font-size: 0.8rem;
   margin-top: 1rem;
+}
+
+.CardAddress {
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: -1rem;
+  font-size: 0.8rem;
+  height: 1.7rem;
+  overflow: hidden;
+}
+
+.CardRecipient {
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+.CardApplicant {
+  font-size: 3rem;
+  margin-bottom: -0.5rem;
+  margin-top: 1rem;
+  overflow: hidden;
 }

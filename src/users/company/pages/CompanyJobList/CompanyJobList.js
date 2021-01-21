@@ -34,6 +34,7 @@ const CompanyJobList = props => {
 
 	let Content = <SpinnerCircle />;
 
+
 	if (data && !props.isLoading) {
 		Content = (
 			<div className={classes.Container}>
@@ -46,36 +47,35 @@ const CompanyJobList = props => {
 										<div className={classes.JobCard}>
 											<div className={classes.CardHeader}>
 												<p>{job.jobTitle}</p>
-												<p
-													style={{
-														color: 'rgba(0,0,0,0.5)',
-														marginTop: '-1rem',
-														fontSize: '0.8rem'
-													}}>
-													{job.placementLocation}
-												</p>
-												<p>{job.emailRecipient}</p>
+												<p className={classes.CardAddress}>
+                          {job.placementLocation}
+                        </p>
+                        <p className={classes.CardRecipient}>
+                          {job.emailRecipient}
+                        </p>
 											</div>
 											<div className={classes.CardBody}>
-												<p
-													style={{
-														fontSize: '2rem',
-														marginBottom: '-0.5rem',
-														marginTop: '1rem'
-													}}>
+												 <p className={classes.CardApplicant} >
 													{job.jobApplicants.length}
 												</p>
 												<p>applicants applied </p>
 											</div>
-											<div className={classes.CardFooter}>
-												{job.expiredDate ? (
-													<p className={classes.ExpDate}>
-														expired in {moment(job.expiredDate).diff(moment(), 'days')} days
-													</p>
-												) : (
-													<p className={classes.ExpDate}>belum ditayangkan</p>
-												)}
-											</div>
+											 <div className={classes.CardFooter}>
+                        {job.expiredDate ? (
+                          <p className={classes.ExpDate}>
+                            {moment(job.expiredDate).diff(moment(), 'days') > 0
+                              ? [
+                                  `expired in ${moment(job.expiredDate).diff(
+                                    moment(),
+                                    'days'
+                                  )} days`,
+                                ]
+                              : 'expired'}
+                          </p>
+                        ) : (
+                          <p className={classes.ExpDate}>belum ditayangkan</p>
+                        )}
+                      </div>
 										</div>
 									</Link>
 								</div>
@@ -86,6 +86,7 @@ const CompanyJobList = props => {
 			</div>
 		);
 	}
+
 
 	return Content;
 };
