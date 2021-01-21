@@ -6,6 +6,7 @@
 }
 
 .ContainerFlex {
+  width: 40rem;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -29,6 +30,7 @@
 }
 
 .FormRow {
+  width: 100%;
   display: flex;
   flex-direction: column;
   border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
@@ -43,7 +45,7 @@
 }
 
 .Text {
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 0.7rem;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.54);
