@@ -82,14 +82,7 @@ const ApplicantCard = (props) => {
                 </div>
               )}
               {resumeFile && (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    marginTop: '1rem',
-                  }}
-                >
+                <div className={classes.SaveResume}>
                   <p className={classes.FilePreview}>{resumeFile.name}</p>
 
                   <span

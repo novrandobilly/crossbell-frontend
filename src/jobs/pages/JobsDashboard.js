@@ -55,61 +55,62 @@ const searchReducer = (state, action) => {
   }
 };
 
+const JobsDashboard = (props) => {
+  const [jobEmpty, setJobEmpty] = useState(false);
+  const [allAvailableJobs, setAllAvailableJobs] = useState();
+  const [state, dispatch] = useReducer(searchReducer, {
+    search: {
+      id: '',
+      value: '',
+      isValid: '',
+    },
+    jobList: null,
+  });
 
-const JobsDashboard = props => {
-	const [ jobEmpty, setJobEmpty ] = useState(false);
-	const [ allAvailableJobs, setAllAvailableJobs ] = useState();
-	const [ state, dispatch ] = useReducer(searchReducer, {
-		search: {
-			id: '',
-			value: '',
-			isValid: ''
-		},
-		jobList: null
-	});
-	const { getAllAvailableJobs } = props;
-	useEffect(
-		() => {
-			const getJobs = async () => {
-				setJobEmpty(false);
-				try {
-					const res = await getAllAvailableJobs();
-					if (!res.availableJobs) {
-						throw new Error('No Job available at the moment');
-					}
-					dispatch({
-						type: ACTION.SEARCHEMPTY,
-						payload: { jobs: res.availableJobs }
-					});
-					setAllAvailableJobs(res.availableJobs);
-				} catch (err) {
-					setJobEmpty(true);
-					setAllAvailableJobs([]);
-					dispatch({
-						type: ACTION.SEARCHEMPTY,
-						payload: { jobs: [] }
-					});
-					console.log(err);
-				}
-			};
-			getJobs();
-		},
-		[ getAllAvailableJobs ]
-	);
+  console.log(allAvailableJobs);
 
-	const searchHandler = event => {
-		event.preventDefault();
+  const { getAllAvailableJobs } = props;
+  useEffect(() => {
+    const getJobs = async () => {
+      setJobEmpty(false);
+      try {
+        const res = await getAllAvailableJobs();
+        if (!res.availableJobs) {
+          throw new Error('No Job available at the moment');
+        }
+        dispatch({
+          type: ACTION.SEARCHEMPTY,
+          payload: { jobs: res.availableJobs },
+        });
+        setAllAvailableJobs(res.availableJobs);
+      } catch (err) {
+        setJobEmpty(true);
+        setAllAvailableJobs([]);
+        dispatch({
+          type: ACTION.SEARCHEMPTY,
+          payload: { jobs: [] },
+        });
+        console.log(err);
+      }
+    };
+    getJobs();
+  }, [getAllAvailableJobs]);
 
-		if (state.search.value) {
-			dispatch({
-				type: ACTION.SEARCHEXECUTE,
-				payload: { jobs: allAvailableJobs }
-			});
-		} else {
-			dispatch({ type: ACTION.SEARCHEMPTY, payload: { jobs: allAvailableJobs } });
-		}
-	};
+  const searchHandler = (event) => {
+    event.preventDefault();
 
+    if (state.search.value) {
+      dispatch({
+        type: ACTION.SEARCHEXECUTE,
+        payload: { jobs: allAvailableJobs },
+      });
+    } else {
+      dispatch({
+        type: ACTION.SEARCHEMPTY,
+        payload: { jobs: allAvailableJobs },
+      });
+    }
+  };
 
   const searchInputHandler = useCallback((id, value, isValid) => {
     dispatch({
@@ -122,19 +123,20 @@ const JobsDashboard = props => {
     });
   }, []);
 
+  let jobLists = <Spinner />;
+  if (state.jobList) {
+    jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} />;
+  }
 
-	let jobLists = <Spinner />;
-	if (state.jobList) {
-		jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} />;
-	}
-
-	return (
-		<div className={classes.JobsDashboard}>
-			<QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} />
-			{jobLists}
-		</div>
-	);
-
+  return (
+    <div className={classes.JobsDashboard}>
+      <QueryBar
+        searchInputHandler={searchInputHandler}
+        searchHandler={searchHandler}
+      />
+      {jobLists}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

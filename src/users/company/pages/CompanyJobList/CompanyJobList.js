@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { connect } from "react-redux";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
-import * as actionCreators from "../../../../store/actions";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import classes from "./CompanyJobList.module.css";
+import * as actionCreators from '../../../../store/actions';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import classes from './CompanyJobList.module.css';
 
 // import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
 
@@ -43,35 +43,30 @@ const CompanyJobList = (props) => {
                     <div className={classes.JobCard}>
                       <div className={classes.CardHeader}>
                         <p>{job.jobTitle}</p>
-                        <p
-                          style={{
-                            color: "rgba(0,0,0,0.5)",
-                            marginTop: "-1rem",
-                            fontSize: "0.8rem",
-                          }}
-                        >
+                        <p className={classes.CardAddress}>
                           {job.placementLocation}
                         </p>
-                        <p>{job.emailRecipient}</p>
+                        <p className={classes.CardRecipient}>
+                          {job.emailRecipient}
+                        </p>
                       </div>
                       <div className={classes.CardBody}>
-                        <p
-                          style={{
-                            fontSize: "3rem",
-                            marginBottom: "-0.5rem",
-                            marginTop: "1rem",
-                          }}
-                        >
-                          264.898
+                        <p className={classes.CardApplicant} style={{}}>
+                          264.898.998.586
                         </p>
                         <p>applicants applied </p>
                       </div>
                       <div className={classes.CardFooter}>
                         {job.expiredDate ? (
                           <p className={classes.ExpDate}>
-                            expired in{" "}
-                            {moment(job.expiredDate).diff(moment(), "days")}{" "}
-                            days
+                            {moment(job.expiredDate).diff(moment(), 'days') > 0
+                              ? [
+                                  `expired in ${moment(job.expiredDate).diff(
+                                    moment(),
+                                    'days'
+                                  )} days`,
+                                ]
+                              : 'expired'}
                           </p>
                         ) : (
                           <p className={classes.ExpDate}>belum ditayangkan</p>

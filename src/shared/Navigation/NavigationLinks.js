@@ -221,6 +221,12 @@ const NavigationLinks = (props) => {
                   id='dropdownCompany'
                 >
                   <NavLink
+                    to={`/ad/alphaomega/promo`}
+                    activeClassName={classes.active}
+                  >
+                    <p>Update Promo</p>
+                  </NavLink>
+                  <NavLink
                     to={`/ad/alphaomega/order/reguler`}
                     activeClassName={classes.active}
                   >

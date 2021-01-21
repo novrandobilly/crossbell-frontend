@@ -1,25 +1,24 @@
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useParams, withRouter } from 'react-router-dom';
+import { useForm } from '../../../../../shared/utils/useForm';
+import moment from 'moment';
 
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { useParams, withRouter } from "react-router-dom";
-import { useForm } from "../../../../../shared/utils/useForm";
-import moment from "moment";
-
-import * as actionTypes from "../../../../../store/actions/actions";
-import * as actionCreators from "../../../../../store/actions/index";
+import * as actionTypes from '../../../../../store/actions/actions';
+import * as actionCreators from '../../../../../store/actions/index';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
   VALIDATOR_ALWAYSTRUE,
-} from "../../../../../shared/utils/validator";
+} from '../../../../../shared/utils/validator';
 
-import Modal from "../../../../../shared/UI_Element/Modal";
-import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import Input from "../../../../../shared/UI_Element/Input";
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
+import Modal from '../../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../../shared/UI_Element/Input';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 
-import classes from "./Certification.module.css";
+import classes from './Certification.module.css';
 
 const Certification = (props) => {
   const { applicantid } = useParams();
@@ -90,7 +89,7 @@ const Certification = (props) => {
         if (res) {
           console.log(res);
         } else {
-          console.log("no res detected");
+          console.log('no res detected');
         }
         props.history.push(`/ap/${applicantid}`);
       } catch (err) {
@@ -113,7 +112,7 @@ const Certification = (props) => {
         if (res) {
           console.log(res);
         } else {
-          console.log("no res detected");
+          console.log('no res detected');
         }
         props.history.push(`/ap/${applicantid}`);
       } catch (err) {
@@ -133,12 +132,12 @@ const Certification = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="title"
-                inputClass="AddJobInput"
+                inputType='input'
+                id='title'
+                inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Certification Title *"
+                label='Certification Title *'
                 initValue={data.title}
                 initIsValid={true}
               />
@@ -146,12 +145,12 @@ const Certification = (props) => {
 
             <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="organization"
-                inputClass="AddJobInput"
+                inputType='input'
+                id='organization'
+                inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Issuing Organization*"
+                label='Issuing Organization*'
                 initValue={data.organization}
                 initIsValid={true}
               />
@@ -161,16 +160,16 @@ const Certification = (props) => {
               <div className={classes.EditLabel}>
                 <p className={classes.Text}>Berlaku Sejak*</p>
                 <Input
-                  inputType="customdate"
-                  id="startDate"
+                  inputType='customdate'
+                  id='startDate'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}
-                  views={["year", "month"]}
-                  label="Tahun Mulai"
+                  views={['year', 'month']}
+                  label='Tahun Mulai'
                   maxDate={moment()}
                   initValue={data.startDate}
                   initIsValid={true}
-                  style={{ marginBottom: "1rem" }}
+                  style={{ marginBottom: '1rem' }}
                 />
               </div>
 
@@ -178,16 +177,16 @@ const Certification = (props) => {
                 <div className={classes.EditLabel}>
                   <p className={classes.Text}>Berlaku Sampai *</p>
                   <Input
-                    inputType="customdate"
-                    id="endDate"
+                    inputType='customdate'
+                    id='endDate'
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                     onInputHandler={onInputHandler}
-                    views={["year", "month"]}
-                    label="Tahun Selesai"
+                    views={['year', 'month']}
+                    label='Tahun Selesai'
                     maxDate={moment()}
-                    initValue={data.endDate}
+                    initValue={data.endDate || moment()}
                     initIsValid={true}
-                    style={{ marginBottom: "1rem" }}
+                    style={{ marginBottom: '1rem' }}
                   />
                 </div>
               ) : (
@@ -196,18 +195,18 @@ const Certification = (props) => {
             </div>
 
             <div className={classes.CheckboxDiv}>
-              <Checkbox color="primary" size="small" onChange={expiryHandler} />
+              <Checkbox color='primary' size='small' onChange={expiryHandler} />
               <label className={classes.CheckboxText}>No expiry date</label>
             </div>
 
             <div className={classes.EditLabel}>
               <Input
-                inputType="textarea"
-                id="description"
-                inputClass="EditProfileTextArea"
+                inputType='textarea'
+                id='description'
+                inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label="Description*"
+                label='Description*'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
@@ -218,9 +217,9 @@ const Certification = (props) => {
           <div className={classes.Footer}>
             <Button
               disabled={!formState.formIsValid}
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
             >
               Save
             </Button>
@@ -242,23 +241,27 @@ const Certification = (props) => {
       {formContent}
     </form>
   );
-
 };
 
-const mapStateToProps = state => {
-	return {
-		isLoading: state.applicant.isLoading,
-		error: state.applicant.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-		getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-		updateApplicantCertification: ApplicantData => dispatch(actionCreators.updateApplicantCertification(ApplicantData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantCertification: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Certification));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Certification));

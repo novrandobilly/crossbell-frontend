@@ -1,25 +1,17 @@
 .InputContainer {
-
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .InputElements {
-  border-radius: 5px;
-  outline: none;
   width: 100%;
-  border: 2px solid rgba(58, 81, 153, 1);
   height: 3rem;
 }
 
 .TextareaElements {
-  border-radius: 5px;
-  outline: none;
   width: 100%;
-  border: 2px solid rgba(58, 81, 153, 1);
 }
 
 .InputLabel {
@@ -89,13 +81,7 @@
 }
 
 .PackageSlot {
-
-	font-size: 1rem;
-	width: 2rem;
-	height: 1.5rem;
-	border: solid 0.05rem;
-	outline: none;
-
+  width: 80%;
 }
 
 .Amount {
@@ -116,7 +102,7 @@
 }
 
 .Age {
-  width: 80%;
+  width: 40%;
 }
 
 .Range {
