@@ -161,11 +161,11 @@ const CompanyCard = props => {
 												<div className={classes.CardBody}>
 													<p
 														style={{
-															fontSize: '3rem',
+															fontSize: '1.5rem',
 															marginBottom: '-0.5rem',
 															marginTop: '1rem'
 														}}>
-														264.898
+														{job.jobApplicants.length}
 													</p>
 													<p>applicants applied </p>
 												</div>

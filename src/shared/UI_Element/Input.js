@@ -69,7 +69,6 @@ const Input = props => {
 		});
 	};
 
-
 	const onBlurHandler = () => {
 		dispatch({ type: ACTION.ONBLUR });
 	};
@@ -88,12 +87,19 @@ const Input = props => {
 					onChange={onChangeHandler}
 					onBlur={onBlurHandler}
 					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-					error={!state.isValid && state.isTouched}
+					error={props.error !== undefined ? props.error : !state.isValid && state.isTouched}
 					InputProps={{
 						style: { fontSize: 15 },
-						inputProps: { min: props.min && props.min, max: props.max && props.max, step: props.step && props.step }
+						inputProps: {
+							min: props.min && props.min,
+							max: props.max && props.max,
+							step: props.step && props.step
+						}
 					}}
 					style={{ margin: '.6rem 0' }}
+					InputLabelProps={{
+						style: { fontSize: props.labelFontSize || 15 }
+					}}
 				/>
 			);
 			break;
