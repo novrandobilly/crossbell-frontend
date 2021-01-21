@@ -23,7 +23,7 @@ const NewJob = props => {
 
 	// const [ fieldOfWork, setFieldOfWork ] = useState('');
 	const [ employment, setEmployment ] = useState('');
-	const [ open, setOpen ] = useState(false);
+	const [ open, setOpen ] = useState([ false, false, false ]);
 	const [ employmentOpen, setEmploymentOpen ] = useState(false);
 
 	const [ formState, onInputHandler ] = useForm(
@@ -76,8 +76,6 @@ const NewJob = props => {
 		},
 		false
 	);
-
-	console.log(formState.inputs.fieldOfWork);
 
 	const { getOneCompany, auth } = props;
 	useEffect(
@@ -169,7 +167,6 @@ const NewJob = props => {
 
 	const fowHandler = e => {
 		let indexFow;
-		console.log(e.target.name);
 		switch (e.target.name) {
 			case 'fieldOfWork-1':
 				indexFow = 0;
@@ -198,13 +195,29 @@ const NewJob = props => {
 	};
 
 	const handleClose = () => {
-		setOpen(false);
+		setOpen([ false, false, false ]);
 	};
 
-	const handleOpen = () => {
-		setOpen(true);
+	const handleOpen = e => {
+		let index;
+		switch (e.target.id) {
+			case 'fieldOfWork-1':
+				index = 0;
+				break;
+			case 'fieldOfWork-2':
+				index = 1;
+				break;
+			case 'fieldOfWork-3':
+				index = 2;
+				break;
+			default:
+				index = 0;
+		}
+		let openArray = [ ...open ];
+		openArray[index] = true;
+		setOpen(openArray);
+		// setOpen(true);
 	};
-
 	const handleEmploymentClose = () => {
 		setEmploymentOpen(false);
 	};
@@ -215,7 +228,7 @@ const NewJob = props => {
 
 	let formContent = (
 		<div className={classes.ContainerFlex}>
-			<p className={classes.FormTitle}>New Job Advertisement</p>
+			<p className={classes.FormTitle}>Form Iklan Lowongan Pekerjaan</p>
 
 			<div className={classes.Content}>
 				<div className={classes.ContentLeft}>
@@ -237,36 +250,9 @@ const NewJob = props => {
 						label='Job Qualification*'
 					/>
 
-					<Input
-						inputType='input'
-						id='slotAllocation'
-						InputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_MIN(1) ]}
-						onInputHandler={onInputHandler}
-						label='Durasi Penayangan* (dalam Minggu)'
-						type='number'
-						min={0}
-						max={parseInt(maxSlot) * 2 || 0}
-						step='2'
-					/>
-
-					<Input
-						inputType='input'
-						id='benefit'
-						InputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-						onInputHandler={onInputHandler}
-						label='Benefits (optional)'
-					/>
-
-					<FormControl
-						className={classes.formControl}
-						style={{
-							width: '100%',
-							marginTop: '0.5rem'
-						}}>
+					<FormControl className={classes.FormControl} style={{ marginTop: '.68rem' }}>
 						<InputLabel id='employment' style={{ fontSize: '1rem' }}>
-							Jenis Pekerjaan*
+							Jenis Kontrak*
 						</InputLabel>
 
 						<Select
@@ -282,14 +268,75 @@ const NewJob = props => {
 								textAlign: 'left'
 							}}>
 							<MenuItem id={0} value='permanent' style={{ fontSize: '0.9rem' }}>
-								Permanent
+								Permanen
 							</MenuItem>
 							<MenuItem id={0} value='contract' style={{ fontSize: '0.9rem' }}>
-								Contract
+								Kontrak
 							</MenuItem>
 							<MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
-								intern
+								Intern/Magang
 							</MenuItem>
+						</Select>
+					</FormControl>
+					<FormControl className={classes.FormControl} style={{ marginTop: '1.3rem' }}>
+						<InputLabel id='fieldOfWorkLabel1' style={{ fontSize: '1rem' }}>
+							Bidang pekerjaan (Wajib)
+						</InputLabel>
+
+						<Select
+							labelId='fieldOfWorkLabel1'
+							id='fieldOfWork-1'
+							name='fieldOfWork-1'
+							open={open[0]}
+							onClose={handleClose}
+							onOpen={handleOpen}
+							value={formState.inputs.fieldOfWork.value[0]}
+							onChange={fowHandler}
+							style={{
+								fontSize: '0.9rem',
+								textAlign: 'left'
+							}}>
+							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
+								<em>Pilih</em>
+							</MenuItem>
+							{WorkFieldData.sort().map((work, i) => {
+								return (
+									<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
+										{work}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
+
+					<FormControl className={classes.FormControl} style={{ marginTop: '1.2rem' }}>
+						<InputLabel id='fieldOfWorkLabel3' style={{ fontSize: '1rem' }}>
+							Bidang pekerjaan (Opsional)
+						</InputLabel>
+
+						<Select
+							labelId='fieldOfWorkLabel3'
+							id='fieldOfWork-3'
+							name='fieldOfWork-3'
+							open={open[2]}
+							onClose={handleClose}
+							onOpen={handleOpen}
+							value={formState.inputs.fieldOfWork.value[2]}
+							onChange={fowHandler}
+							style={{
+								fontSize: '0.9rem',
+								textAlign: 'left'
+							}}>
+							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
+								<em>Pilih</em>
+							</MenuItem>
+							{WorkFieldData.sort().map((work, i) => {
+								return (
+									<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
+										{work}
+									</MenuItem>
+								);
+							})}
 						</Select>
 					</FormControl>
 				</div>
@@ -323,55 +370,16 @@ const NewJob = props => {
 						helperText='Please input a valid email address'
 					/>
 
-					<Input
-						inputType='input'
-						id='salary'
-						InputClass='AddJobInput'
-						validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-						onInputHandler={onInputHandler}
-						label='Salary (optional)'
-					/>
-
-					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem', marginBottom: '1rem' }}>
-						<InputLabel id='fieldOfWorkLabel1' style={{ fontSize: '1rem' }}>
-							Bidang pekerjaan*
-						</InputLabel>
-
-						<Select
-							labelId='fieldOfWorkLabel1'
-							id='fieldOfWork-1'
-							name='fieldOfWork-1'
-							open={open}
-							onClose={handleClose}
-							onOpen={handleOpen}
-							value={formState.inputs.fieldOfWork.value[0]}
-							onChange={fowHandler}
-							style={{
-								fontSize: '0.9rem',
-								textAlign: 'left'
-							}}>
-							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
-								<em>Pilih</em>
-							</MenuItem>
-							{WorkFieldData.sort().map((work, i) => {
-								return (
-									<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
-										{work}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</FormControl>
-					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem', marginBottom: '1rem' }}>
+					<FormControl className={classes.FormControl} style={{ marginTop: '.68rem' }}>
 						<InputLabel id='fieldOfWorkLabel2' style={{ fontSize: '1rem' }}>
-							Bidang pekerjaan*
+							Bidang pekerjaan (Opsional)
 						</InputLabel>
 
 						<Select
 							labelId='fieldOfWorkLabel2'
 							id='fieldOfWork-2'
 							name='fieldOfWork-2'
-							open={open}
+							open={open[1]}
 							onClose={handleClose}
 							onOpen={handleOpen}
 							value={formState.inputs.fieldOfWork.value[1]}
@@ -392,39 +400,9 @@ const NewJob = props => {
 							})}
 						</Select>
 					</FormControl>
-					<FormControl className={classes.formControl} style={{ width: '100%', marginTop: '0.5rem', marginBottom: '1rem' }}>
-						<InputLabel id='fieldOfWorkLabel3' style={{ fontSize: '1rem' }}>
-							Bidang pekerjaan*
-						</InputLabel>
-
-						<Select
-							labelId='fieldOfWorkLabel3'
-							id='fieldOfWork-3'
-							name='fieldOfWork-3'
-							open={open}
-							onClose={handleClose}
-							onOpen={handleOpen}
-							value={formState.inputs.fieldOfWork.value[2]}
-							onChange={fowHandler}
-							style={{
-								fontSize: '0.9rem',
-								textAlign: 'left'
-							}}>
-							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
-								<em>Pilih</em>
-							</MenuItem>
-							{WorkFieldData.sort().map((work, i) => {
-								return (
-									<MenuItem id={i} value={work} style={{ fontSize: '0.9rem' }} key={i}>
-										{work}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</FormControl>
 				</div>
 			</div>
-			<div style={{ width: '95%', marginTop: '0.5rem' }}>
+			<div style={{ width: '95%', marginTop: '2rem' }}>
 				<Input
 					inputType='textarea'
 					id='jobDescriptions'
@@ -434,6 +412,58 @@ const NewJob = props => {
 					label='Job Descriptions*'
 				/>
 			</div>
+			<div className={classes.AdditionalContentContainer}>
+				<h2 className={classes.AdditionalContentHeader}>Informasi Tambahan</h2>
+				<div className={classes.AdditionalContent}>
+					<Input
+						inputType='input'
+						id='benefit'
+						InputClass='AddJobInput'
+						validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
+						onInputHandler={onInputHandler}
+						label='Benefits (optional)'
+						error={false}
+					/>
+					<Input
+						inputType='input'
+						id='salary'
+						InputClass='AddJobInput'
+						validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
+						onInputHandler={onInputHandler}
+						label='Salary (optional)'
+						error={false}
+					/>
+				</div>
+			</div>
+			<div className={classes.AdditionalContentContainer}>
+				<h2 className={classes.AdditionalContentHeader}>Durasi Tayang</h2>
+				<div className={classes.AdditionalContent}>
+					<div className={classes.SlotInput}>
+						<Input
+							inputType='input'
+							id='slotAllocation'
+							InputClass='AddJobInput'
+							validatorMethod={[ VALIDATOR_MIN(1) ]}
+							onInputHandler={onInputHandler}
+							type='number'
+							min={0}
+							max={parseInt(maxSlot) * 2 || 0}
+							step='2'
+						/>
+						<span>minggu</span>
+					</div>
+					<div className={classes.RemainingSlot}>
+						<h2>
+							Sisa slot:{' '}
+							{formState.inputs.slotAllocation.value ? (
+								(parseInt(maxSlot) - parseInt(formState.inputs.slotAllocation.value) / 2).toString()
+							) : (
+								maxSlot
+							)}
+						</h2>
+					</div>
+				</div>
+			</div>
 
 			<div
 				style={{
@@ -441,14 +471,7 @@ const NewJob = props => {
 					marginRight: '1rem',
 					marginTop: '2rem'
 				}}>
-				<Button
-					variant='outlined'
-					color='primary'
-					type='submit'
-					size='small'
-					disableElevation
-					onClick={onSaveHandler}
-					disabled={!formState.formIsValid}>
+				<Button variant='outlined' color='primary' type='submit' size='small' disableElevation onClick={onSaveHandler}>
 					save draft
 				</Button>
 
