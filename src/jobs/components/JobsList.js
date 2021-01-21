@@ -347,6 +347,7 @@ const JobsList = props => {
 							salary={job.salary}
 							emailRecipient={job.companyId.emailRecipient}
 							companyId={job.companyId}
+							fieldOfWork={job.fieldOfWork}
 						/>
 					))
 				) : props.jobEmpty ? (

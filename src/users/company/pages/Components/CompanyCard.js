@@ -172,7 +172,7 @@ const CompanyCard = (props) => {
                                 marginTop: '1rem',
                               }}
                             >
-                              264.898
+                              {job.jobApplicants.length}
                             </p>
                             <p>applicants applied </p>
                           </div>
@@ -206,6 +206,7 @@ const CompanyCard = (props) => {
       </div>
     </div>
   );
+
 };
 
 const mapStateToProps = (state) => {

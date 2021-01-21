@@ -15,6 +15,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './DetailBC.module.css';
 
+
 const DetailBC = (props) => {
   const { orderid } = useParams();
 
@@ -491,6 +492,7 @@ const mapStateToProps = (state) => {
     isLoading: state.admin.isLoading,
     error: state.admin.error,
   };
+
 };
 
 const mapDispatchToProps = (dispatch) => {
