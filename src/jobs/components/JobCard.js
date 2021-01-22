@@ -83,12 +83,13 @@ const JobCard = props => {
 					<Link to={`/co/${props.companyId._id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
 						<span className={classes.TextLeft}>{props.company}</span>
 					</Link>
-					<span>- {props.placementLocation}</span>
+
+					<span className={classes.PlacementLocationProps}>, {props.placementLocation}</span>
 				</div>
 				<div>
-					<em>{props.fieldOfWork.join(', ')}</em>
+					<em>{props.fieldOfWork.filter(fow => fow).join(', ')}</em>
 				</div>
-				{props.salary ? <p className={classes.BottomContent}>IDR {salary.toLocaleString()} /month</p> : <p>Salary Undisclosed</p>}
+				<p className={classes.BottomContent}>{props.salary ? `IDR ${salary.toLocaleString()} /month` : 'Salary Undisclosed'}</p>
 			</div>
 			{!props.auth.isCompany && props.auth.token && <div className={classes.InstantSubmit}>{instantApplyButton}</div>}
 

@@ -2,7 +2,8 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
-	padding: 3rem 0 1rem 0;
+	padding: .5rem 0;
+	height: 2rem;
 }
 
 .SearchForm {

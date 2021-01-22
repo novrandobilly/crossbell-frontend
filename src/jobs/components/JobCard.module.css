@@ -1,7 +1,7 @@
 .JobCard {
 	display: flex;
 	margin: 1rem;
-	height: 8rem;
+	height: 6rem;
 	width: 80%;
 	padding: 20px;
 	border-radius: 5px;
@@ -12,8 +12,8 @@
 }
 
 .Logo {
-	height: 7rem;
-	width: 7rem;
+	height: 5rem;
+	width: 5rem;
 	border: none;
 	background-size: cover;
 	background-position: center;
@@ -57,6 +57,7 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	height: 1.5rem;
 }
 
 .TopContent {
@@ -103,6 +104,13 @@
 	position: absolute;
 	bottom: 0.8rem;
 	right: 0.5rem;
+}
+
+.PlacementLocationProps {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 20%;
 }
 /* 
 .Avatar {

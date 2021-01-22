@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import Input from '../../../../shared/UI_Element/Input';
 
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 
@@ -14,7 +14,9 @@ export default function FormThree (props){
 			</Typography>
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<TextField
+					<Input
+						inputType='textarea'
+						isValid={props.formState.inputs.specification.isValid}
 						required
 						id='specification'
 						name='specification'

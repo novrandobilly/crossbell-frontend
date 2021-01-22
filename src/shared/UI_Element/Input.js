@@ -112,15 +112,15 @@ const Input = props => {
 					style={{ margin: '0.5rem 0' }}
 					label={props.label}
 					name={props.name}
-					value={state.value}
+					value={props.value || state.value}
 					type={props.type || 'text'}
-					onChange={onChangeHandler}
+					onChange={props.onChange || onChangeHandler}
 					onBlur={onBlurHandler}
 					multiline
 					rows={props.rows || 4}
 					variant='outlined'
 					helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-					error={!state.isValid && state.isTouched}
+					error={props.isValid !== undefined ? !props.isValid && state.isTouched : !state.isValid && state.isTouched}
 				/>
 			);
 			break;
