@@ -86,7 +86,7 @@ const JobsList = props => {
 
 				if (fieldOfWorkFilter) {
 					filteredArray = filteredArray.filter(app => {
-						return app.fieldOfWork === fieldOfWorkFilter;
+						return app.fieldOfWork.some(fow => fow === fieldOfWorkFilter);
 					});
 				}
 				if (locationFilter) {
@@ -238,7 +238,7 @@ const JobsList = props => {
 								textAlign: 'left'
 							}}>
 							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
-								<em>Belum ada untuk saat ini</em>
+								<em>none</em>
 							</MenuItem>
 							{WorkFieldData.sort().map((work, i) => {
 								return (
@@ -269,7 +269,7 @@ const JobsList = props => {
 								textAlign: 'left'
 							}}>
 							<MenuItem value='' style={{ fontSize: '0.9rem' }}>
-								<em>Belum ada untuk saat ini</em>
+								<em>none</em>
 							</MenuItem>
 							{LocationData.sort().map((loc, i) => {
 								return (
@@ -304,7 +304,7 @@ const JobsList = props => {
 					<p className={classes.FilterLabel}>Gaji</p>
 					<div className={classes.InputHolder}>
 						<Input
-							inputType='number'
+							inputType='input'
 							id='min'
 							InputClass='Salary'
 							validatorMethod={[ VALIDATOR_ALWAYSTRUE ]}
@@ -312,14 +312,14 @@ const JobsList = props => {
 							type='number'
 							initValue='0'
 							min='0'
-							step='1'
+							step='500000'
 						/>
 						<p>Min</p>
 					</div>
 
 					<div className={classes.InputHolder}>
 						<Input
-							inputType='number'
+							inputType='input'
 							id='max'
 							InputClass='Salary'
 							validatorMethod={[ VALIDATOR_ALWAYSTRUE ]}
@@ -327,7 +327,7 @@ const JobsList = props => {
 							type='number'
 							initValue='0'
 							min='0'
-							step='1'
+							step='500000'
 						/>
 						<p>Max</p>
 					</div>

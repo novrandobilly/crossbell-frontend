@@ -188,7 +188,7 @@ const AdminProfile = props => {
 					</div>
 					<div className={classes.RightCard}>
 						<img
-							src={data.picture.url || 'https://image.flaticon.com/icons/png/512/64/64572.png'}
+							src={data.picture ? data.picture.url : 'https://image.flaticon.com/icons/png/512/64/64572.png'}
 							className={classes.Picture}
 							alt='Profile'
 						/>
