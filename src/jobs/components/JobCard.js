@@ -10,6 +10,7 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobCard.module.css';
 
+
 const JobCard = (props) => {
   const [jobId, setJobId] = useState(null);
   const [applicantList, setApplicantList] = useState([]);
@@ -109,26 +110,16 @@ const JobCard = (props) => {
         </div>
 
         <div className={classes.TopContent}>
-          <Link
-            to={`/co/${props.companyId._id}`}
-            style={{ textDecoration: 'inherit', color: 'inherit' }}
-          >
-            <span className={classes.TextLeft}>{props.company}</span>
-          </Link>
-          <span className={classes.PlacementLocation}>
-            - {props.placementLocation}
-          </span>
-        </div>
-        <div className={classes.FieldOfWork}>
-          <p>{props.fieldOfWork.join(', ')}</p>
-        </div>
-        {props.salary ? (
-          <p className={classes.BottomContent}>
-            IDR {salary.toLocaleString()} /month
-          </p>
-        ) : (
-          <p>Salary Undisclosed</p>
-        )}
+					<Link to={`/co/${props.companyId._id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+						<span className={classes.TextLeft}>{props.company}</span>
+					</Link>
+
+					<span className={classes.PlacementLocationProps}>, {props.placementLocation}</span>
+				</div>
+				<div>
+					<em>{props.fieldOfWork.filter(fow => fow).join(', ')}</em>
+				</div>
+				<p className={classes.BottomContent}>{props.salary ? `IDR ${salary.toLocaleString()} /month` : 'Salary Undisclosed'}</p>
       </div>
       {!props.auth.isCompany && props.auth.token && (
         <div className={classes.InstantSubmit}>{instantApplyButton}</div>
@@ -139,6 +130,7 @@ const JobCard = (props) => {
   );
 
   return <React.Fragment>{content}</React.Fragment>;
+
 };
 
 const mapStateToProps = (state) => {

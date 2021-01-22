@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
+import Input from '../../../../shared/UI_Element/Input';
 
 import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
 
@@ -66,7 +67,9 @@ const FormOne = props => {
 				</Grid>
 
 				<Grid item xs={12}>
-					<TextField
+					<Input
+						inputType='textarea'
+						isValid={props.formState.inputs.mainTask.isValid}
 						required
 						id='mainTask'
 						name='mainTask'
@@ -83,7 +86,9 @@ const FormOne = props => {
 				</Grid>
 
 				<Grid item xs={12}>
-					<TextField
+					<Input
+						inputType='textarea'
+						isValid={props.formState.inputs.responsibility.isValid}
 						required
 						id='responsibility'
 						name='responsibility'
@@ -100,7 +105,9 @@ const FormOne = props => {
 				</Grid>
 
 				<Grid item xs={12}>
-					<TextField
+					<Input
+						inputType='textarea'
+						isValid={props.formState.inputs.authority.isValid}
 						required
 						id='authority'
 						name='authority'

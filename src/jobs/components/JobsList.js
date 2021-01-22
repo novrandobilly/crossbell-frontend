@@ -45,6 +45,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
+
 const JobsList = (props) => {
   const [displayJobs, setDisplayJobs] = useState([]);
   const [displayData, setDisplayData] = useState();
@@ -435,6 +436,7 @@ const JobsList = (props) => {
   );
 
   return <div>{content}</div>;
+
 };
 
 export default JobsList;

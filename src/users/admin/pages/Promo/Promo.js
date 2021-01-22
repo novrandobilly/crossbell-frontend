@@ -12,6 +12,7 @@ import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 import classes from './Promo.module.css';
 
+
 const Promo = (props) => {
   const [promo, setPromo] = useState();
   const [dummyLoad, setDummyLoad] = useState(false);
@@ -162,23 +163,24 @@ const Promo = (props) => {
       {Content}
     </React.Fragment>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    admin: state.admin,
-    error: state.admin.error,
-    isLoading: state.admin.isLoading,
-  };
+const mapStateToProps = state => {
+	return {
+		admin: state.admin,
+		error: state.admin.error,
+		isLoading: state.admin.isLoading
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getPromo: (payload) => dispatch(actionCreators.getPromo(payload)),
-    updatePromo: (data) => dispatch(actionCreators.updatePromo(data)),
-    updatePromoFail: () => dispatch({ type: actionTypes.GETADMINFAIL }),
-    resetAdmin: () => dispatch({ type: actionTypes.GETADMIN }),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		getPromo: payload => dispatch(actionCreators.getPromo(payload)),
+		updatePromo: data => dispatch(actionCreators.updatePromo(data)),
+		updatePromoFail: () => dispatch({ type: actionTypes.GETADMINFAIL }),
+		resetAdmin: () => dispatch({ type: actionTypes.GETADMIN })
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Promo);

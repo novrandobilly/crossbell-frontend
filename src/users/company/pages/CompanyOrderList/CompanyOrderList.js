@@ -72,7 +72,9 @@ const CompanyOrderList = props => {
 							<th>Order Id</th>
 							<th>Jenis Pesanan</th>
 							<th>Tanggal Order</th>
+							<th>Tanggal Approve</th>
 							<th>Jatuh Tempo</th>
+							<th>Sisa Slot</th>
 							<th>Status</th>
 						</tr>
 					</thead>
@@ -82,18 +84,21 @@ const CompanyOrderList = props => {
 							let dueDate = Math.ceil(moment(order.dueDate).diff(moment(), 'days', true));
 							return (
 								<tr key={order._id}>
-									<th> {i + 1}</th>
-									<th>
+									<td> {i + 1}</td>
+									<td>
 										<Link
 											to={order.slot || order.amount ? `/co/${order._id}/invoice` : `/co/order/${order._id}/es`}
 											key={i}>
 											{order._id}
 										</Link>
-									</th>
+									</td>
 
-									<th>{order.slot ? 'Reguler' : order.amount ? 'Bulk Candidate' : 'Executive Search'}</th>
-									<th>{moment(order.createdAt).format('D MMM YYYY')}</th>
-									<th>
+									<td>{order.slot ? 'Reguler' : order.amount ? 'Bulk Candidate' : 'Executive Search'}</td>
+									<td>{moment(order.createdAt).format('D MMM YYYY')}</td>
+									<td style={{ color: 'green' }}>
+										{order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : '-'}
+									</td>
+									<td>
 										<p
 											style={
 												dueDate === 0 ? (
@@ -108,9 +113,9 @@ const CompanyOrderList = props => {
 											}>
 											{order.status === 'Pending' ? `${dueDate} day` : order.status === 'Open' ? 'no due' : '0 day'}
 										</p>
-									</th>
-
-									<th>
+									</td>
+									<td>{order.slot ? order.slot : order.amount ? order.amount : '-'}</td>
+									<td>
 										<p
 											className={classes.Content}
 											style={
@@ -124,7 +129,7 @@ const CompanyOrderList = props => {
 											}>
 											{order.status}
 										</p>
-									</th>
+									</td>
 								</tr>
 							);
 						})}

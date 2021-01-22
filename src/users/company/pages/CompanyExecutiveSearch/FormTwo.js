@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
+import Input from '../../../../shared/UI_Element/Input';
 
 export default function FormTwo (props){
 	return (
@@ -12,7 +12,9 @@ export default function FormTwo (props){
 			</Typography>
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<TextField
+					<Input
+						inputType='textarea'
+						isValid={props.formState.inputs.experience.isValid}
 						required
 						id='experience'
 						name='experience'
@@ -29,7 +31,9 @@ export default function FormTwo (props){
 				</Grid>
 
 				<Grid item xs={12}>
-					<TextField
+					<Input
+						inputType='textarea'
+						isValid={props.formState.inputs.expertise.isValid}
 						required
 						id='expertise'
 						name='expertise'
