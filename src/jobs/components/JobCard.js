@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
@@ -12,6 +12,8 @@ import classes from './JobCard.module.css';
 
 const JobCard = (props) => {
   const [jobId, setJobId] = useState(null);
+  const [applicantList, setApplicantList] = useState([]);
+
   //=====================================INSTANT APPLY=====================================
   const applyHandler = async () => {
     setJobId(props.jobId);
@@ -24,6 +26,8 @@ const JobCard = (props) => {
     try {
       res = await props.applyJob(payload);
       console.log(res);
+      let applicantArray = [...applicantList, props.auth.userId];
+      setApplicantList(applicantArray);
       setJobId(null);
     } catch (err) {
       console.log(err);
@@ -32,17 +36,21 @@ const JobCard = (props) => {
     }
   };
 
+  useEffect(() => {
+    setApplicantList(props.jobApplicant);
+  }, [props.jobApplicant]);
+
   let instantApplyButton;
   if (!props.auth.isCompany && props.auth.token) {
     instantApplyButton = (
       <Button
         btnType='InstantApply'
         onClick={applyHandler}
-        disabled={props.jobApplicant.some(
+        disabled={applicantList.some(
           (appId) => appId.toString() === props.auth.userId.toString()
         )}
       >
-        {props.jobApplicant.some(
+        {applicantList.some(
           (appId) => appId.toString() === props.auth.userId.toString()
         )
           ? 'Applied'
