@@ -6,7 +6,6 @@ import * as actionTypes from '../../store/actions/actions';
 
 import Modal from '../../shared/UI_Element/Modal';
 import Spinner from '../../shared/UI_Element/Spinner/Spinner';
-import SpinnerCircle from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobCard.module.css';

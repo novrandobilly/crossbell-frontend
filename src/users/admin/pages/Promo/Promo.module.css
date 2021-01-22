@@ -21,6 +21,13 @@
   margin: 1rem 0 0 0;
 }
 
+.ReleasedPromo {
+  color: rgba(58, 81, 153, 1);
+  font-weight: 600;
+  text-align: left;
+  margin: 0.5rem 0 0 0;
+}
+
 .OrderTitle {
   font-weight: 500;
   text-align: left;

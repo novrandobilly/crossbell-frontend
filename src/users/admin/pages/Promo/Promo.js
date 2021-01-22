@@ -87,6 +87,9 @@ const Promo = (props) => {
           <div className={classes.Border} />
 
           <p className={classes.OrderTitle}>Promo Reguler </p>
+          <p className={classes.ReleasedPromo}>
+            Promo berlaku saat ini: {promo.promoReg}%
+          </p>
           <Input
             inputType='input'
             id='promoReg'
@@ -114,6 +117,10 @@ const Promo = (props) => {
 
           <div className={classes.Border} />
           <p className={classes.OrderTitle}>Promo Bulk Candidate </p>
+          <p className={classes.ReleasedPromo}>
+            Promo berlaku saat ini: {promo.promoBC}%
+          </p>
+
           <Input
             inputType='input'
             id='promoBC'
