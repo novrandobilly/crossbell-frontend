@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
@@ -10,76 +10,106 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobCard.module.css';
 
-const JobCard = props => {
-	const [ jobId, setJobId ] = useState(null);
-	//=====================================INSTANT APPLY=====================================
-	const applyHandler = async () => {
-		setJobId(props.jobId);
-		const payload = {
-			token: props.auth.token,
-			userId: props.auth.userId,
-			jobId: props.jobId
-		};
-		let res;
-		try {
-			res = await props.applyJob(payload);
-			console.log(res);
-			setJobId(null);
-		} catch (err) {
-			console.log(err);
-			setJobId(null);
-			return props.createJobFail();
-		}
-	};
 
-	let instantApplyButton = (
-		<Button btnType='InstantApply' onClick={applyHandler}>
-			Apply
-		</Button>
-	);
+const JobCard = (props) => {
+  const [jobId, setJobId] = useState(null);
+  const [applicantList, setApplicantList] = useState([]);
 
-	if (props.job.isLoading && jobId === props.jobId) {
-		instantApplyButton = <Spinner />;
-	}
-	//=====================================================================================
-	let salary = parseInt(props.salary);
+  //=====================================INSTANT APPLY=====================================
+  const applyHandler = async () => {
+    setJobId(props.jobId);
+    const payload = {
+      token: props.auth.token,
+      userId: props.auth.userId,
+      jobId: props.jobId,
+    };
+    let res;
+    try {
+      res = await props.applyJob(payload);
+      console.log(res);
+      let applicantArray = [...applicantList, props.auth.userId];
+      setApplicantList(applicantArray);
+      setJobId(null);
+    } catch (err) {
+      console.log(err);
+      setJobId(null);
+      return props.createJobFail();
+    }
+  };
 
-	const onCancelHandler = () => {
-		props.resetJob();
-	};
+  useEffect(() => {
+    setApplicantList(props.jobApplicant);
+  }, [props.jobApplicant]);
 
-	return (
-		<div className={classes.JobCard}>
-			<Modal show={props.job.error} onCancel={onCancelHandler}>
-				Tidak dapat melamar pekerjaan untuk saat ini{' '}
-			</Modal>
-			<div className={classes.Logo}>
-				<img
-					src={
-						props.logo ? props.logo.url : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-					}
-					alt={props.company}
-				/>
-			</div>
-			<div className={classes.Content}>
-				<div className={classes.ContentHeader}>
-					<h3>
-						<Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-							{props.jobTitle}
-						</Link>
-					</h3>
-					<Link
-						to={`/jobs/${props.jobId}`}
-						style={{
-							textDecoration: 'inherit',
-							fontWeight: '500',
-							color: 'rgba(0,0,0,0.6)'
-						}}>
-						Details
-					</Link>
-				</div>
+  let instantApplyButton;
+  if (!props.auth.isCompany && props.auth.token) {
+    instantApplyButton = (
+      <Button
+        btnType='InstantApply'
+        onClick={applyHandler}
+        disabled={applicantList.some(
+          (appId) => appId.toString() === props.auth.userId.toString()
+        )}
+      >
+        {applicantList.some(
+          (appId) => appId.toString() === props.auth.userId.toString()
+        )
+          ? 'Applied'
+          : 'Apply'}
+      </Button>
+    );
+  }
 
-				<div className={classes.TopContent}>
+  if (props.job.isLoading && jobId === props.jobId) {
+    instantApplyButton = <Spinner />;
+  }
+
+  //   =====================================================================================
+  let salary = parseInt(props.salary);
+
+  const onCancelHandler = () => {
+    props.resetJob();
+  };
+  //   let content = <SpinnerCircle />;
+
+  let content = (
+    <div className={classes.JobCard}>
+      <Modal show={props.job.error} onCancel={onCancelHandler}>
+        Tidak dapat melamar pekerjaan untuk saat ini{' '}
+      </Modal>
+      <div className={classes.Logo}>
+        <img
+          src={
+            props.logo
+              ? props.logo.url
+              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+          }
+          alt={props.company}
+        />
+      </div>
+      <div className={classes.Content}>
+        <div className={classes.ContentHeader}>
+          <h3>
+            <Link
+              to={`/jobs/${props.jobId}`}
+              style={{ textDecoration: 'inherit', color: 'inherit' }}
+            >
+              {props.jobTitle}
+            </Link>
+          </h3>
+          <Link
+            to={`/jobs/${props.jobId}`}
+            style={{
+              textDecoration: 'inherit',
+              fontWeight: '500',
+              color: 'rgba(0,0,0,0.6)',
+            }}
+          >
+            Details
+          </Link>
+        </div>
+
+        <div className={classes.TopContent}>
 					<Link to={`/co/${props.companyId._id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
 						<span className={classes.TextLeft}>{props.company}</span>
 					</Link>
@@ -90,28 +120,33 @@ const JobCard = props => {
 					<em>{props.fieldOfWork.filter(fow => fow).join(', ')}</em>
 				</div>
 				<p className={classes.BottomContent}>{props.salary ? `IDR ${salary.toLocaleString()} /month` : 'Salary Undisclosed'}</p>
-			</div>
-			{!props.auth.isCompany && props.auth.token && <div className={classes.InstantSubmit}>{instantApplyButton}</div>}
+      </div>
+      {!props.auth.isCompany && props.auth.token && (
+        <div className={classes.InstantSubmit}>{instantApplyButton}</div>
+      )}
 
-			<footer />
-		</div>
-	);
+      <footer />
+    </div>
+  );
+
+  return <React.Fragment>{content}</React.Fragment>;
+
 };
 
-const mapStateToProps = state => {
-	return {
-		companies: state.company.companies,
-		auth: state.auth,
-		job: state.job
-	};
+const mapStateToProps = (state) => {
+  return {
+    companies: state.company.companies,
+    auth: state.auth,
+    job: state.job,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		applyJob: payload => dispatch(actionCreators.applyJob(payload)),
-		createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
-		resetJob: () => dispatch({ type: actionTypes.JOBRESET })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
+    createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
+    resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobCard);

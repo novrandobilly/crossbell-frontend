@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import OutsideClick from '../utils/outsideClick';
 
 import * as actionTypes from '../../store/actions/actions';
 import * as actionCreators from '../../store/actions/index';
@@ -14,6 +15,16 @@ const NavigationLinks = (props) => {
 
   const [adminDropdown, setAdminDropdown] = useState(false);
   const [adminMyList, setAdminMyList] = useState(false);
+
+  const ref = useRef();
+
+  OutsideClick(ref, () => {
+    if (companyDropdown) setCompanyDropdown(false);
+    if (companyMyList) setCompanyMyList(false);
+    if (adminDropdown) setAdminDropdown(false);
+    if (adminMyList) setAdminMyList(false);
+  });
+
   const logoutHandler = () => {
     if (props.admin.isLoggedIn) {
       props.admLogout();
@@ -128,6 +139,7 @@ const NavigationLinks = (props) => {
                       : classes.dropdownContent
                   }
                   id='dropdownCompany'
+                  ref={ref}
                 >
                   <NavLink
                     to={`/co/order/reguler`}
@@ -149,7 +161,11 @@ const NavigationLinks = (props) => {
             </li>
             <li>
               <div className={classes.dropdown}>
-                <button className={classes.dropbtn} onClick={DropdownList}>
+                <button
+                  className={classes.dropbtn}
+                  onClick={DropdownList}
+                  ref={ref}
+                >
                   My List
                   <ArrowDropDownIcon
                     style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
@@ -205,6 +221,7 @@ const NavigationLinks = (props) => {
                 <button
                   className={classes.dropbtn}
                   onClick={DropdownOrderAdmin}
+                  ref={ref}
                 >
                   Order & Finance
                   <ArrowDropDownIcon
@@ -255,7 +272,11 @@ const NavigationLinks = (props) => {
             </li>
             <li>
               <div className={classes.dropdown}>
-                <button className={classes.dropbtn} onClick={DropdownListAdmin}>
+                <button
+                  className={classes.dropbtn}
+                  onClick={DropdownListAdmin}
+                  ref={ref}
+                >
                   List
                   <ArrowDropDownIcon
                     style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}

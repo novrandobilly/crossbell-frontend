@@ -15,7 +15,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './DetailBC.module.css';
 
-
 const DetailBC = (props) => {
   const { orderid } = useParams();
 
@@ -441,19 +440,6 @@ const DetailBC = (props) => {
                       <th>
                         {props.isLoading && index === i ? (
                           <SpinnerCircle />
-                        ) : dataBC.applicantSent.some(
-                            (appId) => appId.toString() === app.id.toString()
-                          ) ? (
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            className={classes.button}
-                            size='small'
-                            endIcon={<SendIcon />}
-                            disabled={true}
-                          >
-                            Send
-                          </Button>
                         ) : (
                           <Button
                             variant='contained'
@@ -461,6 +447,9 @@ const DetailBC = (props) => {
                             className={classes.button}
                             size='small'
                             endIcon={<SendIcon />}
+                            disabled={dataBC.applicantSent.some(
+                              (appId) => appId.toString() === app.id.toString()
+                            )}
                             onClick={() =>
                               onSentHandler({
                                 applicantId: app.id,
@@ -492,7 +481,6 @@ const mapStateToProps = (state) => {
     isLoading: state.admin.isLoading,
     error: state.admin.error,
   };
-
 };
 
 const mapDispatchToProps = (dispatch) => {

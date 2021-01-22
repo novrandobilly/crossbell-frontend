@@ -12,150 +12,158 @@ import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 import classes from './Promo.module.css';
 
-const Promo = props => {
-	const [ promo, setPromo ] = useState();
-	const [ dummyLoad, setDummyLoad ] = useState(false);
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			promoReg: {
-				value: '',
-				isValid: true
-			},
-			promoBC: {
-				value: '',
-				isValid: true
-			}
-		},
-		true
-	);
+const Promo = (props) => {
+  const [promo, setPromo] = useState();
+  const [dummyLoad, setDummyLoad] = useState(false);
 
-	const { getPromo } = props;
-	useEffect(
-		() => {
-			if (props.admin.token) {
-				getPromo(props.admin.token).then(res => {
-					setPromo(res.promo[0]);
-				});
-			}
-		},
-		[ getPromo, props.admin.token ]
-	);
+  const [formState, onInputHandler] = useForm(
+    {
+      promoReg: {
+        value: '',
+        isValid: true,
+      },
+      promoBC: {
+        value: '',
+        isValid: true,
+      },
+    },
+    true
+  );
 
-	console.log(formState);
+  const { getPromo } = props;
+  useEffect(() => {
+    if (props.admin.token) {
+      getPromo(props.admin.token).then((res) => {
+        setPromo(res.promo);
+      });
+    }
+  }, [getPromo, props.admin.token]);
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
-		setDummyLoad(true);
+  console.log(formState);
 
-		if (!formState.formIsValid) {
-			setDummyLoad(false);
-			return props.updatePromoFail();
-		}
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    setDummyLoad(true);
 
-		const orderData = {
-			token: props.admin.token,
-			promoReg: formState.inputs.promoReg.value,
-			promoBC: formState.inputs.promoBC.value
-		};
+    if (!formState.formIsValid) {
+      setDummyLoad(false);
+      return props.updatePromoFail();
+    }
 
-		try {
-			const res = await props.updatePromo(orderData);
-			if (res) {
-				setPromo(prevData => {
-					const tempData = { ...prevData };
-					tempData.promoReg = orderData.promoReg;
-					tempData.promoBC = orderData.promoBC;
-					return tempData;
-				});
-				console.log(res);
-				setDummyLoad(false);
-			} else {
-				console.log('no res detected');
-			}
-		} catch (err) {
-			console.log(err.message);
-			setDummyLoad(false);
-			return props.updatePromoFail();
-		}
-	};
+    const orderData = {
+      token: props.admin.token,
+      promoReg: formState.inputs.promoReg.value,
+      promoBC: formState.inputs.promoBC.value,
+    };
 
-	let Content = <SpinnerCircle />;
+    try {
+      const res = await props.updatePromo(orderData);
+      if (res) {
+        setPromo((prevData) => {
+          const tempData = { ...prevData };
+          tempData.promoReg = orderData.promoReg;
+          tempData.promoBC = orderData.promoBC;
+          return tempData;
+        });
+        console.log(res);
+        setDummyLoad(false);
+      } else {
+        console.log('no res detected');
+      }
+    } catch (err) {
+      console.log(err.message);
+      setDummyLoad(false);
+      return props.updatePromoFail();
+    }
+  };
 
-	if (!props.isLoading && promo && !dummyLoad) {
-		Content = (
-			<div className={classes.Container}>
-				<div className={classes.PromoContainer}>
-					<p className={classes.PromoTitle}>Promo </p>
-					<div className={classes.Border} />
+  let Content = <SpinnerCircle />;
 
-					<p className={classes.OrderTitle}>Promo Reguler </p>
-					<Input
-						inputType='input'
-						id='promoReg'
-						validatorMethod={[ VALIDATOR_MIN(0) ]}
-						onInputHandler={onInputHandler}
-						type='number'
-						initValue={promo.promoReg}
-						initIsValid={true}
-						min={0}
-						max={100}
-						step='1'
-						label='Input dalam (%)'
-					/>
+  if (!props.isLoading && promo && !dummyLoad) {
+    Content = (
+      <div className={classes.Container}>
+        <div className={classes.PromoContainer}>
+          <p className={classes.PromoTitle}>Promo </p>
+          <div className={classes.Border} />
 
-					<Button
-						variant='contained'
-						disableElevation
-						color='primary'
-						size='small'
-						style={{ marginTop: '0.5rem' }}
-						onClick={onSubmitHandler}>
-						Submit
-					</Button>
+          <p className={classes.OrderTitle}>Promo Reguler </p>
+          <p className={classes.ReleasedPromo}>
+            Promo berlaku saat ini: {promo.promoReg}%
+          </p>
+          <Input
+            inputType='input'
+            id='promoReg'
+            validatorMethod={[VALIDATOR_MIN(0)]}
+            onInputHandler={onInputHandler}
+            type='number'
+            initValue={promo.promoReg}
+            initIsValid={true}
+            min={0}
+            max={100}
+            step='1'
+            label='Input dalam (%)'
+          />
 
-					<div className={classes.Border} />
-					<p className={classes.OrderTitle}>Promo Bulk Candidate </p>
-					<Input
-						inputType='input'
-						id='promoBC'
-						validatorMethod={[ VALIDATOR_MIN(0) ]}
-						onInputHandler={onInputHandler}
-						type='number'
-						initValue={promo.promoBC}
-						initIsValid={true}
-						min={0}
-						max={100}
-						step='1'
-						label='Input dalam (%)'
-					/>
+          <Button
+            variant='contained'
+            disableElevation
+            color='primary'
+            size='small'
+            style={{ marginTop: '0.5rem' }}
+            onClick={onSubmitHandler}
+          >
+            Submit
+          </Button>
 
-					<Button
-						variant='contained'
-						disableElevation
-						color='primary'
-						size='small'
-						style={{ marginTop: '0.5rem' }}
-						onClick={onSubmitHandler}>
-						Submit
-					</Button>
-				</div>
-			</div>
-		);
-	}
+          <div className={classes.Border} />
+          <p className={classes.OrderTitle}>Promo Bulk Candidate </p>
+          <p className={classes.ReleasedPromo}>
+            Promo berlaku saat ini: {promo.promoBC}%
+          </p>
 
-	const onCancelHandler = () => {
-		props.resetAdmin();
-	};
+          <Input
+            inputType='input'
+            id='promoBC'
+            validatorMethod={[VALIDATOR_MIN(0)]}
+            onInputHandler={onInputHandler}
+            type='number'
+            initValue={promo.promoBC}
+            initIsValid={true}
+            min={0}
+            max={100}
+            step='1'
+            label='Input dalam (%)'
+          />
 
-	return (
-		<React.Fragment>
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Tidak dapat mengubah promo untuk sementara, cobalah beberapa saat lagi{' '}
-			</Modal>
-			{Content}
-		</React.Fragment>
-	);
+          <Button
+            variant='contained'
+            disableElevation
+            color='primary'
+            size='small'
+            style={{ marginTop: '0.5rem' }}
+            onClick={onSubmitHandler}
+          >
+            Submit
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const onCancelHandler = () => {
+    props.resetAdmin();
+  };
+
+  return (
+    <React.Fragment>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Tidak dapat mengubah promo untuk sementara, cobalah beberapa saat lagi{' '}
+      </Modal>
+      {Content}
+    </React.Fragment>
+  );
+
 };
 
 const mapStateToProps = state => {
