@@ -24,3 +24,24 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 1);
 }
+
+@media (max-width: 992px) {
+  .Content {
+    padding: 5rem 2rem 2rem 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .Content {
+    padding: 0rem 2rem 2rem 2rem;
+  }
+
+  .ContentRight {
+    display: none;
+  }
+
+  .ContentLeft {
+    text-align: center;
+    width: 100%;
+  }
+}

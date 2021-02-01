@@ -190,10 +190,9 @@
 }
 .Avatar {
   width: 100%;
-  min-height: 10rem;
-  max-height: 15rem;
+  height: 15rem;
   background-position: center;
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   align-self: center;
   margin-bottom: 1rem;

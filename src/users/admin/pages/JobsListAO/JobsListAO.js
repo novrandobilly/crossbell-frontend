@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -6,14 +6,49 @@ import moment from 'moment';
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-
+import Pagination from '@material-ui/lab/Pagination';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import classes from './JobsListAO.module.css';
+
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  rowsPerPage: 10,
+  startIndex: 0,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
 
 const JobsListAO = (props) => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: 'Approved' });
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [displayData, setDisplayData] = useState();
+
+  const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   const handleAll = () => {
     setfind(false);
@@ -50,7 +85,43 @@ const JobsListAO = (props) => {
     }
   }, [getAllJob, getWholeCompanies, setIsLoading, admin]);
 
-  console.log(data);
+  useEffect(() => {
+    if (data && data.length > 0) {
+      let applicantArray = [...data];
+      let pageCount = Math.ceil(applicantArray.length / state.rowsPerPage);
+      dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
+
+      //Slicing all jobs based on the number jobs may appear in one page
+      applicantArray = applicantArray.slice(
+        state.startIndex,
+        state.startIndex + state.rowsPerPage
+      );
+      setIsLoading(false);
+      setDisplayData(applicantArray);
+    }
+  }, [state.rowsPerPage, state.startIndex, data]);
+
+  //================= Pagination ===========================
+
+  const pageChangeHandler = (event, value) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: state.rowsPerPage * (value - 1),
+      },
+    });
+  };
+
+  const rowsHandler = (event) => {
+    console.log(event.target.value);
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        rowsPerPage: event.target.value,
+      },
+    });
+  };
 
   let content = <SpinnerCircle />;
 
@@ -107,6 +178,7 @@ const JobsListAO = (props) => {
           <table className={classes.Table}>
             <thead className={classes.RowField}>
               <tr>
+                <th>No</th>
                 <th>Id</th>
                 <th>Company</th>
                 <th>JobTitle</th>
@@ -119,12 +191,14 @@ const JobsListAO = (props) => {
 
             {find ? (
               <tbody className={classes.ColumnField}>
-                {data &&
-                  data
+                {displayData &&
+                  displayData
                     .filter((status) => status.status === filter)
-                    .map((job) => {
+                    .map((job, i) => {
                       return (
                         <tr key={job.id}>
+                          <th>{i + 1}</th>
+
                           <th>
                             <Link
                               to={`/jobs/${job._id}`}
@@ -183,11 +257,13 @@ const JobsListAO = (props) => {
               </tbody>
             ) : (
               <tbody className={classes.ColumnField}>
-                {data &&
-                  data.map((job) => {
+                {displayData &&
+                  displayData.map((job, i) => {
                     // let difference = (moment(job.expiredDate).diff(moment()));
                     return (
                       <tr key={job._id}>
+                        <th>{i + 1}</th>
+
                         <th>
                           {' '}
                           <Link
@@ -236,6 +312,32 @@ const JobsListAO = (props) => {
               </tbody>
             )}
           </table>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              width: '100%',
+            }}
+          >
+            <FormControl style={{ width: '4rem' }}>
+              <Select
+                labelId='rowPerPage'
+                id='rowPerPageSelect'
+                value={state.rowsPerPage}
+                onChange={rowsHandler}
+              >
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+                <MenuItem value={30}>30</MenuItem>
+              </Select>
+              <FormHelperText>Rows</FormHelperText>
+            </FormControl>
+            <Pagination
+              count={state.pageCount}
+              page={state.pageNumber}
+              onChange={pageChangeHandler}
+            />
+          </div>
         </div>
       </div>
     );

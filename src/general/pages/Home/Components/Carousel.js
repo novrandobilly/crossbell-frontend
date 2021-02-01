@@ -1,51 +1,55 @@
-import React from "react";
-import classes from "./Carousel.module.css";
+import React, { useState, useEffect } from 'react';
+
+import i1 from '../../../../assets/images/1.jpg';
+import i2 from '../../../../assets/images/2.jpg';
+import i3 from '../../../../assets/images/3.jpg';
+
+import classes from './Carousel.module.css';
+
+const ImgComp = ({ src }) => {
+  return (
+    <img
+      src={src}
+      alt='slide-img'
+      style={{ width: '100%', height: '80vh', opacity: '0.3' }}
+    />
+  );
+};
 
 const Carousel = (props) => {
-  // const image = [Image1, Image2, Image3];
+  const backgroundArr = [
+    <ImgComp src={i1} />,
+    <ImgComp src={i2} />,
+    <ImgComp src={i3} />,
+  ];
+  const [x, setX] = useState(0);
 
-  // const [counter, setCounter] = useState(0);
-
-  // let Imej = image[counter];
-
-  // useEffect(() => {
-  //   let car = document.getElementById("carousel");
-  //   let index = 0;
-  //   let i = 0;
-  //   const interval = setInterval(() => {
-  //     if (counter < image.length - 1) {
-  //       setCounter(counter + 1);
-  //     } else {
-  //       setCounter(0);
-  //     }
-  //     if (++i % 2) {
-  //       car.style.opacity = 0.3;
-  //     } else {
-  //       car.src = image[(index = (index + 1) % image.length)];
-  //       car.style.opacity = 0.4;
-  //     }
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, [counter, image]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setX(x + 1);
+      if (x === 2) {
+        setX(0);
+      }
+      // if (x === (backgroundArr.length - 1) * -100) {
+      //   setX(0);
+      // } else {
+      //   setX(x - 100);
+      // }
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [x, backgroundArr]);
 
   return (
-    <React.Fragment>
-      <div className={classes.Container}>
-        <div className={classes.CarouselHolder}>
-          <img
-            alt={`carousel`}
-            src="https://www.slashgear.com/wp-content/uploads/2020/04/star-wars-backgrounds-14.jpg"
-            className={classes.Image}
-            id="carousel"
-          />
-          {/* <ul className={classes.Carousel}>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul> */}
-        </div>
-      </div>
-    </React.Fragment>
+    <div className={classes.Slider}>
+      <div className={classes.Slide}>{backgroundArr[x]}</div>
+      {/* {backgroundArr.map((item, i) => {
+        return (
+          <div key={i} className={classes.Slide}>
+            {item[x]}
+          </div>
+        );
+      })} */}
+    </div>
   );
 };
 

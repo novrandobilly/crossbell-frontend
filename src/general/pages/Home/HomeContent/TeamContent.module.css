@@ -6,12 +6,18 @@
 .HeaderTitle {
   font-size: 2rem;
   font-weight: 500;
+  padding: 1rem 0;
 }
 
 .Content {
   padding: 1rem 5rem;
   display: flex;
   align-items: center;
+}
+
+.TeamList {
+  width: 100%;
+  display: flex;
   justify-content: space-around;
 }
 
@@ -25,6 +31,7 @@
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .CardTop {
@@ -53,4 +60,60 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: black;
+}
+
+@media (max-width: 992px) {
+  .Content {
+    padding: 0rem 2rem;
+    flex-direction: column;
+  }
+
+  .TeamList {
+    margin-bottom: 2rem;
+  }
+
+  .CardContainer {
+    width: 14rem;
+    padding-bottom: 1rem;
+  }
+
+  .TeamList {
+    width: 100%;
+  }
+
+  .Picture {
+    height: 7rem;
+    width: 7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .Content {
+    flex-direction: column;
+  }
+
+  .TeamList {
+    margin-bottom: 2rem;
+  }
+
+  .CardContainer {
+    width: 14rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .Container {
+    background-color: #d7e2ff40;
+    padding: 0rem 0 2rem 0;
+  }
+
+  .TeamList {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+
+  .CardContainer {
+    margin-bottom: 2rem;
+  }
 }

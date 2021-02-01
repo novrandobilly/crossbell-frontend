@@ -1,13 +1,15 @@
 .QueryBar {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	background-color: rgb(215, 226, 255);
-	color: rgba(58, 81, 153, 1);
-	padding: .5rem;
-	box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(215, 226, 255);
+  color: rgba(58, 81, 153, 1);
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 .SearchForm {
-	display: flex;
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
 }

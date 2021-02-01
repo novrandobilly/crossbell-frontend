@@ -25,6 +25,7 @@
   box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
   background-color: white;
   border-radius: 10px;
+  margin-bottom: 2rem;
 }
 
 .Table th {

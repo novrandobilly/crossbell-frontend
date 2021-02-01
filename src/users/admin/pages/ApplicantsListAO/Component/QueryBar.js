@@ -1,9 +1,10 @@
-import React from "react";
-import { VALIDATOR_REQUIRE } from "../../../../../shared/utils/validator";
+import React from 'react';
+import { VALIDATOR_REQUIRE } from '../../../../../shared/utils/validator';
 
-import Input from "../../../../../shared/UI_Element/Input";
+import Input from '../../../../../shared/UI_Element/Input';
+import Button from '@material-ui/core/Button';
 
-import classes from "./QueryBar.module.css";
+import classes from './QueryBar.module.css';
 
 const QueryBar = (props) => {
   return (
@@ -12,18 +13,31 @@ const QueryBar = (props) => {
         <form
           onSubmit={props.searchHandler}
           action={props.action}
-          method="GET"
+          method='GET'
           className={classes.SearchForm}
         >
           <Input
-            id="search"
-            type="text"
-            placeholder="Applicant search..."
+            id='search'
+            type='text'
+            name='search'
+            inputType='search'
+            label='Applicant search...'
             validatorMethod={[VALIDATOR_REQUIRE()]}
-            name="search"
             onInputHandler={props.searchInputHandler}
           />
-          <button type="submit">Search</button>
+          <Button
+            variant='contained'
+            type='submit'
+            color='primary'
+            disableElevation
+            style={{
+              height: '2.5rem',
+              marginTop: '-0.5rem',
+              marginLeft: '2rem',
+            }}
+          >
+            search
+          </Button>
         </form>
       </div>
     </div>

@@ -21,7 +21,7 @@ import ResetPwd from './general/pages/Home/Components/ResetPwd';
 import NewJob from './jobs/pages/NewJob';
 import EditJob from './jobs/pages/EditJob';
 import JobsDashboard from './jobs/pages/JobsDashboard';
-
+import EditUnreleasedJob from './jobs/pages/EditUnreleasedJob';
 import PackageAds from './jobs/pages/PackageAds';
 import JobDetails from './jobs/pages/JobDetails';
 
@@ -213,6 +213,7 @@ const App = (props) => {
 
           {/* Jobs Routes */}
           <Route path='/jobs-dashboard' component={JobsDashboard} />
+          <Route path='/jobs/new/edit/:jobsid' component={EditUnreleasedJob} />
           <Route path='/jobs/new' component={NewJob} />
           <Route path='/jobs/packageads' component={PackageAds} />
           <Route path='/jobs/:jobsid/edit' component={EditJob} />

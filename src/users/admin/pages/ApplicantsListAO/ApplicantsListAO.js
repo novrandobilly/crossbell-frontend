@@ -1,19 +1,24 @@
-import React, { useState, useCallback, useReducer, useEffect } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useState, useCallback, useReducer, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import * as actionCreators from "../../../../store/actions/index";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import QueryBar from "./Component/QueryBar";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import * as actionCreators from '../../../../store/actions/index';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import QueryBar from './Component/QueryBar';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Pagination from '@material-ui/lab/Pagination';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-import classes from "./ApplicantListAO.module.css";
+import classes from './ApplicantListAO.module.css';
 
 const ACTION = {
-  SEARCHUPDATE: "update-search",
-  SEARCHEXECUTE: "search-execute",
-  SEARCHEMPTY: "search-empty",
-  DATAINIT: "data-init",
+  SEARCHUPDATE: 'update-search',
+  SEARCHEXECUTE: 'search-execute',
+  SEARCHEMPTY: 'search-empty',
+  DATAINIT: 'data-init',
 };
 
 const searchReducer = (state, action) => {
@@ -43,7 +48,7 @@ const searchReducer = (state, action) => {
         for (const key in app) {
           searchValidity =
             searchValidity ||
-            (typeof app[key] === "string" &&
+            (typeof app[key] === 'string' &&
               app[key]
                 .toLowerCase()
                 .includes(state.search.value.toLowerCase()));
@@ -53,7 +58,7 @@ const searchReducer = (state, action) => {
             for (const key in edu) {
               eduValidity =
                 eduValidity ||
-                (typeof edu[key] === "string" &&
+                (typeof edu[key] === 'string' &&
                   edu[key]
                     .toLowerCase()
                     .includes(state.search.value.toLowerCase()));
@@ -66,7 +71,7 @@ const searchReducer = (state, action) => {
             for (const key in exp) {
               expValidity =
                 expValidity ||
-                (typeof exp[key] === "string" &&
+                (typeof exp[key] === 'string' &&
                   exp[key]
                     .toLowerCase()
                     .includes(state.search.value.toLowerCase()));
@@ -78,7 +83,7 @@ const searchReducer = (state, action) => {
           app.skills.forEach((skill) => {
             skillValidity =
               skillValidity ||
-              (typeof skill === "string" &&
+              (typeof skill === 'string' &&
                 skill.toLowerCase().includes(state.search.value.toLowerCase()));
           });
           searchValidity = searchValidity || skillValidity;
@@ -104,17 +109,51 @@ const searchReducer = (state, action) => {
   }
 };
 
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  rowsPerPage: 10,
+  startIndex: 0,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 const ApplicantListAO = (props) => {
   const [find, setfind] = useState(false);
-  const [filter, setfilter] = useState({ value: "" });
+  const [filter, setfilter] = useState({ value: '' });
   const [data, setData] = useState();
+  const [displayData, setDisplayData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  const [statePage, dispatchPage] = useReducer(
+    paginationReducer,
+    initPagination
+  );
 
   const [state, dispatch] = useReducer(searchReducer, {
     search: {
-      id: "",
-      value: "",
-      isValid: "",
+      id: '',
+      value: '',
+      isValid: '',
     },
     applicantList: [],
   });
@@ -128,9 +167,24 @@ const ApplicantListAO = (props) => {
         type: ACTION.DATAINIT,
         payload: { init: res.wholeApplicants },
       });
-      setIsLoading(false);
     });
   }, [getAllApplicant, setIsLoading, admin.token]);
+
+  useEffect(() => {
+    if (state.applicantList && state.applicantList.length > 0) {
+      let applicantArray = [...state.applicantList];
+      let pageCount = Math.ceil(applicantArray.length / statePage.rowsPerPage);
+      dispatchPage({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
+
+      //Slicing all jobs based on the number jobs may appear in one page
+      applicantArray = applicantArray.slice(
+        statePage.startIndex,
+        statePage.startIndex + statePage.rowsPerPage
+      );
+      setIsLoading(false);
+      setDisplayData(applicantArray);
+    }
+  }, [statePage.rowsPerPage, statePage.startIndex, state.applicantList]);
 
   const handleAll = () => {
     setfind(false);
@@ -138,17 +192,17 @@ const ApplicantListAO = (props) => {
 
   const handleBlocked = () => {
     setfind(true);
-    setfilter("Blocked");
+    setfilter('Blocked');
   };
 
   const handleRegular = () => {
     setfind(true);
-    setfilter("Regular");
+    setfilter('Regular');
   };
 
   const handlePremium = () => {
     setfind(true);
-    setfilter("Premium");
+    setfilter('Premium');
   };
 
   const searchHandler = (event) => {
@@ -177,9 +231,31 @@ const ApplicantListAO = (props) => {
     });
   }, []);
 
+  //================= Pagination ===========================
+
+  const pageChangeHandler = (event, value) => {
+    dispatchPage({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: statePage.rowsPerPage * (value - 1),
+      },
+    });
+  };
+
+  const rowsHandler = (event) => {
+    console.log(event.target.value);
+    dispatchPage({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        rowsPerPage: event.target.value,
+      },
+    });
+  };
+
   let content = <SpinnerCircle />;
 
-  if (!isLoading) {
+  if (!isLoading && displayData && displayData.length > 0) {
     content = (
       <div className={classes.FlexContainer}>
         <QueryBar
@@ -197,27 +273,27 @@ const ApplicantListAO = (props) => {
                 <ArrowDropDownIcon />
               </button>
               <div className={classes.DropDownContent}>
-                <button style={{ color: "black" }} onClick={handleAll}>
+                <button style={{ color: 'black' }} onClick={handleAll}>
                   All
                 </button>
                 <button
-                  style={{ color: "rgb(33, 153, 0)" }}
-                  value="Blocked"
+                  style={{ color: 'rgb(33, 153, 0)' }}
+                  value='Blocked'
                   onClick={handleBlocked}
                 >
                   Blocked
                 </button>
                 <button
-                  style={{ color: "red" }}
-                  value="Regular"
+                  style={{ color: 'red' }}
+                  value='Regular'
                   onClick={handleRegular}
                 >
                   Regular
                 </button>
 
                 <button
-                  style={{ color: "rgb(250, 129, 0)" }}
-                  value="Premium"
+                  style={{ color: 'rgb(250, 129, 0)' }}
+                  value='Premium'
                   onClick={handlePremium}
                 >
                   Premium
@@ -228,6 +304,7 @@ const ApplicantListAO = (props) => {
           <table className={classes.Table}>
             <thead className={classes.RowField}>
               <tr>
+                <th>No</th>
                 <th>Id</th>
                 <th>Applicant Name</th>
                 <th>Email</th>
@@ -239,15 +316,17 @@ const ApplicantListAO = (props) => {
 
             {find ? (
               <tbody className={classes.ColumnField}>
-                {state.applicantList &&
-                  state.applicantList
+                {displayData &&
+                  displayData
                     .filter((app) => app.status === filter)
-                    .map((app) => (
+                    .map((app, i) => (
                       <tr key={app.id}>
+                        <th>{i + 1}</th>
+
                         <th>
                           <Link
                             to={`/ap/${app.id}`}
-                            style={{ color: "black", textDecoration: "none" }}
+                            style={{ color: 'black', textDecoration: 'none' }}
                           >
                             {app.id}
                           </Link>
@@ -266,11 +345,11 @@ const ApplicantListAO = (props) => {
                         <th
                           style={
                             app.address
-                              ? { color: "black" }
-                              : { color: "rgba(255,0,0,0.7)" }
+                              ? { color: 'black' }
+                              : { color: 'rgba(255,0,0,0.7)' }
                           }
                         >
-                          {app.address ? app.address : "no data"}
+                          {app.address ? app.address : 'no data'}
                         </th>
 
                         <th>
@@ -279,10 +358,10 @@ const ApplicantListAO = (props) => {
                               <ArrowDropDownIcon />
                             </button>
                             <div className={classes.DropDownContent}>
-                              <button style={{ color: "Green" }}>
+                              <button style={{ color: 'Green' }}>
                                 Activate
                               </button>
-                              <button style={{ color: "red" }}>Block</button>
+                              <button style={{ color: 'red' }}>Block</button>
                             </div>
                           </div>
                         </th>
@@ -291,14 +370,16 @@ const ApplicantListAO = (props) => {
               </tbody>
             ) : (
               <tbody className={classes.ColumnField}>
-                {state.applicantList &&
-                  state.applicantList.map((app) => (
+                {displayData &&
+                  displayData.map((app, i) => (
                     <tr key={app.id}>
+                      <th>{i + 1}</th>
+
                       <th>
-                        {" "}
+                        {' '}
                         <Link
                           to={`/ap/${app.id}`}
-                          style={{ color: "black", textDecoration: "none" }}
+                          style={{ color: 'black', textDecoration: 'none' }}
                         >
                           {app.id}
                         </Link>
@@ -310,27 +391,27 @@ const ApplicantListAO = (props) => {
                             {app.firstName} {app.lastName}
                           </div>
                           <p />
-                          {app.headline ? app.headline : "No info"}
+                          {app.headline ? app.headline : 'No info'}
                         </div>
                       </th>
                       <th>{app.email}</th>
                       <th
                         style={
                           app.address
-                            ? { color: "black" }
-                            : { color: "rgba(255,0,0,0.7)" }
+                            ? { color: 'black' }
+                            : { color: 'rgba(255,0,0,0.7)' }
                         }
                       >
-                        {app.address ? app.address : "no data"}
+                        {app.address ? app.address : 'no data'}
                       </th>
                       <th
                         style={
                           app.status
-                            ? { color: "green", fontWeight: "600" }
-                            : { color: "red", fontWeight: "600" }
+                            ? { color: 'green', fontWeight: '600' }
+                            : { color: 'red', fontWeight: '600' }
                         }
                       >
-                        {app.status ? "Active" : "Blocked"}
+                        {app.status ? 'Active' : 'Blocked'}
                       </th>
                       <th>
                         <div className={classes.DropDown}>
@@ -338,8 +419,8 @@ const ApplicantListAO = (props) => {
                             <ArrowDropDownIcon />
                           </button>
                           <div className={classes.DropDownContent}>
-                            <button style={{ color: "Green" }}>Activate</button>
-                            <button style={{ color: "red" }}>Block</button>
+                            <button style={{ color: 'Green' }}>Activate</button>
+                            <button style={{ color: 'red' }}>Block</button>
                           </div>
                         </div>
                       </th>
@@ -348,10 +429,37 @@ const ApplicantListAO = (props) => {
               </tbody>
             )}
           </table>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              width: '100%',
+            }}
+          >
+            <FormControl style={{ width: '4rem' }}>
+              <Select
+                labelId='rowPerPage'
+                id='rowPerPageSelect'
+                value={statePage.rowsPerPage}
+                onChange={rowsHandler}
+              >
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+                <MenuItem value={30}>30</MenuItem>
+              </Select>
+              <FormHelperText>Rows</FormHelperText>
+            </FormControl>
+            <Pagination
+              count={statePage.pageCount}
+              page={statePage.pageNumber}
+              onChange={pageChangeHandler}
+            />
+          </div>
         </div>
       </div>
     );
   }
+
   return <div>{content}</div>;
 };
 

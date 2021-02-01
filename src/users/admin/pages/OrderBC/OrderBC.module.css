@@ -9,13 +9,18 @@
   color: black;
 }
 
+.Header {
+  align-self: flex-start;
+  margin-left: 10%;
+}
+
 .Table {
   width: 80%;
   border-collapse: collapse;
   box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
   background-color: white;
   border-radius: 10px;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .Table th {
