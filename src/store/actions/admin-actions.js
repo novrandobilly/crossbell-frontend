@@ -319,7 +319,7 @@ export const blockCompany = (payload) => {
 
 export const sentApplicantBC = (InputBC) => {
   return async (dispatch) => {
-    dispatch(getAdminStart());
+    // dispatch(getAdminStart());
     console.log(InputBC);
     try {
       const response = await fetch(
@@ -353,18 +353,16 @@ export const updateAdminIntro = (payload) => {
     try {
       const formData = new FormData();
       formData.append('picture', payload.picture);
+      formData.append('role', payload.role);
       formData.append('email', payload.email);
       formData.append('address', payload.address);
-      formData.append('password', payload.password);
       formData.append('phoneNumber', payload.phoneNumber);
-      formData.append('role', payload.role);
 
       const response = await fetch(
         `http://localhost:5000/api/alphaomega/${payload.userId}/profile`,
         {
           method: 'PATCH',
           headers: {
-            // 'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${payload.token}`,
           },
           body: formData,

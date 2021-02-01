@@ -1,5 +1,4 @@
 .JobCard {
-
   display: flex;
   margin: 1rem;
   height: 9rem;
@@ -19,17 +18,13 @@
   border: none;
   background-size: cover;
   background-position: center;
-  display: flex;
-
-}
-
-.Logo:hover {
   cursor: pointer;
 }
 
 .Logo img {
-  width: 100%;
+  width: 8rem;
   height: 8rem;
+  opacity: 100%;
 }
 
 .Content {
@@ -37,8 +32,8 @@
   flex-direction: column;
   align-items: flex-start;
   height: 100%;
-  width: 76%;
-  padding-left: 4%;
+  width: 75%;
+  padding-left: 5.5%;
   text-align: start;
 }
 
@@ -57,11 +52,9 @@
 }
 
 .ContentHeader {
-
   width: 100%;
   display: flex;
   justify-content: space-between;
-
 }
 
 .TopContent {
@@ -110,18 +103,17 @@
 }
 
 .InstantSubmit {
-
-	width: fit-content;
-	position: absolute;
-	bottom: 0.8rem;
-	right: 0.5rem;
+  width: fit-content;
+  position: absolute;
+  bottom: 0.8rem;
+  right: 0.5rem;
 }
 
 .PlacementLocationProps {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-	width: 20%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 20%;
 }
 /* 
 .Avatar {

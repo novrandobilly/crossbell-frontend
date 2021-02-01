@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -13,7 +13,42 @@ import SendIcon from '@material-ui/icons/Send';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
+import Pagination from '@material-ui/lab/Pagination';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import classes from './DetailBC.module.css';
+
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  rowsPerPage: 10,
+  startIndex: 0,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
 
 const DetailBC = (props) => {
   const { orderid } = useParams();
@@ -23,10 +58,15 @@ const DetailBC = (props) => {
   const [shiftFilter, setShiftFilter] = useState(null);
   const [locationFilter, setLocationFilter] = useState(null);
   const [displayData, setDisplayData] = useState();
+  const [applicantList, setApplicantList] = useState([]);
 
   const [dataBC, setDataBC] = useState();
   const [dataApplicant, setDataApplicant] = useState();
   const [index, setIndex] = useState(null);
+  const [indexIsLoading, setIndexIsLoading] = useState(false);
+  const [displayApplicant, setDisplayApplicant] = useState();
+
+  const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -41,10 +81,9 @@ const DetailBC = (props) => {
     },
     true
   );
-  console.log(dataBC);
+
   const { getOrderInvoice, getAllApplicant } = props;
   const token = props.admin.token;
-
   useEffect(() => {
     if (token) {
       const dataBC = {
@@ -56,6 +95,7 @@ const DetailBC = (props) => {
         .then((res) => {
           console.log(res);
           setDataBC(res.order);
+          setApplicantList(res.order.applicantSent);
         })
         .catch((err) => {
           console.log(err);
@@ -113,6 +153,14 @@ const DetailBC = (props) => {
           return el.workShifts === true;
         });
       }
+      let pageCount = Math.ceil(filteredArray.length / state.rowsPerPage);
+      dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
+
+      //Slicing all jobs based on the number jobs may appear in one page
+      filteredArray = filteredArray.slice(
+        state.startIndex,
+        state.startIndex + state.rowsPerPage
+      );
       setDisplayData(filteredArray);
     }
   }, [
@@ -122,6 +170,8 @@ const DetailBC = (props) => {
     locationFilter,
     shiftFilter,
     formState,
+    state.rowsPerPage,
+    state.startIndex,
   ]);
 
   //================= Gender Filter ===========================
@@ -160,16 +210,44 @@ const DetailBC = (props) => {
   //================= Sent Function ===========================
   const onSentHandler = async (dataBC) => {
     setIndex(dataBC.i);
+    setIndexIsLoading(true);
     const applicantBC = {
       token: props.admin.token,
       applicantId: dataBC.applicantId,
       orderId: orderid,
     };
     try {
-      await props.sentApplicantBC(applicantBC);
+      const res = await props.sentApplicantBC(applicantBC);
+      if (res) {
+        let applicantArray = [...applicantList, dataBC.applicantId];
+        setApplicantList(applicantArray);
+        setIndexIsLoading(false);
+      }
     } catch (err) {
       console.log(err);
+      setIndexIsLoading(false);
     }
+  };
+  //================= Pagination ===========================
+
+  const pageChangeHandler = (event, value) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: state.rowsPerPage * (value - 1),
+      },
+    });
+  };
+
+  const rowsHandler = (event) => {
+    console.log(event.target.value);
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        rowsPerPage: event.target.value,
+      },
+    });
   };
 
   //================= Element Component ===========================
@@ -438,8 +516,8 @@ const DetailBC = (props) => {
                       </th>
 
                       <th>
-                        {props.isLoading && index === i ? (
-                          <SpinnerCircle />
+                        {indexIsLoading && index === i ? (
+                          <Spinner />
                         ) : (
                           <Button
                             variant='contained'
@@ -447,7 +525,7 @@ const DetailBC = (props) => {
                             className={classes.button}
                             size='small'
                             endIcon={<SendIcon />}
-                            disabled={dataBC.applicantSent.some(
+                            disabled={applicantList.some(
                               (appId) => appId.toString() === app.id.toString()
                             )}
                             onClick={() =>
@@ -467,6 +545,32 @@ const DetailBC = (props) => {
               </tbody>
             </table>
           </div>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            width: '100%',
+          }}
+        >
+          <FormControl style={{ width: '4rem' }}>
+            <Select
+              labelId='rowPerPage'
+              id='rowPerPageSelect'
+              value={state.rowsPerPage}
+              onChange={rowsHandler}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+            </Select>
+            <FormHelperText>Rows</FormHelperText>
+          </FormControl>
+          <Pagination
+            count={state.pageCount}
+            page={state.pageNumber}
+            onChange={pageChangeHandler}
+          />
         </div>
       </div>
     );

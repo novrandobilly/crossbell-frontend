@@ -73,8 +73,7 @@
 
 .Avatar {
   width: 15rem;
-  min-height: 10rem;
-  max-height: 15rem;
+  height: 15rem;
   background-position: center;
   background-size: 100%;
   background-repeat: no-repeat;
