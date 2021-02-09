@@ -64,7 +64,6 @@ const DetailBC = (props) => {
   const [dataApplicant, setDataApplicant] = useState();
   const [index, setIndex] = useState(null);
   const [indexIsLoading, setIndexIsLoading] = useState(false);
-  const [displayApplicant, setDisplayApplicant] = useState();
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 

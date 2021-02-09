@@ -235,7 +235,7 @@ const EditIntro = (props) => {
   };
 
   return (
-    <div style={!push ? { marginTop: '6rem' } : { marginTop: '0' }}>
+    <div className={!push ? classes.EditIntro : classes.AddIntro}>
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <Modal show={props.error} onCancel={onCancelHandler}>
           Could not update changes at the moment, please try again later

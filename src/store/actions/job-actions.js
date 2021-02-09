@@ -163,9 +163,7 @@ export const getJobsInCompany = (payload) => {
         }
       );
       const responseJSON = await res.json();
-      if (!res.ok) {
-        throw new Error(responseJSON.message);
-      }
+
       dispatch(fetchingFinish());
       return responseJSON;
     } catch (err) {

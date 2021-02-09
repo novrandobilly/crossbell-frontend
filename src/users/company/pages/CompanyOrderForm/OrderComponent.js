@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import classes from "./OrderComponent.module.css";
+import classes from './OrderComponent.module.css';
 
 const OrderComponent = (props) => {
   return (
@@ -11,13 +11,13 @@ const OrderComponent = (props) => {
             <div
               className={classes.CardHeader}
               style={
-                props.title === "Bronze"
-                  ? { backgroundColor: "#ad8a56" }
-                  : props.title === "Silver"
-                  ? { backgroundColor: "#a9a9a9" }
-                  : props.title === "Gold"
-                  ? { backgroundColor: "#d4af47" }
-                  : { backgroundColor: "rgba(58, 81, 153, 1)" }
+                props.title === 'Bronze'
+                  ? { backgroundColor: '#ad8a56' }
+                  : props.title === 'Silver'
+                  ? { backgroundColor: '#a9a9a9' }
+                  : props.title === 'Gold'
+                  ? { backgroundColor: '#d4af47' }
+                  : { backgroundColor: 'rgba(58, 81, 153, 1)' }
               }
             >
               <p className={classes.Title}>{props.title}</p>
@@ -28,7 +28,18 @@ const OrderComponent = (props) => {
                 <p className={classes.Slot}>{props.slot}</p>
               </div>
             </div>
-            <div className={classes.CardContent}>
+            <div
+              className={classes.CardContent}
+              style={
+                props.title === 'Bronze'
+                  ? { backgroundColor: '#ad8a5640' }
+                  : props.title === 'Silver'
+                  ? { backgroundColor: '#a9a9a940' }
+                  : props.title === 'Gold'
+                  ? { backgroundColor: '#d4af4740' }
+                  : { backgroundColor: 'rgba(58, 81, 153, 0.2)' }
+              }
+            >
               <ul>
                 {props.perks.map((perk, i) => {
                   return <li key={i}> {perk}</li>;

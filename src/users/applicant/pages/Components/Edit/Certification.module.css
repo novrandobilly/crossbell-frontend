@@ -77,3 +77,38 @@
   justify-content: flex-end;
   margin-top: 2rem;
 }
+
+@media (max-width: 768px) {
+  .Container {
+    padding: 32px 28px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .Container {
+    padding: 0;
+  }
+
+  .ContainerFlex {
+    padding: 0px 16px 10px 16px;
+    border-radius: 0;
+  }
+
+  .Text {
+    /* margin: 0; */
+  }
+
+  .Period {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .Footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}

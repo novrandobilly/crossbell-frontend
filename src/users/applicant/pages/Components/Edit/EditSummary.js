@@ -80,7 +80,7 @@ const EditSummary = (props) => {
                 label='Details*'
                 initValue={data.details}
                 initIsValid={true}
-                rows={10}
+                rows={14}
               />
             </div>
           </div>

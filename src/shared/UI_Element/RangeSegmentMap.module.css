@@ -4,9 +4,15 @@
   padding-bottom: 2rem;
   margin-top: -0.5rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   text-align: left;
   position: relative;
+}
+
+.TopContent {
+  display: flex;
+  justify-content: space-between;
 }
 
 .Square {
@@ -48,11 +54,27 @@
 }
 
 .Description {
-  width: 50rem;
+  width: 115%;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.5);
 }
 
 .ButtonAction {
   display: flex;
+}
+
+@media (max-width: 576px) {
+  .MapContainer {
+    border-left: none;
+    padding-left: 0;
+    padding-bottom: 2rem;
+  }
+
+  .Square {
+    display: none;
+  }
+
+  .Description {
+    width: 150%;
+  }
 }

@@ -58,7 +58,6 @@ const OrderBC = (props) => {
         .then((res) => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
-          console.log(res);
           setData(sort);
         })
         .catch((err) => {
