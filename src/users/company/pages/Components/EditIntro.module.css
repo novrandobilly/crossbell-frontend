@@ -1,3 +1,10 @@
+.EditIntro {
+  margin-top: 96px;
+}
+.AddIntro {
+  margin-top: 0;
+}
+
 .Container {
   display: flex;
   flex-direction: row;
@@ -78,4 +85,43 @@
   background-size: 100%;
   background-repeat: no-repeat;
   margin: 1rem auto;
+}
+
+@media (max-width: 768px) {
+  .Container {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .EditIntro {
+    margin-top: 0;
+  }
+
+  .ContainerFlex {
+    width: 50vh;
+    padding: 6px 16px;
+  }
+
+  .ProfilePicture {
+    align-self: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 440px) {
+  .ContainerFlex {
+    width: 50vh;
+    padding: 6px 16px;
+  }
+
+  .Container {
+    padding: 0;
+    padding-top: 0;
+  }
+
+  .ContainerFlex {
+    border-radius: 0;
+  }
 }

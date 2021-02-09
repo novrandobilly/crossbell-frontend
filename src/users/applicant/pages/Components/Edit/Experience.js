@@ -1,24 +1,23 @@
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useParams, withRouter } from 'react-router-dom';
+import { useForm } from '../../../../../shared/utils/useForm';
+import moment from 'moment';
 
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useParams, withRouter } from "react-router-dom";
-import { useForm } from "../../../../../shared/utils/useForm";
-import moment from "moment";
-
-import * as actionTypes from "../../../../../store/actions/actions";
-import * as actionCreators from "../../../../../store/actions/index";
+import * as actionTypes from '../../../../../store/actions/actions';
+import * as actionCreators from '../../../../../store/actions/index';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
   VALIDATOR_ALWAYSTRUE,
-} from "../../../../../shared/utils/validator";
+} from '../../../../../shared/utils/validator';
 
-import Modal from "../../../../../shared/UI_Element/Modal";
-import SpinnerCircle from "../../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import Input from "../../../../../shared/UI_Element/Input";
-import Button from "@material-ui/core/Button";
+import Modal from '../../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../../shared/UI_Element/Input';
+import Button from '@material-ui/core/Button';
 
-import classes from "./Experience.module.css";
+import classes from './Experience.module.css';
 
 const Experience = (props) => {
   const { applicantid } = useParams();
@@ -85,7 +84,7 @@ const Experience = (props) => {
       if (res) {
         console.log(res);
       } else {
-        console.log("no res detected");
+        console.log('no res detected');
       }
 
       props.history.push(`/ap/${applicantid}`);
@@ -105,12 +104,12 @@ const Experience = (props) => {
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="prevTitle"
-                inputClass="AddJobInput"
+                inputType='input'
+                id='prevTitle'
+                inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Previous Title *"
+                label='Previous Title *'
                 initValue={data.prevTitle}
                 initIsValid={true}
               />
@@ -118,12 +117,12 @@ const Experience = (props) => {
 
             <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="prevCompany"
-                inputClass="AddJobInput"
+                inputType='input'
+                id='prevCompany'
+                inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Company Name*"
+                label='Company Name*'
                 initValue={data.prevCompany}
                 initIsValid={true}
               />
@@ -131,12 +130,12 @@ const Experience = (props) => {
 
             <div className={classes.EditLabel}>
               <Input
-                inputType="input"
-                id="prevLocation"
-                inputClass="AddJobInput"
+                inputType='input'
+                id='prevLocation'
+                inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label="Location*"
+                label='Location*'
                 initValue={data.prevLocation}
                 initIsValid={true}
               />
@@ -146,44 +145,44 @@ const Experience = (props) => {
               <div className={classes.EditLabel}>
                 <p className={classes.Text}>Waktu Mulai *</p>
                 <Input
-                  inputType="customdate"
-                  id="startDate"
+                  inputType='customdate'
+                  id='startDate'
+                  inputClass='EditProfileTextArea'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}
-                  views={["year", "month"]}
-                  label="Tahun Mulai"
+                  views={['year', 'month']}
+                  label='Tahun Mulai'
                   maxDate={moment()}
                   initValue={data.startDate}
                   initIsValid={true}
-                  style={{ marginBottom: "1rem" }}
                 />
               </div>
 
               <div className={classes.EditLabel}>
                 <p className={classes.Text}>Waktu Selesai *</p>
                 <Input
-                  inputType="customdate"
-                  id="endDate"
+                  inputType='customdate'
+                  id='endDate'
+                  inputClass='EditProfileTextArea'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}
-                  views={["year", "month"]}
-                  label="Tahun Selesai"
+                  views={['year', 'month']}
+                  label='Tahun Selesai'
                   maxDate={moment()}
                   initValue={data.endDate}
                   initIsValid={true}
-                  style={{ marginBottom: "1rem" }}
                 />
               </div>
             </div>
 
             <div className={classes.EditLabel}>
               <Input
-                inputType="textarea"
-                id="description"
-                inputClass="EditProfileTextArea"
+                inputType='textarea'
+                id='description'
+                inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label="Description*"
+                label='Description*'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
@@ -194,9 +193,9 @@ const Experience = (props) => {
           <div className={classes.Footer}>
             <Button
               disabled={!formState.formIsValid}
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
             >
               Save
             </Button>
@@ -218,23 +217,27 @@ const Experience = (props) => {
       {formContent}
     </form>
   );
-
 };
 
-const mapStateToProps = state => {
-	return {
-		isLoading: state.applicant.isLoading,
-		error: state.applicant.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-		getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-		updateApplicantExperience: ApplicantData => dispatch(actionCreators.updateApplicantExperience(ApplicantData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantExperience: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Experience));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Experience));

@@ -13,7 +13,6 @@
   font-family: Arial, Helvetica, sans-serif;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  padding: 1rem;
   margin-right: 1rem;
   width: 17.5%;
 }
@@ -26,6 +25,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
+  padding: 1rem;
 }
 
 .Logo {
@@ -53,18 +53,18 @@
 .CompanyWebsites {
   cursor: pointer;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  width: 80%;
+  flex-wrap: wrap;
   text-decoration: none;
   font-size: 0.8rem;
   font-weight: bold;
-  color: rgba(58, 81, 153, 1);
+  overflow: hidden;
 }
 
 .EditProfile {
-  align-self: flex-end;
-  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
 }
 
 .LinkIcon {
@@ -132,7 +132,6 @@
   padding: 1rem 3rem 3rem 3rem;
   margin-top: 1rem;
   border-radius: 0.2rem;
-  /* overflow: hidden; */
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
@@ -157,7 +156,7 @@
 .JobCard {
   padding: 0 1rem 0 1rem;
   margin: 0.5rem 0.3rem;
-  width: 13.94rem;
+  width: 31.5vh;
   height: 17rem;
   border-radius: 0.2rem;
   border: solid 0.05rem rgba(0, 0, 0, 0.2);
@@ -209,4 +208,158 @@
 .CardRecipient {
   font-size: 0.8rem;
   overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  .Avatar {
+    height: 11rem;
+  }
+
+  .DivContainer {
+    justify-content: space-around;
+  }
+
+  .JobCard {
+    width: 30vh;
+  }
+}
+
+@media (max-width: 992px) {
+  .Wraper {
+    flex-direction: column;
+  }
+
+  .Container {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 16px;
+  }
+
+  .CompanyContainer {
+    display: flex;
+    width: 100%;
+  }
+
+  .ContainerLeft {
+    flex-direction: row;
+    width: 90%;
+  }
+
+  .CompanyName {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  .CompanyIndustry {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .CompanyHeadquarter {
+    font-size: 0.8rem;
+    line-height: 24px;
+  }
+
+  .Content {
+    width: 100%;
+  }
+
+  .DetailLogo {
+    margin-right: 32px;
+  }
+
+  .Avatar {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .ContainerRight {
+    align-self: flex-start;
+  }
+
+  .PicContent {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .TextHolder {
+    margin-right: 0px;
+  }
+
+  .JobCard {
+    width: 25vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .Wraper {
+    padding: 5px 2px;
+  }
+
+  .CompanyContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ContainerLeft {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .Avatar {
+    width: 100%;
+    height: 160px;
+    margin-right: 0;
+  }
+
+  .ContainerLeftDivider {
+    width: 100%;
+  }
+
+  .ContainerRight {
+    align-self: flex-end;
+  }
+
+  .DivContainer {
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    justify-content: flex-start;
+  }
+
+  .PicContainer {
+    padding: 16px;
+  }
+
+  .CardContainer {
+    padding: 16px;
+  }
+
+  .PicHeader {
+    margin-bottom: 10px;
+  }
+
+  .Title {
+    margin: 0;
+  }
+
+  .JobCard {
+    margin: 10px 6px 32px 6px;
+  }
+}
+
+@media (max-width: 320px) {
+  .PicContainer {
+    padding: 4px 8px;
+  }
+
+  .PicContent {
+    line-height: 1.5;
+    overflow-y: hidden;
+  }
+
+  .TextHolder {
+    margin-right: 32px;
+  }
 }

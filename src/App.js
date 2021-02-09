@@ -50,8 +50,6 @@ import EditApplicantEducation from './users/applicant/pages/Components/Edit/Educ
 import EditApplicantExperience from './users/applicant/pages/Components/Edit/Experience';
 import EditApplicantCertification from './users/applicant/pages/Components/Edit/Certification';
 import EditApplicantSkills from './users/applicant/pages/Components/Edit/Skill';
-import AddApplicantIntro from './users/applicant/pages/Components/Add/EditIntro';
-import AddApplicantSummary from './users/applicant/pages/Components/Add/EditSummary';
 import AddApplicantEducation from './users/applicant/pages/Components/Add/Education';
 import AddApplicantExperience from './users/applicant/pages/Components/Add/Experience';
 import AddApplicantCertification from './users/applicant/pages/Components/Add/Certification';
@@ -131,16 +129,6 @@ const App = (props) => {
           <Route
             path='/ap/:applicantid/res-val'
             component={ApplicantResumeVal}
-          />
-
-          <Route
-            path='/ap/:applicantid/add/intro'
-            component={AddApplicantIntro}
-          />
-
-          <Route
-            path='/ap/:applicantid/add/summary'
-            component={AddApplicantSummary}
           />
           <Route
             path='/ap/:applicantid/add/education'

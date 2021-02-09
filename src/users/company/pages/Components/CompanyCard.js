@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -17,6 +18,7 @@ const CompanyCard = (props) => {
   const [data, setData] = useState();
 
   const { getJobsInCompany } = props;
+
   useEffect(() => {
     const token = props.auth.token;
     if (token) {
@@ -26,6 +28,7 @@ const CompanyCard = (props) => {
       };
 
       getJobsInCompany(payload).then((res) => {
+        console.log(res);
         setData(res.foundJob);
       });
     }
@@ -34,58 +37,63 @@ const CompanyCard = (props) => {
   return (
     <div className={classes.Wraper}>
       <div className={classes.Container}>
-        <div className={classes.ContainerLeft}>
-          {props.logo ? (
-            <div
-              className={classes.Avatar}
-              style={{
-                backgroundImage: `url('${props.logo.url}')`,
-              }}
-            />
-          ) : (
-            <AccountCircleIcon
-              style={{
-                fontSize: '15rem',
-                marginBottom: '1rem',
-              }}
-            />
-          )}
+        <div className={classes.CompanyContainer}>
+          <div className={classes.ContainerLeft}>
+            <div className={classes.DetailLogo}>
+              {props.logo ? (
+                <div
+                  className={classes.Avatar}
+                  style={{
+                    backgroundImage: `url('${props.logo.url}')`,
+                  }}
+                />
+              ) : (
+                <AccountCircleIcon
+                  style={{
+                    fontSize: '15rem',
+                    marginBottom: '1rem',
+                  }}
+                />
+              )}
 
-          <p
-            className={classes.Slot}
-            style={
-              props.slotREG < 1
-                ? { color: 'rgb(255, 46, 46)' }
-                : { color: 'rgb(0, 135, 9)' }
-            }
-          >
-            Remaining Slot: {props.slotREG}
-          </p>
+              <p
+                className={classes.Slot}
+                style={
+                  props.slotREG < 1
+                    ? { color: 'rgb(255, 46, 46)' }
+                    : { color: 'rgb(0, 135, 9)' }
+                }
+              >
+                Remaining Slot: {props.slotREG}
+              </p>
+            </div>
 
-          <p className={classes.CompanyName}>{props.companyName}</p>
+            <div className={classes.ContainerLeftDivider}>
+              <p className={classes.CompanyName}>{props.companyName}</p>
 
-          <p className={classes.CompanyIndustry}>{props.industry}</p>
+              <p className={classes.CompanyIndustry}>{props.industry}</p>
 
-          <p className={classes.CompanyHeadquarter}>{props.address}</p>
+              <p className={classes.CompanyHeadquarter}>{props.address}</p>
 
-          <a
-            href={`https://${props.website}`}
-            className={classes.CompanyWebsites}
-          >
-            <img
-              className={classes.LinkIcon}
-              alt='web-icon'
-              src='https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'
-              style={{ marginRight: '1rem' }}
-            />
-            {props.website ? props.website : '-'}
-          </a>
-        </div>
+              <a
+                href={`https://${props.website}`}
+                className={classes.CompanyWebsites}
+              >
+                <img
+                  className={classes.LinkIcon}
+                  alt='web-icon'
+                  src='https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'
+                />
+                {props.website ? props.website : '-'}
+              </a>
+            </div>
+          </div>
 
-        <div className={classes.EditProfile}>
-          <Link to={`/co/${props.companyId}/compro/intro`}>
-            <IconButton />
-          </Link>
+          <div className={classes.EditProfile}>
+            <Link to={`/co/${props.companyId}/compro/intro`}>
+              <IconButton />
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -206,7 +214,6 @@ const CompanyCard = (props) => {
       </div>
     </div>
   );
-
 };
 
 const mapStateToProps = (state) => {
@@ -221,6 +228,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getJobsInCompany: (payload) =>
       dispatch(actionCreators.getJobsInCompany(payload)),
+    resetCompany: () => dispatch({ type: actionTypes.FETCHINGFINISH }),
   };
 };
 

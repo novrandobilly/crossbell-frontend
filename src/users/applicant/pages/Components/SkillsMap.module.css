@@ -4,6 +4,7 @@
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   margin-bottom: 1rem;
+  width: 75.5vh;
 }
 
 .Container {
@@ -35,4 +36,15 @@
   border-radius: 2rem;
   color: white;
   font-weight: 400;
+}
+
+@media (max-width: 576px) {
+  .Container {
+    padding: 6px 16px 16px 16px;
+  }
+
+  .Header {
+    margin-top: 10px;
+    margin-bottom: 24px;
+  }
 }

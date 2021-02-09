@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 5rem;
-  height: 34rem;
+  padding: 0rem 5rem;
+  height: calc(100vh - 64px);
   overflow: hidden;
 }
 
@@ -21,7 +21,7 @@
 
 .AuthForm {
   margin-top: 2rem;
-  width: 27%;
+  width: 30%;
   z-index: 1;
 }
 
@@ -45,11 +45,18 @@
   display: none;
 }
 
+@media (max-width: 1200px) {
+  .AuthForm {
+    width: 33%;
+  }
+}
+
 @media (max-width: 992px) {
   .Content {
     display: flex;
     flex-direction: column;
     height: 30rem;
+    padding-bottom: 10px;
   }
 
   .ContentHolder {

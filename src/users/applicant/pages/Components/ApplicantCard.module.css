@@ -15,6 +15,7 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   padding: 1rem;
   margin-right: 1rem;
+  width: 20%;
 }
 
 .Container a {
@@ -33,7 +34,7 @@
 }
 
 .Avatar {
-  width: 90%;
+  width: 80%;
   height: 15rem;
   border-radius: 50%;
   background-position: center;
@@ -61,7 +62,7 @@
 }
 
 .Address {
-  width: 15rem;
+  width: 100%;
 }
 
 .ProfileLabel {
@@ -84,7 +85,7 @@
 }
 
 .SegmentContainer {
-  width: 100%;
+  width: 76%;
 }
 
 .InputButton {
@@ -150,7 +151,7 @@
 .ResumeHolder {
   display: flex;
   flex-direction: column;
-  width: 17rem;
+  width: 451px;
 }
 
 .ResumePicture {
@@ -161,4 +162,84 @@
   margin-right: 2rem;
   border: solid 0.5px black;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .Avatar {
+    height: 11rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .Wraper {
+    flex-direction: column;
+  }
+
+  .Container {
+    width: 96.2%;
+    margin-bottom: 16px;
+  }
+
+  .ApplicantContainer {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .ContainerLeft {
+    flex-direction: row;
+    width: 90%;
+  }
+
+  .ContainerLeftDivider {
+    width: 60%;
+  }
+
+  .SegmentContainer {
+    width: 100%;
+  }
+
+  .Avatar {
+    width: 34%;
+    height: 95%;
+    margin-right: 32px;
+    align-self: flex-start;
+  }
+
+  .ContainerRight {
+    align-self: flex-start;
+  }
+
+  .ResumePicture {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .Container {
+    width: 70vh;
+  }
+
+  .ApplicantContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ContainerLeft {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .Avatar {
+    width: 50%;
+    height: 160px;
+    margin-right: 0;
+  }
+
+  .ContainerLeftDivider {
+    width: 100%;
+  }
+
+  .ContainerRight {
+    align-self: flex-end;
+  }
 }

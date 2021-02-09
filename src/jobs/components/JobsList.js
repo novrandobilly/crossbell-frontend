@@ -45,7 +45,6 @@ const paginationReducer = (state, action) => {
   }
 };
 
-
 const JobsList = (props) => {
   const [displayJobs, setDisplayJobs] = useState([]);
   const [displayData, setDisplayData] = useState();
@@ -224,6 +223,28 @@ const JobsList = (props) => {
   let content = (
     <div className={classes.Container}>
       <div className={classes.FilterContainer}>
+        <MenuItem>
+          <div className={classes.LeftFilter}>
+            <FormControl
+              className={classes.formControl}
+              style={{ width: '20%', textAlign: 'left' }}
+            >
+              <InputLabel id='sort'>Filter</InputLabel>
+              <Select
+                labelId='sort'
+                id='sort'
+                value={sort}
+                onChange={handleChange}
+              >
+                <MenuItem value='newest'>Terbaru</MenuItem>
+                <MenuItem value='latest'>Terlama</MenuItem>
+                <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
+                <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </MenuItem>
+
         <div className={classes.CheckboxCriteria}>
           <p className={classes.FilterLabel}>Bidang pekerjaan</p>
           <FormControl
@@ -393,13 +414,7 @@ const JobsList = (props) => {
         ) : (
           <h2>Tidak ada pekerjaan sesuai pencarian</h2>
         )}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            width: '100%',
-          }}
-        >
+        <div className={classes.PaginationRight}>
           <FormControl style={{ width: '4rem' }}>
             <Select
               labelId='rowPerPage'
@@ -422,7 +437,7 @@ const JobsList = (props) => {
       </div>
       <FormControl
         className={classes.formControl}
-        style={{ width: '8rem', textAlign: 'left' }}
+        style={{ width: '20%', textAlign: 'left' }}
       >
         <InputLabel id='sort'>Filter</InputLabel>
         <Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
@@ -436,7 +451,6 @@ const JobsList = (props) => {
   );
 
   return <div>{content}</div>;
-
 };
 
 export default JobsList;

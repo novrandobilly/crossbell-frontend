@@ -11,7 +11,7 @@ const ImgComp = ({ src }) => {
     <img
       src={src}
       alt='slide-img'
-      style={{ width: '100%', height: '80vh', opacity: '0.3' }}
+      style={{ width: '100%', height: '100vh', opacity: '0.3' }}
     />
   );
 };

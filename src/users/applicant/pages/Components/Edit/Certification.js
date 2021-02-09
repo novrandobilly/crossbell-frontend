@@ -169,7 +169,6 @@ const Certification = (props) => {
                   maxDate={moment()}
                   initValue={data.startDate}
                   initIsValid={true}
-                  style={{ marginBottom: '1rem' }}
                 />
               </div>
 
@@ -186,7 +185,6 @@ const Certification = (props) => {
                     maxDate={moment()}
                     initValue={data.endDate || moment()}
                     initIsValid={true}
-                    style={{ marginBottom: '1rem' }}
                   />
                 </div>
               ) : (

@@ -110,7 +110,7 @@ const ApplicantCard = (props) => {
                       target='_blank'
                       rel='noopener noreferrer'
                     >
-                      Preview Here
+                      Preview Resume Here
                     </a>
                   </div>
                 )}
