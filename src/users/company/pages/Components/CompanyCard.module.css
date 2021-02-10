@@ -153,11 +153,16 @@
   padding: 0 0.3rem;
 }
 
+.CardHolder {
+  box-sizing: border-box;
+  width: 25%;
+  height: 310px;
+  padding: 0.5rem 0.56rem;
+}
+
 .JobCard {
+  height: 280px;
   padding: 0 1rem 0 1rem;
-  margin: 0.5rem 0.3rem;
-  width: 31.5vh;
-  height: 17rem;
   border-radius: 0.2rem;
   border: solid 0.05rem rgba(0, 0, 0, 0.2);
   text-align: left;
@@ -213,14 +218,6 @@
 @media (max-width: 1200px) {
   .Avatar {
     height: 11rem;
-  }
-
-  .DivContainer {
-    justify-content: space-around;
-  }
-
-  .JobCard {
-    width: 30vh;
   }
 }
 
@@ -288,8 +285,8 @@
     margin-right: 0px;
   }
 
-  .JobCard {
-    width: 25vh;
+  .CardHolder {
+    width: 33.33%;
   }
 }
 
@@ -344,8 +341,14 @@
     margin: 0;
   }
 
+  .CardHolder {
+    width: 50%;
+    margin-right: 32px;
+  }
+
   .JobCard {
-    margin: 10px 6px 32px 6px;
+    width: 31vh;
+    padding: 0 16px;
   }
 }
 

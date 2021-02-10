@@ -178,31 +178,112 @@ const JobsListAO = (props) => {
               </div>
             </div>
           </div>
-          <table className={classes.Table}>
-            <thead className={classes.RowField}>
-              <tr>
-                <th>No</th>
-                <th>Id</th>
-                <th>Company</th>
-                <th>JobTitle</th>
-                <th>Location</th>
-                <th>Date posted</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
 
-            {find ? (
-              <tbody className={classes.ColumnField}>
-                {displayData &&
-                  displayData
-                    .filter((status) => status.status === filter)
-                    .map((job, i) => {
+          <div className={classes.TableHolder}>
+            <table className={classes.Table}>
+              <thead className={classes.RowField}>
+                <tr>
+                  <th>No</th>
+                  <th>Id</th>
+                  <th>Company</th>
+                  <th>JobTitle</th>
+                  <th>Location</th>
+                  <th>Date posted</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              {find ? (
+                <tbody className={classes.ColumnField}>
+                  {displayData &&
+                    displayData
+                      .filter((status) => status.status === filter)
+                      .map((job, i) => {
+                        return (
+                          <tr key={job.id}>
+                            <th>{i + 1}</th>
+
+                            <th>
+                              <Link
+                                to={`/jobs/${job._id}`}
+                                style={{
+                                  color: 'black',
+                                  textDecoration: 'none',
+                                }}
+                              >
+                                {job._id}
+                              </Link>
+                            </th>
+                            <th>{job.companyId.companyName}</th>
+                            <th>{job.jobTitle}</th>
+                            <th>{job.placementLocation}</th>
+                            <th
+                              style={
+                                job.releasedAt
+                                  ? { color: 'black' }
+                                  : { color: 'red' }
+                              }
+                            >
+                              {job.releasedAt
+                                ? moment(job.releasedAt).format('D MMM YYYY')
+                                : 'Belum terbit'}
+                            </th>
+                            <th
+                              style={
+                                job.status === 'Canceled'
+                                  ? { color: 'red', fontWeight: 'bold' }
+                                  : job.status === 'Approved'
+                                  ? {
+                                      color: 'rgb(33, 153, 0)',
+                                      fontWeight: 'bold',
+                                    }
+                                  : job.status === 'Expired'
+                                  ? {
+                                      color: 'rgb(130, 130, 130)',
+                                      fontWeight: 'bold',
+                                    }
+                                  : {
+                                      color: 'rgb(250, 129, 0)',
+                                      fontWeight: 'bold',
+                                    }
+                              }
+                            >
+                              {job.status}
+                            </th>
+                            <th>
+                              <div className={classes.DropDown}>
+                                <button className={classes.DropButton}>
+                                  <ArrowDropDownIcon />
+                                </button>
+                                <div className={classes.DropDownContent}>
+                                  <button style={{ color: 'rgb(33, 153, 0)' }}>
+                                    Approved
+                                  </button>
+                                  <button style={{ color: 'red' }}>
+                                    Canceled
+                                  </button>
+                                  <button style={{ color: 'rgb(250, 129, 0)' }}>
+                                    Pending
+                                  </button>
+                                </div>
+                              </div>
+                            </th>
+                          </tr>
+                        );
+                      })}
+                </tbody>
+              ) : (
+                <tbody className={classes.ColumnField}>
+                  {displayData &&
+                    displayData.map((job, i) => {
+                      // let difference = (moment(job.expiredDate).diff(moment()));
                       return (
-                        <tr key={job.id}>
+                        <tr key={job._id}>
                           <th>{i + 1}</th>
 
                           <th>
+                            {' '}
                             <Link
                               to={`/jobs/${job._id}`}
                               style={{ color: 'black', textDecoration: 'none' }}
@@ -212,7 +293,9 @@ const JobsListAO = (props) => {
                           </th>
                           <th>{job.companyId.companyName}</th>
                           <th>{job.jobTitle}</th>
-                          <th>{job.placementLocation}</th>
+                          <th style={{ width: '20rem' }}>
+                            {job.placementLocation}
+                          </th>
                           <th
                             style={
                               job.releasedAt
@@ -226,25 +309,14 @@ const JobsListAO = (props) => {
                           </th>
                           <th
                             style={
-                              job.status === 'Canceled'
-                                ? { color: 'red', fontWeight: 'bold' }
-                                : job.status === 'Approved'
-                                ? {
-                                    color: 'rgb(33, 153, 0)',
-                                    fontWeight: 'bold',
-                                  }
-                                : job.status === 'Expired'
-                                ? {
-                                    color: 'rgb(130, 130, 130)',
-                                    fontWeight: 'bold',
-                                  }
-                                : {
-                                    color: 'rgb(250, 129, 0)',
-                                    fontWeight: 'bold',
-                                  }
+                              moment(job.expiredDate) >= moment()
+                                ? { color: 'green', fontWeight: '600' }
+                                : { color: 'gray', fontWeight: '600' }
                             }
                           >
-                            {job.status}
+                            {moment(job.expiredDate) >= moment()
+                              ? 'Aktif'
+                              : 'Expired'}
                           </th>
                           <th>
                             <div className={classes.DropDown}>
@@ -267,74 +339,11 @@ const JobsListAO = (props) => {
                         </tr>
                       );
                     })}
-              </tbody>
-            ) : (
-              <tbody className={classes.ColumnField}>
-                {displayData &&
-                  displayData.map((job, i) => {
-                    // let difference = (moment(job.expiredDate).diff(moment()));
-                    return (
-                      <tr key={job._id}>
-                        <th>{i + 1}</th>
+                </tbody>
+              )}
+            </table>
+          </div>
 
-                        <th>
-                          {' '}
-                          <Link
-                            to={`/jobs/${job._id}`}
-                            style={{ color: 'black', textDecoration: 'none' }}
-                          >
-                            {job._id}
-                          </Link>
-                        </th>
-                        <th>{job.companyId.companyName}</th>
-                        <th>{job.jobTitle}</th>
-                        <th style={{ width: '20rem' }}>
-                          {job.placementLocation}
-                        </th>
-                        <th
-                          style={
-                            job.releasedAt
-                              ? { color: 'black' }
-                              : { color: 'red' }
-                          }
-                        >
-                          {job.releasedAt
-                            ? moment(job.releasedAt).format('D MMM YYYY')
-                            : 'Belum terbit'}
-                        </th>
-                        <th
-                          style={
-                            moment(job.expiredDate) >= moment()
-                              ? { color: 'green', fontWeight: '600' }
-                              : { color: 'gray', fontWeight: '600' }
-                          }
-                        >
-                          {moment(job.expiredDate) >= moment()
-                            ? 'Aktif'
-                            : 'Expired'}
-                        </th>
-                        <th>
-                          <div className={classes.DropDown}>
-                            <button className={classes.DropButton}>
-                              <ArrowDropDownIcon />
-                            </button>
-                            <div className={classes.DropDownContent}>
-                              <button style={{ color: 'rgb(33, 153, 0)' }}>
-                                Approved
-                              </button>
-                              <button style={{ color: 'red' }}>Canceled</button>
-                              <button style={{ color: 'rgb(250, 129, 0)' }}>
-                                Pending
-                              </button>
-                            </div>
-                          </div>
-                        </th>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            )}
-          </table>
           <div
             style={{
               display: 'flex',

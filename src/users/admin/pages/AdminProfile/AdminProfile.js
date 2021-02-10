@@ -105,83 +105,6 @@ const AdminProfile = (props) => {
     content = (
       <div className={classes.Container}>
         <div className={classes.AdminCard}>
-          <div className={classes.LeftCard}>
-            <p className={classes.Label}>NIK</p>
-            <p>{data.NIK}</p>
-            <p className={classes.Label}>Nama</p>
-            <p>
-              {data.firstName} {data.lastName}
-            </p>
-            <p className={classes.Label}>Jenis Kelamin</p>
-            <p>{data.gender}</p>
-
-            <p className={classes.Label}>Tanggal Lahir</p>
-            <p>{data.dateOfBirth}</p>
-
-            <p className={classes.Label}>Email</p>
-            {edit ? (
-              <Input
-                inputType='input'
-                id='email'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                label={data.email}
-                initValue={data.email}
-                initIsValid={true}
-              />
-            ) : (
-              <p>{data.email}</p>
-            )}
-
-            <p className={classes.Label}>Alamat</p>
-            {edit ? (
-              <Input
-                inputType='input'
-                id='address'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                label='Sesuai alamat saat ini'
-                initValue={data.address}
-                initIsValid={true}
-              />
-            ) : (
-              <p>{data.address}</p>
-            )}
-
-            <p className={classes.Label}>Telepon</p>
-            {edit ? (
-              <Input
-                inputType='input'
-                id='phoneNumber'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                label={data.phoneNumber}
-                initValue={data.phoneNumber}
-                initIsValid={true}
-              />
-            ) : (
-              <p>{data.phoneNumber}</p>
-            )}
-
-            <p className={classes.Label}>Peran</p>
-            {edit ? (
-              <Input
-                inputType='input'
-                id='role'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                label={data.role}
-                initValue={data.role}
-                initIsValid={true}
-              />
-            ) : (
-              <p>{data.role}</p>
-            )}
-          </div>
           <div className={classes.RightCard}>
             <div
               className={classes.Picture}
@@ -235,6 +158,111 @@ const AdminProfile = (props) => {
                 Edit Profile
               </Button>
             )}
+          </div>
+
+          <div className={classes.LeftCard}>
+            <div className={classes.ContentWraper}>
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>NIK</p>
+                <p className={classes.LabelData}>{data.NIK}</p>
+              </div>
+
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Nama</p>
+                <p className={classes.LabelData}>
+                  {data.firstName} {data.lastName}
+                </p>
+              </div>
+            </div>
+
+            <div className={classes.ContentWraper}>
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Jenis Kelamin</p>
+                <p className={classes.LabelData}>{data.gender}</p>
+              </div>
+
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Tanggal Lahir</p>
+                <p className={classes.LabelData}>{data.dateOfBirth}</p>
+              </div>
+            </div>
+
+            <div className={classes.ContentWraper}>
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Email</p>
+                {edit ? (
+                  <Input
+                    inputType='input'
+                    id='email'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onInputHandler={onInputHandler}
+                    label={data.email}
+                    initValue={data.email}
+                    initIsValid={true}
+                  />
+                ) : (
+                  <p className={classes.LabelData}>{data.email}</p>
+                )}
+              </div>
+
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Alamat</p>
+                {edit ? (
+                  <Input
+                    inputType='input'
+                    id='address'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onInputHandler={onInputHandler}
+                    label='Sesuai alamat saat ini'
+                    initValue={data.address}
+                    initIsValid={true}
+                  />
+                ) : (
+                  <p className={classes.LabelData}>{data.address}</p>
+                )}
+              </div>
+            </div>
+
+            <div className={classes.ContentWraper}>
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Telepon</p>
+                {edit ? (
+                  <Input
+                    inputType='input'
+                    id='phoneNumber'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onInputHandler={onInputHandler}
+                    label={data.phoneNumber}
+                    initValue={data.phoneNumber}
+                    initIsValid={true}
+                  />
+                ) : (
+                  <p className={classes.LabelData}>{data.phoneNumber}</p>
+                )}
+              </div>
+
+              <div className={classes.LabelWraper}>
+                <p className={classes.Label}>Peran</p>
+                {edit ? (
+                  <Input
+                    inputType='input'
+                    id='role'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onInputHandler={onInputHandler}
+                    label={data.role}
+                    initValue={data.role}
+                    initIsValid={true}
+                  />
+                ) : (
+                  <p className={classes.LabelData}>{data.role}</p>
+                )}
+              </div>
+            </div>
+            <div className={classes.ContentWraper}></div>
           </div>
         </div>
       </div>

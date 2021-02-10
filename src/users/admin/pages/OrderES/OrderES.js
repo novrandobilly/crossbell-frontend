@@ -135,88 +135,91 @@ const OrderES = (props) => {
     content = (
       <div className={classes.Container}>
         <h1 className={classes.Header}>Order Executive Search</h1>
-        <table className={classes.Table}>
-          <thead className={classes.RowField}>
-            <tr>
-              <th>No</th>
-              <th>Order Id</th>
-              <th>Nama Perusahaan</th>
-              <th>Tanggal Order</th>
-              <th>Status</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
+        <div className={classes.TableHolder}>
+          <table className={classes.Table}>
+            <thead className={classes.RowField}>
+              <tr>
+                <th>No</th>
+                <th>Order Id</th>
+                <th>Nama Perusahaan</th>
+                <th>Tanggal Order</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
 
-          <tbody className={classes.ColumnField}>
-            {displayData.map((order, i) => (
-              <tr key={order._id}>
-                <th> {i + 1}</th>
-                <th>
-                  {' '}
-                  <Link
-                    to={`/ad/alphaomega/order/${order._id}/es`}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
-                    {order._id}
-                  </Link>
-                </th>
-                <th>
-                  {' '}
-                  <Link
-                    to={`/co/${order.companyId._id}`}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
-                    {order.companyId.companyName}
-                  </Link>
-                </th>
-                <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
-
-                <th>
-                  {props.indexIsLoading && index === i ? (
-                    <SpinnerCircle />
-                  ) : (
-                    <p
-                      className={classes.Content}
-                      style={
-                        order.status === 'Closed'
-                          ? { color: 'red' }
-                          : { color: 'green' }
-                      }
+            <tbody className={classes.ColumnField}>
+              {displayData.map((order, i) => (
+                <tr key={order._id}>
+                  <th> {i + 1}</th>
+                  <th>
+                    {' '}
+                    <Link
+                      to={`/ad/alphaomega/order/${order._id}/es`}
+                      style={{ color: 'black', textDecoration: 'none' }}
                     >
-                      {order.status}
-                    </p>
-                  )}
-                </th>
+                      {order._id}
+                    </Link>
+                  </th>
+                  <th>
+                    {' '}
+                    <Link
+                      to={`/co/${order.companyId._id}`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order.companyId.companyName}
+                    </Link>
+                  </th>
+                  <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
 
-                <th>
-                  <div className={classes.DropDown}>
-                    <button className={classes.DropButton}>
-                      <ArrowDropDownIcon />
-                    </button>
-                    <div className={classes.DropDownContent}>
-                      <button
+                  <th>
+                    {props.indexIsLoading && index === i ? (
+                      <SpinnerCircle />
+                    ) : (
+                      <p
+                        className={classes.Content}
                         style={
-                          order.status === 'Open'
-                            ? { color: 'Red' }
-                            : { color: 'gray' }
-                        }
-                        onClick={() =>
-                          updateStatusHandler({
-                            orderId: order._id,
-                            status: 'Closed',
-                            i,
-                          })
+                          order.status === 'Closed'
+                            ? { color: 'red' }
+                            : { color: 'green' }
                         }
                       >
-                        {order.status === 'Open' ? 'Close' : 'Sudah ditutup'}
+                        {order.status}
+                      </p>
+                    )}
+                  </th>
+
+                  <th>
+                    <div className={classes.DropDown}>
+                      <button className={classes.DropButton}>
+                        <ArrowDropDownIcon />
                       </button>
+                      <div className={classes.DropDownContent}>
+                        <button
+                          style={
+                            order.status === 'Open'
+                              ? { color: 'Red' }
+                              : { color: 'gray' }
+                          }
+                          onClick={() =>
+                            updateStatusHandler({
+                              orderId: order._id,
+                              status: 'Closed',
+                              i,
+                            })
+                          }
+                        >
+                          {order.status === 'Open' ? 'Close' : 'Sudah ditutup'}
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         <div
           style={{
             display: 'flex',
