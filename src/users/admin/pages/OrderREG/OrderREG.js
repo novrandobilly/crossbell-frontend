@@ -128,98 +128,100 @@ const OrderREG = (props) => {
     content = (
       <div className={classes.Container}>
         <h1 className={classes.Header}>Order Reguler (Job Slot)</h1>
-        <table className={classes.Table}>
-          <thead className={classes.RowField}>
-            <tr>
-              <th>No</th>
-              <th>Order Id</th>
-              <th>Perusahaan</th>
-              <th>Slot</th>
-              <th>Nama Paket</th>
-              <th>Tanggal Order</th>
-              <th>Tanggal Disetujui</th>
-              <th>Status</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-
-          <tbody className={classes.ColumnField}>
-            {displayData.map((order, i) => (
-              <tr key={order._id}>
-                <th> {i + 1}</th>
-                <th>
-                  <Link
-                    to={`/co/${order._id}/invoice`}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
-                    {order._id}
-                  </Link>
-                </th>
-                <th>
-                  <Link
-                    to={`/co/${order.companyId._id}`}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
-                    {order.companyId.companyName}
-                  </Link>
-                </th>
-                <th>{order.slot}</th>
-
-                <th>
-                  {' '}
-                  <Link
-                    to={`/co/${order.id}`}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
-                    {order.packageName}
-                  </Link>
-                </th>
-                <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
-                <th>
-                  {order.approvedAt
-                    ? moment(order.approvedAt).format('D MMM YYYY')
-                    : 'not approved'}
-                </th>
-
-                <th>
-                  {props.indexIsLoading && index === i ? (
-                    <Spinner />
-                  ) : order.status === 'Paid' ? (
-                    <span style={{ color: 'Green', fontWeight: 'bold' }}>
-                      Paid
-                    </span>
-                  ) : (
-                    <span style={{ color: 'Orange', fontWeight: 'bold' }}>
-                      Pending
-                    </span>
-                  )}
-                </th>
-
-                <th>
-                  <div className={classes.DropDown}>
-                    <button className={classes.DropButton}>
-                      <ArrowDropDownIcon />
-                    </button>
-                    <div className={classes.DropDownContent}>
-                      <button
-                        style={{ color: 'green' }}
-                        onClick={() =>
-                          approveOrderREGHandler({
-                            orderId: order._id,
-                            companyId: order.companyId._id,
-                            i,
-                          })
-                        }
-                      >
-                        Approve
-                      </button>
-                    </div>
-                  </div>
-                </th>
+        <div className={classes.TableHolder}>
+          <table className={classes.Table}>
+            <thead className={classes.RowField}>
+              <tr>
+                <th>No</th>
+                <th>Order Id</th>
+                <th>Perusahaan</th>
+                <th>Slot</th>
+                <th>Nama Paket</th>
+                <th>Tanggal Order</th>
+                <th>Tanggal Disetujui</th>
+                <th>Status</th>
+                <th>Aksi</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody className={classes.ColumnField}>
+              {displayData.map((order, i) => (
+                <tr key={order._id}>
+                  <th> {i + 1}</th>
+                  <th>
+                    <Link
+                      to={`/co/${order._id}/invoice`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order._id}
+                    </Link>
+                  </th>
+                  <th>
+                    <Link
+                      to={`/co/${order.companyId._id}`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order.companyId.companyName}
+                    </Link>
+                  </th>
+                  <th>{order.slot}</th>
+
+                  <th>
+                    {' '}
+                    <Link
+                      to={`/co/${order.id}`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order.packageName}
+                    </Link>
+                  </th>
+                  <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
+                  <th>
+                    {order.approvedAt
+                      ? moment(order.approvedAt).format('D MMM YYYY')
+                      : 'not approved'}
+                  </th>
+
+                  <th>
+                    {props.indexIsLoading && index === i ? (
+                      <Spinner />
+                    ) : order.status === 'Paid' ? (
+                      <span style={{ color: 'Green', fontWeight: 'bold' }}>
+                        Paid
+                      </span>
+                    ) : (
+                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>
+                        Pending
+                      </span>
+                    )}
+                  </th>
+
+                  <th>
+                    <div className={classes.DropDown}>
+                      <button className={classes.DropButton}>
+                        <ArrowDropDownIcon />
+                      </button>
+                      <div className={classes.DropDownContent}>
+                        <button
+                          style={{ color: 'green' }}
+                          onClick={() =>
+                            approveOrderREGHandler({
+                              orderId: order._id,
+                              companyId: order.companyId._id,
+                              i,
+                            })
+                          }
+                        >
+                          Approve
+                        </button>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div
           style={{
             display: 'flex',

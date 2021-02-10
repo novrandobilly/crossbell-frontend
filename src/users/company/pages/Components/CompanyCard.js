@@ -160,7 +160,7 @@ const CompanyCard = (props) => {
                 .filter((dat) => dat.releasedAt != null)
                 .map((job, i) => {
                   return (
-                    <div key={job.id}>
+                    <div key={job.id} className={classes.CardHolder}>
                       <Link to={`/jobs/${job.id}`}>
                         <div className={classes.JobCard}>
                           <div className={classes.CardHeader}>
