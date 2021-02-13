@@ -40,9 +40,14 @@
   padding: 0 2rem 0 0;
 }
 
-.ContentRight {
+.ContentWrap {
   width: 100%;
-  padding: 0 0 0 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ContentWrap > * {
+  width: 45%;
 }
 
 .ContentBottom {
@@ -86,4 +91,62 @@
 
 .RadioButton {
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .Container {
+    padding: 32px 28px;
+  }
+
+  .ContainerFlex {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 576px) {
+  .Container {
+    padding: 0;
+  }
+
+  .ContainerFlex {
+    width: 90vw;
+    padding: 0px 16px 10px 16px;
+    margin-top: 0rem;
+    border-radius: 0;
+  }
+
+  .ProfilePicture {
+    align-self: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .ContentPhone {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ContentWrap {
+    flex-direction: column;
+  }
+
+  .ContentWrap > * {
+    width: 100%;
+  }
+
+  .ContentBottom {
+    padding-left: 0;
+    text-align: left;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 440px) {
+  .Container {
+    padding-top: 0;
+  }
+
+  .ContainerFlex {
+    border-radius: 0;
+  }
 }

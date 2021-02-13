@@ -24,8 +24,6 @@ import classes from './NewJob.module.css';
 
 const NewJob = (props) => {
   const [maxSlot, setMaxSlot] = useState(null);
-
-  // const [ fieldOfWork, setFieldOfWork ] = useState('');
   const [employment, setEmployment] = useState('');
   const [open, setOpen] = useState([false, false, false]);
   const [employmentOpen, setEmploymentOpen] = useState(false);
@@ -185,7 +183,6 @@ const NewJob = (props) => {
     const elementArray = [...formState.inputs.fieldOfWork.value];
     elementArray[indexFow] = e.target.value;
     onInputHandler(elementId, elementArray, true);
-    // setFieldOfWork(e.target.value);
   };
 
   const handleEmploymentChange = (e) => {
@@ -219,6 +216,7 @@ const NewJob = (props) => {
     setOpen(openArray);
     // setOpen(true);
   };
+
   const handleEmploymentClose = () => {
     setEmploymentOpen(false);
   };
@@ -485,6 +483,7 @@ const NewJob = (props) => {
           />
         </div>
       </div>
+
       <div className={classes.AdditionalContentContainer}>
         <h2 className={classes.AdditionalContentHeader}>Durasi Tayang</h2>
         <div className={classes.DurationContent}>

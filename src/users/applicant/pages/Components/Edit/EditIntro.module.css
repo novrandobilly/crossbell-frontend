@@ -37,6 +37,16 @@
   padding-top: 2rem;
 }
 
+.ContentWrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ContentWrap > * {
+  width: 45%;
+}
+
 .ContentTop {
   width: 100%;
   display: flex;
@@ -79,11 +89,6 @@ input[type='file'] {
 }
 
 .ContentLeft {
-  width: 100%;
-  padding: 0 1rem;
-}
-
-.ContentRight {
   width: 100%;
   padding: 0 1rem;
 }
@@ -143,9 +148,14 @@ input[type='file'] {
 }
 
 @media (max-width: 576px) {
+  .Container {
+    padding: 0;
+  }
+
   .ContainerFlex {
-    width: 50vh;
-    padding: 6px 16px;
+    width: 100vh;
+    padding: 0px 16px 10px 16px;
+    border-radius: 0;
   }
 
   .ProfilePicture {
@@ -154,13 +164,17 @@ input[type='file'] {
     margin-bottom: 20px;
   }
 
-  .ContentTop {
-    display: none;
-  }
-
   .ContentPhone {
     display: flex;
     flex-direction: column;
+  }
+
+  .ContentWrap {
+    flex-direction: column;
+  }
+
+  .ContentWrap > * {
+    width: 100%;
   }
 
   .ContentBottom {

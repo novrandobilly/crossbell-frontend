@@ -253,225 +253,227 @@ const EditUnreleasedJob = (props) => {
 
         <div className={classes.Content}>
           <div className={classes.ContentLeft}>
-            <Input
-              inputType='input'
-              id='jobTitle'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Job Title*'
-              initValue={loadedJob.jobTitle || ''}
-              initIsValid={loadedJob.jobTitle}
-            />
+            <div className={classes.ContentWrap}>
+              <Input
+                inputType='input'
+                id='jobTitle'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Job Title*'
+              />
 
-            <Input
-              inputType='input'
-              id='jobQualification'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Job Qualification*'
-              initValue={loadedJob.jobQualification || ''}
-              initIsValid={loadedJob.jobQualification}
-            />
+              <Input
+                inputType='input'
+                id='placementLocation'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Lokasi Penempatan*'
+              />
+            </div>
 
-            <FormControl
-              className={classes.FormControl}
-              style={{ marginTop: '.68rem' }}
-            >
-              <InputLabel id='employment' style={{ fontSize: '1rem' }}>
-                Jenis Kontrak*
-              </InputLabel>
+            <div className={classes.ContentWrap}>
+              <Input
+                inputType='input'
+                id='jobQualification'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Job Qualification*'
+              />
+              <Input
+                inputType='input'
+                id='technicalRequirement'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Technical Requirement*'
+              />
+            </div>
 
-              <Select
-                id='employment'
-                name='employment'
-                open={employmentOpen}
-                onClose={handleEmploymentClose}
-                onOpen={handleEmploymentOpen}
-                value={employment}
-                onChange={handleEmploymentChange}
-                style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
-                }}
+            <div className={classes.ContentWrap}>
+              <FormControl
+                className={classes.FormControl}
+                style={{ marginTop: '.68rem' }}
               >
-                <MenuItem
-                  id={0}
-                  value='permanent'
-                  style={{ fontSize: '0.9rem' }}
+                <InputLabel id='employment' style={{ fontSize: '1rem' }}>
+                  Jenis Kontrak*
+                </InputLabel>
+
+                <Select
+                  id='employment'
+                  name='employment'
+                  open={employmentOpen}
+                  onClose={handleEmploymentClose}
+                  onOpen={handleEmploymentOpen}
+                  value={employment}
+                  onChange={handleEmploymentChange}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                  }}
                 >
-                  Permanen
-                </MenuItem>
-                <MenuItem
-                  id={0}
-                  value='contract'
-                  style={{ fontSize: '0.9rem' }}
+                  <MenuItem
+                    id={0}
+                    value='permanent'
+                    style={{ fontSize: '0.9rem' }}
+                  >
+                    Permanen
+                  </MenuItem>
+                  <MenuItem
+                    id={0}
+                    value='contract'
+                    style={{ fontSize: '0.9rem' }}
+                  >
+                    Kontrak
+                  </MenuItem>
+                  <MenuItem
+                    id={0}
+                    value='intern'
+                    style={{ fontSize: '0.9rem' }}
+                  >
+                    Intern/Magang
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <Input
+                inputType='input'
+                id='emailRecipient'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Email Recipient*'
+                helperText='Please input a valid email address'
+              />
+            </div>
+
+            <div className={classes.ContentWrap}>
+              <FormControl
+                className={classes.FormControl}
+                style={{ marginTop: '.68rem' }}
+              >
+                <InputLabel id='fieldOfWorkLabel1' style={{ fontSize: '1rem' }}>
+                  Bidang pekerjaan (Wajib)
+                </InputLabel>
+
+                <Select
+                  labelId='fieldOfWorkLabel1'
+                  id='fieldOfWork-1'
+                  name='fieldOfWork-1'
+                  open={open[0]}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={formState.inputs.fieldOfWork.value[0]}
+                  onChange={fowHandler}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                  }}
                 >
-                  Kontrak
-                </MenuItem>
-                <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
-                  Intern/Magang
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl
-              className={classes.FormControl}
-              style={{ marginTop: '1.3rem' }}
-            >
-              <InputLabel id='fieldOfWorkLabel1' style={{ fontSize: '1rem' }}>
-                Bidang pekerjaan (Wajib)
-              </InputLabel>
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Pilih</em>
+                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: '0.9rem' }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
 
-              <Select
-                labelId='fieldOfWorkLabel1'
-                id='fieldOfWork-1'
-                name='fieldOfWork-1'
-                open={open[0]}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={formState.inputs.fieldOfWork.value[0]}
-                onChange={fowHandler}
-                style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
-                }}
+              <FormControl
+                className={classes.FormControl}
+                style={{ marginTop: '.68rem' }}
               >
-                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                  <em>Pilih</em>
-                </MenuItem>
-                {WorkFieldData.sort().map((work, i) => {
-                  return (
-                    <MenuItem
-                      id={i}
-                      value={work}
-                      style={{ fontSize: '0.9rem' }}
-                      key={i}
-                    >
-                      {work}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+                <InputLabel id='fieldOfWorkLabel2' style={{ fontSize: '1rem' }}>
+                  Bidang pekerjaan (Opsional)
+                </InputLabel>
 
-            <FormControl
-              className={classes.FormControl}
-              style={{ marginTop: '1.2rem' }}
-            >
-              <InputLabel id='fieldOfWorkLabel3' style={{ fontSize: '1rem' }}>
-                Bidang pekerjaan (Opsional)
-              </InputLabel>
-
-              <Select
-                labelId='fieldOfWorkLabel3'
-                id='fieldOfWork-3'
-                name='fieldOfWork-3'
-                open={open[2]}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={formState.inputs.fieldOfWork.value[2]}
-                onChange={fowHandler}
-                style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
-                }}
+                <Select
+                  labelId='fieldOfWorkLabel2'
+                  id='fieldOfWork-2'
+                  name='fieldOfWork-2'
+                  open={open[1]}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={formState.inputs.fieldOfWork.value[1]}
+                  onChange={fowHandler}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                  }}
+                >
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Pilih</em>
+                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: '0.9rem' }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </div>
+            <div className={classes.ContentWrap}>
+              <FormControl
+                className={classes.FormControl}
+                style={{ marginTop: '1.2rem' }}
               >
-                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                  <em>Pilih</em>
-                </MenuItem>
-                {WorkFieldData.sort().map((work, i) => {
-                  return (
-                    <MenuItem
-                      id={i}
-                      value={work}
-                      style={{ fontSize: '0.9rem' }}
-                      key={i}
-                    >
-                      {work}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </div>
+                <InputLabel id='fieldOfWorkLabel3' style={{ fontSize: '1rem' }}>
+                  Bidang pekerjaan (Opsional)
+                </InputLabel>
 
-          <div className={classes.ContentRight}>
-            <Input
-              inputType='input'
-              id='placementLocation'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Lokasi Penempatan*'
-              initValue={loadedJob.placementLocation || ''}
-              initIsValid={loadedJob.placementLocation}
-            />
-
-            <Input
-              inputType='input'
-              id='technicalRequirement'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Technical Requirement*'
-              initValue={loadedJob.technicalRequirement || ''}
-              initIsValid={loadedJob.technicalRequirement}
-            />
-
-            <Input
-              inputType='input'
-              id='emailRecipient'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Email Recipient*'
-              helperText='Please input a valid email address'
-              initValue={loadedJob.emailRecipient || ''}
-              initIsValid={loadedJob.emailRecipient}
-            />
-
-            <FormControl
-              className={classes.FormControl}
-              style={{ marginTop: '.68rem' }}
-            >
-              <InputLabel id='fieldOfWorkLabel2' style={{ fontSize: '1rem' }}>
-                Bidang pekerjaan (Opsional)
-              </InputLabel>
-
-              <Select
-                labelId='fieldOfWorkLabel2'
-                id='fieldOfWork-2'
-                name='fieldOfWork-2'
-                open={open[1]}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={formState.inputs.fieldOfWork.value[1]}
-                onChange={fowHandler}
-                style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
-                }}
-              >
-                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                  <em>Pilih</em>
-                </MenuItem>
-                {WorkFieldData.sort().map((work, i) => {
-                  return (
-                    <MenuItem
-                      id={i}
-                      value={work}
-                      style={{ fontSize: '0.9rem' }}
-                      key={i}
-                    >
-                      {work}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+                <Select
+                  labelId='fieldOfWorkLabel3'
+                  id='fieldOfWork-3'
+                  name='fieldOfWork-3'
+                  open={open[2]}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={formState.inputs.fieldOfWork.value[2]}
+                  onChange={fowHandler}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                  }}
+                >
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Pilih</em>
+                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: '0.9rem' }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </div>
           </div>
         </div>
+
         <div style={{ width: '95%', marginTop: '2rem' }}>
           <Input
             inputType='textarea'
@@ -484,6 +486,7 @@ const EditUnreleasedJob = (props) => {
             initIsValid={loadedJob.jobDescriptions}
           />
         </div>
+
         <div className={classes.AdditionalContentContainer}>
           <h2 className={classes.AdditionalContentHeader}>
             Informasi Tambahan
@@ -513,6 +516,7 @@ const EditUnreleasedJob = (props) => {
             />
           </div>
         </div>
+
         <div className={classes.AdditionalContentContainer}>
           <h2 className={classes.AdditionalContentHeader}>Durasi Tayang</h2>
           <div className={classes.AdditionalContent}>
@@ -532,6 +536,7 @@ const EditUnreleasedJob = (props) => {
               />
               <span>minggu</span>
             </div>
+
             <div className={classes.RemainingSlot}>
               <h2>
                 Sisa slot:{' '}
