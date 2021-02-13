@@ -132,99 +132,102 @@ const CompanyOrderList = (props) => {
     content = (
       <div className={classes.Container}>
         <h2>Order List</h2>
-        <table className={classes.Table}>
-          <thead className={classes.RowField}>
-            <tr>
-              <th>No</th>
-              <th>Order Id</th>
-              <th>Jenis Pesanan</th>
-              <th>Tanggal Order</th>
-              <th>Tanggal Approve</th>
-              <th>Jatuh Tempo</th>
-              <th>Sisa Slot</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+        <div className={classes.TableHolder}>
+          <table className={classes.Table}>
+            <thead className={classes.RowField}>
+              <tr>
+                <th>No</th>
+                <th>Order Id</th>
+                <th>Jenis Pesanan</th>
+                <th>Tanggal Order</th>
+                <th>Tanggal Approve</th>
+                <th>Jatuh Tempo</th>
+                <th>Sisa Slot</th>
+                <th>Status</th>
+              </tr>
+            </thead>
 
-          <tbody className={classes.ColumnField}>
-            {displayData.map((order, i) => {
-              let dueDate = Math.ceil(
-                moment(order.dueDate).diff(moment(), 'days', true)
-              );
-              return (
-                <tr key={order._id}>
-                  <td> {i + 1}</td>
-                  <td>
-                    <Link
-                      to={
-                        order.slot || order.amount
-                          ? `/co/${order._id}/invoice`
-                          : `/co/order/${order._id}/es`
-                      }
-                      key={i}
-                    >
-                      {order._id}
-                    </Link>
-                  </td>
+            <tbody className={classes.ColumnField}>
+              {displayData.map((order, i) => {
+                let dueDate = Math.ceil(
+                  moment(order.dueDate).diff(moment(), 'days', true)
+                );
+                return (
+                  <tr key={order._id}>
+                    <td> {i + 1}</td>
+                    <td>
+                      <Link
+                        to={
+                          order.slot || order.amount
+                            ? `/co/${order._id}/invoice`
+                            : `/co/order/${order._id}/es`
+                        }
+                        key={i}
+                      >
+                        {order._id}
+                      </Link>
+                    </td>
 
-                  <td>
-                    {order.slot
-                      ? 'Reguler'
-                      : order.amount
-                      ? 'Bulk Candidate'
-                      : 'Executive Search'}
-                  </td>
-                  <td>{moment(order.createdAt).format('D MMM YYYY')}</td>
-                  <td style={{ color: 'green' }}>
-                    {order.approvedAt
-                      ? moment(order.approvedAt).format('D MMM YYYY')
-                      : '-'}
-                  </td>
-                  <td>
-                    <p
-                      style={
-                        dueDate === 0
-                          ? { color: 'gray' }
-                          : dueDate <= 3
-                          ? { color: 'red' }
-                          : dueDate <= 7
-                          ? { color: '#FF8C00' }
-                          : { color: 'green' }
-                      }
-                    >
-                      {order.status === 'Pending'
-                        ? `${dueDate} day`
-                        : order.status === 'Open'
-                        ? 'no due'
-                        : '0 day'}
-                    </p>
-                  </td>
-                  <td>
-                    {order.slot
-                      ? order.slot
-                      : order.amount
-                      ? order.amount
-                      : '-'}
-                  </td>
-                  <td>
-                    <p
-                      className={classes.Content}
-                      style={
-                        order.status === 'Closed'
-                          ? { color: 'gray' }
-                          : order.status === 'Pending'
-                          ? { color: 'orange' }
-                          : { color: 'green' }
-                      }
-                    >
-                      {order.status}
-                    </p>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td>
+                      {order.slot
+                        ? 'Reguler'
+                        : order.amount
+                        ? 'Bulk Candidate'
+                        : 'Executive Search'}
+                    </td>
+                    <td>{moment(order.createdAt).format('D MMM YYYY')}</td>
+                    <td style={{ color: 'green' }}>
+                      {order.approvedAt
+                        ? moment(order.approvedAt).format('D MMM YYYY')
+                        : '-'}
+                    </td>
+                    <td>
+                      <p
+                        style={
+                          dueDate === 0
+                            ? { color: 'gray' }
+                            : dueDate <= 3
+                            ? { color: 'red' }
+                            : dueDate <= 7
+                            ? { color: '#FF8C00' }
+                            : { color: 'green' }
+                        }
+                      >
+                        {order.status === 'Pending'
+                          ? `${dueDate} day`
+                          : order.status === 'Open'
+                          ? 'no due'
+                          : '0 day'}
+                      </p>
+                    </td>
+                    <td>
+                      {order.slot
+                        ? order.slot
+                        : order.amount
+                        ? order.amount
+                        : '-'}
+                    </td>
+                    <td>
+                      <p
+                        className={classes.Content}
+                        style={
+                          order.status === 'Closed'
+                            ? { color: 'gray' }
+                            : order.status === 'Pending'
+                            ? { color: 'orange' }
+                            : { color: 'green' }
+                        }
+                      >
+                        {order.status}
+                      </p>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
         <div
           style={{
             display: 'flex',

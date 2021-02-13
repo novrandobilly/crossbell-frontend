@@ -7,11 +7,9 @@
 
 .FeedCard {
   margin: 0.5rem;
-  width: 70rem;
-  height: 13rem;
+  width: 60%;
   border-radius: 5px;
   position: relative;
-  overflow-x: hidden;
   background-color: white;
   box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.2);
 }
@@ -20,8 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 100%;
-  padding: 5%;
+  padding: 32px;
   text-align: start;
 }
 
@@ -34,14 +31,13 @@
 
 .FeedContact {
   color: rgba(0, 0, 0, 0.4);
-  margin-bottom: 2rem;
+  margin-bottom: 16px;
 }
 
 .Date {
   color: rgba(0, 0, 0, 0.8);
   font-size: 0.8rem;
-  margin-bottom: 2rem;
-  margin-top: 1rem;
+  margin-top: 16px;
 }
 
 .DeleteFeed {
@@ -62,7 +58,6 @@
 }
 
 .ReplyForm {
-  padding-bottom: 1rem;
   width: 100%;
 }
 
@@ -77,4 +72,7 @@
   border: none;
   outline: none;
   margin-top: 1rem;
+}
+
+@media (max-width: 576px) {
 }

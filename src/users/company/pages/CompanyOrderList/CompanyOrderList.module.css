@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  align-items: center;
-  width: 90%;
+  width: 80%;
 }
 
 .Container a {
@@ -11,16 +10,24 @@
   color: black;
 }
 .Container h2 {
-  align-self: start;
+  width: 100%;
+  text-align: left;
+}
+
+.TableHolder {
+  overflow-y: hidden;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  margin-bottom: 2rem;
+  border-radius: 6px;
+  width: 100%;
 }
 
 .Table {
-  width: 100%;
   border-collapse: collapse;
   box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
   background-color: white;
-  border-radius: 10px;
-  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .Table tr {
@@ -31,20 +38,6 @@
 .Table th {
   text-align: left;
   font-weight: normal;
-}
-
-Table tr:first-child th:first-child,
-Table.Info tr:first-child td:first-child {
-  border-top-left-radius: 6px;
-}
-
-Table tr:first-child th:last-child,
-Table.Info tr:first-child td:last-child {
-  border-top-right-radius: 6px;
-}
-
-Table tr:last-child td:last-child {
-  border-bottom-right-radius: 6px;
 }
 
 .RowField th {
@@ -65,8 +58,7 @@ Table tr:last-child td:last-child {
   background-color: rgba(170, 170, 170, 0.1);
 }
 
-/* 
 @media (max-width: 800px) {
   .Table {
   }
-} */
+}

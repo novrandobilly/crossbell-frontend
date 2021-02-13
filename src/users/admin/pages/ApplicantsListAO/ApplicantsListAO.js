@@ -301,29 +301,84 @@ const ApplicantListAO = (props) => {
               </div>
             </div>
           </div>
-          <table className={classes.Table}>
-            <thead className={classes.RowField}>
-              <tr>
-                <th>No</th>
-                <th>Id</th>
-                <th>Applicant Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
 
-            {find ? (
-              <tbody className={classes.ColumnField}>
-                {displayData &&
-                  displayData
-                    .filter((app) => app.status === filter)
-                    .map((app, i) => (
+          <div className={classes.TableHolder}>
+            <table className={classes.Table}>
+              <thead className={classes.RowField}>
+                <tr>
+                  <th>No</th>
+                  <th>Id</th>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              {find ? (
+                <tbody className={classes.ColumnField}>
+                  {displayData &&
+                    displayData
+                      .filter((app) => app.status === filter)
+                      .map((app, i) => (
+                        <tr key={app.id}>
+                          <th>{i + 1}</th>
+
+                          <th>
+                            <Link
+                              to={`/ap/${app.id}`}
+                              style={{ color: 'black', textDecoration: 'none' }}
+                            >
+                              {app.id}
+                            </Link>
+                          </th>
+
+                          <th>
+                            <div className={classes.NameRow}>
+                              <div className={classes.ApplicantName}>
+                                {app.firstName} {app.lastName}
+                              </div>
+                              <p />
+                              {app.headline}
+                            </div>
+                          </th>
+                          <th>{app.email}</th>
+                          <th
+                            style={
+                              app.address
+                                ? { color: 'black' }
+                                : { color: 'rgba(255,0,0,0.7)' }
+                            }
+                          >
+                            {app.address ? app.address : 'no data'}
+                          </th>
+
+                          <th>
+                            <div className={classes.DropDown}>
+                              <button className={classes.DropButton}>
+                                <ArrowDropDownIcon />
+                              </button>
+                              <div className={classes.DropDownContent}>
+                                <button style={{ color: 'Green' }}>
+                                  Activate
+                                </button>
+                                <button style={{ color: 'red' }}>Block</button>
+                              </div>
+                            </div>
+                          </th>
+                        </tr>
+                      ))}
+                </tbody>
+              ) : (
+                <tbody className={classes.ColumnField}>
+                  {displayData &&
+                    displayData.map((app, i) => (
                       <tr key={app.id}>
                         <th>{i + 1}</th>
 
                         <th>
+                          {' '}
                           <Link
                             to={`/ap/${app.id}`}
                             style={{ color: 'black', textDecoration: 'none' }}
@@ -338,7 +393,7 @@ const ApplicantListAO = (props) => {
                               {app.firstName} {app.lastName}
                             </div>
                             <p />
-                            {app.headline}
+                            {app.headline ? app.headline : 'No info'}
                           </div>
                         </th>
                         <th>{app.email}</th>
@@ -351,7 +406,15 @@ const ApplicantListAO = (props) => {
                         >
                           {app.address ? app.address : 'no data'}
                         </th>
-
+                        <th
+                          style={
+                            app.status
+                              ? { color: 'green', fontWeight: '600' }
+                              : { color: 'red', fontWeight: '600' }
+                          }
+                        >
+                          {app.status ? 'Active' : 'Blocked'}
+                        </th>
                         <th>
                           <div className={classes.DropDown}>
                             <button className={classes.DropButton}>
@@ -367,68 +430,10 @@ const ApplicantListAO = (props) => {
                         </th>
                       </tr>
                     ))}
-              </tbody>
-            ) : (
-              <tbody className={classes.ColumnField}>
-                {displayData &&
-                  displayData.map((app, i) => (
-                    <tr key={app.id}>
-                      <th>{i + 1}</th>
-
-                      <th>
-                        {' '}
-                        <Link
-                          to={`/ap/${app.id}`}
-                          style={{ color: 'black', textDecoration: 'none' }}
-                        >
-                          {app.id}
-                        </Link>
-                      </th>
-
-                      <th>
-                        <div className={classes.NameRow}>
-                          <div className={classes.ApplicantName}>
-                            {app.firstName} {app.lastName}
-                          </div>
-                          <p />
-                          {app.headline ? app.headline : 'No info'}
-                        </div>
-                      </th>
-                      <th>{app.email}</th>
-                      <th
-                        style={
-                          app.address
-                            ? { color: 'black' }
-                            : { color: 'rgba(255,0,0,0.7)' }
-                        }
-                      >
-                        {app.address ? app.address : 'no data'}
-                      </th>
-                      <th
-                        style={
-                          app.status
-                            ? { color: 'green', fontWeight: '600' }
-                            : { color: 'red', fontWeight: '600' }
-                        }
-                      >
-                        {app.status ? 'Active' : 'Blocked'}
-                      </th>
-                      <th>
-                        <div className={classes.DropDown}>
-                          <button className={classes.DropButton}>
-                            <ArrowDropDownIcon />
-                          </button>
-                          <div className={classes.DropDownContent}>
-                            <button style={{ color: 'Green' }}>Activate</button>
-                            <button style={{ color: 'red' }}>Block</button>
-                          </div>
-                        </div>
-                      </th>
-                    </tr>
-                  ))}
-              </tbody>
-            )}
-          </table>
+                </tbody>
+              )}
+            </table>
+          </div>
           <div
             style={{
               display: 'flex',

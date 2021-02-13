@@ -38,7 +38,7 @@ const CompanyJobList = (props) => {
           <div className={classes.DivContainer}>
             {data.map((job, i) => {
               return (
-                <div key={job.id}>
+                <div key={job.id} className={classes.CardHolder}>
                   <Link
                     to={
                       job.expiredDate
