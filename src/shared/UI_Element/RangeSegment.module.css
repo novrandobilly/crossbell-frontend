@@ -19,3 +19,10 @@
   font-size: 1.7rem;
   font-weight: bold;
 }
+
+@media (max-width: 576px) {
+  .Wraper {
+    width: 70vh;
+    padding: 6px 16px;
+  }
+}

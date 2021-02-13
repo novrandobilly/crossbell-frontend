@@ -85,51 +85,43 @@ const CompanyOrderForm = (props) => {
   let formContent = (
     <React.Fragment>
       <div className={classes.PackageList}>
-        <div>
-          <OrderComponent
-            title='Bronze'
-            price={ORIGINAL_PRICE}
-            slot='1 slot'
-            perks={['1 slot = 2 minggu penayangan iklan']}
-            createOrder={props.createOrder}
-          />
-        </div>
-        <div>
-          <OrderComponent
-            title='Silver'
-            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
-            slot='2 - 4 slot'
-            perks={[
-              '1 slot = 2 minggu penayangan iklan',
-              'Discount per slot sebesar 5%',
-            ]}
-            createOrder={props.createOrder}
-          />
-        </div>
-        <div>
-          <OrderComponent
-            title='Gold'
-            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
-            slot='5 - 9 slot'
-            perks={[
-              '1 slot = 2 minggu penayangan iklan',
-              'Discount per slot sebesar 10%',
-            ]}
-            createOrder={props.createOrder}
-          />
-        </div>
-        <div>
-          <OrderComponent
-            title='Platinum'
-            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
-            slot='>9 slot'
-            perks={[
-              '1 slot = 2 minggu penayangan iklan',
-              'Discount per slot sebesar 15%',
-            ]}
-            createOrder={props.createOrder}
-          />
-        </div>
+        <OrderComponent
+          title='Bronze'
+          price={ORIGINAL_PRICE}
+          slot='1 slot'
+          perks={['1 slot = 2 minggu penayangan iklan']}
+          createOrder={props.createOrder}
+        />
+        <OrderComponent
+          title='Silver'
+          price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+          slot='2 - 4 slot'
+          perks={[
+            '1 slot = 2 minggu penayangan iklan',
+            'Discount per slot sebesar 5%',
+          ]}
+          createOrder={props.createOrder}
+        />
+        <OrderComponent
+          title='Gold'
+          price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
+          slot='5 - 9 slot'
+          perks={[
+            '1 slot = 2 minggu penayangan iklan',
+            'Discount per slot sebesar 10%',
+          ]}
+          createOrder={props.createOrder}
+        />
+        <OrderComponent
+          title='Platinum'
+          price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
+          slot='>9 slot'
+          perks={[
+            '1 slot = 2 minggu penayangan iklan',
+            'Discount per slot sebesar 15%',
+          ]}
+          createOrder={props.createOrder}
+        />
       </div>
       <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
         <div className={classes.InputAmount}>

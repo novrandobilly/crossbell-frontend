@@ -1,297 +1,419 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_MIN,
+  VALIDATOR_EMAIL,
+  VALIDATOR_ALWAYSTRUE,
+} from '../../../../shared/utils/validator';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import Modal from '../../../../shared/UI_Element/Modal';
-// import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Button from '@material-ui/core/Button';
 import Input from '../../../../shared/UI_Element/Input';
+import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
 
 import classes from './OrderBCForm.module.css';
 
-const OrderBCForm = props => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			education: {
-				value: '',
-				isValid: false
-			},
-			gender: {
-				value: '',
-				isValid: false
-			},
-			note: {
-				value: '',
-				isValid: true
-			},
-			jobFunction: {
-				value: '',
-				isValid: false
-			},
-			emailRecipient: {
-				value: '',
-				isValid: false
-			},
-			amount: {
-				value: '',
-				isValid: false
-			},
-			location: {
-				value: false,
-				isValid: true
-			},
-			shift: {
-				value: false,
-				isValid: true
-			},
-			min: {
-				value: '',
-				isValid: false
-			},
-			max: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+const OrderBCForm = (props) => {
+  const [employment, setEmployment] = useState('');
+  const [open, setOpen] = useState(false);
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+  const [formState, onInputHandler] = useForm(
+    {
+      education: {
+        value: '',
+        isValid: false,
+      },
+      gender: {
+        value: '',
+        isValid: false,
+      },
+      note: {
+        value: '',
+        isValid: true,
+      },
+      jobFunction: {
+        value: '',
+        isValid: false,
+      },
+      emailRecipient: {
+        value: '',
+        isValid: false,
+      },
+      amount: {
+        value: '',
+        isValid: false,
+      },
+      location: {
+        value: false,
+        isValid: true,
+      },
+      shift: {
+        value: false,
+        isValid: true,
+      },
+      min: {
+        value: '',
+        isValid: false,
+      },
+      max: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false
+  );
 
-		if (!formState.formIsValid) {
-			return props.createOrderFail();
-		}
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-		const orderData = {
-			invoiceId: props.auth.userId.slice(0, 6),
-			companyId: props.auth.userId,
-			token: props.auth.token,
-			education: formState.inputs.education.value,
-			gender: formState.inputs.gender.value,
-			location: formState.inputs.location.value,
-			shift: formState.inputs.shift.value,
-			min: formState.inputs.min.value,
-			max: formState.inputs.max.value,
-			note: formState.inputs.note.value,
-			jobFunction: formState.inputs.jobFunction.value,
-			emailRecipient: formState.inputs.emailRecipient.value,
-			amount: formState.inputs.amount.value
-		};
-		try {
-			console.log('this run');
-			const res = await props.createOrderCandidate(orderData);
-			if (res) {
-				console.log(res);
-				props.history.push(`/co/${res.order.id}/invoice`);
-			} else {
-				console.log('no res detected');
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    if (!formState.formIsValid) {
+      return props.createOrderFail();
+    }
 
-	const onChangeHandler = e => {
-		const elementId = e.target.name;
-		const elementValue = e.target.value;
-		onInputHandler(elementId, elementValue, true);
-	};
+    const orderData = {
+      invoiceId: props.auth.userId.slice(0, 6),
+      companyId: props.auth.userId,
+      token: props.auth.token,
+      education: formState.inputs.education.value,
+      gender: formState.inputs.gender.value,
+      location: formState.inputs.location.value,
+      shift: formState.inputs.shift.value,
+      min: formState.inputs.min.value,
+      max: formState.inputs.max.value,
+      note: formState.inputs.note.value,
+      jobFunction: formState.inputs.jobFunction.value,
+      emailRecipient: formState.inputs.emailRecipient.value,
+      amount: formState.inputs.amount.value,
+    };
+    try {
+      console.log('this run');
+      const res = await props.createOrderCandidate(orderData);
+      if (res) {
+        console.log(res);
+        props.history.push(`/co/${res.order.id}/invoice`);
+      } else {
+        console.log('no res detected');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	const checkHandler = e => {
-		const element = document.getElementById(e.target.name);
-		onInputHandler(e.target.name, element.checked, true);
-	};
+  const onChangeHandler = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    onInputHandler(elementId, elementValue, true);
+  };
 
-	// let formContent = <SpinnerCircle />;
+  const checkHandler = (e) => {
+    const element = document.getElementById(e.target.name);
+    onInputHandler(e.target.name, element.checked, true);
+  };
 
-	// if (!props.isLoading && data) {
-	let formContent = (
-		<React.Fragment>
-			<div className={classes.ContainerFlex}>
-				<p className={classes.FormTitle}>Order bulk candidates</p>
+  const handleChange = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    onInputHandler(elementId, elementValue, true);
+    setEmployment(e.target.value);
+  };
 
-				<div className={classes.FormRow}>
-					<div className={classes.EditLabel}>
-						<div className={classes.Inputs}>
-							<div className={classes.RadioGroup}>
-								<p className={classes.RadioLabel}>Pendidikan</p>
-								<div className={classes.RadioGroupInput} onChange={onChangeHandler}>
-									<input type='radio' value='SMA' name='education' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>SMA</p>
-									<input type='radio' value='SMK' name='education' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>SMK</p>
-									<input type='radio' value='D3' name='education' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>D3</p>
-									<input type='radio' value='S1' name='education' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>S1</p>
-									<input type='radio' value='S2' name='education' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>S2</p>
-									<input type='radio' value='S3' name='education' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>S3</p>
-								</div>
-							</div>
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-							<div>
-								<p className={classes.AgeLabel}>Umur</p>
-								<div className={classes.AgeGroup}>
-									<Input
-										inputType='number'
-										id='min'
-										InputClass='Age'
-										validatorMethod={[ VALIDATOR_MIN(1) ]}
-										onInputHandler={onInputHandler}
-										type='number'
-										initValue='0'
-										min='0'
-										step='1'
-										label='Min'
-									/>
-									<Input
-										InputType='number'
-										id='max'
-										InputClass='Age'
-										labelClass='Range'
-										validatorMethod={[ VALIDATOR_MIN(1) ]}
-										onInputHandler={onInputHandler}
-										type='number'
-										initValue='0'
-										min='0'
-										step='1'
-										label='Max'
-									/>
-								</div>
-							</div>
-						</div>
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-						<div className={classes.Inputs}>
-							<div onChange={onChangeHandler} className={classes.RadioGroup}>
-								<p className={classes.RadioLabel}>Jenis kelamin</p>
-								<div className={classes.RadioGroupInput}>
-									<input type='radio' value='pria' name='gender' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>Pria</p>
-									<input type='radio' value='wanita' name='gender' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioText}>Wanita</p>
-									<input type='radio' value='bebas' name='gender' className={classes.RadioValue} />{' '}
-									<p className={classes.RadioTextGender}>Keduanya</p>
-								</div>
-							</div>
+  let formContent = <SpinnerCircle />;
 
-							<div className={classes.CandidateAmount}>
-								<Input
-									inputType='number'
-									id='amount'
-									InputClass='Amount'
-									validatorMethod={[ VALIDATOR_MIN(1) ]}
-									onInputHandler={onInputHandler}
-									type='number'
-									initValue='0'
-									min='0'
-									step='1'
-									label='Jumlah kandidat*'
-								/>
-							</div>
-						</div>
+  if (!props.isLoading) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Order bulk candidates</p>
 
-						<div className={classes.CheckInputs}>
-							<div className={classes.CheckGroup}>
-								<input
-									type='checkbox'
-									value={formState.inputs.location.value}
-									name='location'
-									id='location'
-									className={classes.CheckValue}
-									onChange={checkHandler}
-								/>
-								<p className={classes.CheckText}>Bersedia ditempatkan diluar kota asal</p>
-							</div>
-							<div className={classes.CheckGroup}>
-								<input
-									type='checkbox'
-									value={formState.inputs.location.value}
-									name='shift'
-									id='shift'
-									className={classes.CheckValue}
-									onChange={checkHandler}
-								/>
-								<p className={classes.CheckText}>Bersedia bekerja secara shift</p>
-							</div>
-						</div>
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <div className={classes.Inputs}>
+                <div className={classes.RadioGroup}>
+                  <p className={classes.RadioLabel}>Pendidikan</p>
+                  <div
+                    className={classes.RadioGroupInput}
+                    onChange={onChangeHandler}
+                  >
+                    <input
+                      type='radio'
+                      value='SMA'
+                      name='education'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>SMA</p>
+                    <input
+                      type='radio'
+                      value='SMK'
+                      name='education'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>SMK</p>
+                    <input
+                      type='radio'
+                      value='D3'
+                      name='education'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>D3</p>
+                    <input
+                      type='radio'
+                      value='S1'
+                      name='education'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>S1</p>
+                    <input
+                      type='radio'
+                      value='S2'
+                      name='education'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>S2</p>
+                    <input
+                      type='radio'
+                      value='S3'
+                      name='education'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>S3</p>
+                  </div>
+                </div>
 
-						<div>
-							<Input
-								inputType='input'
-								id='jobFunction'
-								inputClass='Position'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Posisi pekerjaan yang ditawarkan*'
-							/>
-						</div>
-						<div style={{ marginBottom: '1rem' }}>
-							<Input
-								inputType='input'
-								id='emailRecipient'
-								inputClass='Position'
-								validatorMethod={[ VALIDATOR_EMAIL() ]}
-								onInputHandler={onInputHandler}
-								label='Email penerima*'
-							/>
-						</div>
+                <div>
+                  <p className={classes.AgeLabel}>Umur</p>
+                  <div className={classes.AgeGroup}>
+                    <Input
+                      inputType='number'
+                      id='min'
+                      InputClass='Age'
+                      validatorMethod={[VALIDATOR_MIN(1)]}
+                      onInputHandler={onInputHandler}
+                      type='number'
+                      initValue='0'
+                      min='0'
+                      step='1'
+                      label='Min'
+                    />
+                    <Input
+                      InputType='number'
+                      id='max'
+                      InputClass='Age'
+                      labelClass='Range'
+                      validatorMethod={[VALIDATOR_MIN(1)]}
+                      onInputHandler={onInputHandler}
+                      type='number'
+                      initValue='0'
+                      min='0'
+                      step='1'
+                      label='Max'
+                    />
+                  </div>
+                </div>
+              </div>
 
-						<Input
-							inputType='textarea'
-							id='note'
-							InputClass='JobSpec'
-							validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-							onInputHandler={onInputHandler}
-							label='Catatan tambahan*'
-						/>
-					</div>
-				</div>
+              <div className={classes.Inputs}>
+                <div onChange={onChangeHandler} className={classes.RadioGroup}>
+                  <p className={classes.RadioLabel}>Jenis kelamin</p>
+                  <div className={classes.RadioGroupInput}>
+                    <input
+                      type='radio'
+                      value='pria'
+                      name='gender'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>Pria</p>
+                    <input
+                      type='radio'
+                      value='wanita'
+                      name='gender'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioText}>Wanita</p>
+                    <input
+                      type='radio'
+                      value='bebas'
+                      name='gender'
+                      className={classes.RadioValue}
+                    />{' '}
+                    <p className={classes.RadioTextGender}>Keduanya</p>
+                  </div>
+                </div>
 
-				<div className={classes.Footer}>
-					<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
-						Save
-					</Button>
-				</div>
-			</div>
-		</React.Fragment>
-	);
+                <div className={classes.CandidateAmount}>
+                  <Input
+                    inputType='number'
+                    id='amount'
+                    InputClass='Amount'
+                    validatorMethod={[VALIDATOR_MIN(1)]}
+                    onInputHandler={onInputHandler}
+                    type='number'
+                    initValue='0'
+                    min='0'
+                    step='1'
+                    label='Jumlah kandidat*'
+                  />
+                </div>
+              </div>
 
-	const onCancelHandler = () => {
-		props.resetOrder();
-	};
+              <div className={classes.CheckInputs}>
+                <div className={classes.CheckGroup}>
+                  <input
+                    type='checkbox'
+                    value={formState.inputs.location.value}
+                    name='location'
+                    id='location'
+                    className={classes.CheckValue}
+                    onChange={checkHandler}
+                  />
+                  <p className={classes.CheckText}>
+                    Bersedia ditempatkan diluar kota asal
+                  </p>
+                </div>
+                <div className={classes.CheckGroup}>
+                  <input
+                    type='checkbox'
+                    value={formState.inputs.location.value}
+                    name='shift'
+                    id='shift'
+                    className={classes.CheckValue}
+                    onChange={checkHandler}
+                  />
+                  <p className={classes.CheckText}>
+                    Bersedia bekerja secara shift
+                  </p>
+                </div>
+              </div>
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Tidak dapat melakukan pembelian saat ini{' '}
-			</Modal>
-			{formContent}
-		</form>
-	);
+              <div>
+                <FormControl
+                  className={classes.formControl}
+                  style={{ width: '100%', marginTop: '0.5rem' }}
+                >
+                  <InputLabel id='jobFunction'>Bidang pekerjaan</InputLabel>
+
+                  <Select
+                    labelId='jobFunction'
+                    id='jobFunction'
+                    name='jobFunction'
+                    open={open}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    value={employment}
+                    onChange={handleChange}
+                    style={{
+                      fontSize: '0.9rem',
+                      textAlign: 'left',
+                      paddingBottom: '0.15rem',
+                      color: 'black',
+                    }}
+                  >
+                    <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                      <em>Belum ada untuk saat ini</em>
+                    </MenuItem>
+                    {WorkFieldData.sort().map((work, i) => {
+                      return (
+                        <MenuItem
+                          id={i}
+                          value={work}
+                          style={{ fontSize: '0.9rem' }}
+                          key={i}
+                        >
+                          {work}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </div>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <Input
+                  inputType='input'
+                  id='emailRecipient'
+                  inputClass='Position'
+                  validatorMethod={[VALIDATOR_EMAIL()]}
+                  onInputHandler={onInputHandler}
+                  label='Email penerima*'
+                />
+              </div>
+
+              <Input
+                inputType='textarea'
+                id='note'
+                InputClass='JobSpec'
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onInputHandler={onInputHandler}
+                label='Catatan tambahan*'
+              />
+            </div>
+          </div>
+
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant='contained'
+              color='primary'
+              type='submit'
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  const onCancelHandler = () => {
+    props.resetOrder();
+  };
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Tidak dapat melakukan pembelian saat ini{' '}
+      </Modal>
+      {formContent}
+    </form>
+  );
 };
 
-const mapStateToProps = state => {
-	return {
-		auth: state.auth,
-		isLoading: state.finance.isLoading,
-		error: state.finance.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    isLoading: state.finance.isLoading,
+    error: state.finance.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		createOrderCandidate: data => dispatch(actionCreators.createOrderCandidate(data)),
-		createOrderFail: () => dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
-		resetOrder: () => dispatch({ type: actionTypes.ORDERRESET })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createOrderCandidate: (data) =>
+      dispatch(actionCreators.createOrderCandidate(data)),
+    createOrderFail: () =>
+      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderBCForm));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(OrderBCForm));

@@ -31,3 +31,22 @@
   font-size: 1rem;
   text-align: left;
 }
+
+@media (max-width: 576px) {
+  .Wraper {
+    /* width: 70vh; */
+    padding: 0;
+  }
+
+  .Container {
+    padding: 16px;
+  }
+
+  .Header {
+    margin-top: 0;
+  }
+
+  .Label {
+    text-align: left;
+  }
+}

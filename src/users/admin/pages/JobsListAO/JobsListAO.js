@@ -78,13 +78,16 @@ const JobsListAO = (props) => {
   useEffect(() => {
     const payload = { token: admin.token };
     if (admin.token) {
+      let sort = [];
       getAllJob(payload).then((res) => {
-        setData(res.availableJobs);
+        sort = res.availableJobs;
+        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+        setData(sort);
         setIsLoading(false);
       });
     }
   }, [getAllJob, getWholeCompanies, setIsLoading, admin]);
-
+  console.log(data);
   useEffect(() => {
     if (data && data.length > 0) {
       let applicantArray = [...data];
@@ -210,7 +213,17 @@ const JobsListAO = (props) => {
                           <th>{job.companyId.companyName}</th>
                           <th>{job.jobTitle}</th>
                           <th>{job.placementLocation}</th>
-                          <th>{moment(job.datePosted).format('D MMM YYYY')}</th>
+                          <th
+                            style={
+                              job.releasedAt
+                                ? { color: 'black' }
+                                : { color: 'red' }
+                            }
+                          >
+                            {job.releasedAt
+                              ? moment(job.releasedAt).format('D MMM YYYY')
+                              : 'Belum terbit'}
+                          </th>
                           <th
                             style={
                               job.status === 'Canceled'
@@ -278,7 +291,17 @@ const JobsListAO = (props) => {
                         <th style={{ width: '20rem' }}>
                           {job.placementLocation}
                         </th>
-                        <th>{moment(job.datePosted).format('D MMM YYYY')}</th>
+                        <th
+                          style={
+                            job.releasedAt
+                              ? { color: 'black' }
+                              : { color: 'red' }
+                          }
+                        >
+                          {job.releasedAt
+                            ? moment(job.releasedAt).format('D MMM YYYY')
+                            : 'Belum terbit'}
+                        </th>
                         <th
                           style={
                             moment(job.expiredDate) >= moment()

@@ -20,7 +20,6 @@
   box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
   background-color: white;
   border-radius: 10px;
-  overflow: hidden;
   margin-bottom: 2rem;
 }
 
@@ -65,3 +64,9 @@ Table tr:last-child td:last-child {
 .ColumnField tr:hover {
   background-color: rgba(170, 170, 170, 0.1);
 }
+
+/* 
+@media (max-width: 800px) {
+  .Table {
+  }
+} */

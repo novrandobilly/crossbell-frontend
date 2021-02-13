@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 import Intro from '../Components/Edit/EditIntro.js';
 
 import classes from './ApplicantResumeVal.module.css';
@@ -19,11 +18,6 @@ const ApplicantResumeVal = (props) => {
       </div>
     </div>
   );
-
 };
 
 export default ApplicantResumeVal;
-
-/* <Education push={push} handler={pushHandler} />
-        <Experience push={push} handler={pushHandler} />
-        <Certification push={push} handler={pushHandler} /> */

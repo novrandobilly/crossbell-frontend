@@ -1,110 +1,188 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	margin-top: 6rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 32px;
 }
 
 .ContainerFlex {
-	width: 40%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border: none;
-	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-	border-radius: 0.5rem;
-	background-color: white;
-	font-family: sans-serif;
-	font-size: 0.8rem;
-	font-weight: bold;
-	color: rgba(0, 0, 0, 0.5);
-	padding: 0.5rem 3rem 2rem 3rem;
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  background-color: white;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.5rem 3rem 2rem 3rem;
 }
 
 .FormTitle {
-	font-size: 1.4rem;
-	color: black;
-	align-self: flex-start;
+  font-size: 1.4rem;
+  color: black;
+  align-self: flex-start;
 }
 
 .FormControl {
-	width: 100%;
+  width: 100%;
 }
 
 .Content {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
-	justify-content: space-between;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
+}
+
+.ContentWrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ContentWrap > * {
+  width: 45%;
 }
 
 .ContentLeft {
-	align-items: flex-start;
-	width: 100%;
-	padding: 0 1rem;
-}
-
-.ContentRight {
-	align-items: flex-start;
-	width: 100%;
-	padding: 0 1rem;
+  align-items: center;
+  width: 95%;
+  padding: 0 14px;
 }
 
 .LabelName {
-	align-self: flex-start;
-	margin-bottom: 0.2rem;
-	font-size: 0.9rem;
-	font-weight: bold;
-	color: rgba(58, 81, 153, 1);
+  align-self: flex-start;
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: rgba(58, 81, 153, 1);
 }
 
 .AdditionalContentContainer {
-	width: 95%;
-	display: flex;
-	flex-flow: column;
-	margin: 1.2rem auto;
+  width: 95%;
+  display: flex;
+  flex-flow: column;
+  margin: 1.2rem auto;
 }
 
 .AdditionalContentHeader {
-	margin: 0;
-	align-self: start;
+  margin: 0;
+  align-self: start;
 }
 
 .AdditionalContent {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .AdditionalContent > * {
-	width: 45%;
+  width: 45%;
+}
+
+.DurationContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.DurationContent > * {
+  width: 45%;
 }
 
 .SlotInput {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	font-size: 1rem;
-	width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+  width: 50%;
 }
 
 .SlotInput > div:nth-child(1) {
-	width: 12%;
+  width: 30%;
 }
 
 .SlotInput > span {
-	height: 3rem;
-	display: flex;
-	align-items: center;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  margin-left: 6px;
 }
 
 .RemainingSlot {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: 500;
 }
 
 .RemainingSlot h2 {
-	margin: 0;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .EditCompanyBrief {
+    margin-top: 0;
+  }
+
+  .Container {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .EditCompanyBrief {
+    margin-top: 0;
+  }
+
+  .Container {
+    padding: 0;
+  }
+
+  .ContainerFlex {
+    width: 100vh;
+    padding: 0px 16px 10px 16px;
+    border-radius: 0;
+  }
+
+  .ContentWrap {
+    flex-direction: column;
+  }
+
+  .ContentWrap > * {
+    width: 100%;
+  }
+
+  .AdditionalContentContainer {
+    width: 95%;
+  }
+
+  .AdditionalContent {
+    flex-direction: column;
+  }
+
+  .AdditionalContent > * {
+    width: 100%;
+  }
+}
+
+@media (max-width: 440px) {
+  .ContainerFlex {
+    width: 50vh;
+    padding: 6px 16px;
+  }
+
+  .Container {
+    padding: 0;
+    padding-top: 0;
+  }
+
+  .ContainerFlex {
+    border-radius: 0;
+  }
 }

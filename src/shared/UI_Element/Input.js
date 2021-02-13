@@ -219,6 +219,9 @@ const Input = (props) => {
       inputElement = (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <DatePicker
+            className={[classes.InputElements, classes[props.InputClass]].join(
+              ' '
+            )}
             views={props.views || ['year', 'month', 'date']}
             value={moment(state.value)}
             style={props.style}

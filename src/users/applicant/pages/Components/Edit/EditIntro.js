@@ -301,6 +301,7 @@ const EditIntro = (props) => {
                   initValue={data.firstName}
                   initIsValid={true}
                 />
+
                 <Input
                   inputType='input'
                   id='headline'
@@ -567,30 +568,325 @@ const EditIntro = (props) => {
               </div>
             </div>
 
+            <div className={classes.ContentPhone}>
+              <Input
+                inputType='input'
+                id='firstName'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='First Name*'
+                initValue={data.firstName}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='lastName'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Last Name*'
+                initValue={data.lastName}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='headline'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Headline*'
+                initValue={data.headline}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='email'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_EMAIL()]}
+                onInputHandler={onInputHandler}
+                label='Email*'
+                initValue={data.email}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='phone'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Phone*'
+                initValue={data.phone}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='address'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Address*'
+                initValue={data.address}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='state'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='State*'
+                initValue={data.state}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='city'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='City*'
+                initValue={data.city}
+                initIsValid={true}
+              />
+
+              <Input
+                inputType='input'
+                id='zip'
+                InputClass='AppInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Zip*'
+                initValue={data.zip}
+                initIsValid={true}
+              />
+
+              <FormControl
+                className={classes.formControl}
+                style={{ width: '100%', marginTop: '0.5rem' }}
+              >
+                <InputLabel shrink id='interest'>
+                  Bidang minat 1
+                </InputLabel>
+
+                <Select
+                  labelId='interest'
+                  id='interest'
+                  name='interest'
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={interest[0]}
+                  onChange={handleChange}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                    paddingBottom: '0.15rem',
+                    color: 'black',
+                  }}
+                >
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Belum ada untuk saat ini</em>
+                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: '0.9rem' }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+
+              <FormControl
+                className={classes.formControl}
+                style={{ width: '100%', marginTop: '0.5rem' }}
+              >
+                <InputLabel shrink id='interest'>
+                  Bidang minat 2
+                </InputLabel>
+
+                <Select
+                  labelId='interest'
+                  id='interest'
+                  name='interest'
+                  open={open2}
+                  onClose={handleClose2}
+                  onOpen={handleOpen2}
+                  value={interest[1]}
+                  onChange={handleChange}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                    paddingBottom: '0.15rem',
+                    color: 'black',
+                  }}
+                >
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Belum ada untuk saat ini</em>
+                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: '0.9rem' }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+
+              <FormControl
+                className={classes.formControl}
+                style={{ width: '100%', marginTop: '1.2rem' }}
+              >
+                <InputLabel shrink id='interest'>
+                  Bidang minat 3
+                </InputLabel>
+
+                <Select
+                  labelId='interest'
+                  id='interest'
+                  name='interest'
+                  open={open3}
+                  onClose={handleClose3}
+                  onOpen={handleOpen3}
+                  value={interest[2]}
+                  onChange={handleChange}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                    paddingBottom: '0.15rem',
+                    color: 'black',
+                  }}
+                >
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Belum ada untuk saat ini</em>
+                  </MenuItem>
+                  {WorkFieldData.sort().map((work, i) => {
+                    return (
+                      <MenuItem
+                        id={i}
+                        value={work}
+                        style={{ fontSize: '0.9rem' }}
+                        key={i}
+                      >
+                        {work}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+
+              <p className={classes.Text} style={{ marginBottom: '0.2rem' }}>
+                Tanggal Lahir*
+              </p>
+              <Input
+                inputType='customdate'
+                id='dateOfBirth'
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onInputHandler={onInputHandler}
+                views={['year', 'month', 'date']}
+                label='Tanggal Lahir'
+                maxDate={moment()}
+                initValue={data.dateOfBirth}
+                initIsValid={true}
+                format='dd/MM/yyyy'
+                style={{ width: '100%' }}
+              />
+
+              <div
+                id='gender'
+                onChange={onManualInputHandler}
+                style={{ marginTop: '1.3rem' }}
+              >
+                <p className={classes.Text}>Jenis Kelamin*</p>
+                <div className={classes.RadioHolder}>
+                  <label
+                    style={{ marginRight: '2rem' }}
+                    className={classes.RadioButton}
+                  >
+                    <input type='radio' value='male' name='gender' id='male' />{' '}
+                    Pria
+                  </label>
+                  <label className={classes.RadioButton}>
+                    <input
+                      type='radio'
+                      value='female'
+                      name='gender'
+                      id='female'
+                    />{' '}
+                    Wanita
+                  </label>
+                </div>
+              </div>
+            </div>
+
             <div className={classes.ContentBottom}>
-              <label onChange={onCheckedInputHandler}>
-                <input id='outOfTown' type='checkbox' name='outOfTown' />{' '}
-                Bersedia ditempatkan di luar kota asal
+              <label
+                onChange={onCheckedInputHandler}
+                className={classes.CheckBox}
+              >
+                <input id='outOfTown' type='checkbox' name='outOfTown' />
+                <p style={{ margin: '0', marginLeft: '4px' }}>
+                  Bersedia ditempatkan di luar kota asal
+                </p>
               </label>
-              <label onChange={onCheckedInputHandler}>
-                <input id='workShifts' type='checkbox' name='workShifts' />{' '}
-                Bersedia bekerja dengan sistem shift
+              <label
+                onChange={onCheckedInputHandler}
+                className={classes.CheckBox}
+              >
+                <input id='workShifts' type='checkbox' name='workShifts' />
+                <p style={{ margin: '0', marginLeft: '4px' }}>
+                  Bersedia bekerja dengan sistem shift
+                </p>
               </label>
-              <label onChange={onCheckedInputHandler}>
-                <input id='autoSend' type='checkbox' name='autoSend' /> Saya
-                bersedia didaftarkan kerja secara otomatis oleh Crossbell
+              <label
+                onChange={onCheckedInputHandler}
+                className={classes.CheckBox}
+              >
+                <input id='autoSend' type='checkbox' name='autoSend' />
+                <p style={{ margin: '0', marginLeft: '4px' }}>
+                  Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell
+                </p>
               </label>
-              <label onChange={onCheckedInputHandler}>
-                <input id='autoRemind' type='checkbox' name='autoRemind' /> Saya
-                ingin diingatkan bila ada pekerjaan yang cocok dengan minat saya
+              <label
+                onChange={onCheckedInputHandler}
+                className={classes.CheckBox}
+              >
+                <input id='autoRemind' type='checkbox' name='autoRemind' />
+                <p style={{ margin: '0', marginLeft: '4px' }}>
+                  Berikan notifikasi bila ada pekerjaan sesuai bidang minat
+                </p>
               </label>
-              <label onChange={onCheckedInputHandler}>
+              <label
+                onChange={onCheckedInputHandler}
+                className={classes.CheckBox}
+              >
                 <input
                   id='headhunterProgram'
                   type='checkbox'
                   name='headhunterProgram'
-                />{' '}
-                Saya ingin mengikuti headhunter program Crossbell asal
+                />
+                <p style={{ margin: '0', marginLeft: '4px' }}>
+                  Saya ingin mengikuti headhunter program Crossbell asal
+                </p>
               </label>
             </div>
           </div>
