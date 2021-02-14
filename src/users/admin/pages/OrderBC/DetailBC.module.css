@@ -2,19 +2,29 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .FilterContainer {
+  width: 60vw;
   display: flex;
   padding: 1rem 1rem 0 1rem;
   justify-content: center;
+}
+
+.CheckboxWarper {
+  width: 50%;
+  display: flex;
 }
 
 .CheckboxCriteria {
   display: flex;
   flex-direction: column;
   line-height: 0.3rem;
-  margin-right: 3rem;
+  padding: 0 8px;
+  width: 50%;
+  box-sizing: border-box;
+  align-items: center;
 }
 
 .FilterLabel {
@@ -23,9 +33,9 @@
 
 .FlexWrap {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   height: 6rem;
-  flex-wrap: wrap;
   margin-right: 4rem;
 }
 
@@ -88,10 +98,6 @@
   margin-top: -0.15rem;
 }
 
-.CriteriaRight {
-  width: 9rem;
-}
-
 .CriteriaFooter {
   border-top: solid 0.15rem rgba(0, 0, 0, 0.3);
   color: rgb(251, 255, 1, 1);
@@ -128,4 +134,66 @@
   margin-top: -0.5rem;
   margin-bottom: -0.5rem;
   justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .OrderContainer {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+    border-radius: 5px;
+  }
+
+  .CriteriaContainer {
+    width: auto;
+    padding: 1rem 2rem;
+  }
+
+  .FilterContainer {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .CheckboxCriteria {
+    line-height: 16px;
+  }
+  .FlexWrap {
+    height: auto;
+    margin: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .OrderContainer {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .FilterContainer {
+    padding: 0;
+    height: fit-content;
+  }
+
+  .ApplicantSearch {
+    width: 100vw;
+    overflow-y: hidden;
+  }
+}
+
+@media (max-width: 400px) {
+  .FilterContainer {
+    flex-direction: column;
+  }
+
+  .CheckboxCriteria {
+    width: 50%;
+    align-items: center;
+  }
+
+  .CheckboxWarper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

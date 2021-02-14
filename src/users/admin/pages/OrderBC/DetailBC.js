@@ -256,111 +256,125 @@ const DetailBC = (props) => {
     content = (
       <div className={classes.Container}>
         <div className={classes.FilterContainer}>
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>Jenis Kelamin</p>
-            <div onChange={onGenderHandler}>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' value='male' id='pria' />
-                <p>Pria</p>
+          <div className={classes.CheckboxWarper}>
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>Jenis Kelamin</p>
+              <div onChange={onGenderHandler}>
+                <div>
+                  <div className={classes.CheckboxHolder}>
+                    <Checkbox
+                      color='primary'
+                      size='small'
+                      value='male'
+                      id='pria'
+                    />
+                    <p>Pria</p>
+                  </div>
+                  <div className={classes.CheckboxHolder}>
+                    <Checkbox
+                      color='primary'
+                      size='small'
+                      value='female'
+                      id='wanita'
+                    />
+                    <p>Wanita</p>
+                  </div>
+                </div>
               </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox
-                  color='primary'
-                  size='small'
-                  value='female'
-                  id='wanita'
+            </div>
+
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>Kebersediaan</p>
+              <div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox
+                    color='primary'
+                    size='small'
+                    id='location'
+                    value='location'
+                    onChange={onLocationHandler}
+                  />
+                  <p>Luar kota</p>
+                </div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox
+                    color='primary'
+                    size='small'
+                    id='shift'
+                    value='shift'
+                    onChange={onShiftHandler}
+                  />
+                  <p>Bekerja shift</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={classes.CheckboxWarper}>
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>Pendidikan</p>
+              <div className={classes.FlexWrap} onChange={onEducationHandler}>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox color='primary' size='small' id='SMK' value='SMK' />
+                  <p>SMK</p>
+                </div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox color='primary' size='small' id='SMA' value='SMA' />
+                  <p>SMA</p>
+                </div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox color='primary' size='small' id='D3' value='D3' />
+                  <p>D3</p>
+                </div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox color='primary' size='small' id='S1' value='S1' />
+                  <p>S1</p>
+                </div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox color='primary' size='small' id='S2' value='S2' />
+                  <p>S2</p>
+                </div>
+                <div className={classes.CheckboxHolder}>
+                  <Checkbox color='primary' size='small' id='S3' value='S3' />
+                  <p>S3</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>Usia</p>
+              <div className={classes.AgeGroup}>
+                <Input
+                  inputType='input'
+                  id='min'
+                  InputClass='Age'
+                  labelClass='Range'
+                  validatorMethod={[VALIDATOR_MIN(1)]}
+                  onInputHandler={onInputHandler}
+                  type='number'
+                  initValue='0'
+                  min='0'
+                  step='1'
+                  label='min'
                 />
-                <p>Wanita</p>
+                <Input
+                  inputType='number'
+                  id='max'
+                  InputClass='Age'
+                  labelClass='Range'
+                  validatorMethod={[VALIDATOR_MIN(1)]}
+                  onInputHandler={onInputHandler}
+                  type='number'
+                  initValue='0'
+                  min='0'
+                  step='1'
+                  label='max'
+                />
               </div>
-            </div>
-          </div>
-
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>Pendidikan</p>
-            <div className={classes.FlexWrap} onChange={onEducationHandler}>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' id='SMK' value='SMK' />
-                <p>SMK</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' id='SMA' value='SMA' />
-                <p>SMA</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' id='D3' value='D3' />
-                <p>D3</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' id='S1' value='S1' />
-                <p>S1</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' id='S2' value='S2' />
-                <p>S2</p>
-              </div>
-              <div className={classes.CheckboxHolder}>
-                <Checkbox color='primary' size='small' id='S3' value='S3' />
-                <p>S3</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>Kebersediaan</p>
-            <div className={classes.CheckboxHolder}>
-              <Checkbox
-                color='primary'
-                size='small'
-                id='location'
-                value='location'
-                onChange={onLocationHandler}
-              />
-              <p>Luar kota</p>
-            </div>
-            <div className={classes.CheckboxHolder}>
-              <Checkbox
-                color='primary'
-                size='small'
-                id='shift'
-                value='shift'
-                onChange={onShiftHandler}
-              />
-              <p>Bekerja shift</p>
-            </div>
-          </div>
-
-          <div className={classes.CheckboxCriteria}>
-            <p className={classes.FilterLabel}>Usia</p>
-            <div className={classes.AgeGroup}>
-              <Input
-                inputType='input'
-                id='min'
-                InputClass='Age'
-                labelClass='Range'
-                validatorMethod={[VALIDATOR_MIN(1)]}
-                onInputHandler={onInputHandler}
-                type='number'
-                initValue='0'
-                min='0'
-                step='1'
-                label='min'
-              />
-              <Input
-                inputType='number'
-                id='max'
-                InputClass='Age'
-                labelClass='Range'
-                validatorMethod={[VALIDATOR_MIN(1)]}
-                onInputHandler={onInputHandler}
-                type='number'
-                initValue='0'
-                min='0'
-                step='1'
-                label='max'
-              />
             </div>
           </div>
         </div>
+
         <div className={classes.OrderContainer}>
           <div className={classes.CriteriaContainer}>
             <div className={classes.CriteriaTop}>

@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: rgb(250, 250, 250);
 }
 
 .ContainerFlex {
@@ -13,7 +12,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 0.5rem;
-  padding: 0.5rem 0 2rem 0;
+  padding: 0.5rem 16px 2rem 16px;
   background-color: rgba(255, 255, 255, 0.7);
   font-family: sans-serif;
   font-size: 0.8rem;
@@ -26,14 +25,19 @@
 .FormTitle {
   font-size: 1.4rem;
   color: black;
-  align-self: flex-start;
-  margin-left: 2.5rem;
+  text-align: left;
+  width: 90%;
 }
 
 .FormRow {
   display: flex;
   border-top: solid 0.1rem rgba(124, 124, 124, 0.4);
   padding-top: 2rem;
+  justify-content: center;
+}
+
+.EditLabel {
+  width: 90%;
 }
 
 .Inputs {
@@ -42,10 +46,12 @@
 }
 
 .RadioGroup {
-  width: 12rem;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .RadioLabel {
@@ -80,6 +86,12 @@
   font-weight: 500;
 }
 
+.AgeWraper {
+  width: 30%;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
 .AgeLabel {
   text-align: left;
   color: rgba(0, 0, 0, 0.54);
@@ -91,14 +103,12 @@
 .AgeGroup {
   display: flex;
   justify-content: space-between;
-  width: 10rem;
+  width: 100%;
   margin-right: 2.8rem;
 }
 
 .CandidateAmount {
-  margin-top: 1rem;
-  width: 28%;
-  margin-right: 2.2rem;
+  width: 30%;
 }
 
 .CheckInputs {
@@ -132,4 +142,35 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 4rem;
+}
+
+@media (max-width: 768px) {
+  .ContainerFlex {
+    margin-top: 0;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .Inputs {
+    flex-direction: column;
+  }
+
+  .EditLabel {
+    width: 100%;
+  }
+
+  .RadioGroup {
+    width: 100%;
+  }
+  .AgeWraper {
+    width: 100%;
+  }
+  .CandidateAmount {
+    width: 100%;
+  }
+}
+
+@media (max-width: 440px) {
 }
