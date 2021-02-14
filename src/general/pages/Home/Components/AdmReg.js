@@ -116,132 +116,145 @@ const Register = (props) => {
         <div className={classes.Content}>
           <div className={classes.ContentTop}>
             <div className={classes.ContentLeft}>
-              <Input
-                inputType='input'
-                id='email'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_EMAIL()]}
-                onInputHandler={onInputHandler}
-                label='Email*'
-                helperText='Alamat email tidak valid'
-              />
-
-              <Input
-                inputType='input'
-                id='NIK'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='NIK*'
-                helperText='Tuliskan NIK sesuai KTP'
-              />
-
-              <Input
-                inputType='input'
-                id='firstName'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Nama Depan*'
-                helperText='Tuliskan nama depan sesuai KTP'
-              />
-
-              <Input
-                inputType='input'
-                id='role'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Pekerjaan*'
-                helperText='Tuliskan pekerjaan sesuai KTP'
-              />
-
-              <div style={{ marginTop: '1.2rem' }}>
-                <p className={classes.Text} style={{ marginBottom: '0.2rem' }}>
-                  Tanggal Lahir*
-                </p>
+              <div className={classes.ContentWrap}>
                 <Input
-                  inputType='customdate'
-                  className={classes.Register}
-                  id='dateOfBirth'
-                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                  inputType='input'
+                  id='email'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_EMAIL()]}
                   onInputHandler={onInputHandler}
-                  initIsValid={true}
-                  label='Tanggal Lahir'
-                  maxDate={moment()}
-                  views={['year', 'month', 'date']}
-                  format='dd/MM/yyyy'
-                  style={{ width: '100%' }}
-                  helperText='Tuliskan tanggal lahir sesuai KTP'
+                  label='Email*'
+                  helperText='Alamat email tidak valid'
+                />
+
+                <Input
+                  inputType='input'
+                  id='password'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_MINLENGTH(8)]}
+                  onInputHandler={onInputHandler}
+                  label='Password*'
+                  type='password'
+                  helperText='Password minimal 8 karakter'
                 />
               </div>
-            </div>
 
-            <div className={classes.ContentRight}>
-              <Input
-                inputType='input'
-                id='password'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_MINLENGTH(8)]}
-                onInputHandler={onInputHandler}
-                label='Password*'
-                type='password'
-                helperText='Password minimal 8 karakter'
-              />
+              <div className={classes.ContentWrap}>
+                <Input
+                  inputType='input'
+                  id='firstName'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='Nama Depan*'
+                  helperText='Tuliskan nama depan sesuai KTP'
+                />
 
-              <Input
-                inputType='input'
-                id='lastName'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Nama Belakang*'
-                helperText='Tuliskan nama belakang sesuai KTP'
-              />
+                <Input
+                  inputType='input'
+                  id='lastName'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='Nama Belakang*'
+                  helperText='Tuliskan nama belakang sesuai KTP'
+                />
+              </div>
 
-              <Input
-                inputType='input'
-                id='phoneNumber'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Nomor Telepon*'
-                helperText='Nomor telepon tidak valid'
-              />
+              <div className={classes.ContentWrap}>
+                <Input
+                  inputType='input'
+                  id='NIK'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='NIK*'
+                  helperText='Tuliskan NIK sesuai KTP'
+                />
 
-              <Input
-                inputType='input'
-                id='address'
-                InputClass='Register'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Alamat*'
-                helperText='Tuliskan alamat sesuai KTP'
-              />
+                <Input
+                  inputType='input'
+                  id='phoneNumber'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='Nomor Telepon*'
+                  helperText='Nomor telepon tidak valid'
+                />
+              </div>
 
-              <div
-                id='gender'
-                onChange={onManualInputHandler}
-                style={{ marginTop: '1.3rem' }}
-              >
-                <p className={classes.Text}>Jenis Kelamin*</p>
-                <div className={classes.RadioHolder}>
-                  <label
-                    style={{ marginRight: '2rem' }}
-                    className={classes.RadioButton}
+              <div className={classes.ContentWrap}>
+                <Input
+                  inputType='input'
+                  id='role'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='Pekerjaan*'
+                  helperText='Tuliskan pekerjaan sesuai KTP'
+                />
+
+                <Input
+                  inputType='input'
+                  id='address'
+                  InputClass='Register'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='Alamat*'
+                  helperText='Tuliskan alamat sesuai KTP'
+                />
+              </div>
+
+              <div className={classes.ContentWrap}>
+                <div>
+                  <p
+                    className={classes.Text}
+                    style={{ marginBottom: '0.2rem' }}
                   >
-                    <input type='radio' value='male' name='gender' id='male' />{' '}
-                    Pria
-                  </label>
-                  <label className={classes.RadioButton}>
-                    <input
-                      type='radio'
-                      value='female'
-                      name='gender'
-                      id='female'
-                    />{' '}
-                    Wanita
-                  </label>
+                    Tanggal Lahir*
+                  </p>
+                  <Input
+                    inputType='customdate'
+                    className={classes.Register}
+                    id='dateOfBirth'
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onInputHandler={onInputHandler}
+                    initIsValid={true}
+                    label='Tanggal Lahir'
+                    maxDate={moment()}
+                    initValue={moment()}
+                    views={['year', 'month', 'date']}
+                    format='dd/MM/yyyy'
+                    style={{ width: '100%' }}
+                    helperText='Tuliskan tanggal lahir sesuai KTP'
+                  />
+                </div>
+
+                <div id='gender' onChange={onManualInputHandler}>
+                  <p className={classes.Text}>Jenis Kelamin*</p>
+                  <div className={classes.RadioHolder}>
+                    <label
+                      style={{ marginRight: '2rem' }}
+                      className={classes.RadioButton}
+                    >
+                      <input
+                        type='radio'
+                        value='male'
+                        name='gender'
+                        id='male'
+                      />{' '}
+                      Pria
+                    </label>
+                    <label className={classes.RadioButton}>
+                      <input
+                        type='radio'
+                        value='female'
+                        name='gender'
+                        id='female'
+                      />{' '}
+                      Wanita
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

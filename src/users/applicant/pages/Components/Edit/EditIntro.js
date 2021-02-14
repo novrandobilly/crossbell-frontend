@@ -27,22 +27,13 @@ import classes from './EditIntro.module.css';
 
 const EditIntro = (props) => {
   const { applicantid } = useParams();
-
   const [data, setData] = useState();
-  const [interest, setInterest] = useState(['', '', '']);
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
+  const [open, setOpen] = useState([false, false, false]);
 
   const { getOneApplicant } = props;
   useEffect(() => {
     getOneApplicant(applicantid).then((res) => {
       setData(res.applicant);
-      setInterest([
-        res.applicant.interest[0] ? res.applicant.interest[0] : '',
-        res.applicant.interest[1] ? res.applicant.interest[1] : '',
-        res.applicant.interest[2] ? res.applicant.interest[2] : '',
-      ]);
     });
   }, [getOneApplicant, applicantid]);
 
@@ -117,14 +108,12 @@ const EditIntro = (props) => {
         isValid: data && data.headhunterProgram ? true : false,
       },
       interest: {
-        value: data ? data.interest : null,
-        isValid: true, //required
+        value: data ? data.interest : ['', '', ''],
+        isValid: data && data.interest ? true : false,
       },
     },
     false
   );
-
-  console.log(interest);
 
   useEffect(() => {
     if (data) {
@@ -188,35 +177,49 @@ const EditIntro = (props) => {
     }
   };
 
+  const fowHandler = (e) => {
+    let indexFow;
+    switch (e.target.name) {
+      case 'interest-1':
+        indexFow = 0;
+        break;
+      case 'interest-2':
+        indexFow = 1;
+        break;
+      case 'interest-3':
+        indexFow = 2;
+        break;
+      default:
+        indexFow = 0;
+    }
+    const elementId = 'interest';
+    const elementArray = [...formState.inputs.interest.value];
+    elementArray[indexFow] = e.target.value;
+    onInputHandler(elementId, elementArray, true);
+  };
+
+  const handleOpen = (e) => {
+    let index;
+    switch (e.target.id) {
+      case 'interest-1':
+        index = 0;
+        break;
+      case 'interest-2':
+        index = 1;
+        break;
+      case 'interest-3':
+        index = 2;
+        break;
+      default:
+        index = 0;
+    }
+    let openArray = [...open];
+    openArray[index] = true;
+    setOpen(openArray);
+  };
+
   const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose2 = () => {
-    setOpen2(false);
-  };
-
-  const handleOpen2 = () => {
-    setOpen2(true);
-  };
-
-  const handleClose3 = () => {
-    setOpen3(false);
-  };
-
-  const handleOpen3 = () => {
-    setOpen3(true);
-  };
-
-  const handleChange = (e) => {
-    const elementId = e.target.name;
-    const elementValue = e.target.value;
-    setInterest((prevState) => [...prevState, elementValue]);
-    onInputHandler(elementId, interest, true);
+    setOpen([false, false, false]);
   };
 
   const onManualInputHandler = (e) => {
@@ -291,549 +294,296 @@ const EditIntro = (props) => {
 
             <div className={classes.ContentTop}>
               <div className={classes.ContentLeft}>
-                <Input
-                  inputType='input'
-                  id='firstName'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='First Name*'
-                  initValue={data.firstName}
-                  initIsValid={true}
-                />
+                <div className={classes.ContentWrap}>
+                  <Input
+                    inputType='input'
+                    id='firstName'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='First Name*'
+                    initValue={data.firstName}
+                    initIsValid={true}
+                  />
 
-                <Input
-                  inputType='input'
-                  id='headline'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Headline*'
-                  initValue={data.headline}
-                  initIsValid={true}
-                />
-
-                <Input
-                  inputType='input'
-                  id='phone'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Phone*'
-                  initValue={data.phone}
-                  initIsValid={true}
-                />
-
-                <Input
-                  inputType='input'
-                  id='city'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='City*'
-                  initValue={data.city}
-                  initIsValid={true}
-                />
-
-                <Input
-                  inputType='input'
-                  id='zip'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Zip*'
-                  initValue={data.zip}
-                  initIsValid={true}
-                />
-
-                <FormControl
-                  className={classes.formControl}
-                  style={{ width: '100%', marginTop: '0.5rem' }}
-                >
-                  <InputLabel shrink id='interest'>
-                    Bidang minat 2
-                  </InputLabel>
-
-                  <Select
-                    labelId='interest'
-                    id='interest'
-                    name='interest'
-                    open={open2}
-                    onClose={handleClose2}
-                    onOpen={handleOpen2}
-                    value={interest[1]}
-                    onChange={handleChange}
-                    style={{
-                      fontSize: '0.9rem',
-                      textAlign: 'left',
-                      paddingBottom: '0.15rem',
-                      color: 'black',
-                    }}
-                  >
-                    <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                      <em>Belum ada untuk saat ini</em>
-                    </MenuItem>
-                    {WorkFieldData.sort().map((work, i) => {
-                      return (
-                        <MenuItem
-                          id={i}
-                          value={work}
-                          style={{ fontSize: '0.9rem' }}
-                          key={i}
-                        >
-                          {work}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-
-                <p className={classes.Text} style={{ marginBottom: '0.2rem' }}>
-                  Tanggal Lahir*
-                </p>
-                <Input
-                  inputType='customdate'
-                  id='dateOfBirth'
-                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                  onInputHandler={onInputHandler}
-                  views={['year', 'month', 'date']}
-                  label='Tanggal Lahir'
-                  maxDate={moment()}
-                  initValue={data.dateOfBirth}
-                  initIsValid={true}
-                  format='dd/MM/yyyy'
-                  style={{ width: '100%' }}
-                />
-              </div>
-
-              <div className={classes.ContentRight}>
-                <Input
-                  inputType='input'
-                  id='lastName'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Last Name*'
-                  initValue={data.lastName}
-                  initIsValid={true}
-                />
-
-                <Input
-                  inputType='input'
-                  id='email'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_EMAIL()]}
-                  onInputHandler={onInputHandler}
-                  label='Email*'
-                  initValue={data.email}
-                  initIsValid={true}
-                />
-
-                <Input
-                  inputType='input'
-                  id='address'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Address*'
-                  initValue={data.address}
-                  initIsValid={true}
-                />
-
-                <Input
-                  inputType='input'
-                  id='state'
-                  InputClass='AppInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='State*'
-                  initValue={data.state}
-                  initIsValid={true}
-                />
-
-                <FormControl
-                  className={classes.formControl}
-                  style={{ width: '100%', marginTop: '0.5rem' }}
-                >
-                  <InputLabel shrink id='interest'>
-                    Bidang minat 1
-                  </InputLabel>
-
-                  <Select
-                    labelId='interest'
-                    id='interest'
-                    name='interest'
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={interest[0]}
-                    onChange={handleChange}
-                    style={{
-                      fontSize: '0.9rem',
-                      textAlign: 'left',
-                      paddingBottom: '0.15rem',
-                      color: 'black',
-                    }}
-                  >
-                    <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                      <em>Belum ada untuk saat ini</em>
-                    </MenuItem>
-                    {WorkFieldData.sort().map((work, i) => {
-                      return (
-                        <MenuItem
-                          id={i}
-                          value={work}
-                          style={{ fontSize: '0.9rem' }}
-                          key={i}
-                        >
-                          {work}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-
-                <FormControl
-                  className={classes.formControl}
-                  style={{ width: '100%', marginTop: '1.2rem' }}
-                >
-                  <InputLabel shrink id='interest'>
-                    Bidang minat 3
-                  </InputLabel>
-
-                  <Select
-                    labelId='interest'
-                    id='interest'
-                    name='interest'
-                    open={open3}
-                    onClose={handleClose3}
-                    onOpen={handleOpen3}
-                    value={interest[2]}
-                    onChange={handleChange}
-                    style={{
-                      fontSize: '0.9rem',
-                      textAlign: 'left',
-                      paddingBottom: '0.15rem',
-                      color: 'black',
-                    }}
-                  >
-                    <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                      <em>Belum ada untuk saat ini</em>
-                    </MenuItem>
-                    {WorkFieldData.sort().map((work, i) => {
-                      return (
-                        <MenuItem
-                          id={i}
-                          value={work}
-                          style={{ fontSize: '0.9rem' }}
-                          key={i}
-                        >
-                          {work}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-
-                <div
-                  id='gender'
-                  onChange={onManualInputHandler}
-                  style={{ marginTop: '1.3rem' }}
-                >
-                  <p className={classes.Text}>Jenis Kelamin*</p>
-                  <div className={classes.RadioHolder}>
-                    <label
-                      style={{ marginRight: '2rem' }}
-                      className={classes.RadioButton}
-                    >
-                      <input
-                        type='radio'
-                        value='male'
-                        name='gender'
-                        id='male'
-                      />{' '}
-                      Pria
-                    </label>
-                    <label className={classes.RadioButton}>
-                      <input
-                        type='radio'
-                        value='female'
-                        name='gender'
-                        id='female'
-                      />{' '}
-                      Wanita
-                    </label>
-                  </div>
+                  <Input
+                    inputType='input'
+                    id='lastName'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Last Name*'
+                    initValue={data.lastName}
+                    initIsValid={true}
+                  />
                 </div>
-              </div>
-            </div>
 
-            <div className={classes.ContentPhone}>
-              <Input
-                inputType='input'
-                id='firstName'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='First Name*'
-                initValue={data.firstName}
-                initIsValid={true}
-              />
+                <div className={classes.ContentWrap}>
+                  <Input
+                    inputType='input'
+                    id='headline'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Headline*'
+                    initValue={data.headline}
+                    initIsValid={true}
+                  />
 
-              <Input
-                inputType='input'
-                id='lastName'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Last Name*'
-                initValue={data.lastName}
-                initIsValid={true}
-              />
+                  <Input
+                    inputType='input'
+                    id='email'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_EMAIL()]}
+                    onInputHandler={onInputHandler}
+                    label='Email*'
+                    initValue={data.email}
+                    initIsValid={true}
+                  />
+                </div>
 
-              <Input
-                inputType='input'
-                id='headline'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Headline*'
-                initValue={data.headline}
-                initIsValid={true}
-              />
+                <div className={classes.ContentWrap}>
+                  <Input
+                    inputType='input'
+                    id='phone'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Phone*'
+                    initValue={data.phone}
+                    initIsValid={true}
+                  />
 
-              <Input
-                inputType='input'
-                id='email'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_EMAIL()]}
-                onInputHandler={onInputHandler}
-                label='Email*'
-                initValue={data.email}
-                initIsValid={true}
-              />
+                  <Input
+                    inputType='input'
+                    id='address'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Address*'
+                    initValue={data.address}
+                    initIsValid={true}
+                  />
+                </div>
 
-              <Input
-                inputType='input'
-                id='phone'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Phone*'
-                initValue={data.phone}
-                initIsValid={true}
-              />
+                <div className={classes.ContentWrap}>
+                  <Input
+                    inputType='input'
+                    id='city'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='City*'
+                    initValue={data.city}
+                    initIsValid={true}
+                  />
 
-              <Input
-                inputType='input'
-                id='address'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Address*'
-                initValue={data.address}
-                initIsValid={true}
-              />
+                  <Input
+                    inputType='input'
+                    id='state'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='State*'
+                    initValue={data.state}
+                    initIsValid={true}
+                  />
+                </div>
 
-              <Input
-                inputType='input'
-                id='state'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='State*'
-                initValue={data.state}
-                initIsValid={true}
-              />
+                <div className={classes.ContentWrap}>
+                  <Input
+                    inputType='input'
+                    id='zip'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Zip*'
+                    initValue={data.zip}
+                    initIsValid={true}
+                  />
 
-              <Input
-                inputType='input'
-                id='city'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='City*'
-                initValue={data.city}
-                initIsValid={true}
-              />
-
-              <Input
-                inputType='input'
-                id='zip'
-                InputClass='AppInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Zip*'
-                initValue={data.zip}
-                initIsValid={true}
-              />
-
-              <FormControl
-                className={classes.formControl}
-                style={{ width: '100%', marginTop: '0.5rem' }}
-              >
-                <InputLabel shrink id='interest'>
-                  Bidang minat 1
-                </InputLabel>
-
-                <Select
-                  labelId='interest'
-                  id='interest'
-                  name='interest'
-                  open={open}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={interest[0]}
-                  onChange={handleChange}
-                  style={{
-                    fontSize: '0.9rem',
-                    textAlign: 'left',
-                    paddingBottom: '0.15rem',
-                    color: 'black',
-                  }}
-                >
-                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                    <em>Belum ada untuk saat ini</em>
-                  </MenuItem>
-                  {WorkFieldData.sort().map((work, i) => {
-                    return (
-                      <MenuItem
-                        id={i}
-                        value={work}
-                        style={{ fontSize: '0.9rem' }}
-                        key={i}
-                      >
-                        {work}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-
-              <FormControl
-                className={classes.formControl}
-                style={{ width: '100%', marginTop: '0.5rem' }}
-              >
-                <InputLabel shrink id='interest'>
-                  Bidang minat 2
-                </InputLabel>
-
-                <Select
-                  labelId='interest'
-                  id='interest'
-                  name='interest'
-                  open={open2}
-                  onClose={handleClose2}
-                  onOpen={handleOpen2}
-                  value={interest[1]}
-                  onChange={handleChange}
-                  style={{
-                    fontSize: '0.9rem',
-                    textAlign: 'left',
-                    paddingBottom: '0.15rem',
-                    color: 'black',
-                  }}
-                >
-                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                    <em>Belum ada untuk saat ini</em>
-                  </MenuItem>
-                  {WorkFieldData.sort().map((work, i) => {
-                    return (
-                      <MenuItem
-                        id={i}
-                        value={work}
-                        style={{ fontSize: '0.9rem' }}
-                        key={i}
-                      >
-                        {work}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-
-              <FormControl
-                className={classes.formControl}
-                style={{ width: '100%', marginTop: '1.2rem' }}
-              >
-                <InputLabel shrink id='interest'>
-                  Bidang minat 3
-                </InputLabel>
-
-                <Select
-                  labelId='interest'
-                  id='interest'
-                  name='interest'
-                  open={open3}
-                  onClose={handleClose3}
-                  onOpen={handleOpen3}
-                  value={interest[2]}
-                  onChange={handleChange}
-                  style={{
-                    fontSize: '0.9rem',
-                    textAlign: 'left',
-                    paddingBottom: '0.15rem',
-                    color: 'black',
-                  }}
-                >
-                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                    <em>Belum ada untuk saat ini</em>
-                  </MenuItem>
-                  {WorkFieldData.sort().map((work, i) => {
-                    return (
-                      <MenuItem
-                        id={i}
-                        value={work}
-                        style={{ fontSize: '0.9rem' }}
-                        key={i}
-                      >
-                        {work}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-
-              <p className={classes.Text} style={{ marginBottom: '0.2rem' }}>
-                Tanggal Lahir*
-              </p>
-              <Input
-                inputType='customdate'
-                id='dateOfBirth'
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onInputHandler={onInputHandler}
-                views={['year', 'month', 'date']}
-                label='Tanggal Lahir'
-                maxDate={moment()}
-                initValue={data.dateOfBirth}
-                initIsValid={true}
-                format='dd/MM/yyyy'
-                style={{ width: '100%' }}
-              />
-
-              <div
-                id='gender'
-                onChange={onManualInputHandler}
-                style={{ marginTop: '1.3rem' }}
-              >
-                <p className={classes.Text}>Jenis Kelamin*</p>
-                <div className={classes.RadioHolder}>
-                  <label
-                    style={{ marginRight: '2rem' }}
-                    className={classes.RadioButton}
+                  <FormControl
+                    className={classes.formControl}
+                    style={{ marginTop: '0.5rem' }}
                   >
-                    <input type='radio' value='male' name='gender' id='male' />{' '}
-                    Pria
-                  </label>
-                  <label className={classes.RadioButton}>
-                    <input
-                      type='radio'
-                      value='female'
-                      name='gender'
-                      id='female'
-                    />{' '}
-                    Wanita
-                  </label>
+                    <InputLabel shrink id='interestLabel1'>
+                      Bidang minat 1
+                    </InputLabel>
+
+                    <Select
+                      labelId='interestLabel1'
+                      id='interest-1'
+                      name='interest-1'
+                      open={open[0]}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={formState.inputs.interest.value[0]}
+                      onChange={fowHandler}
+                      style={{
+                        fontSize: '0.9rem',
+                        textAlign: 'left',
+                        paddingBottom: '0.15rem',
+                        color: 'black',
+                      }}
+                    >
+                      <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                        <em>Belum ada untuk saat ini</em>
+                      </MenuItem>
+                      {WorkFieldData.sort().map((work, i) => {
+                        return (
+                          <MenuItem
+                            id={i}
+                            value={work}
+                            style={{ fontSize: '0.9rem' }}
+                            key={i}
+                          >
+                            {work}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+
+                <div className={classes.ContentWrap}>
+                  <FormControl
+                    className={classes.formControl}
+                    style={{ marginTop: '0.5rem' }}
+                  >
+                    <InputLabel shrink id='interestLabel2'>
+                      Bidang minat 2
+                    </InputLabel>
+
+                    <Select
+                      labelId='interestLabel2'
+                      id='interest-2'
+                      name='interest-2'
+                      open={open[1]}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={formState.inputs.interest.value[1]}
+                      onChange={fowHandler}
+                      style={{
+                        fontSize: '0.9rem',
+                        textAlign: 'left',
+                        paddingBottom: '0.15rem',
+                        color: 'black',
+                      }}
+                    >
+                      <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                        <em>Belum ada untuk saat ini</em>
+                      </MenuItem>
+                      {WorkFieldData.sort().map((work, i) => {
+                        return (
+                          <MenuItem
+                            id={i}
+                            value={work}
+                            style={{ fontSize: '0.9rem' }}
+                            key={i}
+                          >
+                            {work}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl
+                    className={classes.formControl}
+                    style={{ marginTop: '0.5rem' }}
+                  >
+                    <InputLabel shrink id='interestLabel3'>
+                      Bidang minat 3
+                    </InputLabel>
+
+                    <Select
+                      labelId='interestLabel3'
+                      id='interest-3'
+                      name='interest-3'
+                      open={open[2]}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={formState.inputs.interest.value[2]}
+                      onChange={fowHandler}
+                      style={{
+                        fontSize: '0.9rem',
+                        textAlign: 'left',
+                        paddingBottom: '0.15rem',
+                        color: 'black',
+                      }}
+                    >
+                      <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                        <em>Belum ada untuk saat ini</em>
+                      </MenuItem>
+                      {WorkFieldData.sort().map((work, i) => {
+                        return (
+                          <MenuItem
+                            id={i}
+                            value={work}
+                            style={{ fontSize: '0.9rem' }}
+                            key={i}
+                          >
+                            {work}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+
+                <div className={classes.ContentWrap}>
+                  <div>
+                    <p
+                      className={classes.Text}
+                      style={{ marginBottom: '0.2rem' }}
+                    >
+                      Tanggal Lahir*
+                    </p>
+                    <Input
+                      inputType='customdate'
+                      id='dateOfBirth'
+                      validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                      onInputHandler={onInputHandler}
+                      views={['year', 'month', 'date']}
+                      label='Tanggal Lahir'
+                      maxDate={moment()}
+                      initValue={data.dateOfBirth}
+                      initIsValid={true}
+                      format='dd/MM/yyyy'
+                      style={{ width: '100%' }}
+                    />
+                  </div>
+
+                  <div
+                    id='gender'
+                    onChange={onManualInputHandler}
+                    style={{ marginTop: '1.3rem' }}
+                  >
+                    <p className={classes.Text}>Jenis Kelamin*</p>
+                    <div className={classes.RadioHolder}>
+                      <label
+                        style={{ marginRight: '2rem' }}
+                        className={classes.RadioButton}
+                      >
+                        <input
+                          type='radio'
+                          value='male'
+                          name='gender'
+                          id='male'
+                        />{' '}
+                        Pria
+                      </label>
+                      <label className={classes.RadioButton}>
+                        <input
+                          type='radio'
+                          value='female'
+                          name='gender'
+                          id='female'
+                        />{' '}
+                        Wanita
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

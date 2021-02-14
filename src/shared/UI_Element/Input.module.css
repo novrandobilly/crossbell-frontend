@@ -88,7 +88,7 @@
 }
 
 .Amount {
-  width: 90%;
+  width: 100%;
 }
 
 .Position {
@@ -96,12 +96,7 @@
 }
 
 .JobSpec {
-  align-content: flex-start;
-  width: 40rem;
-  height: 4rem;
-  border: solid 0.05rem rgba(124, 124, 124, 0.4);
-  margin-bottom: 1rem;
-  resize: none;
+  width: 100%;
 }
 
 .Age {

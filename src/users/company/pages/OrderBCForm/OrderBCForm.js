@@ -197,7 +197,7 @@ const OrderBCForm = (props) => {
                   </div>
                 </div>
 
-                <div>
+                <div className={classes.AgeWraper}>
                   <p className={classes.AgeLabel}>Umur</p>
                   <div className={classes.AgeGroup}>
                     <Input

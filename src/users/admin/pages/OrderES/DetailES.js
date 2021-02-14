@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
-import { validate } from "../../../../shared/utils/validator";
-import { useForm } from "../../../../shared/utils/useForm";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { validate } from '../../../../shared/utils/validator';
+import { useForm } from '../../../../shared/utils/useForm';
 // import moment from "moment";
 
-import * as actionCreators from "../../../../store/actions/index";
-import { VALIDATOR_REQUIRE } from "../../../../shared/utils/validator";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import classes from "./DetailES.module.css";
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import classes from './DetailES.module.css';
 
 const DetailES = (props) => {
   const { orderid } = useParams();
@@ -29,19 +29,19 @@ const DetailES = (props) => {
   const [formState, onInputHandler] = useForm(
     {
       candidateName: {
-        value: "",
+        value: '',
         isValid: false,
       },
       candidateEmail: {
-        value: "",
+        value: '',
         isValid: false,
       },
       candidateContact: {
-        value: "",
+        value: '',
         isValid: false,
       },
       note: {
-        value: "",
+        value: '',
         isValid: false,
       },
     },
@@ -67,7 +67,7 @@ const DetailES = (props) => {
     };
 
     const CandidateState = {
-      status: "Open",
+      status: 'Open',
       candidateName: formState.inputs.candidateName.value,
       candidateEmail: formState.inputs.candidateEmail.value,
       candidateContact: formState.inputs.candidateContact.value,
@@ -225,10 +225,10 @@ const DetailES = (props) => {
         <div className={classes.InputContainer}>
           <form className={classes.InputField}>
             <TextField
-              label="nama kandidat"
-              id="candidateName"
-              name="candidateName"
-              size="small"
+              label='nama kandidat'
+              id='candidateName'
+              name='candidateName'
+              size='small'
               onChange={(event) =>
                 onManualHandler(event, {
                   validator: [VALIDATOR_REQUIRE()],
@@ -236,52 +236,58 @@ const DetailES = (props) => {
               }
               inputProps={{
                 style: {
-                  fontSize: "0.8rem",
+                  fontSize: '0.8rem',
                 },
               }}
+              style={{ width: '80%' }}
+            />
+
+            <TextField
+              label='email'
+              id='candidateEmail'
+              name='candidateEmail'
+              size='small'
+              onChange={(event) =>
+                onManualHandler(event, {
+                  validator: [VALIDATOR_REQUIRE()],
+                })
+              }
+              inputProps={{
+                style: {
+                  fontSize: '0.8rem',
+                },
+              }}
+              style={{ width: '80%' }}
             />
             <TextField
-              label="email"
-              id="candidateEmail"
-              name="candidateEmail"
-              size="small"
+              label='No.HP'
+              id='candidateContact'
+              name='candidateContact'
+              size='small'
               onChange={(event) =>
                 onManualHandler(event, {
                   validator: [VALIDATOR_REQUIRE()],
                 })
               }
+              style={{ width: '80%' }}
               inputProps={{
                 style: {
-                  fontSize: "0.8rem",
+                  fontSize: '0.8rem',
                 },
               }}
             />
-            <TextField
-              label="No.HP"
-              id="candidateContact"
-              name="candidateContact"
-              size="small"
-              onChange={(event) =>
-                onManualHandler(event, {
-                  validator: [VALIDATOR_REQUIRE()],
-                })
-              }
-              inputProps={{
-                style: {
-                  fontSize: "0.8rem",
-                },
-              }}
-            />
-            <Button
-              variant="outlined"
-              color="primary"
-              style={{ height: "2rem" }}
-              className={classes.AddButton}
-              onClick={onSubmitHandler}
-              startIcon={<AddIcon />}
-            >
-              Add
-            </Button>
+            <div className={classes.Button}>
+              <Button
+                variant='outlined'
+                color='primary'
+                style={{ height: '2rem' }}
+                className={classes.AddButton}
+                onClick={onSubmitHandler}
+                startIcon={<AddIcon />}
+              >
+                Add
+              </Button>
+            </div>
           </form>
           <div className={classes.CadidateContainer}>
             {displayData.map((can, i) => {
@@ -294,19 +300,19 @@ const DetailES = (props) => {
                           onDeleteHandler(e, can.id, can.candidateName)
                         }
                         style={{
-                          border: "none",
-                          outline: "none",
-                          backgroundColor: "transparent",
-                          margin: "0.2rem 0.5rem -0.2rem 0",
-                          padding: "0",
-                          cursor: "pointer",
+                          border: 'none',
+                          outline: 'none',
+                          backgroundColor: 'transparent',
+                          margin: '0.2rem 0.5rem -0.2rem 0',
+                          padding: '0',
+                          cursor: 'pointer',
                         }}
                       >
                         <CloseIcon
                           style={{
-                            color: "gray",
-                            fontSize: "1rem",
-                            margin: "0",
+                            color: 'gray',
+                            fontSize: '1rem',
+                            margin: '0',
                           }}
                         />
                       </button>
@@ -318,9 +324,9 @@ const DetailES = (props) => {
                       ) : (
                         <p
                           style={
-                            can.status === "Open"
-                              ? { color: "green" }
-                              : { color: "gray" }
+                            can.status === 'Open'
+                              ? { color: 'green' }
+                              : { color: 'gray' }
                           }
                         >
                           {can.status}
@@ -331,11 +337,11 @@ const DetailES = (props) => {
                       </button>
                       <div className={classes.DropDownContent}>
                         <button
-                          style={{ color: "Green" }}
+                          style={{ color: 'Green' }}
                           onClick={() =>
                             candidateStatusHandler({
                               applicantId: can.id,
-                              value: "Open",
+                              value: 'Open',
                               i,
                             })
                           }
@@ -343,11 +349,11 @@ const DetailES = (props) => {
                           Open
                         </button>
                         <button
-                          style={{ color: "red" }}
+                          style={{ color: 'red' }}
                           onClick={() =>
                             candidateStatusHandler({
                               applicantId: can.id,
-                              value: "Closed",
+                              value: 'Closed',
                               i,
                             })
                           }
@@ -365,23 +371,23 @@ const DetailES = (props) => {
                     {reply && replyIndex === i ? (
                       <div className={classes.ReplyInput}>
                         <TextField
-                          name="note"
-                          id="note"
-                          label="catatan"
+                          name='note'
+                          id='note'
+                          label='catatan'
                           multiline
                           rowsMax={4}
-                          variant="outlined"
-                          size="small"
+                          variant='outlined'
+                          size='small'
                           defaultValue={can.note}
                           inputProps={{
                             style: {
-                              fontSize: "0.8rem",
+                              fontSize: '0.8rem',
                             },
                           }}
                           style={{
-                            marginBottom: "0.5rem",
-                            width: "25rem",
-                            marginRight: "0.5rem",
+                            marginBottom: '0.5rem',
+                            width: '25rem',
+                            marginRight: '0.5rem',
                           }}
                           onChange={(event) =>
                             onManualHandler(event, {
@@ -390,8 +396,8 @@ const DetailES = (props) => {
                           }
                         />
                         <Button
-                          color="primary"
-                          style={{ height: "2.5rem" }}
+                          color='primary'
+                          style={{ height: '2.5rem' }}
                           className={classes.button}
                           onClick={() =>
                             updateNoteES({
@@ -407,8 +413,8 @@ const DetailES = (props) => {
                       <div className={classes.CandidateNote}>
                         <p className={classes.NoteText}>{can.note}</p>
                         <Button
-                          color="primary"
-                          style={{ height: "2.5rem" }}
+                          color='primary'
+                          style={{ height: '2.5rem' }}
                           className={classes.button}
                           onClick={(e) => replyHandler(i)}
                         >
