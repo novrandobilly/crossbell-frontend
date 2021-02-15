@@ -1,10 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { VALIDATOR_REQUIRE } from "../../../shared/utils/validator";
 
-// import Input from "../../../shared/UI_Element/Input";
-// import Button from "../../../shared/UI_Element/Button";
 import Carousel from './Components/Carousel';
 import AuthForm from './Components/AuthForm';
 import ContentTextRight from './HomeContent/ContentTextRight';

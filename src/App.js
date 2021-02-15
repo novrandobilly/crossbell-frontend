@@ -16,6 +16,7 @@ import SyaratKetentuan from './general/pages/SyaratKetentuan/SyaratKetentuan';
 import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi';
 import ForgotPwd from './general/pages/Home/Components/ForgotPwd';
 import ResetPwd from './general/pages/Home/Components/ResetPwd';
+import FAQ from './general/components/ContactUs/FAQ';
 
 //==================================== jobs =========================================================
 import NewJob from './jobs/pages/NewJob';
@@ -237,6 +238,7 @@ const App = (props) => {
           <Route path='/ad/alphaomega/promo' component={Promo} />
 
           {/* General Routes */}
+          <Route path='/FrequentlyAskedQuestion' component={FAQ} />
           <Route path='/blogs' component={Blogs} />
           <Route path='/about-us' component={AboutUs} />
           <Route path='/contact-us' component={ContactUs} />

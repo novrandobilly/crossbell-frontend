@@ -66,28 +66,38 @@ const ContactUsContent = (props) => {
         <p className={classes.HeaderTitle}>Help Articles</p>
         <ul className={classes.HelpArticlesLink}>
           <li>
-            <Link to='#'>I am an Employer, how can I post a job ads?</Link>
+            <Link to='/FrequentlyAskedQuestion'>
+              I am an Employer, how can I post a job ads?
+            </Link>
           </li>
           <li>
-            <Link to='#'>What's the benefit of becoming a jobseeker here?</Link>
+            <Link to='/FrequentlyAskedQuestion'>
+              What's the benefit of becoming a jobseeker here?
+            </Link>
           </li>
           <li>
-            <Link to='#'>What's the benefit of becoming an employer here?</Link>
+            <Link to='/FrequentlyAskedQuestion'>
+              What's the benefit of becoming an employer here?
+            </Link>
           </li>
           <li>
-            <Link to='#'>I can't remember my login password</Link>
+            <Link to='/FrequentlyAskedQuestion'>
+              I can't remember my login password
+            </Link>
           </li>
           <li>
-            <Link to='#'>
+            <Link to='/FrequentlyAskedQuestion'>
               I have a billing question (unrecognized charge, invoicing)
             </Link>
           </li>
           <li>
-            <Link to='#'>I want to report a security issue</Link>
+            <Link to='/FrequentlyAskedQuestion'>
+              I want to report a security issue
+            </Link>
           </li>
         </ul>
         <span className={classes.SeeAllArticles}>
-          <Link to='#'>See all help articles</Link>
+          <Link to='/FrequentlyAskedQuestion'>See all help articles</Link>
         </span>
       </div>
       <div className={classes.NeedSupport}>
