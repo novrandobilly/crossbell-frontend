@@ -37,7 +37,7 @@ export const login = loginData => {
 	return async dispatch => {
 		dispatch(loginStart());
 		try {
-			const res = await fetch('http://localhost:5000/api/users/login', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ export const googleLogin = payload => {
 	return async dispatch => {
 		dispatch(loginStart());
 		try {
-			const res = await fetch('http://localhost:5000/api/users/login/google', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/login/google`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ export const forgotPwd = payload => {
 	return async dispatch => {
 		dispatch(authStart());
 		try {
-			const res = await fetch('http://localhost:5000/api/users/forgot', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/forgot`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -135,7 +135,7 @@ export const getResetPwd = payload => {
 	return async dispatch => {
 		dispatch(authStart());
 		try {
-			const res = await fetch(`http://localhost:5000/api/users/reset/${payload.token}`);
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/reset/${payload.token}`);
 			const resJSON = await res.json();
 			if (!res.ok) {
 				throw new Error(resJSON.message);
@@ -154,7 +154,7 @@ export const resetPwd = payload => {
 		console.log(payload);
 		dispatch(authStart());
 		try {
-			const res = await fetch(`http://localhost:5000/api/users/reset/${payload.resetToken}`, {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/reset/${payload.resetToken}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

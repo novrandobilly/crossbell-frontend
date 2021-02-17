@@ -119,7 +119,7 @@ export const createOrder = orderData => {
 	return async dispatch => {
 		dispatch(createOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/reg`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export const getOrder = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/${payload.userId}/order/reg`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/reg`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ export const getOrderInvoice = payload => {
 	return async dispatch => {
 		dispatch(getOrderInvoiceStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/${payload.orderId}/invoice`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/${payload.orderId}/invoice`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export const getWholeOrderREG = payload => {
 	return async dispatch => {
 		dispatch(getOrderRegulerStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/reg`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -225,7 +225,7 @@ export const approveOrderREG = orderData => {
 	return async dispatch => {
 		dispatch(approveOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/approve/reg`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/approve/reg`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -255,7 +255,7 @@ export const getWholeOrderES = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const res = await fetch('http://localhost:5000/api/alphaomega/order/es', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -279,7 +279,7 @@ export const getCompanyES = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/${payload.userId}/order/es`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/es`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -303,7 +303,7 @@ export const getOneOrderES = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const res = await fetch(`http://localhost:5000/api/alphaomega/order/es/${payload.orderId}`, {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/${payload.orderId}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -327,7 +327,7 @@ export const createOrderES = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const res = await fetch('http://localhost:5000/api/alphaomega/order/es', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -364,7 +364,7 @@ export const addCandidateES = payload => {
 		dispatch(createOrderStart());
 		console.log(payload);
 		try {
-			const res = await fetch('http://localhost:5000/api/alphaomega/order/es/addcandidate', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/addcandidate`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -396,7 +396,7 @@ export const updateCandidateStatusES = payload => {
 		dispatch(approveOrderStart());
 		console.log(payload);
 		try {
-			const res = await fetch('http://localhost:5000/api/alphaomega/order/es/updatecandidate', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/updatecandidate`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -429,7 +429,7 @@ export const updateOrderStatusES = payload => {
 		dispatch(approveOrderStart());
 		console.log(payload);
 		try {
-			const res = await fetch('http://localhost:5000/api/alphaomega/order/es/updateorder', {
+			const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/updateorder`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -460,7 +460,7 @@ export const createOrderCandidate = orderData => {
 	return async dispatch => {
 		dispatch(createOrderCandidateStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/bc`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/bc`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -499,7 +499,7 @@ export const getWholeOrderBC = payload => {
 		dispatch(getOrderCandidateStart());
 		console.log(payload);
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/bc`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/bc`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -525,7 +525,7 @@ export const getCompanyBC = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/${payload.userId}/order/bc`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/bc`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -549,7 +549,7 @@ export const deleteCandidateES = payload => {
 	return async dispatch => {
 		dispatch(getOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/order/es/deletecandidate`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/deletecandidate`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -577,7 +577,7 @@ export const approveOrderBC = orderData => {
 	return async dispatch => {
 		dispatch(approveOrderStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/alphaomega/approve/bc`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/approve/bc`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
