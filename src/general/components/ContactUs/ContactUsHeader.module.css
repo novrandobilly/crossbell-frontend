@@ -1,16 +1,21 @@
 .ContactUsHeader {
-	display: flex;
-	flex-flow: column;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 10rem;
-	padding: 0 10%;
-	background-color: rgb(215, 226, 255);
-	color: rgba(58, 81, 153, 1);
-	box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 10%;
+  background-color: rgb(215, 226, 255);
+  color: rgba(58, 81, 153, 1);
+  box-sizing: border-box;
 }
 
 .ContactUsHeader > * {
-	margin: .5rem 0;
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 576px) {
+  .ContactUsHeader {
+    padding: 16px 8px;
+  }
 }
