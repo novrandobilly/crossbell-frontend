@@ -72,7 +72,7 @@ export const deleteSegment = segmentData => {
 	return async dispatch => {
 		dispatch(deleteSegmentStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/segment`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/segment`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json'
@@ -101,7 +101,7 @@ export const createApplicant = ApplicantData => {
 	return async dispatch => {
 		dispatch(createApplicantStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/signup`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/signup`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -134,7 +134,7 @@ export const getOneApplicant = ApplicantId => {
 	return async dispatch => {
 		dispatch(getApplicantStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantId}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
@@ -179,7 +179,7 @@ export const updateApplicantIntro = ApplicantData => {
 			formData.append('headhunterProgram', ApplicantData.headhunterProgram);
 			formData.append('interest', ApplicantData.interest);
 
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
 				body: formData
 			});
@@ -202,7 +202,7 @@ export const updateApplicantSummary = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
@@ -228,7 +228,7 @@ export const updateApplicantEducation = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
@@ -263,7 +263,7 @@ export const updateApplicantExperience = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
@@ -298,7 +298,7 @@ export const updateApplicantCertification = ApplicantData => {
 		dispatch(updateApplicantStart());
 		console.log(ApplicantData);
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
@@ -331,7 +331,7 @@ export const updateApplicantSkills = ApplicantData => {
 	return async dispatch => {
 		dispatch(updateApplicantStart());
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${ApplicantData.applicantId}`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
@@ -360,7 +360,7 @@ export const updateResume = payload => {
 		const resumeData = new FormData();
 		resumeData.append('resume', payload.resume);
 		try {
-			const response = await fetch(`http://localhost:5000/api/users/ap/${payload.applicantId}/resume`, {
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}/resume`, {
 				method: 'PATCH',
 				body: resumeData
 			});
