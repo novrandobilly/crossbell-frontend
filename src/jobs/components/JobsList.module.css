@@ -63,3 +63,57 @@
   justify-content: space-around;
   width: 100%;
 }
+
+.FormControl {
+  width: 20%;
+}
+
+@media (max-width: 992px) {
+  .FilterContainer {
+    display: none;
+  }
+
+  .JobList {
+    order: 2;
+    width: 60%;
+  }
+
+  .FormControl {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .Wraper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Container {
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    margin-top: 32px;
+    width: 80%;
+  }
+
+  .JobList {
+    width: 100%;
+  }
+
+  .FormControl {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 400px) {
+  .JobList {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .FormControl {
+    width: 50%;
+  }
+}

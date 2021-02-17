@@ -1,20 +1,37 @@
 .QueryBar {
-	width: 100%;
-	display: flex;
-	justify-content: space-around;
-	padding: .5rem 0;
-	height: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem 0;
 }
 
 .SearchForm {
-	display: flex;
-	margin-right: -3rem;
+  display: flex;
+  margin-right: -3rem;
 }
 
 .SearchContainer {
-	width: 30%;
+  width: 30%;
 }
 
 .ButtonContainer {
-	align-self: center;
+  align-self: center;
+}
+
+@media (max-width: 400px) {
+  .QueryBar {
+    padding: 0;
+  }
+
+  .SearchForm {
+    margin-right: 0;
+  }
+
+  .SearchContainer {
+    width: 60%;
+  }
+
+  .ButtonContainer {
+    width: 40%;
+  }
 }

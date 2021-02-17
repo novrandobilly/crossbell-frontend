@@ -223,28 +223,6 @@ const JobsList = (props) => {
   let content = (
     <div className={classes.Container}>
       <div className={classes.FilterContainer}>
-        <MenuItem>
-          <div className={classes.LeftFilter}>
-            <FormControl
-              className={classes.formControl}
-              style={{ width: '20%', textAlign: 'left' }}
-            >
-              <InputLabel id='sort'>Filter</InputLabel>
-              <Select
-                labelId='sort'
-                id='sort'
-                value={sort}
-                onChange={handleChange}
-              >
-                <MenuItem value='newest'>Terbaru</MenuItem>
-                <MenuItem value='latest'>Terlama</MenuItem>
-                <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
-                <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </MenuItem>
-
         <div className={classes.CheckboxCriteria}>
           <p className={classes.FilterLabel}>Bidang pekerjaan</p>
           <FormControl
@@ -392,7 +370,7 @@ const JobsList = (props) => {
         </div>
       </div>
 
-      <div className={classes.JobList}>
+      <div className={classes.JobList} id='JobList'>
         {displayJobs && displayJobs.length > 0 ? (
           displayJobs.map((job) => (
             <JobCard
@@ -435,22 +413,22 @@ const JobsList = (props) => {
           />
         </div>
       </div>
-      <FormControl
-        className={classes.formControl}
-        style={{ width: '20%', textAlign: 'left' }}
-      >
-        <InputLabel id='sort'>Filter</InputLabel>
-        <Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
-          <MenuItem value='newest'>Terbaru</MenuItem>
-          <MenuItem value='latest'>Terlama</MenuItem>
-          <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
-          <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
-        </Select>
-      </FormControl>
+
+      <div className={classes.FormControl} id='FormControl'>
+        <FormControl style={{ width: '100%', textAlign: 'left' }}>
+          <InputLabel id='sort'>Filter</InputLabel>
+          <Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
+            <MenuItem value='newest'>Terbaru</MenuItem>
+            <MenuItem value='latest'>Terlama</MenuItem>
+            <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
+            <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
     </div>
   );
 
-  return <div>{content}</div>;
+  return <div className={classes.Wraper}>{content}</div>;
 };
 
 export default JobsList;
