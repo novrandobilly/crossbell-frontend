@@ -23,6 +23,8 @@ import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
 
 import classes from './OrderBCForm.module.css';
 
+const ORIGINAL_PRICE = 40000;
+
 const OrderBCForm = (props) => {
   const [employment, setEmployment] = useState('');
   const [open, setOpen] = useState(false);
@@ -30,7 +32,7 @@ const OrderBCForm = (props) => {
   const [formState, onInputHandler] = useForm(
     {
       education: {
-        value: '',
+        value: [],
         isValid: false,
       },
       gender: {
@@ -109,7 +111,7 @@ const OrderBCForm = (props) => {
     }
   };
 
-  const onChangeHandler = (e) => {
+  const genderHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -127,6 +129,16 @@ const OrderBCForm = (props) => {
     setEmployment(e.target.value);
   };
 
+  const educationHandler = (e) => {
+    let tempArray = [...formState.inputs.education.value];
+    if (e.target.checked) {
+      tempArray = [...tempArray, e.target.value];
+    } else {
+      tempArray = tempArray.filter((el) => el !== e.target.value);
+    }
+    return [tempArray, onInputHandler('education', tempArray, true)];
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -134,6 +146,16 @@ const OrderBCForm = (props) => {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  let price;
+
+  if (formState.inputs.amount.value <= 1) price = ORIGINAL_PRICE;
+  if (formState.inputs.amount.value > 1)
+    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
+  if (formState.inputs.amount.value > 4)
+    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2;
+  if (formState.inputs.amount.value > 9)
+    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3;
 
   let formContent = <SpinnerCircle />;
 
@@ -150,45 +172,45 @@ const OrderBCForm = (props) => {
                   <p className={classes.RadioLabel}>Pendidikan</p>
                   <div
                     className={classes.RadioGroupInput}
-                    onChange={onChangeHandler}
+                    onChange={educationHandler}
                   >
                     <input
-                      type='radio'
+                      type='checkbox'
                       value='SMA'
                       name='education'
                       className={classes.RadioValue}
                     />{' '}
                     <p className={classes.RadioText}>SMA</p>
                     <input
-                      type='radio'
+                      type='checkbox'
                       value='SMK'
                       name='education'
                       className={classes.RadioValue}
                     />{' '}
                     <p className={classes.RadioText}>SMK</p>
                     <input
-                      type='radio'
+                      type='checkbox'
                       value='D3'
                       name='education'
                       className={classes.RadioValue}
                     />{' '}
                     <p className={classes.RadioText}>D3</p>
                     <input
-                      type='radio'
+                      type='checkbox'
                       value='S1'
                       name='education'
                       className={classes.RadioValue}
                     />{' '}
                     <p className={classes.RadioText}>S1</p>
                     <input
-                      type='radio'
+                      type='checkbox'
                       value='S2'
                       name='education'
                       className={classes.RadioValue}
                     />{' '}
                     <p className={classes.RadioText}>S2</p>
                     <input
-                      type='radio'
+                      type='checkbox'
                       value='S3'
                       name='education'
                       className={classes.RadioValue}
@@ -230,7 +252,7 @@ const OrderBCForm = (props) => {
               </div>
 
               <div className={classes.Inputs}>
-                <div onChange={onChangeHandler} className={classes.RadioGroup}>
+                <div onChange={genderHandler} className={classes.RadioGroup}>
                   <p className={classes.RadioLabel}>Jenis kelamin</p>
                   <div className={classes.RadioGroupInput}>
                     <input
@@ -363,6 +385,26 @@ const OrderBCForm = (props) => {
                 onInputHandler={onInputHandler}
                 label='Catatan tambahan*'
               />
+              <div className={classes.PriceHolder}>
+                <div
+                  className={classes.InputAmount}
+                  style={{ borderBottom: '1px solid black' }}
+                >
+                  <p className={classes.Label}>Harga per slot:</p>
+                  <p className={classes.InputSlot}>
+                    IDR {price.toLocaleString()}
+                  </p>
+                </div>
+                <div className={classes.InputAmount}>
+                  <p className={classes.Label}>Total:</p>
+                  <p className={classes.InputSlot}>
+                    <strong>
+                      IDR{' '}
+                      {(price * formState.inputs.amount.value).toLocaleString()}
+                    </strong>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 

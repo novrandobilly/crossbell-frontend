@@ -137,11 +137,37 @@
   font-weight: 400;
 }
 
+.PriceHolder {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.InputAmount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+  font-size: 0.9rem;
+  color: black;
+}
+
+.Label {
+  display: flex;
+  margin: 0;
+}
+
+.InputSlot {
+  display: flex;
+  overflow: hidden;
+}
+
 .Footer {
   width: 89%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 4rem;
+  margin-top: 32px;
 }
 
 @media (max-width: 768px) {
