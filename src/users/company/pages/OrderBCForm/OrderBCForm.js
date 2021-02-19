@@ -19,6 +19,7 @@ import Modal from '../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Button from '@material-ui/core/Button';
 import Input from '../../../../shared/UI_Element/Input';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
 
 import classes from './OrderBCForm.module.css';
@@ -28,6 +29,7 @@ const ORIGINAL_PRICE = 40000;
 const OrderBCForm = (props) => {
   const [employment, setEmployment] = useState('');
   const [open, setOpen] = useState(false);
+  const [orderModal, setOrderModal] = useState(false);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -97,8 +99,10 @@ const OrderBCForm = (props) => {
       emailRecipient: formState.inputs.emailRecipient.value,
       amount: formState.inputs.amount.value,
     };
+
+    setOrderModal(false);
+
     try {
-      console.log('this run');
       const res = await props.createOrderCandidate(orderData);
       if (res) {
         console.log(res);
@@ -145,6 +149,14 @@ const OrderBCForm = (props) => {
 
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  const onCloseOrderModal = () => {
+    setOrderModal(false);
+  };
+
+  const onOpenOrderModal = () => {
+    setOrderModal(true);
   };
 
   let price;
@@ -413,7 +425,8 @@ const OrderBCForm = (props) => {
               disabled={!formState.formIsValid}
               variant='contained'
               color='primary'
-              type='submit'
+              type='button'
+              onClick={onOpenOrderModal}
             >
               Save
             </Button>
@@ -432,6 +445,13 @@ const OrderBCForm = (props) => {
       <Modal show={props.error} onCancel={onCancelHandler}>
         Tidak dapat melakukan pembelian saat ini{' '}
       </Modal>
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={onSubmitHandler}
+      >
+        Apakah anda yakin ingin membuat pesananan saat ini?
+      </OrderModal>
       {formContent}
     </form>
   );

@@ -103,7 +103,7 @@ const EditPIC = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='PIC Name*'
+                label='Nama*'
                 initValue={data.picName}
                 initIsValid={data.picName}
               />
@@ -113,7 +113,7 @@ const EditPIC = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='PIC Job Title*'
+                label='Posisi*'
                 initValue={data.picJobTitle}
                 initIsValid={data.picJobTitle}
               />
@@ -123,7 +123,7 @@ const EditPIC = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
-                label='PIC Email*'
+                label=' Email*'
                 initValue={data.picEmail}
                 initIsValid={data.picEmail}
                 helperText='Please input a valid email address'
@@ -134,7 +134,7 @@ const EditPIC = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='PIC Phone Number / Whatsapp*'
+                label=' Nomor telepon / Whatsapp*'
                 initValue={data.picPhone}
                 initIsValid={data.picPhone}
               />
@@ -144,7 +144,7 @@ const EditPIC = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='PIC Office Phone Number*'
+                label='Nomor Telepon Kantor*'
                 initValue={data.picPhone}
                 initIsValid={data.picPhone}
               />

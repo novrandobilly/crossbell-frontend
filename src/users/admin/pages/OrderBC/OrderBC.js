@@ -212,7 +212,7 @@ const OrderBC = (props) => {
                             Approve
                           </button>
                         ) : (
-                          <button style={{ color: 'gray', fontWeight: '500' }}>
+                          <button style={{ color: 'gray', fontWeight: 'bold' }}>
                             Telah disetujui
                           </button>
                         )}

@@ -80,6 +80,8 @@ import MainNavigation from './shared/Navigation/MainNavigation';
 import Footer from './shared/Navigation/Footer';
 import ContactIcon from './shared/UI_Element/ContactIcon';
 
+import OrderModal from './shared/UI_Element/OrderModal';
+
 import './App.css';
 
 let logoutTimer;
@@ -127,6 +129,7 @@ const App = (props) => {
       <main>
         <Switch>
           {/* Users Routes: Applicant */}
+          <Route path='/test/modal' component={OrderModal} />
           <Route
             path='/ap/:applicantid/res-val'
             component={ApplicantResumeVal}
