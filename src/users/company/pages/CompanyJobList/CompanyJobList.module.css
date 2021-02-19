@@ -50,6 +50,27 @@
   border: solid 0.05rem rgba(0, 0, 0, 0.7);
 }
 
+.CardHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+  width: 100%;
+}
+
+.CardHeader button {
+  outline: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.CardHeader p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .CardBody {
   display: flex;
   flex-direction: column;
@@ -87,6 +108,17 @@
   margin-bottom: -0.5rem;
   margin-top: 1rem;
   overflow: hidden;
+}
+
+.EmptyText {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  font-weight: bold;
 }
 
 @media (max-width: 992px) {

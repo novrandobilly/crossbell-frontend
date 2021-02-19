@@ -5,14 +5,14 @@ import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import classes from './CompanyJobList.module.css';
+import CloseIcon from '@material-ui/icons/Close';
 
-// import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import classes from './CompanyJobList.module.css';
 
 const CompanyJobList = (props) => {
   const { companyid } = useParams();
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   const { getJobsInCompany } = props;
   useEffect(() => {
@@ -29,57 +29,88 @@ const CompanyJobList = (props) => {
     }
   }, [getJobsInCompany, companyid, props.auth]);
 
-  let Content = <SpinnerCircle />;
+  const onDeleteHandler = async (id) => {
+    const token = props.auth.token;
+    try {
+      const payload = {
+        jobId: id,
+        token: token,
+      };
+      const res = await props.deleteJob(payload);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log('No feed with id:' + { id } + 'found');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  if (data && !props.isLoading) {
-    Content = (
+  let content = <SpinnerCircle />;
+
+  if (!props.isLoading && data && data.length > 0) {
+    content = (
       <div className={classes.Container}>
         <div className={classes.CardContainer}>
           <div className={classes.DivContainer}>
             {data.map((job, i) => {
               return (
                 <div key={job.id} className={classes.CardHolder}>
-                  <Link
-                    to={
-                      job.expiredDate
-                        ? `/jobs/${job.id}`
-                        : `/jobs/new/edit/${job.id}`
-                    }
-                  >
-                    <div className={classes.JobCard}>
-                      <div className={classes.CardHeader}>
+                  <div className={classes.JobCard}>
+                    <div className={classes.CardHeader}>
+                      <div>
                         <p>{job.jobTitle}</p>
                         <p className={classes.CardAddress}>
                           {job.placementLocation}
                         </p>
+                      </div>
+                      {!job.expiredDate && (
+                        <div>
+                          <button onClick={() => onDeleteHandler(job.id)}>
+                            <CloseIcon />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <Link
+                      to={
+                        job.expiredDate
+                          ? `/jobs/${job.id}`
+                          : `/jobs/new/edit/${job.id}`
+                      }
+                    >
+                      <div>
                         <p className={classes.CardRecipient}>
                           {job.emailRecipient}
                         </p>
-                      </div>
-                      <div className={classes.CardBody}>
-                        <p className={classes.CardApplicant}>
-                          {job.jobApplicants.length}
-                        </p>
-                        <p>applicants applied </p>
-                      </div>
-                      <div className={classes.CardFooter}>
-                        {job.expiredDate ? (
-                          <p className={classes.ExpDate}>
-                            {moment(job.expiredDate).diff(moment(), 'days') > 0
-                              ? [
-                                  `expired in ${moment(job.expiredDate).diff(
-                                    moment(),
-                                    'days'
-                                  )} days`,
-                                ]
-                              : 'expired'}
+
+                        <div className={classes.CardBody}>
+                          <p className={classes.CardApplicant}>
+                            {job.jobApplicants.length}
                           </p>
-                        ) : (
-                          <p className={classes.ExpDate}>belum ditayangkan</p>
-                        )}
+                          <p>applicants applied </p>
+                        </div>
+                        <div className={classes.CardFooter}>
+                          {job.expiredDate ? (
+                            <p className={classes.ExpDate}>
+                              {moment(job.expiredDate).diff(moment(), 'days') >
+                              0
+                                ? [
+                                    `expired in ${moment(job.expiredDate).diff(
+                                      moment(),
+                                      'days'
+                                    )} days`,
+                                  ]
+                                : 'expired'}
+                            </p>
+                          ) : (
+                            <p className={classes.ExpDate}>belum ditayangkan</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 </div>
               );
             })}
@@ -89,7 +120,15 @@ const CompanyJobList = (props) => {
     );
   }
 
-  return Content;
+  if (!props.isLoading && data && data.length < 1) {
+    content = (
+      <p className={classes.EmptyText}>
+        Anda belum memasang iklan pekerjaan sebelumnya
+      </p>
+    );
+  }
+
+  return content;
 };
 
 const mapStateToProps = (state) => {
@@ -102,7 +141,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
+    deleteJob: (payload) => dispatch(actionCreators.deleteJob(payload)),
     getJobsInCompany: (payload) =>
       dispatch(actionCreators.getJobsInCompany(payload)),
   };

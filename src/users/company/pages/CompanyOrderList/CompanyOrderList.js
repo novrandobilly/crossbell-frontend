@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import { connect } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { withRouter, useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 // import * as actionTypes from "../../../../store/actions/actions";
@@ -43,7 +43,7 @@ const paginationReducer = (state, action) => {
 
 const CompanyOrderList = (props) => {
   const { companyid } = useParams();
-  const [orderData, setOrderData] = useState();
+  const [orderData, setOrderData] = useState([]);
   const [displayData, setDisplayData] = useState();
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
@@ -126,6 +126,20 @@ const CompanyOrderList = (props) => {
     });
   };
 
+  const history = useHistory();
+
+  const rowPushInvoice = (id) => {
+    if (id) {
+      history.push(`/co/${id}/invoice`);
+    }
+  };
+
+  const rowPushES = (id) => {
+    if (id) {
+      history.push(`/co/order/${id}/es`);
+    }
+  };
+
   let content = <SpinnerCircle />;
 
   if (!props.isLoading && displayData) {
@@ -153,20 +167,16 @@ const CompanyOrderList = (props) => {
                   moment(order.dueDate).diff(moment(), 'days', true)
                 );
                 return (
-                  <tr key={order._id}>
+                  <tr
+                    key={order._id}
+                    onClick={() =>
+                      order.slot || order.amount
+                        ? rowPushInvoice(order._id)
+                        : rowPushES(order._id)
+                    }
+                  >
                     <td> {i + 1}</td>
-                    <td>
-                      <Link
-                        to={
-                          order.slot || order.amount
-                            ? `/co/${order._id}/invoice`
-                            : `/co/order/${order._id}/es`
-                        }
-                        key={i}
-                      >
-                        {order._id}
-                      </Link>
-                    </td>
+                    <td>{order._id}</td>
 
                     <td>
                       {order.slot
@@ -258,6 +268,14 @@ const CompanyOrderList = (props) => {
     );
   }
 
+  if (!props.isLoading && orderData && orderData.length < 1) {
+    content = (
+      <p className={classes.EmptyText}>
+        Anda belum melakukan pembelian sebelumnya
+      </p>
+    );
+  }
+
   return <div>{content}</div>;
 };
 
@@ -277,4 +295,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompanyOrderList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CompanyOrderList));

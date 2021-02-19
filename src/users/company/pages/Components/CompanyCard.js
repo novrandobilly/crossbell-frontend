@@ -39,92 +39,74 @@ const CompanyCard = (props) => {
       <div className={classes.Container}>
         <div className={classes.CompanyContainer}>
           <div className={classes.ContainerLeft}>
-            <div className={classes.DetailLogo}>
-              {props.logo ? (
-                <div
-                  className={classes.Avatar}
-                  style={{
-                    backgroundImage: `url('${props.logo.url}')`,
-                  }}
-                />
-              ) : (
-                <AccountCircleIcon
-                  style={{
-                    fontSize: '15rem',
-                    marginBottom: '1rem',
-                  }}
-                />
-              )}
+            <div className={classes.ContainerLeftGroup}>
+              <div className={classes.DetailLogo}>
+                {props.logo ? (
+                  <div
+                    className={classes.Avatar}
+                    style={{
+                      backgroundImage: `url('${props.logo.url}')`,
+                    }}
+                  />
+                ) : (
+                  <AccountCircleIcon
+                    style={{
+                      fontSize: '15rem',
+                      marginBottom: '1rem',
+                    }}
+                  />
+                )}
 
-              <p
-                className={classes.Slot}
-                style={
-                  props.slotREG < 1
-                    ? { color: 'rgb(255, 46, 46)' }
-                    : { color: 'rgb(0, 135, 9)' }
-                }
-              >
-                Remaining Slot: {props.slotREG}
-              </p>
+                <p
+                  className={classes.Slot}
+                  style={
+                    props.slotREG < 1
+                      ? { color: 'rgb(255, 46, 46)' }
+                      : { color: 'rgb(0, 135, 9)' }
+                  }
+                >
+                  Remaining Slot: {props.slotREG}
+                </p>
+              </div>
+
+              <div className={classes.ContainerLeftDivider}>
+                <p className={classes.CompanyName}>{props.companyName}</p>
+
+                <p className={classes.CompanyIndustry}>{props.industry}</p>
+
+                <p className={classes.CompanyHeadquarter}>{props.address}</p>
+
+                <a
+                  href={`https://${props.website}`}
+                  className={classes.CompanyWebsites}
+                >
+                  {props.website ? props.website : '-'}
+                </a>
+              </div>
             </div>
 
-            <div className={classes.ContainerLeftDivider}>
-              <p className={classes.CompanyName}>{props.companyName}</p>
-
-              <p className={classes.CompanyIndustry}>{props.industry}</p>
-
-              <p className={classes.CompanyHeadquarter}>{props.address}</p>
-
-              <a
-                href={`https://${props.website}`}
-                className={classes.CompanyWebsites}
-              >
-                <img
-                  className={classes.LinkIcon}
-                  alt='web-icon'
-                  src='https://i.pinimg.com/originals/00/50/71/005071cbf1fdd17673607ecd7b7e88f6.png'
-                />
-                {props.website ? props.website : '-'}
-              </a>
-            </div>
-          </div>
-
-          <div className={classes.EditProfile}>
-            <Link to={`/co/${props.companyId}/compro/intro`}>
-              <IconButton />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <div className={classes.Content}>
-        <TextOnly
-          id={props.companyId}
-          labelName='Company Brief Descriptions'
-          route={`/co/${props.companyId}/compro/details`}
-          text={props.briefDescriptions}
-        />
-
-        <div className={classes.PicContainer}>
-          <div className={classes.PicHeader}>
-            <p className={classes.Title}>Contact Person</p>
-
-            <div className={classes.EditPIC}>
-              <Link to={`/co/${props.companyId}/compro/personincharge`}>
+            <div className={classes.EditProfile}>
+              <Link to={`/co/${props.companyId}/compro/intro`}>
                 <IconButton />
               </Link>
             </div>
+          </div>
+        </div>
+
+        <div className={classes.PicContainer}>
+          <div className={classes.PicHeader}>
+            <p className={classes.PICTitle}>Contact Person</p>
           </div>
 
           <div className={classes.PicContent}>
             <div className={classes.TextHolder}>
               <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Nama PIC: </p>
+                <p className={classes.PicLabel}>Nama: </p>
                 <p>{props.picName}</p>
               </div>
 
               <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Bekerja Sebagai: </p>
+                <p className={classes.PicLabel}>Posisi: </p>
                 <p>{props.picJobTitle}</p>
               </div>
             </div>
@@ -146,7 +128,22 @@ const CompanyCard = (props) => {
               </div>
             </div>
           </div>
+
+          <div className={classes.EditPIC}>
+            <Link to={`/co/${props.companyId}/compro/personincharge`}>
+              <IconButton />
+            </Link>
+          </div>
         </div>
+      </div>
+
+      <div className={classes.Content}>
+        <TextOnly
+          id={props.companyId}
+          labelName='Company Brief Descriptions'
+          route={`/co/${props.companyId}/compro/details`}
+          text={props.briefDescriptions}
+        />
 
         <div className={classes.CardContainer}>
           <div className={classes.Header}>
@@ -154,8 +151,7 @@ const CompanyCard = (props) => {
           </div>
 
           <div className={classes.DivContainer}>
-            {data &&
-              !props.isLoading &&
+            {!props.isLoading && data && data.length > 0 ? (
               data
                 .filter((dat) => dat.releasedAt != null)
                 .map((job, i) => {
@@ -208,7 +204,12 @@ const CompanyCard = (props) => {
                       </Link>
                     </div>
                   );
-                })}
+                })
+            ) : (
+              <p className={classes.EmptyText}>
+                Belum ada pekerjaan yang ditayangkan oleh perusahaan ini
+              </p>
+            )}
           </div>
         </div>
       </div>

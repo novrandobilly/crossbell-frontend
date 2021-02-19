@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions';
 import Modal from '../../../../shared/UI_Element/Modal';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -19,256 +20,313 @@ import FormOne from './FormOne';
 import FormTwo from './FormTwo';
 import FormThree from './FormThree';
 
-function Copyright (){
-	return (
-		<Typography variant='body2' color='textSecondary' align='center'>
-			{'Copyright © '}
-			{/* <Link color="inherit" href="https://material-ui.com/"> */}
-			CrossBell co
-			{/* </Link>{" "} */}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
+function Copyright() {
+  return (
+    <Typography variant='body2' color='textSecondary' align='center'>
+      {'Copyright © '}
+      {/* <Link color="inherit" href="https://material-ui.com/"> */}
+      CrossBell co
+      {/* </Link>{" "} */}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
 
-const useStyles = makeStyles(theme => ({
-	appBar: {
-		position: 'relative'
-	},
-	layout: {
-		width: 'auto',
-		marginLeft: theme.spacing(2),
-		marginRight: theme.spacing(2),
-		[theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-			width: 600,
-			marginLeft: 'auto',
-			marginRight: 'auto'
-		}
-	},
-	paper: {
-		marginTop: theme.spacing(3),
-		marginBottom: theme.spacing(3),
-		padding: theme.spacing(2),
-		[theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-			marginTop: theme.spacing(6),
-			marginBottom: theme.spacing(6),
-			padding: theme.spacing(3)
-		}
-	},
-	stepper: {
-		padding: theme.spacing(3, 0, 5)
-	},
-	buttons: {
-		display: 'flex',
-		justifyContent: 'flex-end'
-	},
-	button: {
-		marginTop: theme.spacing(3),
-		marginLeft: theme.spacing(1)
-	}
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: 'relative',
+  },
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 600,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
+  },
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
 }));
 
-const steps = [ 'Kandidat & Pekerjaan', 'Pengalaman & Keahlian', 'Spesifikasi Khusus' ];
+const steps = [
+  'Kandidat & Pekerjaan',
+  'Pengalaman & Keahlian',
+  'Spesifikasi Khusus',
+];
 
-const Checkout = props => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			positionLevel: {
-				value: '',
-				isValid: false
-			},
-			mainTask: {
-				value: '',
-				isValid: false
-			},
-			responsibility: {
-				value: '',
-				isValid: false
-			},
-			authority: {
-				value: '',
-				isValid: false
-			},
-			minSalary: {
-				value: '',
-				isValid: false
-			},
-			maxSalary: {
-				value: '',
-				isValid: false
-			},
-			experience: {
-				value: '',
-				isValid: false
-			},
-			expertise: {
-				value: '',
-				isValid: false
-			},
-			specification: {
-				value: '',
-				isValid: true
-			}
-		},
-		false
-	);
+const Checkout = (props) => {
+  const [orderModal, setOrderModal] = useState(false);
 
-	useEffect(
-		() => {
-			onInputHandler('positionLevel', 'Manager', true);
-		},
-		[ onInputHandler ]
-	);
+  const [formState, onInputHandler] = useForm(
+    {
+      positionLevel: {
+        value: '',
+        isValid: false,
+      },
+      mainTask: {
+        value: '',
+        isValid: false,
+      },
+      responsibility: {
+        value: '',
+        isValid: false,
+      },
+      authority: {
+        value: '',
+        isValid: false,
+      },
+      minSalary: {
+        value: '',
+        isValid: false,
+      },
+      maxSalary: {
+        value: '',
+        isValid: false,
+      },
+      experience: {
+        value: '',
+        isValid: false,
+      },
+      expertise: {
+        value: '',
+        isValid: false,
+      },
+      specification: {
+        value: '',
+        isValid: true,
+      },
+    },
+    false
+  );
 
-	const onManualHandler = (event, payload) => {
-		const value = event.target.value;
-		const id = event.target.name;
-		const isValid = validate(value, payload.validator);
+  useEffect(() => {
+    onInputHandler('positionLevel', 'Manager', true);
+  }, [onInputHandler]);
 
-		onInputHandler(id, value, isValid);
-	};
+  const onManualHandler = (event, payload) => {
+    const value = event.target.value;
+    const id = event.target.name;
+    const isValid = validate(value, payload.validator);
 
-	const onSalaryRangeHandler = useCallback(
-		payload => {
-			onInputHandler('minSalary', payload[0] * 1000000, true);
-			onInputHandler('maxSalary', payload[1] * 1000000, true);
-		},
-		[ onInputHandler ]
-	);
+    onInputHandler(id, value, isValid);
+  };
 
-	const classes = useStyles();
-	const [ activeStep, setActiveStep ] = React.useState(0);
+  const onSalaryRangeHandler = useCallback(
+    (payload) => {
+      onInputHandler('minSalary', payload[0] * 1000000, true);
+      onInputHandler('maxSalary', payload[1] * 1000000, true);
+    },
+    [onInputHandler]
+  );
 
-	const handleNext = async () => {
-		if (activeStep === 2) {
-			if (!formState.formIsValid) {
-				return props.createOrderFail();
-			}
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(0);
 
-			const payload = {
-				positionLevel: formState.inputs.positionLevel.value,
-				mainTask: formState.inputs.mainTask.value,
-				responsibility: formState.inputs.responsibility.value,
-				authority: formState.inputs.authority.value,
-				salaryRange: {
-					max: formState.inputs.maxSalary.value,
-					min: formState.inputs.minSalary.value
-				},
-				experience: formState.inputs.experience.value,
-				expertise: formState.inputs.expertise.value,
-				specification: formState.inputs.specification.value,
-				token: props.auth.token,
-				companyId: props.auth.userId
-			};
-			try {
-				const res = await props.createRequest(payload);
-				console.log(res);
-			} catch (err) {
-				console.log(err);
-			}
-		}
-		setActiveStep(activeStep + 1);
-	};
+  const handleNext = async () => {
+    if (activeStep === 2) {
+      setOrderModal(false);
 
-	const handleBack = () => {
-		setActiveStep(activeStep - 1);
-	};
+      if (!formState.formIsValid) {
+        return props.createOrderFail();
+      }
 
-	const getStepContent = step => {
-		switch (step) {
-			case 0:
-				return <FormOne onManualHandler={onManualHandler} formState={formState} onSalaryRangeHandler={onSalaryRangeHandler} />;
-			case 1:
-				return <FormTwo onManualHandler={onManualHandler} formState={formState} />;
-			case 2:
-				return <FormThree onManualHandler={onManualHandler} formState={formState} />;
-			default:
-				throw new Error('Unknown step');
-		}
-	};
+      const payload = {
+        positionLevel: formState.inputs.positionLevel.value,
+        mainTask: formState.inputs.mainTask.value,
+        responsibility: formState.inputs.responsibility.value,
+        authority: formState.inputs.authority.value,
+        salaryRange: {
+          max: formState.inputs.maxSalary.value,
+          min: formState.inputs.minSalary.value,
+        },
+        experience: formState.inputs.experience.value,
+        expertise: formState.inputs.expertise.value,
+        specification: formState.inputs.specification.value,
+        token: props.auth.token,
+        companyId: props.auth.userId,
+      };
+      try {
+        const res = await props.createRequest(payload);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    setActiveStep(activeStep + 1);
+  };
 
-	let content = (
-		<React.Fragment>
-			<CssBaseline />
-			<main className={classes.layout} style={{ width: '650px' }}>
-				<Paper className={classes.paper}>
-					<Typography component='h1' variant='h4' align='center'>
-						Executive Search Form
-					</Typography>
-					<Stepper activeStep={activeStep} className={classes.stepper}>
-						{steps.map(label => (
-							<Step key={label}>
-								<StepLabel>{label}</StepLabel>
-							</Step>
-						))}
-					</Stepper>
-					<React.Fragment>
-						{activeStep === steps.length ? (
-							<React.Fragment>
-								<Typography variant='h5' gutterBottom>
-									Terima kasih atas pengajuan Executive Search.
-								</Typography>
-								<Typography variant='subtitle1'>
-									Tim admin Crossbell akan segera memproses dan menghubungi penanggung jawab (PIC) akun untuk
-									menindak-lanjuti proses program Executive Search ini.
-								</Typography>
-								<Link to={`/co/${props.auth.userId}/listOrder`}>
-									<Button variant='contained' color='primary' className={classes.button}>
-										Selesai
-									</Button>
-								</Link>
-							</React.Fragment>
-						) : (
-							<React.Fragment>
-								{getStepContent(activeStep)}
-								<div className={classes.buttons}>
-									{activeStep !== 0 && (
-										<Button onClick={handleBack} className={classes.button}>
-											Back
-										</Button>
-									)}
-									<Button variant='contained' color='primary' onClick={handleNext} className={classes.button}>
-										{activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-									</Button>
-								</div>
-							</React.Fragment>
-						)}
-					</React.Fragment>
-				</Paper>
-				<Copyright />
-			</main>
-		</React.Fragment>
-	);
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
 
-	const onCancelHandler = () => {
-		props.resetOrder();
-	};
+  const onCloseOrderModal = () => {
+    setOrderModal(false);
+  };
 
-	return (
-		<React.Fragment>
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Tidak dapat melakukan pemesanan saat ini, mohon periksa kembali detail pesanan{' '}
-			</Modal>
-			{content}
-		</React.Fragment>
-	);
+  const onOpenOrderModal = () => {
+    setOrderModal(true);
+  };
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <FormOne
+            onManualHandler={onManualHandler}
+            formState={formState}
+            onSalaryRangeHandler={onSalaryRangeHandler}
+          />
+        );
+      case 1:
+        return (
+          <FormTwo onManualHandler={onManualHandler} formState={formState} />
+        );
+      case 2:
+        return (
+          <FormThree onManualHandler={onManualHandler} formState={formState} />
+        );
+      default:
+        throw new Error('Unknown step');
+    }
+  };
+
+  let content = (
+    <React.Fragment>
+      <CssBaseline />
+      <main className={classes.layout} style={{ width: '650px' }}>
+        <Paper className={classes.paper}>
+          <Typography component='h1' variant='h4' align='center'>
+            Executive Search Form
+          </Typography>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant='h5' gutterBottom>
+                  Terima kasih atas pengajuan Executive Search.
+                </Typography>
+                <Typography variant='subtitle1'>
+                  Tim admin Crossbell akan segera memproses dan menghubungi
+                  penanggung jawab (PIC) akun untuk menindak-lanjuti proses
+                  program Executive Search ini.
+                </Typography>
+                <Link
+                  to={`/co/${props.auth.userId}/listOrder`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    className={classes.button}
+                  >
+                    Selesai
+                  </Button>
+                </Link>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Back
+                    </Button>
+                  )}
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={onOpenOrderModal}
+                      className={classes.button}
+                    >
+                      Place order
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </div>
+              </React.Fragment>
+            )}
+          </React.Fragment>
+        </Paper>
+        <Copyright />
+      </main>
+    </React.Fragment>
+  );
+
+  const onCancelHandler = () => {
+    props.resetOrder();
+  };
+
+  return (
+    <React.Fragment>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Tidak dapat melakukan pemesanan saat ini, mohon periksa kembali detail
+        pesanan{' '}
+      </Modal>
+
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={activeStep === 2 ? handleNext : null}
+      >
+        Apakah anda yakin ingin membuat pesananan saat ini?
+      </OrderModal>
+      {content}
+    </React.Fragment>
+  );
 };
 
-const mapStateToProps = state => {
-	return {
-		auth: state.auth,
-		isLoading: state.finance.isLoading,
-		error: state.finance.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    isLoading: state.finance.isLoading,
+    error: state.finance.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		createRequest: payload => dispatch(actionCreators.createOrderES(payload)),
-		createOrderFail: () => dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
-		resetOrder: () => dispatch({ type: actionTypes.ORDERRESET })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createRequest: (payload) => dispatch(actionCreators.createOrderES(payload)),
+    createOrderFail: () =>
+      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

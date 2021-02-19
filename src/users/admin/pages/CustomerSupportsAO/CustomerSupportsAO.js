@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
-import { VALIDATOR_REQUIRE } from "../../../../shared/utils/validator";
-import * as actionCreators from "../../../../store/actions/index";
-import SpinnerCircle from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import Input from "../../../../shared/UI_Element/Input";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
+import * as actionCreators from '../../../../store/actions/index';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import classes from "./CustomerSupportsAO.module.css";
+import classes from './CustomerSupportsAO.module.css';
 
 const CustomerSupportsAO = (props) => {
   const [data, setData] = useState([]);
@@ -28,7 +28,7 @@ const CustomerSupportsAO = (props) => {
       if (res) {
         console.log(res);
       } else {
-        console.log("no feed with id:" + { id });
+        console.log('no feed with id:' + { id });
       }
     } catch (err) {
       console.log(err);
@@ -60,9 +60,9 @@ const CustomerSupportsAO = (props) => {
 
               <div className={classes.ReplyForm}>
                 <Input
-                  inputType="textarea"
-                  id="reply"
-                  label="Reply Here"
+                  inputType='textarea'
+                  id='reply'
+                  label='Reply Here'
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                 />
 
@@ -74,6 +74,14 @@ const CustomerSupportsAO = (props) => {
       })}
     </div>
   );
+
+  if (data && data.length < 1) {
+    content = (
+      <p className={classes.EmptyText}>
+        Belum ada feedback dari pengguna untuk saat ini
+      </p>
+    );
+  }
 
   if (isLoading) {
     content = <SpinnerCircle />;
