@@ -8,14 +8,13 @@
 }
 
 .Container {
-  padding: 1rem 4rem 4rem 4rem;
+  padding: 32px;
 }
 
 .Header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 2rem;
   margin-bottom: 1.5rem;
 }
 
@@ -36,6 +35,13 @@
   border-radius: 2rem;
   color: white;
   font-weight: 400;
+}
+
+.EmptyDescription {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 576px) {

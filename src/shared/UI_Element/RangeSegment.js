@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-import RangeSegmentMap from "./RangeSegmentMap";
-import IconButton from "./IconButton";
+import RangeSegmentMap from './RangeSegmentMap';
+import IconButton from './IconButton';
 
-import classes from "./RangeSegment.module.css";
+import classes from './RangeSegment.module.css';
 
 const RangeSegment = (props) => {
   const [segmentArray, setSegmentArray] = useState(props.contents);
@@ -29,7 +29,7 @@ const RangeSegment = (props) => {
           )}
           <div>
             <Link to={props.routeAdd}>
-              <IconButton iconType="NewSegment" />
+              <IconButton iconType='NewSegment' />
             </Link>
           </div>
         </div>
@@ -43,11 +43,11 @@ const RangeSegment = (props) => {
                   subTitle={
                     content.major || content.prevCompany || content.organization
                   }
-                  start={moment(content.startDate).format("MMMM YYYY")}
+                  start={moment(content.startDate).format('MMMM YYYY')}
                   end={
                     moment(content.endDate).year() < 10000
-                      ? moment(content.endDate).format("MMMM  YYYY")
-                      : "No expiry date"
+                      ? moment(content.endDate).format('MMMM  YYYY')
+                      : 'No expiry date'
                   }
                   description={content.description}
                   routeEdit={`${props.routeEdit}/${i}`}
@@ -62,6 +62,11 @@ const RangeSegment = (props) => {
               </div>
             );
           })}
+        {segmentArray.length < 1 && (
+          <p className={classes.EmptyDescription}>
+            Silahkan lengkapi data diri anda terlebih dahulu
+          </p>
+        )}
       </div>
     </div>
   );

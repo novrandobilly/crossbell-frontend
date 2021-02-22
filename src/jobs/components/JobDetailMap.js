@@ -18,7 +18,7 @@ const JobDetailMap = (props) => {
         companyName={props.job.companyId.companyName}
         level={props.job.level}
         jobFunction={props.job.jobFunction}
-        companyDetails={props.job.companyId.details}
+        companyDetails={props.job.companyId.briefDescriptions}
         key={props.job.id}
         jobId={props.job.id}
         technicalRequirement={props.job.technicalRequirement}

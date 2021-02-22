@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import IconButton from "../../../../shared/UI_Element/IconButton";
+import IconButton from '../../../../shared/UI_Element/IconButton';
 
-import classes from "./SkillsMap.module.css";
+import classes from './SkillsMap.module.css';
 
 const RangeSegment = (props) => {
   return (
@@ -19,6 +19,12 @@ const RangeSegment = (props) => {
             </Link>
           </div>
         </div>
+
+        {props.skills.length < 1 && (
+          <p className={classes.EmptyDescription}>
+            Silahkan lengkapi data diri anda terlebih dahulu
+          </p>
+        )}
 
         <div className={classes.MapContainer}>
           {props.skills &&

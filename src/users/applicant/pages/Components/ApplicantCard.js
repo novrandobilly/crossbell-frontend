@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+// import { PDFViewer } from '@react-pdf/renderer';
 import * as actionCreators from '../../../../store/actions';
 
+import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IconButton from '../../../../shared/UI_Element/IconButton';
 import TextOnly from '../../../../shared/UI_Element/TextOnly';
@@ -13,12 +15,15 @@ import classes from './ApplicantCard.module.css';
 
 const ApplicantCard = (props) => {
   const [resumeFile, setResumeFile] = useState();
+  const [loadingResume, setLoadingResume] = useState(false);
+
   const onUploadHandler = (event) => {
     event.preventDefault();
     setResumeFile(event.target.files[0]);
   };
 
   const onSubmitResumeHandler = async (event) => {
+    setLoadingResume(true);
     event.preventDefault();
     const payload = {
       applicantId: props.auth.userId,
@@ -28,8 +33,10 @@ const ApplicantCard = (props) => {
     try {
       const res = await props.updateResume(payload);
       console.log(res);
+      setLoadingResume(false);
     } catch (err) {
       console.log(err);
+      setLoadingResume(false);
     }
   };
   console.log(props.resume);
@@ -64,36 +71,7 @@ const ApplicantCard = (props) => {
 
               <p className={classes.Email}>{props.email}</p>
               <p className={classes.Email}>{props.phone}</p>
-              {!props.resume && (
-                <div>
-                  <label className={classes.InputButton}>
-                    <input
-                      type='file'
-                      name='resume'
-                      id='resume'
-                      onChange={onUploadHandler}
-                      accept='.pdf'
-                    />
-                    <span className={classes.InputButtonText}>
-                      {' '}
-                      Upload Resume{' '}
-                    </span>
-                  </label>
-                </div>
-              )}
-              {resumeFile && (
-                <div className={classes.SaveResume}>
-                  <p className={classes.FilePreview}>{resumeFile.name}</p>
 
-                  <span
-                    className={classes.SaveText}
-                    onClick={onSubmitResumeHandler}
-                  >
-                    {' '}
-                    Save{' '}
-                  </span>
-                </div>
-              )}
               <div className={classes.ResumePreview}>
                 {props.resume && (
                   <div className={classes.ResumeHolder}>
@@ -102,6 +80,7 @@ const ApplicantCard = (props) => {
                       src={`url('${props.picture.url}')`}
                       alt='resume-pic'
                     />
+
                     <a
                       href={
                         props.resume.url.slice(0, props.resume.url.length - 4) +
@@ -115,6 +94,41 @@ const ApplicantCard = (props) => {
                   </div>
                 )}
               </div>
+              <div>
+                <label className={classes.InputButton}>
+                  <input
+                    type='file'
+                    name='resume'
+                    id='resume'
+                    onChange={onUploadHandler}
+                    accept='.pdf'
+                  />
+                  <span className={classes.InputButtonText}>
+                    {' '}
+                    Upload Resume{' '}
+                  </span>
+                </label>
+              </div>
+
+              {resumeFile && (
+                <div className={classes.SaveResume}>
+                  <p className={classes.FilePreview}>{resumeFile.name}</p>
+
+                  {loadingResume ? (
+                    <div className={classes.SaveText}>
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <span
+                      className={classes.SaveText}
+                      onClick={onSubmitResumeHandler}
+                    >
+                      {' '}
+                      Save{' '}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -134,40 +148,43 @@ const ApplicantCard = (props) => {
       <div className={classes.SegmentContainer}>
         <TextOnly
           id={props.id}
-          labelName='Summary'
+          labelName='Ringkasan'
           route={`/ap/${props.id}/summary`}
           text={props.details}
         />
         <RangeSegment
           id={props.id}
-          labelName='Experience'
+          labelName='Pengalaman'
           routeEdit={`/ap/${props.id}/experience`}
           routeAdd={`/ap/${props.id}/add/experience`}
           contents={props.experience}
           state='experience'
           isLoading={props.applicant.isLoading}
         />
+
         <RangeSegment
           id={props.id}
-          labelName='Education'
+          labelName='Pendidikan'
           routeEdit={`/ap/${props.id}/education`}
           routeAdd={`/ap/${props.id}/add/education`}
           contents={props.education}
           state='education'
           isLoading={props.applicant.isLoading}
         />
+
         <RangeSegment
           id={props.id}
-          labelName='Certification/ Achievement'
+          labelName='Sertifikasi/ Penghargaan'
           routeEdit={`/ap/${props.id}/certification`}
           routeAdd={`/ap/${props.id}/add/certification`}
           contents={props.certification}
           state='certification'
           isLoading={props.applicant.isLoading}
         />
+
         <SkillsMap
           id={props.id}
-          labelName='Skills'
+          labelName='Ketrampilan'
           routeEdit={`/ap/${props.id}/skills`}
           routeAdd={`/ap/${props.id}/add/skills`}
           skills={props.skills}
