@@ -238,7 +238,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Job Title*'
+              label='Judul*'
             />
 
             <Input
@@ -258,7 +258,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Job Qualification*'
+              label='Jenjang pendidikan*'
             />
             <Input
               inputType='input'
@@ -266,7 +266,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Technical Requirement*'
+              label='Persyaratan teknis*'
             />
           </div>
 
@@ -318,7 +318,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Email Recipient*'
+              label='Email penerima*'
               helperText='Please input a valid email address'
             />
           </div>
@@ -455,7 +455,7 @@ const NewJob = (props) => {
           InputClass='AddJobInput'
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
-          label='Job Descriptions*'
+          label='Deskripsi pekerjaan*'
         />
       </div>
 
@@ -468,7 +468,7 @@ const NewJob = (props) => {
             InputClass='AddJobInput'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            label='Benefits (optional)'
+            label='Keuntungan (optional)'
             error={false}
           />
 
@@ -478,7 +478,7 @@ const NewJob = (props) => {
             InputClass='AddJobInput'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            label='Salary (optional)'
+            label='Gaji (optional)'
             error={false}
           />
         </div>

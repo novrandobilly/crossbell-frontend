@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import IconButton from "./IconButton";
+import IconButton from './IconButton';
 
-import classes from "./TextOnly.module.css";
+import classes from './TextOnly.module.css';
 
 const Button = (props) => {
   return (
@@ -18,7 +18,13 @@ const Button = (props) => {
           </Link>
         </div>
 
-        <div className={classes.Description}>{props.text}</div>
+        {props.text ? (
+          <div className={classes.Description}>{props.text}</div>
+        ) : (
+          <div className={classes.EmptyDescription}>
+            Silahkan lengkapi data diri anda terlebih dahulu
+          </div>
+        )}
       </div>
     </div>
   );

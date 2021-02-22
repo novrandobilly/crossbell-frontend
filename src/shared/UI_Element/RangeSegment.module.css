@@ -4,20 +4,26 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.2rem;
   margin-bottom: 1rem;
-  padding: 2rem 5rem;
+  padding: 32px;
 }
 
 .Header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 .Label {
   font-size: 1.7rem;
   font-weight: bold;
+}
+
+.EmptyDescription {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 576px) {
