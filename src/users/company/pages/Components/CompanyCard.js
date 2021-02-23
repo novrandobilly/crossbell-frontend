@@ -93,48 +93,50 @@ const CompanyCard = (props) => {
           </div>
         </div>
 
-        <div className={classes.PicContainer}>
-          <div className={classes.PicHeader}>
-            <p className={classes.PICTitle}>Contact Person</p>
-          </div>
+        {(props.auth.userId === companyid) | props.admin.isAdmin && (
+          <div className={classes.PicContainer}>
+            <div className={classes.PicHeader}>
+              <p className={classes.PICTitle}>Contact Person</p>
+            </div>
 
-          <div className={classes.PicContent}>
-            <div className={classes.TextHolder}>
-              <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Nama: </p>
-                <p>{props.picName}</p>
+            <div className={classes.PicContent}>
+              <div className={classes.TextHolder}>
+                <div className={classes.TextWraper}>
+                  <p className={classes.PicLabel}>Nama: </p>
+                  <p>{props.picName}</p>
+                </div>
+
+                <div className={classes.TextWraper}>
+                  <p className={classes.PicLabel}>Posisi: </p>
+                  <p>{props.picJobTitle}</p>
+                </div>
               </div>
 
-              <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Posisi: </p>
-                <p>{props.picJobTitle}</p>
+              <div className={classes.TextHolder}>
+                <div className={classes.TextWraper}>
+                  <p className={classes.PicLabel}>Email: </p>
+                  <p>{props.picEmail}</p>
+                </div>
+
+                <div className={classes.TextWraper}>
+                  <p className={classes.PicLabel}>Telepon: </p>
+                  <p>{props.picPhone}</p>
+                </div>
+
+                <div className={classes.TextWraper}>
+                  <p className={classes.PicLabel}>Kantor: </p>
+                  <p>{props.picOfficePhone}</p>
+                </div>
               </div>
             </div>
 
-            <div className={classes.TextHolder}>
-              <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Email: </p>
-                <p>{props.picEmail}</p>
-              </div>
-
-              <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Telepon: </p>
-                <p>{props.picPhone}</p>
-              </div>
-
-              <div className={classes.TextWraper}>
-                <p className={classes.PicLabel}>Kantor: </p>
-                <p>{props.picOfficePhone}</p>
-              </div>
+            <div className={classes.EditPIC}>
+              <Link to={`/co/${props.companyId}/compro/personincharge`}>
+                <IconButton />
+              </Link>
             </div>
           </div>
-
-          <div className={classes.EditPIC}>
-            <Link to={`/co/${props.companyId}/compro/personincharge`}>
-              <IconButton />
-            </Link>
-          </div>
-        </div>
+        )}
       </div>
 
       <div className={classes.Content}>
@@ -160,7 +162,7 @@ const CompanyCard = (props) => {
                       <Link to={`/jobs/${job.id}`}>
                         <div className={classes.JobCard}>
                           <div className={classes.CardHeader}>
-                            <p>{job.jobTitle}</p>
+                            <p className={classes.CardTitle}>{job.jobTitle}</p>
                             <p className={classes.CardLocation}>
                               {job.placementLocation}
                             </p>
@@ -220,6 +222,7 @@ const CompanyCard = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    admin: state.admin,
     isLoading: state.job.isLoading,
     error: state.job.error,
   };
