@@ -66,6 +66,7 @@ export {
   getJobsInCompany,
   saveJobDraft,
   releaseJob,
+  editJobDraft,
 } from './job-actions';
 
 export {

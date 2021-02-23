@@ -1,182 +1,184 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	font-family: sans-serif;
-	padding: 3rem 4rem;
+  display: flex;
+  flex-direction: row;
+  font-family: sans-serif;
+  padding: 3rem 4rem;
 }
 
 .LeftContainer {
-	display: flex;
-	flex-direction: column;
-	width: 60%;
-	margin-right: 2rem;
-	background-color: white;
-	padding: 2rem;
-	border-radius: 0.5rem;
-	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-right: 2rem;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .RightContainer {
-	display: flex;
-	flex-direction: column;
-	align-self: flex-start;
-	width: 40%;
-	box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-	border-radius: 0.5rem;
-	background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 40%;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  background-color: white;
 }
 
 .UpperContainer {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-	padding-bottom: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding-bottom: 3rem;
 }
 
 .Header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2rem;
 }
 
 .Logo {
-	height: 10rem;
-	margin-right: 2rem;
+  height: 10rem;
+  margin-right: 2rem;
 }
 
 .ContainerIntro {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	height: 10rem;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 10rem;
+  width: 100%;
 }
 
 .JobTitle {
-	font-weight: bold;
-	font-size: 1.8rem;
-	margin-right: 1rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-right: 1rem;
 }
 
 .ContainerFirst {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .TextLeft {
-	margin-right: 1rem;
-	text-decoration: none;
+  margin-right: 1rem;
+  text-decoration: none;
 }
 
 .TextMiddle {
-	margin-left: 1rem;
-	margin-right: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .TextRight {
-	margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .ContainerSecond {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	margin-top: -1rem;
-	color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: -1rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .ContainerThird {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	color: rgba(0, 0, 0, 0.6);
-	box-sizing: border-box;
-	width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .TextDate {
-	font-size: 0.8rem;
-	color: rgba(0, 0, 0, 0.6);
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .ButtonContainer {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ButtonContainer > * {
-	display: flex;
-	align-items: center;
-	text-decoration: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .InstantButton {
-	background-color: transparent;
-	border: none;
-	color: rgba(58, 81, 153, 1);
-	font-size: 1rem;
-	font-weight: bold;
-	cursor: pointer;
-	outline: none;
-	margin-left: 0.5rem;
+  background-color: transparent;
+  border: none;
+  color: rgba(58, 81, 153, 1);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  margin-left: 0.5rem;
 }
 
 .DeleteButton {
-	color: maroon;
+  color: maroon;
 }
 
 .JobDesc {
-	padding-bottom: 1rem;
-	border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding-bottom: 1rem;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .TextLabel {
-	margin-top: 2rem;
-	font-size: 1.4rem;
-	font-weight: bold;
-	text-align: left;
-	color: rgba(0, 0, 0, 0.8);
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .TextDetail {
-	margin-top: 2rem;
-	margin-left: 2rem;
-	width: 55rem;
-	text-align: left;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  width: 90%;
+  text-align: left;
 }
 
 .AboutLabel {
-	margin-left: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-	text-align: left;
-	color: rgba(0, 0, 0, 0.7);
-	margin-bottom: 2rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 2rem;
 }
 
 .AboutText {
-	font-size: 0.9rem;
-	margin-left: 1rem;
-	margin-right: 1rem;
-	padding-bottom: 2rem;
-	text-align: left;
-	border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-bottom: 2rem;
+  text-align: left;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .AvatarContainer {
-	width: 25%;
-	margin-right: 1.5rem;
+  width: 25%;
+  margin-right: 1.5rem;
 }
 .Avatar {
-	width: 10rem;
-	height: 10rem;
-	border-radius: 50%;
-	background-position: center;
-	background-size: 75%;
-	background-repeat: no-repeat;
-	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background-position: center;
+  background-size: 75%;
+  background-repeat: no-repeat;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 }

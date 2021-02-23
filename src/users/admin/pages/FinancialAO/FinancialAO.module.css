@@ -96,6 +96,12 @@
     border-radius: 0;
   }
 
+  .Table th {
+    padding: 8px;
+    text-align: left;
+    font-weight: normal;
+  }
+
   .RevenueContainer {
     border-radius: 0;
   }

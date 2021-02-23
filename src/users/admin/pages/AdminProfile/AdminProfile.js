@@ -23,6 +23,7 @@ const AdminProfile = (props) => {
         value: data ? data.picture : null,
         isValid: true,
       },
+
       email: {
         value: data ? data.email : null,
         isValid: true,

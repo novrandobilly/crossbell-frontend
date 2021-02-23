@@ -1,0 +1,45 @@
+.Modal {
+  z-index: 100;
+  position: fixed;
+  top: 22vh;
+  left: 10%;
+  width: 80%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  /* overflow: hidden; */
+}
+
+/* .Header {
+  width: 100%;
+  padding: 1rem 0.5rem;
+  background: #1100ff;
+  color: white;
+  box-sizing: border-box;
+} */
+
+.Header h2 {
+  margin: 0.5rem;
+}
+
+.Content {
+  font-size: 1.4rem;
+  margin: 48px 0 16px 0;
+  padding: 1rem 0.5rem;
+}
+
+.Footer {
+  padding: 1rem 1rem;
+}
+
+.Footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .Modal {
+    left: calc(50% - 20rem);
+    width: 40rem;
+  }
+}

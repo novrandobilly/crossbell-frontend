@@ -35,44 +35,44 @@ const EditUnreleasedJob = (props) => {
   const [formState, onInputHandler] = useForm(
     {
       jobTitle: {
-        value: loadedJob ? loadedJob.jobTitle : null,
+        value: loadedJob ? loadedJob.jobTitle : '',
         isValid: loadedJob && loadedJob.jobTitle ? true : false,
       },
       jobDescriptions: {
-        value: loadedJob ? loadedJob.jobDescriptions : null,
+        value: loadedJob ? loadedJob.jobDescriptions : '',
         isValid: loadedJob && loadedJob.jobDescriptions ? true : false,
       },
-      jobQualification: {
-        value: loadedJob ? loadedJob.jobQualification : null,
-        isValid: loadedJob && loadedJob.jobQualification ? true : false,
+      educationalStage: {
+        value: loadedJob ? loadedJob.educationalStage : '',
+        isValid: loadedJob && loadedJob.educationalStage ? true : false,
       },
       technicalRequirement: {
-        value: loadedJob ? loadedJob.technicalRequirement : null,
+        value: loadedJob ? loadedJob.technicalRequirement : '',
         isValid: loadedJob && loadedJob.technicalRequirement ? true : false,
       },
       placementLocation: {
-        value: loadedJob ? loadedJob.placementLocation : null,
+        value: loadedJob ? loadedJob.placementLocation : '',
         isValid: loadedJob && loadedJob.placementLocation ? true : false,
       },
 
       emailRecipient: {
-        value: loadedJob ? loadedJob.emailRecipient : null,
+        value: loadedJob ? loadedJob.emailRecipient : '',
         isValid: true,
       },
       employment: {
-        value: loadedJob ? loadedJob.employment : null,
+        value: loadedJob ? loadedJob.employment : '',
         isValid: true,
       },
       salary: {
-        value: loadedJob ? loadedJob.salary : null,
+        value: loadedJob ? loadedJob.salary : '',
         isValid: true,
       },
       benefit: {
-        value: loadedJob ? loadedJob.benefit : null,
+        value: loadedJob ? loadedJob.benefit : '',
         isValid: true,
       },
       slotAllocation: {
-        value: loadedJob ? loadedJob.slotAllocation : null,
+        value: loadedJob ? loadedJob.slotAllocation : '',
         isValid: loadedJob && loadedJob.slotAllocation ? true : false,
       },
       fieldOfWork: {
@@ -131,7 +131,7 @@ const EditUnreleasedJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -160,7 +160,7 @@ const EditUnreleasedJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -172,10 +172,11 @@ const EditUnreleasedJob = (props) => {
     const authData = {
       token: props.auth.token,
       userId: props.auth.userId,
+      id: jobsid,
     };
     console.log(jobData);
     try {
-      const res = await props.saveJobDraft(jobData, authData);
+      const res = await props.editJobDraft(jobData, authData);
       console.log(res);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
@@ -260,7 +261,8 @@ const EditUnreleasedJob = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Job Title*'
+                label='Judul*'
+                initValue={loadedJob.jobTitle}
               />
 
               <Input
@@ -270,25 +272,28 @@ const EditUnreleasedJob = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label='Lokasi Penempatan*'
+                initValue={loadedJob.placementLocation}
               />
             </div>
 
             <div className={classes.ContentWrap}>
               <Input
                 inputType='input'
-                id='jobQualification'
+                id='educationalStage'
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Job Qualification*'
+                label='Jenjang pendidikan*'
               />
+
               <Input
                 inputType='input'
                 id='technicalRequirement'
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Technical Requirement*'
+                label='Persyaratan teknis*'
+                initValue={loadedJob.technicalRequirement}
               />
             </div>
 
@@ -344,8 +349,9 @@ const EditUnreleasedJob = (props) => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Email Recipient*'
+                label='Email penerima*'
                 helperText='Please input a valid email address'
+                initValue={loadedJob.emailRecipient}
               />
             </div>
 
@@ -481,7 +487,7 @@ const EditUnreleasedJob = (props) => {
             InputClass='AddJobInput'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Job Descriptions*'
+            label='Deskripsi pekerjaan*'
             initValue={loadedJob.jobDescriptions || ''}
             initIsValid={loadedJob.jobDescriptions}
           />
@@ -498,7 +504,7 @@ const EditUnreleasedJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label='Benefits (optional)'
+              label='Keuntungan (optional)'
               error={false}
               initValue={loadedJob.benefit || ''}
               initIsValid={loadedJob.benefit}
@@ -509,7 +515,7 @@ const EditUnreleasedJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label='Salary (optional)'
+              label='Gaji (optional)'
               error={false}
               initValue={loadedJob.salary || ''}
               initIsValid={loadedJob.salary}
@@ -612,8 +618,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createJob: (jobData, authData) =>
       dispatch(actionCreators.createJob(jobData, authData)),
-    saveJobDraft: (jobData, authData) =>
-      dispatch(actionCreators.saveJobDraft(jobData, authData)),
+    editJobDraft: (jobData, authData) =>
+      dispatch(actionCreators.editJobDraft(jobData, authData)),
     getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),

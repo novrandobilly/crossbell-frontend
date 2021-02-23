@@ -6,13 +6,9 @@
 }
 
 .Container {
-  background-color: white;
-  border-radius: 0.2rem;
   display: flex;
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   margin-right: 1rem;
   width: 17.5%;
 }
@@ -26,6 +22,15 @@
   flex-direction: column;
   text-align: left;
   padding: 1rem;
+  background-color: white;
+  border-radius: 0.2rem;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.ContainerLeftDivider {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Logo {
@@ -52,19 +57,19 @@
 
 .CompanyWebsites {
   cursor: pointer;
-  display: flex;
   align-items: center;
-  flex-wrap: wrap;
   text-decoration: none;
   font-size: 0.8rem;
   font-weight: bold;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .EditProfile {
   display: flex;
   justify-content: flex-end;
-  padding: 1rem;
+  margin-top: 16px;
 }
 
 .LinkIcon {
@@ -85,9 +90,10 @@
   font-family: Arial, Helvetica, sans-serif;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  padding: 1rem 3rem 3rem 3rem;
   text-align: left;
   width: auto;
+  padding: 16px;
+  margin-top: 16px;
 }
 
 .PicHeader {
@@ -101,25 +107,44 @@
   font-weight: bold;
 }
 
+.PICTitle {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
 .PicContent {
   display: flex;
-  line-height: 0;
+  flex-direction: column;
+  line-height: 16px;
   font-size: 0.9rem;
+  width: 100%;
+  overflow: hidden;
 }
 
 .TextHolder {
   display: flex;
   flex-direction: column;
-  margin-right: 10rem;
 }
 
 .TextWraper {
   display: flex;
+  margin: 8px 0;
 }
 
 .PicLabel {
   color: rgba(0, 0, 0, 0.6);
-  margin-right: 1rem;
+}
+
+.TextWraper p {
+  margin: 0 10px 0 0;
+}
+
+.EditPIC {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
 }
 
 /* job list css */
@@ -146,6 +171,14 @@
   justify-content: 'flex-start';
   flex-wrap: wrap;
   text-align: left;
+}
+
+.EmptyText {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
 }
 
 .Header {
@@ -210,9 +243,17 @@
   overflow: hidden;
 }
 
+.CardTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .CardRecipient {
   font-size: 0.8rem;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 1200px) {
@@ -239,7 +280,7 @@
 
   .ContainerLeft {
     flex-direction: row;
-    width: 90%;
+    width: 100%;
   }
 
   .CompanyName {
@@ -272,6 +313,10 @@
     height: 10rem;
   }
 
+  .ContainerLeft {
+    justify-content: space-between;
+  }
+
   .ContainerRight {
     align-self: flex-start;
   }
@@ -282,11 +327,33 @@
   }
 
   .TextHolder {
-    margin-right: 0px;
+    margin-right: 40px;
   }
 
   .CardHolder {
     width: 33.33%;
+  }
+
+  .EditProfile {
+    margin-top: 0;
+    align-self: flex-end;
+  }
+
+  .ContainerLeftGroup {
+    display: flex;
+  }
+
+  .PicContent {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .CardContainer {
+    padding: 16px;
+  }
+
+  .Title {
+    margin-top: 0;
   }
 }
 

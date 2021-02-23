@@ -38,7 +38,7 @@ const NewJob = (props) => {
         value: '',
         isValid: false,
       },
-      jobQualification: {
+      educationalStage: {
         value: '',
         isValid: false,
       },
@@ -112,7 +112,7 @@ const NewJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -141,7 +141,7 @@ const NewJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -238,7 +238,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Job Title*'
+              label='Judul*'
             />
 
             <Input
@@ -254,11 +254,11 @@ const NewJob = (props) => {
           <div className={classes.ContentWrap}>
             <Input
               inputType='input'
-              id='jobQualification'
+              id='educationalStage'
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Job Qualification*'
+              label='Jenjang pendidikan*'
             />
             <Input
               inputType='input'
@@ -266,7 +266,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Technical Requirement*'
+              label='Persyaratan teknis*'
             />
           </div>
 
@@ -292,6 +292,9 @@ const NewJob = (props) => {
                   textAlign: 'left',
                 }}
               >
+                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                  <em>Pilih</em>
+                </MenuItem>
                 <MenuItem
                   id={0}
                   value='permanent'
@@ -318,7 +321,7 @@ const NewJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Email Recipient*'
+              label='Email penerima*'
               helperText='Please input a valid email address'
             />
           </div>
@@ -455,7 +458,7 @@ const NewJob = (props) => {
           InputClass='AddJobInput'
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
-          label='Job Descriptions*'
+          label='Deskripsi pekerjaan*'
         />
       </div>
 
@@ -468,7 +471,7 @@ const NewJob = (props) => {
             InputClass='AddJobInput'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            label='Benefits (optional)'
+            label='Keuntungan (optional)'
             error={false}
           />
 
@@ -478,7 +481,7 @@ const NewJob = (props) => {
             InputClass='AddJobInput'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            label='Salary (optional)'
+            label='Gaji (optional)'
             error={false}
           />
         </div>

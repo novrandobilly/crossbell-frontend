@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Modal from '../../../../shared/UI_Element/Modal';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './CompanyOrderForm.module.css';
@@ -19,6 +20,8 @@ const ORIGINAL_PRICE = 500000;
 
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
+
+  const [orderModal, setOrderModal] = useState(false);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -60,6 +63,9 @@ const CompanyOrderForm = (props) => {
       if (orderData.slot < 1) {
         throw new Error('jumlah pembelian tidak boleh dibawah 1');
       }
+
+      setOrderModal(false);
+
       const res = await props.createOrder(orderData);
       if (res) {
         console.log(res);
@@ -81,6 +87,14 @@ const CompanyOrderForm = (props) => {
     price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
   if (formState.inputs.slot.value > 9)
     price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15;
+
+  const onCloseOrderModal = () => {
+    setOrderModal(false);
+  };
+
+  const onOpenOrderModal = () => {
+    setOrderModal(true);
+  };
 
   let formContent = (
     <React.Fragment>
@@ -159,12 +173,13 @@ const CompanyOrderForm = (props) => {
 
         <div style={{ width: '100%', textAlign: 'center' }}>
           <Button
-            type='submit'
+            type='button'
             variant='contained'
             color='primary'
             disableElevation
             disabled={!formState.formIsValid}
             style={{ width: '50%', marginTop: '1rem' }}
+            onClick={onOpenOrderModal}
           >
             Submit
           </Button>
@@ -185,6 +200,13 @@ const CompanyOrderForm = (props) => {
       <Modal show={props.error} onCancel={onCancelHandler}>
         Tidak dapat melakukan Pembelian untuk saat ini
       </Modal>
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={onSubmitHandler}
+      >
+        Apakah anda yakin ingin membuat pesananan saat ini?
+      </OrderModal>
       {formContent}
     </div>
   );
