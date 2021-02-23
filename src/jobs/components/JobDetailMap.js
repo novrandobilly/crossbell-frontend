@@ -26,7 +26,7 @@ const JobDetailMap = (props) => {
         releasedAt={props.job.releasedAt}
         placementLocation={props.job.placementLocation}
         jobTitle={props.job.jobTitle}
-        jobQualification={props.job.jobQualification}
+        educationalStage={props.job.educationalStage}
         jobDescriptions={props.job.jobDescriptions}
         jobApplicants={props.job.jobApplicants}
         fieldOfWork={props.job.fieldOfWork}

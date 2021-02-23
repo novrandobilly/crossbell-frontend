@@ -38,7 +38,7 @@ const NewJob = (props) => {
         value: '',
         isValid: false,
       },
-      jobQualification: {
+      educationalStage: {
         value: '',
         isValid: false,
       },
@@ -112,7 +112,7 @@ const NewJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -141,7 +141,7 @@ const NewJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -254,7 +254,7 @@ const NewJob = (props) => {
           <div className={classes.ContentWrap}>
             <Input
               inputType='input'
-              id='jobQualification'
+              id='educationalStage'
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
@@ -292,6 +292,9 @@ const NewJob = (props) => {
                   textAlign: 'left',
                 }}
               >
+                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                  <em>Pilih</em>
+                </MenuItem>
                 <MenuItem
                   id={0}
                   value='permanent'

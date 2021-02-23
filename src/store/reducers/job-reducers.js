@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from '../actions/actions';
 
 const initJobState = {
   isLoading: false,
@@ -44,7 +44,7 @@ const jobReducers = (state = initJobState, action) => {
         ...jobArray[jobIndex],
         benefit: action.payload.updatedJob.benefit,
         employment: action.payload.updatedJob.employment,
-        jobQualification: action.payload.updatedJob.jobQualification,
+        educationalStage: action.payload.updatedJob.educationalStage,
         technicalRequirement: action.payload.updatedJob.technicalRequirement,
         salary: action.payload.updatedJob.salary,
       };

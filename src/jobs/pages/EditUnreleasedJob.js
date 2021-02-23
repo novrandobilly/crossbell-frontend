@@ -42,9 +42,9 @@ const EditUnreleasedJob = (props) => {
         value: loadedJob ? loadedJob.jobDescriptions : '',
         isValid: loadedJob && loadedJob.jobDescriptions ? true : false,
       },
-      jobQualification: {
-        value: loadedJob ? loadedJob.jobQualification : '',
-        isValid: loadedJob && loadedJob.jobQualification ? true : false,
+      educationalStage: {
+        value: loadedJob ? loadedJob.educationalStage : '',
+        isValid: loadedJob && loadedJob.educationalStage ? true : false,
       },
       technicalRequirement: {
         value: loadedJob ? loadedJob.technicalRequirement : '',
@@ -131,7 +131,7 @@ const EditUnreleasedJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -160,7 +160,7 @@ const EditUnreleasedJob = (props) => {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -172,10 +172,11 @@ const EditUnreleasedJob = (props) => {
     const authData = {
       token: props.auth.token,
       userId: props.auth.userId,
+      id: jobsid,
     };
     console.log(jobData);
     try {
-      const res = await props.saveJobDraft(jobData, authData);
+      const res = await props.editJobDraft(jobData, authData);
       console.log(res);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
@@ -278,11 +279,11 @@ const EditUnreleasedJob = (props) => {
             <div className={classes.ContentWrap}>
               <Input
                 inputType='input'
-                id='jobQualification'
+                id='educationalStage'
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Kualifikasi*'
+                label='Jenjang pendidikan*'
               />
 
               <Input
@@ -617,8 +618,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createJob: (jobData, authData) =>
       dispatch(actionCreators.createJob(jobData, authData)),
-    saveJobDraft: (jobData, authData) =>
-      dispatch(actionCreators.saveJobDraft(jobData, authData)),
+    editJobDraft: (jobData, authData) =>
+      dispatch(actionCreators.editJobDraft(jobData, authData)),
     getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),

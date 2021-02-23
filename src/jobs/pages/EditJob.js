@@ -22,9 +22,9 @@ const EditJob = (props) => {
 
   const [formState, onInputHandler] = useForm(
     {
-      jobQualification: {
-        value: identifiedJob ? identifiedJob.jobQualification : '',
-        isValid: identifiedJob ? identifiedJob.jobQualification : false,
+      educationalStage: {
+        value: identifiedJob ? identifiedJob.educationalStage : '',
+        isValid: identifiedJob ? identifiedJob.educationalStage : false,
       },
       technicalRequirement: {
         value: identifiedJob ? identifiedJob.technicalRequirement : '',
@@ -67,7 +67,7 @@ const EditJob = (props) => {
       jobId: jobid,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       employment: formState.inputs.employment.value,
-      jobQualification: formState.inputs.jobQualification.value,
+      educationalStage: formState.inputs.educationalStage.value,
       salary: formState.inputs.salary.value,
       technicalRequirement: formState.inputs.technicalRequirement.value,
       token: props.auth.token,
@@ -119,12 +119,12 @@ const EditJob = (props) => {
             />
             <Input
               inputType='input'
-              id='jobQualification'
+              id='educationalStage'
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
               label='Kualifikasi*'
-              initValue={identifiedJob.jobQualification}
+              initValue={identifiedJob.educationalStage}
               initIsValid={true}
             />
 

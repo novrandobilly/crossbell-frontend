@@ -30,7 +30,7 @@ export const createJob = (jobData, authData) => {
           jobTitle: jobData.jobTitle,
           placementLocation: jobData.placementLocation,
           jobDescriptions: jobData.jobDescriptions,
-          jobQualification: jobData.jobQualification,
+          educationalStage: jobData.educationalStage,
           technicalRequirement: jobData.technicalRequirement,
           emailRecipient: jobData.emailRecipient,
           employment: jobData.employment,
@@ -71,7 +71,49 @@ export const saveJobDraft = (jobData, authData) => {
             jobTitle: jobData.jobTitle,
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
-            jobQualification: jobData.jobQualification,
+            educationalStage: jobData.educationalStage,
+            technicalRequirement: jobData.technicalRequirement,
+            emailRecipient: jobData.emailRecipient,
+            employment: jobData.employment,
+            benefit: jobData.benefit,
+            salary: jobData.salary,
+            slot: jobData.slot,
+            fieldOfWork: jobData.fieldOfWork,
+            companyId: authData.userId,
+          }),
+        }
+      );
+      const responseJSON = await res.json();
+      if (!res.ok) {
+        throw new Error(responseJSON.message);
+      }
+      console.log(responseJSON);
+      dispatch(createJobSuccess());
+      return responseJSON;
+    } catch (err) {
+      dispatch(createJobFail());
+      return err;
+    }
+  };
+};
+
+export const editJobDraft = (jobData, authData) => {
+  return async (dispatch) => {
+    dispatch(createJobStart());
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authData.token}`,
+          },
+          body: JSON.stringify({
+            jobTitle: jobData.jobTitle,
+            placementLocation: jobData.placementLocation,
+            jobDescriptions: jobData.jobDescriptions,
+            educationalStage: jobData.educationalStage,
             technicalRequirement: jobData.technicalRequirement,
             emailRecipient: jobData.emailRecipient,
             employment: jobData.employment,
@@ -197,7 +239,7 @@ export const updateJob = (payload) => {
           body: JSON.stringify({
             jobDescriptions: payload.jobDescriptions,
             employment: payload.employment,
-            jobQualification: payload.jobQualification,
+            educationalStage: payload.educationalStage,
             salary: payload.salary,
             technicalRequirement: payload.technicalRequirement,
           }),

@@ -151,7 +151,7 @@ const JobDetails = (props) => {
 
           <div className={classes.JobDesc}>
             <p className={classes.TextLabel}>Kualifikasi Pekerjaan</p>
-            <p className={classes.TextDetail}>{props.jobQualification}</p>
+            <p className={classes.TextDetail}>{props.educationalStage}</p>
           </div>
 
           <div className={classes.JobDesc}>
