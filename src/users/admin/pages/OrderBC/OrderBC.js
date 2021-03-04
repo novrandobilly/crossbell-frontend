@@ -43,7 +43,7 @@ const paginationReducer = (state, action) => {
 };
 
 const OrderBC = (props) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
 
@@ -254,6 +254,15 @@ const OrderBC = (props) => {
       </div>
     );
   }
+
+  if (!props.isLoading && data.length <= 0) {
+    content = (
+      <p className={classes.EmptyText}>
+        Belum ada perusahaan yang membuat pesanan untuk saat ini
+      </p>
+    );
+  }
+
   return <div>{content}</div>;
 };
 

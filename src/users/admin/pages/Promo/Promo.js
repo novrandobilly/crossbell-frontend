@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from '../../../../shared/utils/useForm';
 
-import { VALIDATOR_MIN } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_MIN,
+  VALIDATOR_MAX,
+} from '../../../../shared/utils/validator';
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
 import Button from '@material-ui/core/Button';
@@ -11,7 +14,6 @@ import Modal from '../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 import classes from './Promo.module.css';
-
 
 const Promo = (props) => {
   const [promo, setPromo] = useState();
@@ -35,12 +37,10 @@ const Promo = (props) => {
   useEffect(() => {
     if (props.admin.token) {
       getPromo(props.admin.token).then((res) => {
-        setPromo(res.promo);
+        setPromo(res.promo[0]);
       });
     }
   }, [getPromo, props.admin.token]);
-
-  console.log(formState);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -94,7 +94,7 @@ const Promo = (props) => {
           <Input
             inputType='input'
             id='promoReg'
-            validatorMethod={[VALIDATOR_MIN(0)]}
+            validatorMethod={[VALIDATOR_MIN(0), VALIDATOR_MAX(100)]}
             onInputHandler={onInputHandler}
             type='number'
             initValue={promo.promoReg}
@@ -103,6 +103,7 @@ const Promo = (props) => {
             max={100}
             step='1'
             label='Input dalam (%)'
+            helperText='mohon masukkan nilai dari 0 - 100'
           />
 
           <Button
@@ -110,7 +111,7 @@ const Promo = (props) => {
             disableElevation
             color='primary'
             size='small'
-            style={{ marginTop: '0.5rem' }}
+            style={{ marginTop: '16px' }}
             onClick={onSubmitHandler}
           >
             Submit
@@ -125,7 +126,7 @@ const Promo = (props) => {
           <Input
             inputType='input'
             id='promoBC'
-            validatorMethod={[VALIDATOR_MIN(0)]}
+            validatorMethod={[VALIDATOR_MIN(0), VALIDATOR_MAX(100)]}
             onInputHandler={onInputHandler}
             type='number'
             initValue={promo.promoBC}
@@ -134,6 +135,7 @@ const Promo = (props) => {
             max={100}
             step='1'
             label='Input dalam (%)'
+            helperText='mohon masukkan nilai dari 0 - 100'
           />
 
           <Button
@@ -141,7 +143,7 @@ const Promo = (props) => {
             disableElevation
             color='primary'
             size='small'
-            style={{ marginTop: '0.5rem' }}
+            style={{ marginTop: '16px' }}
             onClick={onSubmitHandler}
           >
             Submit
@@ -163,24 +165,23 @@ const Promo = (props) => {
       {Content}
     </React.Fragment>
   );
-
 };
 
-const mapStateToProps = state => {
-	return {
-		admin: state.admin,
-		error: state.admin.error,
-		isLoading: state.admin.isLoading
-	};
+const mapStateToProps = (state) => {
+  return {
+    admin: state.admin,
+    error: state.admin.error,
+    isLoading: state.admin.isLoading,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		getPromo: payload => dispatch(actionCreators.getPromo(payload)),
-		updatePromo: data => dispatch(actionCreators.updatePromo(data)),
-		updatePromoFail: () => dispatch({ type: actionTypes.GETADMINFAIL }),
-		resetAdmin: () => dispatch({ type: actionTypes.GETADMIN })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPromo: (payload) => dispatch(actionCreators.getPromo(payload)),
+    updatePromo: (data) => dispatch(actionCreators.updatePromo(data)),
+    updatePromoFail: () => dispatch({ type: actionTypes.GETADMINFAIL }),
+    resetAdmin: () => dispatch({ type: actionTypes.GETADMIN }),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Promo);

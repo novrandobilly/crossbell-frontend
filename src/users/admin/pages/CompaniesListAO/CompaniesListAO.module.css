@@ -79,7 +79,8 @@
   background-color: #f9f9f9;
   box-shadow: 0rem 0.8rem 1rem 0rem rgba(0, 0, 0, 0.2);
   z-index: 1;
-  right: 0;
+  right: 0px;
+  bottom: -3px;
 }
 
 .DropDownContent button {
@@ -99,11 +100,22 @@
 }
 
 .DropDown:hover .DropDownContent {
-  display: block;
+  display: flex;
 }
 
 .DropDown:hover .DropButton {
   background-color: #d7e2ff;
+}
+
+.EmptyText {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  font-weight: bold;
 }
 
 @media (max-width: 992px) {

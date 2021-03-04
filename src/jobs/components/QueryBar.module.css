@@ -18,6 +18,12 @@
   align-self: center;
 }
 
+@media (max-width: 768px) {
+  .SearchContainer {
+    width: 60%;
+  }
+}
+
 @media (max-width: 400px) {
   .QueryBar {
     padding: 0;

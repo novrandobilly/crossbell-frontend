@@ -123,7 +123,7 @@ const EditJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Kualifikasi*'
+              label='Jenjang pendidikan*'
               initValue={identifiedJob.educationalStage}
               initIsValid={true}
             />

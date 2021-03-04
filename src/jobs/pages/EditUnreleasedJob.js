@@ -17,6 +17,7 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MIN,
   VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_EMAIL,
 } from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
 
@@ -27,10 +28,38 @@ const EditUnreleasedJob = (props) => {
   const [loadedJob, setLoadedJob] = useState(null);
   const [maxSlot, setMaxSlot] = useState(null);
 
-  // const [ fieldOfWork, setFieldOfWork ] = useState('');
+  const [fieldOfWork, setFieldOfWork] = useState(['', '', '']);
   const [employment, setEmployment] = useState('');
   const [open, setOpen] = useState([false, false, false]);
   const [employmentOpen, setEmploymentOpen] = useState(false);
+
+  const { getOneCompany, auth, getOneJob } = props;
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const res = await getOneJob(jobsid);
+        setFieldOfWork(res.fieldOfWork);
+        setLoadedJob(res);
+        setEmployment(res.employment);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchJob();
+
+    const getSlot = async () => {
+      try {
+        if (auth.userId) {
+          const res = await getOneCompany({ userId: auth.userId });
+          setMaxSlot(res.company.slotREG);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getSlot();
+  }, [getOneCompany, auth, getOneJob, jobsid]);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -57,20 +86,24 @@ const EditUnreleasedJob = (props) => {
 
       emailRecipient: {
         value: loadedJob ? loadedJob.emailRecipient : '',
-        isValid: true,
+        isValid: loadedJob && loadedJob.emailRecipient ? true : false,
       },
+
       employment: {
         value: loadedJob ? loadedJob.employment : '',
         isValid: true,
       },
+
       salary: {
         value: loadedJob ? loadedJob.salary : '',
         isValid: true,
       },
+
       benefit: {
         value: loadedJob ? loadedJob.benefit : '',
         isValid: true,
       },
+
       slotAllocation: {
         value: loadedJob ? loadedJob.slotAllocation : '',
         isValid: loadedJob && loadedJob.slotAllocation ? true : false,
@@ -83,38 +116,17 @@ const EditUnreleasedJob = (props) => {
     false
   );
 
-  const { getOneCompany, auth, getOneJob } = props;
-  useEffect(() => {
-    const fetchJob = async () => {
-      try {
-        const res = await getOneJob(jobsid);
-        setLoadedJob(res);
-        setEmployment(res.employment);
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchJob();
-
-    const getSlot = async () => {
-      try {
-        if (auth.userId) {
-          const res = await getOneCompany({ userId: auth.userId });
-          setMaxSlot(res.company.slotREG);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getSlot();
-  }, [getOneCompany, auth, getOneJob, jobsid]);
+  console.log(formState);
 
   useEffect(() => {
     if (loadedJob) {
       const employment = document.getElementById('employment');
       const salary = document.getElementById('salary');
       const benefit = document.getElementById('benefit');
+      const fow1 = document.getElementById('fieldOfWork-1');
+      const fow2 = document.getElementById('fieldOfWork-2');
+      const fow3 = document.getElementById('fieldOfWork-3');
+      onInputHandler('fieldOfWork', [fow1.value, fow2.value, fow3.value], true);
       onInputHandler('employment', employment.value, true);
       onInputHandler('salary', salary.value, true);
       onInputHandler('benefit', benefit.value, true);
@@ -200,10 +212,10 @@ const EditUnreleasedJob = (props) => {
         indexFow = 0;
     }
     const elementId = 'fieldOfWork';
-    const elementArray = [...formState.inputs.fieldOfWork.value];
+    const elementArray = [...fieldOfWork];
     elementArray[indexFow] = e.target.value;
+    setFieldOfWork(elementArray);
     onInputHandler(elementId, elementArray, true);
-    // setFieldOfWork(e.target.value);
   };
 
   const handleEmploymentChange = (e) => {
@@ -235,7 +247,6 @@ const EditUnreleasedJob = (props) => {
     let openArray = [...open];
     openArray[index] = true;
     setOpen(openArray);
-    // setOpen(true);
   };
   const handleEmploymentClose = () => {
     setEmploymentOpen(false);
@@ -263,6 +274,7 @@ const EditUnreleasedJob = (props) => {
                 onInputHandler={onInputHandler}
                 label='Judul*'
                 initValue={loadedJob.jobTitle}
+                initIsValid={loadedJob.jobTitle ? true : false}
               />
 
               <Input
@@ -273,6 +285,7 @@ const EditUnreleasedJob = (props) => {
                 onInputHandler={onInputHandler}
                 label='Lokasi Penempatan*'
                 initValue={loadedJob.placementLocation}
+                initIsValid={loadedJob.placementLocation ? true : false}
               />
             </div>
 
@@ -284,6 +297,8 @@ const EditUnreleasedJob = (props) => {
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label='Jenjang pendidikan*'
+                initValue={loadedJob.educationalStage}
+                initIsValid={loadedJob.educationalStage ? true : false}
               />
 
               <Input
@@ -294,6 +309,7 @@ const EditUnreleasedJob = (props) => {
                 onInputHandler={onInputHandler}
                 label='Persyaratan teknis*'
                 initValue={loadedJob.technicalRequirement}
+                initIsValid={loadedJob.technicalRequirement ? true : false}
               />
             </div>
 
@@ -347,7 +363,7 @@ const EditUnreleasedJob = (props) => {
                 inputType='input'
                 id='emailRecipient'
                 InputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
+                validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
                 label='Email penerima*'
                 helperText='Please input a valid email address'
@@ -371,7 +387,7 @@ const EditUnreleasedJob = (props) => {
                   open={open[0]}
                   onClose={handleClose}
                   onOpen={handleOpen}
-                  value={formState.inputs.fieldOfWork.value[0]}
+                  value={fieldOfWork[0] ? fieldOfWork[0] : ''}
                   onChange={fowHandler}
                   style={{
                     fontSize: '0.9rem',
@@ -411,7 +427,7 @@ const EditUnreleasedJob = (props) => {
                   open={open[1]}
                   onClose={handleClose}
                   onOpen={handleOpen}
-                  value={formState.inputs.fieldOfWork.value[1]}
+                  value={fieldOfWork[1] ? fieldOfWork[1] : ''}
                   onChange={fowHandler}
                   style={{
                     fontSize: '0.9rem',
@@ -452,7 +468,7 @@ const EditUnreleasedJob = (props) => {
                   open={open[2]}
                   onClose={handleClose}
                   onOpen={handleOpen}
-                  value={formState.inputs.fieldOfWork.value[2]}
+                  value={fieldOfWork[2] ? fieldOfWork[2] : ''}
                   onChange={fowHandler}
                   style={{
                     fontSize: '0.9rem',

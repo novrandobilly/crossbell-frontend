@@ -45,6 +45,7 @@ const CompanyOrderList = (props) => {
   const { companyid } = useParams();
   const [orderData, setOrderData] = useState([]);
   const [displayData, setDisplayData] = useState();
+  const [displayIsLoading, setDisplayIsLoading] = useState(true);
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -72,6 +73,7 @@ const CompanyOrderList = (props) => {
             userId: companyid,
             token: props.auth.token,
           });
+          setDisplayIsLoading(false);
         } catch (err) {
           console.log(err);
         }
@@ -142,7 +144,7 @@ const CompanyOrderList = (props) => {
 
   let content = <SpinnerCircle />;
 
-  if (!props.isLoading && displayData) {
+  if (!displayIsLoading && displayData) {
     content = (
       <div className={classes.Container}>
         <h2>Order List</h2>
@@ -156,7 +158,7 @@ const CompanyOrderList = (props) => {
                 <th>Tanggal Order</th>
                 <th>Tanggal Approve</th>
                 <th>Jatuh Tempo</th>
-                <th>Sisa Slot</th>
+                <th>Jumlah Slot</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -194,7 +196,7 @@ const CompanyOrderList = (props) => {
                     <td>
                       <p
                         style={
-                          dueDate === 0
+                          dueDate <= 0
                             ? { color: 'gray' }
                             : dueDate <= 3
                             ? { color: 'red' }
@@ -203,9 +205,9 @@ const CompanyOrderList = (props) => {
                             : { color: 'green' }
                         }
                       >
-                        {order.status === 'Pending'
+                        {dueDate > 0
                           ? `${dueDate} day`
-                          : order.status === 'Open'
+                          : dueDate <= 0
                           ? 'no due'
                           : '0 day'}
                       </p>
@@ -268,7 +270,7 @@ const CompanyOrderList = (props) => {
     );
   }
 
-  if (!props.isLoading && orderData && orderData.length < 1) {
+  if (!displayIsLoading && orderData && orderData.length < 1) {
     content = (
       <p className={classes.EmptyText}>
         Anda belum melakukan pembelian sebelumnya

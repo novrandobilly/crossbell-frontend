@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from '../actions/actions';
 
 const initialState = {
   isLoading: false,
@@ -17,6 +17,7 @@ const companyReducers = (state = initialState, action) => {
         isLoading: false,
       };
     }
+
     case actionTypes.UPDATECOMPANYSTART:
     case actionTypes.CREATECOMPANYSTART:
     case actionTypes.GETCOMPANYSTART: {
