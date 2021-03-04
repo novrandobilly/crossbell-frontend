@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import FormOne from './FormOne';
 import FormTwo from './FormTwo';
 import FormThree from './FormThree';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 function Copyright() {
   return (
@@ -253,7 +254,11 @@ const Checkout = (props) => {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {!props.isLoading ? (
+                  getStepContent(activeStep)
+                ) : (
+                  <SpinnerCircle />
+                )}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

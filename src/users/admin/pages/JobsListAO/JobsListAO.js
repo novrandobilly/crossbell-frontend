@@ -80,14 +80,16 @@ const JobsListAO = (props) => {
     if (admin.token) {
       let sort = [];
       getAllJob(payload).then((res) => {
-        sort = res.availableJobs;
-        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
-        setData(sort);
-        setIsLoading(false);
+        if (res) {
+          sort = res.availableJobs;
+          sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+          setData(sort);
+          setIsLoading(false);
+        }
       });
     }
   }, [getAllJob, getWholeCompanies, setIsLoading, admin]);
-  console.log(data);
+
   useEffect(() => {
     if (data && data.length > 0) {
       let applicantArray = [...data];
@@ -372,6 +374,14 @@ const JobsListAO = (props) => {
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (!props.isLoading && !data) {
+    content = (
+      <p className={classes.EmptyText}>
+        Belum ada pekerjaan ditayangkan oleh perusahaan saat ini
+      </p>
     );
   }
 

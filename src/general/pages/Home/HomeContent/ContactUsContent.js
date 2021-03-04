@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
 import { connect } from 'react-redux';
 
+import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
 import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
@@ -12,6 +13,8 @@ import {
   VALIDATOR_EMAIL,
   VALIDATOR_NUMSTR,
 } from '../../../../shared/utils/validator';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 import classes from './ContactUsContent.module.css';
 
@@ -50,7 +53,6 @@ const ContactUsContent = (props) => {
       const res = await props.createFeed(newFeed);
       console.log(res);
       if (res) {
-        alert('Success Posting your feed!');
         console.log(res);
       } else {
         throw new Error('Error nih bro');
@@ -60,38 +62,42 @@ const ContactUsContent = (props) => {
     }
   };
 
+  const onCancelHandler = () => {
+    props.resetFeed();
+  };
+
   return (
     <div className={classes.Content}>
       <div className={classes.HelpArticles}>
         <p className={classes.HeaderTitle}>Help Articles</p>
         <ul className={classes.HelpArticlesLink}>
           <li>
-            <Link to='/FrequentlyAskedQuestion'>
+            <Link to='/FrequentlyAskedQuestion/FAQ001'>
               I am an Employer, how can I post a job ads?
             </Link>
           </li>
           <li>
-            <Link to='/FrequentlyAskedQuestion'>
+            <Link to='/FrequentlyAskedQuestion/FAQ002'>
               What's the benefit of becoming a jobseeker here?
             </Link>
           </li>
           <li>
-            <Link to='/FrequentlyAskedQuestion'>
+            <Link to='/FrequentlyAskedQuestion/FAQ003'>
               What's the benefit of becoming an employer here?
             </Link>
           </li>
           <li>
-            <Link to='/FrequentlyAskedQuestion'>
+            <Link to='/FrequentlyAskedQuestion/FAQ004'>
               I can't remember my login password
             </Link>
           </li>
           <li>
-            <Link to='/FrequentlyAskedQuestion'>
+            <Link to='/FrequentlyAskedQuestion/FAQ005'>
               I have a billing question (unrecognized charge, invoicing)
             </Link>
           </li>
           <li>
-            <Link to='/FrequentlyAskedQuestion'>
+            <Link to='/FrequentlyAskedQuestion/FAQ006'>
               I want to report a security issue
             </Link>
           </li>
@@ -102,66 +108,83 @@ const ContactUsContent = (props) => {
       </div>
       <div className={classes.NeedSupport}>
         <p className={classes.HeaderTitle}>Contact Us</p>
-        <form onSubmit={onSubmitHandler} className={classes.ContactUsForm}>
-          <Input
-            inputType='input'
-            label='Nama Lengkap'
-            id='nama'
-            name='nama'
-            onInputHandler={onInputHandler}
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            helperText='Mohon masukan nama lengkap anda'
-          />
-          <Input
-            inputType='input'
-            label='Email'
-            id='email'
-            name='email'
-            onInputHandler={onInputHandler}
-            validatorMethod={[VALIDATOR_EMAIL()]}
-            helperText='Pastikan input harus berbentuk email'
-          />
-          <Input
-            inputType='input'
-            label='No Telephone'
-            id='phone'
-            name='phone'
-            onInputHandler={onInputHandler}
-            validatorMethod={[VALIDATOR_NUMSTR()]}
-            helperText='Pastikan nomor telepon sudah benar'
-          />
-          <Input
-            inputType='textarea'
-            label='Pesan...'
-            rows={4}
-            id='feed'
-            name='feed'
-            onInputHandler={onInputHandler}
-            validatorMethod={[VALIDATOR_MINLENGTH(10)]}
-            helperText='Pastikan pesan lebih dari 10 alfabet'
-          />
+        <Modal show={props.success} onCancel={onCancelHandler}>
+          Termia kasih atas feedback yang diberikan, feedback anda akan kami
+          proses dan dibalas melalui email.{' '}
+        </Modal>
+        {!props.isLoading ? (
+          <form onSubmit={onSubmitHandler} className={classes.ContactUsForm}>
+            <Input
+              inputType='input'
+              label='Nama Lengkap'
+              id='nama'
+              name='nama'
+              onInputHandler={onInputHandler}
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              helperText='Mohon masukan nama lengkap anda'
+            />
+            <Input
+              inputType='input'
+              label='Email'
+              id='email'
+              name='email'
+              onInputHandler={onInputHandler}
+              validatorMethod={[VALIDATOR_EMAIL()]}
+              helperText='Pastikan input harus berbentuk email'
+            />
+            <Input
+              inputType='input'
+              label='No Telephone'
+              id='phone'
+              name='phone'
+              onInputHandler={onInputHandler}
+              validatorMethod={[VALIDATOR_NUMSTR()]}
+              helperText='Pastikan nomor telepon sudah benar'
+            />
+            <Input
+              inputType='textarea'
+              label='Pesan...'
+              rows={4}
+              id='feed'
+              name='feed'
+              onInputHandler={onInputHandler}
+              validatorMethod={[VALIDATOR_MINLENGTH(10)]}
+              helperText='Pastikan pesan lebih dari 10 alfabet'
+            />
 
-          <div className={classes.Footer}>
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='submit'
-              size='small'
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
+            <div className={classes.Footer}>
+              <Button
+                disabled={!formState.formIsValid}
+                variant='contained'
+                color='primary'
+                type='submit'
+                size='small'
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
+        ) : (
+          <SpinnerCircle />
+        )}
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    createFeed: (newFeed) => dispatch(actionCreators.createFeed(newFeed)),
+    isLoading: state.feed.isLoading,
+    error: state.feed.error,
+    success: state.feed.success,
   };
 };
 
-export default connect(null, mapDispatchToProps)(ContactUsContent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createFeed: (newFeed) => dispatch(actionCreators.createFeed(newFeed)),
+    resetFeed: () => dispatch({ type: actionTypes.FEEDBACKRESET }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactUsContent);

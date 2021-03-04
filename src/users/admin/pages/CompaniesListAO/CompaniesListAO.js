@@ -44,7 +44,7 @@ const paginationReducer = (state, action) => {
 const CompaniesListAO = (props) => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: '' });
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [indexLoading, setIndexLoading] = useState(null);
   const [displayData, setDisplayData] = useState();
@@ -56,7 +56,6 @@ const CompaniesListAO = (props) => {
     const payload = { token: admin.token };
     getWholeCompanies(payload).then((res) => {
       setData(res.wholeCompanies);
-      setIsLoading(false);
     });
   }, [getWholeCompanies, setIsLoading, admin]);
 
@@ -72,6 +71,7 @@ const CompaniesListAO = (props) => {
         state.startIndex + state.rowsPerPage
       );
       setDisplayData(applicantArray);
+      setIsLoading(false);
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
@@ -155,254 +155,281 @@ const CompaniesListAO = (props) => {
     });
   };
 
-  let content = (
-    <div className={classes.FlexContainer}>
-      <div className={classes.Container}>
-        <div className={classes.HeaderContainer}>
-          <h1 className={classes.Header}>Companies Account List</h1>
-          <div className={classes.DropDown}>
-            <button className={classes.DropButton}>
-              Filter
-              <ArrowDropDownIcon />
-            </button>
-            <div className={classes.DropDownContent}>
-              <button style={{ color: 'black' }} onClick={handleAll}>
-                All
-              </button>
+  console.log(data);
+  console.log(displayData);
 
-              <button
-                style={{ color: 'red' }}
-                value='Blocked'
-                onClick={handleRegular}
-              >
-                Blocked
-              </button>
+  let content = <SpinnerCircle />;
 
-              <button
-                style={{ color: 'rgb(250, 129, 0)' }}
-                value='Premium'
-                onClick={handlePremium}
-              >
-                Premium
+  if (!isLoading && data && displayData) {
+    content = (
+      <div className={classes.FlexContainer}>
+        <div className={classes.Container}>
+          <div className={classes.HeaderContainer}>
+            <h1 className={classes.Header}>Companies Account List</h1>
+            <div className={classes.DropDown}>
+              <button className={classes.DropButton}>
+                Filter
+                <ArrowDropDownIcon />
               </button>
+              <div className={classes.DropDownContent}>
+                <button style={{ color: 'black' }} onClick={handleAll}>
+                  All
+                </button>
 
-              <button
-                style={{ color: 'rgb(33, 153, 0)' }}
-                value='Member'
-                onClick={handleMember}
-              >
-                Member
-              </button>
+                <button
+                  style={{ color: 'red' }}
+                  value='Blocked'
+                  onClick={handleRegular}
+                >
+                  Blocked
+                </button>
+
+                <button
+                  style={{ color: 'rgb(250, 129, 0)' }}
+                  value='Premium'
+                  onClick={handlePremium}
+                >
+                  Premium
+                </button>
+
+                <button
+                  style={{ color: 'rgb(33, 153, 0)' }}
+                  value='Member'
+                  onClick={handleMember}
+                >
+                  Member
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={classes.TableHolder}>
-          <table className={classes.Table}>
-            <thead className={classes.RowField}>
-              <tr>
-                <th>No</th>
-                <th>Company Name</th>
-                <th>Industry</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+          <div className={classes.TableHolder}>
+            <table className={classes.Table}>
+              <thead className={classes.RowField}>
+                <tr>
+                  <th>No</th>
+                  <th>Company Name</th>
+                  <th>Industry</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
 
-            {find ? (
-              <tbody className={classes.ColumnField}>
-                {displayData
-                  .filter((company) => company.status === filter)
-                  .map((company, index) => (
-                    <tr key={company.id}>
-                      <th> {index + 1}</th>
+              {find ? (
+                <tbody className={classes.ColumnField}>
+                  {displayData
+                    .filter((company) => company.status === filter)
+                    .map((company, index) => (
+                      <tr key={company.id}>
+                        <th> {index + 1}</th>
 
-                      <th>
-                        {' '}
-                        <Link
-                          to={`/co/${company.id}`}
-                          style={{ color: 'black', textDecoration: 'none' }}
-                        >
-                          {company.companyName}
-                        </Link>
-                      </th>
-                      <th>{company.industry ? company.industry : 'no data'}</th>
-                      <th>{company.email}</th>
-                      <th>{company.address}</th>
+                        <th>
+                          {' '}
+                          <Link
+                            to={`/co/${company.id}`}
+                            style={{ color: 'black', textDecoration: 'none' }}
+                          >
+                            {company.companyName}
+                          </Link>
+                        </th>
+                        <th>
+                          {company.industry ? company.industry : 'no data'}
+                        </th>
+                        <th>{company.email}</th>
+                        <th>{company.address}</th>
 
-                      <th>
-                        {props.company.isLoading && indexLoading === index ? (
-                          <SpinnerCircle />
-                        ) : company.isActive ? (
-                          <span style={{ color: 'Green', fontWeight: 'bold' }}>
-                            Active
-                          </span>
-                        ) : (
-                          <span style={{ color: 'Orange', fontWeight: 'bold' }}>
-                            Pending
-                          </span>
-                        )}
-                      </th>
-
-                      <th>
-                        <div className={classes.DropDown}>
-                          <button className={classes.DropButton}>
-                            <ArrowDropDownIcon />
-                          </button>
-                          <div className={classes.DropDownContent}>
-                            <button
-                              style={{ color: 'Green' }}
-                              onClick={() =>
-                                activateCompanyHandler({
-                                  companyId: company.id,
-                                  index,
-                                })
-                              }
+                        <th>
+                          {props.company.isLoading && indexLoading === index ? (
+                            <SpinnerCircle />
+                          ) : company.isActive ? (
+                            <span
+                              style={{ color: 'Green', fontWeight: 'bold' }}
                             >
-                              Activate
-                            </button>
-                            <button
-                              style={{ color: 'red' }}
-                              onClick={() =>
-                                blockCompanyHandler({
-                                  companyId: company.id,
-                                  index,
-                                })
-                              }
+                              Active
+                            </span>
+                          ) : (
+                            <span
+                              style={{ color: 'Orange', fontWeight: 'bold' }}
                             >
-                              Block
+                              Pending
+                            </span>
+                          )}
+                        </th>
+
+                        <th>
+                          <div className={classes.DropDown}>
+                            <button className={classes.DropButton}>
+                              <ArrowDropDownIcon />
                             </button>
+                            <div className={classes.DropDownContent}>
+                              <button
+                                style={{ color: 'Green' }}
+                                onClick={() =>
+                                  activateCompanyHandler({
+                                    companyId: company.id,
+                                    index,
+                                  })
+                                }
+                              >
+                                Activate
+                              </button>
+                              <button
+                                style={{ color: 'red' }}
+                                onClick={() =>
+                                  blockCompanyHandler({
+                                    companyId: company.id,
+                                    index,
+                                  })
+                                }
+                              >
+                                Block
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </th>
-                    </tr>
-                  ))}
-              </tbody>
-            ) : (
-              <tbody className={classes.ColumnField}>
-                {displayData &&
-                  displayData.map((company, index) => (
-                    <tr key={company.id}>
-                      <th> {index + 1}</th>
+                        </th>
+                      </tr>
+                    ))}
+                </tbody>
+              ) : (
+                <tbody className={classes.ColumnField}>
+                  {displayData &&
+                    displayData.map((company, index) => (
+                      <tr key={company.id}>
+                        <th> {index + 1}</th>
 
-                      <th>
-                        {' '}
-                        <Link
-                          to={`/co/${company.id}`}
-                          style={{ color: 'black', textDecoration: 'none' }}
+                        <th>
+                          {' '}
+                          <Link
+                            to={`/co/${company.id}`}
+                            style={{ color: 'black', textDecoration: 'none' }}
+                          >
+                            {company.companyName}
+                          </Link>
+                        </th>
+                        <th
+                          style={
+                            company.industry
+                              ? { color: 'black' }
+                              : {
+                                  color: 'rgba(255,0,0,0.7)',
+                                  fontWeight: 'bold',
+                                }
+                          }
                         >
-                          {company.companyName}
-                        </Link>
-                      </th>
-                      <th
-                        style={
-                          company.industry
-                            ? { color: 'black' }
-                            : { color: 'rgba(255,0,0,0.7)', fontWeight: 'bold' }
-                        }
-                      >
-                        {company.industry ? company.industry : 'no data'}
-                      </th>
+                          {company.industry ? company.industry : 'no data'}
+                        </th>
 
-                      <th>{company.email}</th>
+                        <th>{company.email}</th>
 
-                      <th
-                        style={
-                          company.address
-                            ? { color: 'black', maxWidth: '24rem' }
-                            : { color: 'rgba(255,0,0,0.7)', fontWeight: 'bold' }
-                        }
-                      >
-                        {' '}
-                        {company.address ? company.address : 'no data'}
-                      </th>
+                        <th
+                          style={
+                            company.address
+                              ? { color: 'black', maxWidth: '24rem' }
+                              : {
+                                  color: 'rgba(255,0,0,0.7)',
+                                  fontWeight: 'bold',
+                                }
+                          }
+                        >
+                          {' '}
+                          {company.address ? company.address : 'no data'}
+                        </th>
 
-                      <th>
-                        {props.company.isLoading && indexLoading === index ? (
-                          <SpinnerCircle />
-                        ) : company.isActive ? (
-                          <span style={{ color: 'Green', fontWeight: 'bold' }}>
-                            Active
-                          </span>
-                        ) : (
-                          <span style={{ color: 'Orange', fontWeight: 'bold' }}>
-                            Pending
-                          </span>
-                        )}
-                      </th>
-
-                      <th>
-                        <div className={classes.DropDown}>
-                          <button className={classes.DropButton}>
-                            <ArrowDropDownIcon />
-                          </button>
-                          <div className={classes.DropDownContent}>
-                            <button
-                              style={{ color: 'Green' }}
-                              onClick={() =>
-                                activateCompanyHandler({
-                                  companyId: company.id,
-                                  index,
-                                })
-                              }
+                        <th>
+                          {props.company.isLoading && indexLoading === index ? (
+                            <SpinnerCircle />
+                          ) : company.isActive ? (
+                            <span
+                              style={{ color: 'Green', fontWeight: 'bold' }}
                             >
-                              Activate
-                            </button>
-                            <button
-                              style={{ color: 'red' }}
-                              onClick={() =>
-                                blockCompanyHandler({
-                                  companyId: company.id,
-                                  index,
-                                })
-                              }
+                              Active
+                            </span>
+                          ) : (
+                            <span
+                              style={{ color: 'Orange', fontWeight: 'bold' }}
                             >
-                              Block
+                              Pending
+                            </span>
+                          )}
+                        </th>
+
+                        <th>
+                          <div className={classes.DropDown}>
+                            <button className={classes.DropButton}>
+                              <ArrowDropDownIcon />
                             </button>
+                            <div className={classes.DropDownContent}>
+                              <button
+                                style={{ color: 'Green' }}
+                                onClick={() =>
+                                  activateCompanyHandler({
+                                    companyId: company.id,
+                                    index,
+                                  })
+                                }
+                              >
+                                Activate
+                              </button>
+                              <button
+                                style={{ color: 'red' }}
+                                onClick={() =>
+                                  blockCompanyHandler({
+                                    companyId: company.id,
+                                    index,
+                                  })
+                                }
+                              >
+                                Block
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </th>
-                    </tr>
-                  ))}
-              </tbody>
-            )}
-          </table>
-        </div>
+                        </th>
+                      </tr>
+                    ))}
+                </tbody>
+              )}
+            </table>
+          </div>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            width: '100%',
-          }}
-        >
-          <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
-            </Select>
-            <FormHelperText>Rows</FormHelperText>
-          </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              width: '100%',
+            }}
+          >
+            <FormControl style={{ width: '4rem' }}>
+              <Select
+                labelId='rowPerPage'
+                id='rowPerPageSelect'
+                value={state.rowsPerPage}
+                onChange={rowsHandler}
+              >
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+                <MenuItem value={30}>30</MenuItem>
+              </Select>
+              <FormHelperText>Rows</FormHelperText>
+            </FormControl>
+            <Pagination
+              count={state.pageCount}
+              page={state.pageNumber}
+              onChange={pageChangeHandler}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 
-  if (isLoading) {
-    content = <SpinnerCircle />;
+  if (!props.isLoading && !data && !displayData) {
+    content = (
+      <p className={classes.EmptyText}>
+        Tidak ditemukan data akun terdaftar sebagai perusahaan
+      </p>
+    );
   }
 
   return <div>{content}</div>;

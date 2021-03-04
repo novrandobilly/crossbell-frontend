@@ -255,6 +255,9 @@ const ApplicantListAO = (props) => {
 
   let content = <SpinnerCircle />;
 
+  console.log(data);
+  console.log(displayData);
+
   if (!isLoading && displayData && displayData.length > 0) {
     content = (
       <div className={classes.FlexContainer}>
@@ -462,6 +465,14 @@ const ApplicantListAO = (props) => {
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (!props.isLoading && !data) {
+    content = (
+      <p className={classes.EmptyText}>
+        Tidak ditemukan data akun terdaftar sebagai pelamar
+      </p>
     );
   }
 

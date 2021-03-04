@@ -85,7 +85,7 @@ const JobsList = (props) => {
 
       if (fieldOfWorkFilter) {
         filteredArray = filteredArray.filter((app) => {
-          return app.fieldOfWork === fieldOfWorkFilter;
+          return app.fieldOfWork.some((fow) => fow === fieldOfWorkFilter);
         });
       }
       if (locationFilter) {
@@ -414,7 +414,7 @@ const JobsList = (props) => {
         </div>
       </div>
 
-      <div className={classes.FormControl} id='FormControl'>
+      <div className={classes.SortFilter} id='FormControl'>
         <FormControl style={{ width: '100%', textAlign: 'left' }}>
           <InputLabel id='sort'>Filter</InputLabel>
           <Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
