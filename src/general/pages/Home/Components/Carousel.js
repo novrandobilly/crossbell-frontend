@@ -26,29 +26,28 @@ const Carousel = (props) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setX(x + 1);
-      if (x === 2) {
+      if (x === (backgroundArr.length - 1) * -100) {
         setX(0);
+      } else {
+        setX(x - 100);
       }
-      // if (x === (backgroundArr.length - 1) * -100) {
-      //   setX(0);
-      // } else {
-      //   setX(x - 100);
-      // }
     }, 15000);
     return () => clearInterval(interval);
   }, [x, backgroundArr]);
 
   return (
     <div className={classes.Slider}>
-      <div className={classes.Slide}>{backgroundArr[x]}</div>
-      {/* {backgroundArr.map((item, i) => {
+      {backgroundArr.map((item, i) => {
         return (
-          <div key={i} className={classes.Slide}>
-            {item[x]}
+          <div
+            key={i}
+            className={classes.Slide}
+            style={{ transform: `translateX(${x}%)` }}
+          >
+            {item}
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 };

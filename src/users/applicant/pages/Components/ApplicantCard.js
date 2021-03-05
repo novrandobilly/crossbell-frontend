@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { PDFViewer } from '@react-pdf/renderer';
 import * as actionCreators from '../../../../store/actions';
 
 import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
@@ -39,7 +38,7 @@ const ApplicantCard = (props) => {
       setLoadingResume(false);
     }
   };
-  console.log(props.resume);
+  console.log(props.resume.url);
 
   return (
     <div className={classes.Wraper}>
@@ -77,10 +76,12 @@ const ApplicantCard = (props) => {
                   <div className={classes.ResumeHolder}>
                     <img
                       className={classes.ResumePicture}
-                      src={`url('${props.picture.url}')`}
-                      alt='resume-pic'
+                      src={`${
+                        props.resume.url.slice(0, props.resume.url.length - 4) +
+                        '.jpg'
+                      }`}
+                      alt='resume-preview'
                     />
-
                     <a
                       href={
                         props.resume.url.slice(0, props.resume.url.length - 4) +
