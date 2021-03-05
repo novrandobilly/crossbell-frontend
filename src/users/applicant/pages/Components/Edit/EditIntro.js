@@ -30,9 +30,12 @@ const EditIntro = (props) => {
   const [data, setData] = useState();
   const [open, setOpen] = useState([false, false, false]);
 
+  const [interest, setInterest] = useState(['', '', '']);
+
   const { getOneApplicant } = props;
   useEffect(() => {
     getOneApplicant(applicantid).then((res) => {
+      setInterest(res.applicant.interest);
       setData(res.applicant);
     });
   }, [getOneApplicant, applicantid]);
@@ -130,6 +133,7 @@ const EditIntro = (props) => {
       autoRemindEl.checked = data.autoRemind;
       headhunterProgramEl.checked = data.headhunterProgram;
       onInputHandler('gender', data.gender, true);
+      onInputHandler('interest', data.interest, true);
       onInputHandler('autoSend', data.autoSend, true);
       onInputHandler('outOfTown', data.outOfTown, true);
       onInputHandler('workShifts', data.workShifts, true);
@@ -137,6 +141,8 @@ const EditIntro = (props) => {
       onInputHandler('headhunterProgram', data.headhunterProgram, true);
     }
   }, [data, onInputHandler]);
+
+  console.log(formState && formState.inputs.interest);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -195,6 +201,7 @@ const EditIntro = (props) => {
     const elementId = 'interest';
     const elementArray = [...formState.inputs.interest.value];
     elementArray[indexFow] = e.target.value;
+    setInterest(elementArray);
     onInputHandler(elementId, elementArray, true);
   };
 
@@ -417,7 +424,7 @@ const EditIntro = (props) => {
                       open={open[0]}
                       onClose={handleClose}
                       onOpen={handleOpen}
-                      value={formState.inputs.interest.value[0]}
+                      value={interest[0] ? interest[0] : ''}
                       onChange={fowHandler}
                       style={{
                         fontSize: '0.9rem',
@@ -461,7 +468,7 @@ const EditIntro = (props) => {
                       open={open[1]}
                       onClose={handleClose}
                       onOpen={handleOpen}
-                      value={formState.inputs.interest.value[1]}
+                      value={interest[1] ? interest[1] : ''}
                       onChange={fowHandler}
                       style={{
                         fontSize: '0.9rem',
@@ -503,7 +510,7 @@ const EditIntro = (props) => {
                       open={open[2]}
                       onClose={handleClose}
                       onOpen={handleOpen}
-                      value={formState.inputs.interest.value[2]}
+                      value={interest[2] ? interest[2] : ''}
                       onChange={fowHandler}
                       style={{
                         fontSize: '0.9rem',

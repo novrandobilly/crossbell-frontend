@@ -44,6 +44,7 @@ import CompanyJobList from './users/company/pages/CompanyJobList/CompanyJobList'
 import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
 import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
 import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
+import Subscription from './users/applicant/pages/Components/Subscription';
 
 import EditApplicantIntro from './users/applicant/pages/Components/Edit/EditIntro';
 import EditApplicantSummary from './users/applicant/pages/Components/Edit/EditSummary';
@@ -174,6 +175,8 @@ const App = (props) => {
           />
           <Route path='/ap/:applicantid' component={ApplicantDetails} />
 
+          <Route path='/subscription/:applicantid' component={Subscription} />
+
           <Route path='/authentication/ap' component={AuthenticationAp} />
 
           {/* Users Routes: Company */}
@@ -241,7 +244,7 @@ const App = (props) => {
           <Route path='/ad/alphaomega/promo' component={Promo} />
 
           {/* General Routes */}
-          <Route path='/FrequentlyAskedQuestion' component={FAQ} />
+          <Route path='/FrequentlyAskedQuestion/:faqId' component={FAQ} />
           <Route path='/blogs' component={Blogs} />
           <Route path='/about-us' component={AboutUs} />
           <Route path='/contact-us' component={ContactUs} />

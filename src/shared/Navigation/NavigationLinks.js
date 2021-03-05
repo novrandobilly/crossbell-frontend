@@ -38,7 +38,7 @@ const NavigationLinks = (props) => {
   if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
     logout = (
       <li onClick={logoutHandler}>
-        <NavLink to='#'>Logout</NavLink>
+        <NavLink to='#'>Keluar-{'>'}</NavLink>
       </li>
     );
   }
@@ -87,7 +87,7 @@ const NavigationLinks = (props) => {
         {props.auth.isLoggedIn && !props.auth.isCompany && (
           <li>
             <span>
-              Welcome,{' '}
+              Selamat datang,{' '}
               <NavLink
                 to={`/ap/${props.auth.userId}`}
                 activeClassName={classes.active}
@@ -99,12 +99,12 @@ const NavigationLinks = (props) => {
         )}
         <li>
           <NavLink to='/' exact activeClassName={classes.active}>
-            Home
+            Beranda
           </NavLink>
         </li>
         <li>
           <NavLink to='/jobs-dashboard' activeClassName={classes.active}>
-            Explore Jobs
+            Dasbor Pekerjaan
           </NavLink>
         </li>
 
@@ -115,18 +115,18 @@ const NavigationLinks = (props) => {
                 to={`/co/${props.auth.userId}`}
                 activeClassName={classes.active}
               >
-                My Company Profile
+                Profil Perusahaan
               </NavLink>
             </li>
             <li>
               <NavLink to={`/jobs/new`} activeClassName={classes.active}>
-                Post New Job
+                Pasang Iklan
               </NavLink>
             </li>
             <li>
               <div className={classes.dropdown}>
                 <button className={classes.dropbtn} onClick={DropdownOrder}>
-                  Place Order
+                  Taruh Pesanan
                   <ArrowDropDownIcon
                     style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
@@ -145,16 +145,16 @@ const NavigationLinks = (props) => {
                     to={`/co/order/reguler`}
                     activeClassName={classes.active}
                   >
-                    <p>Order Job Slot</p>
+                    <p>Pesan Slot Iklan</p>
                   </NavLink>
                   <NavLink
                     to={`/co/order/candidate`}
                     activeClassName={classes.active}
                   >
-                    <p>Order Bulk Candidate</p>
+                    <p>Pesan Kandidat</p>
                   </NavLink>
                   <NavLink to={`/co/order/es`} activeClassName={classes.active}>
-                    <p>Order Executive Search</p>
+                    <p>Pesan Pencarian Eksekutif</p>
                   </NavLink>
                 </div>
               </div>
@@ -166,7 +166,7 @@ const NavigationLinks = (props) => {
                   onClick={DropdownList}
                   ref={ref}
                 >
-                  My List
+                  List
                   <ArrowDropDownIcon
                     style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
@@ -184,13 +184,13 @@ const NavigationLinks = (props) => {
                     to={`/co/${props.auth.userId}/listOrder`}
                     activeClassName={classes.active}
                   >
-                    <p>Order List</p>
+                    <p>Pesanan</p>
                   </NavLink>
                   <NavLink
                     to={`/co/${props.auth.userId}/jobList`}
                     activeClassName={classes.active}
                   >
-                    <p>Job list</p>
+                    <p>Iklan Pekerjaan</p>
                   </NavLink>
                 </div>
               </div>
@@ -311,6 +311,187 @@ const NavigationLinks = (props) => {
                   </NavLink>
                 </div>
               </div>
+            </li>
+          </>
+        )}
+        {logout}
+      </ul>
+
+      {/*======================================================================*/}
+
+      <ul className={classes.PhoneLinks}>
+        {props.auth.isLoggedIn && !props.auth.isCompany && (
+          <li>
+            <span>
+              Welcome,{' '}
+              <NavLink
+                to={`/ap/${props.auth.userId}`}
+                activeClassName={classes.active}
+              >
+                {data}
+              </NavLink>
+            </span>
+          </li>
+        )}
+        <li>
+          <NavLink to='/' exact activeClassName={classes.active}>
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/jobs-dashboard' activeClassName={classes.active}>
+            Explore Jobs
+          </NavLink>
+        </li>
+
+        {props.auth.isLoggedIn && props.auth.isCompany && (
+          <>
+            <li>
+              <NavLink
+                to={`/co/${props.auth.userId}`}
+                activeClassName={classes.active}
+              >
+                My Company Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={`/jobs/new`} activeClassName={classes.active}>
+                Post New Job
+              </NavLink>
+            </li>
+
+            <div className={classes.Divider}> Post Order </div>
+
+            <li>
+              <NavLink
+                to={`/co/order/reguler`}
+                activeClassName={classes.active}
+              >
+                Order Job Slot
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/co/order/candidate`}
+                activeClassName={classes.active}
+              >
+                Order Bulk Candidate
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={`/co/order/es`} activeClassName={classes.active}>
+                Order Executive Search
+              </NavLink>
+            </li>
+
+            <div className={classes.Divider}> My List </div>
+
+            <li>
+              <NavLink
+                to={`/co/${props.auth.userId}/listOrder`}
+                activeClassName={classes.active}
+              >
+                Order List
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/co/${props.auth.userId}/jobList`}
+                activeClassName={classes.active}
+              >
+                Job list
+              </NavLink>
+            </li>
+          </>
+        )}
+
+        {props.admin.isAdmin && props.admin.isLoggedIn && (
+          <>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/profile`}
+                activeClassName={classes.active}
+              >
+                My Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/customer-supports`}
+                activeClassName={classes.active}
+              >
+                Feedback
+              </NavLink>
+            </li>
+
+            <div className={classes.Divider}>Order & Finance</div>
+
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/promo`}
+                activeClassName={classes.active}
+              >
+                Update Promo
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/order/reguler`}
+                activeClassName={classes.active}
+              >
+                Order Reguler List
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/order/candidate`}
+                activeClassName={classes.active}
+              >
+                Order Bulk Candidate List
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/order/es`}
+                activeClassName={classes.active}
+              >
+                Order Executive Search List
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/financial`}
+                activeClassName={classes.active}
+              >
+                Finance
+              </NavLink>
+            </li>
+
+            <div className={classes.Divider}>List</div>
+
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/applicants`}
+                activeClassName={classes.active}
+              >
+                Applicant List
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/companies`}
+                activeClassName={classes.active}
+              >
+                Company list
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/jobs`}
+                activeClassName={classes.active}
+              >
+                Job list
+              </NavLink>
             </li>
           </>
         )}

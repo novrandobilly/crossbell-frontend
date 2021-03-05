@@ -1,90 +1,102 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .ContainerFlex {
-	margin: 6rem auto 0;
-	padding: 1rem;
-	width: 25rem;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	border: 0.1rem solid grey;
-	border-radius: 1rem;
-	background-color: rgba(213, 214, 210, 1);
-	font-family: sans-serif;
+  width: 20rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: white;
+  font-family: sans-serif;
+  padding: 30px 20px;
+  margin-top: 2rem;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  align-self: center;
 }
 
 .FormTitle {
-	font-size: 1.4rem;
-	font-weight: bold;
-	margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
 }
 .SubTitle {
-	font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .SubmitButton {
-	margin: 1.5rem auto 0;
-	width: 10rem;
-	height: 2rem;
-	border: none;
-	border-radius: 0.5rem;
-	color: white;
-	background-color: rgba(58, 81, 153, 1);
-	font-size: 1rem;
-	font-weight: bold;
-	transition: all 0.5s;
-	cursor: pointer;
-	outline: none;
+  margin: 1.5rem auto 0;
+  width: 10rem;
+  height: 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  background-color: rgba(58, 81, 153, 1);
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.5s;
+  cursor: pointer;
+  outline: none;
 }
 
 .SubmitButton:disabled {
-	color: #ccc;
-	cursor: not-allowed;
-	background-color: gray;
+  color: #ccc;
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 .SubmitButton:enabled span {
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
 }
 
 .SubmitButton:enabled span:after {
-	content: "\2192";
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -2rem;
-	transition: 0.5s;
+  content: '\2192';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -2rem;
+  transition: 0.5s;
 }
 
 .SubmitButton:hover:enabled span {
-	padding-right: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .SubmitButton:hover:enabled span:after {
-	opacity: 1;
-	right: 0;
+  opacity: 1;
+  right: 0;
 }
 
 .ChangeSign {
-	margin-top: 1.5rem;
-	border: none;
-	color: blue;
-	background-color: transparent;
-	font-size: 0.8rem;
-	font-weight: bold;
-	cursor: pointer;
-	outline: none;
+  margin-top: 1.5rem;
+  border: none;
+  color: blue;
+  background-color: transparent;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
 }
 
 .sign {
-	color: black;
-	font-size: 0.8rem;
-	font-weight: bold;
+  color: black;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+@media (max-width: 568px) {
+  .ContainerFlex {
+    border-radius: 0.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .ContainerFlex {
+    border-radius: 0;
+    width: 100%;
+  }
 }

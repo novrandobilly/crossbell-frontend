@@ -24,6 +24,7 @@ const CompanyJobList = (props) => {
       };
 
       getJobsInCompany(payload).then((res) => {
+        console.log(res);
         setData(res.foundJob);
       });
     }
@@ -39,6 +40,7 @@ const CompanyJobList = (props) => {
       const res = await props.deleteJob(payload);
       if (res) {
         console.log(res);
+        setData(data.filter((fil) => fil._id !== id));
       } else {
         console.log('No feed with id:' + { id } + 'found');
       }
@@ -120,7 +122,7 @@ const CompanyJobList = (props) => {
     );
   }
 
-  if (!props.isLoading && data && data.length < 1) {
+  if (!props.isLoading && (!data || data.length < 1)) {
     content = (
       <p className={classes.EmptyText}>
         Anda belum memasang iklan pekerjaan sebelumnya

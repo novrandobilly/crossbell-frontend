@@ -5,7 +5,7 @@ import IconButton from '../../../../shared/UI_Element/IconButton';
 
 import classes from './SkillsMap.module.css';
 
-const RangeSegment = (props) => {
+const SkillsMap = (props) => {
   return (
     <div className={classes.Wraper}>
       <div className={classes.Container}>
@@ -41,4 +41,4 @@ const RangeSegment = (props) => {
   );
 };
 
-export default RangeSegment;
+export default SkillsMap;

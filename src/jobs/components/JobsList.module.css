@@ -105,6 +105,10 @@
   .FormControl {
     align-self: flex-end;
   }
+
+  .SortFilter {
+    align-self: start;
+  }
 }
 
 @media (max-width: 400px) {

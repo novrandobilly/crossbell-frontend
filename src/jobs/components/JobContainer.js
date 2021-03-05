@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import * as actionCreators from '../../store/actions/';
-
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
+import Button from '../../shared/UI_Element/Button';
+
 import classes from './JobContainer.module.css';
 
 const JobDetails = props => {
 	const { jobsid } = useParams();
+
 	const onSaveHandler = event => {
 		event.preventDefault();
 	};
@@ -82,7 +84,7 @@ const JobDetails = props => {
 								<p className={classes.TextLeft}>{props.companyName}</p>
 							</Link>
 							<p>-</p>
-							<p className={classes.TextMiddle}>{props.fieldOfWork.filter(field => field).join(', ')}</p>
+							<p className={classes.TextMiddle}>{props.fieldOfWork}</p>
 						</div>
 
 						<div className={classes.ContainerSecond}>
@@ -94,7 +96,8 @@ const JobDetails = props => {
 						</div>
 
 						<div className={classes.ContainerThird}>
-							<p className={classes.TextLeft}>email HR: {props.emailRecipient}</p>
+							{props.auth.isCompany ||
+								(props.admin.isAdmin && <p className={classes.TextLeft}>email HR: {props.emailRecipient}</p>)}
 
 							<div className={classes.ButtonContainer}>
 								{props.auth.userId === props.companyId && (
@@ -119,11 +122,16 @@ const JobDetails = props => {
 
 								{!props.auth.isCompany &&
 								props.auth.token && (
-									<Link to='#'>
-										<button className={classes.InstantButton} onClick={onSaveHandler}>
-											<span>Apply</span>
-										</button>
-									</Link>
+									<Button
+										btnType='InstantApply'
+										onClick={onSaveHandler}
+										disabled={props.jobApplicants.some(appId => appId.toString() === props.auth.userId.toString())}>
+										{props.jobApplicants.some(appId => appId.toString() === props.auth.userId.toString()) ? (
+											'Applied'
+										) : (
+											'Apply'
+										)}
+									</Button>
 								)}
 							</div>
 						</div>
@@ -161,7 +169,6 @@ const JobDetails = props => {
 
 				<div>
 					<p className={classes.AboutLabel}>Location</p>
-					<p className={classes.AboutText}>{props.companyLocation}</p>
 				</div>
 			</div>
 		</div>
@@ -176,6 +183,7 @@ const JobDetails = props => {
 
 const mapStateToProps = state => {
 	return {
+		admin: state.admin,
 		auth: state.auth,
 		job: state.job
 	};
