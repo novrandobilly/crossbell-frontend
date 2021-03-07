@@ -1,104 +1,104 @@
 .Content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0rem 5rem;
-  height: calc(100vh - 64px);
-  overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0rem 5rem;
+	height: calc(100vh - 64px);
+	overflow: hidden;
 }
 
 .ContentHolder {
-  text-align: justify;
-  width: 55%;
-  color: white;
-  z-index: 1;
+	text-align: justify;
+	width: 55%;
+	color: white;
+	z-index: 1;
 }
 
 .About {
-  font-size: 1.2rem;
-  margin-bottom: 5rem;
+	font-size: 1.3rem;
+	margin-bottom: 5rem;
 }
 
 .AuthForm {
-  margin-top: 2rem;
-  width: 30%;
-  z-index: 1;
+	margin-top: 2rem;
+	width: 30%;
+	z-index: 1;
 }
 
 .LinkRef {
-  width: fit-content;
-  font-size: 2rem;
-  font-weight: bold;
+	width: fit-content;
+	font-size: 2rem;
+	font-weight: bold;
 }
 
 .LinkRef a:hover {
-  color: white;
+	color: white;
 }
 
 .LinkRef a {
-  text-decoration: none;
-  color: rgba(58, 81, 153, 1);
+	text-decoration: none;
+	color: #d8e4fc;
 }
 
 .SmallAbout {
-  background-color: white;
-  display: none;
+	background-color: white;
+	display: none;
 }
 
 @media (max-width: 1200px) {
-  .AuthForm {
-    width: 33%;
-  }
+	.AuthForm {
+		width: 33%;
+	}
 }
 
 @media (max-width: 992px) {
-  .Content {
-    display: flex;
-    flex-direction: column;
-    height: 30rem;
-    padding-bottom: 10px;
-  }
+	.Content {
+		display: flex;
+		flex-direction: column;
+		height: 30rem;
+		padding-bottom: 10px;
+	}
 
-  .ContentHolder {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
+	.ContentHolder {
+		width: 0;
+		height: 0;
+		overflow: hidden;
+	}
 
-  .LinkRef {
-    visibility: hidden;
-  }
+	.LinkRef {
+		visibility: hidden;
+	}
 
-  .AuthForm {
-    margin-top: -2rem;
-    width: 50%;
-  }
+	.AuthForm {
+		margin-top: -2rem;
+		width: 50%;
+	}
 
-  .SmallAbout {
-    width: auto;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem 3rem 2rem;
-  }
+	.SmallAbout {
+		width: auto;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		padding: 1rem 2rem 3rem 2rem;
+	}
 }
 
 @media (max-width: 768px) {
-  .Content {
-    height: 30rem;
-  }
+	.Content {
+		height: 30rem;
+	}
 
-  .AuthForm {
-    width: 50%;
-  }
+	.AuthForm {
+		width: 50%;
+	}
 }
 
 @media (max-width: 576px) {
-  .AuthForm {
-    width: 20rem;
-  }
+	.AuthForm {
+		width: 20rem;
+	}
 
-  .SmallAbout {
-    padding-bottom: 3rem;
-  }
+	.SmallAbout {
+		padding-bottom: 3rem;
+	}
 }

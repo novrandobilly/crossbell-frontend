@@ -119,6 +119,9 @@ export const updateCompanyIntro = CompanyData => {
 
 			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
 				method: 'PATCH',
+				headers: {
+					Authorization: `Bearer ${CompanyData.token}`
+				},
 				body: formData
 			});
 			const responseJSON = await response.json();
@@ -144,7 +147,8 @@ export const updateCompanyBriefDescriptions = CompanyData => {
 			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
 				method: 'PATCH',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${CompanyData.token}`
 				},
 				body: JSON.stringify({
 					briefDescriptions: CompanyData.briefDescriptions
@@ -173,7 +177,8 @@ export const updateCompanyPIC = CompanyData => {
 			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
 				method: 'PATCH',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${CompanyData.token}`
 				},
 				body: JSON.stringify({
 					id: CompanyData.companyId,
