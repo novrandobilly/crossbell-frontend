@@ -89,7 +89,8 @@ const Education = props => {
 			location: formState.inputs.location.value,
 			startDate: formState.inputs.startDate.value,
 			endDate: formState.inputs.endDate.value,
-			description: formState.inputs.description.value
+			description: formState.inputs.description.value,
+			token: props.auth.token
 		};
 		try {
 			const res = await props.updateApplicantEducation(updatedEducation);
@@ -232,22 +233,20 @@ const Education = props => {
 						</div>
 					</div>
 
-
-          <div className={classes.EditLabel}>
-            <Input
-              inputType="textarea"
-              id="description"
-              inputClass="EditProfileTextArea"
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
-              onInputHandler={onInputHandler}
-              label="Deskripsi Pendidikan *"
-              initValue={data.description}
-              initIsValid={true}
-              rows={12}
-            />
-          </div>
-        </div>
-
+					<div className={classes.EditLabel}>
+						<Input
+							inputType='textarea'
+							id='description'
+							inputClass='EditProfileTextArea'
+							validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
+							onInputHandler={onInputHandler}
+							label='Deskripsi Pendidikan *'
+							initValue={data.description}
+							initIsValid={true}
+							rows={12}
+						/>
+					</div>
+				</div>
 
 				<div className={classes.Footer}>
 					<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
@@ -275,7 +274,8 @@ const Education = props => {
 const mapStateToProps = state => {
 	return {
 		isLoading: state.applicant.isLoading,
-		error: state.applicant.error
+		error: state.applicant.error,
+		auth: state.auth
 	};
 };
 

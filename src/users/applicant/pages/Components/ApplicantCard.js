@@ -38,7 +38,6 @@ const ApplicantCard = props => {
 			setLoadingResume(false);
 		}
 	};
-	console.log(props.resume.url);
 
 	return (
 		<div className={classes.Wraper}>
