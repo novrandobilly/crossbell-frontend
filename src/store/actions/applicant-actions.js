@@ -401,15 +401,17 @@ export const updateResume = payload => {
 		dispatch(updateApplicantStart());
 		const resumeData = new FormData();
 		resumeData.append('resume', payload.resume);
+		console.log(payload);
 		try {
 			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}/resume`, {
 				method: 'PATCH',
-				header: {
+				headers: {
 					Authorization: `Bearer ${payload.token}`
 				},
 				body: resumeData
 			});
 			const responseJSON = await response.json();
+			console.log(responseJSON);
 			if (!response.ok) {
 				throw new Error(responseJSON.message);
 			}
