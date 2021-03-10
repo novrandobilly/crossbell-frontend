@@ -55,7 +55,6 @@ import EditApplicantSkills from './users/applicant/pages/Components/Edit/Skill';
 import AddApplicantEducation from './users/applicant/pages/Components/Add/Education';
 import AddApplicantExperience from './users/applicant/pages/Components/Add/Experience';
 import AddApplicantCertification from './users/applicant/pages/Components/Add/Certification';
-import AddApplicantSkills from './users/applicant/pages/Components/Add/Skill';
 
 //==================================== admin =========================================================
 
@@ -146,10 +145,6 @@ const App = (props) => {
           <Route
             path='/ap/:applicantid/add/certification'
             component={AddApplicantCertification}
-          />
-          <Route
-            path='/ap/:applicantid/add/skills'
-            component={AddApplicantSkills}
           />
 
           <Route path='/ap/:applicantid/intro' component={EditApplicantIntro} />

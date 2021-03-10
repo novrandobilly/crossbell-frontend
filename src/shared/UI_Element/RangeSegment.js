@@ -47,6 +47,8 @@ const RangeSegment = (props) => {
                   end={
                     moment(content.endDate).year() < 10000
                       ? moment(content.endDate).format('MMMM  YYYY')
+                      : props.labelName === 'Pengalaman'
+                      ? 'Saat ini'
                       : 'No expiry date'
                   }
                   description={content.description}

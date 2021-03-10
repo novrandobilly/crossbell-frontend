@@ -13,126 +13,150 @@ import Input from '../../../../../shared/UI_Element/Input';
 
 import classes from './Skill.module.css';
 
-const EditDetails = props => {
-	const [ skills, setSkills ] = useState([ 'skill' ]);
-	const [ skillsList, setSkillsList ] = useState();
-	const [ formState, onInputHandler ] = useForm({}, true);
-	const { applicantid } = useParams();
+const EditDetails = (props) => {
+  const [skills, setSkills] = useState(['skill']);
+  const [skillsList, setSkillsList] = useState();
+  const [formState, onInputHandler] = useForm({}, true);
+  const { applicantid } = useParams();
 
-	const { getOneApplicant } = props;
-	useEffect(
-		() => {
-			let res;
-			const fetchApp = async () => {
-				const payload = {
-					applicantId: applicantid,
-					token: props.auth.token
-				};
-				res = await getOneApplicant(payload);
-				res.applicant.skills.forEach((skill, i) => {
-					setSkills(prevState => [ ...prevState, 'skill' ]);
-					onInputHandler(`skill_${i}`, skill, true);
-				});
-				setSkillsList(res.applicant.skills);
-			};
-			fetchApp();
-		},
-		[ getOneApplicant, applicantid, onInputHandler, props.auth.token ]
-	);
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    let res;
+    const fetchApp = async () => {
+      const payload = {
+        applicantId: applicantid,
+        token: props.auth.token,
+      };
 
-	const onSubmitHandler = async event => {
-		if (!formState.formIsValid) {
-			return props.updateApplicantFail();
-		}
+      res = await getOneApplicant(payload);
+      res.applicant.skills.forEach((skill, i) => {
+        setSkills((prevState) => [...prevState, 'skill']);
+        onInputHandler(`skill_${i}`, skill, true);
+      });
+      setSkillsList(res.applicant.skills);
+    };
 
-		event.preventDefault();
-		let skillsData = [];
-		for (const key in formState.inputs) {
-			skillsData = skillsData.concat(formState.inputs[key].value);
-		}
-		skillsData = skillsData.filter(skill => !!skill.trim());
-		const updatedData = {
-			applicantId: applicantid,
-			skillsData,
-			token: props.auth.token
-		};
-		await props.updateSkills(updatedData);
-		props.history.push(`/ap/${applicantid}`);
-	};
+    if (props.auth.token) {
+      fetchApp();
+    }
+  }, [getOneApplicant, applicantid, onInputHandler, props.auth.token]);
 
-	const addSkill = e => {
-		e.preventDefault();
-		setSkills(skills => [ ...skills, 'skill' ]);
-	};
-	let formSkills = <Spinner />;
+  const onSubmitHandler = async (event) => {
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
 
-	if (skillsList && !props.applicant.isLoading) {
-		formSkills = (
-			<form onSubmit={onSubmitHandler} className={classes.Container}>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Skills edit</p>
+    event.preventDefault();
+    let skillsData = [];
+    for (const key in formState.inputs) {
+      skillsData = skillsData.concat(formState.inputs[key].value);
+    }
+    skillsData = skillsData.value.filter((val) => val !== '');
+    skillsData = skillsData.filter((skill) => !!skill.trim());
+    console.log(skillsData);
+    const updatedData = {
+      applicantId: applicantid,
+      skillsData,
+      token: props.auth.token,
+    };
+    await props.updateSkills(updatedData);
+    props.history.push(`/ap/${applicantid}`);
+  };
 
-					{skills.map((skill, i) => {
-						return (
-							<div className={classes.FormRow} key={i}>
-								<Input
-									inputType='input'
-									id={`skill_${i}`}
-									validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-									onInputHandler={onInputHandler}
-									initValue={skillsList[i]}
-									initIsValid={true}
-									label='Input skills'
-								/>
-							</div>
-						);
-					})}
+  const addSkill = (e) => {
+    e.preventDefault();
+    setSkills((skills) => [...skills, 'skill']);
+  };
+  let formSkills = <Spinner />;
 
-					<Button variant='contained' color='primary' type='button' disableElevation onClick={addSkill} size='small'>
-						Add Input
-					</Button>
+  console.log(formState);
+  // console.log(skillsList);
 
-					<div className={classes.Footer}>
-						<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
-							Save
-						</Button>
-					</div>
-				</div>
-			</form>
-		);
-	}
+  if (skillsList && !props.applicant.isLoading) {
+    formSkills = (
+      <form onSubmit={onSubmitHandler} className={classes.Container}>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Ubah keterampilan</p>
 
-	const onCancelHandler = () => {
-		props.resetApplicant();
-	};
+          {skills.map((skill, i) => {
+            return (
+              <div className={classes.FormRow} key={i}>
+                <Input
+                  inputType='input'
+                  id={`skill_${i}`}
+                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                  onInputHandler={onInputHandler}
+                  initValue={skillsList[i]}
+                  initIsValid={true}
+                  label='Input skills'
+                />
+              </div>
+            );
+          })}
 
-	return (
-		<React.Fragment>
-			{' '}
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Could not update changes at the moment, please try again later
-			</Modal>
-			{formSkills}
-		</React.Fragment>
-	);
+          <Button
+            variant='contained'
+            color='primary'
+            type='button'
+            disableElevation
+            onClick={addSkill}
+            size='small'
+          >
+            Add Input
+          </Button>
+
+          <div className={classes.Footer}>
+            <Button
+              disabled={skillsList.length > 1}
+              variant='contained'
+              color='primary'
+              type='submit'
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </form>
+    );
+  }
+
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
+
+  return (
+    <React.Fragment>
+      {' '}
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
+      {formSkills}
+    </React.Fragment>
+  );
 };
 
-const mapStateToProps = state => {
-	return {
-		applicant: state.applicant,
-		isLoading: state.applicant.isLoading,
-		error: state.applicant.error,
-		auth: state.auth
-	};
+const mapStateToProps = (state) => {
+  return {
+    applicant: state.applicant,
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+    auth: state.auth,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateSkills: payload => dispatch(actionCreators.updateApplicantSkills(payload)),
-		getOneApplicant: applicantid => dispatch(actionCreators.getOneApplicant(applicantid)),
-		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSkills: (payload) =>
+      dispatch(actionCreators.updateApplicantSkills(payload)),
+    getOneApplicant: (applicantid) =>
+      dispatch(actionCreators.getOneApplicant(applicantid)),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditDetails));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditDetails));

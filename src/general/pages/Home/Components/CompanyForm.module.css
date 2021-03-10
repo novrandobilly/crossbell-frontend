@@ -1,71 +1,71 @@
 .Container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .ContainerFlex {
-	width: 20rem;
-	display: flex;
-	flex-direction: column;
-	border: none;
-	border-radius: 1rem;
-	background-color: white;
-	font-family: sans-serif;
-	overflow: hidden;
+  width: 22rem;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 1rem;
+  background-color: white;
+  font-family: sans-serif;
+  overflow: hidden;
 }
 
 .Header {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	padding: 0rem 1.5rem 0 1.5rem;
-	margin-top: -0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0rem 1.5rem;
+  margin-top: -0.4rem;
 }
 
 .FormTitle {
-	margin-bottom: 0rem;
-	font-size: 1.7rem;
-	font-weight: bold;
-	align-self: flex-start;
+  margin-bottom: 0rem;
+  font-size: 1.7rem;
+  font-weight: bold;
+  align-self: flex-start;
 }
 
 .Content {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem 1.5rem;
 }
 
 .ChangeSign {
-	margin-top: 1.5rem;
-	border: none;
-	color: blue;
-	background-color: transparent;
-	font-size: 0.8rem;
-	font-weight: bold;
-	cursor: pointer;
-	outline: none;
+  margin-top: 1.5rem;
+  border: none;
+  color: blue;
+  background-color: transparent;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
 }
 
 .sign {
-	color: black;
-	font-size: 0.8rem;
+  color: black;
+  font-size: 0.8rem;
 }
 
 .Footer {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	background-color: rgb(245, 245, 245);
-	padding: .5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: rgb(245, 245, 245);
+  padding: 0.5rem 0;
 }
 
 .Footer button {
-	padding: 0;
-	font-size: 1rem;
-	align-self: flex-start;
-	background-color: transparent;
-	margin-left: 1.5rem;
-	font-weight: bold;
+  padding: 0;
+  font-size: 1rem;
+  align-self: flex-start;
+  background-color: transparent;
+  margin-left: 1.5rem;
+  font-weight: bold;
 }

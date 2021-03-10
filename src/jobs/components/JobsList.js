@@ -224,6 +224,7 @@ const JobsList = (props) => {
     <div className={classes.Container}>
       <div className={classes.FilterContainer}>
         <div className={classes.CheckboxCriteria}>
+          <p className={classes.FilterTitle}>Filter</p>
           <p className={classes.FilterLabel}>Bidang pekerjaan</p>
           <FormControl
             className={classes.formControl}
@@ -245,7 +246,7 @@ const JobsList = (props) => {
               }}
             >
               <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                <em>Belum ada untuk saat ini</em>
+                <em>Kosongkan</em>
               </MenuItem>
               {WorkFieldData.sort().map((work, i) => {
                 return (
@@ -285,7 +286,7 @@ const JobsList = (props) => {
               }}
             >
               <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                <em>Belum ada untuk saat ini</em>
+                <em>Kosongkan</em>
               </MenuItem>
               {LocationData.sort().map((loc, i) => {
                 return (
@@ -340,7 +341,7 @@ const JobsList = (props) => {
           <p className={classes.FilterLabel}>Gaji</p>
           <div className={classes.InputHolder}>
             <Input
-              inputType='number'
+              inputType='input'
               id='min'
               InputClass='Salary'
               validatorMethod={[VALIDATOR_ALWAYSTRUE]}
@@ -348,14 +349,14 @@ const JobsList = (props) => {
               type='number'
               initValue='0'
               min='0'
-              step='1'
+              step='1000'
             />
             <p>Min</p>
           </div>
 
           <div className={classes.InputHolder}>
             <Input
-              inputType='number'
+              inputType='input'
               id='max'
               InputClass='Salary'
               validatorMethod={[VALIDATOR_ALWAYSTRUE]}
@@ -363,7 +364,7 @@ const JobsList = (props) => {
               type='number'
               initValue='0'
               min='0'
-              step='1'
+              step='1000'
             />
             <p>Max</p>
           </div>
@@ -371,6 +372,28 @@ const JobsList = (props) => {
       </div>
 
       <div className={classes.JobList} id='JobList'>
+        <div className={classes.SortFilter} id='FormControl'>
+          <FormControl
+            style={{
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            <InputLabel id='sort'>Sortir</InputLabel>
+            <Select
+              labelId='sort'
+              id='sort'
+              value={sort}
+              onChange={handleChange}
+            >
+              <MenuItem value='newest'>Terbaru</MenuItem>
+              <MenuItem value='latest'>Terlama</MenuItem>
+              <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
+              <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
         {displayJobs && displayJobs.length > 0 ? (
           displayJobs.map((job) => (
             <JobCard
@@ -412,18 +435,6 @@ const JobsList = (props) => {
             onChange={pageChangeHandler}
           />
         </div>
-      </div>
-
-      <div className={classes.SortFilter} id='FormControl'>
-        <FormControl style={{ width: '100%', textAlign: 'left' }}>
-          <InputLabel id='sort'>Filter</InputLabel>
-          <Select labelId='sort' id='sort' value={sort} onChange={handleChange}>
-            <MenuItem value='newest'>Terbaru</MenuItem>
-            <MenuItem value='latest'>Terlama</MenuItem>
-            <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
-            <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
-          </Select>
-        </FormControl>
       </div>
     </div>
   );

@@ -305,6 +305,7 @@ export const applyJob = (payload) => {
         }
       );
       const responseJSON = await response.json();
+      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }

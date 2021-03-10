@@ -6,233 +6,278 @@ import moment from 'moment';
 
 import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH, VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_ALWAYSTRUE,
+} from '../../../../../shared/utils/validator';
 
 import Modal from '../../../../../shared/UI_Element/Modal';
+import Checkbox from '@material-ui/core/Checkbox';
 import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
 import classes from './Experience.module.css';
 
-const Experience = props => {
-	const { applicantid } = useParams();
-	const { experienceindex } = useParams();
+const Experience = (props) => {
+  const { applicantid } = useParams();
+  const { experienceindex } = useParams();
 
-	const [ data, setData ] = useState();
+  const [data, setData] = useState();
+  const [tillNow, setTillNow] = useState(false);
 
-	const { getOneApplicant } = props;
-	useEffect(
-		() => {
-			const payload = {
-				applicantId: applicantid,
-				token: props.auth.token
-			};
-			getOneApplicant(payload).then(res => {
-				setData(res.applicant.experience[experienceindex]);
-			});
-		},
-		[ getOneApplicant, applicantid, experienceindex, props.auth.token ]
-	);
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    const payload = {
+      applicantId: applicantid,
+      token: props.auth.token,
+    };
+    if (props.auth.token) {
+      getOneApplicant(payload).then((res) => {
+        setData(res.applicant.experience[experienceindex]);
+      });
+    }
+  }, [getOneApplicant, applicantid, experienceindex, props.auth.token]);
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			prevTitle: {
-				value: data ? data.prevTitle : null,
-				isValid: data && data.prevTitle ? true : false
-			},
-			prevCompany: {
-				value: data ? data.prevCompany : null,
-				isValid: data && data.prevCompany ? true : false
-			},
-			prevLocation: {
-				value: data ? data.prevLocation : null,
-				isValid: data && data.prevLocation ? true : false
-			},
-			startDate: {
-				value: data ? data.startDate : null,
-				isValid: data && data.startDate ? true : false
-			},
-			endDate: {
-				value: data ? data.endDate : null,
-				isValid: data && data.endDate ? true : false
-			},
-			description: {
-				value: data ? data.description : null,
-				isValid: data && data.description ? true : false
-			}
-		},
-		false
-	);
+  const [formState, onInputHandler] = useForm(
+    {
+      prevTitle: {
+        value: data ? data.prevTitle : null,
+        isValid: data && data.prevTitle ? true : false,
+      },
+      prevCompany: {
+        value: data ? data.prevCompany : null,
+        isValid: data && data.prevCompany ? true : false,
+      },
+      prevLocation: {
+        value: data ? data.prevLocation : null,
+        isValid: data && data.prevLocation ? true : false,
+      },
+      startDate: {
+        value: data ? data.startDate : null,
+        isValid: data && data.startDate ? true : false,
+      },
+      endDate: {
+        value: data ? data.endDate : null,
+        isValid: data && data.endDate ? true : false,
+      },
+      description: {
+        value: data ? data.description : null,
+        isValid: data && data.description ? true : false,
+      },
+    },
+    false
+  );
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-		if (!formState.formIsValid) {
-			return props.updateApplicantFail();
-		}
+    if (!formState.formIsValid) {
+      return props.updateApplicantFail();
+    }
+    let updatedExperience = {
+      applicantId: applicantid,
+      index: experienceindex,
+      prevTitle: formState.inputs.prevTitle.value,
+      prevCompany: formState.inputs.prevCompany.value,
+      prevLocation: formState.inputs.prevLocation.value,
+      startDate: formState.inputs.startDate.value,
+      endDate: formState.inputs.endDate.value,
+      description: formState.inputs.description.value,
+      token: props.auth.token,
+    };
 
-		const updatedExperience = {
-			applicantId: applicantid,
-			index: experienceindex,
-			prevTitle: formState.inputs.prevTitle.value,
-			prevCompany: formState.inputs.prevCompany.value,
-			prevLocation: formState.inputs.prevLocation.value,
-			startDate: formState.inputs.startDate.value,
-			endDate: formState.inputs.endDate.value,
-			description: formState.inputs.description.value,
-			token: props.auth.token
-		};
-		try {
-			const res = await props.updateApplicantExperience(updatedExperience);
-			if (res) {
-				console.log(res);
-			} else {
-				console.log('no res detected');
-			}
+    if (tillNow) {
+      updatedExperience = {
+        applicantId: applicantid,
+        index: experienceindex,
+        prevTitle: formState.inputs.prevTitle.value,
+        prevCompany: formState.inputs.prevCompany.value,
+        prevLocation: formState.inputs.prevLocation.value,
+        startDate: formState.inputs.startDate.value,
+        endDate: '01/01/10000',
+        description: formState.inputs.description.value,
+        token: props.auth.token,
+      };
+    }
 
-			props.history.push(`/ap/${applicantid}`);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+    try {
+      const res = await props.updateApplicantExperience(updatedExperience);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log('no res detected');
+      }
 
-	let formContent = <SpinnerCircle />;
+      props.history.push(`/ap/${applicantid}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	if (!props.isLoading && data) {
-		formContent = (
-			<React.Fragment>
-				<div className={classes.ContainerFlex}>
-					<p className={classes.FormTitle}>Experience</p>
+  const dateHandler = (event) => {
+    setTillNow(!tillNow);
+  };
 
-					<div className={classes.FormRow}>
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='input'
-								id='prevTitle'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Previous Title *'
-								initValue={data.prevTitle}
-								initIsValid={true}
-							/>
-						</div>
+  let formContent = <SpinnerCircle />;
 
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='input'
-								id='prevCompany'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Company Name*'
-								initValue={data.prevCompany}
-								initIsValid={true}
-							/>
-						</div>
+  if (!props.isLoading && data) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.ContainerFlex}>
+          <p className={classes.FormTitle}>Ubah pengalaman</p>
 
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='input'
-								id='prevLocation'
-								inputClass='AddJobInput'
-								validatorMethod={[ VALIDATOR_REQUIRE() ]}
-								onInputHandler={onInputHandler}
-								label='Location*'
-								initValue={data.prevLocation}
-								initIsValid={true}
-							/>
-						</div>
+          <div className={classes.FormRow}>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType='input'
+                id='prevTitle'
+                inputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Posisi pekerjaan*'
+                initValue={data.prevTitle}
+                initIsValid={true}
+              />
+            </div>
 
-						<div className={classes.Period}>
-							<div className={classes.EditLabel}>
-								<p className={classes.Text}>Waktu Mulai *</p>
-								<Input
-									inputType='customdate'
-									id='startDate'
-									inputClass='EditProfileTextArea'
-									validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-									onInputHandler={onInputHandler}
-									views={[ 'year', 'month' ]}
-									label='Tahun Mulai'
-									maxDate={moment()}
-									initValue={data.startDate}
-									initIsValid={true}
-								/>
-							</div>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType='input'
+                id='prevCompany'
+                inputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Nama perusahaan*'
+                initValue={data.prevCompany}
+                initIsValid={true}
+              />
+            </div>
 
-							<div className={classes.EditLabel}>
-								<p className={classes.Text}>Waktu Selesai *</p>
-								<Input
-									inputType='customdate'
-									id='endDate'
-									inputClass='EditProfileTextArea'
-									validatorMethod={[ VALIDATOR_ALWAYSTRUE() ]}
-									onInputHandler={onInputHandler}
-									views={[ 'year', 'month' ]}
-									label='Tahun Selesai'
-									maxDate={moment()}
-									initValue={data.endDate}
-									initIsValid={true}
-								/>
-							</div>
-						</div>
+            <div className={classes.EditLabel}>
+              <Input
+                inputType='input'
+                id='prevLocation'
+                inputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Alamat perusahaan*'
+                initValue={data.prevLocation}
+                initIsValid={true}
+              />
+            </div>
 
-						<div className={classes.EditLabel}>
-							<Input
-								inputType='textarea'
-								id='description'
-								inputClass='EditProfileTextArea'
-								validatorMethod={[ VALIDATOR_MINLENGTH(20) ]}
-								onInputHandler={onInputHandler}
-								label='Description*'
-								initValue={data.description}
-								initIsValid={true}
-								rows={12}
-							/>
-						</div>
-					</div>
+            <div className={classes.Period}>
+              <div className={classes.EditLabel}>
+                <p className={classes.Text}>Waktu Mulai*</p>
+                <Input
+                  inputType='customdate'
+                  id='startDate'
+                  inputClass='EditProfileTextArea'
+                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                  onInputHandler={onInputHandler}
+                  views={['year', 'month']}
+                  label='Tahun Mulai'
+                  maxDate={moment()}
+                  initValue={data.startDate}
+                  initIsValid={true}
+                />
+              </div>
 
-					<div className={classes.Footer}>
-						<Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
-							Save
-						</Button>
-					</div>
-				</div>
-			</React.Fragment>
-		);
-	}
+              {!tillNow ? (
+                <div className={classes.EditLabel}>
+                  <p className={classes.Text}>Waktu Selesai*</p>
+                  <Input
+                    inputType='customdate'
+                    id='endDate'
+                    inputClass='EditProfileTextArea'
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onInputHandler={onInputHandler}
+                    views={['year', 'month']}
+                    label='Tahun Selesai'
+                    maxDate={moment()}
+                    initValue={data.endDate}
+                    initIsValid={true}
+                  />
+                </div>
+              ) : (
+                <div />
+              )}
+            </div>
 
-	const onCancelHandler = () => {
-		props.resetApplicant();
-	};
+            <div className={classes.CheckboxDiv}>
+              <Checkbox color='primary' size='small' onChange={dateHandler} />
+              <label className={classes.CheckboxText}>
+                Saya masih berkerja disini
+              </label>
+            </div>
 
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Could not update changes at the moment, please try again later
-			</Modal>
-			{formContent}
-		</form>
-	);
+            <div className={classes.EditLabel}>
+              <Input
+                inputType='textarea'
+                id='description'
+                inputClass='EditProfileTextArea'
+                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                onInputHandler={onInputHandler}
+                label='Rincian*'
+                initValue={data.description}
+                initIsValid={true}
+                rows={12}
+                helperText='Rincian setidaknya berjumlah 20 karakter'
+              />
+            </div>
+          </div>
+
+          <div className={classes.Footer}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant='contained'
+              color='primary'
+              type='submit'
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  const onCancelHandler = () => {
+    props.resetApplicant();
+  };
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
+      {formContent}
+    </form>
+  );
 };
 
-const mapStateToProps = state => {
-	return {
-		isLoading: state.applicant.isLoading,
-		error: state.applicant.error,
-		auth: state.auth
-	};
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.applicant.isLoading,
+    error: state.applicant.error,
+    auth: state.auth,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-		resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-		getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-		updateApplicantExperience: ApplicantData => dispatch(actionCreators.updateApplicantExperience(ApplicantData))
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantExperience: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Experience));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Experience));

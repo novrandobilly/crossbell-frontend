@@ -185,27 +185,25 @@ const Input = (props) => {
         />
       );
       break;
+
     case 'date':
       inputElement = (
-        <input
+        <TextField
+          id={id}
+          type='date'
+          InputLabelProps={{
+            shrink: true,
+          }}
           className={[classes.InputElements, classes[props.InputClass]].join(
             ' '
           )}
-          style={{
-            backgroundColor:
-              state.isValid || !state.isTouched
-                ? 'white'
-                : ' rgb(215, 226, 255)',
-          }}
-          type='date'
-          id={id}
-          cols={props.cols || '30'}
-          rows={props.rows || '5'}
-          name={props.name}
-          value={state.value}
-          onChange={onChangeHandler}
-          onBlur={onBlurHandler}
-          placeholder={props.placeholder || ''}
+          views={props.views || ['year', 'month', 'date']}
+          value={moment(state.value)}
+          style={props.style}
+          onChange={(eventValue) => onCustomDateHandler(eventValue)}
+          minDate={props.minDate}
+          maxDate={props.maxDate}
+          format={props.format}
           helperText={
             props.helperText &&
             !state.isValid &&

@@ -72,7 +72,7 @@ const Register = (props) => {
     <React.Fragment>
       <div className={classes.ContainerFlex}>
         <div className={classes.Header}>
-          <p className={classes.FormTitle}>Applicant Register</p>
+          <p className={classes.FormTitle}>Registrasi pelamar</p>
         </div>
         <div className={classes.Content}>
           <Input
@@ -136,7 +136,7 @@ const Register = (props) => {
               type='button'
               onClick={props.sign}
             >
-              Sign In Here
+              masuk di sini
             </button>
           </span>
         </div>
@@ -148,7 +148,7 @@ const Register = (props) => {
             disableElevation
             endIcon={<ArrowForwardIcon />}
           >
-            Company Register
+            Daftar sebagai perusahaan
           </Button>
         </div>
       </div>
