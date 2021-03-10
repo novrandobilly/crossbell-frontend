@@ -68,6 +68,7 @@ const ExecutiveSearchDetail = React.lazy(() => import('./users/company/pages/Com
 const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJobList/CompanyJobList'));
 
 //==================================== applicant =========================================================
+
 // import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
 // import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
 // import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
@@ -135,6 +136,7 @@ const DetailES = React.lazy(() => import('./users/admin/pages/OrderES/DetailES')
 const Promo = React.lazy(() => import('./users/admin/pages/Promo/Promo'));
 
 let logoutTimer;
+
 
 const App = props => {
 	const { login, loginAdmin } = props;
@@ -263,6 +265,7 @@ const App = props => {
 			<Footer />
 		</Router>
 	);
+
 };
 
 const mapStateToProps = state => {

@@ -66,7 +66,7 @@ const CompanyForm = (props) => {
     <React.Fragment>
       <div className={classes.ContainerFlex}>
         <div className={classes.Header}>
-          <p className={classes.FormTitle}>Company Register</p>
+          <p className={classes.FormTitle}>Registrasi perusahaan</p>
         </div>
 
         <div className={classes.Content}>
@@ -121,7 +121,7 @@ const CompanyForm = (props) => {
               onClick={props.sign}
               type='button'
             >
-              Sign In Here
+              masuk di sini
             </button>
           </span>
         </div>
@@ -133,7 +133,7 @@ const CompanyForm = (props) => {
             disableElevation
             startIcon={<ArrowBackIcon />}
           >
-            Applicant Register
+            Daftar sebagai pelamar
           </Button>
         </div>
       </div>

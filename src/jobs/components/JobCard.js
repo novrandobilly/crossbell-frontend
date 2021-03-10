@@ -26,8 +26,10 @@ const JobCard = (props) => {
     try {
       res = await props.applyJob(payload);
       console.log(res);
-      let applicantArray = [...applicantList, props.auth.userId];
-      setApplicantList(applicantArray);
+      if (res.message === 'Successfully applied to the job') {
+        let applicantArray = [...applicantList, props.auth.userId];
+        setApplicantList(applicantArray);
+      }
       setJobId(null);
     } catch (err) {
       console.log(err);
