@@ -99,7 +99,7 @@ const EditApplicantSkills = React.lazy(() => import('./users/applicant/pages/Com
 const AddApplicantEducation = React.lazy(() => import('./users/applicant/pages/Components/Add/Education'));
 const AddApplicantExperience = React.lazy(() => import('./users/applicant/pages/Components/Add/Experience'));
 const AddApplicantCertification = React.lazy(() => import('./users/applicant/pages/Components/Add/Certification'));
-const AddApplicantSkills = React.lazy(() => import('./users/applicant/pages/Components/Add/Skill'));
+// const AddApplicantSkills = React.lazy(() => import('./users/applicant/pages/Components/Add/Skill'));
 
 //==================================== admin =========================================================
 
@@ -136,7 +136,6 @@ const DetailES = React.lazy(() => import('./users/admin/pages/OrderES/DetailES')
 const Promo = React.lazy(() => import('./users/admin/pages/Promo/Promo'));
 
 let logoutTimer;
-
 
 const App = props => {
 	const { login, loginAdmin } = props;
@@ -191,7 +190,7 @@ const App = props => {
 						<Route path='/ap/:applicantid/add/education' component={AddApplicantEducation} />
 						<Route path='/ap/:applicantid/add/experience' component={AddApplicantExperience} />
 						<Route path='/ap/:applicantid/add/certification' component={AddApplicantCertification} />
-						<Route path='/ap/:applicantid/add/skills' component={AddApplicantSkills} />
+						{/* <Route path='/ap/:applicantid/add/skills' component={AddApplicantSkills} /> */}
 
 						<Route path='/ap/:applicantid/intro' component={EditApplicantIntro} />
 						<Route path='/ap/:applicantid/summary' component={EditApplicantSummary} />
@@ -265,7 +264,6 @@ const App = props => {
 			<Footer />
 		</Router>
 	);
-
 };
 
 const mapStateToProps = state => {
