@@ -121,7 +121,7 @@ export const createOrder = orderData => {
 		try {
 			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`, {
 				method: 'POST',
-				mode: 'no-cors',
+				// mode: 'no-cors',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${orderData.token}`
@@ -134,10 +134,10 @@ export const createOrder = orderData => {
 				})
 			});
 			const responseJSON = await response.json();
+			console.log(responseJSON);
 			if (!response.ok) {
 				throw new Error(responseJSON.message);
 			}
-			console.log(responseJSON);
 			dispatch(createOrderSuccess(responseJSON));
 			return responseJSON;
 		} catch (err) {

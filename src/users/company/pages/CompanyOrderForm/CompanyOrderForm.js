@@ -67,11 +67,12 @@ const CompanyOrderForm = props => {
 			setOrderModal(false);
 
 			const res = await props.createOrder(orderData);
+			console.log(res);
 			if (res) {
 				console.log(res);
 				props.history.push(`/co/${res.orderreg.id}/invoice`);
 			} else {
-				throw new Error('Error nih bro');
+				throw new Error('Error');
 			}
 		} catch (err) {
 			console.log(err);
