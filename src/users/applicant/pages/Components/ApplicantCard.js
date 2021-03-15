@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import * as actionCreators from '../../../../store/actions';
 
 import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
@@ -157,7 +158,9 @@ const ApplicantCard = (props) => {
           labelName='Pengalaman'
           routeEdit={`/ap/${props.id}/experience`}
           routeAdd={`/ap/${props.id}/add/experience`}
-          contents={props.experience}
+          contents={props.experience.sort(
+            (a, b) => moment(b.startDate) - moment(a.startDate)
+          )}
           state='experience'
           isLoading={props.applicant.isLoading}
         />
@@ -167,7 +170,9 @@ const ApplicantCard = (props) => {
           labelName='Pendidikan'
           routeEdit={`/ap/${props.id}/education`}
           routeAdd={`/ap/${props.id}/add/education`}
-          contents={props.education}
+          contents={props.education.sort(
+            (a, b) => moment(b.startDate) - moment(a.startDate)
+          )}
           state='education'
           isLoading={props.applicant.isLoading}
         />
@@ -177,7 +182,9 @@ const ApplicantCard = (props) => {
           labelName='Sertifikasi/ Penghargaan'
           routeEdit={`/ap/${props.id}/certification`}
           routeAdd={`/ap/${props.id}/add/certification`}
-          contents={props.certification}
+          contents={props.certification.sort(
+            (a, b) => moment(b.startDate) - moment(a.startDate)
+          )}
           state='certification'
           isLoading={props.applicant.isLoading}
         />

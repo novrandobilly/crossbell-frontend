@@ -3,6 +3,7 @@
   flex-direction: row;
   font-family: sans-serif;
   padding: 3rem 4rem;
+  box-sizing: border-box;
 }
 
 .LeftContainer {
@@ -25,6 +26,7 @@
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
+  padding: 2rem;
   background-color: white;
 }
 
@@ -34,6 +36,43 @@
   justify-content: flex-start;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   padding-bottom: 3rem;
+}
+
+.LowerContainer {
+  margin-top: 16px;
+}
+
+.SectionDesc {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding-bottom: 16px;
+}
+
+.SectionDiv {
+  text-align: left;
+  width: 30%;
+}
+
+.MiddleSectionDiv {
+  text-align: left;
+  width: 30%;
+  border-left: solid 1px rgba(0, 0, 0, 0.2);
+  border-right: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 0 16px;
+}
+
+.Caption {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.Details {
+  font-size: 0.9rem;
+  font-weight: lighter;
+  margin: 8px 0 0 16px;
 }
 
 .Header {
@@ -53,7 +92,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 10rem;
-  width: 100%;
+  width: 70%;
 }
 
 .JobTitle {
@@ -105,6 +144,10 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.TextDateMobile {
+  display: none;
+}
+
 .ButtonContainer {
   display: flex;
   justify-content: space-between;
@@ -132,21 +175,19 @@
 }
 
 .JobDesc {
-  padding-bottom: 1rem;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .TextLabel {
-  margin-top: 2rem;
-  font-size: 1.4rem;
+  margin: 16px 0 0 0;
+  font-size: 1.2rem;
   font-weight: bold;
   text-align: left;
   color: rgba(0, 0, 0, 0.8);
 }
 
 .TextDetail {
-  margin-top: 2rem;
-  margin-left: 2rem;
+  margin: 16px 0 16px 16px;
   width: 90%;
   text-align: left;
 }
@@ -166,19 +207,148 @@
   margin-right: 1rem;
   padding-bottom: 2rem;
   text-align: left;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .AvatarContainer {
-  width: 25%;
+  width: 30%;
   margin-right: 1.5rem;
 }
+
 .Avatar {
-  width: 10rem;
+  width: auto;
   height: 10rem;
   border-radius: 50%;
   background-position: center;
   background-size: 75%;
   background-repeat: no-repeat;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1200px) {
+  .Container {
+    flex-direction: column;
+    align-items: center;
+    border: blue 1px solid;
+  }
+
+  .LeftContainer {
+    width: 100%;
+    margin-right: 0;
+    margin-top: 16px;
+  }
+
+  .RightContainer {
+    width: 100%;
+    margin-top: 16px;
+    align-self: center;
+  }
+
+  .AboutLabel {
+    margin: 0;
+  }
+
+  .AboutText {
+    margin: 16px 0 0 16px;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .TextDate {
+    display: none;
+  }
+
+  .TextDateMobile {
+    display: flex;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+@media (max-width: 576px) {
+  .UpperContainer {
+    flex-direction: column;
+    padding-bottom: 16px;
+  }
+
+  .AvatarContainer {
+    display: flex;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+
+  .Avatar {
+    width: 15rem;
+    height: 15rem;
+    margin-bottom: 16px;
+  }
+  .TextLeft {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .AvatarContainer {
+    margin-bottom: 0;
+  }
+
+  .Avatar {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .UpperContainer {
+    padding-bottom: 0;
+  }
+
+  .Header {
+    height: auto;
+  }
+
+  .JobTitle {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .TextLeft {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  .TextDateMobile {
+    margin: 0;
+    font-size: 0.6rem;
+  }
+
+  .SectionDesc {
+    flex-direction: column;
+  }
+
+  .SectionDiv {
+    width: 100%;
+  }
+
+  .MiddleSectionDiv {
+    width: 100%;
+    border-left: 0;
+    border-right: 0;
+    border-top: solid 1px rgba(0, 0, 0, 0.2);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+    margin: 16px 0;
+    padding: 16px 0;
+  }
+
+  .Details {
+    font-size: 0.8rem;
+  }
+
+  .TextLabel {
+    font-size: 0.9rem;
+  }
+
+  .TextLabel {
+    font-size: o.8rem;
+  }
 }

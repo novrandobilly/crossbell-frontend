@@ -28,7 +28,7 @@ const ModalOverlay = (props) => {
               variant='contained'
               color='	'
               disableElevation
-              style={{ marginRight: '16px' }}
+              style={{ marginRight: '16px', padding: '0' }}
               onClick={props.onCancel}
             >
               tidak
@@ -39,6 +39,7 @@ const ModalOverlay = (props) => {
               color='primary'
               disableElevation
               onClick={props.Accept}
+              style={{ padding: '0' }}
             >
               ya
             </Button>

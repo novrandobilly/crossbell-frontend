@@ -129,6 +129,8 @@ const EditIntro = (props) => {
     false
   );
 
+  console.log(data);
+
   useEffect(() => {
     if (data) {
       const genderEl = document.getElementById(data.gender);
@@ -143,6 +145,7 @@ const EditIntro = (props) => {
       autoSendEl.checked = data.autoSend;
       autoRemindEl.checked = data.autoRemind;
       headhunterProgramEl.checked = data.headhunterProgram;
+      onInputHandler('state', location, true);
       onInputHandler('gender', data.gender, true);
       onInputHandler('interest', data.interest, true);
       onInputHandler('autoSend', data.autoSend, true);
@@ -151,7 +154,7 @@ const EditIntro = (props) => {
       onInputHandler('autoRemind', data.autoRemind, true);
       onInputHandler('headhunterProgram', data.headhunterProgram, true);
     }
-  }, [data, onInputHandler]);
+  }, [data, onInputHandler, location]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -192,6 +195,8 @@ const EditIntro = (props) => {
       console.log(err);
     }
   };
+
+  console.log(formState);
 
   const fowHandler = (e) => {
     let indexFow;
@@ -386,33 +391,9 @@ const EditIntro = (props) => {
                     initIsValid={true}
                   />
 
-                  <Input
-                    inputType='input'
-                    id='address'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Alamat saat ini*'
-                    initValue={data.address}
-                    initIsValid={true}
-                  />
-                </div>
-
-                <div className={classes.ContentWrap}>
-                  <Input
-                    inputType='input'
-                    id='city'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Kota*'
-                    initValue={data.city}
-                    initIsValid={true}
-                  />
-
                   <FormControl
                     className={classes.formControl}
-                    style={{ marginTop: '0.5rem' }}
+                    style={{ marginTop: '0rem' }}
                   >
                     <InputLabel shrink id='stateLabel'>
                       Provinsi*
@@ -425,7 +406,6 @@ const EditIntro = (props) => {
                         paddingBottom: '0.15rem',
                         color: 'black',
                       }}
-                      labelId='state'
                       id='state'
                       name='state'
                       open={locationOpen}
@@ -456,6 +436,30 @@ const EditIntro = (props) => {
                 <div className={classes.ContentWrap}>
                   <Input
                     inputType='input'
+                    id='city'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Kota*'
+                    initValue={data.city}
+                    initIsValid={true}
+                  />
+
+                  <Input
+                    inputType='input'
+                    id='address'
+                    InputClass='AppInput'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                    onInputHandler={onInputHandler}
+                    label='Alamat saat ini*'
+                    initValue={data.address}
+                    initIsValid={true}
+                  />
+                </div>
+
+                <div className={classes.ContentWrap}>
+                  <Input
+                    inputType='input'
                     id='zip'
                     InputClass='AppInput'
                     validatorMethod={[VALIDATOR_REQUIRE()]}
@@ -467,7 +471,7 @@ const EditIntro = (props) => {
 
                   <FormControl
                     className={classes.formControl}
-                    style={{ marginTop: '0.5rem' }}
+                    style={{ marginTop: '0rem' }}
                   >
                     <InputLabel shrink id='interestLabel1'>
                       Bidang minat 1*

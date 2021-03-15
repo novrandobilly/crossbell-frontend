@@ -450,7 +450,7 @@ const OrderBCForm = (props) => {
         onCancel={onCloseOrderModal}
         Accept={onSubmitHandler}
       >
-        Apakah anda yakin ingin membuat pesananan saat ini?
+        Buat pesanan sekarang?
       </OrderModal>
       {formContent}
     </form>

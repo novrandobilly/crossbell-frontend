@@ -60,7 +60,7 @@ const Certification = (props) => {
       },
       description: {
         value: data ? data.description : null,
-        isValid: data && data.description ? true : false,
+        isValid: true,
       },
     },
     false
@@ -213,7 +213,7 @@ const Certification = (props) => {
                 inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_MINLENGTH(20)]}
                 onInputHandler={onInputHandler}
-                label='Rincian*'
+                label='Rincian (Optional)'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
