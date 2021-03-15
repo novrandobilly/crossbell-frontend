@@ -18,6 +18,7 @@ import classes from './CompanyOrderForm.module.css';
 
 const ORIGINAL_PRICE = 500000;
 
+
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
 
@@ -210,6 +211,7 @@ const CompanyOrderForm = (props) => {
       {formContent}
     </div>
   );
+
 };
 
 const mapStateToProps = (state) => {
