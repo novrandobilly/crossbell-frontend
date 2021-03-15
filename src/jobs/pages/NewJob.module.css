@@ -112,17 +112,29 @@
   display: flex;
   align-items: center;
   margin-left: 6px;
+  color: black;
 }
 
 .RemainingSlot {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   font-weight: 500;
+  color: black;
 }
 
-.RemainingSlot h2 {
+.SlotAddButton {
+  background: rgba(58, 82, 153, 0.1);
+  border-radius: 3px;
+  border: solid 0.1px rgb(0, 0, 0, 0.2);
+}
+
+.RemainingSlot h3 {
   margin: 0;
+}
+
+.AdditionalContentContainer a {
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {

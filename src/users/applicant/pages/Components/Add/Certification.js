@@ -45,7 +45,7 @@ const Certification = (props) => {
       },
       description: {
         value: '',
-        isValid: false,
+        isValid: true,
       },
     },
     false
@@ -113,6 +113,8 @@ const Certification = (props) => {
       }
     }
   };
+
+  console.log(formState);
 
   let formContent = (
     <React.Fragment>
@@ -190,9 +192,10 @@ const Certification = (props) => {
               inputClass='EditProfileTextArea'
               validatorMethod={[VALIDATOR_MINLENGTH(20)]}
               onInputHandler={onInputHandler}
-              label='Rincian*'
+              label='Rincian (Optional)'
               rows={12}
               helperText='Rincian setidaknya berjumlah 20 karakter'
+              initIsValid={true}
             />
           </div>
         </div>

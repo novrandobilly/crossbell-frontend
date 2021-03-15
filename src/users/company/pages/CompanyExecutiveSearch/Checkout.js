@@ -310,7 +310,7 @@ const Checkout = (props) => {
         onCancel={onCloseOrderModal}
         Accept={activeStep === 2 ? handleNext : null}
       >
-        Apakah anda yakin ingin membuat pesananan saat ini?
+        Buat pesanan sekarang?
       </OrderModal>
       {content}
     </React.Fragment>

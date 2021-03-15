@@ -108,6 +108,7 @@ const Input = (props) => {
           InputLabelProps={{
             style: { fontSize: props.labelFontSize || 15 },
           }}
+          onKeyUp={props.onKeyUp}
         />
       );
       break;

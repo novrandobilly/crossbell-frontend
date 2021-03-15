@@ -7,16 +7,8 @@
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
-  /* overflow: hidden; */
+  padding: 0 16px;
 }
-
-/* .Header {
-  width: 100%;
-  padding: 1rem 0.5rem;
-  background: #1100ff;
-  color: white;
-  box-sizing: border-box;
-} */
 
 .Header h2 {
   margin: 0.5rem;
@@ -24,8 +16,9 @@
 
 .Content {
   font-size: 1.4rem;
-  margin: 48px 0 16px 0;
-  padding: 1rem 0.5rem;
+  margin: 0 0 0.5rem 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .Footer {
@@ -39,7 +32,7 @@
 
 @media (min-width: 768px) {
   .Modal {
-    left: calc(50% - 20rem);
-    width: 40rem;
+    left: calc(59.5% - 20rem);
+    width: 20rem;
   }
 }

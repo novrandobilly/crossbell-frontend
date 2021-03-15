@@ -51,7 +51,6 @@ const EditDetails = (props) => {
     for (const key in formState.inputs) {
       skillsData = skillsData.concat(formState.inputs[key].value);
     }
-    skillsData = skillsData.value.filter((val) => val !== '');
     skillsData = skillsData.filter((skill) => !!skill.trim());
     console.log(skillsData);
     const updatedData = {
@@ -68,9 +67,6 @@ const EditDetails = (props) => {
     setSkills((skills) => [...skills, 'skill']);
   };
   let formSkills = <Spinner />;
-
-  console.log(formState);
-  // console.log(skillsList);
 
   if (skillsList && !props.applicant.isLoading) {
     formSkills = (
@@ -107,7 +103,7 @@ const EditDetails = (props) => {
 
           <div className={classes.Footer}>
             <Button
-              disabled={skillsList.length > 1}
+              disabled={!formState.formIsValid}
               variant='contained'
               color='primary'
               type='submit'

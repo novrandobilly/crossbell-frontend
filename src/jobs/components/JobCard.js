@@ -71,8 +71,7 @@ const JobCard = (props) => {
   const onCancelHandler = () => {
     props.resetJob();
   };
-  //   let content = <SpinnerCircle />;
-
+  
   let content = (
     <div className={classes.JobCard}>
       <Modal show={props.job.error} onCancel={onCancelHandler}>

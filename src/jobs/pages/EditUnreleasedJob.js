@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, useParams } from 'react-router-dom';
+import { withRouter, useParams, Link } from 'react-router-dom';
 import { useForm } from '../../shared/utils/useForm';
 
 import * as actionTypes from '../../store/actions/actions';
@@ -20,6 +20,7 @@ import {
   VALIDATOR_EMAIL,
 } from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
+import AddIcon from '@material-ui/icons/Add';
 
 import classes from './NewJob.module.css';
 
@@ -32,6 +33,8 @@ const EditUnreleasedJob = (props) => {
   const [employment, setEmployment] = useState('');
   const [open, setOpen] = useState([false, false, false]);
   const [employmentOpen, setEmploymentOpen] = useState(false);
+  const [educationalStageOpen, setEducationalStageOpen] = useState(false);
+  const [educationalStage, setEducationalStage] = useState('');
 
   const { getOneCompany, auth, getOneJob } = props;
   useEffect(() => {
@@ -39,8 +42,9 @@ const EditUnreleasedJob = (props) => {
       try {
         const res = await getOneJob(jobsid);
         setFieldOfWork(res.fieldOfWork);
-        setLoadedJob(res);
         setEmployment(res.employment);
+        setEducationalStage(res.educationalStage);
+        setLoadedJob(res);
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -108,6 +112,7 @@ const EditUnreleasedJob = (props) => {
         value: loadedJob ? loadedJob.slotAllocation : '',
         isValid: loadedJob && loadedJob.slotAllocation ? true : false,
       },
+
       fieldOfWork: {
         value: loadedJob ? loadedJob.fieldOfWork : ['', '', ''],
         isValid: loadedJob && loadedJob.fieldOfWork ? true : false,
@@ -118,20 +123,28 @@ const EditUnreleasedJob = (props) => {
 
   console.log(formState);
 
+  const checkmyinput = () => {
+    if (formState && formState.slotAllocation) {
+      let inputfield = document.getElementById('slotAllocation');
+      let inputval = inputfield.value;
+      let numeric = inputval.replace(/[^0-9]+/, 0);
+      if (numeric.length !== inputval.length || numeric % 2 !== 0) {
+        inputfield.value = '0';
+      }
+    }
+  };
+
   useEffect(() => {
     if (loadedJob) {
-      const employment = document.getElementById('employment');
       const salary = document.getElementById('salary');
       const benefit = document.getElementById('benefit');
-      const fow1 = document.getElementById('fieldOfWork-1');
-      const fow2 = document.getElementById('fieldOfWork-2');
-      const fow3 = document.getElementById('fieldOfWork-3');
-      onInputHandler('fieldOfWork', [fow1.value, fow2.value, fow3.value], true);
-      onInputHandler('employment', employment.value, true);
+      onInputHandler('fieldOfWork', fieldOfWork, true);
+      onInputHandler('educationalStage', educationalStage, true);
+      onInputHandler('employment', employment, true);
       onInputHandler('salary', salary.value, true);
       onInputHandler('benefit', benefit.value, true);
     }
-  }, [onInputHandler, loadedJob]);
+  }, [onInputHandler, loadedJob, employment, educationalStage, fieldOfWork]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -156,8 +169,10 @@ const EditUnreleasedJob = (props) => {
       token: props.auth.token,
       userId: props.auth.userId,
     };
-    console.log(jobData);
     try {
+      if (formState.inputs.slotAllocation.value % 2 !== 0) {
+        throw new Error('Slot allocation harus genap');
+      }
       const res = await props.createJob(jobData, authData);
       console.log(res);
       props.history.push('/jobs-dashboard');
@@ -168,6 +183,7 @@ const EditUnreleasedJob = (props) => {
 
   const onSaveHandler = async (event) => {
     event.preventDefault();
+
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
       placementLocation: formState.inputs.placementLocation.value,
@@ -186,8 +202,10 @@ const EditUnreleasedJob = (props) => {
       userId: props.auth.userId,
       id: jobsid,
     };
-    console.log(jobData);
     try {
+      if (formState.inputs.slotAllocation.value % 2 !== 0) {
+        throw new Error('Slot allocation harus genap');
+      }
       const res = await props.editJobDraft(jobData, authData);
       console.log(res);
       props.history.push(`/co/${props.auth.userId}/jobList`);
@@ -248,12 +266,28 @@ const EditUnreleasedJob = (props) => {
     openArray[index] = true;
     setOpen(openArray);
   };
+
   const handleEmploymentClose = () => {
     setEmploymentOpen(false);
   };
 
   const handleEmploymentOpen = () => {
     setEmploymentOpen(true);
+  };
+
+  const handleChange = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    onInputHandler(elementId, elementValue, true);
+    setEducationalStage(e.target.value);
+  };
+
+  const handleEducationClose = () => {
+    setEducationalStageOpen(false);
+  };
+
+  const handleEducationOpen = () => {
+    setEducationalStageOpen(true);
   };
 
   let formContent = <Spinner />;
@@ -290,16 +324,47 @@ const EditUnreleasedJob = (props) => {
             </div>
 
             <div className={classes.ContentWrap}>
-              <Input
-                inputType='input'
-                id='educationalStage'
-                InputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Jenjang pendidikan*'
-                initValue={loadedJob.educationalStage}
-                initIsValid={loadedJob.educationalStage ? true : false}
-              />
+              <FormControl
+                className={classes.formControl}
+                style={{ margin: '0.8rem 0' }}
+              >
+                <InputLabel
+                  id='educationalStageLabel'
+                  style={{ fontSize: '1rem' }}
+                >
+                  Tingkat Pendidikan*
+                </InputLabel>
+
+                <Select
+                  id='educationalStage'
+                  name='educationalStage'
+                  open={educationalStageOpen}
+                  onClose={handleEducationClose}
+                  onOpen={handleEducationOpen}
+                  value={educationalStage}
+                  onChange={handleChange}
+                  style={{ fontSize: '0.9rem', textAlign: 'left' }}
+                >
+                  <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
+                    SMA
+                  </MenuItem>
+                  <MenuItem value={'SMK'} style={{ fontSize: '0.9rem' }}>
+                    SMK
+                  </MenuItem>
+                  <MenuItem value={'D3'} style={{ fontSize: '0.9rem' }}>
+                    D3
+                  </MenuItem>
+                  <MenuItem value={'S1'} style={{ fontSize: '0.9rem' }}>
+                    S1
+                  </MenuItem>
+                  <MenuItem value={'S2'} style={{ fontSize: '0.9rem' }}>
+                    S2
+                  </MenuItem>
+                  <MenuItem value={'S3'} style={{ fontSize: '0.9rem' }}>
+                    S3
+                  </MenuItem>
+                </Select>
+              </FormControl>
 
               <Input
                 inputType='input'
@@ -318,7 +383,7 @@ const EditUnreleasedJob = (props) => {
                 className={classes.FormControl}
                 style={{ marginTop: '.68rem' }}
               >
-                <InputLabel id='employment' style={{ fontSize: '1rem' }}>
+                <InputLabel id='employmentLabel' style={{ fontSize: '1rem' }}>
                   Jenis Kontrak*
                 </InputLabel>
 
@@ -368,6 +433,7 @@ const EditUnreleasedJob = (props) => {
                 label='Email penerima*'
                 helperText='Please input a valid email address'
                 initValue={loadedJob.emailRecipient}
+                initIsValid={loadedJob.emailRecipient ? true : false}
               />
             </div>
 
@@ -505,7 +571,8 @@ const EditUnreleasedJob = (props) => {
             onInputHandler={onInputHandler}
             label='Deskripsi pekerjaan*'
             initValue={loadedJob.jobDescriptions || ''}
-            initIsValid={loadedJob.jobDescriptions}
+            initIsValid={loadedJob.jobDescriptions ? true : false}
+            helperText='Deskripsi pekerjaan wajib diisi'
           />
         </div>
 
@@ -535,6 +602,9 @@ const EditUnreleasedJob = (props) => {
               error={false}
               initValue={loadedJob.salary || ''}
               initIsValid={loadedJob.salary}
+              type='number'
+              min={0}
+              step='1000'
             />
           </div>
         </div>
@@ -555,20 +625,38 @@ const EditUnreleasedJob = (props) => {
                 step='2'
                 initValue={loadedJob.slot || ''}
                 initIsValid={loadedJob.slot}
+                defaultValue={0}
+                onKeyUp={checkmyinput()}
               />
               <span>minggu</span>
             </div>
 
             <div className={classes.RemainingSlot}>
-              <h2>
+              <h3>
                 Sisa slot:{' '}
-                {formState.inputs.slotAllocation.value
+                {formState.inputs.slotAllocation.value &&
+                formState.inputs.slotAllocation.value > 0 &&
+                parseInt(maxSlot) >
+                  parseInt(formState.inputs.slotAllocation.value) / 2
                   ? (
                       parseInt(maxSlot) -
                       parseInt(formState.inputs.slotAllocation.value) / 2
                     ).toString()
                   : maxSlot}
-              </h2>
+              </h3>
+              <div className={classes.SlotAddButton}>
+                <Link to={`/co/order/reguler`}>
+                  <Button
+                    color='primary'
+                    disableElevation
+                    size='small'
+                    startIcon={<AddIcon />}
+                    style={{ fontWeight: '600' }}
+                  >
+                    Tambah Slot
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

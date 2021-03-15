@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import classes from "./ContentTextLeft.module.css";
+import classes from './ContentTextLeft.module.css';
 
 const ContentTextRight = (props) => {
   return (
@@ -8,7 +8,7 @@ const ContentTextRight = (props) => {
       <div className={classes.ContentLeft}>
         <p className={classes.Title}>Help finding your dream career now.</p>
         <p>
-          {" "}
+          {' '}
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
           sodales scelerisque quam rutrum eleifend. Proin sed turpis a nulla
           iaculis vulputate nec nec eros. Sed posuere et elit id facilisis.

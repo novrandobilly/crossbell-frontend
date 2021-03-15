@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 
 import Carousel from './Components/Carousel';
 import AuthForm from './Components/AuthForm';
-import ContentTextRight from './HomeContent/ContentTextRight';
-import ContentTextLeft from './HomeContent/ContentTextLeft';
 import ContactUsContent from './HomeContent/ContactUsContent';
-import FeatureContent from './HomeContent/FeatureContent';
-import TeamContent from './HomeContent/TeamContent';
 import classes from './Home.module.css';
 
 const Home = (props) => {
@@ -48,10 +44,6 @@ const Home = (props) => {
         </div>
       </div>
 
-      <FeatureContent />
-      <ContentTextRight />
-      <ContentTextLeft />
-      <TeamContent />
       <ContactUsContent />
     </React.Fragment>
   );
