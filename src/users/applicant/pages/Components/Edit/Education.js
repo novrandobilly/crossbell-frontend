@@ -12,6 +12,9 @@ import {
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../../shared/utils/validator';
 
+import University from '../../../../../shared/UI_Element/UniversityData';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -29,6 +32,7 @@ const Education = (props) => {
 
   const [degree, setDegree] = useState('');
   const [open, setOpen] = useState(false);
+  const [school, setSchool] = useState('');
   const [data, setData] = useState();
 
   const { getOneApplicant } = props;
@@ -40,7 +44,11 @@ const Education = (props) => {
     if (props.auth.token) {
       getOneApplicant(payload).then((res) => {
         console.log(res);
-        setData(res.applicant.education[educationindex]);
+        const educationSort = res.applicant.education.sort(
+          (a, b) => moment(b.startDate) - moment(a.startDate)
+        );
+        setData(educationSort[educationindex]);
+        setSchool(educationSort[educationindex].school);
       });
     }
   }, [getOneApplicant, applicantid, educationindex, props.auth.token]);
@@ -78,8 +86,6 @@ const Education = (props) => {
     },
     false
   );
-  console.log(data);
-  console.log(formState);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -116,8 +122,11 @@ const Education = (props) => {
   useEffect(() => {
     if (data) {
       onInputHandler('degree', data.degree, true);
+      onInputHandler('school', school, true);
     }
-  }, [data, onInputHandler]);
+  }, [data, onInputHandler, school]);
+
+  console.log(formState);
 
   const handleChange = (e) => {
     const elementId = e.target.name;
@@ -134,6 +143,10 @@ const Education = (props) => {
     setOpen(true);
   };
 
+  const handleSchoolChange = (e, value) => {
+    onInputHandler('school', value, true);
+  };
+
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading && data) {
@@ -143,15 +156,22 @@ const Education = (props) => {
 
         <div className={classes.FormRow}>
           <div className={classes.EditLabel}>
-            <Input
-              inputType='input'
+            <Autocomplete
               id='school'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='School *'
-              initValue={data.school}
-              initIsValid={true}
+              name='school'
+              options={University.map((option) => option)}
+              onChange={handleSchoolChange}
+              value={
+                school && University.find((select, i) => select === school)
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label='Nama sekolah/ universitas*'
+                  margin='normal'
+                  variant='standard'
+                />
+              )}
             />
           </div>
 
