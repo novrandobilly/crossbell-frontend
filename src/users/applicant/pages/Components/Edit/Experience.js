@@ -35,7 +35,10 @@ const Experience = (props) => {
     };
     if (props.auth.token) {
       getOneApplicant(payload).then((res) => {
-        setData(res.applicant.experience[experienceindex]);
+        const experienceSort = res.applicant.experience.sort(
+          (a, b) => moment(b.startDate) - moment(a.startDate)
+        );
+        setData(experienceSort[experienceindex]);
       });
     }
   }, [getOneApplicant, applicantid, experienceindex, props.auth.token]);

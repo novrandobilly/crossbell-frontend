@@ -12,14 +12,17 @@ import {
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../../shared/utils/validator';
 
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Modal from '../../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Cities from '../../../../../shared/UI_Element/CitiesData';
 import Input from '../../../../../shared/UI_Element/Input';
 import WorkFieldData from '../../../../../shared/UI_Element/WorkFieldData';
 import LocationData from '../../../../../shared/UI_Element/LocationData';
@@ -33,6 +36,7 @@ const EditIntro = (props) => {
 
   const [interest, setInterest] = useState(['', '', '']);
 
+  const [city, setCity] = useState(Cities.default);
   const [location, setLocation] = useState('');
   const [locationOpen, setLocationOpen] = useState(false);
 
@@ -129,8 +133,6 @@ const EditIntro = (props) => {
     false
   );
 
-  console.log(data);
-
   useEffect(() => {
     if (data) {
       const genderEl = document.getElementById(data.gender);
@@ -145,6 +147,7 @@ const EditIntro = (props) => {
       autoSendEl.checked = data.autoSend;
       autoRemindEl.checked = data.autoRemind;
       headhunterProgramEl.checked = data.headhunterProgram;
+      onInputHandler('city', city[0], true);
       onInputHandler('state', location, true);
       onInputHandler('gender', data.gender, true);
       onInputHandler('interest', data.interest, true);
@@ -154,7 +157,7 @@ const EditIntro = (props) => {
       onInputHandler('autoRemind', data.autoRemind, true);
       onInputHandler('headhunterProgram', data.headhunterProgram, true);
     }
-  }, [data, onInputHandler, location]);
+  }, [data, onInputHandler, location, city]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -195,8 +198,6 @@ const EditIntro = (props) => {
       console.log(err);
     }
   };
-
-  console.log(formState);
 
   const fowHandler = (e) => {
     let indexFow;
@@ -264,12 +265,157 @@ const EditIntro = (props) => {
   };
 
   //=================== State Handler ====================
+
   const onLocationHandler = (e) => {
+    switch (e.target.value) {
+      case 'Aceh':
+        setCity(Cities.Aceh);
+        break;
+
+      case 'Sumatera Utara':
+        setCity(Cities.SumUt);
+        break;
+
+      case 'Sumatera Barat':
+        setCity(Cities.SumBar);
+        break;
+
+      case 'Riau':
+        setCity(Cities.Riau);
+        break;
+
+      case 'Kepulauan Riau':
+        setCity(Cities.KepulauanRiau);
+        break;
+
+      case 'Jambi':
+        setCity(Cities.Jambi);
+        break;
+
+      case 'Sumatera Selatan':
+        setCity(Cities.SumSel);
+        break;
+
+      case 'Kepulauan Bangka Belitung':
+        setCity(Cities.BangkaBelitung);
+        break;
+
+      case 'Bengkulu':
+        setCity(Cities.Bengkulu);
+        break;
+
+      case 'Lampung':
+        setCity(Cities.Lampung);
+        break;
+
+      case 'DKI Jakarta':
+        setCity(Cities.Jakarta);
+        break;
+
+      case 'Banten':
+        setCity(Cities.Banten);
+        break;
+
+      case 'Jawa Barat':
+        setCity(Cities.JawaBarat);
+        break;
+
+      case 'Jawa Tengah':
+        setCity(Cities.JawaTengah);
+        break;
+
+      case 'DI Yogyakarta':
+        setCity(Cities.Yogyakarta);
+        break;
+
+      case 'Jawa Timur':
+        setCity(Cities.JawaTimur);
+        break;
+
+      case 'Bali':
+        setCity(Cities.Bali);
+        break;
+
+      case 'Nusa Tenggara Barat':
+        setCity(Cities.NTB);
+        break;
+
+      case 'Nusa Tenggara Timur':
+        setCity(Cities.NTT);
+        break;
+
+      case 'Kalimantan Barat':
+        setCity(Cities.KalBar);
+        break;
+
+      case 'Kalimantan Timur':
+        setCity(Cities.KalTim);
+        break;
+
+      case 'Kalimantan Tengah':
+        setCity(Cities.KalTengh);
+        break;
+
+      case 'Kalimantan Utara':
+        setCity(Cities.KalUt);
+        break;
+
+      case 'Kalimantan Selatan':
+        setCity(Cities.KalSel);
+        break;
+
+      case 'Gorontalo':
+        setCity(Cities.Gorontalo);
+        break;
+
+      case 'Sulawesi Barat':
+        setCity(Cities.SulBar);
+        break;
+
+      case 'Sulawesi Timur':
+        setCity(Cities.SumTim);
+        break;
+
+      case 'Sulawesi Tengah':
+        setCity(Cities.SulTengah);
+        break;
+
+      case 'Sulawesi Tenggara':
+        setCity(Cities.SulTenggara);
+        break;
+
+      case 'Sulawesi Selatan':
+        setCity(Cities.SulSel);
+        break;
+
+      case 'Maluku':
+        setCity(Cities.Maluku);
+        break;
+
+      case 'Maluku Utara':
+        setCity(Cities.MalukuUtara);
+        break;
+
+      case 'Papua':
+        setCity(Cities.Papua);
+        break;
+
+      case 'Papua Barat':
+        setCity(Cities.PapuaBarat);
+        break;
+
+      default: {
+        return Cities.default;
+      }
+    }
+
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setLocation(e.target.value);
   };
+
+  console.log(formState);
 
   const handleLocationClose = () => {
     setLocationOpen(false);
@@ -277,6 +423,10 @@ const EditIntro = (props) => {
 
   const handleLocationOpen = () => {
     setLocationOpen(true);
+  };
+
+  const handleCityChange = (e, value) => {
+    onInputHandler('city', value, true);
   };
 
   let formContent = <SpinnerCircle />;
@@ -434,15 +584,20 @@ const EditIntro = (props) => {
                 </div>
 
                 <div className={classes.ContentWrap}>
-                  <Input
-                    inputType='input'
+                  <Autocomplete
                     id='city'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Kota*'
-                    initValue={data.city}
-                    initIsValid={true}
+                    name='city'
+                    options={city.map((option) => option)}
+                    onChange={handleCityChange}
+                    value={data.city && data.city}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label='Kota*'
+                        margin='normal'
+                        variant='standard'
+                      />
+                    )}
                   />
 
                   <Input
