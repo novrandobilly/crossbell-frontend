@@ -14,6 +14,7 @@ import IconButton from '../../../../shared/UI_Element/IconButton';
 import TextOnly from '../../../../shared/UI_Element/TextOnly';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import Tabs from './Tabs';
 
 import classes from './CompanyCard.module.css';
 
@@ -93,7 +94,6 @@ const CompanyCard = (props) => {
                         style={{
                           fontSize: '15rem',
                           marginBottom: '1rem',
-                          marginLeft: '-10px',
                           fill: 'black',
                         }}
                       />
@@ -204,6 +204,7 @@ const CompanyCard = (props) => {
         </div>
 
         <div className={classes.Content}>
+          <Tabs />
           <TextOnly
             id={props.companyId}
             labelName='Company Brief Descriptions'
@@ -270,7 +271,7 @@ const CompanyCard = (props) => {
                 unreleasedData.map((job, i) => {
                   return (
                     <div key={job.id} className={classes.CardHolder}>
-                      <Link to={`/jobs/${job.id}`}>
+                      <Link to={`/jobs/new/edit/${job.id}`}>
                         <div className={classes.JobCard}>
                           <div className={classes.CardHeader}>
                             <p className={classes.CardTitle}>{job.jobTitle}</p>

@@ -117,15 +117,18 @@ const Invoice = (props) => {
                   <th>
                     Rp.{' '}
                     {orderData.pricePerSlot
-                      ? orderData.pricePerSlot
-                      : orderData.price}
+                      ? orderData.pricePerSlot.toLocaleString()
+                      : orderData.price.toLocaleString()}
                     ,-
                   </th>
                   <th>
                     Rp.{' '}
                     {orderData.packageName
-                      ? (subTotal = orderData.pricePerSlot * orderData.slot)
-                      : (subTotal = orderData.price * orderData.amount)}
+                      ? (subTotal =
+                          orderData.pricePerSlot *
+                          orderData.slot).toLocaleString()
+                      : (subTotal =
+                          orderData.price * orderData.amount).toLocaleString()}
                     ,-
                   </th>
                 </tr>
@@ -171,9 +174,9 @@ const Invoice = (props) => {
                     ,-
                   </p>
                 </div>
-                <p className={classes.SubTotal}>(Qty x package price)</p>
+                <p className={classes.SubTotal}>(jumlah x harga satuan)</p>
                 <div className={classes.Amount}>
-                  <p>Discount</p>
+                  <p>Diskon</p>
                   <p>
                     - Rp.
                     {(dis = subTotal * 0).toLocaleString()}
@@ -182,7 +185,7 @@ const Invoice = (props) => {
                 </div>
                 <div className={classes.Amount}>
                   <p>
-                    Tax <span>(10%)</span>
+                    Pajak<span>(10%)</span>
                   </p>
                   <p>
                     Rp.

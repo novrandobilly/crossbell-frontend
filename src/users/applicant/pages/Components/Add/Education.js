@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
 import moment from 'moment';
 
@@ -8,8 +8,8 @@ import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH,
   VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_MIN,
 } from '../../../../../shared/utils/validator';
 
 import University from '../../../../../shared/UI_Element/UniversityData';
@@ -62,6 +62,10 @@ const Education = (props) => {
         value: '',
         isValid: false,
       },
+      IPK: {
+        value: '',
+        isValid: false,
+      },
     },
     false
   );
@@ -82,6 +86,7 @@ const Education = (props) => {
       startDate: formState.inputs.startDate.value,
       endDate: formState.inputs.endDate.value,
       description: formState.inputs.description.value,
+      IPK: formState.inputs.IPK.value,
       token: props.auth.token,
     };
     try {
@@ -230,6 +235,21 @@ const Education = (props) => {
               initValue={moment()}
             />
           </div>
+
+          <div className={classes.EditLabel}>
+            <p className={classes.TextIPK}>IPK/ Nilai Kelulusan</p>
+            <Input
+              inputType='input'
+              id='IPK'
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              error={false}
+              type='number'
+              min={0}
+              max={4}
+              step='0.1'
+            />
+          </div>
         </div>
 
         <div className={classes.EditLabel}>
@@ -237,9 +257,9 @@ const Education = (props) => {
             inputType='textarea'
             id='description'
             inputClass='EditProfileTextArea'
-            validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            label='Rincian*'
+            label='Deskripsi Pendidikan (Opsional)'
             initIsValid={true}
             rows={12}
             helperText='Rincian setidaknya berjumlah 20 karakter'
@@ -248,6 +268,16 @@ const Education = (props) => {
       </div>
 
       <div className={classes.Footer}>
+        <Link to={`/ap/${applicantid}`}>
+          <Button
+            variant='outlined'
+            type='Button'
+            disableElevation
+            style={{ marginRight: '16px' }}
+          >
+            Back
+          </Button>
+        </Link>
         <Button
           disabled={!formState.formIsValid}
           variant='contained'

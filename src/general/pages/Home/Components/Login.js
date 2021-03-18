@@ -18,133 +18,139 @@ import {
 
 import classes from './Login.module.css';
 
+const Login = (props) => {
+  const [formState, onInputHandler] = useForm(
+    {
+      email: {
+        value: '',
+        isValid: false,
+      },
+      password: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false
+  );
 
-const Login = props => {
-	const [ formState, onInputHandler ] = useForm(
-		{
-			email: {
-				value: '',
-				isValid: false
-			},
-			password: {
-				value: '',
-				isValid: false
-			}
-		},
-		false
-	);
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
+    const loginData = {
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    };
 
-		const loginData = {
-			email: formState.inputs.email.value,
-			password: formState.inputs.password.value
-		};
+    let res;
+    try {
+      res = await props.loginServer(loginData);
+      if (!res) {
+        throw new Error('Error');
+      }
+    } catch (err) {
+      console.log(err);
+    }
 
-		let res;
-		try {
-			res = await props.loginServer(loginData);
-			if (!res) {
-				throw new Error('Error');
-			}
-		} catch (err) {
-			console.log(err);
-		}
+    if (res.token) {
+      props.history.push('/jobs-dashboard');
+    } else {
+      console.log('error');
+    }
+  };
 
-		if (res.token) {
-			props.history.push('/jobs-dashboard');
-		} else {
-			console.log('error');
-		}
-	};
+  const onCancelHandler = () => {
+    props.logout();
+  };
 
-	const onCancelHandler = () => {
-		props.logout();
-	};
+  let formContent = (
+    <React.Fragment>
+      <div className={classes.ContainerFlex}>
+        <div className={classes.Header}>
+          <p className={classes.FormTitle}>Sign In</p>
+        </div>
 
-	let formContent = (
-		<React.Fragment>
-			<div className={classes.ContainerFlex}>
-				<div className={classes.Header}>
-					<p className={classes.FormTitle}>Sign In</p>
-				</div>
+        <div className={classes.Content}>
+          <Input
+            inputType='input'
+            id='email'
+            InputClass='Login'
+            validatorMethod={[VALIDATOR_EMAIL()]}
+            onInputHandler={onInputHandler}
+            label='Email'
+            helperText='Please input a valid email address.'
+          />
 
-				<div className={classes.Content}>
-					<Input
-						inputType='input'
-						id='email'
-						InputClass='Login'
-						validatorMethod={[ VALIDATOR_EMAIL() ]}
-						onInputHandler={onInputHandler}
-						label='Email'
-						helperText='Please input a valid email address.'
-					/>
+          <Input
+            inputType='input'
+            id='password'
+            InputClass='Login'
+            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+            onInputHandler={onInputHandler}
+            label='Password'
+            type='password'
+            helperText='Password contains min. 6 characters.'
+          />
 
-					<Input
-						inputType='input'
-						id='password'
-						InputClass='Login'
-						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
-						onInputHandler={onInputHandler}
-						label='Password'
-						type='password'
-						helperText='Password contains min. 6 characters.'
-					/>
+          <Button
+            variant='contained'
+            color='primary'
+            type='submit'
+            disableElevation
+            disabled={!formState.formIsValid}
+            style={{
+              marginTop: '1rem',
+            }}
+          >
+            Sign in
+          </Button>
 
-					<Button
-						variant='contained'
-						color='primary'
-						type='submit'
-						disableElevation
-						disabled={!formState.formIsValid}
-						style={{
-							marginTop: '1rem'
-						}}>
-						Sign in
-					</Button>
+          <GoogleLoginButton />
 
-					<GoogleLoginButton />
+          <span className={classes.Sign}>
+            Tidak punya akun?
+            <button
+              className={classes.ChangeSign}
+              onClick={props.sign}
+              type='button'
+            >
+              Daftar disini
+            </button>
+          </span>
 
-					<span className={classes.Sign}>
-						Don't have an account
-						<button className={classes.ChangeSign} onClick={props.sign} type='button'>
-							Register Here
-						</button>
-					</span>
+          <span className={classes.Sign}>
+            <em>
+              Lupa password?
+              <button className={classes.ChangeSign} type='button'>
+                <Link
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(58, 81, 153, 1)',
+                  }}
+                  to='/forgot'
+                >
+                  Klik disini
+                </Link>
+              </button>
+            </em>
+          </span>
+        </div>
 
-					<span className={classes.Sign}>
-						Forgot password?
-						<button className={classes.ChangeSign} type='button'>
-							<Link
-								style={{
-									textDecoration: 'none',
-									color: 'rgba(58, 81, 153, 1)'
-								}}
-								to='/forgot'>
-								Click Here
-							</Link>
-						</button>
-					</span>
-				</div>
+        <div className={classes.Footer} />
+      </div>
+    </React.Fragment>
+  );
 
-				<div className={classes.Footer} />
-			</div>
-		</React.Fragment>
-	);
-
-	if (props.auth.isLoading) {
-		formContent = <Spinner />;
-	}
-	return (
-		<form onSubmit={onSubmitHandler} className={classes.Container}>
-			<Modal show={props.auth.isError} onCancel={onCancelHandler}>
-				Email or Password invalid. Please try again.
-			</Modal>
-			{formContent}
-		</form>
-	);
-
+  if (props.auth.isLoading) {
+    formContent = <Spinner />;
+  }
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.Container}>
+      <Modal show={props.auth.isError} onCancel={onCancelHandler}>
+        Email or Password invalid. Please try again.
+      </Modal>
+      {formContent}
+    </form>
+  );
 };
 
 const mapStateToProps = (state) => {

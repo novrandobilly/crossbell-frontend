@@ -80,6 +80,10 @@
   margin-top: 2rem;
 }
 
+.Footer a {
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .Container {
     padding: 32px 28px;
