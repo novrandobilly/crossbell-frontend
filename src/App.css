@@ -1,6 +1,13 @@
 .App {
-  text-align: center;
-  margin: 0 auto;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.centerGlobal {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
 }
 
 * {

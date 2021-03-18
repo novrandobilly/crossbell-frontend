@@ -10,6 +10,7 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobContainer.module.css';
 
+
 const JobDetails = (props) => {
   const [jobId, setJobId] = useState(null);
   const [applicantList, setApplicantList] = useState([]);
@@ -153,114 +154,107 @@ const JobDetails = (props) => {
                   </button>
                 )}
 
-                {/* {props.auth.userId === props.companyId && (
+
+								{/* {props.auth.userId === props.companyId && (
 									<button onClick={onDeleteHandler} className={[ classes.InstantButton, classes.DeleteButton ].join(' ')}>
 										<span>Delete</span>
 									</button>
 								)} */}
 
-                {!props.auth.isCompany && props.auth.token && (
-                  <Button
-                    btnType='InstantApply'
-                    onClick={onSaveHandler}
-                    disabled={props.jobApplicants.some(
-                      (appId) =>
-                        appId.toString() === props.auth.userId.toString()
-                    )}
-                  >
-                    {props.jobApplicants.some(
-                      (appId) =>
-                        appId.toString() === props.auth.userId.toString()
-                    )
-                      ? 'Applied'
-                      : 'Apply'}
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+								{!props.auth.isCompany &&
+								props.auth.token && (
+									<Button
+										btnType='InstantApply'
+										onClick={onSaveHandler}
+										disabled={props.jobApplicants.some(appId => appId.toString() === props.auth.userId.toString())}>
+										{props.jobApplicants.some(appId => appId.toString() === props.auth.userId.toString()) ? (
+											'Applied'
+										) : (
+											'Apply'
+										)}
+									</Button>
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <div className={classes.LowerContainer}>
-          <div className={classes.SectionDesc}>
-            <div className={classes.SectionDiv}>
-              <p className={classes.Caption}>Fungsi Pekerjaan</p>
-              {props.fieldOfWork.map((item, i) => (
-                <p className={classes.Details} key={i}>
-                  {item}
-                </p>
-              ))}
-            </div>
-            <div className={classes.MiddleSectionDiv}>
-              <p className={classes.Caption}>Jenis Kontrak</p>
-              <p className={classes.Details}>{props.employment}</p>
-            </div>
-            <div className={classes.SectionDiv}>
-              <p className={classes.Caption}>Jenjang Pendidikan (min)</p>
-              <p className={classes.Details}>{props.educationalStage}</p>
-            </div>
-          </div>
+				<div className={classes.LowerContainer}>
+					<div className={classes.SectionDesc}>
+						<div className={classes.SectionDiv}>
+							<p className={classes.Caption}>Fungsi Pekerjaan</p>
+							{props.fieldOfWork.map((item, i) => (
+								<p className={classes.Details} key={i}>
+									{item}
+								</p>
+							))}
+						</div>
+						<div className={classes.MiddleSectionDiv}>
+							<p className={classes.Caption}>Jenis Kontrak</p>
+							<p className={classes.Details}>{props.employment}</p>
+						</div>
+						<div className={classes.SectionDiv}>
+							<p className={classes.Caption}>Jenjang Pendidikan (min)</p>
+							<p className={classes.Details}>{props.educationalStage}</p>
+						</div>
+					</div>
 
-          <div className={classes.JobDesc}>
-            <p className={classes.TextLabel}>Deskripsi Pekerjaan</p>
-            <p className={classes.TextDetail}>{props.jobDescriptions}</p>
-          </div>
+					<div className={classes.JobDesc}>
+						<p className={classes.TextLabel}>Deskripsi Pekerjaan</p>
+						<p className={classes.TextDetail}>{props.jobDescriptions}</p>
+					</div>
 
-          <div className={classes.JobDesc}>
-            <p className={classes.TextLabel}>Syarat Teknis</p>
-            <p className={classes.TextDetail}>{props.technicalRequirement}</p>
-          </div>
+					<div className={classes.JobDesc}>
+						<p className={classes.TextLabel}>Syarat Teknis</p>
+						<p className={classes.TextDetail}>{props.technicalRequirement}</p>
+					</div>
 
-          <div>
-            <p className={classes.TextLabel}>Benefits</p>
-            <p className={classes.TextDetail}>{props.benefit}</p>
-          </div>
-        </div>
-      </div>
+					<div>
+						<p className={classes.TextLabel}>Benefits</p>
+						<p className={classes.TextDetail}>{props.benefit}</p>
+					</div>
+				</div>
+			</div>
 
-      <div className={classes.RightContainer}>
-        <div
-          style={{
-            marginBottom: '16px',
-            borderBottom: 'solid 1px rgba(0, 0, 0, 0.2)',
-          }}
-        >
-          <p className={classes.AboutLabel}>About Company</p>
-          <p className={classes.AboutText}>{props.companyDetails}</p>
-        </div>
+			<div className={classes.RightContainer}>
+				<div
+					style={{
+						marginBottom: '16px',
+						borderBottom: 'solid 1px rgba(0, 0, 0, 0.2)'
+					}}>
+					<p className={classes.AboutLabel}>About Company</p>
+					<p className={classes.AboutText}>{props.companyDetails}</p>
+				</div>
 
-        <div>
-          <p className={classes.AboutLabel}>Location</p>
-        </div>
-      </div>
-    </div>
-  );
+				<div>
+					<p className={classes.AboutLabel}>Location</p>
+				</div>
+			</div>
+		</div>
+	);
 
-  if (props.job.isLoading) {
-    containerContent = <Spinner />;
-  }
+	if (props.job.isLoading) {
+		containerContent = <Spinner />;
+	}
 
-  return containerContent;
+	return containerContent;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    admin: state.admin,
-    auth: state.auth,
-    companies: state.company.companies,
-    job: state.job,
-  };
+const mapStateToProps = state => {
+	return {
+		admin: state.admin,
+		auth: state.auth,
+		companies: state.company.companies,
+		job: state.job
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
-    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
-    releaseJob: (payload) => dispatch(actionCreators.releaseJob(payload)),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		// deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
+		applyJob: payload => dispatch(actionCreators.applyJob(payload)),
+		releaseJob: payload => dispatch(actionCreators.releaseJob(payload))
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(JobDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(JobDetails));
