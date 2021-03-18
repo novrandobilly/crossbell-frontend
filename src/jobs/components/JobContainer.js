@@ -10,130 +10,150 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobContainer.module.css';
 
-const JobDetails = props => {
-	const setJobId = useState(null)[1];
-	const [ applicantList, setApplicantList ] = useState([]);
 
-	const { jobsid } = useParams();
+const JobDetails = (props) => {
+  const [jobId, setJobId] = useState(null);
+  const [applicantList, setApplicantList] = useState([]);
 
-	const onSaveHandler = async event => {
-		event.preventDefault();
-		setJobId(props.jobId);
-		const payload = {
-			token: props.auth.token,
-			userId: props.auth.userId,
-			jobId: props.jobId
-		};
-		let res;
-		try {
-			res = await props.applyJob(payload);
-			console.log(res);
-			if (res.message === 'Successfully applied to the job') {
-				let applicantArray = [ ...applicantList, props.auth.userId ];
-				setApplicantList(applicantArray);
-			}
-			setJobId(null);
-		} catch (err) {
-			console.log(err);
-			setJobId(null);
-			return props.createJobFail();
-		}
-	};
+  const { jobsid } = useParams();
 
-	// const onDeleteHandler = async event => {
-	// 	event.preventDefault();
+  console.log(jobId);
 
-	// 	const payload = {
-	// 		jobId: jobsid,
-	// 		token: props.auth.token
-	// 	};
-	// 	try {
-	// 		await props.deleteJob(payload);
-	// 		props.history.push('/jobs-dashboard');
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// };
+  const onSaveHandler = async (event) => {
+    event.preventDefault();
+    setJobId(props.jobId);
+    const payload = {
+      token: props.auth.token,
+      userId: props.auth.userId,
+      jobId: props.jobId,
+    };
+    let res;
+    try {
+      res = await props.applyJob(payload);
+      console.log(res);
+      if (res.message === 'Successfully applied to the job') {
+        let applicantArray = [...applicantList, props.auth.userId];
+        setApplicantList(applicantArray);
+      }
+      setJobId(null);
+    } catch (err) {
+      console.log(err);
+      setJobId(null);
+      return props.createJobFail();
+    }
+  };
 
-	const onReleaseHandler = async event => {
-		event.preventDefault();
+  // const onDeleteHandler = async event => {
+  // 	event.preventDefault();
 
-		const payload = {
-			jobId: jobsid,
-			token: props.auth.token
-		};
-		try {
-			await props.deleteJob(payload);
-			props.history.push('/jobs-dashboard');
-		} catch (err) {
-			console.log(err);
-		}
-	};
+  // 	const payload = {
+  // 		jobId: jobsid,
+  // 		token: props.auth.token
+  // 	};
+  // 	try {
+  // 		await props.deleteJob(payload);
+  // 		props.history.push('/jobs-dashboard');
+  // 	} catch (err) {
+  // 		console.log(err);
+  // 	}
+  // };
 
-	console.log(props);
+  const onReleaseHandler = async (event) => {
+    event.preventDefault();
 
-	let containerContent = (
-		<div className={classes.Container}>
-			<div className={classes.LeftContainer}>
-				<div className={classes.UpperContainer}>
-					<div className={classes.AvatarContainer}>
-						{props.logo && props.logo.url ? (
-							<div
-								className={classes.Avatar}
-								style={{
-									backgroundImage: `url('${props.logo.url}')`
-								}}
-							/>
-						) : (
-							<AccountCircleIcon
-								style={{
-									fontSize: '15rem',
-									marginBottom: '1rem'
-								}}
-							/>
-						)}
-					</div>
+    const payload = {
+      jobId: jobsid,
+      token: props.auth.token,
+    };
+    try {
+      await props.deleteJob(payload);
+      props.history.push('/jobs-dashboard');
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-					<div className={classes.ContainerIntro}>
-						<div className={classes.Header}>
-							<p className={classes.JobTitle}>{props.jobTitle} </p>
-							<p className={classes.TextDate}>Posted {moment().diff(moment(props.releasedAt), 'days')} days ago</p>
-						</div>
-						<div className={classes.ContainerFirst}>
-							<Link
-								to={`/co/${props.companyId}`}
-								style={{
-									textDecoration: 'none',
-									color: 'rgba(58, 81, 153, 1)'
-								}}>
-								<p className={classes.TextLeft}>{props.companyName}</p>
-							</Link>
-						</div>
+  console.log(props);
 
-						<div className={classes.ContainerSecond}>
-							<p className={classes.TextLeft}>
-								Gaji: IDR {props.payment ? props.payment.toLocaleString() : 'tidak dipaparkan oleh perusahaan'}
-							</p>
-						</div>
+  let containerContent = (
+    <div className={classes.Container}>
+      <div className={classes.LeftContainer}>
+        <div className={classes.UpperContainer}>
+          <div className={classes.AvatarContainer}>
+            {props.logo && props.logo.url ? (
+              <div
+                className={classes.Avatar}
+                style={{
+                  backgroundImage: `url('${props.logo.url}')`,
+                }}
+              />
+            ) : (
+              <AccountCircleIcon
+                style={{
+                  fontSize: '15rem',
+                  marginBottom: '1rem',
+                }}
+              />
+            )}
+          </div>
 
-						<div className={classes.ContainerThird}>
-							{props.auth.isCompany ||
-								(props.admin.isAdmin && <p className={classes.TextLeft}>email HR: {props.emailRecipient}</p>)}
-							<p className={classes.TextDateMobile}>Posted {moment().diff(moment(props.releasedAt), 'days')} days ago</p>
-							<div className={classes.ButtonContainer}>
-								{props.auth.userId === props.companyId && (
-									<Link to={`/jobs/${props.jobId}/edit`}>
-										<button className={classes.InstantButton}>
-											<span>Edit</span>
-										</button>
-									</Link>
-								)}
-								{!props.releasedAt &&
-								props.auth.userId === props.companyId && (
-									<button onClick={onReleaseHandler} className={classes.InstantButton}>
-										<span>Release</span>
-									</button>
-								)}
+          <div className={classes.ContainerIntro}>
+            <div className={classes.Header}>
+              <p className={classes.JobTitle}>{props.jobTitle} </p>
+              <p className={classes.TextDate}>
+                Posted {moment().diff(moment(props.releasedAt), 'days')} days
+                ago
+              </p>
+            </div>
+            <div className={classes.ContainerFirst}>
+              <Link
+                to={`/co/${props.companyId}`}
+                style={{
+                  textDecoration: 'none',
+                  color: 'rgba(58, 81, 153, 1)',
+                }}
+              >
+                <p className={classes.TextLeft}>{props.companyName}</p>
+              </Link>
+            </div>
+
+            <div className={classes.ContainerSecond}>
+              <p className={classes.TextLeft}>
+                Gaji: IDR{' '}
+                {props.payment
+                  ? props.payment.toLocaleString()
+                  : 'tidak dipaparkan oleh perusahaan'}
+              </p>
+            </div>
+
+            <div className={classes.ContainerThird}>
+              {props.auth.isCompany ||
+                (props.admin.isAdmin && (
+                  <p className={classes.TextLeft}>
+                    email HR: {props.emailRecipient}
+                  </p>
+                ))}
+              <p className={classes.TextDateMobile}>
+                Posted {moment().diff(moment(props.releasedAt), 'days')} days
+                ago
+              </p>
+              <div className={classes.ButtonContainer}>
+                {props.auth.userId === props.companyId && (
+                  <Link to={`/jobs/${props.jobId}/edit`}>
+                    <button className={classes.InstantButton}>
+                      <span>Edit</span>
+                    </button>
+                  </Link>
+                )}
+                {!props.releasedAt && props.auth.userId === props.companyId && (
+                  <button
+                    onClick={onReleaseHandler}
+                    className={classes.InstantButton}
+                  >
+                    <span>Release</span>
+                  </button>
+                )}
+
 
 								{/* {props.auth.userId === props.companyId && (
 									<button onClick={onDeleteHandler} className={[ classes.InstantButton, classes.DeleteButton ].join(' ')}>

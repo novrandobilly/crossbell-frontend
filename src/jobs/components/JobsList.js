@@ -340,6 +340,8 @@ const JobsList = (props) => {
         <div className={classes.CheckboxCriteria}>
           <p className={classes.FilterLabel}>Gaji</p>
           <div className={classes.InputHolder}>
+            <p>Min</p>
+
             <Input
               inputType='input'
               id='min'
@@ -351,10 +353,9 @@ const JobsList = (props) => {
               min='0'
               step='1000'
             />
-            <p>Min</p>
           </div>
 
-          <div className={classes.InputHolder}>
+          {/* <div className={classes.InputHolder}>
             <Input
               inputType='input'
               id='max'
@@ -367,7 +368,7 @@ const JobsList = (props) => {
               step='1000'
             />
             <p>Max</p>
-          </div>
+          </div> */}
         </div>
       </div>
 

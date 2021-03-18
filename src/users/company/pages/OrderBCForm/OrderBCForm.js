@@ -396,25 +396,40 @@ const OrderBCForm = (props) => {
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
                 label='Catatan tambahan*'
+                initIsValid={true}
               />
-              <div className={classes.PriceHolder}>
-                <div
-                  className={classes.InputAmount}
-                  style={{ borderBottom: '1px solid black' }}
-                >
-                  <p className={classes.Label}>Harga per slot:</p>
-                  <p className={classes.InputSlot}>
-                    IDR {price.toLocaleString()}
-                  </p>
+
+              <div className={classes.FooterSection}>
+                <div className={classes.PriceDescription}>
+                  <div className={classes.PackageDesc}>
+                    Untuk pemesanan kandidat, konsumen akan diberikan diskon
+                    untuk setiap kelipatan tertentu:
+                    <p>1. pemesanan 2-4 diskon (10%)</p>
+                    <p>2. pemesanan 5-9 diskon (20%)</p>
+                    <p>3. pemesanan lebih dari 9 diskon (30%)</p>
+                  </div>
                 </div>
-                <div className={classes.InputAmount}>
-                  <p className={classes.Label}>Total:</p>
-                  <p className={classes.InputSlot}>
-                    <strong>
-                      IDR{' '}
-                      {(price * formState.inputs.amount.value).toLocaleString()}
-                    </strong>
-                  </p>
+                <div className={classes.PriceHolder}>
+                  <div
+                    className={classes.InputAmount}
+                    style={{ borderBottom: '1px solid black' }}
+                  >
+                    <p className={classes.Label}>Harga per slot:</p>
+                    <p className={classes.InputSlot}>
+                      IDR {price.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className={classes.InputAmount}>
+                    <p className={classes.Label}>Total:</p>
+                    <p className={classes.InputSlot}>
+                      <strong>
+                        IDR{' '}
+                        {(
+                          price * formState.inputs.amount.value
+                        ).toLocaleString()}
+                      </strong>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

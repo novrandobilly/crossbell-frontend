@@ -45,21 +45,24 @@ const ApplicantCard = (props) => {
       <div className={classes.Container}>
         <div className={classes.ApplicantContainer}>
           <div className={classes.ContainerLeft}>
-            {props.picture ? (
-              <div
-                className={classes.Avatar}
-                style={{
-                  backgroundImage: `url('${props.picture.url}')`,
-                }}
-              />
-            ) : (
-              <AccountCircleIcon
-                style={{
-                  fontSize: '15rem',
-                  marginBottom: '1rem',
-                }}
-              />
-            )}
+            <Link to={`/ap/${props.id}/intro`}>
+              {props.picture ? (
+                <div
+                  className={classes.Avatar}
+                  style={{
+                    backgroundImage: `url('${props.picture.url}')`,
+                  }}
+                />
+              ) : (
+                <AccountCircleIcon
+                  style={{
+                    fontSize: '15rem',
+                    marginBottom: '1rem',
+                    fill: 'black',
+                  }}
+                />
+              )}
+            </Link>
 
             <div className={classes.ContainerLeftDivider}>
               <p className={classes.Name}>
@@ -149,10 +152,11 @@ const ApplicantCard = (props) => {
       <div className={classes.SegmentContainer}>
         <TextOnly
           id={props.id}
-          labelName='Ringkasan'
+          labelName='Tentang Saya'
           route={`/ap/${props.id}/summary`}
           text={props.details}
         />
+
         <RangeSegment
           id={props.id}
           labelName='Pengalaman'

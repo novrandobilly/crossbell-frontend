@@ -67,8 +67,9 @@
 }
 
 .InputHolder {
+  width: 100%;
   display: flex;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: gray;
 }
 

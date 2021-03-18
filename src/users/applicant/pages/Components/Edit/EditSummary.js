@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../../store/actions/actions';
@@ -93,6 +93,16 @@ const EditSummary = (props) => {
             </div>
           </div>
           <div className={classes.Footer}>
+            <Link to={`/ap/${applicantid}`}>
+              <Button
+                variant='outlined'
+                type='Button'
+                disableElevation
+                style={{ marginRight: '16px' }}
+              >
+                Back
+              </Button>
+            </Link>
             <Button
               disabled={!formState.formIsValid}
               variant='contained'

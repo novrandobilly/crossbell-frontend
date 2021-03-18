@@ -67,7 +67,7 @@
   width: 15rem;
   height: 15rem;
   border-radius: 50%;
-  background-position: center;
+  /* background-position: center; */
   background-size: cover;
   margin-bottom: 1rem;
 }
@@ -141,6 +141,10 @@ input[type='file'] {
   justify-content: flex-start;
   align-items: flex-start;
   text-align: start;
+}
+
+.Footer a {
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {

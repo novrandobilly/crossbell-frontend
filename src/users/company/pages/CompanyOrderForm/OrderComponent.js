@@ -40,11 +40,17 @@ const OrderComponent = (props) => {
                   : { backgroundColor: 'rgba(58, 81, 153, 0.2)' }
               }
             >
-              <ul>
-                {props.perks.map((perk, i) => {
-                  return <li key={i}> {perk}</li>;
-                })}
-              </ul>
+              {props.perks ? (
+                <ul>
+                  {props.perks.map((perk, i) => {
+                    return <li key={i}> {perk}</li>;
+                  })}
+                </ul>
+              ) : (
+                <ul>
+                  <li>Harga normal tanpa diskon</li>
+                </ul>
+              )}
             </div>
           </div>
         </div>

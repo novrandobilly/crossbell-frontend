@@ -96,36 +96,34 @@ const CompanyOrderForm = props => {
 	let formContent = (
 		<React.Fragment>
 			<div className={classes.PackageList}>
-				<OrderComponent
-					title='Bronze'
-					price={ORIGINAL_PRICE}
-					slot='1 slot'
-					perks={[ '1 slot = 2 minggu penayangan iklan' ]}
-					createOrder={props.createOrder}
-				/>
+				<OrderComponent title='Bronze' price={ORIGINAL_PRICE} slot='1 slot' createOrder={props.createOrder} />
 				<OrderComponent
 					title='Silver'
-					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05}
+					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
 					slot='2 - 4 slot'
-					perks={[ '1 slot = 2 minggu penayangan iklan', 'Discount per slot sebesar 5%' ]}
+					perks={[ 'Diskon per slot sebesar 5%' ]}
 					createOrder={props.createOrder}
 				/>
 				<OrderComponent
 					title='Gold'
-					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
 					slot='5 - 9 slot'
-					perks={[ '1 slot = 2 minggu penayangan iklan', 'Discount per slot sebesar 10%' ]}
+					perks={[ 'Diskon per slot sebesar 10%' ]}
 					createOrder={props.createOrder}
 				/>
 				<OrderComponent
 					title='Platinum'
-					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
+					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
 					slot='>9 slot'
-					perks={[ '1 slot = 2 minggu penayangan iklan', 'Discount per slot sebesar 15%' ]}
+					perks={[ 'Diskon per slot sebesar 15%' ]}
 					createOrder={props.createOrder}
 				/>
 			</div>
 			<form className={classes.FormContainer} onSubmit={onSubmitHandler}>
+				<div className={classes.InputAmount} style={{ marginTop: '20px' }}>
+					<p className={classes.SlotEqual}>1 Slot = 2 minggu waktu tayang iklan</p>
+				</div>
+
 				<div className={classes.InputAmount}>
 					<p className={classes.Label}>Jumlah slot yang ingin dibeli</p>
 					<div className={classes.InputSlot}>
@@ -136,11 +134,26 @@ const CompanyOrderForm = props => {
 							validatorMethod={[ VALIDATOR_MIN(1) ]}
 							onInputHandler={onInputHandler}
 							type='number'
-							initValue='1'
-							min='1'
+							initValue='0'
+							min='0'
 							step='1'
 						/>
 					</div>
+				</div>
+
+				<div className={classes.InputAmount} style={{ marginBottom: '-16px' }}>
+					<p className={classes.Label}>Jenis paket:</p>
+					<p className={classes.InputSlot}>
+						{formState.inputs.slot.value <= 1 ? (
+							'Bronze'
+						) : formState.inputs.slot.value < 4 ? (
+							'Silver'
+						) : formState.inputs.slot.value < 9 ? (
+							'Gold'
+						) : (
+							'Platinum'
+						)}
+					</p>
 				</div>
 
 				<div className={classes.InputAmount} style={{ borderBottom: '1px solid black' }}>

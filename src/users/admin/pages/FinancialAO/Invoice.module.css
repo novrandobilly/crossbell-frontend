@@ -30,14 +30,10 @@
   margin: 0rem;
   font-size: 1.2rem;
   color: white;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   padding-bottom: 1rem;
-  padding-left: 1rem;
+  padding-left: 2rem;
   text-align: left;
-}
-
-.Id span {
-  text-decoration: underline;
 }
 
 .Content {

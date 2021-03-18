@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
 import moment from 'moment';
 
@@ -8,7 +8,6 @@ import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH,
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../../shared/utils/validator';
 
@@ -83,6 +82,10 @@ const Education = (props) => {
         value: data ? data.description : null,
         isValid: data && data.description ? true : false,
       },
+      IPK: {
+        value: data ? data.IPK : null,
+        isValid: data && data.IPK ? true : false,
+      },
     },
     false
   );
@@ -104,6 +107,7 @@ const Education = (props) => {
       startDate: formState.inputs.startDate.value,
       endDate: formState.inputs.endDate.value,
       description: formState.inputs.description.value,
+      IPK: formState.inputs.IPK.value,
       token: props.auth.token,
     };
     try {
@@ -119,14 +123,14 @@ const Education = (props) => {
     }
   };
 
+  console.log(data);
+
   useEffect(() => {
     if (data) {
       onInputHandler('degree', data.degree, true);
       onInputHandler('school', school, true);
     }
   }, [data, onInputHandler, school]);
-
-  console.log(formState);
 
   const handleChange = (e) => {
     const elementId = e.target.name;
@@ -269,6 +273,23 @@ const Education = (props) => {
                 initIsValid={true}
               />
             </div>
+
+            <div className={classes.EditLabel}>
+              <p className={classes.TextIPK}>IPK/ Nilai Kelulusan</p>
+              <Input
+                inputType='input'
+                id='IPK'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                error={false}
+                initValue={data.IPK}
+                initIsValid={true}
+                type='number'
+                min={0}
+                max={4}
+                step='0.1'
+              />
+            </div>
           </div>
 
           <div className={classes.EditLabel}>
@@ -276,9 +297,9 @@ const Education = (props) => {
               inputType='textarea'
               id='description'
               inputClass='EditProfileTextArea'
-              validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+              validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label='Rincian*'
+              label='Deskripsi Pendidikan (Opsional)'
               initValue={data.description}
               initIsValid={true}
               rows={12}
@@ -288,6 +309,16 @@ const Education = (props) => {
         </div>
 
         <div className={classes.Footer}>
+          <Link to={`/ap/${applicantid}`}>
+            <Button
+              variant='outlined'
+              type='Button'
+              disableElevation
+              style={{ marginRight: '16px' }}
+            >
+              Back
+            </Button>
+          </Link>
           <Button
             disabled={!formState.formIsValid}
             variant='contained'
