@@ -1,25 +1,25 @@
 .Footer {
-	width: 100%;
-	display: flex;
-	flex-flow: column;
-	margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  margin-top: 2rem;
 }
 
 .LogoAddress {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 1rem 4rem;
-	box-sizing: border-box;
-	background-color: rgb(215, 226, 255);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+  box-sizing: border-box;
+  background-color: rgb(215, 226, 255);
 }
 
 .Copyright {
-	width: 100%;
-	padding: .5rem;
-	background-color: rgba(58, 81, 153, 1);
-	color: white;
-	font-size: 1rem;
-	box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: rgba(58, 81, 153, 1);
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
 }

@@ -34,12 +34,24 @@
 }
 
 .Avatar {
-  width: 80%;
+  width: 100%;
   height: 15rem;
   border-radius: 50%;
-  background-position: center;
   background-size: cover;
+}
+
+.ContainerLeft a {
+  width: 80%;
+  height: 15rem;
   align-self: center;
+  border-radius: 50%;
+  /* border: rgba(58, 81, 153, 0.2) 4px solid; */
+}
+
+.ResumeHolder a {
+  width: auto;
+  height: auto;
+  align-self: flex-start;
 }
 
 .ContainerLeftDivider {

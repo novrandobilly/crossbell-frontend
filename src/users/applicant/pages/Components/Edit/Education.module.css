@@ -55,11 +55,26 @@
   margin-bottom: 0.2rem;
 }
 
+.TextIPK {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 1;
+  letter-spacing: 0.00938em;
+  text-align: left;
+  margin-bottom: -4px;
+}
+
 .Footer {
   width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
+}
+
+.Footer a {
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {

@@ -42,6 +42,14 @@
   vertical-align: baseline;
 }
 
+.SlotEqual {
+  width: 100%;
+  margin: 0;
+  /* text-align: start; */
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .InputSlot {
   width: 30%;
   overflow: hidden;

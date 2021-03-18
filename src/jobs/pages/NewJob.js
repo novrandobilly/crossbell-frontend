@@ -167,6 +167,35 @@ const NewJob = (props) => {
     }
   };
 
+  const onAddSlotHandler = async (event) => {
+    event.preventDefault();
+    const jobData = {
+      jobTitle: formState.inputs.jobTitle.value,
+      placementLocation: formState.inputs.placementLocation.value,
+      jobDescriptions: formState.inputs.jobDescriptions.value,
+      educationalStage: formState.inputs.educationalStage.value,
+      technicalRequirement: formState.inputs.technicalRequirement.value,
+      emailRecipient: formState.inputs.emailRecipient.value,
+      employment: formState.inputs.employment.value,
+      benefit: formState.inputs.benefit.value,
+      slot: formState.inputs.slotAllocation.value,
+      salary: formState.inputs.salary.value,
+      fieldOfWork: formState.inputs.fieldOfWork.value,
+    };
+    const authData = {
+      token: props.auth.token,
+      userId: props.auth.userId,
+    };
+    console.log(jobData);
+    try {
+      const res = await props.saveJobDraft(jobData, authData);
+      console.log(res);
+      props.history.push(`/co/order/reguler`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const fowHandler = (e) => {
     let indexFow;
     switch (e.target.name) {
@@ -571,16 +600,15 @@ const NewJob = (props) => {
                 : maxSlot}
             </h3>
             <div className={classes.SlotAddButton}>
-              <Link to={`/co/order/reguler`}>
-                <Button
-                  disableElevation
-                  size='small'
-                  style={{ fontWeight: '600' }}
-                  startIcon={<AddIcon />}
-                >
-                  Tambah Slot
-                </Button>
-              </Link>
+              <Button
+                disableElevation
+                size='small'
+                style={{ fontWeight: '600' }}
+                startIcon={<AddIcon />}
+                onClick={onAddSlotHandler}
+              >
+                Tambah Slot
+              </Button>
             </div>
           </div>
         </div>

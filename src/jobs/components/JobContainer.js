@@ -16,6 +16,8 @@ const JobDetails = (props) => {
 
   const { jobsid } = useParams();
 
+  console.log(jobId);
+
   const onSaveHandler = async (event) => {
     event.preventDefault();
     setJobId(props.jobId);

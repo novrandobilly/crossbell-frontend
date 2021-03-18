@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../../store/actions/actions';
@@ -435,7 +435,7 @@ const EditIntro = (props) => {
     formContent = (
       <React.Fragment>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>About Me</p>
+          <p className={classes.FormTitle}>Data Diri Pelamar</p>
 
           <div className={classes.Content}>
             <div className={classes.ProfilePicture}>
@@ -464,11 +464,14 @@ const EditIntro = (props) => {
                 />
                 <span className={classes.InputButtonText}> Upload File </span>
               </label>
+              <span>
+                <em style={{ color: 'gray' }}>Ukuran file max 500kb</em>
+              </span>
               {formState.inputs.picture.value ? (
                 formState.inputs.picture.value.size > 500000 ? (
                   <span>
                     <em style={{ color: 'red' }}>
-                      File is too large. Please provide max. 500kb image
+                      File terlalu besar. Mohon gunakan file berukuran max 500kb
                     </em>
                   </span>
                 ) : (
@@ -860,13 +863,23 @@ const EditIntro = (props) => {
                   name='headhunterProgram'
                 />
                 <p style={{ margin: '0', marginLeft: '4px' }}>
-                  Saya ingin mengikuti headhunter program Crossbell asal
+                  Saya ingin mengikuti program headhunter Crossbell
                 </p>
               </label>
             </div>
           </div>
 
           <div className={classes.Footer}>
+            <Link to={`/ap/${applicantid}`}>
+              <Button
+                variant='outlined'
+                type='Button'
+                disableElevation
+                style={{ marginRight: '16px' }}
+              >
+                Back
+              </Button>
+            </Link>
             <Button
               disabled={!formState.formIsValid}
               variant='contained'

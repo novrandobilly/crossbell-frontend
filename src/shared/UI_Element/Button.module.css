@@ -5,10 +5,10 @@
   outline: none;
   cursor: pointer;
   font: inherit;
-  padding: 10px;
-  margin: 10px;
-  font-weight: bold;
-  transition: transform 0.1s ease-in;
+  padding: 5px 10px;
+  margin: 0;
+  /* font-weight: bold; */
+  transition: all 0.1s ease-in;
 }
 
 .Button:disabled {
@@ -17,15 +17,13 @@
 }
 
 .Button:hover:enabled {
-  transform: scale(1);
-}
-
-.Button:active:enabled {
-  transform: translateY(2px);
+  background-color: rgba(58, 81, 153, 1);
 }
 
 .InstantApply {
-  color: rgba(58, 81, 153, 1);
+  color: white;
+  border-radius: 3px;
+  background-color: rgba(58, 81, 153, 0.9);
 }
 
 .Dark {
@@ -61,10 +59,10 @@
 }
 
 @media screen and (min-width: 768px) {
-  .Button:hover:enabled {
+  /* .Button:hover:enabled {
     transform: scale(1.1);
   }
   .Button:active {
     transform: translateY(2px);
-  }
+  } */
 }

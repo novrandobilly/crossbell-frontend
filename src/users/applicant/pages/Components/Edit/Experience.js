@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
 import moment from 'moment';
 
@@ -8,7 +8,6 @@ import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH,
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../../shared/utils/validator';
 
@@ -221,9 +220,9 @@ const Experience = (props) => {
                 inputType='textarea'
                 id='description'
                 inputClass='EditProfileTextArea'
-                validatorMethod={[VALIDATOR_MINLENGTH(20)]}
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
-                label='Rincian*'
+                label='Deskripsi Pengalaman (Opsional)'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
@@ -233,6 +232,16 @@ const Experience = (props) => {
           </div>
 
           <div className={classes.Footer}>
+            <Link to={`/ap/${applicantid}`}>
+              <Button
+                variant='outlined'
+                type='Button'
+                disableElevation
+                style={{ marginRight: '16px' }}
+              >
+                Back
+              </Button>
+            </Link>
             <Button
               disabled={!formState.formIsValid}
               variant='contained'

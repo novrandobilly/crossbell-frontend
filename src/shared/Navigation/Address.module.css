@@ -1,12 +1,12 @@
 .Address {
-	display: flex;
-	flex-flow: column;
-	justify-content: center;
-	align-items: center;
-	line-height: 150%;
-	font-size: 1.1rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 150%;
+  font-size: 0.8rem;
 }
 
 .Address p {
-	margin: 0;
+  margin: 0;
 }
