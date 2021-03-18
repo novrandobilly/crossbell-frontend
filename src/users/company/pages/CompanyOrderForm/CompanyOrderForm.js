@@ -112,14 +112,14 @@ const CompanyOrderForm = props => {
 				/>
 				<OrderComponent
 					title='Gold'
-					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
+					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
 					slot='5 - 9 slot'
 					perks={[ '1 slot = 2 minggu penayangan iklan', 'Discount per slot sebesar 10%' ]}
 					createOrder={props.createOrder}
 				/>
 				<OrderComponent
 					title='Platinum'
-					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
+					price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
 					slot='>9 slot'
 					perks={[ '1 slot = 2 minggu penayangan iklan', 'Discount per slot sebesar 15%' ]}
 					createOrder={props.createOrder}
