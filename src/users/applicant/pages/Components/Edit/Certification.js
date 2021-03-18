@@ -35,7 +35,10 @@ const Certification = (props) => {
     };
     if (props.auth.token) {
       getOneApplicant(payload).then((res) => {
-        setData(res.applicant.certification[certificationindex]);
+        const certificationSort = res.applicant.certification.sort(
+          (a, b) => moment(b.startDate) - moment(a.startDate)
+        );
+        setData(certificationSort[certificationindex]);
       });
     }
   }, [getOneApplicant, applicantid, certificationindex, props.auth.token]);

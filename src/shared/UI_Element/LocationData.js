@@ -34,4 +34,5 @@ const LocationList = [
   'Papua Barat',
   'Papua',
 ];
+
 export default LocationList;

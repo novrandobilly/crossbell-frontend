@@ -12,6 +12,9 @@ import {
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../../shared/utils/validator';
 
+import University from '../../../../../shared/UI_Element/UniversityData';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -109,20 +112,29 @@ const Education = (props) => {
     setOpen(true);
   };
 
+  const handleSchoolChange = (e, value) => {
+    onInputHandler('school', value, true);
+  };
+
   let formContent = (
     <div className={classes.ContainerFlex}>
       <p className={classes.FormTitle}>Tambah pendidikan</p>
 
       <div className={classes.FormRow}>
         <div className={classes.EditLabel}>
-          <Input
-            inputType='input'
+          <Autocomplete
             id='school'
-            InputClass='AddJobInput'
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label='Nama sekolah/ universitas*'
-            initIsValid={true}
+            name='school'
+            options={University.map((option) => option)}
+            onChange={handleSchoolChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label='Nama sekolah/ universitas*'
+                margin='normal'
+                variant='standard'
+              />
+            )}
           />
         </div>
 
