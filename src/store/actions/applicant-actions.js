@@ -78,6 +78,7 @@ export const deleteSegment = (segmentData) => {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${segmentData.token}`,
           },
           body: JSON.stringify({
             applicantId: segmentData.applicantId,

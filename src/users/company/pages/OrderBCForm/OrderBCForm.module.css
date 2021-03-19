@@ -132,7 +132,7 @@
 
 .CheckText {
   margin-top: 1rem;
-  margin-right: 1rem;
+  margin-right: 8px;
   color: rgba(0, 0, 0, 1);
   font-weight: 400;
 }
@@ -175,6 +175,22 @@
 .Label {
   display: flex;
   margin: 0;
+}
+
+.DropDownDiv {
+  width: 50%;
+  margin-top: 0.3rem;
+}
+
+.EducationalInput {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -16px;
+}
+
+.IPK {
+  width: 30%;
+  margin-top: 12px;
 }
 
 .InputSlot {

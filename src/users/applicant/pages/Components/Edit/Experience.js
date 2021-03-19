@@ -98,7 +98,7 @@ const Experience = (props) => {
         prevCompany: formState.inputs.prevCompany.value,
         prevLocation: formState.inputs.prevLocation.value,
         startDate: formState.inputs.startDate.value,
-        endDate: '01/01/10000',
+        endDate: null,
         description: formState.inputs.description.value,
         token: props.auth.token,
       };

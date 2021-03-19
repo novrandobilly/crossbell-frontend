@@ -415,8 +415,6 @@ const EditIntro = (props) => {
     setLocation(e.target.value);
   };
 
-  console.log(formState);
-
   const handleLocationClose = () => {
     setLocationOpen(false);
   };
