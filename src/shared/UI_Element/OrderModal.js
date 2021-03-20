@@ -26,7 +26,6 @@ const ModalOverlay = (props) => {
           <div className={`${classes.FooterButton}`}>
             <Button
               variant='contained'
-              color='	'
               disableElevation
               style={{ marginRight: '16px', padding: '0' }}
               onClick={props.onCancel}

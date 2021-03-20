@@ -17,27 +17,28 @@ const RangeSegmentMap = (props) => {
   const onDeleteHandler = async (event, index) => {
     event.preventDefault();
     setIndexLoading(index);
-    console.log(event, index);
-    const segmentData = {
-      applicantId: applicantid,
-      elementId: props.elementId,
-      index: props.index,
-      segment: props.stateName,
-    };
 
-    try {
-      const res = await props.deleteSegment(segmentData);
-      if (res) {
-        console.log(res);
+    if (props.token) {
+      const segmentData = {
+        applicantId: applicantid,
+        elementId: props.elementId,
+        index: props.index,
+        segment: props.stateName,
+        token: props.token,
+      };
+
+      try {
+        const res = await props.deleteSegment(segmentData);
+        if (res) {
+          console.log(res);
+        }
+        setIndexLoading(null);
+        props.deleteSegmentHandler(props.elementId.toString());
+      } catch (err) {
+        console.log(err);
+        setIndexLoading(null);
       }
-      setIndexLoading(null);
-      props.deleteSegmentHandler(props.elementId.toString());
-    } catch (err) {
-      console.log(err);
-      setIndexLoading(null);
     }
-
-    // props.history.push(`/ap/${applicantid}`);
   };
 
   let segmentElement = (

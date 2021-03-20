@@ -87,7 +87,6 @@ const Certification = (props) => {
         console.log(err);
       }
     } else {
-      console.log('this one runs');
       const updatedCertification = {
         applicantId: applicantid,
         title: formState.inputs.title.value,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -23,6 +23,7 @@ const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
 
   const [orderModal, setOrderModal] = useState(false);
+  const [slot, setSlot] = useState(0);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -84,9 +85,9 @@ const CompanyOrderForm = (props) => {
   if (formState.inputs.slot.value <= 1) price = ORIGINAL_PRICE;
   if (formState.inputs.slot.value > 1)
     price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05;
-  if (formState.inputs.slot.value > 4)
+  if (formState.inputs.slot.value >= 4)
     price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
-  if (formState.inputs.slot.value > 9)
+  if (formState.inputs.slot.value >= 9)
     price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15;
 
   const onCloseOrderModal = () => {
@@ -97,36 +98,74 @@ const CompanyOrderForm = (props) => {
     setOrderModal(true);
   };
 
+  const OnclickBronze = () => {
+    onInputHandler('slot', 1, true);
+    setSlot(1);
+  };
+
+  const OnclickSilver = () => {
+    const slotOrder = document.getElementById('slot');
+    slotOrder.innerHTML = '4';
+    slotOrder.value = '4';
+    onInputHandler('slot', 4, true);
+    setSlot(4);
+  };
+
+  const OnclickGold = () => {
+    onInputHandler('slot', 9, true);
+    setSlot(9);
+  };
+
+  const OnclickPlatinum = () => {
+    onInputHandler('slot', 10, true);
+    setSlot(10);
+  };
+
+  useEffect(() => {
+    onInputHandler('state', slot, true);
+  }, [onInputHandler, slot]);
+
   let formContent = (
     <React.Fragment>
       <div className={classes.PackageList}>
-        <OrderComponent
-          title='Bronze'
-          price={ORIGINAL_PRICE}
-          slot='1 slot'
-          createOrder={props.createOrder}
-        />
-        <OrderComponent
-          title='Silver'
-          price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
-          slot='2 - 4 slot'
-          perks={['Diskon per slot sebesar 5%']}
-          createOrder={props.createOrder}
-        />
-        <OrderComponent
-          title='Gold'
-          price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
-          slot='5 - 9 slot'
-          perks={['Diskon per slot sebesar 10%']}
-          createOrder={props.createOrder}
-        />
-        <OrderComponent
-          title='Platinum'
-          price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
-          slot='>9 slot'
-          perks={['Diskon per slot sebesar 15%']}
-          createOrder={props.createOrder}
-        />
+        <div onClick={OnclickBronze}>
+          <OrderComponent
+            title='Bronze'
+            price={ORIGINAL_PRICE}
+            slot='1 slot'
+            createOrder={props.createOrder}
+          />
+        </div>
+
+        <div onClick={OnclickSilver}>
+          <OrderComponent
+            title='Silver'
+            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+            slot='2 - 4 slot'
+            perks={['Diskon per slot sebesar 5%']}
+            createOrder={props.createOrder}
+          />
+        </div>
+
+        <div onClick={OnclickGold}>
+          <OrderComponent
+            title='Gold'
+            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
+            slot='5 - 9 slot'
+            perks={['Diskon per slot sebesar 10%']}
+            createOrder={props.createOrder}
+          />
+        </div>
+
+        <div onClick={OnclickPlatinum}>
+          <OrderComponent
+            title='Platinum'
+            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
+            slot='>9 slot'
+            perks={['Diskon per slot sebesar 15%']}
+            createOrder={props.createOrder}
+          />
+        </div>
       </div>
       <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
         <div className={classes.InputAmount} style={{ marginTop: '20px' }}>
@@ -145,7 +184,7 @@ const CompanyOrderForm = (props) => {
               validatorMethod={[VALIDATOR_MIN(1)]}
               onInputHandler={onInputHandler}
               type='number'
-              initValue='0'
+              initValue={slot ? slot : '0'}
               min='0'
               step='1'
             />
@@ -157,9 +196,9 @@ const CompanyOrderForm = (props) => {
           <p className={classes.InputSlot}>
             {formState.inputs.slot.value <= 1
               ? 'Bronze'
-              : formState.inputs.slot.value < 4
+              : formState.inputs.slot.value <= 4
               ? 'Silver'
-              : formState.inputs.slot.value < 9
+              : formState.inputs.slot.value <= 9
               ? 'Gold'
               : 'Platinum'}
           </p>

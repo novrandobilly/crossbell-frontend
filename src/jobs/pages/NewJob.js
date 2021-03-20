@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { useForm } from '../../shared/utils/useForm';
 
 import * as actionTypes from '../../store/actions/actions';

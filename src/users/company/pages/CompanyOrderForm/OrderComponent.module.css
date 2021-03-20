@@ -6,6 +6,7 @@
 .OrderCard {
   background-color: white;
   margin-right: 16px;
+  cursor: pointer;
 }
 
 .CardHolder {
