@@ -8,6 +8,8 @@ import * as actionTypes from '../../../../../store/actions/actions';
 import * as actionCreators from '../../../../../store/actions/index';
 import {
   VALIDATOR_REQUIRE,
+  VALIDATOR_MAX,
+  VALIDATOR_MIN,
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../../shared/utils/validator';
 
@@ -279,7 +281,7 @@ const Education = (props) => {
               <Input
                 inputType='input'
                 id='IPK'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
+                validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
                 onInputHandler={onInputHandler}
                 error={false}
                 initValue={data.IPK}
@@ -288,6 +290,13 @@ const Education = (props) => {
                 min={0}
                 max={4}
                 step='0.1'
+                helperText={
+                  formState.inputs.IPK.value < 0
+                    ? 'Nilai IPK min 0'
+                    : formState.inputs.IPK.value > 4
+                    ? 'Nilai IPK max 4'
+                    : 'IPK wajib diisi'
+                }
               />
             </div>
           </div>

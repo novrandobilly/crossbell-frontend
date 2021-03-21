@@ -167,6 +167,7 @@ const ApplicantCard = (props) => {
           )}
           state='experience'
           isLoading={props.applicant.isLoading}
+          token={props.auth.token}
         />
 
         <RangeSegment
@@ -179,6 +180,7 @@ const ApplicantCard = (props) => {
           )}
           state='education'
           isLoading={props.applicant.isLoading}
+          token={props.auth.token}
         />
 
         <RangeSegment
@@ -191,6 +193,7 @@ const ApplicantCard = (props) => {
           )}
           state='certification'
           isLoading={props.applicant.isLoading}
+          token={props.auth.token}
         />
 
         <SkillsMap
@@ -199,6 +202,7 @@ const ApplicantCard = (props) => {
           routeEdit={`/ap/${props.id}/skills`}
           routeAdd={`/ap/${props.id}/add/skills`}
           skills={props.skills}
+          token={props.auth.token}
         />
       </div>
     </div>

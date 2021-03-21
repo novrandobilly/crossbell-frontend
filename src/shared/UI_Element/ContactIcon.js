@@ -8,10 +8,10 @@ const ContactIcon = props => {
 	return (
 		<div className={classes.Container}>
 			<div className={classes.IconContainer}>
-				<a href='https://wa.link/spqhhp' target='_blank' rel='noopener noreferrer'>
+				<a href='https://web.whatsapp.com' target='_blank' rel='noopener noreferrer'>
 					<WhatsAppIcon style={{ fontSize: '22pt', color: 'white' }} />
 				</a>
-				<a href='https://instagram.com' target='_blank' rel='noopener noreferrer'>
+				<a href='https://www.instagram.com' target='_blank' rel='noopener noreferrer'>
 					<InstagramIcon style={{ fontSize: '22pt', color: 'white' }} />
 				</a>
 			</div>

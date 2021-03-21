@@ -9,15 +9,19 @@ import {
   VALIDATOR_MIN,
   VALIDATOR_EMAIL,
   VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_MAX,
 } from '../../../../shared/utils/validator';
 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Button from '@material-ui/core/Button';
+import University from '../../../../shared/UI_Element/UniversityData';
 import Input from '../../../../shared/UI_Element/Input';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
 import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
@@ -70,6 +74,14 @@ const OrderBCForm = (props) => {
         isValid: false,
       },
       max: {
+        value: '',
+        isValid: false,
+      },
+      IPK: {
+        value: '',
+        isValid: false,
+      },
+      school: {
         value: '',
         isValid: false,
       },
@@ -157,6 +169,10 @@ const OrderBCForm = (props) => {
 
   const onOpenOrderModal = () => {
     setOrderModal(true);
+  };
+
+  const handleSchoolChange = (e, value) => {
+    onInputHandler('school', value, true);
   };
 
   let price;
@@ -303,6 +319,47 @@ const OrderBCForm = (props) => {
                     min='0'
                     step='1'
                     label='Jumlah kandidat*'
+                  />
+                </div>
+              </div>
+
+              <div className={classes.EducationalInput}>
+                <div className={classes.DropDownDiv}>
+                  <Autocomplete
+                    id='school'
+                    name='school'
+                    options={University.map((option) => option)}
+                    onChange={handleSchoolChange}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label='Nama sekolah/ universitas*'
+                        margin='normal'
+                        variant='standard'
+                      />
+                    )}
+                  />
+                </div>
+
+                <div className={classes.IPK}>
+                  <Input
+                    inputType='input'
+                    label='IPK'
+                    id='IPK'
+                    validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
+                    onInputHandler={onInputHandler}
+                    error={false}
+                    type='number'
+                    min={0}
+                    max={4}
+                    step='0.1'
+                    helperText={
+                      formState.inputs.IPK.value < 0
+                        ? 'Nilai IPK min 0'
+                        : formState.inputs.IPK.value > 4
+                        ? 'Nilai IPK max 4'
+                        : 'IPK wajib diisi'
+                    }
                   />
                 </div>
               </div>

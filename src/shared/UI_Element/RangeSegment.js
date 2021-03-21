@@ -60,6 +60,7 @@ const RangeSegment = (props) => {
                   deleteSegmentHandler={(elementId) =>
                     deleteSegmentHandler(elementId)
                   }
+                  token={props.token}
                 />
               </div>
             );
