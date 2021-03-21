@@ -33,6 +33,7 @@ const EditDetails = props => {
 				res.applicant.skills.forEach((skill, i) => {
 					setSkills(prevState => [ ...prevState, 'skill' ]);
 					onInputHandler(`skill_${i}`, skill, true);
+					onInputHandler(`skill_${i + 1}`, skill, true);
 				});
 				setSkillsList(res.applicant.skills);
 			};
@@ -55,7 +56,6 @@ const EditDetails = props => {
 			skillsData = skillsData.concat(formState.inputs[key].value);
 		}
 		skillsData = skillsData.filter(skill => !!skill.trim());
-		console.log(skillsData);
 		const updatedData = {
 			applicantId: applicantid,
 			skillsData,
@@ -68,10 +68,10 @@ const EditDetails = props => {
 	const addSkill = e => {
 		e.preventDefault();
 		setSkills(skills => [ ...skills, 'skill' ]);
+		onInputHandler(`skill_${skills.length}`, '', true);
 	};
 	let formSkills = <Spinner />;
 
-	console.log(formState);
 	if (skillsList && !props.applicant.isLoading) {
 		formSkills = (
 			<form onSubmit={onSubmitHandler} className={classes.Container}>

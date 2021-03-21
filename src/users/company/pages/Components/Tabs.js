@@ -5,7 +5,6 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 function TabPanel (props){
@@ -18,11 +17,7 @@ function TabPanel (props){
 			id={`full-width-tabpanel-${index}`}
 			aria-labelledby={`full-width-tab-${index}`}
 			{...other}>
-			{value === index && (
-				<Box p={3}>
-					<Typography>{children}</Typography>
-				</Box>
-			)}
+			{value === index && <Box p={3}>{children}</Box>}
 		</div>
 	);
 }
@@ -95,18 +90,11 @@ export default function FullWidthTabs (){
 					<ol>
 						<li>Pastikan akun perusahaan anda sudah terverifikasi. Proses verifikasi umumnya membutuhkan waktu 1x24 jam</li>
 						<li>Tentukan iklan lowongan pekerjaan yang ingin anda pasang</li>
-						<li>
-							Beli slot iklan sesuai kebutuhan anda pada menu 'Buat Pesanan' - 'Pesan Slot Iklan' dan ikuti proses
-							selanjutnya. 1 slot iklan berlaku untuk pemasangan iklan selama 2 minggu (14 hari)
-						</li>
-						<li>
-							Lakukan pembayaran sesuai pesanan anda yang tertera pada invoice dan setelah pembayaran terkonfirmasi, jumlah
-							slot di bawah foto perusahaan akan bertambah
-						</li>
-						<li>
-							Buat iklan lowongan pekerjaan anda dengan klik tombol 'Pasang Iklan', isi sesuai kebutuhan perusahaan anda dan
-							tentukan durasi penayangan iklan
-						</li>
+						<li>Beli slot iklan sesuai kebutuhan anda pada menu 'Buat Pesanan' - 'Pesan Slot Iklan'.</li>
+						<li>Lakukan pembayaran sesuai pesanan anda yang tertera pada invoice.</li>
+						<li>Jumlah slot di bawah foto perusahaan akan bertambah setelah pembayaran terkonfirmasi.</li>
+						<li>Buat iklan lowongan pekerjaan anda dengan klik tombol 'Pasang Iklan'</li>
+						<li>Isi konten iklan dan tentukan durasi penayangan.</li>
 						<li>Daftar pesanan anda dapat dilihat kembali di menu 'List' - 'Pesanan'</li>
 					</ol>
 				</TabPanel>
