@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
@@ -25,6 +25,39 @@ import LocationData from '../../../../../shared/UI_Element/LocationData';
 
 import classes from './EditIntro.module.css';
 
+const initialLocation = {
+	province: '',
+	citySelected: ''
+};
+
+const LOC = {
+	INITFETCH: 'initialFetch',
+	CHGPROVINCE: 'changeProvince',
+	CHGCITY: 'changeCity'
+};
+
+const locationReducer = (state, action) => {
+	switch (action.type) {
+		case LOC.INITFETCH:
+			return {
+				province: action.province,
+				citySelected: action.citySelected
+			};
+		case LOC.CHGPROVINCE:
+			return {
+				province: action.province,
+				citySelected: ''
+			};
+		case LOC.CHGCITY:
+			return {
+				...state,
+				citySelected: action.citySelected
+			};
+		default:
+			return state;
+	}
+};
+
 const EditIntro = props => {
 	const { applicantid } = useParams();
 	const [ data, setData ] = useState();
@@ -32,8 +65,10 @@ const EditIntro = props => {
 
 	const [ interest, setInterest ] = useState([ '', '', '' ]);
 
+	const [ locationState, dispatch ] = useReducer(locationReducer, initialLocation);
+
 	const [ city, setCity ] = useState(Cities.default);
-	const [ location, setLocation ] = useState('');
+	// const [ location, setLocation ] = useState('');
 	const [ locationOpen, setLocationOpen ] = useState(false);
 
 	const ProvCityRelation = prov => {
@@ -190,7 +225,8 @@ const EditIntro = props => {
 			if (props.auth.token) {
 				getOneApplicant(payload).then(res => {
 					setInterest(res.applicant.interest);
-					setLocation(res.applicant.state);
+					// setLocation(res.applicant.state);
+					dispatch({ type: LOC.INITFETCH, province: res.applicant.state, citySelected: res.applicant.city });
 					setData(res.applicant);
 					ProvCityRelation(res.applicant.state);
 				});
@@ -234,12 +270,12 @@ const EditIntro = props => {
 				isValid: data && data.address ? true : false
 			},
 			city: {
-				value: data ? data.city : null,
-				isValid: data && data.city ? true : false
+				value: locationState.city ? locationState.city : null,
+				isValid: locationState.city ? true : false
 			},
 			state: {
-				value: data ? data.state : null,
-				isValid: data && data.state ? true : false
+				value: locationState.province ? locationState.province : null,
+				isValid: locationState.province ? true : false
 			},
 			zip: {
 				value: data ? data.zip : null,
@@ -294,8 +330,8 @@ const EditIntro = props => {
 				autoRemindEl.checked = data.autoRemind;
 				headhunterProgramEl.checked = data.headhunterProgram;
 
-				onInputHandler('state', location, true);
-				onInputHandler('city', city[0], true);
+				onInputHandler('state', locationState.province, true);
+				onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
 				onInputHandler('gender', data.gender, true);
 				onInputHandler('interest', data.interest, true);
 				onInputHandler('autoSend', data.autoSend, true);
@@ -305,7 +341,7 @@ const EditIntro = props => {
 				onInputHandler('headhunterProgram', data.headhunterProgram, true);
 			}
 		},
-		[ data, onInputHandler, location, city ]
+		[ data, onInputHandler, locationState, city ]
 	);
 
 	const onSubmitHandler = async event => {
@@ -417,11 +453,11 @@ const EditIntro = props => {
 
 	const onLocationHandler = e => {
 		ProvCityRelation(e.target.value);
-
 		const elementId = e.target.name;
 		const elementValue = e.target.value;
 		onInputHandler(elementId, elementValue, true);
-		setLocation(e.target.value);
+		dispatch({ type: LOC.CHGPROVINCE, province: e.target.value });
+		onInputHandler('city', '', false);
 	};
 
 	console.log(formState);
@@ -436,6 +472,7 @@ const EditIntro = props => {
 
 	const handleCityChange = (e, value) => {
 		onInputHandler('city', value, true);
+		dispatch({ type: LOC.CHGCITY, citySelected: value });
 	};
 
 	let formContent = <SpinnerCircle />;
@@ -560,7 +597,7 @@ const EditIntro = props => {
 											open={locationOpen}
 											onClose={handleLocationClose}
 											onOpen={handleLocationOpen}
-											value={location}
+											value={locationState.province}
 											onChange={onLocationHandler}>
 											<MenuItem value='' style={{ fontSize: '0.9rem' }}>
 												<em>Kosong</em>
@@ -582,7 +619,7 @@ const EditIntro = props => {
 										name='city'
 										options={city.map(option => option)}
 										onChange={handleCityChange}
-										value={data.city && data.city}
+										value={locationState.citySelected}
 										renderInput={params => <TextField {...params} label='Kota*' margin='normal' variant='standard' />}
 									/>
 
