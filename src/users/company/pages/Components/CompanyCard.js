@@ -9,7 +9,6 @@ import OutsideClick from '../../../../shared/utils/outsideClick';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Button from '@material-ui/core/Button';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IconButton from '../../../../shared/UI_Element/IconButton';
 import TextOnly from '../../../../shared/UI_Element/TextOnly';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
@@ -22,7 +21,9 @@ const CompanyCard = (props) => {
   const { companyid } = useParams();
 
   const [companyDropdown, setCompanyDropdown] = useState(false);
+
   const [unreleasedData, setUnreleasedData] = useState();
+  const [expiredData, setExpiredData] = useState();
   const [displayData, setDisplayData] = useState();
 
   const ref = useRef();
@@ -30,31 +31,42 @@ const CompanyCard = (props) => {
 
   useEffect(() => {
     const token = props.auth.token;
-    if (token) {
-      const payload = {
-        token: token,
-        companyId: companyid,
-      };
+    const payload = {
+      token: token,
+      companyId: companyid,
+    };
 
-      getJobsInCompany(payload).then((res) => {
-        console.log(res);
-        if (res && res.foundJob) {
-          setDisplayData(
-            res.foundJob
-              .filter((dat) => dat.releasedAt != null)
-              .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-          );
-          setUnreleasedData(
-            res.foundJob
-              .filter((dat) => dat.releasedAt === null)
-              .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-          );
-        } else {
-          setDisplayData(null);
-          setUnreleasedData(null);
-        }
-      });
-    }
+    getJobsInCompany(payload).then((res) => {
+      console.log(res);
+      if (res && res.foundJob) {
+        setDisplayData(
+          res.foundJob
+            .filter(
+              (dat) =>
+                dat.releasedAt != null && moment(dat.expiredDate) > moment()
+            )
+            .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+        );
+
+        setExpiredData(
+          res.foundJob
+            .filter(
+              (dat) =>
+                dat.releasedAt != null && moment(dat.expiredDate) < moment()
+            )
+            .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+        );
+
+        setUnreleasedData(
+          res.foundJob
+            .filter((dat) => dat.releasedAt === null)
+            .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+        );
+      } else {
+        setDisplayData(null);
+        setUnreleasedData(null);
+      }
+    });
   }, [getJobsInCompany, companyid, props.auth]);
 
   const DropdownOrder = () => {
@@ -90,11 +102,10 @@ const CompanyCard = (props) => {
                         }}
                       />
                     ) : (
-                      <AccountCircleIcon
+                      <div
+                        className={classes.Avatar}
                         style={{
-                          fontSize: '15rem',
-                          marginBottom: '1rem',
-                          fill: 'black',
+                          backgroundImage: `url('https://res.cloudinary.com/kalkulus/image/upload/v1616503057/Profile_w6vts3.png')`,
                         }}
                       />
                     )}
@@ -110,9 +121,9 @@ const CompanyCard = (props) => {
                         }
                       >
                         {props.isActive ? (
-                          <div className={classes.VerifiedDiv}>
-                            <VerifiedUserIcon /> <span>Verified</span>
-                          </div>
+                          <span className={classes.VerifiedDiv}>
+                            <VerifiedUserIcon /> Verified
+                          </span>
                         ) : (
                           'Menunggu verifikasi admin'
                         )}{' '}
@@ -147,11 +158,13 @@ const CompanyCard = (props) => {
                 </div>
               </div>
 
-              <div className={classes.EditProfile}>
-                <Link to={`/co/${props.companyId}/compro/intro`}>
-                  <IconButton />
-                </Link>
-              </div>
+              {props.auth.isCompany && props.auth.userId === companyid && (
+                <div className={classes.EditProfile}>
+                  <Link to={`/co/${props.companyId}/compro/intro`}>
+                    <IconButton />
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 
@@ -204,18 +217,23 @@ const CompanyCard = (props) => {
         </div>
 
         <div className={classes.Content}>
-          <Tabs />
-          <TextOnly
-            id={props.companyId}
-            labelName='Company Brief Descriptions'
-            route={`/co/${props.companyId}/compro/details`}
-            text={props.briefDescriptions}
-          />
+          <div className={classes.CompanyExclusive}>
+            {props.auth.isCompany && props.auth.userId === companyid && (
+              <Tabs />
+            )}
+            <TextOnly
+              id={props.companyId}
+              labelName='COMPANY BRIEF DESCRIPTION'
+              route={`/co/${props.companyId}/compro/details`}
+              text={props.briefDescriptions}
+              companyid={companyid}
+            />
+          </div>
 
           <div className={classes.CardContainer}>
             <div className={classes.Header}>
               <div className={classes.HeaderTitleDiv}>
-                <p className={classes.Title}>Job Posted</p>
+                <p className={classes.Title}>IKLAN PEKERJAAN</p>
               </div>
               {props.auth.isCompany && props.auth.userId === companyid && (
                 <div className={classes.ButtonsDiv}>
@@ -234,7 +252,10 @@ const CompanyCard = (props) => {
                     <button className={classes.dropbtn} onClick={DropdownOrder}>
                       BUAT PESANAN
                       <ArrowDropDownIcon
-                        style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
+                        style={{
+                          alignSelf: 'center',
+                          marginBottom: '-0.4rem',
+                        }}
                       />
                     </button>
 
@@ -295,24 +316,7 @@ const CompanyCard = (props) => {
                             <p>applicants applied </p>
                           </div>
                           <div className={classes.CardFooter}>
-                            {job.expiredDate ? (
-                              <p className={classes.ExpDate}>
-                                {moment(job.expiredDate).diff(
-                                  moment(),
-                                  'days'
-                                ) > 0
-                                  ? [
-                                      `expired in ${moment(
-                                        job.expiredDate
-                                      ).diff(moment(), 'days')} days`,
-                                    ]
-                                  : 'expired'}
-                              </p>
-                            ) : (
-                              <p className={classes.ExpDate}>
-                                belum ditayangkan
-                              </p>
-                            )}
+                            <p className={classes.ExpDate}>belum ditayangkan</p>
                           </div>
                         </div>
                       </Link>
@@ -372,7 +376,8 @@ const CompanyCard = (props) => {
                     </div>
                   );
                 })
-              ) : props.auth.isCompany &&
+              ) : props.isLoading &&
+                props.auth.isCompany &&
                 unreleasedData &&
                 unreleasedData.length > 0 ? (
                 <div />
@@ -381,6 +386,63 @@ const CompanyCard = (props) => {
                   Belum ada pekerjaan yang ditayangkan oleh perusahaan ini
                 </p>
               )}
+
+              {!props.isLoading &&
+                props.auth.isCompany &&
+                props.auth.userId === companyid &&
+                expiredData &&
+                expiredData.length > 0 &&
+                expiredData.map((job, i) => {
+                  return (
+                    <div key={job.id} className={classes.CardHolder}>
+                      <Link to={`/jobs/new/edit/${job.id}`}>
+                        <div className={classes.JobCard}>
+                          <div className={classes.CardHeader}>
+                            <p className={classes.CardTitle}>{job.jobTitle}</p>
+                            <p className={classes.CardLocation}>
+                              {job.placementLocation}
+                            </p>
+                            <p className={classes.CardRecipient}>
+                              {job.emailRecipient}
+                            </p>
+                          </div>
+                          <div className={classes.CardBody}>
+                            <p
+                              style={{
+                                fontSize: '3rem',
+                                marginBottom: '-0.5rem',
+                                marginTop: '1rem',
+                              }}
+                            >
+                              {job.jobApplicants.length}
+                            </p>
+                            <p>applicants applied </p>
+                          </div>
+                          <div className={classes.CardFooter}>
+                            {job.expiredDate ? (
+                              <p className={classes.ExpDate}>
+                                {moment(job.expiredDate).diff(
+                                  moment(),
+                                  'days'
+                                ) > 0
+                                  ? [
+                                      `expired in ${moment(
+                                        job.expiredDate
+                                      ).diff(moment(), 'days')} days`,
+                                    ]
+                                  : 'expired'}
+                              </p>
+                            ) : (
+                              <p className={classes.ExpDate}>
+                                belum ditayangkan
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>

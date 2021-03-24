@@ -5,7 +5,6 @@ import moment from 'moment';
 import * as actionCreators from '../../../../store/actions';
 
 import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IconButton from '../../../../shared/UI_Element/IconButton';
 import TextOnly from '../../../../shared/UI_Element/TextOnly';
 import RangeSegment from '../../../../shared/UI_Element/RangeSegment';
@@ -54,11 +53,10 @@ const ApplicantCard = (props) => {
                   }}
                 />
               ) : (
-                <AccountCircleIcon
+                <div
+                  className={classes.Avatar}
                   style={{
-                    fontSize: '15rem',
-                    marginBottom: '1rem',
-                    fill: 'black',
+                    backgroundImage: `url('https://res.cloudinary.com/kalkulus/image/upload/v1616503057/Profile_w6vts3.png')`,
                   }}
                 />
               )}
@@ -98,21 +96,23 @@ const ApplicantCard = (props) => {
                   </div>
                 )}
               </div>
-              <div>
-                <label className={classes.InputButton}>
-                  <input
-                    type='file'
-                    name='resume'
-                    id='resume'
-                    onChange={onUploadHandler}
-                    accept='.pdf'
-                  />
-                  <span className={classes.InputButtonText}>
-                    {' '}
-                    Upload Resume{' '}
-                  </span>
-                </label>
-              </div>
+              {props.auth.userId === props.id && (
+                <div>
+                  <label className={classes.InputButton}>
+                    <input
+                      type='file'
+                      name='resume'
+                      id='resume'
+                      onChange={onUploadHandler}
+                      accept='.pdf'
+                    />
+                    <span className={classes.InputButtonText}>
+                      {' '}
+                      Upload Resume{' '}
+                    </span>
+                  </label>
+                </div>
+              )}
 
               {resumeFile && (
                 <div className={classes.SaveResume}>
@@ -142,9 +142,11 @@ const ApplicantCard = (props) => {
                 <button> Jobs Applied </button>
               </Link>
             )}
-            <Link to={`/ap/${props.id}/intro`}>
-              <IconButton />
-            </Link>
+            {props.auth.userId === props.id && (
+              <Link to={`/ap/${props.id}/intro`}>
+                <IconButton />
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -155,6 +157,7 @@ const ApplicantCard = (props) => {
           labelName='Tentang Saya'
           route={`/ap/${props.id}/summary`}
           text={props.details}
+          applicantid={props.id}
         />
 
         <RangeSegment
@@ -168,6 +171,7 @@ const ApplicantCard = (props) => {
           state='experience'
           isLoading={props.applicant.isLoading}
           token={props.auth.token}
+          applicantid={props.id}
         />
 
         <RangeSegment
@@ -181,6 +185,7 @@ const ApplicantCard = (props) => {
           state='education'
           isLoading={props.applicant.isLoading}
           token={props.auth.token}
+          applicantid={props.id}
         />
 
         <RangeSegment
@@ -194,6 +199,7 @@ const ApplicantCard = (props) => {
           state='certification'
           isLoading={props.applicant.isLoading}
           token={props.auth.token}
+          applicantid={props.id}
         />
 
         <SkillsMap
@@ -203,6 +209,7 @@ const ApplicantCard = (props) => {
           routeAdd={`/ap/${props.id}/add/skills`}
           skills={props.skills}
           token={props.auth.token}
+          applicantid={props.id}
         />
       </div>
     </div>

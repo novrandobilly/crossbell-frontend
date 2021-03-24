@@ -13,6 +13,7 @@ import {
   VALIDATOR_EMAIL,
   VALIDATOR_NUMSTR,
 } from '../../../../shared/utils/validator';
+import FAQ from '../../../components/ContactUs/FAQ';
 import Modal from '../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
@@ -70,38 +71,7 @@ const ContactUsContent = (props) => {
     <div className={classes.Content}>
       <div className={classes.HelpArticles}>
         <p className={classes.HeaderTitle}>Help Articles</p>
-        <ul className={classes.HelpArticlesLink}>
-          <li>
-            <Link to='/FrequentlyAskedQuestion/FAQ001'>
-              I am an Employer, how can I post a job ads?
-            </Link>
-          </li>
-          <li>
-            <Link to='/FrequentlyAskedQuestion/FAQ002'>
-              What's the benefit of becoming a jobseeker here?
-            </Link>
-          </li>
-          <li>
-            <Link to='/FrequentlyAskedQuestion/FAQ003'>
-              What's the benefit of becoming an employer here?
-            </Link>
-          </li>
-          <li>
-            <Link to='/FrequentlyAskedQuestion/FAQ004'>
-              I can't remember my login password
-            </Link>
-          </li>
-          <li>
-            <Link to='/FrequentlyAskedQuestion/FAQ005'>
-              I have a billing question (unrecognized charge, invoicing)
-            </Link>
-          </li>
-          <li>
-            <Link to='/FrequentlyAskedQuestion/FAQ006'>
-              I want to report a security issue
-            </Link>
-          </li>
-        </ul>
+        <FAQ />
         <span className={classes.SeeAllArticles}>
           <Link to='/FrequentlyAskedQuestion'>See all help articles</Link>
         </span>

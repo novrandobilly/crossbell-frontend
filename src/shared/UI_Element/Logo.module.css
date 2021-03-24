@@ -1,13 +1,13 @@
 .Logo {
-	display: flex;
-	align-items: center;
-	background-color: transparent;
-	padding: 2px;
-	height: 100%;
-	box-sizing: border-box;
-	border-radius: 5px;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 2px;
+  height: 100%;
+  box-sizing: border-box;
+  width: 15%;
 }
 
 .Logo img {
-	height: auto;
+  height: auto;
 }

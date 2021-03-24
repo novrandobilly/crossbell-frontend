@@ -18,6 +18,7 @@ export {
   getOneApplicant,
   deleteSegment,
   updateResume,
+  getApplicantJobsApplied,
 } from './applicant-actions';
 
 export {

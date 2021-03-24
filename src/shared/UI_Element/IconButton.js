@@ -1,51 +1,52 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-import AddIcon from "@material-ui/icons/Add";
-import EditIcon from "@material-ui/icons/Edit";
-import CloseIcon from "@material-ui/icons/Close";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 // import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from '@material-ui/core/IconButton';
 
-import classes from "./IconButton.module.css";
+import classes from './IconButton.module.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    borderRadius: "3rem",
-    marginLeft: "1rem",
-    width: "2.5rem",
-    height: "2.5rem",
+    borderRadius: '3rem',
+    marginLeft: '1rem',
+    width: '2.5rem',
+    height: '2.5rem',
   },
   delete: {
-    marginLeft: "1rem",
-    width: "2.5rem",
-    height: "2.5rem",
-    backgroundColor: "rgba(245, 0, 87, 0.05)",
-    "&:hover": {
-      backgroundColor: "rgba(245, 0, 87, 0.05)",
+    marginLeft: '1rem',
+    width: '2.5rem',
+    height: '2.5rem',
+    backgroundColor: 'rgba(245, 0, 87, 0.05)',
+    '&:hover': {
+      backgroundColor: 'rgba(245, 0, 87, 0.05)',
     },
   },
   edit: {
-    marginLeft: "1rem",
-    width: "2.5rem",
-    height: "2.5rem",
-    backgroundColor: "rgba(0,0,0,0.05)",
-    "&:hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.05)",
+    marginLeft: '1rem',
+    width: '2.5rem',
+    height: '2.5rem',
+    backgroundColor: 'rgb(240,240,240)',
+    // border: '1px solid rgba(0,0,0,0.05)',
+    '&:hover': {
+      backgroundColor: 'rgb(200,200,200)',
     },
   },
   add: {
-    marginLeft: "1rem",
-    width: "2.5rem",
-    height: "2.5rem",
-    backgroundColor: "rgba(63, 81, 181,0.05)",
-    "&:hover": {
-      backgroundColor: "rgba(63, 81, 181, 0.05)",
+    marginLeft: '1rem',
+    width: '2.5rem',
+    height: '2.5rem',
+    backgroundColor: 'rgba(63, 81, 181,0.05)',
+    '&:hover': {
+      backgroundColor: 'rgba(63, 81, 181, 0.05)',
     },
   },
   label: {
-    textTransform: "lowercase",
+    textTransform: 'lowercase',
   },
 }));
 
@@ -53,13 +54,13 @@ const ButtonIcon = (props) => {
   const styles = useStyles();
 
   switch (props.iconType) {
-    case "NewJob":
+    case 'NewJob':
       return (
         <button
           className={[
             classes.IconAddJobButton,
             classes[props.IconButtonClass],
-          ].join(" ")}
+          ].join(' ')}
         >
           <span className={classes.AddButton}>
             <AddIcon />
@@ -67,10 +68,10 @@ const ButtonIcon = (props) => {
         </button>
       );
 
-    case "NewSegment":
+    case 'NewSegment':
       return (
         <IconButton
-          color="primary"
+          color='primary'
           classes={{ root: styles.add, label: styles.label }}
           onClick={props.onClick}
         >
@@ -78,10 +79,10 @@ const ButtonIcon = (props) => {
         </IconButton>
       );
 
-    case "Delete":
+    case 'Delete':
       return (
         <IconButton
-          color="secondary"
+          color='secondary'
           classes={{ root: styles.delete, label: styles.label }}
           onClick={props.onClick}
         >
@@ -89,13 +90,13 @@ const ButtonIcon = (props) => {
         </IconButton>
       );
 
-    case "Order":
+    case 'Order':
       return (
         <button
           className={[
             classes.IconOrderButton,
             classes[props.IconButtonClass],
-          ].join(" ")}
+          ].join(' ')}
           onClick={props.onClick}
         >
           <span className={classes.OrderButton}>

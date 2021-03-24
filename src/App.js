@@ -69,6 +69,23 @@ const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJob
 
 //==================================== applicant =========================================================
 
+import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
+import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
+import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
+import Subscription from './users/applicant/pages/Components/Subscription';
+
+import JobsApplied from './users/applicant/pages/Components/JobsApplied';
+import EditApplicantIntro from './users/applicant/pages/Components/Edit/EditIntro';
+import EditApplicantSummary from './users/applicant/pages/Components/Edit/EditSummary';
+import EditApplicantEducation from './users/applicant/pages/Components/Edit/Education';
+import EditApplicantExperience from './users/applicant/pages/Components/Edit/Experience';
+import EditApplicantCertification from './users/applicant/pages/Components/Edit/Certification';
+import EditApplicantSkills from './users/applicant/pages/Components/Edit/Skill';
+import AddApplicantEducation from './users/applicant/pages/Components/Add/Education';
+import AddApplicantExperience from './users/applicant/pages/Components/Add/Experience';
+import AddApplicantCertification from './users/applicant/pages/Components/Add/Certification';
+
+
 // import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
 // import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
 // import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
@@ -79,16 +96,12 @@ const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/Applic
 const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
 const Subscription = React.lazy(() => import('./users/applicant/pages/Components/Subscription'));
 
-// import EditApplicantIntro from './users/applicant/pages/Components/Edit/EditIntro';
-// import EditApplicantSummary from './users/applicant/pages/Components/Edit/EditSummary';
-// import EditApplicantEducation from './users/applicant/pages/Components/Edit/Education';
-// import EditApplicantExperience from './users/applicant/pages/Components/Edit/Experience';
-// import EditApplicantCertification from './users/applicant/pages/Components/Edit/Certification';
-// import EditApplicantSkills from './users/applicant/pages/Components/Edit/Skill';
-// import AddApplicantEducation from './users/applicant/pages/Components/Add/Education';
-// import AddApplicantExperience from './users/applicant/pages/Components/Add/Experience';
-// import AddApplicantCertification from './users/applicant/pages/Components/Add/Certification';
-// import AddApplicantSkills from './users/applicant/pages/Components/Add/Skill';
+
+import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
+import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
+import MainNavigation from './shared/Navigation/MainNavigation';
+import Footer from './shared/Navigation/Footer';
+
 
 const EditApplicantIntro = React.lazy(() => import('./users/applicant/pages/Components/Edit/EditIntro'));
 const EditApplicantSummary = React.lazy(() => import('./users/applicant/pages/Components/Edit/EditSummary'));
@@ -137,133 +150,180 @@ const Promo = React.lazy(() => import('./users/admin/pages/Promo/Promo'));
 
 let logoutTimer;
 
-const App = props => {
-	const { login, loginAdmin } = props;
-	useEffect(
-		() => {
-			const authData = JSON.parse(localStorage.getItem('userData'));
-			if (authData && authData.token && !authData.isAdmin && new Date(authData.expiration) > new Date()) {
-				login(authData);
-			} else if (authData && authData.token && authData.isAdmin) {
-				loginAdmin(authData);
-			} else {
-				localStorage.removeItem('userData');
-			}
-		},
-		[ login, loginAdmin ]
-	);
+const App = (props) => {
+  const { login, loginAdmin } = props;
+  useEffect(() => {
+    const authData = JSON.parse(localStorage.getItem('userData'));
+    if (
+      authData &&
+      authData.token &&
+      !authData.isAdmin &&
+      new Date(authData.expiration) > new Date()
+    ) {
+      login(authData);
+    } else if (authData && authData.token && authData.isAdmin) {
+      loginAdmin(authData);
+    } else {
+      localStorage.removeItem('userData');
+    }
+  }, [login, loginAdmin]);
 
-	const adminToken = props.admin.token;
-	const adminTokenExp = props.admin.tokenExpirationDate;
-	const userToken = props.auth.token;
-	const userTokenExp = props.auth.tokenExpirationDate;
-	const { logout, logoutAdmin } = props;
-	useEffect(
-		() => {
-			if (adminToken && adminTokenExp) {
-				const remainingTime = new Date(adminTokenExp).getTime() - new Date().getTime();
-				logoutTimer = setTimeout(logoutAdmin, remainingTime);
-			} else if (userToken && userTokenExp) {
-				const remainingTime = new Date(userTokenExp).getTime() - new Date().getTime();
-				logoutTimer = setTimeout(logout, remainingTime);
-			} else {
-				clearTimeout(logoutTimer);
-			}
-		},
-		[ adminToken, adminTokenExp, userToken, userTokenExp, logout, logoutAdmin ]
-	);
+  const adminToken = props.admin.token;
+  const adminTokenExp = props.admin.tokenExpirationDate;
+  const userToken = props.auth.token;
+  const userTokenExp = props.auth.tokenExpirationDate;
+  const { logout, logoutAdmin } = props;
+  useEffect(() => {
+    if (adminToken && adminTokenExp) {
+      const remainingTime =
+        new Date(adminTokenExp).getTime() - new Date().getTime();
+      logoutTimer = setTimeout(logoutAdmin, remainingTime);
+    } else if (userToken && userTokenExp) {
+      const remainingTime =
+        new Date(userTokenExp).getTime() - new Date().getTime();
+      logoutTimer = setTimeout(logout, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [adminToken, adminTokenExp, userToken, userTokenExp, logout, logoutAdmin]);
 
-	return (
-		<Router>
-			<MainNavigation />
-			<main>
-				<Suspense
-					fallback={
-						<div className='centerGlobal'>
-							<Spinner />
-						</div>
-					}>
-					<Switch>
-						{/* Users Routes: Applicant */}
-						<Route path='/test/modal' component={OrderModal} />
-						<Route path='/ap/:applicantid/res-val' component={ApplicantResumeVal} />
-						<Route path='/ap/:applicantid/add/education' component={AddApplicantEducation} />
-						<Route path='/ap/:applicantid/add/experience' component={AddApplicantExperience} />
-						<Route path='/ap/:applicantid/add/certification' component={AddApplicantCertification} />
-						{/* <Route path='/ap/:applicantid/add/skills' component={AddApplicantSkills} /> */}
+  return (
+    <Router>
+      <MainNavigation />
+      <main>
+        <Switch>
+          {/* Users Routes: Applicant */}
+          <Route path='/test/modal' component={OrderModal} />
+          <Route
+            path='/ap/:applicantid/res-val'
+            component={ApplicantResumeVal}
+          />
+          <Route
+            path='/ap/:applicantid/add/education'
+            component={AddApplicantEducation}
+          />
+          <Route
+            path='/ap/:applicantid/add/experience'
+            component={AddApplicantExperience}
+          />
+          <Route
+            path='/ap/:applicantid/add/certification'
+            component={AddApplicantCertification}
+          />
 
-						<Route path='/ap/:applicantid/intro' component={EditApplicantIntro} />
-						<Route path='/ap/:applicantid/summary' component={EditApplicantSummary} />
-						<Route path='/ap/:applicantid/education/:educationindex' component={EditApplicantEducation} />
-						<Route path='/ap/:applicantid/experience/:experienceindex' component={EditApplicantExperience} />
-						<Route path='/ap/:applicantid/certification/:certificationindex' component={EditApplicantCertification} />
-						<Route path='/ap/:applicantid/skills' component={EditApplicantSkills} />
-						<Route path='/ap/:applicantid' component={ApplicantDetails} />
+          <Route path='/ap/:applicantid/intro' component={EditApplicantIntro} />
+          <Route
+            path='/ap/:applicantid/summary'
+            component={EditApplicantSummary}
+          />
+          <Route
+            path='/ap/:applicantid/education/:educationindex'
+            component={EditApplicantEducation}
+          />
+          <Route
+            path='/ap/:applicantid/experience/:experienceindex'
+            component={EditApplicantExperience}
+          />
+          <Route
+            path='/ap/:applicantid/certification/:certificationindex'
+            component={EditApplicantCertification}
+          />
+          <Route
+            path='/ap/:applicantid/skills'
+            component={EditApplicantSkills}
+          />
 
-						<Route path='/subscription/:applicantid' component={Subscription} />
+          <Route path='/ap/:applicantid/appliedjobs' component={JobsApplied} />
 
-						<Route path='/authentication/ap' component={AuthenticationAp} />
+          <Route path='/ap/:applicantid' component={ApplicantDetails} />
 
-						{/* Users Routes: Company */}
-						<Route path='/co/:companyid/compro/intro' component={EditCompanyIntro} />
-						<Route path='/co/:companyid/compro/details' component={EditCompanyBriefDescriptions} />
-						<Route path='/co/:companyid/compro/personincharge' component={EditCompanyPIC} />
-						<Route path='/co/order/es' component={CompanyExecutiveSearch} />
-						<Route path='/co/order/:orderid/es' component={ExecutiveSearchDetail} />
-						<Route path='/co/order/reguler' component={CompanyOrderForm} />
-						<Route path='/co/order/candidate' component={OrderBCForm} />
-						<Route path='/co/:companyid/listOrder' component={CompanyOrderList} />
-						<Route path='/co/:companyid/jobList' component={CompanyJobList} />
-						<Route path='/co/:orderid/invoice' component={Invoice} />
-						<Route path='/co/:companyid/compro' component={CompanyProfileForm} />
-						<Route path='/co/:companyid' component={CompanyBriefDescriptions} />
-						<Route path='/authentication/co' component={AuthenticationCo} />
+          <Route path='/subscription/:applicantid' component={Subscription} />
 
-						{/* Jobs Routes */}
-						<Route path='/jobs-dashboard' component={JobsDashboard} />
-						<Route path='/jobs/new/edit/:jobsid' component={EditUnreleasedJob} />
-						<Route path='/jobs/new' component={NewJob} />
-						<Route path='/jobs/packageads' component={PackageAds} />
-						<Route path='/jobs/:jobsid/edit' component={EditJob} />
-						<Route path='/jobs/:jobsid' component={JobDetails} />
+          <Route path='/authentication/ap' component={AuthenticationAp} />
 
-						{/* Admin Routes */}
-						<Route path='/ad/alphaomega/admreg' component={AdmAuth} />
-						<Route path='/ad/alphaomega/profile' component={AdminProfile} />
-						<Route path='/ad/alphaomega/applicants/:applicantid' component={ApplicantDetailsAO} />
-						<Route path='/ad/alphaomega/applicants' component={ApplicantsListAO} />
-						<Route path='/ad/alphaomega/jobs/:jobid' component={JobsDetailsAO} />
-						<Route path='/ad/alphaomega/jobs' component={JobsListAO} />
-						<Route path='/ad/alphaomega/companies' component={CompaniesListAO} />
-						<Route path='/ad/alphaomega/customer-supports' component={CustomerSupportsAO} />
-						<Route path='/ad/alphaomega/financial' component={FinancialAO} />
-						<Route path='/ad/alphaomega/order/reguler' component={OrderREG} />
-						<Route path='/ad/alphaomega/order/candidate' component={OrderBC} />
-						<Route path='/ad/alphaomega/order/es' component={OrderES} />
-						<Route path='/ad/alphaomega/order/:orderid/candidate' component={DetailBC} />
-						<Route path='/ad/alphaomega/order/:orderid/es' component={DetailES} />
-						<Route path='/ad/alphaomega/promo' component={Promo} />
+          {/* Users Routes: Company */}
+          <Route
+            path='/co/:companyid/compro/intro'
+            component={EditCompanyIntro}
+          />
+          <Route
+            path='/co/:companyid/compro/details'
+            component={EditCompanyBriefDescriptions}
+          />
+          <Route
+            path='/co/:companyid/compro/personincharge'
+            component={EditCompanyPIC}
+          />
+          <Route path='/co/order/es' component={CompanyExecutiveSearch} />
+          <Route
+            path='/co/order/:orderid/es'
+            component={ExecutiveSearchDetail}
+          />
+          <Route path='/co/order/reguler' component={CompanyOrderForm} />
+          <Route path='/co/order/candidate' component={OrderBCForm} />
+          <Route path='/co/:companyid/listOrder' component={CompanyOrderList} />
+          <Route path='/co/:companyid/jobList' component={CompanyJobList} />
+          <Route path='/co/:orderid/invoice' component={Invoice} />
+          <Route path='/co/:companyid/compro' component={CompanyProfileForm} />
+          <Route path='/co/:companyid' component={CompanyBriefDescriptions} />
+          <Route path='/authentication/co' component={AuthenticationCo} />
 
-						{/* General Routes */}
-						<Route path='/FrequentlyAskedQuestion/:faqId' component={FAQ} />
-						<Route path='/blogs' component={Blogs} />
-						<Route path='/about-us' component={AboutUs} />
-						<Route path='/contact-us' component={ContactUs} />
-						<Route path='/syarat-ketentuan' component={SyaratKetentuan} />
-						<Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
-						<Route path='/forgot' component={ForgotPwd} />
-						<Route path='/reset/:token' component={ResetPwd} />
-						<Route path='/' component={Home} />
+          {/* Jobs Routes */}
+          <Route path='/jobs-dashboard' component={JobsDashboard} />
+          <Route path='/jobs/new/edit/:jobsid' component={EditUnreleasedJob} />
+          <Route path='/jobs/new' component={NewJob} />
+          <Route path='/jobs/packageads' component={PackageAds} />
+          <Route path='/jobs/:jobsid/edit' component={EditJob} />
+          <Route path='/jobs/:jobsid' component={JobDetails} />
 
-						{/* Absurd Routes */}
-						<Redirect to='/' />
-					</Switch>
-				</Suspense>
-			</main>
-			<ContactIcon />
-			<Footer />
-		</Router>
-	);
+          {/* Admin Routes */}
+          <Route path='/ad/alphaomega/admreg' component={AdmAuth} />
+          <Route path='/ad/alphaomega/profile' component={AdminProfile} />
+          <Route
+            path='/ad/alphaomega/applicants/:applicantid'
+            component={ApplicantDetailsAO}
+          />
+          <Route
+            path='/ad/alphaomega/applicants'
+            component={ApplicantsListAO}
+          />
+          <Route path='/ad/alphaomega/jobs/:jobid' component={JobsDetailsAO} />
+          <Route path='/ad/alphaomega/jobs' component={JobsListAO} />
+          <Route path='/ad/alphaomega/companies' component={CompaniesListAO} />
+          <Route
+            path='/ad/alphaomega/customer-supports'
+            component={CustomerSupportsAO}
+          />
+          <Route path='/ad/alphaomega/financial' component={FinancialAO} />
+          <Route path='/ad/alphaomega/order/reguler' component={OrderREG} />
+          <Route path='/ad/alphaomega/order/candidate' component={OrderBC} />
+          <Route path='/ad/alphaomega/order/es' component={OrderES} />
+          <Route
+            path='/ad/alphaomega/order/:orderid/candidate'
+            component={DetailBC}
+          />
+          <Route path='/ad/alphaomega/order/:orderid/es' component={DetailES} />
+          <Route path='/ad/alphaomega/promo' component={Promo} />
+
+          {/* General Routes */}
+          <Route path='/FrequentlyAskedQuestion/:faqId' component={FAQ} />
+          <Route path='/blogs' component={Blogs} />
+          <Route path='/about-us' component={AboutUs} />
+          <Route path='/contact-us' component={ContactUs} />
+          <Route path='/syarat-ketentuan' component={SyaratKetentuan} />
+          <Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
+          <Route path='/forgot' component={ForgotPwd} />
+          <Route path='/reset/:token' component={ResetPwd} />
+          <Route path='/' component={Home} />
+
+          {/* Absurd Routes */}
+          <Redirect to='/' />
+        </Switch>
+      </main>
+      <Footer />
+    </Router>
+  );
+
 };
 
 const mapStateToProps = state => {

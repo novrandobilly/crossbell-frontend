@@ -1,0 +1,72 @@
+.FooterRoute {
+  width: 50%;
+  display: flex;
+  /* border: black solid 1px; */
+  justify-content: space-around;
+}
+
+.FooterRoute p {
+  margin: 0;
+}
+
+.RouteSection {
+  text-align: left;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  width: 30%;
+}
+
+.RouteSection a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.1s ease-in-out;
+}
+
+.RouteSection a:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+.CategoriesTitle {
+  font-size: 1rem;
+  color: rgba(58, 81, 153, 1);
+}
+
+.SocialSection {
+  text-align: left;
+  line-height: 1.5rem;
+  font-weight: bold;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  width: 30%;
+  padding: 0 16px;
+}
+
+.SocialSection a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.SocialSection a:hover {
+  color: rgba(58, 81, 153, 1);
+}
+
+.SocialMediaDiv {
+  display: flex;
+}
+
+.IconDiv {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.4);
+  margin-right: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease-in-out;
+}
+
+.IconDiv:hover {
+  background-color: rgba(58, 81, 153, 1);
+}

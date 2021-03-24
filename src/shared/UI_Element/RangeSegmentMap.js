@@ -55,16 +55,19 @@ const RangeSegmentMap = (props) => {
             <p className={classes.Period}>{props.end}</p>
           </div>
         </div>
-        <div>
-          <Link to={props.routeEdit}>
-            <IconButton />
-          </Link>
 
-          <IconButton
-            iconType='Delete'
-            onClick={(event) => onDeleteHandler(event, props.index)}
-          />
-        </div>
+        {props.auth.userId === props.applicantid && (
+          <div>
+            <Link to={props.routeEdit}>
+              <IconButton />
+            </Link>
+
+            <IconButton
+              iconType='Delete'
+              onClick={(event) => onDeleteHandler(event, props.index)}
+            />
+          </div>
+        )}
       </div>
 
       <div className={classes.ButtonAction}>
@@ -80,6 +83,15 @@ const RangeSegmentMap = (props) => {
   return segmentElement;
 };
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    admin: state.admin,
+    isLoading: state.job.isLoading,
+    error: state.job.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteSegment: (segmentData) =>
@@ -87,4 +99,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(RangeSegmentMap));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(RangeSegmentMap));

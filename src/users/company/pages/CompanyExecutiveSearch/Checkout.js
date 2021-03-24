@@ -168,6 +168,11 @@ const Checkout = (props) => {
         token: props.auth.token,
         companyId: props.auth.userId,
       };
+
+      if (!props.auth.isActive) {
+        throw new Error('Perusahaan anda masih dalam proses verifikasi admin');
+      }
+
       try {
         const res = await props.createRequest(payload);
         console.log(res);
