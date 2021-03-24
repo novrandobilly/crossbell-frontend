@@ -255,9 +255,6 @@ const ApplicantListAO = (props) => {
 
   let content = <SpinnerCircle />;
 
-  console.log(data);
-  console.log(displayData);
-
   if (!isLoading && displayData && displayData.length > 0) {
     content = (
       <div className={classes.FlexContainer}>

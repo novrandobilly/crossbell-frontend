@@ -118,7 +118,7 @@
 }
 
 .Title {
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   font-weight: bold;
   margin: 0;
 }
@@ -163,6 +163,10 @@
   margin-top: 16px;
 }
 
+.CompanyExclusive {
+  margin-bottom: 16px;
+}
+
 /* job list css */
 
 .CardContainer {
@@ -170,9 +174,8 @@
   flex-direction: column;
   justify-content: center;
   background-color: rgb(255, 255, 255);
-  padding: 2rem 3rem 3rem 3rem;
-  margin-top: 1rem;
-  border-radius: 0.2rem;
+  border-radius: 4px;
+  overflow: hidden;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
@@ -187,6 +190,7 @@
   justify-content: 'flex-start';
   flex-wrap: wrap;
   text-align: left;
+  padding: 0px 8px 16px 8px;
 }
 
 .EmptyText {
@@ -201,8 +205,11 @@
   display: flex;
   text-align: left;
   padding: 0 0.3rem;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   align-items: center;
+  padding: 8px 16px;
+  background-color: #c2d7f2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .HeaderTitleDiv {
@@ -213,7 +220,7 @@
   box-sizing: border-box;
   width: 25%;
   height: 310px;
-  padding: 0.5rem 0.56rem;
+  padding: 8px 8px;
 }
 
 .VerifiedDiv {
@@ -260,10 +267,9 @@
 .Avatar {
   width: 100%;
   height: 15rem;
-  background-position: center;
-  background-size: cover;
+  background-position: center center;
+  background-size: contain;
   background-repeat: no-repeat;
-  align-self: center;
   margin-bottom: 1rem;
 }
 

@@ -96,6 +96,10 @@ const OrderBCForm = (props) => {
       return props.createOrderFail();
     }
 
+    if (!props.auth.isActive) {
+      throw new Error('Perusahaan anda masih dalam proses verifikasi admin');
+    }
+
     const orderData = {
       invoiceId: props.auth.userId.slice(0, 6),
       companyId: props.auth.userId,

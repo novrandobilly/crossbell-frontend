@@ -1,7 +1,7 @@
 .JobCard {
   display: flex;
   margin: 1rem;
-  height: 9rem;
+  height: 180px;
   width: 100%;
   padding: 20px;
   border-radius: 5px;

@@ -11,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import JobCard from './JobCard';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
 import LocationData from '../../shared/UI_Element/LocationData';
@@ -54,10 +56,8 @@ const JobsList = (props) => {
   const [employmentFilter, setEmploymentFilter] = useState([]);
 
   const [fieldOfWorkFilter, setFieldOfWorkFilter] = useState('');
-  const [workOpen, setWorkOpen] = useState(false);
 
   const [locationFilter, setLocationFilter] = useState('');
-  const [locationOpen, setLocationOpen] = useState(false);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -193,115 +193,85 @@ const JobsList = (props) => {
   };
 
   //================= Loc/Shift Filter ===========================
-  const onLocationHandler = (e) => {
-    setLocationFilter(e.target.value);
-    console.log(e.target.value);
+  const handleLocationChange = (e, value) => {
+    setLocationFilter(value);
   };
 
-  const handleLocationClose = () => {
-    setLocationOpen(false);
-  };
-
-  const handleLocationOpen = () => {
-    setLocationOpen(true);
-  };
   //=================== Field Of Work Filter ====================================
-
-  const onHandleWork = (e) => {
-    setFieldOfWorkFilter(e.target.value);
-  };
-
-  const handleWorkClose = () => {
-    setWorkOpen(false);
-  };
-
-  const handleWorkOpen = () => {
-    setWorkOpen(true);
+  const handleWorkFieldChange = (e, value) => {
+    setFieldOfWorkFilter(value);
   };
 
   //================= Element Component ===========================
   let content = (
     <div className={classes.Container}>
       <div className={classes.FilterContainer}>
-        <div className={classes.CheckboxCriteria}>
-          <p className={classes.FilterTitle}>Filter</p>
-          <p className={classes.FilterLabel}>Bidang pekerjaan</p>
+        <div className={classes.SortCriteria}>
+          <p className={classes.FilterTitle}>Sortir</p>
+
           <FormControl
-            className={classes.formControl}
-            style={{ width: '100%', marginTop: '-0.5rem' }}
+            style={{
+              width: '100%',
+              textAlign: 'left',
+              marginTop: '16px',
+            }}
           >
-            <InputLabel id='fieldOfWorkFilter'>Pilih</InputLabel>
+            <InputLabel id='sort'>Pilih</InputLabel>
             <Select
-              labelId='fieldOfWorkFilter'
-              id='fieldOfWorkFilter'
-              name='fieldOfWorkFilter'
-              open={workOpen}
-              onClose={handleWorkClose}
-              onOpen={handleWorkOpen}
-              value={fieldOfWorkFilter}
-              onChange={onHandleWork}
-              style={{
-                fontSize: '0.9rem',
-                textAlign: 'left',
-              }}
+              labelId='sort'
+              id='sort'
+              value={sort}
+              onChange={handleChange}
             >
-              <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                <em>Kosongkan</em>
-              </MenuItem>
-              {WorkFieldData.sort().map((work, i) => {
-                return (
-                  <MenuItem
-                    id={i}
-                    value={work}
-                    style={{ fontSize: '0.9rem' }}
-                    key={i}
-                  >
-                    {work}
-                  </MenuItem>
-                );
-              })}
+              <MenuItem value='newest'>Terbaru</MenuItem>
+              <MenuItem value='latest'>Terlama</MenuItem>
+              <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
+              <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
             </Select>
           </FormControl>
         </div>
 
         <div className={classes.CheckboxCriteria}>
+          <p className={classes.FilterTitle}>Filter</p>
+          <p className={classes.FilterLabel}>Bidang pekerjaan</p>
+          <Autocomplete
+            id='fieldOfWorkFilter'
+            name='fieldOfWorkFilter'
+            options={WorkFieldData.map((option) => option)}
+            onChange={handleWorkFieldChange}
+            value={''}
+            style={{ width: '100%' }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                style={{ marginTop: '0' }}
+                label='Pilih*'
+                margin='normal'
+                variant='standard'
+              />
+            )}
+          />
+        </div>
+
+        <div className={classes.CheckboxCriteria}>
           <p className={classes.FilterLabel}>Lokasi</p>
-          <FormControl
-            className={classes.formControl}
-            style={{ width: '100%', marginTop: '-0.5rem' }}
-          >
-            <InputLabel id='locationFilter'>Pilih</InputLabel>
-            <Select
-              labelId='locationFilter'
-              id='locationFilter'
-              name='locationFilter'
-              open={locationOpen}
-              onClose={handleLocationClose}
-              onOpen={handleLocationOpen}
-              value={locationFilter}
-              onChange={onLocationHandler}
-              style={{
-                fontSize: '0.9rem',
-                textAlign: 'left',
-              }}
-            >
-              <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                <em>Kosongkan</em>
-              </MenuItem>
-              {LocationData.sort().map((loc, i) => {
-                return (
-                  <MenuItem
-                    id={i}
-                    value={loc}
-                    style={{ fontSize: '0.9rem' }}
-                    key={i}
-                  >
-                    {loc}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            id='locationFilter'
+            name='locationFilter'
+            options={LocationData.map((option) => option)}
+            onChange={handleLocationChange}
+            value={''}
+            style={{ width: '100%' }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                style={{ marginTop: '0' }}
+                label='Pilih*'
+                margin='normal'
+                variant='standard'
+              />
+            )}
+          />
         </div>
 
         <div className={classes.CheckboxCriteria}>
@@ -373,28 +343,6 @@ const JobsList = (props) => {
       </div>
 
       <div className={classes.JobList} id='JobList'>
-        <div className={classes.SortFilter} id='FormControl'>
-          <FormControl
-            style={{
-              width: '100%',
-              textAlign: 'left',
-            }}
-          >
-            <InputLabel id='sort'>Sortir</InputLabel>
-            <Select
-              labelId='sort'
-              id='sort'
-              value={sort}
-              onChange={handleChange}
-            >
-              <MenuItem value='newest'>Terbaru</MenuItem>
-              <MenuItem value='latest'>Terlama</MenuItem>
-              <MenuItem value='highSalary'>Gaji Tertinggi</MenuItem>
-              <MenuItem value='lowSalary'>Gaji Terendah</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-
         {displayJobs && displayJobs.length > 0 ? (
           displayJobs.map((job) => (
             <JobCard

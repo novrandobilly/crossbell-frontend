@@ -153,6 +153,7 @@ export const getOneApplicant = (payload) => {
         }
       );
       const responseJSON = await response.json();
+      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
@@ -160,6 +161,36 @@ export const getOneApplicant = (payload) => {
       return responseJSON;
     } catch (err) {
       dispatch(getApplicantFail());
+      return err;
+    }
+  };
+};
+
+export const getApplicantJobsApplied = (payload) => {
+  return async (dispatch) => {
+    dispatch(getApplicantStart());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}/jobs`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getApplicantSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getApplicantFail());
+      return err;
     }
   };
 };

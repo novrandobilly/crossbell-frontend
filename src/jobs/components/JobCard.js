@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
 import * as actionTypes from '../../store/actions/actions';
@@ -42,7 +42,11 @@ const JobCard = (props) => {
     setApplicantList(props.jobApplicant);
   }, [props.jobApplicant]);
 
-  let instantApplyButton;
+  let instantApplyButton = (
+    <Button btnType='InstantApply' onClick={() => props.history.push('/')}>
+      Apply
+    </Button>
+  );
   if (!props.auth.isCompany && props.auth.token) {
     instantApplyButton = (
       <Button
@@ -71,7 +75,7 @@ const JobCard = (props) => {
   const onCancelHandler = () => {
     props.resetJob();
   };
-  
+
   let content = (
     <div className={classes.JobCard}>
       <Modal show={props.job.error} onCancel={onCancelHandler}>
@@ -130,9 +134,7 @@ const JobCard = (props) => {
             : 'Salary Undisclosed'}
         </p>
       </div>
-      {!props.auth.isCompany && props.auth.token && (
-        <div className={classes.InstantSubmit}>{instantApplyButton}</div>
-      )}
+      <div className={classes.InstantSubmit}>{instantApplyButton}</div>
 
       <footer />
     </div>
@@ -157,4 +159,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(JobCard));

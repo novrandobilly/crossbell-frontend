@@ -102,17 +102,27 @@ const NavigationLinks = (props) => {
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
         {props.auth.isLoggedIn && !props.auth.isCompany && (
-          <li>
-            <span>
-              Selamat datang,{' '}
+          <React.Fragment>
+            <li>
+              <span>
+                Selamat datang,{' '}
+                <NavLink
+                  to={`/ap/${props.auth.userId}`}
+                  activeClassName={classes.active}
+                >
+                  {data}
+                </NavLink>
+              </span>
+            </li>
+            <li>
               <NavLink
-                to={`/ap/${props.auth.userId}`}
+                to={`/ap/${props.auth.userId}/appliedjobs`}
                 activeClassName={classes.active}
               >
-                {data}
+                Pekerjan Dilamar
               </NavLink>
-            </span>
-          </li>
+            </li>
+          </React.Fragment>
         )}
         <li>
           <NavLink to='/' exact activeClassName={classes.active}>

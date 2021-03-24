@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import moment from 'moment';
 
 import RangeSegmentMap from './RangeSegmentMap';
@@ -27,11 +28,13 @@ const RangeSegment = (props) => {
           {props.labelName && (
             <label className={classes.Label}>{props.labelName}</label>
           )}
-          <div>
-            <Link to={props.routeAdd}>
-              <IconButton iconType='NewSegment' />
-            </Link>
-          </div>
+          {props.auth.userId === props.applicantid && (
+            <div>
+              <Link to={props.routeAdd}>
+                <IconButton iconType='NewSegment' />
+              </Link>
+            </div>
+          )}
         </div>
 
         {segmentArray &&
@@ -61,6 +64,7 @@ const RangeSegment = (props) => {
                     deleteSegmentHandler(elementId)
                   }
                   token={props.token}
+                  applicantid={props.applicantid}
                 />
               </div>
             );
@@ -75,4 +79,13 @@ const RangeSegment = (props) => {
   );
 };
 
-export default RangeSegment;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    admin: state.admin,
+    isLoading: state.job.isLoading,
+    error: state.job.error,
+  };
+};
+
+export default connect(mapStateToProps)(RangeSegment);

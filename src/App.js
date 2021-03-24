@@ -46,6 +46,7 @@ import ApplicantDetails from './users/applicant/pages/ApplicantDetails/Applicant
 import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
 import Subscription from './users/applicant/pages/Components/Subscription';
 
+import JobsApplied from './users/applicant/pages/Components/JobsApplied';
 import EditApplicantIntro from './users/applicant/pages/Components/Edit/EditIntro';
 import EditApplicantSummary from './users/applicant/pages/Components/Edit/EditSummary';
 import EditApplicantEducation from './users/applicant/pages/Components/Edit/Education';
@@ -78,7 +79,6 @@ import AuthenticationAp from './users/applicant/pages/AuthenticationAp/Authentic
 import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
 import MainNavigation from './shared/Navigation/MainNavigation';
 import Footer from './shared/Navigation/Footer';
-import ContactIcon from './shared/UI_Element/ContactIcon';
 
 import OrderModal from './shared/UI_Element/OrderModal';
 
@@ -168,6 +168,9 @@ const App = (props) => {
             path='/ap/:applicantid/skills'
             component={EditApplicantSkills}
           />
+
+          <Route path='/ap/:applicantid/appliedjobs' component={JobsApplied} />
+
           <Route path='/ap/:applicantid' component={ApplicantDetails} />
 
           <Route path='/subscription/:applicantid' component={Subscription} />
@@ -253,7 +256,6 @@ const App = (props) => {
           <Redirect to='/' />
         </Switch>
       </main>
-      <ContactIcon />
       <Footer />
     </Router>
   );

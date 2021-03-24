@@ -110,6 +110,14 @@ const JobsDashboard = (props) => {
     }
   };
 
+  const clearHandler = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: ACTION.SEARCHEMPTY,
+      payload: { jobs: allAvailableJobs },
+    });
+  };
+
   const searchInputHandler = useCallback((id, value, isValid) => {
     dispatch({
       type: ACTION.SEARCHUPDATE,
@@ -131,6 +139,7 @@ const JobsDashboard = (props) => {
       <QueryBar
         searchInputHandler={searchInputHandler}
         searchHandler={searchHandler}
+        clearHandler={clearHandler}
       />
       {jobLists}
     </div>

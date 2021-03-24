@@ -4,27 +4,13 @@
   padding-top: 200px;
 }
 
+/* 
 .Container {
   text-align: left;
   padding: 60px;
-}
+} */
 
-.Container div {
-  margin-left: 32px;
-  margin-bottom: 20px;
-  display: flex;
-}
-
-.Container h3 {
-  margin: 0;
-}
-
-.Container p {
+/* .Container p {
   margin: 0;
   margin-left: 16px;
-}
-
-.Content {
-  display: flex;
-  flex-direction: column;
-}
+} */
