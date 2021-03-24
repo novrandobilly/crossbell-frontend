@@ -18,6 +18,7 @@ import classes from './CompanyOrderForm.module.css';
 
 const ORIGINAL_PRICE = 500000;
 
+
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
 
@@ -262,26 +263,23 @@ const CompanyOrderForm = (props) => {
       {formContent}
     </div>
   );
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    isLoading: state.finance.isLoading,
-    error: state.finance.error,
-  };
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		isLoading: state.finance.isLoading,
+		error: state.finance.error
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createOrder: (orderData) => dispatch(actionCreators.createOrder(orderData)),
-    createOrderFail: () =>
-      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
-    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		createOrder: orderData => dispatch(actionCreators.createOrder(orderData)),
+		createOrderFail: () => dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+		resetOrder: () => dispatch({ type: actionTypes.ORDERRESET })
+	};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CompanyOrderForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyOrderForm));

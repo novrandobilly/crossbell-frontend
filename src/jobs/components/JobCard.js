@@ -10,6 +10,7 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobCard.module.css';
 
+
 const JobCard = (props) => {
   const [jobId, setJobId] = useState(null);
   const [applicantList, setApplicantList] = useState([]);
@@ -141,22 +142,23 @@ const JobCard = (props) => {
   );
 
   return <React.Fragment>{content}</React.Fragment>;
+
 };
 
-const mapStateToProps = (state) => {
-  return {
-    companies: state.company.companies,
-    auth: state.auth,
-    job: state.job,
-  };
+const mapStateToProps = state => {
+	return {
+		companies: state.company.companies,
+		auth: state.auth,
+		job: state.job
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
-    createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
-    resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
-  };
+const mapDispatchToProps = dispatch => {
+	return {
+		applyJob: payload => dispatch(actionCreators.applyJob(payload)),
+		createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
+		resetJob: () => dispatch({ type: actionTypes.JOBRESET })
+	};
 };
 
 export default connect(
