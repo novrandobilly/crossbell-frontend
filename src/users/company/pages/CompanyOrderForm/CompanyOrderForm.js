@@ -40,6 +40,10 @@ const CompanyOrderForm = props => {
 			return props.createOrderFail();
 		}
 
+		if (!props.auth.isActive) {
+			throw new Error('Perusahaan anda masih dalam proses verifikasi admin');
+		}
+
 		let title = 'bronze';
 
 		if (formState.inputs.slot.value > 1) {

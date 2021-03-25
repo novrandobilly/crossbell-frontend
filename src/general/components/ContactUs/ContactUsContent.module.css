@@ -11,22 +11,7 @@
 .HelpArticles {
   text-align: start;
   margin-top: 3rem;
-}
-
-.HelpArticlesLink {
-  list-style: none;
-  padding-left: 1rem;
-}
-
-.HelpArticlesLink > * {
-  margin: 1rem 0;
-  border-bottom: 1px solid rgb(199, 208, 219);
-  padding-bottom: 1rem;
-}
-
-.HelpArticlesLink a {
-  text-decoration: none;
-  color: black;
+  width: 35%;
 }
 
 .SeeAllArticles a {

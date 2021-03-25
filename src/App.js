@@ -17,7 +17,6 @@ import AuthenticationAp from './users/applicant/pages/AuthenticationAp/Authentic
 import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
 import MainNavigation from './shared/Navigation/MainNavigation';
 import Footer from './shared/Navigation/Footer';
-import ContactIcon from './shared/UI_Element/ContactIcon';
 
 import OrderModal from './shared/UI_Element/OrderModal';
 import Spinner from './shared/UI_Element/Spinner/SpinnerCircle';
@@ -69,16 +68,7 @@ const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJob
 
 //==================================== applicant =========================================================
 
-// import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
-// import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
-// import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
-// import Subscription from './users/applicant/pages/Components/Subscription';
-
-const ApplicantResumeVal = React.lazy(() => import('./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal'));
-const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/ApplicantDetails/ApplicantDetails'));
-const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
-const Subscription = React.lazy(() => import('./users/applicant/pages/Components/Subscription'));
-
+// import JobsApplied from './users/applicant/pages/Components/JobsApplied';
 // import EditApplicantIntro from './users/applicant/pages/Components/Edit/EditIntro';
 // import EditApplicantSummary from './users/applicant/pages/Components/Edit/EditSummary';
 // import EditApplicantEducation from './users/applicant/pages/Components/Edit/Education';
@@ -88,7 +78,22 @@ const Subscription = React.lazy(() => import('./users/applicant/pages/Components
 // import AddApplicantEducation from './users/applicant/pages/Components/Add/Education';
 // import AddApplicantExperience from './users/applicant/pages/Components/Add/Experience';
 // import AddApplicantCertification from './users/applicant/pages/Components/Add/Certification';
-// import AddApplicantSkills from './users/applicant/pages/Components/Add/Skill';
+
+// import ApplicantResumeVal from './users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal';
+// import ApplicantDetails from './users/applicant/pages/ApplicantDetails/ApplicantDetails';
+// import ApplicantDetailsAO from './users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO';
+// import Subscription from './users/applicant/pages/Components/Subscription';
+
+const JobsApplied = React.lazy(() => import('./users/applicant/pages/Components/JobsApplied'));
+const ApplicantResumeVal = React.lazy(() => import('./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal'));
+const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/ApplicantDetails/ApplicantDetails'));
+const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
+const Subscription = React.lazy(() => import('./users/applicant/pages/Components/Subscription'));
+
+// import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
+// import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
+// import MainNavigation from './shared/Navigation/MainNavigation';
+// import Footer from './shared/Navigation/Footer';
 
 const EditApplicantIntro = React.lazy(() => import('./users/applicant/pages/Components/Edit/EditIntro'));
 const EditApplicantSummary = React.lazy(() => import('./users/applicant/pages/Components/Edit/EditSummary'));
@@ -190,7 +195,6 @@ const App = props => {
 						<Route path='/ap/:applicantid/add/education' component={AddApplicantEducation} />
 						<Route path='/ap/:applicantid/add/experience' component={AddApplicantExperience} />
 						<Route path='/ap/:applicantid/add/certification' component={AddApplicantCertification} />
-						{/* <Route path='/ap/:applicantid/add/skills' component={AddApplicantSkills} /> */}
 
 						<Route path='/ap/:applicantid/intro' component={EditApplicantIntro} />
 						<Route path='/ap/:applicantid/summary' component={EditApplicantSummary} />
@@ -198,6 +202,9 @@ const App = props => {
 						<Route path='/ap/:applicantid/experience/:experienceindex' component={EditApplicantExperience} />
 						<Route path='/ap/:applicantid/certification/:certificationindex' component={EditApplicantCertification} />
 						<Route path='/ap/:applicantid/skills' component={EditApplicantSkills} />
+
+						<Route path='/ap/:applicantid/appliedjobs' component={JobsApplied} />
+
 						<Route path='/ap/:applicantid' component={ApplicantDetails} />
 
 						<Route path='/subscription/:applicantid' component={Subscription} />
@@ -260,7 +267,6 @@ const App = props => {
 					</Switch>
 				</Suspense>
 			</main>
-			<ContactIcon />
 			<Footer />
 		</Router>
 	);

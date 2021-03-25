@@ -3,7 +3,6 @@ import React from 'react';
 import ApplicantCard from './ApplicantCard';
 
 const ApplicantMap = props => {
-	console.log(props.items.experience);
 	return (
 		<div>
 			<ApplicantCard
