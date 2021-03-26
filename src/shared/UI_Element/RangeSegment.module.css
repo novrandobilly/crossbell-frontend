@@ -4,18 +4,25 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.2rem;
   margin-bottom: 1rem;
-  padding: 32px;
+  padding-bottom: 32px;
 }
 
 .Header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 2.5rem;
+  margin-bottom: 32px;
+  padding: 4px 16px 4px 16px;
+  background-color: #c2d7f2;
+  align-items: center;
+}
+
+.MapContainer {
+  padding: 0 16px 0 32px;
 }
 
 .Label {
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   font-weight: bold;
 }
 

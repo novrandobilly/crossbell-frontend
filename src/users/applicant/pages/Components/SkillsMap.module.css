@@ -5,27 +5,28 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   margin-bottom: 1rem;
   width: 100%;
-}
-
-.Container {
-  padding: 32px;
+  overflow: hidden;
 }
 
 .Header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 32px;
+  background-color: #c2d7f2;
+  padding: 4px 16px 4px 16px;
+  align-items: center;
 }
 
 .Label {
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   font-weight: bold;
 }
 
 .MapContainer {
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 24px;
 }
 
 .SkillContainer {

@@ -47,43 +47,6 @@
   display: none;
 }
 
-.Container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.SelectorContainer {
-  width: 22rem;
-  height: 27rem;
-  display: flex;
-  flex-direction: column;
-  border: none;
-  border-radius: 1rem;
-  background-color: white;
-  font-family: sans-serif;
-  overflow: hidden;
-  justify-content: space-around;
-  background-color: black;
-}
-
-.SelectorSection {
-  display: flex;
-  height: 33%;
-  align-items: center;
-  justify-content: center;
-  border: 1px rgba(0, 0, 0, 0.1) solid;
-  font-size: 1.3rem;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  color: rgba(58, 81, 153, 1);
-  font-weight: bold;
-}
-
-.SelectorSection:hover {
-  opacity: 0.95;
-}
-
 @media (max-width: 1200px) {
   .AuthForm {
     width: 33%;

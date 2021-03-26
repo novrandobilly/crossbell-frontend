@@ -24,7 +24,7 @@
 }
 
 .FormTitle {
-  margin-bottom: 0rem;
+  margin-bottom: 16px;
   font-size: 1.7rem;
   font-weight: bold;
   align-self: flex-start;
@@ -34,7 +34,12 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 1rem 1.5rem;
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+
+.InputBox {
+  height: 65px;
+  margin-bottom: 8px;
 }
 
 .ChangeSign {

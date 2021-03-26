@@ -26,28 +26,28 @@ const QueryBar = (props) => {
             onInputHandler={props.searchInputHandler}
             error={false}
           />
-          <div className={classes.ButtonContainer}>
-            <Button
-              variant='contained'
-              type='submit'
-              color='primary'
-              disableElevation
-              style={{ padding: ' 0 1rem', marginLeft: '2rem' }}
-            >
-              search
-            </Button>
-
-            <Button
-              variant='outlined'
-              type='button'
-              onClick={props.clearHandler}
-              disableElevation
-              style={{ padding: ' 0 1rem', marginLeft: '16px' }}
-            >
-              clear
-            </Button>
-          </div>
         </form>
+        <div className={classes.ButtonContainer}>
+          <Button
+            variant='contained'
+            type='submit'
+            color='primary'
+            disableElevation
+            style={{ padding: ' 0 1rem', marginLeft: '2rem' }}
+          >
+            search
+          </Button>
+
+          <Button
+            variant='outlined'
+            type='button'
+            onClick={props.clearHandler}
+            disableElevation
+            style={{ padding: ' 0 1rem', marginLeft: '16px' }}
+          >
+            clear
+          </Button>
+        </div>
       </div>
     </div>
   );

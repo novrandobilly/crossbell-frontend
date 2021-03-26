@@ -10,7 +10,6 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobCard.module.css';
 
-
 const JobCard = (props) => {
   const [jobId, setJobId] = useState(null);
   const [applicantList, setApplicantList] = useState([]);
@@ -44,7 +43,12 @@ const JobCard = (props) => {
   }, [props.jobApplicant]);
 
   let instantApplyButton = (
-    <Button btnType='InstantApply' onClick={() => props.history.push('/')}>
+    <Button
+      btnType='InstantApply'
+      onClick={() => {
+        props.setModalError(true);
+      }}
+    >
       Apply
     </Button>
   );
@@ -78,87 +82,88 @@ const JobCard = (props) => {
   };
 
   let content = (
-    <div className={classes.JobCard}>
-      <Modal show={props.job.error} onCancel={onCancelHandler}>
-        Tidak dapat melamar pekerjaan untuk saat ini{' '}
-      </Modal>
-      <div className={classes.Logo}>
-        <img
-          src={
-            props.logo
-              ? props.logo.url
-              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-          }
-          alt='company-logo'
-        />
-      </div>
-      <div className={classes.Content}>
-        <div className={classes.ContentHeader}>
-          <h3>
+    <div className={classes.FlexWrap}>
+      <div className={classes.JobCard}>
+        <Modal show={props.job.error} onCancel={onCancelHandler}>
+          Tidak dapat melamar pekerjaan untuk saat ini{' '}
+        </Modal>
+        <div className={classes.Logo}>
+          <img
+            src={
+              props.logo
+                ? props.logo.url
+                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+            }
+            alt='company-logo'
+          />
+        </div>
+        <div className={classes.Content}>
+          <div className={classes.ContentHeader}>
+            <h3>
+              <Link
+                to={`/jobs/${props.jobId}`}
+                style={{ textDecoration: 'inherit', color: 'inherit' }}
+              >
+                {props.jobTitle}
+              </Link>
+            </h3>
             <Link
               to={`/jobs/${props.jobId}`}
+              style={{
+                textDecoration: 'inherit',
+                fontWeight: '500',
+                color: 'rgba(0,0,0,0.6)',
+              }}
+            >
+              Details
+            </Link>
+          </div>
+
+          <div className={classes.TopContent}>
+            <Link
+              to={`/co/${props.companyId._id}`}
               style={{ textDecoration: 'inherit', color: 'inherit' }}
             >
-              {props.jobTitle}
+              <span className={classes.TextLeft}>{props.company}</span>
             </Link>
-          </h3>
-          <Link
-            to={`/jobs/${props.jobId}`}
-            style={{
-              textDecoration: 'inherit',
-              fontWeight: '500',
-              color: 'rgba(0,0,0,0.6)',
-            }}
-          >
-            Details
-          </Link>
-        </div>
 
-        <div className={classes.TopContent}>
-          <Link
-            to={`/co/${props.companyId._id}`}
-            style={{ textDecoration: 'inherit', color: 'inherit' }}
-          >
-            <span className={classes.TextLeft}>{props.company}</span>
-          </Link>
+            <span className={classes.PlacementLocationProps}>
+              , {props.placementLocation}
+            </span>
+          </div>
+          <div>
+            <em>{props.fieldOfWork.filter((fow) => fow).join(', ')}</em>
+          </div>
+          <p className={classes.BottomContent}>
+            {props.salary
+              ? `IDR ${salary.toLocaleString()} /month`
+              : 'Salary Undisclosed'}
+          </p>
+        </div>
+        <div className={classes.InstantSubmit}>{instantApplyButton}</div>
 
-          <span className={classes.PlacementLocationProps}>
-            , {props.placementLocation}
-          </span>
-        </div>
-        <div>
-          <em>{props.fieldOfWork.filter((fow) => fow).join(', ')}</em>
-        </div>
-        <p className={classes.BottomContent}>
-          {props.salary
-            ? `IDR ${salary.toLocaleString()} /month`
-            : 'Salary Undisclosed'}
-        </p>
+        <footer />
       </div>
-      <div className={classes.InstantSubmit}>{instantApplyButton}</div>
-
-      <footer />
     </div>
   );
 
   return <React.Fragment>{content}</React.Fragment>;
-
 };
 
-const mapStateToProps = state => {
-	return {
-		companies: state.company.companies,
-		auth: state.auth,
-		job: state.job
-	};
+const mapStateToProps = (state) => {
+  return {
+    companies: state.company.companies,
+    auth: state.auth,
+    job: state.job,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		applyJob: payload => dispatch(actionCreators.applyJob(payload)),
-		createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
-		resetJob: () => dispatch({ type: actionTypes.JOBRESET })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
+    createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
+    resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
+  };
 };
 
 export default connect(

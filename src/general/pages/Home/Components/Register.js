@@ -71,50 +71,68 @@ const Register = (props) => {
   let formContent = (
     <React.Fragment>
       <div className={classes.ContainerFlex}>
+        <div className={classes.Footer}>
+          <Button
+            color='primary'
+            onClick={props.role}
+            disableElevation
+            endIcon={<ArrowForwardIcon />}
+          >
+            Daftar sebagai perusahaan
+          </Button>
+        </div>
         <div className={classes.Header}>
           <p className={classes.FormTitle}>Registrasi pelamar</p>
         </div>
         <div className={classes.Content}>
-          <Input
-            inputType='input'
-            id='firstName'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label='Nama depan'
-            helperText='Mohon masukkan nama depan yang valid'
-          />
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='firstName'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label='Nama depan'
+              helperText='Mohon masukkan nama depan yang valid'
+            />
+          </div>
 
-          <Input
-            inputType='input'
-            id='lastName'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label='Nama belakang'
-            helperText='Mohon masukkan nama belakang yang valid'
-          />
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='lastName'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label='Nama belakang'
+              helperText='Mohon masukkan nama belakang yang valid'
+            />
+          </div>
 
-          <Input
-            inputType='input'
-            id='email'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_EMAIL()]}
-            onInputHandler={onInputHandler}
-            label='Email'
-            helperText='Mohon masukkan alamat email yang valid'
-          />
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='email'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_EMAIL()]}
+              onInputHandler={onInputHandler}
+              label='Email'
+              helperText='Mohon masukkan alamat email yang valid'
+            />
+          </div>
 
-          <Input
-            inputType='input'
-            id='password'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label='Password'
-            type='password'
-            helperText='Password minimal mengandung 6 karakter'
-          />
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='password'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Password'
+              type='password'
+              helperText='Password minimal mengandung 6 karakter'
+            />
+          </div>
 
           <Button
             variant='contained'
@@ -139,17 +157,6 @@ const Register = (props) => {
               masuk di sini
             </button>
           </span>
-        </div>
-
-        <div className={classes.Footer}>
-          <Button
-            color='primary'
-            onClick={props.role}
-            disableElevation
-            endIcon={<ArrowForwardIcon />}
-          >
-            Daftar sebagai perusahaan
-          </Button>
         </div>
       </div>
     </React.Fragment>

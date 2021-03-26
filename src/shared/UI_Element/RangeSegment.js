@@ -21,8 +21,6 @@ const RangeSegment = (props) => {
 
   return (
     <div className={classes.Wraper}>
-      <div className={classes.Line} />
-
       <div className={classes.Container}>
         <div className={classes.Header}>
           {props.labelName && (
@@ -40,7 +38,7 @@ const RangeSegment = (props) => {
         {segmentArray &&
           segmentArray.map((content, i) => {
             return (
-              <div key={i}>
+              <div key={i} className={classes.MapContainer}>
                 <RangeSegmentMap
                   title={content.school || content.prevTitle || content.title}
                   subTitle={

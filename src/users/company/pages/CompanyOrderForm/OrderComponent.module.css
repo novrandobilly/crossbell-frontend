@@ -4,8 +4,8 @@
 }
 
 .OrderCard {
+  /* width: 20%; */
   background-color: white;
-  margin-right: 16px;
   cursor: pointer;
 }
 
