@@ -1,11 +1,31 @@
+.Pages a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Explore {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 24px 0;
+  padding: 24px 0;
+  color: rgba(58, 81, 153, 1);
+  cursor: pointer;
+}
+
+.Explore:hover {
+  background-color: #d7e2ff;
+}
+
 .Wraper {
-  padding: 2rem 2rem 0rem 2rem;
+  padding: 0 24px 0rem 24px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
 }
 
 .Container {
+  box-sizing: border-box;
   background-color: white;
   border-radius: 0.2rem;
   display: flex;
@@ -13,8 +33,7 @@
   font-family: Arial, Helvetica, sans-serif;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  padding: 1rem;
-  margin-right: 1rem;
+  padding: 16px;
   width: 20%;
 }
 
@@ -93,7 +112,9 @@
 }
 
 .SegmentContainer {
-  width: 76%;
+  width: 80%;
+  box-sizing: border-box;
+  padding: 0 0 0 16px;
 }
 
 .InputButton {

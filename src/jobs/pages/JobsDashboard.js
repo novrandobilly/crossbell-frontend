@@ -1,10 +1,12 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
 
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import JobsList from '../components/JobsList';
 import QueryBar from '../components/QueryBar';
+import Modal from '../../shared/UI_Element/Modal';
 
 import classes from './JobsDashboard.module.css';
 
@@ -58,6 +60,7 @@ const searchReducer = (state, action) => {
 const JobsDashboard = (props) => {
   const [jobEmpty, setJobEmpty] = useState(false);
   const [allAvailableJobs, setAllAvailableJobs] = useState();
+  const [modalError, setModalError] = useState(false);
   const [state, dispatch] = useReducer(searchReducer, {
     search: {
       id: '',
@@ -131,17 +134,40 @@ const JobsDashboard = (props) => {
 
   let jobLists = <Spinner />;
   if (state.jobList) {
-    jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} />;
+    jobLists = (
+      <JobsList
+        items={state.jobList}
+        jobEmpty={jobEmpty}
+        setModalError={setModalError}
+        modalError={modalError}
+      />
+    );
   }
+  console.log(modalError);
+  const onCancelHandler = () => {
+    setModalError(false);
+    props.history.push('/');
+  };
 
   return (
     <div className={classes.JobsDashboard}>
-      <QueryBar
-        searchInputHandler={searchInputHandler}
-        searchHandler={searchHandler}
-        clearHandler={clearHandler}
-      />
-      {jobLists}
+      <Modal show={modalError} onCancel={onCancelHandler}>
+        Mohon masuk terlebih dahulu agar dapat melamar pekerjaan
+      </Modal>
+      <div className={classes.Dashboard}>
+        <div className={classes.Header}>
+          <div className={classes.HeaderSection1} />
+          <div className={classes.HeaderSection2}>
+            <QueryBar
+              searchInputHandler={searchInputHandler}
+              searchHandler={searchHandler}
+              clearHandler={clearHandler}
+            />
+          </div>
+        </div>
+
+        <div className={classes.Content}>{jobLists}</div>
+      </div>
     </div>
   );
 };
@@ -159,4 +185,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobsDashboard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(JobsDashboard));

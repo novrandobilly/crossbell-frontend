@@ -26,7 +26,7 @@ const ACTIONPAGE = {
 const initPagination = {
   pageCount: 1,
   pageNumber: 1,
-  rowsPerPage: 5,
+  rowsPerPage: 10,
   startIndex: 0,
 };
 
@@ -239,7 +239,6 @@ const JobsList = (props) => {
             name='fieldOfWorkFilter'
             options={WorkFieldData.map((option) => option)}
             onChange={handleWorkFieldChange}
-            value={''}
             style={{ width: '100%' }}
             renderInput={(params) => (
               <TextField
@@ -260,7 +259,6 @@ const JobsList = (props) => {
             name='locationFilter'
             options={LocationData.map((option) => option)}
             onChange={handleLocationChange}
-            value={''}
             style={{ width: '100%' }}
             renderInput={(params) => (
               <TextField
@@ -341,48 +339,53 @@ const JobsList = (props) => {
           </div> */}
         </div>
       </div>
-
-      <div className={classes.JobList} id='JobList'>
-        {displayJobs && displayJobs.length > 0 ? (
-          displayJobs.map((job) => (
-            <JobCard
-              key={job._id}
-              jobId={job._id}
-              jobTitle={job.jobTitle}
-              placementLocation={job.placementLocation}
-              company={job.companyId.companyName}
-              logo={job.companyId.logo}
-              salary={job.salary}
-              emailRecipient={job.companyId.emailRecipient}
-              companyId={job.companyId}
-              fieldOfWork={job.fieldOfWork}
-              jobApplicant={job.jobApplicants}
+      <div className={classes.JobContainer}>
+        <div className={classes.JobList} id='JobList'>
+          {displayJobs && displayJobs.length > 0 ? (
+            displayJobs.map((job) => (
+              <JobCard
+                key={job._id}
+                jobId={job._id}
+                jobTitle={job.jobTitle}
+                placementLocation={job.placementLocation}
+                company={job.companyId.companyName}
+                logo={job.companyId.logo}
+                salary={job.salary}
+                emailRecipient={job.companyId.emailRecipient}
+                companyId={job.companyId}
+                fieldOfWork={job.fieldOfWork}
+                jobApplicant={job.jobApplicants}
+                setModalError={props.setModalError}
+                modalError={props.modalError}
+              />
+            ))
+          ) : props.jobEmpty ? (
+            <h2>Tidak ada lowongan pekerjaan yang tersedia</h2>
+          ) : (
+            <h2>Tidak ada pekerjaan sesuai pencarian</h2>
+          )}
+        </div>
+        <div className={classes.PaginationBox}>
+          <div className={classes.Pagination}>
+            <FormControl style={{ width: '4rem' }}>
+              <Select
+                labelId='rowPerPage'
+                id='rowPerPageSelect'
+                value={state.rowsPerPage}
+                onChange={rowsHandler}
+              >
+                <MenuItem value={10}>5</MenuItem>
+                <MenuItem value={20}>10</MenuItem>
+                <MenuItem value={30}>15</MenuItem>
+              </Select>
+              <FormHelperText>Rows</FormHelperText>
+            </FormControl>
+            <Pagination
+              count={state.pageCount}
+              page={state.pageNumber}
+              onChange={pageChangeHandler}
             />
-          ))
-        ) : props.jobEmpty ? (
-          <h2>Tidak ada lowongan pekerjaan yang tersedia</h2>
-        ) : (
-          <h2>Tidak ada pekerjaan sesuai pencarian</h2>
-        )}
-        <div className={classes.PaginationRight}>
-          <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={15}>15</MenuItem>
-            </Select>
-            <FormHelperText>Rows</FormHelperText>
-          </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          </div>
         </div>
       </div>
     </div>

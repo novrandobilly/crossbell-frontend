@@ -8,12 +8,14 @@ import ContactUsContent from './HomeContent/ContactUsContent';
 import classes from './Home.module.css';
 
 const Home = (props) => {
-  const [sign, setSign] = useState(false);
+  const [sign, setSign] = useState(true);
   const [role, setRole] = useState(false);
   const [touch, setTouch] = useState(false);
+  const [nav, setNav] = useState(false);
 
   const toggleSign = () => {
     setSign(!sign);
+    setNav(true);
   };
 
   const toggleRole = () => {
@@ -26,10 +28,6 @@ const Home = (props) => {
   const toggleTouchCompany = () => {
     setTouch(true);
     setRole(!role);
-  };
-  const toggleTouchLogin = () => {
-    setTouch(true);
-    setSign(!sign);
   };
 
   return (
@@ -53,40 +51,16 @@ const Home = (props) => {
           </div>
         </div>
         <div className={classes.AuthForm}>
-          {!props.auth.isLoggedIn && !props.admin.isLoggedIn && !touch && (
-            <div className={classes.Container}>
-              <div className={classes.SelectorContainer}>
-                <div
-                  className={classes.SelectorSection}
-                  onClick={toggleTouch}
-                  style={{ backgroundColor: 'white' }}
-                >
-                  Daftar sebagai pelamar
-                </div>
-                <div
-                  className={classes.SelectorSection}
-                  onClick={toggleTouchCompany}
-                  style={{ backgroundColor: 'white' }}
-                >
-                  Daftar sebagai Perusahaan
-                </div>
-                <div
-                  className={classes.SelectorSection}
-                  onClick={toggleTouchLogin}
-                  style={{ backgroundColor: '#d7e2ff' }}
-                >
-                  Masuk dengan akun yang ada
-                </div>
-              </div>
-            </div>
-          )}
-
-          {!props.auth.isLoggedIn && !props.admin.isLoggedIn && touch && (
+          {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
             <AuthForm
               role={role}
               sign={sign}
+              touch={touch}
+              nav={nav}
               toggleSign={toggleSign}
               toggleRole={toggleRole}
+              toggleTouch={toggleTouch}
+              toggleTouchCompany={toggleTouchCompany}
             />
           )}
         </div>

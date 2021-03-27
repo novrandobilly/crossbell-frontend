@@ -22,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
     width: '2.5rem',
     height: '2.5rem',
     backgroundColor: 'rgba(245, 0, 87, 0.05)',
+    transition: 'all 0.1s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgba(245, 0, 87, 0.05)',
+      backgroundColor: 'rgba(245, 0, 87, 0.2)',
     },
   },
   edit: {
@@ -31,18 +32,19 @@ const useStyles = makeStyles((theme) => ({
     width: '2.5rem',
     height: '2.5rem',
     backgroundColor: 'rgb(240,240,240)',
-    // border: '1px solid rgba(0,0,0,0.05)',
+    transition: 'all 0.1s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgb(200,200,200)',
+      backgroundColor: 'rgb(225,225,225)',
     },
   },
   add: {
     marginLeft: '1rem',
     width: '2.5rem',
     height: '2.5rem',
-    backgroundColor: 'rgba(63, 81, 181,0.05)',
+    backgroundColor: 'rgb(240,240,240)',
+    transition: 'all 0.1s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgba(63, 81, 181, 0.05)',
+      backgroundColor: 'rgb(225,225,225)',
     },
   },
   label: {

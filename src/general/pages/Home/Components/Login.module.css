@@ -39,6 +39,11 @@
   padding: 0rem 1.5rem;
 }
 
+.InputBox {
+  height: 65px;
+  margin-bottom: 8px;
+}
+
 .ChangeSign {
   margin-top: 1.5rem;
   border: none;

@@ -44,6 +44,11 @@
   margin-top: 0.6rem;
 }
 
+.InputBox {
+  height: 65px;
+  margin-bottom: 10px;
+}
+
 .ProfilePicture {
   display: flex;
   flex-direction: column;

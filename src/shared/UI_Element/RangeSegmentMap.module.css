@@ -1,8 +1,7 @@
 .MapContainer {
   border-left: solid 0.4rem rgba(58, 81, 153, 1);
-  padding-left: 4rem;
-  padding-bottom: 2rem;
-  margin-top: -0.5rem;
+  padding-left: 2rem;
+  padding-bottom: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

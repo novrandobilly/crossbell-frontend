@@ -50,9 +50,11 @@ const Login = (props) => {
     } catch (err) {
       console.log(err);
     }
-
-    if (res.token) {
+    console.log(res);
+    if (res.token && !res.isCompany) {
       props.history.push('/jobs-dashboard');
+    } else if (res.token && res.isCompany) {
+      props.history.push(`/co/${res.userId}`);
     } else {
       console.log('error');
     }
@@ -70,26 +72,29 @@ const Login = (props) => {
         </div>
 
         <div className={classes.Content}>
-          <Input
-            inputType='input'
-            id='email'
-            InputClass='Login'
-            validatorMethod={[VALIDATOR_EMAIL()]}
-            onInputHandler={onInputHandler}
-            label='Email'
-            helperText='Please input a valid email address.'
-          />
-
-          <Input
-            inputType='input'
-            id='password'
-            InputClass='Login'
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label='Password'
-            type='password'
-            helperText='Password contains min. 6 characters.'
-          />
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='email'
+              InputClass='Login'
+              validatorMethod={[VALIDATOR_EMAIL()]}
+              onInputHandler={onInputHandler}
+              label='Email'
+              helperText='Please input a valid email address.'
+            />
+          </div>
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='password'
+              InputClass='Login'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Password'
+              type='password'
+              helperText='Password contains min. 6 characters.'
+            />
+          </div>
 
           <Button
             variant='contained'

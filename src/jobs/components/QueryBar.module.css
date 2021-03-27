@@ -3,25 +3,22 @@
   display: flex;
   justify-content: space-around;
   padding: 0.5rem 0;
+  /* border: black solid 1px; */
 }
 
 .SearchContainer {
-  width: 45%;
-  background-color: white;
-  padding: 0 32px;
-  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
-    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
-  border-radius: 4px;
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
 }
 
 .SearchForm {
-  width: 100%;
+  width: 50%;
   display: flex;
-  margin-right: -3rem;
 }
 
 .ButtonContainer {
-  width: 40%;
+  width: 50%;
   align-self: center;
   display: flex;
 }

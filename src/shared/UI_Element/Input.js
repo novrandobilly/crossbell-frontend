@@ -104,7 +104,6 @@ const Input = (props) => {
               step: props.step && props.step,
             },
           }}
-          style={{ margin: '.6rem 0' }}
           InputLabelProps={{
             style: { fontSize: props.labelFontSize || 15 },
           }}
