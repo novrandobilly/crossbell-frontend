@@ -36,6 +36,10 @@ const Education = (props) => {
   const [school, setSchool] = useState('');
   const [data, setData] = useState();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneApplicant } = props;
   useEffect(() => {
     const payload = {
@@ -124,8 +128,6 @@ const Education = (props) => {
       console.log(err);
     }
   };
-
-  console.log(data);
 
   useEffect(() => {
     if (data) {

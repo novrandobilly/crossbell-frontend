@@ -14,6 +14,10 @@ const CompanyJobList = (props) => {
 
   const [data, setData] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getJobsInCompany } = props;
   useEffect(() => {
     const token = props.auth.token;

@@ -70,6 +70,10 @@ const EditIntro = (props) => {
     initialLocation
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [city, setCity] = useState(Cities.default);
   // const [ location, setLocation ] = useState('');
   //   const [locationOpen, setLocationOpen] = useState(false);
@@ -492,7 +496,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Nama depan*'
                     initValue={data.firstName}
-                    initIsValid={true}
+                    initIsValid={data.firstName ? true : false}
                     helperText='Nama depan wajib diisi'
                   />
 
@@ -504,7 +508,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Nama belakang*'
                     initValue={data.lastName}
-                    initIsValid={true}
+                    initIsValid={data.lastName ? true : false}
                     helperText='Nama belakang wajib diisi'
                   />
                 </div>
@@ -518,7 +522,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Gelar*'
                     initValue={data.headline}
-                    initIsValid={true}
+                    initIsValid={data.headline ? true : false}
                     helperText='Gelar wajib diisi'
                   />
 
@@ -534,8 +538,8 @@ const EditIntro = (props) => {
                       views={['year', 'month', 'date']}
                       label='Tanggal Lahir'
                       maxDate={moment()}
-                      initValue={data.dateOfBirth}
-                      initIsValid={true}
+                      initValue={data.dateOfBirth ? data.dateOfBirth : moment()}
+                      initIsValid={data.dateOfBirth ? data.dateOfBirth : false}
                       format='dd/MM/yyyy'
                       style={{ width: '100%' }}
                       helperText='Tanggal lahir wajib diisi'
@@ -552,7 +556,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Email*'
                     initValue={data.email}
-                    initIsValid={true}
+                    initIsValid={data.email ? data.email : false}
                     helperText='Mohon input email yang valid'
                   />
 
@@ -564,7 +568,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Nomor telepon*'
                     initValue={data.phone}
-                    initIsValid={true}
+                    initIsValid={data.phone ? data.phone : false}
                     helperText='Mohon masukkan nomor telepon yang valid'
                   />
                 </div>
@@ -615,7 +619,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Alamat saat ini*'
                     initValue={data.address}
-                    initIsValid={true}
+                    initIsValid={data.address ? data.address : false}
                     helperText='Alamat wajib diisi'
                   />
 
@@ -627,7 +631,7 @@ const EditIntro = (props) => {
                     onInputHandler={onInputHandler}
                     label='Kode Pos*'
                     initValue={data.zip}
-                    initIsValid={true}
+                    initIsValid={data.zip ? data.zip : false}
                     helperText='Kode pos wajib diisi'
                   />
                 </div>
@@ -646,7 +650,7 @@ const EditIntro = (props) => {
                       <TextField
                         {...params}
                         style={{ margin: '0' }}
-                        label='Bidang minat*'
+                        label='Bidang minat'
                         margin='normal'
                         variant='standard'
                       />

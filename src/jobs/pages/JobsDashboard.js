@@ -70,6 +70,10 @@ const JobsDashboard = (props) => {
     jobList: null,
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getAllAvailableJobs } = props;
   useEffect(() => {
     const getJobs = async () => {
@@ -143,7 +147,7 @@ const JobsDashboard = (props) => {
       />
     );
   }
-  console.log(modalError);
+
   const onCancelHandler = () => {
     setModalError(false);
     props.history.push('/');

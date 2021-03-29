@@ -27,19 +27,26 @@
 
 .LinkRef {
   width: fit-content;
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.LinkRef a:hover {
-  color: rgba(58, 81, 153, 1);
+  background-color: white;
+  border-radius: 5px;
 }
 
 .LinkRef a {
   text-decoration: none;
-  color: #d7e2ff;
-
+  color: white;
   /* text-shadow: 1px 1px 0 rgb(0, 0, 0); */
+}
+
+.Explore {
+  background-color: rgba(58, 81, 153, 0.95);
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.LinkRef:hover {
+  background-color: black;
 }
 
 .SmallAbout {

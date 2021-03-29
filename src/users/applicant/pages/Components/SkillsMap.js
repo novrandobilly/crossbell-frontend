@@ -22,7 +22,7 @@ const SkillsMap = (props) => {
 
         {props.skills.length < 1 && (
           <p className={classes.EmptyDescription}>
-            Silahkan lengkapi data diri anda terlebih dahulu
+            Silahkan isi keterampilan anda anda terlebih dahulu
           </p>
         )}
 

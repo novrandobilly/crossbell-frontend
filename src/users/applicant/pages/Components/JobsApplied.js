@@ -16,6 +16,10 @@ const JobsApplied = (props) => {
   const { getApplicantJobsApplied } = props;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const token = props.auth.token;
     if (token) {
       const payload = {

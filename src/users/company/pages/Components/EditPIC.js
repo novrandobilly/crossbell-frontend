@@ -24,6 +24,10 @@ const EditPIC = (props) => {
 
   const [data, setData] = useState();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneCompany } = props;
   useEffect(() => {
     getOneCompany({ userId: companyid }).then((res) => {

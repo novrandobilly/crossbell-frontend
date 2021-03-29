@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Carousel from './Components/Carousel';
 import AuthForm from './Components/AuthForm';
 import ContactUsContent from './HomeContent/ContactUsContent';
+import Button from '@material-ui/core/Button';
 import classes from './Home.module.css';
 
 const Home = (props) => {
@@ -30,6 +31,10 @@ const Home = (props) => {
     setRole(!role);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <React.Fragment>
       <Carousel />
@@ -46,7 +51,7 @@ const Home = (props) => {
           </div>
           <div className={classes.LinkRef}>
             <Link to={`/jobs-dashboard`}>
-              <p>CARI PEKERJAAN DISINI</p>
+              <div className={classes.Explore}>CARI PEKERJAAN DISINI</div>
             </Link>
           </div>
         </div>

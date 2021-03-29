@@ -20,6 +20,7 @@ const ORIGINAL_PRICE = 500000;
 
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
+  const [validationError, setValidationError] = useState(false);
 
   const [orderModal, setOrderModal] = useState(false);
   const [slot, setSlot] = useState('0');
@@ -41,7 +42,7 @@ const CompanyOrderForm = (props) => {
     }
 
     if (!props.auth.isActive) {
-      throw new Error('Perusahaan anda masih dalam proses verifikasi admin');
+      setValidationError(true);
     }
 
     let title = 'bronze';
@@ -55,31 +56,32 @@ const CompanyOrderForm = (props) => {
     if (formState.inputs.slot.value > 9) {
       title = 'platinum';
     }
+    if (!props.auth.isActive) {
+      const orderData = {
+        invoiceId: companyData.userId.slice(0, 3),
+        companyId: companyData.userId,
+        packageName: title,
+        slot: formState.inputs.slot.value,
+        token: props.auth.token,
+      };
 
-    const orderData = {
-      invoiceId: companyData.userId.slice(0, 3),
-      companyId: companyData.userId,
-      packageName: title,
-      slot: formState.inputs.slot.value,
-      token: props.auth.token,
-    };
+      try {
+        if (orderData.slot < 1) {
+          throw new Error('jumlah pembelian tidak boleh dibawah 1');
+        }
 
-    try {
-      if (orderData.slot < 1) {
-        throw new Error('jumlah pembelian tidak boleh dibawah 1');
+        setOrderModal(false);
+
+        const res = await props.createOrder(orderData);
+        if (res) {
+          console.log(res);
+          props.history.push(`/co/${res.orderreg.id}/invoice`);
+        } else {
+          throw new Error('Error nih bro');
+        }
+      } catch (err) {
+        console.log(err);
       }
-
-      setOrderModal(false);
-
-      const res = await props.createOrder(orderData);
-      if (res) {
-        console.log(res);
-        props.history.push(`/co/${res.orderreg.id}/invoice`);
-      } else {
-        throw new Error('Error nih bro');
-      }
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -187,6 +189,7 @@ const CompanyOrderForm = (props) => {
               initValue={slot}
               min='0'
               step='1'
+              helperText={'Minimal 1'}
             />
           </div>
         </div>
@@ -239,6 +242,7 @@ const CompanyOrderForm = (props) => {
 
   const onCancelHandler = () => {
     props.resetOrder();
+    setValidationError(false);
   };
 
   if (props.isLoading) formContent = <Spinner />;
@@ -246,7 +250,16 @@ const CompanyOrderForm = (props) => {
   return (
     <div className={classes.Container}>
       {' '}
-      <Modal show={props.error} onCancel={onCancelHandler}>
+      <Modal
+        show={validationError && !props.auth.isActive}
+        onCancel={onCancelHandler}
+      >
+        Perusahaan anda masih dalam proses verifikasi admin
+      </Modal>
+      <Modal
+        show={props.error && props.auth.isActive}
+        onCancel={onCancelHandler}
+      >
         Tidak dapat melakukan Pembelian untuk saat ini
       </Modal>
       <OrderModal
