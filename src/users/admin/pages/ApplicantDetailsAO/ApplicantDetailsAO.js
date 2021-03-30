@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-import classes from "./ApplicantDetailsAO.module.css";
+import classes from './ApplicantDetailsAO.module.css';
 
 const ApplicantDetailsAO = (props) => {
   const { applicantid } = useParams();
@@ -17,7 +17,11 @@ const ApplicantDetailsAO = (props) => {
   );
 
   const [find, setfind] = useState(false);
-  const [filter, setfilter] = useState({ value: "" });
+  const [filter, setfilter] = useState({ value: '' });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleAll = () => {
     setfind(false);
@@ -25,17 +29,17 @@ const ApplicantDetailsAO = (props) => {
 
   const handleCanceled = () => {
     setfind(true);
-    setfilter("Canceled");
+    setfilter('Canceled');
   };
 
   const handleApproved = () => {
     setfind(true);
-    setfilter("Approved");
+    setfilter('Approved');
   };
 
   const handlePending = () => {
     setfind(true);
-    setfilter("Pending");
+    setfilter('Pending');
   };
 
   return (
@@ -51,27 +55,27 @@ const ApplicantDetailsAO = (props) => {
               <ArrowDropDownIcon />
             </button>
             <div className={classes.DropDownContent}>
-              <button style={{ color: "black" }} onClick={handleAll}>
+              <button style={{ color: 'black' }} onClick={handleAll}>
                 All
               </button>
               <button
-                style={{ color: "rgb(33, 153, 0)" }}
-                value="Approved"
+                style={{ color: 'rgb(33, 153, 0)' }}
+                value='Approved'
                 onClick={handleApproved}
               >
                 Approved
               </button>
               <button
-                style={{ color: "red" }}
-                value="Canceled"
+                style={{ color: 'red' }}
+                value='Canceled'
                 onClick={handleCanceled}
               >
                 Canceled
               </button>
 
               <button
-                style={{ color: "rgb(250, 129, 0)" }}
-                value="Pending"
+                style={{ color: 'rgb(250, 129, 0)' }}
+                value='Pending'
                 onClick={handlePending}
               >
                 Pending
@@ -105,11 +109,11 @@ const ApplicantDetailsAO = (props) => {
                   <th>{job.datePosted} days ago</th>
                   <th
                     style={
-                      job.status === "Canceled"
-                        ? { color: "Red", fontWeight: "bold" }
-                        : job.status === "Approved"
-                        ? { color: "Green", fontWeight: "bold" }
-                        : { color: "Yellow", fontWeight: "bold" }
+                      job.status === 'Canceled'
+                        ? { color: 'Red', fontWeight: 'bold' }
+                        : job.status === 'Approved'
+                        ? { color: 'Green', fontWeight: 'bold' }
+                        : { color: 'Yellow', fontWeight: 'bold' }
                     }
                   >
                     {job.status}
@@ -120,8 +124,8 @@ const ApplicantDetailsAO = (props) => {
                         <ArrowDropDownIcon />
                       </button>
                       <div className={classes.DropDownContent}>
-                        <button style={{ color: "Green" }}>Activate</button>
-                        <button style={{ color: "red" }}>Block</button>
+                        <button style={{ color: 'Green' }}>Activate</button>
+                        <button style={{ color: 'red' }}>Block</button>
                       </div>
                     </div>
                   </th>
@@ -140,11 +144,11 @@ const ApplicantDetailsAO = (props) => {
                   <th>{job.datePosted} days ago</th>
                   <th
                     style={
-                      job.status === "Canceled"
-                        ? { color: "Red", fontWeight: "bold" }
-                        : job.status === "Approved"
-                        ? { color: "Green", fontWeight: "bold" }
-                        : { color: "Yellow", fontWeight: "bold" }
+                      job.status === 'Canceled'
+                        ? { color: 'Red', fontWeight: 'bold' }
+                        : job.status === 'Approved'
+                        ? { color: 'Green', fontWeight: 'bold' }
+                        : { color: 'Yellow', fontWeight: 'bold' }
                     }
                   >
                     {job.status}
@@ -155,8 +159,8 @@ const ApplicantDetailsAO = (props) => {
                         <ArrowDropDownIcon />
                       </button>
                       <div className={classes.DropDownContent}>
-                        <button style={{ color: "Green" }}>Activate</button>
-                        <button style={{ color: "red" }}>Block</button>
+                        <button style={{ color: 'Green' }}>Activate</button>
+                        <button style={{ color: 'red' }}>Block</button>
                       </div>
                     </div>
                   </th>

@@ -158,6 +158,10 @@ const ApplicantListAO = (props) => {
     applicantList: [],
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getAllApplicant, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };

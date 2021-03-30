@@ -49,6 +49,10 @@ const OrderES = (props) => {
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getWholeOrderES } = props;
   useEffect(() => {
     const token = props.admin.token;

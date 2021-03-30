@@ -99,6 +99,10 @@ const DetailES = (props) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const token = props.admin.token;
     if (token) {
       const dataES = {

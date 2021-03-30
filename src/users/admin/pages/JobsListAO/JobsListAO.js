@@ -74,6 +74,10 @@ const JobsListAO = (props) => {
     setfilter('Expired');
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getAllJob, getWholeCompanies, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };
