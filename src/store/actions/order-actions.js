@@ -121,7 +121,6 @@ export const createOrder = orderData => {
 		try {
 			const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`, {
 				method: 'POST',
-				// mode: 'no-cors',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${orderData.token}`
