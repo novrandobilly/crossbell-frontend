@@ -19,6 +19,10 @@ const EditSummary = (props) => {
 
   const [data, setData] = useState();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneApplicant } = props;
   useEffect(() => {
     const payload = {
@@ -74,7 +78,7 @@ const EditSummary = (props) => {
     formContent = (
       <React.Fragment>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Ringkasan tentang diri anda</p>
+          <p className={classes.FormTitle}>Ringkasan diri</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>

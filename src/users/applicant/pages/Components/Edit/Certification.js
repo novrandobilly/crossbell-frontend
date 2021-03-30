@@ -68,6 +68,10 @@ const Certification = (props) => {
     false
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const expiryHandler = (event) => {
     setExpiry(!expiry);
   };

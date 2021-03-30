@@ -15,7 +15,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import JobCard from './JobCard';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
-import LocationData from '../../shared/UI_Element/LocationData';
+import CitiesData from '../../shared/UI_Element/CitiesData';
 
 import classes from './JobsList.module.css';
 
@@ -202,6 +202,11 @@ const JobsList = (props) => {
     setFieldOfWorkFilter(value);
   };
 
+  let cities = [];
+  for (const key in CitiesData) {
+    if (key !== 'default') cities = [...cities, ...CitiesData[key]];
+  }
+
   //================= Element Component ===========================
   let content = (
     <div className={classes.Container}>
@@ -257,7 +262,7 @@ const JobsList = (props) => {
           <Autocomplete
             id='locationFilter'
             name='locationFilter'
-            options={LocationData.map((option) => option)}
+            options={cities.map((option) => option)}
             onChange={handleLocationChange}
             style={{ width: '100%' }}
             renderInput={(params) => (

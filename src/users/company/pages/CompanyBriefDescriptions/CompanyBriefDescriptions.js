@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Spinner from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
-import * as actionCreators from "../../../../store/actions";
-import CompanyMap from "../Components/CompanyMap";
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import * as actionCreators from '../../../../store/actions';
+import CompanyMap from '../Components/CompanyMap';
 
 const CompanyBriefDescriptions = (props) => {
   const { companyid } = useParams();
   const [loadedCompany, setLoadedCompany] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const { getOneCompany } = props;
   useEffect(() => {

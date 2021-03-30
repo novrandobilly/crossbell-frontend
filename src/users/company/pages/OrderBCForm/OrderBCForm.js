@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -88,6 +88,10 @@ const OrderBCForm = (props) => {
     },
     false
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();

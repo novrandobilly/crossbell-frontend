@@ -10,6 +10,10 @@ const JobDetails = (props) => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneJob } = props;
   useEffect(() => {
     const fetchJob = async () => {

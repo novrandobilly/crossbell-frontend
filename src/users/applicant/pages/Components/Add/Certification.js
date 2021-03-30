@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
@@ -49,6 +49,10 @@ const Certification = (props) => {
     },
     false
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const expiryHandler = (event) => {
     setExpiry(!expiry);

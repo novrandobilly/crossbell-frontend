@@ -47,6 +47,10 @@ const EditJob = (props) => {
     true
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneJob } = props;
   useEffect(() => {
     const fetchJob = async () => {

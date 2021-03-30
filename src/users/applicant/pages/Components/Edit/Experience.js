@@ -26,6 +26,10 @@ const Experience = (props) => {
   const [data, setData] = useState();
   const [tillNow, setTillNow] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneApplicant } = props;
   useEffect(() => {
     const payload = {

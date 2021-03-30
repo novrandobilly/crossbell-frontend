@@ -17,6 +17,10 @@ const ApplicantDetails = (props) => {
   const { getOneApplicant, getApplicantFail } = props;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const payload = {
       applicantId: applicantid,
       token: props.auth.token || props.admin.token,

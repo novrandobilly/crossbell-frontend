@@ -18,233 +18,262 @@ import classes from './CompanyOrderForm.module.css';
 
 const ORIGINAL_PRICE = 500000;
 
-const CompanyOrderForm = props => {
-	const companyData = JSON.parse(localStorage.getItem('userData'));
-	const [ price, setPrice ] = useState(ORIGINAL_PRICE);
 
-	const [ orderModal, setOrderModal ] = useState(false);
-	// const [ slot, setSlot ] = useState('0');
+const CompanyOrderForm = (props) => {
+  const companyData = JSON.parse(localStorage.getItem('userData'));
+  const [validationError, setValidationError] = useState(false);
 
-	const [ formState, onInputHandler ] = useForm(
-		{
-			slot: {
-				value: null,
-				isValid: false
-			}
-		},
-		false
-	);
+  const [orderModal, setOrderModal] = useState(false);
+  const [slot, setSlot] = useState('0');
 
-	const onSubmitHandler = async event => {
-		event.preventDefault();
-		if (!formState.formIsValid) {
-			return props.createOrderFail();
-		}
+  const [formState, onInputHandler] = useForm(
+    {
+      slot: {
+        value: null,
+        isValid: false,
+      },
+    },
+    false
+  );
 
-		if (!props.auth.isActive) {
-			throw new Error('Perusahaan anda masih dalam proses verifikasi admin');
-		}
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    if (!formState.formIsValid) {
+      return props.createOrderFail();
+    }
 
-		let title = 'bronze';
+    if (!props.auth.isActive) {
+      setValidationError(true);
+    }
 
-		if (formState.inputs.slot.value > 1) {
-			title = 'silver';
-		}
-		if (formState.inputs.slot.value > 4) {
-			title = 'gold';
-		}
-		if (formState.inputs.slot.value > 9) {
-			title = 'platinum';
-		}
+    let title = 'bronze';
 
-		const orderData = {
-			invoiceId: companyData.userId.slice(0, 3),
-			companyId: companyData.userId,
-			packageName: title,
-			slot: formState.inputs.slot.value,
-			token: props.auth.token
-		};
+    if (formState.inputs.slot.value > 1) {
+      title = 'silver';
+    }
+    if (formState.inputs.slot.value > 4) {
+      title = 'gold';
+    }
+    if (formState.inputs.slot.value > 9) {
+      title = 'platinum';
+    }
+    if (!props.auth.isActive) {
+      const orderData = {
+        invoiceId: companyData.userId.slice(0, 3),
+        companyId: companyData.userId,
+        packageName: title,
+        slot: formState.inputs.slot.value,
+        token: props.auth.token,
+      };
 
-		if (orderData.slot < 1) {
-			throw new Error('jumlah pembelian tidak boleh dibawah 1');
-		}
-		setOrderModal(false);
-		try {
-			const res = await props.createOrder(orderData);
-			console.log(res);
-			props.history.push(`/co/${res.orderreg.id}/invoice`);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+      try {
+        if (orderData.slot < 1) {
+          throw new Error('jumlah pembelian tidak boleh dibawah 1');
+        }
 
-	useEffect(
-		() => {
-			if (formState.inputs.slot.value <= 1) setPrice(ORIGINAL_PRICE);
-			if (formState.inputs.slot.value <= 4) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05);
-			if (formState.inputs.slot.value <= 9) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1);
-			if (formState.inputs.slot.value > 9) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15);
-		},
-		[ formState.inputs.slot.value ]
-	);
+        setOrderModal(false);
 
-	const onCloseOrderModal = () => {
-		setOrderModal(false);
-	};
+        const res = await props.createOrder(orderData);
+        if (res) {
+          console.log(res);
+          props.history.push(`/co/${res.orderreg.id}/invoice`);
+        } else {
+          throw new Error('Error nih bro');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
-	const onOpenOrderModal = () => {
-		setOrderModal(true);
-	};
+  let price;
 
-	const OnclickBronze = () => {
-		onInputHandler('slot', 1, true);
-		setPrice(ORIGINAL_PRICE);
-		// setSlot('1');
-	};
+  if (formState.inputs.slot.value <= 1) price = ORIGINAL_PRICE;
+  if (formState.inputs.slot.value > 1)
+    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05;
+  if (formState.inputs.slot.value >= 4)
+    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
+  if (formState.inputs.slot.value >= 9)
+    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15;
 
-	const OnclickSilver = () => {
-		onInputHandler('slot', 4, true);
-		setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05);
-		// setSlot('4');
-	};
+  const onCloseOrderModal = () => {
+    setOrderModal(false);
+  };
 
-	const OnclickGold = () => {
-		onInputHandler('slot', 9, true);
-		setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1);
-		// setSlot('9');
-	};
+  const onOpenOrderModal = () => {
+    setOrderModal(true);
+  };
 
-	const OnclickPlatinum = () => {
-		onInputHandler('slot', 10, true);
-		setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15);
-		// setSlot('10');
-	};
+  const OnclickBronze = () => {
+    onInputHandler('slot', 1, true);
+    setSlot('1');
+  };
 
-	// useEffect(
-	// 	() => {
-	// 		onInputHandler('state', slot, true);
-	// 	},
-	// 	[ onInputHandler, slot ]
-	// );
-	let formContent = (
-		<React.Fragment>
-			<div className={classes.PackageList}>
-				<div onClick={OnclickBronze} className={classes.PackageCard}>
-					<OrderComponent title='Bronze' price={ORIGINAL_PRICE} slot='1 slot' createOrder={props.createOrder} />
-				</div>
+  const OnclickSilver = () => {
+    onInputHandler('slot', 4, true);
+    setSlot('4');
+  };
 
-				<div onClick={OnclickSilver} className={classes.PackageCard}>
-					<OrderComponent
-						title='Silver'
-						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05}
-						slot='2 - 4 slot'
-						perks={[ 'Diskon per slot sebesar 5%' ]}
-						createOrder={props.createOrder}
-					/>
-				</div>
+  const OnclickGold = () => {
+    onInputHandler('slot', 9, true);
+    setSlot('9');
+  };
 
-				<div onClick={OnclickGold} className={classes.PackageCard}>
-					<OrderComponent
-						title='Gold'
-						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
-						slot='5 - 9 slot'
-						perks={[ 'Diskon per slot sebesar 10%' ]}
-						createOrder={props.createOrder}
-					/>
-				</div>
+  const OnclickPlatinum = () => {
+    onInputHandler('slot', 10, true);
+    setSlot('10');
+  };
 
-				<div onClick={OnclickPlatinum} className={classes.PackageCard}>
-					<OrderComponent
-						title='Platinum'
-						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
-						slot='>9 slot'
-						perks={[ 'Diskon per slot sebesar 15%' ]}
-						createOrder={props.createOrder}
-					/>
-				</div>
-			</div>
-			<form className={classes.FormContainer} onSubmit={onSubmitHandler}>
-				<div className={classes.InputAmount} style={{ marginTop: '20px' }}>
-					<p className={classes.SlotEqual}>1 Slot = 2 minggu waktu tayang iklan</p>
-				</div>
+  useEffect(() => {
+    onInputHandler('state', slot, true);
+  }, [onInputHandler, slot]);
 
-				<div className={classes.InputAmount}>
-					<p className={classes.Label}>Jumlah slot yang ingin dibeli</p>
-					<div className={classes.InputSlot}>
-						<Input
-							inputType='input'
-							id='slot'
-							InputClass='PackageSlot'
-							validatorMethod={[ VALIDATOR_MIN(1) ]}
-							onInputHandler={onInputHandler}
-							type='number'
-							initValue={formState.inputs.slot.value ? formState.inputs.slot.value : '0'}
-							min='0'
-							step='1'
-							value={(formState.inputs.slot.value && formState.inputs.slot.value) || '0'}
-						/>
-					</div>
-				</div>
+  let formContent = (
+    <React.Fragment>
+      <div className={classes.PackageList}>
+        <div onClick={OnclickBronze} className={classes.PackageCard}>
+          <OrderComponent
+            title='Bronze'
+            price={ORIGINAL_PRICE}
+            slot='1 slot'
+            createOrder={props.createOrder}
+          />
+        </div>
 
-				<div className={classes.InputAmount} style={{ marginBottom: '-16px' }}>
-					<p className={classes.Label}>Jenis paket:</p>
-					<p className={classes.InputSlot}>
-						{formState.inputs.slot.value <= 1 ? (
-							'Bronze'
-						) : formState.inputs.slot.value <= 4 ? (
-							'Silver'
-						) : formState.inputs.slot.value <= 9 ? (
-							'Gold'
-						) : (
-							'Platinum'
-						)}
-					</p>
-				</div>
+        <div onClick={OnclickSilver} className={classes.PackageCard}>
+          <OrderComponent
+            title='Silver'
+            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+            slot='2 - 4 slot'
+            perks={['Diskon per slot sebesar 5%']}
+            createOrder={props.createOrder}
+          />
+        </div>
 
-				<div className={classes.InputAmount} style={{ borderBottom: '1px solid black' }}>
-					<p className={classes.Label}>Harga per slot:</p>
-					<p className={classes.InputSlot}>IDR {price.toLocaleString()}</p>
-				</div>
-				<div className={classes.InputAmount}>
-					<p className={classes.Label}>Total:</p>
-					<p className={classes.InputSlot}>
-						<strong>IDR {(price * formState.inputs.slot.value).toLocaleString()}</strong>
-					</p>
-				</div>
+        <div onClick={OnclickGold} className={classes.PackageCard}>
+          <OrderComponent
+            title='Gold'
+            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
+            slot='5 - 9 slot'
+            perks={['Diskon per slot sebesar 10%']}
+            createOrder={props.createOrder}
+          />
+        </div>
 
-				<div style={{ width: '100%', textAlign: 'center' }}>
-					<Button
-						type='button'
-						variant='contained'
-						color='primary'
-						disableElevation
-						disabled={!formState.formIsValid}
-						style={{ width: '50%', marginTop: '1rem' }}
-						onClick={onOpenOrderModal}>
-						Submit
-					</Button>
-				</div>
-			</form>
-		</React.Fragment>
-	);
-	const onCancelHandler = () => {
-		props.resetOrder();
-	};
+        <div onClick={OnclickPlatinum} className={classes.PackageCard}>
+          <OrderComponent
+            title='Platinum'
+            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
+            slot='>9 slot'
+            perks={['Diskon per slot sebesar 15%']}
+            createOrder={props.createOrder}
+          />
+        </div>
+      </div>
+      <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
+        <div className={classes.InputAmount} style={{ marginTop: '20px' }}>
+          <p className={classes.SlotEqual}>
+            1 Slot = 2 minggu waktu tayang iklan
+          </p>
+        </div>
 
-	if (props.isLoading) formContent = <Spinner />;
+        <div className={classes.InputAmount}>
+          <p className={classes.Label}>Jumlah slot yang ingin dibeli</p>
+          <div className={classes.InputSlot}>
+            <Input
+              inputType='input'
+              id='slot'
+              InputClass='PackageSlot'
+              validatorMethod={[VALIDATOR_MIN(1)]}
+              onInputHandler={onInputHandler}
+              type='number'
+              initValue={slot}
+              min='0'
+              step='1'
+              helperText={'Minimal 1'}
+            />
+          </div>
+        </div>
 
-	return (
-		<div className={classes.Container}>
-			{' '}
-			<Modal show={props.error} onCancel={onCancelHandler}>
-				Tidak dapat melakukan Pembelian untuk saat ini
-			</Modal>
-			<OrderModal show={orderModal} onCancel={onCloseOrderModal} Accept={onSubmitHandler}>
-				Buat pesanan sekarang?
-			</OrderModal>
-			{formContent}
-		</div>
-	);
+        <div className={classes.InputAmount} style={{ marginBottom: '-16px' }}>
+          <p className={classes.Label}>Jenis paket:</p>
+          <p className={classes.InputSlot}>
+            {formState.inputs.slot.value <= 1
+              ? 'Bronze'
+              : formState.inputs.slot.value <= 4
+              ? 'Silver'
+              : formState.inputs.slot.value <= 9
+              ? 'Gold'
+              : 'Platinum'}
+          </p>
+        </div>
+
+        <div
+          className={classes.InputAmount}
+          style={{ borderBottom: '1px solid black' }}
+        >
+          <p className={classes.Label}>Harga per slot:</p>
+          <p className={classes.InputSlot}>IDR {price.toLocaleString()}</p>
+        </div>
+        <div className={classes.InputAmount}>
+          <p className={classes.Label}>Total:</p>
+          <p className={classes.InputSlot}>
+            <strong>
+              IDR {(price * formState.inputs.slot.value).toLocaleString()}
+            </strong>
+          </p>
+        </div>
+
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <Button
+            type='button'
+            variant='contained'
+            color='primary'
+            disableElevation
+            disabled={!formState.formIsValid}
+            style={{ width: '50%', marginTop: '1rem' }}
+            onClick={onOpenOrderModal}
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </React.Fragment>
+  );
+
+  const onCancelHandler = () => {
+    props.resetOrder();
+    setValidationError(false);
+  };
+
+  if (props.isLoading) formContent = <Spinner />;
+
+  return (
+    <div className={classes.Container}>
+      {' '}
+      <Modal
+        show={validationError && !props.auth.isActive}
+        onCancel={onCancelHandler}
+      >
+        Perusahaan anda masih dalam proses verifikasi admin
+      </Modal>
+      <Modal
+        show={props.error && props.auth.isActive}
+        onCancel={onCancelHandler}
+      >
+        Tidak dapat melakukan Pembelian untuk saat ini
+      </Modal>
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={onSubmitHandler}
+      >
+        Buat pesanan sekarang?
+      </OrderModal>
+      {formContent}
+    </div>
+  );
+
 };
 
 const mapStateToProps = state => {

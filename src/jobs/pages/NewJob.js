@@ -22,6 +22,7 @@ import {
   VALIDATOR_ALWAYSTRUE,
 } from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
+import CitiesData from '../../shared/UI_Element/CitiesData';
 
 import classes from './NewJob.module.css';
 
@@ -83,6 +84,10 @@ const NewJob = (props) => {
     false
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneCompany, auth } = props;
   useEffect(() => {
     const employment = document.getElementById('employment');
@@ -129,7 +134,6 @@ const NewJob = (props) => {
       token: props.auth.token,
       userId: props.auth.userId,
     };
-    console.log(jobData);
     try {
       const res = await props.createJob(jobData, authData);
       console.log(res);
@@ -158,7 +162,6 @@ const NewJob = (props) => {
       token: props.auth.token,
       userId: props.auth.userId,
     };
-    console.log(jobData);
     try {
       const res = await props.saveJobDraft(jobData, authData);
       console.log(res);
@@ -187,7 +190,7 @@ const NewJob = (props) => {
       token: props.auth.token,
       userId: props.auth.userId,
     };
-    console.log(jobData);
+
     try {
       const res = await props.saveJobDraft(jobData, authData);
       console.log(res);
@@ -232,6 +235,16 @@ const NewJob = (props) => {
     setEducationalStageOpen(true);
   };
 
+  const handleLocationChange = (e, value) => {
+    onInputHandler('placementLocation', value, true);
+  };
+
+  let cities = [];
+
+  for (const key in CitiesData) {
+    if (key !== 'default') cities = [...cities, ...CitiesData[key]];
+  }
+
   let formContent = (
     <div className={classes.ContainerFlex}>
       <p className={classes.FormTitle}>Form Iklan Lowongan Pekerjaan</p>
@@ -249,14 +262,21 @@ const NewJob = (props) => {
               helperText='Judul iklan pekerjaan wajib diisi'
             />
 
-            <Input
-              inputType='input'
-              id='placementLocation'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Lokasi Penempatan*'
-              helperText='Lokasi penempatan wajib diisi'
+            <Autocomplete
+              id='locationFilter'
+              name='locationFilter'
+              options={cities.map((option) => option)}
+              onChange={handleLocationChange}
+              style={{ margin: '0' }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  style={{ margin: '0' }}
+                  label='Lokasi*'
+                  margin='normal'
+                  variant='standard'
+                />
+              )}
             />
           </div>
 

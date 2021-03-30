@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-import EditIntro from "../Components/EditIntro";
-import EditCompanyBriefDescriptions from "../Components/EditCompanyBriefDescriptions";
-import EditPIC from "../Components/EditPIC";
+import EditIntro from '../Components/EditIntro';
+import EditCompanyBriefDescriptions from '../Components/EditCompanyBriefDescriptions';
+import EditPIC from '../Components/EditPIC';
 
-import classes from "./CompanyProfileForm.module.css";
+import classes from './CompanyProfileForm.module.css';
 
 const CompanyProfileForm = (props) => {
   const [push, setPush] = useState(true);
   const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const pushHandler = () => {
     setPush(!push);
@@ -30,7 +34,7 @@ const CompanyProfileForm = (props) => {
     <div className={classes.Form}>
       {counter === 0 ? (
         <EditIntro
-          FlexClass="FlexContainer"
+          FlexClass='FlexContainer'
           push={push}
           pushHandler={pushHandler}
           onNextHandler={onNextHandler}

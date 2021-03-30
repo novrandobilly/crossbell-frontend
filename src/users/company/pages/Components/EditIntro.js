@@ -24,6 +24,10 @@ const EditIntro = (props) => {
 
   const [data, setData] = useState();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getOneCompany } = props;
   useEffect(() => {
     getOneCompany({ userId: companyid }).then((res) => {
@@ -50,6 +54,10 @@ const EditIntro = (props) => {
       industry: {
         value: data ? data.industry : null,
         isValid: data && data.industry ? true : false,
+      },
+      NPWP: {
+        value: data ? data.NPWP : null,
+        isValid: true,
       },
       address: {
         value: data ? data.address : null,
@@ -78,6 +86,7 @@ const EditIntro = (props) => {
       industry: formState.inputs.industry.value,
       address: formState.inputs.address.value,
       website: formState.inputs.website.value,
+      NPWP: formState.inputs.NPWP.value,
       token: props.auth.token,
     };
     try {
@@ -209,6 +218,19 @@ const EditIntro = (props) => {
                   initValue={data.address || ''}
                   initIsValid={data.address}
                   helperText='Alamat perusahaan wajib diisi'
+                />
+              </div>
+              <div className={classes.InputBox}>
+                <Input
+                  inputType='input'
+                  id='NPWP'
+                  inputClass='AddJobInput'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                  onInputHandler={onInputHandler}
+                  label='NPWP'
+                  initValue={data.NPWP || ''}
+                  initIsValid={data.NPWP}
+                  helperText='NPWP wajib diisi'
                 />
               </div>
               <div className={classes.InputBox}>

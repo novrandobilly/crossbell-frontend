@@ -52,7 +52,7 @@
 
 .SlotEqual {
   width: 100%;
-  margin: 0;
+  margin: 0 0 16px 0;
   /* text-align: start; */
   font-weight: 600;
   color: rgba(0, 0, 0, 0.6);
