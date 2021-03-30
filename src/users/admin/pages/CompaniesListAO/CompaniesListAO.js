@@ -51,6 +51,9 @@ const CompaniesListAO = (props) => {
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { getWholeCompanies, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };
