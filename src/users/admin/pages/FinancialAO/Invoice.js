@@ -17,9 +17,11 @@ const Invoice = (props) => {
   let { orderid } = useParams();
   const [orderData, setOrderData] = useState();
 
-  const { getOrderInvoice } = props;
-  console.log(getOrderInvoice);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  const { getOrderInvoice } = props;
   useEffect(() => {
     if (props.auth.token) {
       getOrderInvoice({ orderId: orderid, token: props.auth.token }).then(

@@ -50,6 +50,10 @@ const OrderREG = (props) => {
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getWholeOrderREG } = props;
   useEffect(() => {
     if (props.admin.token) {

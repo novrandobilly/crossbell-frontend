@@ -33,6 +33,10 @@ const Promo = (props) => {
     true
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { getPromo } = props;
   useEffect(() => {
     if (props.admin.token) {

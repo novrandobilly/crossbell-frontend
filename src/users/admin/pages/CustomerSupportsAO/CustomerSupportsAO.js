@@ -13,8 +13,11 @@ const CustomerSupportsAO = (props) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { getFeedback } = props;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  const { getFeedback } = props;
   useEffect(() => {
     getFeedback().then((res) => {
       setData(res.Feedback);

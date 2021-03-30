@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
-import * as actionCreators from "../../../../store/actions";
-import Spinner from "../../../../shared/UI_Element/Spinner/SpinnerCircle";
+import * as actionCreators from '../../../../store/actions';
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 // import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
-import classes from "./FinancialAO.module.css";
+import classes from './FinancialAO.module.css';
 
 const FinancialAO = (props) => {
   let total = [];
   let revenue = 0;
   const [displayData, setDisplayData] = useState();
 
-  const { getWholeOrderREG, getWholeOrderBC } = props;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  const { getWholeOrderREG, getWholeOrderBC } = props;
   useEffect(() => {
     let orderReg = [];
     let orderBC = [];
@@ -77,36 +80,36 @@ const FinancialAO = (props) => {
                       <th>{fin.companyId.companyName}</th>
                       <th>{fin._id}</th>
                       <th>
-                        {" "}
-                        {fin.slot ? "order reguler" : "order bulk candidate"}
+                        {' '}
+                        {fin.slot ? 'order reguler' : 'order bulk candidate'}
                       </th>
-                      <th>{fin.slot ? fin.packageName : "-"}</th>
-                      <th>{moment(fin.createdAt).format("D MMM YYYY")}</th>
-                      <th>{moment(fin.approvedAt).format("D MMM YYYY")}</th>
+                      <th>{fin.slot ? fin.packageName : '-'}</th>
+                      <th>{moment(fin.createdAt).format('D MMM YYYY')}</th>
+                      <th>{moment(fin.approvedAt).format('D MMM YYYY')}</th>
                       {/* ========== Slot ========== */}
-                      {fin.status === "Pending" ? (
+                      {fin.status === 'Pending' ? (
                         <th
                           style={{
-                            fontSize: "0.9rem",
-                            color: "rgb(250, 129, 0)",
+                            fontSize: '0.9rem',
+                            color: 'rgb(250, 129, 0)',
                           }}
                         >
                           pending
                         </th>
                       ) : (
-                        <th style={{ fontSize: "0.9rem" }}>
-                          <p style={{ margin: "-0.5rem 0 -1rem 0" }}>
+                        <th style={{ fontSize: '0.9rem' }}>
+                          <p style={{ margin: '-0.5rem 0 -1rem 0' }}>
                             {fin.slot || fin.amount}
-                            <span style={{ margin: "0 0 0 1rem" }}>
-                              {fin.slot ? "slot" : "candidate"}
+                            <span style={{ margin: '0 0 0 1rem' }}>
+                              {fin.slot ? 'slot' : 'candidate'}
                             </span>
                           </p>
                         </th>
                       )}
 
                       {/* ========== Price/Slot ========== */}
-                      {fin.status === "Pending" ? (
-                        <th style={{ color: "rgb(250, 129, 0)" }}>pending</th>
+                      {fin.status === 'Pending' ? (
+                        <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                       ) : (
                         <th>
                           Rp. {(fin.pricePerSlot || fin.price).toLocaleString()}
@@ -114,8 +117,8 @@ const FinancialAO = (props) => {
                       )}
 
                       {/* ========== Total Price ========== */}
-                      {fin.status === "Pending" ? (
-                        <th style={{ color: "rgb(250, 129, 0)" }}>
+                      {fin.status === 'Pending' ? (
+                        <th style={{ color: 'rgb(250, 129, 0)' }}>
                           {/* {() => {
                           parseInt((total[i] = 0));
                           return null;
@@ -125,7 +128,7 @@ const FinancialAO = (props) => {
                         </th>
                       ) : (
                         <th>
-                          Rp.{" "}
+                          Rp.{' '}
                           {parseInt(
                             (total[i] = fin.totalPrice)
                           ).toLocaleString()}
@@ -134,11 +137,11 @@ const FinancialAO = (props) => {
 
                       <th
                         style={
-                          fin.status === "Pending"
-                            ? { color: "rgb(250, 129, 0)", fontWeight: "bold" }
-                            : fin.status === "Expired"
-                            ? { color: "Gray", fontWeight: "bold" }
-                            : { color: "green", fontWeight: "bold" }
+                          fin.status === 'Pending'
+                            ? { color: 'rgb(250, 129, 0)', fontWeight: 'bold' }
+                            : fin.status === 'Expired'
+                            ? { color: 'Gray', fontWeight: 'bold' }
+                            : { color: 'green', fontWeight: 'bold' }
                         }
                       >
                         {fin.status}
