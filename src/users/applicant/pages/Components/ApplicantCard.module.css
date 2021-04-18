@@ -114,7 +114,7 @@
 .SegmentContainer {
   width: 80%;
   box-sizing: border-box;
-  padding: 0 0 0 16px;
+  padding: 0 0 0 24px;
 }
 
 .InputButton {
@@ -209,11 +209,17 @@
 @media (max-width: 992px) {
   .Wraper {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .Container {
-    width: 96.2%;
-    margin-bottom: 16px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .SegmentContainer {
+    padding: 0;
   }
 
   .ApplicantContainer {
@@ -227,7 +233,7 @@
   }
 
   .ContainerLeftDivider {
-    width: 60%;
+    width: 100%;
   }
 
   .SegmentContainer {
@@ -235,10 +241,11 @@
   }
 
   .Avatar {
-    width: 34%;
-    height: 95%;
+    width: 180px;
+    height: 180px;
     margin-right: 32px;
-    align-self: flex-start;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+    margin-left: 42px;
   }
 
   .ContainerRight {
@@ -252,7 +259,11 @@
 
 @media (max-width: 576px) {
   .Container {
-    width: 70vh;
+    width: 100%;
+  }
+
+  .ContainerLeft a {
+    height: auto;
   }
 
   .ApplicantContainer {
@@ -265,10 +276,13 @@
     width: 100%;
   }
 
+  .ContainerLeft a {
+    width: auto;
+  }
+
   .Avatar {
-    width: 50%;
-    height: 160px;
-    margin-right: 0;
+    width: 180px;
+    height: 180px;
   }
 
   .ContainerLeftDivider {

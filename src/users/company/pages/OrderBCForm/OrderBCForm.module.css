@@ -214,6 +214,14 @@
 }
 
 @media (max-width: 576px) {
+  .ContainerFlex {
+    padding: 0px 24px 32px 24px;
+  }
+
+  .FormTitle {
+    width: 100%;
+  }
+
   .Inputs {
     flex-direction: column;
   }
@@ -224,12 +232,39 @@
 
   .RadioGroup {
     width: 100%;
+    order: 2;
   }
+
   .AgeWraper {
     width: 100%;
+    order: 2;
   }
+
   .CandidateAmount {
     width: 100%;
+    order: 1;
+  }
+
+  .EducationalInput {
+    flex-direction: column;
+  }
+
+  .DropDownDiv {
+    width: 100%;
+  }
+
+  .FooterSection {
+    flex-direction: column;
+  }
+
+  .PriceDescription {
+    width: 100%;
+    order: 2;
+  }
+
+  .PriceHolder {
+    width: 100%;
+    order: 1;
   }
 }
 

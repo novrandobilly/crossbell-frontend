@@ -30,6 +30,8 @@
 
 .HeaderNav {
   display: none;
+  /* width: 560px;
+  position: relative; */
 }
 
 .DrawerNav {

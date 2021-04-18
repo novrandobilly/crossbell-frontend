@@ -74,7 +74,7 @@
 
 @media (max-width: 992px) {
   .Content {
-    padding: 4rem 2rem;
+    padding: 1rem 2rem;
   }
 
   .HelpArticlesLink > * {
@@ -94,6 +94,7 @@
   .HelpArticles {
     width: 40%;
   }
+
   .ContactUsForm {
     width: 18rem;
   }

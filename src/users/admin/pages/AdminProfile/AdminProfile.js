@@ -110,7 +110,7 @@ const AdminProfile = (props) => {
 
   if (data && !props.admin.isLoading) {
     content = (
-      <div className={classes.Container}>
+      <form onSubmit={onSubmitHandler} className={classes.FormCard}>
         <div className={classes.AdminCard}>
           <div className={classes.RightCard}>
             <div
@@ -276,11 +276,11 @@ const AdminProfile = (props) => {
             <div className={classes.ContentWraper} />
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 
-  return <form onSubmit={onSubmitHandler}>{content}</form>;
+  return <div className={classes.Container}>{content} </div>;
 };
 
 const mapStateToProps = (state) => {

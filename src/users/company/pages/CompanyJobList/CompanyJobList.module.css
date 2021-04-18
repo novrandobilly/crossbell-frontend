@@ -122,6 +122,15 @@
 }
 
 @media (max-width: 992px) {
+  .Container {
+    padding: 0 24px;
+  }
+
+  .CardContainer {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
   .CardHolder {
     width: 33.33%;
   }
@@ -133,9 +142,14 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 420px) {
+  .DivContainer {
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+  }
+
   .CardHolder {
-    width: 100%;
-    padding: 10px 6px 32px 6px;
+    min-width: 220px;
+    max-width: 220px;
   }
 }

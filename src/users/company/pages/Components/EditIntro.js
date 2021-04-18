@@ -188,7 +188,7 @@ const EditIntro = (props) => {
                   inputClass='AddJobInput'
                   validatorMethod={[VALIDATOR_EMAIL()]}
                   onInputHandler={onInputHandler}
-                  label='Email perusahaan* (email ini akan digunakan untuk sign in)'
+                  label='Email login*'
                   initValue={data.email || ''}
                   initIsValid={data.email}
                   helperText='Please input a valid email address'

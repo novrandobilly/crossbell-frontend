@@ -18,7 +18,6 @@ import classes from './CompanyOrderForm.module.css';
 
 const ORIGINAL_PRICE = 500000;
 
-
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
   const [validationError, setValidationError] = useState(false);
@@ -190,7 +189,11 @@ const CompanyOrderForm = (props) => {
               initValue={slot}
               min='0'
               step='1'
-              helperText={'Minimal 1'}
+              helperText={
+                formState.inputs.slot.value <= 0
+                  ? 'Minimal pembelian 1 slot'
+                  : 'Mohon masukkan jumlah yang ingin dibeli'
+              }
             />
           </div>
         </div>
@@ -273,23 +276,26 @@ const CompanyOrderForm = (props) => {
       {formContent}
     </div>
   );
-
 };
 
-const mapStateToProps = state => {
-	return {
-		auth: state.auth,
-		isLoading: state.finance.isLoading,
-		error: state.finance.error
-	};
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    isLoading: state.finance.isLoading,
+    error: state.finance.error,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		createOrder: orderData => dispatch(actionCreators.createOrder(orderData)),
-		createOrderFail: () => dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
-		resetOrder: () => dispatch({ type: actionTypes.ORDERRESET })
-	};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createOrder: (orderData) => dispatch(actionCreators.createOrder(orderData)),
+    createOrderFail: () =>
+      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyOrderForm));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CompanyOrderForm));

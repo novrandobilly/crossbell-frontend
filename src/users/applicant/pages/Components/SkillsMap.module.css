@@ -46,12 +46,11 @@
 }
 
 @media (max-width: 576px) {
-  .Container {
-    padding: 6px 16px 16px 16px;
+  .Header {
+    margin-bottom: 24px;
   }
 
-  .Header {
-    margin-top: 10px;
-    margin-bottom: 24px;
+  .SkillContainer {
+    margin-bottom: 16px;
   }
 }

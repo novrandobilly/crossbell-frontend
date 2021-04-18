@@ -104,6 +104,7 @@ input[type='file'] {
   line-height: 1;
   letter-spacing: 0.00938em;
   text-align: left;
+  margin-top: -3px;
 }
 
 .RadioHolder {
@@ -178,16 +179,25 @@ input[type='file'] {
 
   .ContentWrap {
     flex-direction: column;
+    margin-top: 0;
   }
 
   .ContentWrap > * {
     width: 100%;
   }
 
+  .InputDiv {
+    margin-top: 8px;
+  }
+
   .ContentBottom {
     padding-left: 0;
     text-align: left;
     line-height: 20px;
+  }
+
+  .Text {
+    margin-top: 10px;
   }
 }
 

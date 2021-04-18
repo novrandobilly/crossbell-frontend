@@ -70,3 +70,24 @@
 .IconDiv:hover {
   background-color: rgba(58, 81, 153, 1);
 }
+
+@media (max-width: 576px) {
+  .FooterRoute {
+    width: 50%;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+
+  .RouteSection {
+    display: none;
+  }
+
+  .SocialSection {
+    text-align: left;
+    line-height: 1.5rem;
+    font-weight: bold;
+    border-left: none;
+    width: 100%;
+    padding: 0;
+  }
+}

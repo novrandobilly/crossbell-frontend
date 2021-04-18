@@ -196,7 +196,6 @@ const Certification = (props) => {
               onInputHandler={onInputHandler}
               label='Deskripsi Sertifikasi (Opsional)'
               rows={12}
-              helperText='Rincian setidaknya berjumlah 20 karakter'
               initIsValid={true}
             />
           </div>

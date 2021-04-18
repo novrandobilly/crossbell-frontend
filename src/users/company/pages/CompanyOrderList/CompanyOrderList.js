@@ -282,7 +282,7 @@ const CompanyOrderList = (props) => {
     );
   }
 
-  return <div>{content}</div>;
+  return <div className={classes.Wraper}>{content}</div>;
 };
 
 const mapStateToProps = (state) => {
