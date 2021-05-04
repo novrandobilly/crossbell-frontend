@@ -45,7 +45,7 @@ const RangeSegmentMap = (props) => {
     <div className={classes.MapContainer}>
       <div className={classes.TopContent}>
         <div className={classes.Square} />
-        <div>
+        <div className={classes.TitleBox}>
           <p className={classes.Title}>{props.title}</p>
           <p className={classes.SubTitle}>{props.subTitle}</p>
 

@@ -31,7 +31,7 @@
 
 @media (max-width: 400px) {
   .QueryBar {
-    padding: 0;
+    padding: 8px 0 0 0;
   }
 
   .SearchForm {
@@ -39,7 +39,7 @@
   }
 
   .SearchContainer {
-    width: 60%;
+    width: 100%;
   }
 
   .ButtonContainer {

@@ -95,17 +95,20 @@
   }
 
   .Container {
-    padding: 0;
+    padding: 0 24px;
   }
 
   .ContainerFlex {
     width: 100vh;
     padding: 0px 16px 10px 16px;
-    border-radius: 0;
   }
 }
 
 @media (max-width: 440px) {
+  .EditCompanyBrief {
+    padding: 0;
+  }
+
   .ContainerFlex {
     width: 50vh;
     padding: 6px 16px;

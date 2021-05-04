@@ -19,11 +19,12 @@ const CustomerSupportsAO = (props) => {
 
   const { getFeedback } = props;
   useEffect(() => {
-    getFeedback().then((res) => {
+    const token = props.admin.token;
+    getFeedback(token).then((res) => {
       setData(res.Feedback);
       setIsLoading(false);
     });
-  }, [getFeedback, setIsLoading]);
+  }, [getFeedback, setIsLoading, props.admin.token]);
 
   const onDeleteHandler = async (id) => {
     try {
@@ -38,47 +39,51 @@ const CustomerSupportsAO = (props) => {
     }
   };
 
-  let content = (
-    <div className={classes.Container}>
-      {data.map((feed, i) => {
-        return (
-          <div className={classes.FeedCard} key={feed._id}>
-            <div className={classes.Content}>
-              <div className={classes.Header}>
-                <div>Created By: {feed.name}</div>
-                <div>
-                  <button
-                    className={classes.DeleteFeed}
-                    onClick={() => onDeleteHandler(feed._id)}
-                  >
-                    <DeleteForeverIcon />
-                  </button>
+  let content = <SpinnerCircle />;
+
+  if (!isLoading && data) {
+    content = (
+      <div className={classes.Container}>
+        {data.map((feed, i) => {
+          return (
+            <div className={classes.FeedCard} key={feed._id}>
+              <div className={classes.Content}>
+                <div className={classes.Header}>
+                  <div>Created By: {feed.name}</div>
+                  <div>
+                    <button
+                      className={classes.DeleteFeed}
+                      onClick={() => onDeleteHandler(feed._id)}
+                    >
+                      <DeleteForeverIcon />
+                    </button>
+                  </div>
+                </div>
+                <div className={classes.FeedContact}>
+                  {feed.email} - {feed.phone}
+                </div>
+                <div className={classes.Feeds}>{feed.feed}</div>
+                <div className={classes.Date}> {feed.datePosted} </div>
+
+                <div className={classes.ReplyForm}>
+                  <Input
+                    inputType='textarea'
+                    id='reply'
+                    label='Reply Here'
+                    validatorMethod={[VALIDATOR_REQUIRE()]}
+                  />
+
+                  <button className={classes.ReplyButton}>Reply</button>
                 </div>
               </div>
-              <div className={classes.FeedContact}>
-                {feed.email} - {feed.phone}
-              </div>
-              <div className={classes.Feeds}>{feed.feed}</div>
-              <div className={classes.Date}> {feed.datePosted} </div>
-
-              <div className={classes.ReplyForm}>
-                <Input
-                  inputType='textarea'
-                  id='reply'
-                  label='Reply Here'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                />
-
-                <button className={classes.ReplyButton}>Reply</button>
-              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
-  );
+          );
+        })}
+      </div>
+    );
+  }
 
-  if (data && data.length < 1) {
+  if (!isLoading && data && data.length < 1) {
     content = (
       <p className={classes.EmptyText}>
         Belum ada feedback dari pengguna untuk saat ini
@@ -86,18 +91,20 @@ const CustomerSupportsAO = (props) => {
     );
   }
 
-  if (isLoading) {
-    content = <SpinnerCircle />;
-  }
-
   return <div>{content}</div>;
+};
+
+const mapStateToProps = (state) => {
+  return {
+    admin: state.admin,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteFeed: (feedId) => dispatch(actionCreators.deleteFeed(feedId)),
-    getFeedback: () => dispatch(actionCreators.getFeedback()),
+    getFeedback: (payload) => dispatch(actionCreators.getFeedback(payload)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(CustomerSupportsAO);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerSupportsAO);

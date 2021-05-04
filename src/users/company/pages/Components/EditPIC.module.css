@@ -93,13 +93,12 @@
   }
 
   .Container {
-    padding: 0;
+    padding: 32px 24px;
   }
 
   .ContainerFlex {
     width: 100vh;
     padding: 0px 16px 10px 16px;
-    border-radius: 0;
   }
 }
 

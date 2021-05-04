@@ -76,4 +76,14 @@
   .Description {
     width: 150%;
   }
+
+  .TitleBox {
+    width: 70%;
+  }
+}
+
+@media (max-width: 400px) {
+  .TitleBox {
+    width: 50%;
+  }
 }

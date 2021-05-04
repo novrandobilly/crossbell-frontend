@@ -13,7 +13,6 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../shared/UI_Element/Input';
 import {
@@ -77,7 +76,7 @@ const NewJob = (props) => {
         isValid: false,
       },
       fieldOfWork: {
-        value: ['', '', ''],
+        value: [],
         isValid: false,
       },
     },
@@ -269,12 +268,12 @@ const NewJob = (props) => {
               onChange={handleLocationChange}
               style={{ margin: '0' }}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  style={{ margin: '0' }}
+                <Input
+                  params={{ ...params }}
+                  inputType='autoComplete'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
                   label='Lokasi*'
-                  margin='normal'
-                  variant='standard'
+                  helperText='Lokasi pekerjaan wajib diisi'
                 />
               )}
             />
@@ -392,12 +391,12 @@ const NewJob = (props) => {
               onChange={fowHandler}
               style={{ margin: '0', width: '100%' }}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  style={{ margin: '0' }}
+                <Input
+                  params={{ ...params }}
+                  inputType='autoComplete'
+                  validatorMethod={[VALIDATOR_REQUIRE()]}
                   label='Bidang minat*'
-                  margin='normal'
-                  variant='standard'
+                  helperText='Bidang minat wajib diisi'
                 />
               )}
             />
@@ -413,6 +412,7 @@ const NewJob = (props) => {
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
           label='Deskripsi pekerjaan*'
+          helperText='Deskripsi pekerjaan wajib diisi'
         />
       </div>
 

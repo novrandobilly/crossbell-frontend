@@ -1,0 +1,64 @@
+.LinkRef {
+  font-size: 15px;
+  text-transform: uppercase;
+  color: rgba(58, 81, 153, 1);
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  line-height: 64px;
+  display: inline-block;
+  box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+}
+
+.LinkRef:nth-child(1) {
+  width: 20%;
+}
+.LinkRef:nth-child(2) {
+  width: 20%;
+}
+.LinkRef:nth-child(3) {
+  width: 20%;
+}
+.LinkRef:nth-child(4) {
+  width: 20%;
+}
+.LinkRef:nth-child(5) {
+  width: 20%;
+}
+
+.Animation {
+  position: absolute;
+  height: 5px;
+  bottom: 0;
+  z-index: 0;
+  background-color: rgba(58, 81, 153, 1);
+  width: 112px;
+  transition: all 0.3s ease 0s;
+}
+
+.StartHome,
+.LinkRef:nth-child(1):hover:active ~ .Animation {
+  left: 0;
+}
+
+.StartHome,
+.LinkRef:nth-child(2):hover:active ~ .Animation {
+  left: 112px;
+}
+
+.StartHome,
+.LinkRef:nth-child(3):hover:active ~ .Animation {
+  left: 224px;
+}
+
+.StartHome,
+.LinkRef:nth-child(4):hover:active ~ .Animation {
+  left: 336px;
+}
+
+.StartHome,
+.LinkRef:nth-child(5):hover:active ~ .Animation {
+  left: 448px;
+}

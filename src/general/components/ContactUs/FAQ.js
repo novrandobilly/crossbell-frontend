@@ -9,6 +9,7 @@ import classes from './FAQ.module.css';
 
 const Accordion = withStyles({
   root: {
+    textAlign: 'left',
     borderTop: '1px solid rgba(0, 0, 0, .125)',
     boxShadow: 'none',
     '&:not(:last-child)': {

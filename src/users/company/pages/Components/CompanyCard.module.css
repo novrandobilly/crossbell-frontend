@@ -205,7 +205,7 @@
   display: flex;
   text-align: left;
   padding: 0 0.3rem;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   align-items: center;
   padding: 8px 16px;
   background-color: #c2d7f2;
@@ -385,6 +385,7 @@
   .ContainerLeft {
     flex-direction: row;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .CompanyName {
@@ -457,10 +458,6 @@
     justify-content: flex-start;
   }
 
-  .CardContainer {
-    padding: 16px;
-  }
-
   .Title {
     margin-top: 0;
   }
@@ -479,6 +476,10 @@
   .ContainerLeft {
     flex-direction: column;
     width: 100%;
+  }
+
+  .CardContainer {
+    margin-bottom: 16px;
   }
 
   .Avatar {
@@ -505,10 +506,6 @@
     padding: 16px;
   }
 
-  .CardContainer {
-    padding: 16px;
-  }
-
   .PicHeader {
     margin-bottom: 10px;
   }
@@ -518,13 +515,24 @@
   }
 
   .CardHolder {
-    width: 50%;
-    margin-right: 32px;
+    width: 220px;
+    margin-right: 16px;
+  }
+
+  .ButtonsDiv {
+    display: none;
   }
 
   .JobCard {
-    width: 31vh;
-    padding: 0 16px;
+    box-sizing: border-box;
+    width: 220px;
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .PicContent {
+    flex-direction: column;
   }
 }
 
