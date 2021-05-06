@@ -80,7 +80,7 @@ const Login = (props) => {
               validatorMethod={[VALIDATOR_EMAIL()]}
               onInputHandler={onInputHandler}
               label='Email'
-              helperText='Please input a valid email address.'
+              helperText='Mohon masukkan email yang valid.'
             />
           </div>
           <div className={classes.InputBox}>
@@ -92,7 +92,7 @@ const Login = (props) => {
               onInputHandler={onInputHandler}
               label='Password'
               type='password'
-              helperText='Password contains min. 6 characters.'
+              helperText='Password minimal berjumlah 6 karakter.'
             />
           </div>
 

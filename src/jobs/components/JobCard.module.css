@@ -118,6 +118,12 @@
   width: 20%;
 }
 
+@media (max-width: 992px) {
+  .FlexWrap {
+    width: 100%;
+  }
+}
+
 @media (max-width: 400px) {
   .Logo {
     width: 100%;
@@ -135,10 +141,10 @@
   .JobCard {
     box-sizing: border-box;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin: 16px;
     height: auto;
-    width: 80%;
+    width: 100%;
   }
 
   .Content {

@@ -6,7 +6,7 @@ import NavigationLinks from './NavigationLinks';
 import SideDrawer from './SideDrawer';
 import Backdrop from '../UI_Element/Backdrop';
 import Logo from '../UI_Element/Logo';
-
+// import NavLinks from './NavLinks';
 import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
@@ -39,6 +39,7 @@ const MainNavigation = () => {
 				</h2>
 				<nav className={classes.HeaderNav}>
 					<NavigationLinks />
+					{/* <NavLinks /> */}
 				</nav>
 			</MainHeader>
 		</React.Fragment>

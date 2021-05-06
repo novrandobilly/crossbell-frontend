@@ -223,7 +223,6 @@ const Certification = (props) => {
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
-                helperText='Rincian setidaknya berjumlah 20 karakter'
               />
             </div>
           </div>

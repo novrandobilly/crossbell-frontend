@@ -16,7 +16,12 @@
 
 .About {
   font-size: 1.3rem;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
+  line-height: 2rem;
+}
+
+.About p {
+  margin: 0;
 }
 
 .AuthForm {
@@ -64,8 +69,7 @@
   .Content {
     display: flex;
     flex-direction: column;
-    height: 30rem;
-    padding-bottom: 10px;
+    justify-content: center;
   }
 
   .ContentHolder {
@@ -79,8 +83,8 @@
   }
 
   .AuthForm {
-    margin-top: -2rem;
     width: 50%;
+    margin-top: 0;
   }
 
   .SmallAbout {
@@ -88,26 +92,31 @@
     height: auto;
     display: flex;
     flex-direction: column;
-    padding: 1rem 2rem 3rem 2rem;
+    padding: 16px 32px;
   }
 }
 
 @media (max-width: 768px) {
-  .Content {
-    height: 30rem;
-  }
-
   .AuthForm {
-    width: 50%;
+    width: 80%;
   }
 }
 
 @media (max-width: 576px) {
+  .Content {
+    padding: 10px 10px;
+  }
+
   .AuthForm {
-    width: 20rem;
+    width: 100%;
+  }
+
+  .About {
+    font-size: 1rem;
+    margin-bottom: 0;
   }
 
   .SmallAbout {
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
   }
 }

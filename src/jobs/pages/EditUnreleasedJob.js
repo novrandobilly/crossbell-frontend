@@ -87,6 +87,7 @@ const EditUnreleasedJob = (props) => {
         value: loadedJob ? loadedJob.educationalStage : '',
         isValid: loadedJob && loadedJob.educationalStage ? true : false,
       },
+
       technicalRequirement: {
         value: loadedJob ? loadedJob.technicalRequirement : '',
         isValid: loadedJob && loadedJob.technicalRequirement ? true : false,
@@ -304,6 +305,8 @@ const EditUnreleasedJob = (props) => {
 
   let formContent = <Spinner />;
 
+  console.log(formState);
+
   if (!props.job.isLoading && loadedJob) {
     formContent = (
       <div className={classes.ContainerFlex}>
@@ -321,6 +324,7 @@ const EditUnreleasedJob = (props) => {
                 label='Judul*'
                 initValue={loadedJob.jobTitle}
                 initIsValid={loadedJob.jobTitle ? true : false}
+                helperText='Judul pekerjaan wajib diisi'
               />
 
               <Autocomplete
@@ -398,6 +402,7 @@ const EditUnreleasedJob = (props) => {
                 label='Persyaratan teknis*'
                 initValue={loadedJob.technicalRequirement}
                 initIsValid={loadedJob.technicalRequirement ? true : false}
+                helperText='Syarat teknis wajib diisi'
               />
             </div>
 
@@ -454,7 +459,7 @@ const EditUnreleasedJob = (props) => {
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
                 label='Email penerima*'
-                helperText='Please input a valid email address'
+                helperText='Mohon masukkan email yang valid'
                 initValue={loadedJob.emailRecipient}
                 initIsValid={loadedJob.emailRecipient ? true : false}
               />
@@ -553,6 +558,13 @@ const EditUnreleasedJob = (props) => {
                 initIsValid={loadedJob.slot}
                 defaultValue={0}
                 onKeyUp={checkmyinput()}
+                helperText={
+                  formState.inputs.slotAllocation.value < 0
+                    ? 'Input slot minimal 2'
+                    : formState.inputs.slotAllocation.value % 2 !== 0
+                    ? 'Input slot harus genap'
+                    : 'Slot wajib diisi'
+                }
               />
               <span>minggu</span>
             </div>
@@ -562,6 +574,7 @@ const EditUnreleasedJob = (props) => {
                 Sisa slot:{' '}
                 {formState.inputs.slotAllocation.value &&
                 formState.inputs.slotAllocation.value > 0 &&
+                formState.inputs.slotAllocation.value % 2 === 0 &&
                 parseInt(maxSlot) >
                   parseInt(formState.inputs.slotAllocation.value) / 2
                   ? (

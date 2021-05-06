@@ -488,203 +488,226 @@ const EditIntro = (props) => {
             <div className={classes.ContentTop}>
               <div className={classes.ContentLeft}>
                 <div className={classes.ContentWrap}>
-                  <Input
-                    inputType='input'
-                    id='firstName'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Nama depan*'
-                    initValue={data.firstName}
-                    initIsValid={data.firstName ? true : false}
-                    helperText='Nama depan wajib diisi'
-                  />
-
-                  <Input
-                    inputType='input'
-                    id='lastName'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Nama belakang*'
-                    initValue={data.lastName}
-                    initIsValid={data.lastName ? true : false}
-                    helperText='Nama belakang wajib diisi'
-                  />
-                </div>
-
-                <div className={classes.ContentWrap}>
-                  <Input
-                    inputType='input'
-                    id='headline'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Gelar*'
-                    initValue={data.headline}
-                    initIsValid={data.headline ? true : false}
-                    helperText='Gelar wajib diisi'
-                  />
-
-                  <div>
-                    <p className={classes.Text} style={{ margin: '0' }}>
-                      Tanggal Lahir*
-                    </p>
+                  <div className={classes.InputDiv}>
                     <Input
-                      inputType='customdate'
-                      id='dateOfBirth'
-                      validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                      inputType='input'
+                      id='firstName'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
                       onInputHandler={onInputHandler}
-                      views={['year', 'month', 'date']}
-                      label='Tanggal Lahir'
-                      maxDate={moment()}
-                      initValue={data.dateOfBirth ? data.dateOfBirth : moment()}
-                      initIsValid={data.dateOfBirth ? data.dateOfBirth : false}
-                      format='dd/MM/yyyy'
-                      style={{ width: '100%' }}
-                      helperText='Tanggal lahir wajib diisi'
+                      label='Nama depan*'
+                      initValue={data.firstName}
+                      initIsValid={data.firstName ? true : false}
+                      helperText='Nama depan wajib diisi'
+                    />
+                  </div>
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='lastName'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
+                      onInputHandler={onInputHandler}
+                      label='Nama belakang*'
+                      initValue={data.lastName}
+                      initIsValid={data.lastName ? true : false}
+                      helperText='Nama belakang wajib diisi'
                     />
                   </div>
                 </div>
 
                 <div className={classes.ContentWrap}>
-                  <Input
-                    inputType='input'
-                    id='email'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_EMAIL()]}
-                    onInputHandler={onInputHandler}
-                    label='Email*'
-                    initValue={data.email}
-                    initIsValid={data.email ? data.email : false}
-                    helperText='Mohon input email yang valid'
-                  />
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='headline'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
+                      onInputHandler={onInputHandler}
+                      label='Gelar*'
+                      initValue={data.headline}
+                      initIsValid={data.headline ? true : false}
+                      helperText='Gelar wajib diisi'
+                    />
+                  </div>
 
-                  <Input
-                    inputType='input'
-                    id='phone'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Nomor telepon*'
-                    initValue={data.phone}
-                    initIsValid={data.phone ? data.phone : false}
-                    helperText='Mohon masukkan nomor telepon yang valid'
-                  />
+                  <div className={classes.InputDiv}>
+                    <div>
+                      <p className={classes.Text} style={{ margin: '0' }}>
+                        Tanggal Lahir*
+                      </p>
+                      <Input
+                        inputType='customdate'
+                        id='dateOfBirth'
+                        validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                        onInputHandler={onInputHandler}
+                        views={['year', 'month', 'date']}
+                        label='Tanggal Lahir'
+                        maxDate={moment()}
+                        initValue={
+                          data.dateOfBirth ? data.dateOfBirth : moment()
+                        }
+                        initIsValid={
+                          data.dateOfBirth ? data.dateOfBirth : false
+                        }
+                        format='dd/MM/yyyy'
+                        style={{ width: '100%' }}
+                        helperText='Tanggal lahir wajib diisi'
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className={classes.ContentWrap}>
-                  <Autocomplete
-                    id='state'
-                    name='state'
-                    options={LocationData.sort().map((option) => option)}
-                    onChange={handleStateChange}
-                    value={locationState.province}
-                    style={{ margin: '0' }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        style={{ margin: '0' }}
-                        label='Provinsi*'
-                        margin='normal'
-                        variant='standard'
-                      />
-                    )}
-                  />
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='email'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_EMAIL()]}
+                      onInputHandler={onInputHandler}
+                      label='Email*'
+                      initValue={data.email}
+                      initIsValid={data.email ? data.email : false}
+                      helperText='Mohon input email yang valid'
+                    />
+                  </div>
 
-                  <Autocomplete
-                    id='city'
-                    name='city'
-                    options={city.map((option) => option)}
-                    onChange={handleCityChange}
-                    value={locationState.citySelected}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        style={{ margin: '0' }}
-                        label='Kota*'
-                        margin='normal'
-                        variant='standard'
-                      />
-                    )}
-                  />
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='phone'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
+                      onInputHandler={onInputHandler}
+                      label='Nomor telepon*'
+                      initValue={data.phone}
+                      initIsValid={data.phone ? data.phone : false}
+                      helperText='Mohon masukkan nomor telepon yang aktif'
+                    />
+                  </div>
                 </div>
 
                 <div className={classes.ContentWrap}>
-                  <Input
-                    inputType='input'
-                    id='address'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Alamat saat ini*'
-                    initValue={data.address}
-                    initIsValid={data.address ? data.address : false}
-                    helperText='Alamat wajib diisi'
-                  />
+                  <div className={classes.InputDiv}>
+                    <Autocomplete
+                      id='state'
+                      name='state'
+                      options={LocationData.sort().map((option) => option)}
+                      onChange={handleStateChange}
+                      value={locationState.province}
+                      style={{ margin: '0' }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          style={{ margin: '0' }}
+                          label='Provinsi*'
+                          margin='normal'
+                          variant='standard'
+                        />
+                      )}
+                    />
+                  </div>
 
-                  <Input
-                    inputType='input'
-                    id='zip'
-                    InputClass='AppInput'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                    onInputHandler={onInputHandler}
-                    label='Kode Pos*'
-                    initValue={data.zip}
-                    initIsValid={data.zip ? data.zip : false}
-                    helperText='Kode pos wajib diisi'
-                  />
+                  <div className={classes.InputDiv}>
+                    <Autocomplete
+                      id='city'
+                      name='city'
+                      options={city.map((option) => option)}
+                      onChange={handleCityChange}
+                      value={locationState.citySelected}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          style={{ margin: '0' }}
+                          label='Kota*'
+                          margin='normal'
+                          variant='standard'
+                        />
+                      )}
+                    />
+                  </div>
                 </div>
 
                 <div className={classes.ContentWrap}>
-                  <Autocomplete
-                    multiple
-                    id='interest'
-                    name='interest'
-                    options={WorkFieldData.sort().map((option) => option)}
-                    getOptionLabel={(option) => option}
-                    onChange={fowHandler}
-                    value={interest ? interest : ''}
-                    style={{ margin: '0' }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        style={{ margin: '0' }}
-                        label='Bidang minat'
-                        margin='normal'
-                        variant='standard'
-                      />
-                    )}
-                  />
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='address'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
+                      onInputHandler={onInputHandler}
+                      label='Alamat saat ini*'
+                      initValue={data.address}
+                      initIsValid={data.address ? data.address : false}
+                      helperText='Alamat wajib diisi'
+                    />
+                  </div>
 
-                  <div
-                    id='gender'
-                    onChange={onManualInputHandler}
-                    style={{ marginTop: '-1rem' }}
-                  >
-                    <p className={classes.Text}>Jenis Kelamin*</p>
-                    <div className={classes.RadioHolder}>
-                      <label
-                        style={{ marginRight: '2rem' }}
-                        className={classes.RadioButton}
-                      >
-                        <input
-                          type='radio'
-                          value='male'
-                          name='gender'
-                          id='male'
-                        />{' '}
-                        Pria
-                      </label>
-                      <label className={classes.RadioButton}>
-                        <input
-                          type='radio'
-                          value='female'
-                          name='gender'
-                          id='female'
-                        />{' '}
-                        Wanita
-                      </label>
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='zip'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
+                      onInputHandler={onInputHandler}
+                      label='Kode Pos*'
+                      initValue={data.zip}
+                      initIsValid={data.zip ? data.zip : false}
+                      helperText='Kode pos wajib diisi'
+                    />
+                  </div>
+                </div>
+
+                <div className={classes.ContentWrap}>
+                  <div className={classes.InputDiv}>
+                    <Autocomplete
+                      multiple
+                      id='interest'
+                      name='interest'
+                      options={WorkFieldData.sort().map((option) => option)}
+                      getOptionLabel={(option) => option}
+                      onChange={fowHandler}
+                      value={interest ? interest : ''}
+                      style={{ margin: '0' }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          style={{ margin: '0' }}
+                          label='Bidang minat'
+                          margin='normal'
+                          variant='standard'
+                        />
+                      )}
+                    />
+                  </div>
+
+                  <div className={classes.InputDiv}>
+                    <div id='gender' onChange={onManualInputHandler}>
+                      <p className={classes.Text}>Jenis Kelamin*</p>
+                      <div className={classes.RadioHolder}>
+                        <label
+                          style={{ marginRight: '2rem' }}
+                          className={classes.RadioButton}
+                        >
+                          <input
+                            type='radio'
+                            value='male'
+                            name='gender'
+                            id='male'
+                          />{' '}
+                          Pria
+                        </label>
+                        <label className={classes.RadioButton}>
+                          <input
+                            type='radio'
+                            value='female'
+                            name='gender'
+                            id='female'
+                          />{' '}
+                          Wanita
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

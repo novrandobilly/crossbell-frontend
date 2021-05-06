@@ -11,3 +11,10 @@
 .Address p {
   margin: 0;
 }
+
+@media (max-width: 576px) {
+  .Address {
+    width: 50%;
+    box-sizing: border-box;
+  }
+}

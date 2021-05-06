@@ -94,17 +94,21 @@
 
 @media (max-width: 768px) {
   .Container {
-    padding: 32px 28px;
+    padding: 0 24px;
   }
 }
 
 @media (max-width: 576px) {
+  .Container {
+    padding: 0 24px;
+  }
+
   .EditIntro {
     margin-top: 0;
   }
 
   .ContainerFlex {
-    width: 50vh;
+    width: 100%;
     padding: 6px 16px;
   }
 
@@ -116,17 +120,17 @@
 }
 
 @media (max-width: 440px) {
+  .EditIntro {
+    padding: 0;
+  }
+
   .ContainerFlex {
-    width: 50vh;
     padding: 6px 16px;
+    border-radius: 0;
   }
 
   .Container {
     padding: 0;
     padding-top: 0;
-  }
-
-  .ContainerFlex {
-    border-radius: 0;
   }
 }

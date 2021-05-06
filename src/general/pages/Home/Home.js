@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Carousel from './Components/Carousel';
 import AuthForm from './Components/AuthForm';
 import ContactUsContent from './HomeContent/ContactUsContent';
-// import Button from '@material-ui/core/Button';
 import classes from './Home.module.css';
 
 const Home = props => {

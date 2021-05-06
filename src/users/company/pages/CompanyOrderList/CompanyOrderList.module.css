@@ -70,3 +70,13 @@
   top: 40%;
   font-weight: bold;
 }
+
+@media (max-width: 992px) {
+  .Wraper {
+    padding: 0 24px;
+  }
+
+  .Container {
+    width: 100%;
+  }
+}

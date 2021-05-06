@@ -24,3 +24,9 @@
   font-size: 1rem;
   box-sizing: border-box;
 }
+
+@media (max-width: 576px) {
+  .LogoAddress {
+    align-items: flex-start;
+  }
+}

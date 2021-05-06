@@ -102,3 +102,22 @@
   margin: 0;
   padding: 0;
 }
+
+@media (max-width: 992px) {
+  .CardHolder {
+    width: 33.33%;
+  }
+}
+
+@media (max-width: 768px) {
+  .CardHolder {
+    width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .CardHolder {
+    width: 100%;
+    padding: 10px 6px 32px 6px;
+  }
+}

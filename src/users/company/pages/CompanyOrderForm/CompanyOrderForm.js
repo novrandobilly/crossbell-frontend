@@ -20,17 +20,15 @@ const ORIGINAL_PRICE = 500000;
 
 const CompanyOrderForm = props => {
 	const companyData = JSON.parse(localStorage.getItem('userData'));
-	const [ price, setPrice ] = useState(ORIGINAL_PRICE);
-
 	const [ validationError, setValidationError ] = useState(false);
 
 	const [ orderModal, setOrderModal ] = useState(false);
-	// const [ slot, setSlot ] = useState('0');
+	const [ slot, setSlot ] = useState('0');
 
 	const [ formState, onInputHandler ] = useForm(
 		{
 			slot: {
-				value: 0,
+				value: null,
 				isValid: false
 			}
 		},
@@ -58,41 +56,41 @@ const CompanyOrderForm = props => {
 		if (formState.inputs.slot.value > 9) {
 			title = 'platinum';
 		}
-		const orderData = {
-			invoiceId: companyData.userId.slice(0, 3),
-			companyId: companyData.userId,
-			packageName: title,
-			slot: formState.inputs.slot.value,
-			token: props.auth.token
-		};
+		if (!props.auth.isActive) {
+			const orderData = {
+				invoiceId: companyData.userId.slice(0, 3),
+				companyId: companyData.userId,
+				packageName: title,
+				slot: formState.inputs.slot.value,
+				token: props.auth.token
+			};
 
-		if (orderData.slot < 1) {
-			throw new Error('jumlah pembelian tidak boleh dibawah 1');
-		}
-		setOrderModal(false);
-		try {
-			const res = await props.createOrder(orderData);
-			console.log(res);
-			props.history.push(`/co/${res.orderreg.id}/invoice`);
-		} catch (err) {
-			console.log(err);
+			try {
+				if (orderData.slot < 1) {
+					throw new Error('jumlah pembelian tidak boleh dibawah 1');
+				}
+
+				setOrderModal(false);
+
+				const res = await props.createOrder(orderData);
+				if (res) {
+					console.log(res);
+					props.history.push(`/co/${res.orderreg.id}/invoice`);
+				} else {
+					throw new Error('Error nih bro');
+				}
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	};
-	console.log(formState.inputs.slot.value, price);
 
-	useEffect(
-		() => {
-			const setPriceSelected = (slot) => {
-				if (slot <= 1) return (ORIGINAL_PRICE);
-				if (slot <= 4) return (ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05);
-				if (slot <= 9) return (ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1);
-				return ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15
-			}
-			
-			setPrice(setPriceSelected(formState?.inputs?.slot?.value))
-		},
-		[ formState.inputs.slot.value ]
-	);
+	let price;
+
+	if (formState.inputs.slot.value <= 1) price = ORIGINAL_PRICE;
+	if (formState.inputs.slot.value > 1) price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05;
+	if (formState.inputs.slot.value >= 4) price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
+	if (formState.inputs.slot.value >= 9) price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15;
 
 	const onCloseOrderModal = () => {
 		setOrderModal(false);
@@ -104,19 +102,30 @@ const CompanyOrderForm = props => {
 
 	const OnclickBronze = () => {
 		onInputHandler('slot', 1, true);
+		setSlot('1');
 	};
 
 	const OnclickSilver = () => {
 		onInputHandler('slot', 4, true);
+		setSlot('4');
 	};
 
 	const OnclickGold = () => {
 		onInputHandler('slot', 9, true);
+		setSlot('9');
 	};
 
 	const OnclickPlatinum = () => {
 		onInputHandler('slot', 10, true);
+		setSlot('10');
 	};
+
+	useEffect(
+		() => {
+			onInputHandler('state', slot, true);
+		},
+		[ onInputHandler, slot ]
+	);
 
 	let formContent = (
 		<React.Fragment>
@@ -128,7 +137,7 @@ const CompanyOrderForm = props => {
 				<div onClick={OnclickSilver} className={classes.PackageCard}>
 					<OrderComponent
 						title='Silver'
-						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05}
+						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
 						slot='2 - 4 slot'
 						perks={[ 'Diskon per slot sebesar 5%' ]}
 						createOrder={props.createOrder}
@@ -138,7 +147,7 @@ const CompanyOrderForm = props => {
 				<div onClick={OnclickGold} className={classes.PackageCard}>
 					<OrderComponent
 						title='Gold'
-						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
 						slot='5 - 9 slot'
 						perks={[ 'Diskon per slot sebesar 10%' ]}
 						createOrder={props.createOrder}
@@ -148,7 +157,7 @@ const CompanyOrderForm = props => {
 				<div onClick={OnclickPlatinum} className={classes.PackageCard}>
 					<OrderComponent
 						title='Platinum'
-						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
+						price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
 						slot='>9 slot'
 						perks={[ 'Diskon per slot sebesar 15%' ]}
 						createOrder={props.createOrder}
@@ -170,11 +179,12 @@ const CompanyOrderForm = props => {
 							validatorMethod={[ VALIDATOR_MIN(1) ]}
 							onInputHandler={onInputHandler}
 							type='number'
-							initValue={formState?.inputs?.slot?.value }
+							initValue={slot}
 							min='0'
 							step='1'
-							helperText={'Minimal 1'}
-							value={formState?.inputs?.slot?.value }
+							helperText={
+								formState.inputs.slot.value <= 0 ? 'Minimal pembelian 1 slot' : 'Mohon masukkan jumlah yang ingin dibeli'
+							}
 						/>
 					</div>
 				</div>

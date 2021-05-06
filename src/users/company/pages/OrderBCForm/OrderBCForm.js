@@ -341,7 +341,7 @@ const OrderBCForm = (props) => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label='Nama sekolah/ universitas*'
+                        label='Universitas tertentu'
                         margin='normal'
                         variant='standard'
                       />
