@@ -283,6 +283,12 @@ const CompanyCard = (props) => {
               )}
             </div>
 
+            {!props.isLoading &&
+              props.auth.isCompany &&
+              props.auth.userId === companyid && (
+                <div className={classes.BorderLine}>Belum ditayangkan</div>
+              )}
+
             <div className={classes.DivContainer}>
               {!props.isLoading &&
                 props.auth.isCompany &&
@@ -323,7 +329,15 @@ const CompanyCard = (props) => {
                     </div>
                   );
                 })}
+            </div>
 
+            {!props.isLoading &&
+              props.auth.isCompany &&
+              props.auth.userId === companyid && (
+                <div className={classes.BorderLine}>Sedang ditayangkan</div>
+              )}
+
+            <div className={classes.DivContainer}>
               {!props.isLoading && displayData && displayData.length > 0 ? (
                 displayData.map((job, i) => {
                   return (
@@ -386,7 +400,16 @@ const CompanyCard = (props) => {
                   Belum ada pekerjaan yang ditayangkan oleh perusahaan ini
                 </p>
               )}
+            </div>
+            {!props.isLoading &&
+              props.auth.isCompany &&
+              props.auth.userId === companyid && (
+                <div className={classes.BorderLine}>
+                  Sudah lewat masa tayang
+                </div>
+              )}
 
+            <div className={classes.DivContainer}>
               {!props.isLoading &&
                 props.auth.isCompany &&
                 props.auth.userId === companyid &&

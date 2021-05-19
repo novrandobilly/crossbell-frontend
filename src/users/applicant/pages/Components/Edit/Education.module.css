@@ -37,6 +37,10 @@
   padding-top: 2rem;
 }
 
+.EditLabel {
+  margin: 8px 0;
+}
+
 .Period {
   display: flex;
   flex-direction: row;

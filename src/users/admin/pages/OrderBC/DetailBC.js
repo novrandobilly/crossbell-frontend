@@ -5,7 +5,10 @@ import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_MIN } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_MIN,
+  VALIDATOR_MAX,
+} from '../../../../shared/utils/validator';
 import Input from '../../../../shared/UI_Element/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -19,6 +22,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import University from '../../../../shared/UI_Element/UniversityData';
 
 import classes from './DetailBC.module.css';
 
@@ -77,6 +83,14 @@ const DetailBC = (props) => {
         value: '',
         isValid: true,
       },
+      IPK: {
+        value: '',
+        isValid: true,
+      },
+      school: {
+        value: '',
+        isValid: true,
+      },
     },
     true
   );
@@ -87,6 +101,7 @@ const DetailBC = (props) => {
 
   const { getOrderInvoice, getAllApplicant } = props;
   const token = props.admin.token;
+
   useEffect(() => {
     if (token) {
       const dataBC = {
@@ -132,10 +147,10 @@ const DetailBC = (props) => {
           });
         });
       }
+
       if (formState.inputs.min.value > 0) {
         filteredArray = filteredArray.filter((el) => {
           let tempAge = moment().diff(moment(el.dateOfBirth), 'year');
-          console.log(tempAge);
           return tempAge >= formState.inputs.min.value;
         });
       }
@@ -146,16 +161,35 @@ const DetailBC = (props) => {
           return tempAge <= formState.inputs.max.value;
         });
       }
+
       if (locationFilter) {
         filteredArray = filteredArray.filter((el) => {
           return el.outOfTown === true;
         });
       }
+
       if (shiftFilter) {
         filteredArray = filteredArray.filter((el) => {
           return el.workShifts === true;
         });
       }
+
+      if (formState.inputs.IPK.value > 0 && formState.inputs.IPK.value <= 4) {
+        filteredArray = filteredArray.filter((app) => {
+          return app.education.some((edu) => {
+            return edu.IPK >= formState.inputs.IPK.value;
+          });
+        });
+      }
+
+      if (formState.inputs.school.value) {
+        filteredArray = filteredArray.filter((app) => {
+          return app.education.some((edu) => {
+            return edu.school === formState.inputs.school.value;
+          });
+        });
+      }
+
       let pageCount = Math.ceil(filteredArray.length / state.rowsPerPage);
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
@@ -190,6 +224,7 @@ const DetailBC = (props) => {
     });
   };
 
+  //================= Education Filter ===========================
   const onEducationHandler = (e) => {
     setEducationFilter((prevState) => {
       let tempArray = [...prevState];
@@ -208,6 +243,11 @@ const DetailBC = (props) => {
   };
   const onShiftHandler = (e) => {
     setShiftFilter(e.target.checked ? true : false);
+  };
+
+  //================= Univ Filter ===========================
+  const handleSchoolChange = (e, value) => {
+    onInputHandler('school', value, true);
   };
 
   //================= Sent Function ===========================
@@ -312,9 +352,7 @@ const DetailBC = (props) => {
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className={classes.CheckboxWarper}>
             <div className={classes.CheckboxCriteria}>
               <p className={classes.FilterLabel}>Pendidikan</p>
               <div className={classes.FlexWrap} onChange={onEducationHandler}>
@@ -373,6 +411,50 @@ const DetailBC = (props) => {
                   min='0'
                   step='1'
                   label='max'
+                />
+              </div>
+            </div>
+
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>IPK</p>
+              <div className={classes.AgeGroup}>
+                <Input
+                  inputType='input'
+                  id='IPK'
+                  validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
+                  onInputHandler={onInputHandler}
+                  error={false}
+                  type='number'
+                  min={0}
+                  max={4}
+                  step='0.01'
+                  helperText={
+                    formState.inputs.IPK.value < 0
+                      ? 'Nilai IPK min 0'
+                      : formState.inputs.IPK.value > 4
+                      ? 'Nilai IPK max 4'
+                      : 'IPK wajib diisi'
+                  }
+                />
+              </div>
+            </div>
+
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>Universitas</p>
+              <div className={classes.UnivDiv}>
+                <Autocomplete
+                  id='school'
+                  name='school'
+                  options={University.map((option) => option)}
+                  onChange={handleSchoolChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label='Universitas tertentu'
+                      margin='normal'
+                      variant='standard'
+                    />
+                  )}
                 />
               </div>
             </div>
@@ -532,30 +614,35 @@ const DetailBC = (props) => {
                         )}
                       </th>
 
-                      <th>
-                        {indexIsLoading && index === i ? (
-                          <Spinner />
-                        ) : (
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            className={classes.button}
-                            size='small'
-                            endIcon={<SendIcon />}
-                            disabled={applicantList.some(
-                              (appId) => appId.toString() === app.id.toString()
-                            )}
-                            onClick={() =>
-                              onSentHandler({
-                                applicantId: app.id,
-                                i,
-                              })
-                            }
-                          >
-                            Send
-                          </Button>
-                        )}
-                      </th>
+                      {dataBC && dataBC.approvetAt ? (
+                        <th>
+                          {indexIsLoading && index === i ? (
+                            <Spinner />
+                          ) : (
+                            <Button
+                              variant='contained'
+                              color='primary'
+                              className={classes.button}
+                              size='small'
+                              endIcon={<SendIcon />}
+                              disabled={applicantList.some(
+                                (appId) =>
+                                  appId.toString() === app.id.toString()
+                              )}
+                              onClick={() =>
+                                onSentHandler({
+                                  applicantId: app.id,
+                                  i,
+                                })
+                              }
+                            >
+                              Send
+                            </Button>
+                          )}
+                        </th>
+                      ) : (
+                        <th>tidak dapat dikirim</th>
+                      )}
                     </tr>
                   );
                 })}

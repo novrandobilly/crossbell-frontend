@@ -42,16 +42,8 @@ const JobCard = (props) => {
     setApplicantList(props.jobApplicant);
   }, [props.jobApplicant]);
 
-  let instantApplyButton = (
-    <Button
-      btnType='InstantApply'
-      onClick={() => {
-        props.setModalError(true);
-      }}
-    >
-      Apply
-    </Button>
-  );
+  let instantApplyButton = <Button></Button>;
+
   if (!props.auth.isCompany && props.auth.token) {
     instantApplyButton = (
       <Button

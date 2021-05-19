@@ -91,6 +91,7 @@ export const createCompany = (companyData) => {
             companyName: companyData.companyName,
             email: companyData.email,
             password: companyData.password,
+            NPWP: companyData.NPWP,
             isCompany: true,
           }),
         }
