@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import MainHeader from './MainHeader';
 import NavigationLinks from './NavigationLinks';
 import SideDrawer from './SideDrawer';
 import Backdrop from '../UI_Element/Backdrop';
 import Logo from '../UI_Element/Logo';
-import NavLinks from './NavLinks';
+// import NavLinks from './NavLinks';
 import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {

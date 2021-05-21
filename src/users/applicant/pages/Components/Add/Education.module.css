@@ -37,10 +37,7 @@
 }
 
 .EditLabel {
-  /* display: flex;
-  flex-direction: column;
-  align-self: flex-start; */
-  margin-top: 0.3rem;
+  margin: 8px 0;
 }
 
 .Period {

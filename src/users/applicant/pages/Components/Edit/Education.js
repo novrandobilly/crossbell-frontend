@@ -183,10 +183,7 @@ const Education = (props) => {
             />
           </div>
 
-          <FormControl
-            className={classes.formControl}
-            style={{ margin: '0.8rem 0' }}
-          >
+          <FormControl className={classes.formControl}>
             <InputLabel shrink id='degree' style={{ fontSize: '1rem' }}>
               Tingkat Pendidikan*
             </InputLabel>
@@ -279,7 +276,7 @@ const Education = (props) => {
             </div>
 
             <div className={classes.EditLabel}>
-              <p className={classes.TextIPK}>IPK/ Nilai Kelulusan</p>
+              <p className={classes.Text}>IPK/ Nilai Kelulusan</p>
               <Input
                 inputType='input'
                 id='IPK'

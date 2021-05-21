@@ -101,7 +101,15 @@ const CompanyJobList = (props) => {
                         </div>
                         <div className={classes.CardFooter}>
                           {job.expiredDate ? (
-                            <p className={classes.ExpDate}>
+                            <p
+                              className={classes.ExpDate}
+                              style={
+                                moment(job.expiredDate).diff(moment(), 'days') >
+                                0
+                                  ? { color: '#32CD32' }
+                                  : { color: '#778899' }
+                              }
+                            >
                               {moment(job.expiredDate).diff(moment(), 'days') >
                               0
                                 ? [
@@ -113,7 +121,12 @@ const CompanyJobList = (props) => {
                                 : 'expired'}
                             </p>
                           ) : (
-                            <p className={classes.ExpDate}>belum ditayangkan</p>
+                            <p
+                              className={classes.ExpDate}
+                              style={{ color: '#FF8C00' }}
+                            >
+                              belum ditayangkan
+                            </p>
                           )}
                         </div>
                       </div>

@@ -80,16 +80,19 @@
 .Name {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .Title {
   color: rgba(0, 0, 0, 0.7);
   font-weight: 400;
+  margin: 2px 0;
 }
 
 .Address {
   width: 100%;
+  margin-bottom: 0;
+  font-size: 0.8rem;
 }
 
 .ProfileLabel {
@@ -103,12 +106,13 @@
 .Email {
   color: gray;
   font-size: 0.8rem;
-  line-height: 0;
+  margin: 2px 0;
 }
 
 .ContainerRight {
+  position: absolute;
+  top: 185px;
   align-self: flex-end;
-  margin-top: 1rem;
 }
 
 .SegmentContainer {
@@ -249,6 +253,7 @@
   }
 
   .ContainerRight {
+    position: unset;
     align-self: flex-start;
   }
 
@@ -291,5 +296,6 @@
 
   .ContainerRight {
     align-self: flex-end;
+    position: absolute;
   }
 }

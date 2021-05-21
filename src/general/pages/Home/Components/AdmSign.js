@@ -71,26 +71,30 @@ const AdmSign = (props) => {
     <div className={classes.ContainerFlex}>
       <p className={classes.FormTitle}>Login</p>
 
-      <Input
-        inputType='input'
-        id='email'
-        InputClass='Login'
-        validatorMethod={[VALIDATOR_EMAIL()]}
-        onInputHandler={onInputHandler}
-        label='Email*'
-        helperText='Input harus berbentuk email'
-      />
+      <div className={classes.InputContainer}>
+        <Input
+          inputType='input'
+          id='email'
+          InputClass='Login'
+          validatorMethod={[VALIDATOR_EMAIL()]}
+          onInputHandler={onInputHandler}
+          label='Email*'
+          helperText='Input harus berbentuk email'
+        />
+      </div>
 
-      <Input
-        inputType='input'
-        id='password'
-        InputClass='Login'
-        validatorMethod={[VALIDATOR_REQUIRE()]}
-        onInputHandler={onInputHandler}
-        label='Password*'
-        type='password'
-        helperText='Password minimal 8 karakter'
-      />
+      <div className={classes.InputContainer}>
+        <Input
+          inputType='input'
+          id='password'
+          InputClass='Login'
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label='Password*'
+          type='password'
+          helperText='Password minimal 8 karakter'
+        />
+      </div>
 
       <Button
         variant='contained'

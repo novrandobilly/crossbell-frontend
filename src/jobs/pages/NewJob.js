@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
+import TextField from '@material-ui/core/TextField';
 import Input from '../../shared/UI_Element/Input';
 import {
   VALIDATOR_REQUIRE,
@@ -262,18 +263,25 @@ const NewJob = (props) => {
             />
 
             <Autocomplete
-              id='locationFilter'
-              name='locationFilter'
+              id='placementLocation'
+              name='placementLocation'
               options={cities.map((option) => option)}
               onChange={handleLocationChange}
               style={{ margin: '0' }}
               renderInput={(params) => (
-                <Input
-                  params={{ ...params }}
-                  inputType='autoComplete'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                // <Input
+                //   params={{ ...params }}
+                //   inputType='autoComplete'
+                //   validatorMethod={[VALIDATOR_REQUIRE()]}
+                //   label='Lokasi*'
+                //   helperText='Lokasi pekerjaan wajib diisi'
+                // />
+                <TextField
+                  {...params}
+                  style={{ margin: '0' }}
                   label='Lokasi*'
-                  helperText='Lokasi pekerjaan wajib diisi'
+                  margin='normal'
+                  variant='standard'
                 />
               )}
             />
@@ -391,12 +399,19 @@ const NewJob = (props) => {
               onChange={fowHandler}
               style={{ margin: '0', width: '100%' }}
               renderInput={(params) => (
-                <Input
-                  params={{ ...params }}
-                  inputType='autoComplete'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
+                // <Input
+                //   params={{ ...params }}
+                //   inputType='autoComplete'
+                //   validatorMethod={[VALIDATOR_REQUIRE()]}
+                //   label='Bidang minat*'
+                //   helperText='Bidang minat wajib diisi'
+                // />
+                <TextField
+                  {...params}
+                  style={{ margin: '0' }}
                   label='Bidang minat*'
-                  helperText='Bidang minat wajib diisi'
+                  margin='normal'
+                  variant='standard'
                 />
               )}
             />

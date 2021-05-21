@@ -248,7 +248,7 @@ const EditUnreleasedJob = (props) => {
       token: props.auth.token,
       userId: props.auth.userId,
     };
-    console.log(jobData);
+
     try {
       const res = await props.saveJobDraft(jobData, authData);
       console.log(res);
@@ -304,8 +304,6 @@ const EditUnreleasedJob = (props) => {
   }
 
   let formContent = <Spinner />;
-
-  console.log(formState);
 
   if (!props.job.isLoading && loadedJob) {
     formContent = (
@@ -409,7 +407,7 @@ const EditUnreleasedJob = (props) => {
             <div className={classes.ContentWrap}>
               <FormControl
                 className={classes.FormControl}
-                style={{ marginTop: '.68rem' }}
+                style={{ marginTop: '0' }}
               >
                 <InputLabel id='employmentLabel' style={{ fontSize: '1rem' }}>
                   Jenis Kontrak*

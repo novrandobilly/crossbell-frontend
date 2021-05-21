@@ -38,6 +38,10 @@ const Register = (props) => {
         value: '',
         isValid: false,
       },
+      confirmPassword: {
+        value: '',
+        isValid: false,
+      },
     },
     false
   );
@@ -92,7 +96,7 @@ const Register = (props) => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Nama depan'
+              label='Nama depan*'
               helperText='Mohon masukkan nama depan yang valid'
             />
           </div>
@@ -104,7 +108,7 @@ const Register = (props) => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Nama belakang'
+              label='Nama belakang*'
               helperText='Mohon masukkan nama belakang yang valid'
             />
           </div>
@@ -116,7 +120,7 @@ const Register = (props) => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_EMAIL()]}
               onInputHandler={onInputHandler}
-              label='Email'
+              label='Email*'
               helperText='Mohon masukkan alamat email yang valid'
             />
           </div>
@@ -128,9 +132,22 @@ const Register = (props) => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_MINLENGTH(6)]}
               onInputHandler={onInputHandler}
-              label='Password'
+              label='Password*'
               type='password'
               helperText='Password minimal mengandung 6 karakter'
+            />
+          </div>
+
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='confirmPassword'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Confirm password*'
+              type='password'
+              helperText='Password belum sesuai mohon coba lagi'
             />
           </div>
 
@@ -139,7 +156,11 @@ const Register = (props) => {
             color='primary'
             type='submit'
             disableElevation
-            disabled={!formState.formIsValid}
+            disabled={
+              !formState.formIsValid ||
+              formState.inputs.password.value !==
+                formState.inputs.confirmPassword.value
+            }
             style={{
               marginTop: '1rem',
             }}
