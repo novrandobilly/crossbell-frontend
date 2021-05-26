@@ -89,7 +89,7 @@ const ResetPwd = props => {
 						InputClass='Forgot_Password'
 						validatorMethod={[ VALIDATOR_MINLENGTH(6) ]}
 						onInputHandler={onInputHandler}
-						label='Confirm Password*'
+						label='Password Confirmation*'
 					/>
 
 					<button disabled={!formState.formIsValid} className={classes.SubmitButton}>

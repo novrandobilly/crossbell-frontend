@@ -77,7 +77,7 @@ const CompanyOrderForm = props => {
 					console.log(res);
 					props.history.push(`/co/${res.orderreg.id}/invoice`);
 				} else {
-					throw new Error('Error nih bro');
+					throw new Error(res);
 				}
 			} catch (err) {
 				console.log(err);
