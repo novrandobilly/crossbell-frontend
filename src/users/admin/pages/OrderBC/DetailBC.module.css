@@ -6,14 +6,14 @@
 }
 
 .FilterContainer {
-  width: 60vw;
+  width: 100vw;
   display: flex;
   padding: 1rem 1rem 0 1rem;
   justify-content: center;
 }
 
 .CheckboxWarper {
-  width: 50%;
+  width: 80%;
   display: flex;
 }
 
@@ -25,6 +25,10 @@
   width: 50%;
   box-sizing: border-box;
   align-items: center;
+}
+
+.UnivDiv {
+  width: 100%;
 }
 
 .FilterLabel {

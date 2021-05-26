@@ -544,9 +544,7 @@ const EditIntro = (props) => {
                         views={['year', 'month', 'date']}
                         label='Tanggal Lahir'
                         maxDate={moment()}
-                        initValue={
-                          data.dateOfBirth ? data.dateOfBirth : moment()
-                        }
+                        initValue={data.dateOfBirth ? data.dateOfBirth : null}
                         initIsValid={
                           data.dateOfBirth ? data.dateOfBirth : false
                         }
@@ -779,7 +777,10 @@ const EditIntro = (props) => {
               </Button>
             </Link>
             <Button
-              disabled={!formState.formIsValid}
+              disabled={
+                formState.inputs.interest.value.length <= 0 ||
+                !formState.formIsValid
+              }
               variant='contained'
               color='primary'
               type='submit'

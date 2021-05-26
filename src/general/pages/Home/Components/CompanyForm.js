@@ -20,6 +20,7 @@ import classes from './CompanyForm.module.css';
 
 const CompanyForm = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
+
   const [formState, onInputHandler] = useForm(
     {
       companyName: {
@@ -30,19 +31,29 @@ const CompanyForm = (props) => {
         value: '',
         isValid: false,
       },
+      NPWP: {
+        value: '',
+        isValid: false,
+      },
       password: {
+        value: '',
+        isValid: false,
+      },
+      confirmPassword: {
         value: '',
         isValid: false,
       },
     },
     false
   );
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const newCompany = {
       companyName: formState.inputs.companyName.value,
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
+      NPWP: formState.inputs.NPWP.value,
     };
 
     try {
@@ -107,6 +118,18 @@ const CompanyForm = (props) => {
           <div className={classes.InputBox}>
             <Input
               inputType='input'
+              id='NPWP'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Nomor NPWP*'
+              helperText='NPWP wajib diisi'
+            />
+          </div>
+
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
               id='password'
               InputClass='Register'
               validatorMethod={[VALIDATOR_MINLENGTH(6)]}
@@ -117,12 +140,29 @@ const CompanyForm = (props) => {
             />
           </div>
 
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='confirmPassword'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Confirm password*'
+              type='password'
+              helperText={'Password belum sesuai, mohon coba lagi'}
+            />
+          </div>
+
           <Button
             variant='contained'
             color='primary'
             type='submit'
             disableElevation
-            disabled={!formState.formIsValid}
+            disabled={
+              !formState.formIsValid ||
+              formState.inputs.password.value !==
+                formState.inputs.confirmPassword.value
+            }
             style={{
               marginTop: '1rem',
             }}

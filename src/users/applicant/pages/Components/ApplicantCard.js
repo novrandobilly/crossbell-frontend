@@ -71,10 +71,9 @@ const ApplicantCard = (props) => {
                   {props.firstName} {props.lastName}
                 </p>
                 <p className={classes.Title}>{props.headline}</p>
-                <p className={classes.Address}>{props.address}</p>
-
                 <p className={classes.Email}>{props.email}</p>
                 <p className={classes.Email}>{props.phone}</p>
+                <p className={classes.Address}>{props.address}</p>
 
                 <div className={classes.ResumePreview}>
                   {props.resume && (

@@ -100,7 +100,6 @@ export const saveJobDraft = (jobData, authData) => {
 export const editJobDraft = (jobData, authData) => {
   return async (dispatch) => {
     dispatch(createJobStart());
-    console.log(jobData);
     try {
       const res = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.id}`,

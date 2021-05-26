@@ -26,6 +26,10 @@
   align-self: flex-start;
 }
 
+.InputContainer {
+  margin-top: 8px;
+}
+
 .Content {
   display: flex;
   flex-direction: column;
