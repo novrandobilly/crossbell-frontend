@@ -56,7 +56,7 @@ const CompanyOrderForm = props => {
 		if (formState.inputs.slot.value > 9) {
 			title = 'platinum';
 		}
-		if (!props.auth.isActive) {
+		if (props.auth.isActive) {
 			const orderData = {
 				invoiceId: companyData.userId.slice(0, 3),
 				companyId: companyData.userId,
