@@ -214,7 +214,6 @@ const EditIntro = props => {
 			}
 		}
 	};
-
 	const { getOneApplicant } = props;
 	useEffect(
 		() => {
@@ -335,7 +334,7 @@ const EditIntro = props => {
 
 				onInputHandler('state', locationState.province, true);
 				onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
-				onInputHandler('gender', data.gender, true);
+				onInputHandler('gender', data.gender, !!genderEl);
 				onInputHandler('interest', data.interest, true);
 				onInputHandler('autoSend', data.autoSend, true);
 				onInputHandler('outOfTown', data.outOfTown, true);
@@ -728,6 +727,8 @@ const EditIntro = props => {
 	const onCancelHandler = () => {
 		props.resetApplicant();
 	};
+
+	console.log(formState);
 
 	return (
 		<form onSubmit={onSubmitHandler} className={classes.Container}>
