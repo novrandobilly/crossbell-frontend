@@ -41,7 +41,7 @@ const ApplicantCard = (props) => {
 
   return (
     <div className={classes.Pages}>
-      <Link to={'/job-dashboard'}>
+      <Link to={'/jobs-dashboard'}>
         <p className={classes.Explore}>Telusuri pekerjaan disini</p>
       </Link>
       <div className={classes.Wraper}>

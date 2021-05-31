@@ -181,6 +181,7 @@ const EditUnreleasedJob = (props) => {
       fieldOfWork: formState.inputs.fieldOfWork.value,
     };
     const authData = {
+      jobId: jobsid,
       token: props.auth.token,
       userId: props.auth.userId,
     };
@@ -188,7 +189,7 @@ const EditUnreleasedJob = (props) => {
       if (formState.inputs.slotAllocation.value % 2 !== 0) {
         throw new Error('Slot allocation harus genap');
       }
-      const res = await props.createJob(jobData, authData);
+      const res = await props.releaseJob(jobData, authData);
       console.log(res);
       props.history.push('/jobs-dashboard');
     } catch (err) {
@@ -245,12 +246,13 @@ const EditUnreleasedJob = (props) => {
       fieldOfWork: formState.inputs.fieldOfWork.value,
     };
     const authData = {
+      jobsid: jobsid,
       token: props.auth.token,
       userId: props.auth.userId,
     };
 
     try {
-      const res = await props.saveJobDraft(jobData, authData);
+      const res = await props.editJobDraft(jobData, authData);
       console.log(res);
       props.history.push(`/co/order/reguler`);
     } catch (err) {
@@ -583,11 +585,10 @@ const EditUnreleasedJob = (props) => {
               </h3>
               <div className={classes.SlotAddButton}>
                 <Button
-                  color='primary'
                   disableElevation
                   size='small'
-                  startIcon={<AddIcon />}
                   style={{ fontWeight: '600' }}
+                  startIcon={<AddIcon />}
                   onClick={onAddSlotHandler}
                 >
                   Tambah Slot
@@ -656,8 +657,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createJob: (jobData, authData) =>
-      dispatch(actionCreators.createJob(jobData, authData)),
+    releaseJob: (jobData, authData) =>
+      dispatch(actionCreators.releaseJob(jobData, authData)),
     editJobDraft: (jobData, authData) =>
       dispatch(actionCreators.editJobDraft(jobData, authData)),
     getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
