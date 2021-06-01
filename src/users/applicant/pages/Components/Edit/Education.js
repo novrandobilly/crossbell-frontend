@@ -14,7 +14,9 @@ import {
 } from '../../../../../shared/utils/validator';
 
 import University from '../../../../../shared/UI_Element/UniversityData';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -35,6 +37,8 @@ const Education = (props) => {
   const [open, setOpen] = useState(false);
   const [school, setSchool] = useState('');
   const [data, setData] = useState();
+
+  const filter = createFilterOptions();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -105,6 +109,7 @@ const Education = (props) => {
 
     const updatedEducation = {
       applicantId: applicantid,
+      token: props.auth.token,
       index: educationindex,
       school: formState.inputs.school.value,
       degree: formState.inputs.degree.value,
@@ -114,7 +119,6 @@ const Education = (props) => {
       endDate: formState.inputs.endDate.value,
       description: formState.inputs.description.value,
       IPK: formState.inputs.IPK.value,
-      token: props.auth.token,
     };
     try {
       const res = await props.updateApplicantEducation(updatedEducation);
@@ -151,9 +155,9 @@ const Education = (props) => {
     setOpen(true);
   };
 
-  const handleSchoolChange = (e, value) => {
-    onInputHandler('school', value, true);
-  };
+  // const handleSchoolChange = (e, value) => {
+  //   onInputHandler('school', value, true);
+  // };
 
   let formContent = <SpinnerCircle />;
 
@@ -165,13 +169,59 @@ const Education = (props) => {
         <div className={classes.FormRow}>
           <div className={classes.EditLabel}>
             <Autocomplete
+              value={school}
+              onChange={(event, newValue) => {
+                console.log(newValue.inputValue);
+                if (typeof newValue === 'string') {
+                  setSchool({
+                    institusi: newValue,
+                  });
+                  onInputHandler('school', newValue.institusi, true);
+                } else if (newValue && newValue.inputValue) {
+                  // Create a new value from the user input
+                  setSchool({
+                    institusi: newValue.inputValue,
+                  });
+                  onInputHandler('school', newValue.inputValue.institusi, true);
+                } else {
+                  setSchool(newValue);
+                  onInputHandler('school', newValue.institusi, true);
+                }
+              }}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+
+                // Suggest the creation of a new value
+                if (params.inputValue !== '') {
+                  filtered.push({
+                    inputValue: params.inputValue,
+                    institusi: `Tambahkan "${params.inputValue}"`,
+                  });
+                }
+
+                return filtered;
+              }}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
               id='school'
               name='school'
-              options={University.map((option) => option)}
-              onChange={handleSchoolChange}
-              value={
-                school && University.find((select, i) => select === school)
-              }
+              ccc
+              options={University}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === 'string') {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.institusi;
+              }}
+              renderOption={(option) => option.institusi}
+              freeSolo
               renderInput={(params) => (
                 <TextField
                   {...params}

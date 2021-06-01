@@ -7,6 +7,7 @@ const CompanyMap = (props) => {
     <div>
       <CompanyCard
         key={props.items.companyId}
+        email={props.items.email}
         companyId={props.items.id}
         companyName={props.items.companyName}
         logo={props.items.logo}

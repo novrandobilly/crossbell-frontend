@@ -489,6 +489,7 @@ const NewJob = (props) => {
                   ).toString()
                 : maxSlot}
             </h3>
+
             <div className={classes.SlotAddButton}>
               <Button
                 disableElevation
