@@ -102,7 +102,7 @@ export const editJobDraft = (jobData, authData) => {
     dispatch(createJobStart());
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.jobsid}`,
         {
           method: 'PATCH',
           headers: {
@@ -317,18 +317,32 @@ export const applyJob = (payload) => {
   };
 };
 
-export const releaseJob = (payload) => {
+export const releaseJob = (jobData, authData) => {
   return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/${payload.jobId}/release`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/${authData.jobId}/release`,
         {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
+            Authorization: `Bearer ${authData.token}`,
           },
+          body: JSON.stringify({
+            jobTitle: jobData.jobTitle,
+            placementLocation: jobData.placementLocation,
+            jobDescriptions: jobData.jobDescriptions,
+            educationalStage: jobData.educationalStage,
+            technicalRequirement: jobData.technicalRequirement,
+            emailRecipient: jobData.emailRecipient,
+            employment: jobData.employment,
+            benefit: jobData.benefit,
+            salary: jobData.salary,
+            slot: jobData.slot,
+            fieldOfWork: jobData.fieldOfWork,
+            companyId: authData.userId,
+          }),
         }
       );
       const responseJSON = res.json();

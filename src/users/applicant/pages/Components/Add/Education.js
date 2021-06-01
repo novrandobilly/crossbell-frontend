@@ -14,7 +14,9 @@ import {
 } from '../../../../../shared/utils/validator';
 
 import University from '../../../../../shared/UI_Element/UniversityData';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -31,7 +33,10 @@ const Education = (props) => {
   const { applicantid } = useParams();
   const push = props.push;
 
+  const filter = createFilterOptions();
+
   const [degree, setDegree] = useState('');
+  const [school, setSchool] = useState('');
   const [open, setOpen] = useState(false);
   const [formState, onInputHandler] = useForm(
     {
@@ -122,9 +127,9 @@ const Education = (props) => {
     setOpen(true);
   };
 
-  const handleSchoolChange = (e, value) => {
-    onInputHandler('school', value, true);
-  };
+  // const handleSchoolChange = (e, value) => {
+  //   onInputHandler('school', value, true);
+  // };
 
   let formContent = (
     <div className={classes.ContainerFlex}>
@@ -133,10 +138,54 @@ const Education = (props) => {
       <div className={classes.FormRow}>
         <div className={classes.EditLabel}>
           <Autocomplete
+            value={school}
+            onChange={(event, newValue) => {
+              console.log(newValue.inputValue);
+              if (typeof newValue === 'string') {
+                setSchool({
+                  institusi: newValue,
+                });
+                onInputHandler('school', newValue.institusi, true);
+              } else if (newValue && newValue.inputValue) {
+                setSchool({
+                  institusi: newValue.inputValue,
+                });
+                onInputHandler('school', newValue.inputValue.institusi, true);
+              } else {
+                setSchool(newValue);
+                onInputHandler('school', newValue.institusi, true);
+              }
+            }}
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+
+              if (params.inputValue !== '') {
+                filtered.push({
+                  inputValue: params.inputValue,
+                  institusi: `Tambahkan "${params.inputValue}"`,
+                });
+              }
+
+              return filtered;
+            }}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
             id='school'
             name='school'
-            options={University.map((option) => option)}
-            onChange={handleSchoolChange}
+            ccc
+            options={University}
+            getOptionLabel={(option) => {
+              if (typeof option === 'string') {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.institusi;
+            }}
+            renderOption={(option) => option.institusi}
+            freeSolo
             renderInput={(params) => (
               <TextField
                 {...params}

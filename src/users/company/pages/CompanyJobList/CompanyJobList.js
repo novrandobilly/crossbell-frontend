@@ -29,9 +29,13 @@ const CompanyJobList = (props) => {
 
       getJobsInCompany(payload).then((res) => {
         console.log(res);
-        setData(
-          res.foundJob.sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-        );
+        if (!res.message) {
+          setData(
+            res.foundJob.sort(
+              (a, b) => moment(b.createdAt) - moment(a.createdAt)
+            )
+          );
+        }
       });
     }
   }, [getJobsInCompany, companyid, props.auth]);

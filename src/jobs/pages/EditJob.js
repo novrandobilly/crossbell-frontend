@@ -111,92 +111,105 @@ const EditJob = (props) => {
 
         <div className={classes.FormRow}>
           <div className={classes.EditLabel}>
-            <Input
-              inputType='input'
-              id='jobDescriptions'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Deskripsi pekerjaan*'
-              initValue={identifiedJob.jobDescriptions}
-              initIsValid={true}
-            />
-            <Input
-              inputType='input'
-              id='educationalStage'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Jenjang pendidikan*'
-              initValue={identifiedJob.educationalStage}
-              initIsValid={true}
-            />
+            <div className={classes.InputDiv}>
+              <Input
+                inputType='input'
+                id='jobDescriptions'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Deskripsi pekerjaan*'
+                initValue={identifiedJob.jobDescriptions}
+                initIsValid={true}
+              />
+            </div>
+            <div className={classes.InputDiv}>
+              <Input
+                inputType='input'
+                id='educationalStage'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Jenjang pendidikan*'
+                initValue={identifiedJob.educationalStage}
+                initIsValid={true}
+              />
+            </div>
 
-            <Input
-              inputType='input'
-              id='technicalRequirement'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Persyaratan teknis*'
-              initValue={identifiedJob.technicalRequirement}
-              initIsValid={true}
-            />
+            <div className={classes.InputDiv}>
+              <Input
+                inputType='input'
+                id='technicalRequirement'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Persyaratan teknis*'
+                initValue={identifiedJob.technicalRequirement}
+                initIsValid={true}
+              />
+            </div>
 
-            <FormControl
-              className={classes.formControl}
-              style={{
-                width: '100%',
-                marginTop: '0.5rem',
-              }}
-            >
-              <InputLabel id='employment' style={{ fontSize: '1rem' }}>
-                Jenis Pekerjaan*
-              </InputLabel>
-
-              <Select
-                id='employment'
-                name='employment'
-                open={employmentOpen}
-                onClose={handleEmploymentClose}
-                onOpen={handleEmploymentOpen}
-                value={employment}
-                onChange={handleEmploymentChange}
+            <div className={classes.InputDiv}>
+              <FormControl
+                className={classes.formControl}
                 style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
+                  width: '100%',
                 }}
               >
-                <MenuItem
-                  id={0}
-                  value='permanent'
-                  style={{ fontSize: '0.9rem' }}
-                >
-                  Permanent
-                </MenuItem>
-                <MenuItem
-                  id={0}
-                  value='contract'
-                  style={{ fontSize: '0.9rem' }}
-                >
-                  Contract
-                </MenuItem>
-                <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
-                  intern
-                </MenuItem>
-              </Select>
-            </FormControl>
+                <InputLabel id='employment' style={{ fontSize: '1rem' }}>
+                  Jenis Pekerjaan*
+                </InputLabel>
 
-            <Input
-              inputType='input'
-              id='salary'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Gaji*'
-              initValue={identifiedJob.salary}
-              initIsValid={true}
-            />
+                <Select
+                  id='employment'
+                  name='employment'
+                  open={employmentOpen}
+                  onClose={handleEmploymentClose}
+                  onOpen={handleEmploymentOpen}
+                  value={employment}
+                  onChange={handleEmploymentChange}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                  }}
+                >
+                  <MenuItem
+                    id={0}
+                    value='permanent'
+                    style={{ fontSize: '0.9rem' }}
+                  >
+                    Permanent
+                  </MenuItem>
+                  <MenuItem
+                    id={0}
+                    value='contract'
+                    style={{ fontSize: '0.9rem' }}
+                  >
+                    Contract
+                  </MenuItem>
+                  <MenuItem
+                    id={0}
+                    value='intern'
+                    style={{ fontSize: '0.9rem' }}
+                  >
+                    intern
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
+            <div className={classes.InputDiv}>
+              <Input
+                inputType='input'
+                id='salary'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                label='Gaji*'
+                initValue={identifiedJob.salary}
+                initIsValid={true}
+              />
+            </div>
           </div>
         </div>
         <div className={classes.Footer}>

@@ -20,6 +20,10 @@
   text-align: left;
 }
 
+.InputDiv {
+  margin-top: 8px;
+}
+
 .FormTitle {
   font-size: 1.5rem;
   font-weight: bold;
