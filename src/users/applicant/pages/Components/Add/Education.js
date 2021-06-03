@@ -112,6 +112,12 @@ const Education = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (school) {
+      onInputHandler('school', school.institusi, true);
+    }
+  }, [onInputHandler, school]);
+
   const handleChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
@@ -127,10 +133,6 @@ const Education = (props) => {
     setOpen(true);
   };
 
-  // const handleSchoolChange = (e, value) => {
-  //   onInputHandler('school', value, true);
-  // };
-
   let formContent = (
     <div className={classes.ContainerFlex}>
       <p className={classes.FormTitle}>Tambah pendidikan</p>
@@ -140,7 +142,6 @@ const Education = (props) => {
           <Autocomplete
             value={school}
             onChange={(event, newValue) => {
-              console.log(newValue.inputValue);
               if (typeof newValue === 'string') {
                 setSchool({
                   institusi: newValue,

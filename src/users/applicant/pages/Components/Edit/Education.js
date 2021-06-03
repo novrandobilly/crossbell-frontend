@@ -134,9 +134,9 @@ const Education = (props) => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && school) {
       onInputHandler('degree', data.degree, true);
-      onInputHandler('school', school, true);
+      onInputHandler('school', school.institusi, true);
     }
   }, [data, onInputHandler, school]);
 
@@ -155,10 +155,6 @@ const Education = (props) => {
     setOpen(true);
   };
 
-  // const handleSchoolChange = (e, value) => {
-  //   onInputHandler('school', value, true);
-  // };
-
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading && data) {
@@ -171,7 +167,6 @@ const Education = (props) => {
             <Autocomplete
               value={school}
               onChange={(event, newValue) => {
-                console.log(newValue.inputValue);
                 if (typeof newValue === 'string') {
                   setSchool({
                     institusi: newValue,

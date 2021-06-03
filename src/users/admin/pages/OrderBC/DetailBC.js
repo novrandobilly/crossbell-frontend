@@ -614,7 +614,7 @@ const DetailBC = (props) => {
                         )}
                       </th>
 
-                      {dataBC && dataBC.approvetAt ? (
+                      {dataBC && dataBC.approvedAt ? (
                         <th>
                           {indexIsLoading && index === i ? (
                             <Spinner />

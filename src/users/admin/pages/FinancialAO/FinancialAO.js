@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionCreators from '../../../../store/actions';
+import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 // import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 import classes from './FinancialAO.module.css';
@@ -16,6 +19,20 @@ const FinancialAO = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [formState, onInputHandler] = useForm(
+    {
+      start: {
+        value: '',
+        isValid: true,
+      },
+      end: {
+        value: '',
+        isValid: true,
+      },
+    },
+    true
+  );
 
   const { getWholeOrderREG, getWholeOrderBC } = props;
   useEffect(() => {
@@ -36,7 +53,6 @@ const FinancialAO = (props) => {
         orderReg = resreg.orderreg;
         orderBC = resbc.orderbc;
         allOrder = [...orderReg, ...orderBC];
-        console.log(allOrder);
         allOrder = allOrder.sort(
           (a, b) => moment(b.createdAt) - moment(a.createdAt)
         );
@@ -45,6 +61,34 @@ const FinancialAO = (props) => {
       fetchData();
     }
   }, [getWholeOrderREG, getWholeOrderBC, props.admin]);
+
+  let items = displayData;
+
+  useEffect(() => {
+    if (items && items.length > 0) {
+      let filteredArray = [...items];
+      console.log(formState.inputs.start.value);
+      console.log(formState.inputs.end.value);
+
+      if (formState.inputs.start.value) {
+        filteredArray = filteredArray.filter((el) => {
+          return el.createdAt >= formState.inputs.start.value;
+        });
+      }
+
+      if (formState.inputs.end.value) {
+        filteredArray = filteredArray.filter((el) => {
+          return el.createdAt <= formState.inputs.end.value;
+        });
+      }
+
+      console.log(filteredArray);
+      setDisplayData(filteredArray);
+    } else {
+      setDisplayData(items);
+    }
+  }, [items, displayData, formState]);
+
   let content = <Spinner />;
 
   if (displayData && !props.isLoading) {
@@ -53,6 +97,35 @@ const FinancialAO = (props) => {
         <div className={classes.Container}>
           <div className={classes.HeaderContainer}>
             <h1 className={classes.Header}>CrossBell Finance</h1>
+            <div className={classes.DateFilter}>
+              <p className={classes.DateLabel}>Tanggal awal</p>
+              <Input
+                inputType='customdate'
+                id='start'
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onInputHandler={onInputHandler}
+                views={['year', 'month', 'date']}
+                maxDate={moment()}
+                initIsValid={true}
+                initValue={null}
+                format='dd/MM/yyyy'
+              />
+            </div>
+
+            <div className={classes.DateFilter}>
+              <p className={classes.DateLabel}>Tanggal akhir</p>
+              <Input
+                inputType='customdate'
+                id='end'
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onInputHandler={onInputHandler}
+                views={['year', 'month', 'date']}
+                maxDate={moment()}
+                initIsValid={true}
+                initValue={null}
+                format='dd/MM/yyyy'
+              />
+            </div>
           </div>
           <div className={classes.TableHolder}>
             <table className={classes.Table}>
