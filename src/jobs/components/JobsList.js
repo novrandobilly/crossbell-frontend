@@ -54,9 +54,7 @@ const JobsList = (props) => {
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
   const [sort, setSort] = useState('newest');
   const [employmentFilter, setEmploymentFilter] = useState([]);
-
   const [fieldOfWorkFilter, setFieldOfWorkFilter] = useState('');
-
   const [locationFilter, setLocationFilter] = useState('');
 
   const [formState, onInputHandler] = useForm(

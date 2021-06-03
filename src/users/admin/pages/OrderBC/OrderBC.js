@@ -146,6 +146,7 @@ const OrderBC = (props) => {
                 <th>No</th>
                 <th>Order Id</th>
                 <th>Nama Perusahaan</th>
+                <th>Harga Total</th>
                 <th>Tanggal Order</th>
                 <th>Tanggal Disetujui</th>
                 <th>Status</th>
@@ -175,6 +176,8 @@ const OrderBC = (props) => {
                       {order.companyId.companyName}
                     </Link>
                   </th>
+                  <th>Rp.{order.totalPrice.toLocaleString()}</th>
+
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
                   <th>
                     {order.approvedAt

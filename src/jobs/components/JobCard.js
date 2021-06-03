@@ -127,7 +127,7 @@ const JobCard = (props) => {
             <em>{props.fieldOfWork.filter((fow) => fow).join(', ')}</em>
           </div>
           <p className={classes.BottomContent}>
-            {props.salary
+            {props.salary && props.salary > 0
               ? `IDR ${salary.toLocaleString()} /month`
               : 'Salary Undisclosed'}
           </p>
