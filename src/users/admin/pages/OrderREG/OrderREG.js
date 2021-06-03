@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './OrderREG.module.css';
 
@@ -47,6 +48,12 @@ const OrderREG = (props) => {
   const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
+  const [orderModal, setOrderModal] = useState(false);
+  const [approveOrder, setApproveOrder] = useState({
+    orderId: null,
+    companyId: null,
+    index: null,
+  });
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -84,6 +91,8 @@ const OrderREG = (props) => {
 
   const approveOrderREGHandler = async (dataInput) => {
     setIndex(dataInput.i);
+    setOrderModal(false);
+
     const payload = {
       token: props.admin.token,
       companyId: dataInput.companyId,
@@ -126,6 +135,15 @@ const OrderREG = (props) => {
     });
   };
 
+  const onCloseOrderModal = () => {
+    setOrderModal(false);
+  };
+
+  const onOpenOrderModal = (orderId, companyId, index) => {
+    setApproveOrder({ orderId: orderId, companyId: companyId, index: index });
+    setOrderModal(true);
+  };
+
   let content = <SpinnerCircle />;
 
   if (!props.isLoading && data && displayData) {
@@ -141,6 +159,7 @@ const OrderREG = (props) => {
                 <th>Perusahaan</th>
                 <th>Slot</th>
                 <th>Nama Paket</th>
+                <th>Harga Total</th>
                 <th>Tanggal Order</th>
                 <th>Tanggal Disetujui</th>
                 <th>Status</th>
@@ -179,7 +198,10 @@ const OrderREG = (props) => {
                       {order.packageName}
                     </Link>
                   </th>
+                  <th>Rp.{order.totalPrice.toLocaleString()}</th>
+
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
+
                   <th>
                     {order.approvedAt
                       ? moment(order.approvedAt).format('D MMM YYYY')
@@ -209,11 +231,7 @@ const OrderREG = (props) => {
                         <button
                           style={{ color: 'green' }}
                           onClick={() =>
-                            approveOrderREGHandler({
-                              orderId: order._id,
-                              companyId: order.companyId._id,
-                              i,
-                            })
+                            onOpenOrderModal(order._id, order.companyId._id, i)
                           }
                         >
                           Approve
@@ -264,7 +282,24 @@ const OrderREG = (props) => {
     );
   }
 
-  return <div>{content}</div>;
+  return (
+    <div>
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={() =>
+          approveOrderREGHandler({
+            orderId: approveOrder.orderId,
+            companyId: approveOrder.companyId,
+            i: approveOrder.index,
+          })
+        }
+      >
+        Setujui pembelian dari perusahaan ini?
+      </OrderModal>
+      {content}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

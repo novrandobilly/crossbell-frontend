@@ -57,7 +57,6 @@ const Input = (props) => {
   };
 
   const onCustomDateHandler = (payload) => {
-    console.log(moment(payload).format('L'));
     dispatch({
       type: ACTION.ONCHANGE,
       payload: {

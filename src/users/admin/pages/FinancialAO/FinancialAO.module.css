@@ -15,10 +15,19 @@
 .HeaderContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .Header {
   align-self: flex-start;
+}
+
+.DateLabel {
+  margin: 0;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8rem;
 }
 
 .TableHolder {
