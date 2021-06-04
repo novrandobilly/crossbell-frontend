@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
-import classes from './OrderBC.module.css';
+import classes from './OrderREG.module.css';
 
 const ACTIONPAGE = {
   PAGEUPDATE: 'PAGEUPDATE',
@@ -44,16 +41,9 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const OrderBC = (props) => {
+const OrderREG = (props) => {
   const [data, setData] = useState([]);
-  const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
-  const [orderModal, setOrderModal] = useState(false);
-  const [approveOrder, setApproveOrder] = useState({
-    orderId: null,
-    companyId: null,
-    index: null,
-  });
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -61,22 +51,18 @@ const OrderBC = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { getWholeOrderBC } = props;
+  const { getWholeOrderREG } = props;
   useEffect(() => {
-    const token = props.admin.token;
-    if (token) {
+    if (props.admin.token) {
       let sort = [];
-      getWholeOrderBC(token)
-        .then((res) => {
-          sort = res.orderbc;
-          sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
-          setData(sort);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      getWholeOrderREG(props.admin.token).then((res) => {
+        sort = res.orderreg;
+        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+        setData(sort);
+        console.log(res);
+      });
     }
-  }, [getWholeOrderBC, props.admin]);
+  }, [getWholeOrderREG, props.admin]);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -92,29 +78,6 @@ const OrderBC = (props) => {
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, data]);
-
-  const approveOrderBCHandler = async (dataInput) => {
-    setIndex(dataInput.i);
-    setOrderModal(false);
-
-    const payload = {
-      token: props.admin.token,
-      companyId: dataInput.companyId,
-      orderId: dataInput.orderId,
-    };
-    try {
-      await props.approveOrderBC(payload);
-      setData((prevData) => {
-        const tempData = [...prevData];
-        tempData[dataInput.i].status = 'Paid';
-        return tempData;
-      });
-      setIndex(null);
-    } catch (err) {
-      console.log(err);
-      setIndex(null);
-    }
-  };
 
   //================= Pagination ===========================
 
@@ -138,37 +101,24 @@ const OrderBC = (props) => {
     });
   };
 
-  const onCloseOrderModal = () => {
-    setOrderModal(false);
-  };
-
-  const onOpenOrderModal = (orderId, companyId, index) => {
-    setApproveOrder({ orderId: orderId, companyId: companyId, index: index });
-    setOrderModal(true);
-  };
-
   let content = <SpinnerCircle />;
 
-  //   if (!props.isLoading && data.length < 1) {
-  //     content = <h1>tidak ada order untuk saat ini</h1>;
-  //   }
-
-  if (!props.isLoading && displayData) {
+  if (!props.isLoading && data && displayData) {
     content = (
       <div className={classes.Container}>
-        <h1 className={classes.Header}>Order Bulk Candidates</h1>
+        <h1 className={classes.Header}>Order Reguler (Job Slot)</h1>
         <div className={classes.TableHolder}>
           <table className={classes.Table}>
             <thead className={classes.RowField}>
               <tr>
                 <th>No</th>
                 <th>Order Id</th>
-                <th>Nama Perusahaan</th>
-                <th>Harga Total</th>
+                <th>Perusahaan</th>
+                <th>Slot</th>
+                <th>Nama Paket</th>
                 <th>Tanggal Order</th>
                 <th>Tanggal Disetujui</th>
                 <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
 
@@ -176,17 +126,8 @@ const OrderBC = (props) => {
               {displayData.map((order, i) => (
                 <tr key={order._id}>
                   <th> {i + 1}</th>
+                  <th>{order._id}</th>
                   <th>
-                    {' '}
-                    <Link
-                      to={`/ad/alphaomega/order/${order._id}/candidate`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {order._id}
-                    </Link>
-                  </th>
-                  <th>
-                    {' '}
                     <Link
                       to={`/co/${order.companyId._id}`}
                       style={{ color: 'black', textDecoration: 'none' }}
@@ -194,9 +135,20 @@ const OrderBC = (props) => {
                       {order.companyId.companyName}
                     </Link>
                   </th>
-                  <th>Rp.{order.totalPrice.toLocaleString()}</th>
+                  <th>{order.slot}</th>
+
+                  <th>
+                    {' '}
+                    <Link
+                      to={`/co/${order.id}`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order.packageName}
+                    </Link>
+                  </th>
 
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
+
                   <th>
                     {order.approvedAt
                       ? moment(order.approvedAt).format('D MMM YYYY')
@@ -204,9 +156,7 @@ const OrderBC = (props) => {
                   </th>
 
                   <th>
-                    {props.indexIsLoading && index === i ? (
-                      <Spinner />
-                    ) : order.status === 'Paid' ? (
+                    {order.status === 'Paid' ? (
                       <span style={{ color: 'Green', fontWeight: 'bold' }}>
                         Paid
                       </span>
@@ -216,40 +166,11 @@ const OrderBC = (props) => {
                       </span>
                     )}
                   </th>
-
-                  <th>
-                    <div className={classes.DropDown}>
-                      <button className={classes.DropButton}>
-                        <ArrowDropDownIcon />
-                      </button>
-                      <div className={classes.DropDownContent}>
-                        {order.status === 'Pending' ? (
-                          <button
-                            style={{ color: 'green' }}
-                            onClick={() =>
-                              onOpenOrderModal(
-                                order._id,
-                                order.companyId._id,
-                                i
-                              )
-                            }
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          <button style={{ color: 'gray', fontWeight: 'bold' }}>
-                            Telah disetujui
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </th>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
         <div
           style={{
             display: 'flex',
@@ -288,24 +209,7 @@ const OrderBC = (props) => {
     );
   }
 
-  return (
-    <div>
-      <OrderModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        Accept={() =>
-          approveOrderBCHandler({
-            orderId: approveOrder.orderId,
-            companyId: approveOrder.companyId,
-            i: approveOrder.index,
-          })
-        }
-      >
-        Setujui pembelian dari perusahaan ini?
-      </OrderModal>
-      {content}
-    </div>
-  );
+  return <div>{content}</div>;
 };
 
 const mapStateToProps = (state) => {
@@ -319,10 +223,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
-    approveOrderBC: (payload) =>
-      dispatch(actionCreators.approveOrderBC(payload)),
+    getWholeOrderREG: (data) => dispatch(actionCreators.getWholeOrderREG(data)),
+    approveOrderREG: (payload) =>
+      dispatch(actionCreators.approveOrderREG(payload)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderBC);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderREG);

@@ -213,7 +213,20 @@ const Invoice = React.lazy(() =>
 const OrderREG = React.lazy(() =>
   import('./users/admin/pages/OrderREG/OrderREG')
 );
+const OrderREGFinance = React.lazy(() =>
+  import('./users/admin/pages/OrderREG/OrderREGFinance')
+);
+const OrderREGOperational = React.lazy(() =>
+  import('./users/admin/pages/OrderREG/OrderREGOperational')
+);
 const OrderBC = React.lazy(() => import('./users/admin/pages/OrderBC/OrderBC'));
+const OrderBCOperational = React.lazy(() =>
+  import('./users/admin/pages/OrderBC/OrderBCOperational')
+);
+const OrderBCFinance = React.lazy(() =>
+  import('./users/admin/pages/OrderBC/OrderBCFinance')
+);
+
 const OrderES = React.lazy(() => import('./users/admin/pages/OrderES/OrderES'));
 const DetailBC = React.lazy(() =>
   import('./users/admin/pages/OrderBC/DetailBC')
@@ -395,8 +408,31 @@ const App = (props) => {
               component={CustomerSupportsAO}
             />
             <Route path='/ad/alphaomega/financial' component={FinancialAO} />
-            <Route path='/ad/alphaomega/order/reguler' component={OrderREG} />
-            <Route path='/ad/alphaomega/order/candidate' component={OrderBC} />
+            <Route
+              path='/ad/alphaomega/order/reguler/all'
+              component={OrderREG}
+            />
+            <Route
+              path='/ad/alphaomega/order/reguler/fin'
+              component={OrderREGFinance}
+            />
+            <Route
+              path='/ad/alphaomega/order/reguler/opr'
+              component={OrderREGOperational}
+            />
+            <Route
+              path='/ad/alphaomega/order/candidate/all'
+              component={OrderBC}
+            />
+            <Route
+              path='/ad/alphaomega/order/candidate/fin'
+              component={OrderBCFinance}
+            />
+            <Route
+              path='/ad/alphaomega/order/candidate/opr'
+              component={OrderBCOperational}
+            />
+
             <Route path='/ad/alphaomega/order/es' component={OrderES} />
             <Route
               path='/ad/alphaomega/order/:orderid/candidate'

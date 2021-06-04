@@ -176,15 +176,7 @@ const OrderBC = (props) => {
               {displayData.map((order, i) => (
                 <tr key={order._id}>
                   <th> {i + 1}</th>
-                  <th>
-                    {' '}
-                    <Link
-                      to={`/ad/alphaomega/order/${order._id}/candidate`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {order._id}
-                    </Link>
-                  </th>
+                  <th> {order._id}</th>
                   <th>
                     {' '}
                     <Link

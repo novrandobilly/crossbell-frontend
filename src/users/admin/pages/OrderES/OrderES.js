@@ -6,10 +6,12 @@ import moment from 'moment';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import Select from '@material-ui/core/Select';
 
@@ -46,6 +48,12 @@ const OrderES = (props) => {
   const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
+  const [orderModal, setOrderModal] = useState(false);
+  const [approveOrder, setApproveOrder] = useState({
+    orderId: null,
+    status: null,
+    index: null,
+  });
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -88,6 +96,8 @@ const OrderES = (props) => {
 
   const updateStatusHandler = async (dataInput) => {
     setIndex(dataInput.i);
+    setOrderModal(false);
+
     const payload = {
       token: props.admin.token,
       orderId: dataInput.orderId,
@@ -127,6 +137,15 @@ const OrderES = (props) => {
         rowsPerPage: event.target.value,
       },
     });
+  };
+
+  const onCloseOrderModal = () => {
+    setOrderModal(false);
+  };
+
+  const onOpenOrderModal = (orderId, index) => {
+    setApproveOrder({ orderId: orderId, status: 'Closed', index: index });
+    setOrderModal(true);
   };
 
   let content = <SpinnerCircle />;
@@ -178,7 +197,7 @@ const OrderES = (props) => {
 
                   <th>
                     {props.indexIsLoading && index === i ? (
-                      <SpinnerCircle />
+                      <Spinner />
                     ) : (
                       <p
                         className={classes.Content}
@@ -205,13 +224,7 @@ const OrderES = (props) => {
                               ? { color: 'Red' }
                               : { color: 'gray' }
                           }
-                          onClick={() =>
-                            updateStatusHandler({
-                              orderId: order._id,
-                              status: 'Closed',
-                              i,
-                            })
-                          }
+                          onClick={() => onOpenOrderModal(order._id, i)}
                         >
                           {order.status === 'Open' ? 'Close' : 'Sudah ditutup'}
                         </button>
@@ -262,7 +275,25 @@ const OrderES = (props) => {
     );
   }
 
-  return <div>{content}</div>;
+  return (
+    <div>
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={() =>
+          updateStatusHandler({
+            orderId: approveOrder.orderId,
+            status: approveOrder.status,
+            i: approveOrder.index,
+          })
+        }
+      >
+        {' '}
+        Setujui pembelian dari perusahaan ini?
+      </OrderModal>
+      {content}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

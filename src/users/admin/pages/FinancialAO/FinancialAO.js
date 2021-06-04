@@ -14,20 +14,20 @@ import classes from './FinancialAO.module.css';
 const FinancialAO = (props) => {
   let total = [];
   let revenue = 0;
+  const [fetchData, setFetchData] = useState();
   const [displayData, setDisplayData] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   const [formState, onInputHandler] = useForm(
     {
       start: {
-        value: '',
+        value: null,
         isValid: true,
       },
       end: {
-        value: '',
+        value: null,
         isValid: true,
       },
     },
@@ -36,9 +36,7 @@ const FinancialAO = (props) => {
 
   const { getWholeOrderREG, getWholeOrderBC } = props;
   useEffect(() => {
-    let orderReg = [];
-    let orderBC = [];
-    let allOrder = [];
+    let totalOrder = [];
     const token = props.admin.token;
     if (token) {
       const fetchData = async () => {
@@ -50,44 +48,35 @@ const FinancialAO = (props) => {
         } catch (err) {
           console.log(err);
         }
-        orderReg = resreg.orderreg;
-        orderBC = resbc.orderbc;
-        allOrder = [...orderReg, ...orderBC];
-        allOrder = allOrder.sort(
+        totalOrder = [...resreg.orderreg, ...resbc.orderbc];
+        totalOrder = totalOrder.sort(
           (a, b) => moment(b.createdAt) - moment(a.createdAt)
         );
-        setDisplayData(allOrder);
+        setFetchData(totalOrder);
       };
       fetchData();
     }
   }, [getWholeOrderREG, getWholeOrderBC, props.admin]);
 
-  let items = displayData;
-
   useEffect(() => {
-    if (items && items.length > 0) {
-      let filteredArray = [...items];
-      console.log(formState.inputs.start.value);
-      console.log(formState.inputs.end.value);
-
-      if (formState.inputs.start.value) {
-        filteredArray = filteredArray.filter((el) => {
-          return el.createdAt >= formState.inputs.start.value;
-        });
+    if (fetchData) {
+      let filteredOrders = [...fetchData];
+      if (formState?.inputs?.start?.value && formState?.inputs?.end?.value) {
+        filteredOrders = filteredOrders.filter((order) =>
+          moment(order.createdAt).isBetween(
+            moment(moment(formState.inputs.start.value).format('LL')),
+            moment(
+              `${moment(formState.inputs.end.value).format('LL')} 23:59:59`
+            ),
+            undefined,
+            []
+          )
+        );
       }
-
-      if (formState.inputs.end.value) {
-        filteredArray = filteredArray.filter((el) => {
-          return el.createdAt <= formState.inputs.end.value;
-        });
-      }
-
-      console.log(filteredArray);
-      setDisplayData(filteredArray);
-    } else {
-      setDisplayData(items);
+      setDisplayData(filteredOrders);
     }
-  }, [items, displayData, formState]);
+  }, [fetchData, formState.inputs.start.value, formState.inputs.end.value]);
+  // console.log(formState.inputs)
 
   let content = <Spinner />;
 
@@ -104,10 +93,11 @@ const FinancialAO = (props) => {
                 id='start'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
+                onChange
                 views={['year', 'month', 'date']}
                 maxDate={moment()}
                 initIsValid={true}
-                initValue={null}
+                initValue={moment()}
                 format='dd/MM/yyyy'
               />
             </div>
@@ -122,7 +112,7 @@ const FinancialAO = (props) => {
                 views={['year', 'month', 'date']}
                 maxDate={moment()}
                 initIsValid={true}
-                initValue={null}
+                initValue={moment()}
                 format='dd/MM/yyyy'
               />
             </div>
@@ -159,6 +149,7 @@ const FinancialAO = (props) => {
                       <th>{fin.slot ? fin.packageName : '-'}</th>
                       <th>{moment(fin.createdAt).format('D MMM YYYY')}</th>
                       <th>{moment(fin.approvedAt).format('D MMM YYYY')}</th>
+
                       {/* ========== Slot ========== */}
                       {fin.status === 'Pending' ? (
                         <th
@@ -261,8 +252,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getWholeOrderREG: (data) => dispatch(actionCreators.getWholeOrderREG(data)),
-    getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
+    getWholeOrderREG: (token) =>
+      dispatch(actionCreators.getWholeOrderREG(token)),
+    getWholeOrderBC: (token) => dispatch(actionCreators.getWholeOrderBC(token)),
   };
 };
 
