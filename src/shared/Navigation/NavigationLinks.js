@@ -164,18 +164,24 @@ const NavigationLinks = (props) => {
                   <NavLink
                     to={`/co/order/reguler`}
                     activeClassName={classes.active}
+                    onClick={DropdownOrder}
                   >
                     <p>Pesan Slot Iklan</p>
                   </NavLink>
                   <NavLink
                     to={`/co/order/candidate`}
                     activeClassName={classes.active}
+                    onClick={DropdownOrder}
                   >
                     <p>
                       Pesan <em>Bulk Candidates</em>
                     </p>
                   </NavLink>
-                  <NavLink to={`/co/order/es`} activeClassName={classes.active}>
+                  <NavLink
+                    to={`/co/order/es`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrder}
+                  >
                     <p>Pesan Kandidat Eksekutif</p>
                   </NavLink>
                 </div>
@@ -205,12 +211,14 @@ const NavigationLinks = (props) => {
                   <NavLink
                     to={`/co/${props.auth.userId}/listOrder`}
                     activeClassName={classes.active}
+                    onClick={DropdownList}
                   >
                     <p>Pesanan</p>
                   </NavLink>
                   <NavLink
                     to={`/co/${props.auth.userId}/jobList`}
                     activeClassName={classes.active}
+                    onClick={DropdownList}
                   >
                     <p>Iklan Pekerjaan</p>
                   </NavLink>
@@ -266,26 +274,30 @@ const NavigationLinks = (props) => {
                     <p>Update Promo</p>
                   </NavLink>
                   <NavLink
-                    to={`/ad/alphaomega/order/reguler`}
+                    to={`/ad/alphaomega/order/reguler/all`}
                     activeClassName={classes.active}
+                    onClick={DropdownOrderAdmin}
                   >
                     <p>Order Reguler List</p>
                   </NavLink>
                   <NavLink
-                    to={`/ad/alphaomega/order/candidate`}
+                    to={`/ad/alphaomega/order/candidate/all`}
                     activeClassName={classes.active}
+                    onClick={DropdownOrderAdmin}
                   >
                     <p>Order Bulk Candidate List</p>
                   </NavLink>
                   <NavLink
                     to={`/ad/alphaomega/order/es`}
                     activeClassName={classes.active}
+                    onClick={DropdownOrderAdmin}
                   >
                     <p>Order Executive Search List</p>
                   </NavLink>
                   <NavLink
                     to={`/ad/alphaomega/financial`}
                     activeClassName={classes.active}
+                    onClick={DropdownOrderAdmin}
                   >
                     <p>Finance</p>
                   </NavLink>
@@ -314,6 +326,7 @@ const NavigationLinks = (props) => {
                   <NavLink
                     to={`/ad/alphaomega/applicants`}
                     activeClassName={classes.active}
+                    onClick={DropdownListAdmin}
                   >
                     <p>Applicant List</p>
                   </NavLink>
@@ -321,6 +334,7 @@ const NavigationLinks = (props) => {
                   <NavLink
                     to={`/ad/alphaomega/companies`}
                     activeClassName={classes.active}
+                    onClick={DropdownListAdmin}
                   >
                     <p>Company list</p>
                   </NavLink>
@@ -328,6 +342,7 @@ const NavigationLinks = (props) => {
                   <NavLink
                     to={`/ad/alphaomega/jobs`}
                     activeClassName={classes.active}
+                    onClick={DropdownListAdmin}
                   >
                     <p>Job list</p>
                   </NavLink>
@@ -458,7 +473,7 @@ const NavigationLinks = (props) => {
             </li>
             <li>
               <NavLink
-                to={`/ad/alphaomega/order/reguler`}
+                to={`/ad/alphaomega/order/reguler/all`}
                 activeClassName={classes.active}
               >
                 Order Reguler List
@@ -466,7 +481,7 @@ const NavigationLinks = (props) => {
             </li>
             <li>
               <NavLink
-                to={`/ad/alphaomega/order/candidate`}
+                to={`/ad/alphaomega/order/candidate/all`}
                 activeClassName={classes.active}
               >
                 Order Bulk Candidate List
