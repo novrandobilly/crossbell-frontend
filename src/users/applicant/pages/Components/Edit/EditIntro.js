@@ -805,6 +805,7 @@ const EditIntro = (props) => {
       {formContent}
     </form>
   );
+
 };
 
 const mapStateToProps = (state) => {
