@@ -205,7 +205,7 @@ const OrderBCForm = (props) => {
             <div className={classes.EditLabel}>
               <div className={classes.Inputs}>
                 <div className={classes.RadioGroup}>
-                  <p className={classes.RadioLabel}>Pendidikan</p>
+                  <p className={classes.RadioLabel}>Pendidikan*</p>
                   <div
                     className={classes.RadioGroupInput}
                     onChange={educationHandler}
@@ -256,7 +256,7 @@ const OrderBCForm = (props) => {
                 </div>
 
                 <div className={classes.AgeWraper}>
-                  <p className={classes.AgeLabel}>Umur</p>
+                  <p className={classes.AgeLabel}>Umur*</p>
                   <div className={classes.AgeGroup}>
                     <Input
                       inputType='number'
@@ -289,7 +289,7 @@ const OrderBCForm = (props) => {
 
               <div className={classes.Inputs}>
                 <div onChange={genderHandler} className={classes.RadioGroup}>
-                  <p className={classes.RadioLabel}>Jenis kelamin</p>
+                  <p className={classes.RadioLabel}>Jenis kelamin*</p>
                   <div className={classes.RadioGroupInput}>
                     <input
                       type='radio'
@@ -336,12 +336,12 @@ const OrderBCForm = (props) => {
                   <Autocomplete
                     id='school'
                     name='school'
-                    options={University.map((option) => option)}
+                    options={University.map((option) => option.institusi)}
                     onChange={handleSchoolChange}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label='Universitas preferensi'
+                        label='Universitas preferensi*'
                         margin='normal'
                         variant='standard'
                       />
@@ -352,7 +352,7 @@ const OrderBCForm = (props) => {
                 <div className={classes.IPK}>
                   <Input
                     inputType='input'
-                    label='IPK minimum'
+                    label='IPK minimum*'
                     id='IPK'
                     validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
                     onInputHandler={onInputHandler}
@@ -404,9 +404,9 @@ const OrderBCForm = (props) => {
               <div>
                 <FormControl
                   className={classes.formControl}
-                  style={{ width: '100%', marginTop: '0.5rem' }}
+                  style={{ width: '100%', margin: '8px 0' }}
                 >
-                  <InputLabel id='jobFunction'>Bidang pekerjaan</InputLabel>
+                  <InputLabel id='jobFunction'>Bidang pekerjaan*</InputLabel>
 
                   <Select
                     labelId='jobFunction'
@@ -443,10 +443,10 @@ const OrderBCForm = (props) => {
                 </FormControl>
               </div>
 
-              <div style={{ marginBottom: '1rem' }}>
+              <div style={{ margin: '8px 0 16px 0' }}>
                 <Input
                   inputType='input'
-                  id='emailRecipient'
+                  id='emailRecipient*'
                   inputClass='Position'
                   validatorMethod={[VALIDATOR_EMAIL()]}
                   onInputHandler={onInputHandler}

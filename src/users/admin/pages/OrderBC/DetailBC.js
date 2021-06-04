@@ -414,6 +414,26 @@ const DetailBC = (props) => {
                 />
               </div>
             </div>
+            <div className={classes.CheckboxCriteria}>
+              <p className={classes.FilterLabel}>Universitas</p>
+              <div className={classes.UnivDiv}>
+                <Autocomplete
+                  id='school'
+                  name='school'
+                  options={University.map((option) => option.institusi)}
+                  onChange={handleSchoolChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label='Universitas tertentu'
+                      margin='normal'
+                      variant='standard'
+                      style={{ margin: '0' }}
+                    />
+                  )}
+                />
+              </div>
+            </div>
 
             <div className={classes.CheckboxCriteria}>
               <p className={classes.FilterLabel}>IPK</p>
@@ -435,26 +455,6 @@ const DetailBC = (props) => {
                       ? 'Nilai IPK max 4'
                       : 'IPK wajib diisi'
                   }
-                />
-              </div>
-            </div>
-
-            <div className={classes.CheckboxCriteria}>
-              <p className={classes.FilterLabel}>Universitas</p>
-              <div className={classes.UnivDiv}>
-                <Autocomplete
-                  id='school'
-                  name='school'
-                  options={University.map((option) => option)}
-                  onChange={handleSchoolChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label='Universitas tertentu'
-                      margin='normal'
-                      variant='standard'
-                    />
-                  )}
                 />
               </div>
             </div>

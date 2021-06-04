@@ -11,6 +11,7 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './FinancialAO.module.css';
 
+
 const FinancialAO = props => {
 	let total = [];
 	let revenue = 0;
@@ -177,6 +178,7 @@ const FinancialAO = props => {
 											{fin.status === 'Pending' ? (
 												<th style={{ color: 'rgb(250, 129, 0)' }}>
 													{/* {() => {
+
                           parseInt((total[i] = 0));
                           return null;
                         }}
@@ -237,11 +239,13 @@ const mapStateToProps = state => {
 	};
 };
 
+
 const mapDispatchToProps = dispatch => {
 	return {
 		getWholeOrderREG: token => dispatch(actionCreators.getWholeOrderREG(token)),
 		getWholeOrderBC: token => dispatch(actionCreators.getWholeOrderBC(token))
 	};
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FinancialAO);

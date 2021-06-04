@@ -14,7 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
-import classes from './OrderBC.module.css';
+import classes from './OrderREG.module.css';
 
 const ACTIONPAGE = {
   PAGEUPDATE: 'PAGEUPDATE',
@@ -44,7 +44,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const OrderBC = (props) => {
+const OrderREG = (props) => {
   const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
@@ -61,22 +61,18 @@ const OrderBC = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { getWholeOrderBC } = props;
+  const { getWholeOrderREG } = props;
   useEffect(() => {
-    const token = props.admin.token;
-    if (token) {
+    if (props.admin.token) {
       let sort = [];
-      getWholeOrderBC(token)
-        .then((res) => {
-          sort = res.orderbc;
-          sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
-          setData(sort);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      getWholeOrderREG(props.admin.token).then((res) => {
+        sort = res.orderreg;
+        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+        setData(sort);
+        console.log(res);
+      });
     }
-  }, [getWholeOrderBC, props.admin]);
+  }, [getWholeOrderREG, props.admin]);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -93,7 +89,7 @@ const OrderBC = (props) => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const approveOrderBCHandler = async (dataInput) => {
+  const approveOrderREGHandler = async (dataInput) => {
     setIndex(dataInput.i);
     setOrderModal(false);
 
@@ -102,8 +98,9 @@ const OrderBC = (props) => {
       companyId: dataInput.companyId,
       orderId: dataInput.orderId,
     };
+
     try {
-      await props.approveOrderBC(payload);
+      await props.approveOrderREG(payload);
       setData((prevData) => {
         const tempData = [...prevData];
         tempData[dataInput.i].status = 'Paid';
@@ -149,21 +146,19 @@ const OrderBC = (props) => {
 
   let content = <SpinnerCircle />;
 
-  //   if (!props.isLoading && data.length < 1) {
-  //     content = <h1>tidak ada order untuk saat ini</h1>;
-  //   }
-
-  if (!props.isLoading && displayData) {
+  if (!props.isLoading && data && displayData) {
     content = (
       <div className={classes.Container}>
-        <h1 className={classes.Header}>Order Bulk Candidates</h1>
+        <h1 className={classes.Header}>Order Reguler (Job Slot)</h1>
         <div className={classes.TableHolder}>
           <table className={classes.Table}>
             <thead className={classes.RowField}>
               <tr>
                 <th>No</th>
                 <th>Order Id</th>
-                <th>Nama Perusahaan</th>
+                <th>Perusahaan</th>
+                <th>Slot</th>
+                <th>Nama Paket</th>
                 <th>Harga Total</th>
                 <th>Tanggal Order</th>
                 <th>Tanggal Disetujui</th>
@@ -177,16 +172,14 @@ const OrderBC = (props) => {
                 <tr key={order._id}>
                   <th> {i + 1}</th>
                   <th>
-                    {' '}
                     <Link
-                      to={`/ad/alphaomega/order/${order._id}/candidate`}
+                      to={`/co/${order._id}/invoice`}
                       style={{ color: 'black', textDecoration: 'none' }}
                     >
                       {order._id}
                     </Link>
                   </th>
                   <th>
-                    {' '}
                     <Link
                       to={`/co/${order.companyId._id}`}
                       style={{ color: 'black', textDecoration: 'none' }}
@@ -194,9 +187,21 @@ const OrderBC = (props) => {
                       {order.companyId.companyName}
                     </Link>
                   </th>
+                  <th>{order.slot}</th>
+
+                  <th>
+                    {' '}
+                    <Link
+                      to={`/co/${order.id}`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order.packageName}
+                    </Link>
+                  </th>
                   <th>Rp.{order.totalPrice.toLocaleString()}</th>
 
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
+
                   <th>
                     {order.approvedAt
                       ? moment(order.approvedAt).format('D MMM YYYY')
@@ -223,24 +228,14 @@ const OrderBC = (props) => {
                         <ArrowDropDownIcon />
                       </button>
                       <div className={classes.DropDownContent}>
-                        {order.status === 'Pending' ? (
-                          <button
-                            style={{ color: 'green' }}
-                            onClick={() =>
-                              onOpenOrderModal(
-                                order._id,
-                                order.companyId._id,
-                                i
-                              )
-                            }
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          <button style={{ color: 'gray', fontWeight: 'bold' }}>
-                            Telah disetujui
-                          </button>
-                        )}
+                        <button
+                          style={{ color: 'green' }}
+                          onClick={() =>
+                            onOpenOrderModal(order._id, order.companyId._id, i)
+                          }
+                        >
+                          Approve
+                        </button>
                       </div>
                     </div>
                   </th>
@@ -249,7 +244,6 @@ const OrderBC = (props) => {
             </tbody>
           </table>
         </div>
-
         <div
           style={{
             display: 'flex',
@@ -294,7 +288,7 @@ const OrderBC = (props) => {
         show={orderModal}
         onCancel={onCloseOrderModal}
         Accept={() =>
-          approveOrderBCHandler({
+          approveOrderREGHandler({
             orderId: approveOrder.orderId,
             companyId: approveOrder.companyId,
             i: approveOrder.index,
@@ -319,10 +313,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
-    approveOrderBC: (payload) =>
-      dispatch(actionCreators.approveOrderBC(payload)),
+    getWholeOrderREG: (data) => dispatch(actionCreators.getWholeOrderREG(data)),
+    approveOrderREG: (payload) =>
+      dispatch(actionCreators.approveOrderREG(payload)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderBC);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderREG);
