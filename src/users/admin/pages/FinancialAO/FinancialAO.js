@@ -11,6 +11,7 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './FinancialAO.module.css';
 
+
 const FinancialAO = props => {
 	let total = [];
 	let revenue = 0;
