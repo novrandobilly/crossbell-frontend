@@ -3,11 +3,12 @@
   padding: 2rem 5rem;
   align-items: center;
   background-color: white;
+  justify-content: space-between;
 }
 
 .ContentRight {
-  width: 30%;
-  height: 25rem;
+  width: 25%;
+  height: 300px;
   border: solid 0.1rem black;
 }
 
