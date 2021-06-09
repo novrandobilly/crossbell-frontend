@@ -1,85 +1,86 @@
 .Wraper {
-	background-color: #d7e2ff40;
-	padding: 2rem 5rem;
-	align-items: center;
+  background-color: #d7e2ff40;
+  padding: 2rem 5rem;
+  align-items: center;
+  width: 100%;
 }
 
 .Content {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .HeaderTitle {
-	font-size: 2rem;
-	font-weight: 500;
-	padding: 1rem 0;
-	margin: 0;
-	margin-bottom: 2em;
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 1rem 0;
+  margin: 0;
+  margin-bottom: 2em;
 }
 
 .CardContainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 14rem;
-	height: 13rem;
-	box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.5);
-	background-color: white;
-	padding: 2rem;
-	border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 14rem;
+  height: 13rem;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.5);
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
 }
 
 .CardTop {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 5rem;
-	height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  height: 30%;
 }
 
 .Picture {
-	border: solid 0.1rem black;
-	height: 5rem;
-	width: 5rem;
-	border-radius: 50%;
-	font-size: medium;
+  border: solid 0.1rem black;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  font-size: medium;
 }
 
 .CardBottom {
-	margin-top: 1rem;
-	height: 60%;
-	font-size: 0.9rem;
-	color: rgba(0, 0, 0, 0.6);
-	line-height: 1.618rem;
+  margin-top: 1rem;
+  height: 60%;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.618rem;
 }
 
 .Title {
-	font-size: 1.1rem;
-	font-weight: 500;
-	color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: black;
 }
 
 @media (max-width: 992px) {
-	.Content {
-		padding: 4rem 1.5rem;
-	}
+  .Content {
+    padding: 4rem 1.5rem;
+  }
 
-	.CardContainer {
-		margin: 0 0.5rem;
-	}
+  .CardContainer {
+    margin: 0 0.5rem;
+  }
 }
 
 @media (max-width: 576px) {
-	.Content {
-		flex-direction: column;
-		padding: 3rem 1.5rem 0 1.5rem;
-	}
+  .Content {
+    flex-direction: column;
+    padding: 3rem 1.5rem 0 1.5rem;
+  }
 
-	.CardContainer {
-		padding: 1rem;
-		width: 14rem;
-		height: 18rem;
-		margin-bottom: 3rem;
-	}
+  .CardContainer {
+    padding: 1rem;
+    width: 14rem;
+    height: 18rem;
+    margin-bottom: 3rem;
+  }
 }

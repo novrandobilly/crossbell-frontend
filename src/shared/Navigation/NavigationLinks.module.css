@@ -85,8 +85,8 @@
 }
 
 .PhoneLinks li {
-  margin: 11.5px;
-  font-size: 1.3rem;
+  margin: 8px;
+  font-size: 1rem;
 }
 
 .PhoneLinks a {
@@ -126,18 +126,25 @@
   background: rgba(58, 81, 153, 1);
 }
 
+.PhoneLinks .Logout {
+  text-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
 .Divider {
   width: 100%;
   text-align: left;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  padding: 10px 0;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
-  margin: 16px 0;
+  margin: 8px 0;
   color: rgba(0, 0, 0, 0.5);
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1080px) {
   .PhoneLinks {
     display: none;
   }
