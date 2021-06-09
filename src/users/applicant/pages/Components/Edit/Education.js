@@ -155,6 +155,37 @@ const Education = (props) => {
     setOpen(true);
   };
 
+  const onAutoCompleteHandler = (event, newValue) => {
+		event.preventDefault();
+    console.log(newValue)
+		if (typeof newValue === 'string') {
+			setSchool({
+				institusi: newValue
+			});
+			onInputHandler('school', newValue.institusi, true);
+		} else if (newValue && newValue.inputValue) {
+			setSchool({
+				institusi: newValue.inputValue
+			});
+			onInputHandler('school', newValue.inputValue.institusi, true);
+		} else {
+			setSchool(newValue);
+			onInputHandler('school', newValue?.institusi || '', true);
+		}
+	};
+
+	const onFilterHandler = (options, params) => {
+		const filtered = filter(options, params);
+
+		if (params.inputValue !== '') {
+			filtered.push({
+				inputValue: params.inputValue,
+				institusi: `Tambahkan "${params.inputValue}"`
+			});
+		}
+
+		return filtered;
+	};
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading && data) {
@@ -166,42 +197,14 @@ const Education = (props) => {
           <div className={classes.EditLabel}>
             <Autocomplete
               value={school}
-              onChange={(event, newValue) => {
-                if (typeof newValue === 'string') {
-                  setSchool({
-                    institusi: newValue,
-                  });
-                  onInputHandler('school', newValue.institusi, true);
-                } else if (newValue && newValue.inputValue) {
-                  // Create a new value from the user input
-                  setSchool({
-                    institusi: newValue.inputValue,
-                  });
-                  onInputHandler('school', newValue.inputValue.institusi, true);
-                } else {
-                  setSchool(newValue);
-                  onInputHandler('school', newValue.institusi, true);
-                }
-              }}
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-
-                // Suggest the creation of a new value
-                if (params.inputValue !== '') {
-                  filtered.push({
-                    inputValue: params.inputValue,
-                    institusi: `Tambahkan "${params.inputValue}"`,
-                  });
-                }
-
-                return filtered;
-              }}
+              onChange={onAutoCompleteHandler}
+              filterOptions={onFilterHandler}
               selectOnFocus
               clearOnBlur
               handleHomeEndKeys
               id='school'
               name='school'
-              ccc
+              ccc='true'
               options={University}
               getOptionLabel={(option) => {
                 // Value selected with enter, right from the input

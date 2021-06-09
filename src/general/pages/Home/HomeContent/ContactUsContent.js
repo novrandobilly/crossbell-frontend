@@ -15,7 +15,7 @@ import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import classes from './ContactUsContent.module.css';
 
 const ContactUsContent = props => {
-	const [ formState, onInputHandler ] = useForm(
+	const [formState, onInputHandler] = useForm(
 		{
 			nama: {
 				value: '',
@@ -65,7 +65,7 @@ const ContactUsContent = props => {
 	return (
 		<div className={classes.Content}>
 			<div className={classes.HelpArticles}>
-				<p className={classes.HeaderTitle}>Help Articles</p>
+				<p className={classes.HeaderTitle}>Frequently Asked Questions</p>
 				<FAQ />
 				<span className={classes.SeeAllArticles}>
 					<Link to='/FrequentlyAskedQuestion'>See all help articles</Link>
@@ -74,7 +74,7 @@ const ContactUsContent = props => {
 			<div className={classes.NeedSupport}>
 				<p className={classes.HeaderTitle}>Contact Us</p>
 				<Modal show={props.success} onCancel={onCancelHandler}>
-					Termia kasih atas feedback yang diberikan, feedback anda akan kami proses dan dibalas melalui email.{' '}
+					Terima kasih atas feedback yang diberikan, feedback anda akan kami proses dan dibalas melalui email.{' '}
 				</Modal>
 				{!props.isLoading ? (
 					<form onSubmit={onSubmitHandler} className={classes.ContactUsForm}>
@@ -84,7 +84,7 @@ const ContactUsContent = props => {
 							id='nama'
 							name='nama'
 							onInputHandler={onInputHandler}
-							validatorMethod={[ VALIDATOR_REQUIRE() ]}
+							validatorMethod={[VALIDATOR_REQUIRE()]}
 							helperText='Mohon masukan nama lengkap anda'
 						/>
 						<Input
@@ -93,7 +93,7 @@ const ContactUsContent = props => {
 							id='email'
 							name='email'
 							onInputHandler={onInputHandler}
-							validatorMethod={[ VALIDATOR_EMAIL() ]}
+							validatorMethod={[VALIDATOR_EMAIL()]}
 							helperText='Pastikan input harus berbentuk email'
 						/>
 						<Input
@@ -102,7 +102,7 @@ const ContactUsContent = props => {
 							id='phone'
 							name='phone'
 							onInputHandler={onInputHandler}
-							validatorMethod={[ VALIDATOR_NUMSTR() ]}
+							validatorMethod={[VALIDATOR_NUMSTR()]}
 							helperText='Pastikan nomor telepon sudah benar'
 						/>
 						<Input
@@ -112,7 +112,7 @@ const ContactUsContent = props => {
 							id='feed'
 							name='feed'
 							onInputHandler={onInputHandler}
-							validatorMethod={[ VALIDATOR_MINLENGTH(10) ]}
+							validatorMethod={[VALIDATOR_MINLENGTH(10)]}
 							helperText='Pastikan pesan lebih dari 10 alfabet'
 						/>
 
