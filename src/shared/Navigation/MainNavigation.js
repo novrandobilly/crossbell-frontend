@@ -34,7 +34,7 @@ const MainNavigation = () => {
         </button>
         <h2 className={classes.Title}>
           <Link to='/'>
-            <Logo logoWidth='65px' />
+            <Logo logoWidth='55px' />
           </Link>
         </h2>
         <nav className={classes.HeaderNav}>

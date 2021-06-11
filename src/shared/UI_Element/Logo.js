@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CrossbellLogo from '../../assets/images/Crossbell_Emblem (2).png';
+import CrossbellLogo from '../../assets/images/Crossbell_Emblem.png';
 import classes from './Logo.module.css';
 
 const Logo = (props) => {
@@ -9,7 +9,7 @@ const Logo = (props) => {
       <img
         src={CrossbellLogo}
         alt='Crossbell logo'
-        style={{ width: props.logoWidth || '100px' }}
+        style={{ width: props.logoWidth || '75px', marginRight: '16px' }}
       />
       Crossbell
     </div>

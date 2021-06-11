@@ -1,13 +1,14 @@
 .Content {
   display: flex;
-  padding: 5rem 5rem 2rem 5rem;
+  padding: 2rem 5rem;
   align-items: center;
   background-color: white;
+  justify-content: space-between;
 }
 
 .ContentLeft {
-  width: 30%;
-  height: 25rem;
+  width: 25%;
+  height: 300px;
   border: solid 0.1rem black;
   margin-right: 5%;
 }
