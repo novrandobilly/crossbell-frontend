@@ -15,6 +15,7 @@ const JobDetailMap = (props) => {
     <div>
       <JobContainer
         companyName={props.job.companyId.companyName}
+        isHidden={props.job.isHidden}
         companyDetails={props.job.companyId.briefDescriptions}
         companyId={props.job.companyId.id}
         companyLocation={props.job.companyId.address}

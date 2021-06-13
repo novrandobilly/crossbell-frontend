@@ -7,6 +7,7 @@ import * as actionTypes from '../../store/actions/actions';
 import Modal from '../../shared/UI_Element/Modal';
 import Spinner from '../../shared/UI_Element/Spinner/Spinner';
 import Button from '../../shared/UI_Element/Button';
+import BlankCompany from '../../assets/images/Company.png';
 
 import classes from './JobCard.module.css';
 
@@ -81,11 +82,7 @@ const JobCard = (props) => {
         </Modal>
         <div className={classes.Logo}>
           <img
-            src={
-              props.logo
-                ? props.logo.url
-                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-            }
+            src={props.logo && !props.isHidden ? props.logo.url : BlankCompany}
             alt='company-logo'
           />
         </div>
@@ -112,12 +109,16 @@ const JobCard = (props) => {
           </div>
 
           <div className={classes.TopContent}>
-            <Link
-              to={`/co/${props.companyId._id}`}
-              style={{ textDecoration: 'inherit', color: 'inherit' }}
-            >
-              <span className={classes.TextLeft}>{props.company}</span>
-            </Link>
+            {props.isHidden ? (
+              <span className={classes.TextSecret}>Dirahasiakan</span>
+            ) : (
+              <Link
+                to={`/co/${props.companyId._id}`}
+                style={{ textDecoration: 'inherit', color: 'inherit' }}
+              >
+                <span className={classes.TextLeft}>{props.company}</span>
+              </Link>
+            )}
 
             <span className={classes.PlacementLocationProps}>
               , {props.placementLocation}

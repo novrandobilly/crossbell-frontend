@@ -28,6 +28,7 @@ export const createJob = (jobData, authData) => {
         },
         body: JSON.stringify({
           jobTitle: jobData.jobTitle,
+          isHidden: jobData.isHidden,
           placementLocation: jobData.placementLocation,
           jobDescriptions: jobData.jobDescriptions,
           educationalStage: jobData.educationalStage,
@@ -69,6 +70,7 @@ export const saveJobDraft = (jobData, authData) => {
           },
           body: JSON.stringify({
             jobTitle: jobData.jobTitle,
+            isHidden: jobData.isHidden,
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
             educationalStage: jobData.educationalStage,
@@ -102,7 +104,7 @@ export const editJobDraft = (jobData, authData) => {
     dispatch(createJobStart());
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.jobsid}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.id}`,
         {
           method: 'PATCH',
           headers: {
@@ -111,6 +113,7 @@ export const editJobDraft = (jobData, authData) => {
           },
           body: JSON.stringify({
             jobTitle: jobData.jobTitle,
+            isHidden: jobData.isHidden,
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
             educationalStage: jobData.educationalStage,
@@ -331,6 +334,7 @@ export const releaseJob = (jobData, authData) => {
           },
           body: JSON.stringify({
             jobTitle: jobData.jobTitle,
+            isHidden: jobData.isHidden,
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
             educationalStage: jobData.educationalStage,

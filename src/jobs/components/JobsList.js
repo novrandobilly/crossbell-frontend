@@ -348,6 +348,7 @@ const JobsList = (props) => {
             displayJobs.map((job) => (
               <JobCard
                 key={job._id}
+                isHidden={job.isHidden}
                 jobId={job._id}
                 jobTitle={job.jobTitle}
                 placementLocation={job.placementLocation}

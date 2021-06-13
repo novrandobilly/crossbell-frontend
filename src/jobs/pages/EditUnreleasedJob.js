@@ -79,6 +79,12 @@ const EditUnreleasedJob = (props) => {
         value: loadedJob ? loadedJob.jobTitle : '',
         isValid: loadedJob && loadedJob.jobTitle ? true : false,
       },
+
+      isHidden: {
+        value: loadedJob ? loadedJob.isHidden : '',
+        isValid: loadedJob && loadedJob.isHidden ? true : false,
+      },
+
       jobDescriptions: {
         value: loadedJob ? loadedJob.jobDescriptions : '',
         isValid: loadedJob && loadedJob.jobDescriptions ? true : false,
@@ -143,6 +149,14 @@ const EditUnreleasedJob = (props) => {
 
   useEffect(() => {
     if (loadedJob) {
+      const isHiddenEl = document.getElementById('isHidden');
+      isHiddenEl.checked = loadedJob.isHidden;
+      onInputHandler('isHidden', loadedJob.isHidden, true);
+    }
+  }, [loadedJob, onInputHandler]);
+
+  useEffect(() => {
+    if (loadedJob) {
       const salary = document.getElementById('salary');
       const benefit = document.getElementById('benefit');
       onInputHandler('placementLocation', placement, true);
@@ -169,6 +183,7 @@ const EditUnreleasedJob = (props) => {
 
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
+      isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       educationalStage: formState.inputs.educationalStage.value,
@@ -202,6 +217,7 @@ const EditUnreleasedJob = (props) => {
 
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
+      isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       educationalStage: formState.inputs.educationalStage.value,
@@ -234,6 +250,7 @@ const EditUnreleasedJob = (props) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
+      isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       educationalStage: formState.inputs.educationalStage.value,
@@ -297,6 +314,12 @@ const EditUnreleasedJob = (props) => {
 
   const handleLocationChange = (e, value) => {
     onInputHandler('placementLocation', value, true);
+  };
+
+  const onCheckedInputHandler = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.checked;
+    onInputHandler(elementId, elementValue, true);
   };
 
   let cities = [];
@@ -505,6 +528,21 @@ const EditUnreleasedJob = (props) => {
             initIsValid={loadedJob.jobDescriptions ? true : false}
             helperText='Deskripsi pekerjaan wajib diisi'
           />
+        </div>
+
+        <div className={classes.CheckBoxDiv}>
+          <label
+            onChange={onCheckedInputHandler}
+            className={classes.CheckBoxLabel}
+          >
+            <input
+              id='isHidden'
+              type='checkbox'
+              name='isHidden'
+              className={classes.CheckBox}
+            />
+            <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+          </label>
         </div>
 
         <div className={classes.AdditionalContentContainer}>
