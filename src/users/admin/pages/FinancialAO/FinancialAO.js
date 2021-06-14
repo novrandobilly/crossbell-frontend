@@ -11,9 +11,19 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './FinancialAO.module.css';
 
+<<<<<<< HEAD
 const FinancialAO = props => {
   let total = [];
   let revenue = 0;
+=======
+const FinancialAO = (props) => {
+  // let total = [];
+  // let revenue = 0;
+
+  const [total, setTotal] = useState([]);
+  const [revenue, setRevenue] = useState(0);
+
+>>>>>>> a67ce6caa04bff330333d53baa7ac95ebdbc0e30
   const [fetchData, setFetchData] = useState();
   const [displayData, setDisplayData] = useState();
 
@@ -221,7 +231,11 @@ const FinancialAO = props => {
   return content;
 };
 
+<<<<<<< HEAD
 const mapStateToProps = state => {
+=======
+const mapStateToProps = (state) => {
+>>>>>>> a67ce6caa04bff330333d53baa7ac95ebdbc0e30
   return {
     admin: state.admin,
     isLoading: state.finance.isLoading,
@@ -229,10 +243,18 @@ const mapStateToProps = state => {
   };
 };
 
+<<<<<<< HEAD
 const mapDispatchToProps = dispatch => {
   return {
     getWholeOrderREG: token => dispatch(actionCreators.getWholeOrderREG(token)),
     getWholeOrderBC: token => dispatch(actionCreators.getWholeOrderBC(token)),
+=======
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getWholeOrderREG: (token) =>
+      dispatch(actionCreators.getWholeOrderREG(token)),
+    getWholeOrderBC: (token) => dispatch(actionCreators.getWholeOrderBC(token)),
+>>>>>>> a67ce6caa04bff330333d53baa7ac95ebdbc0e30
   };
 };
 

@@ -63,6 +63,30 @@
   color: rgba(58, 81, 153, 1);
 }
 
+.CheckBoxDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.CheckBoxLabel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: start;
+  font-size: 1rem;
+}
+
+.CheckBox {
+  margin: 0 8px 0 15px;
+  width: 15px;
+  height: 15px;
+}
+
 .AdditionalContentContainer {
   width: 95%;
   display: flex;

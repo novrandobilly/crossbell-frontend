@@ -39,6 +39,10 @@ const NewJob = (props) => {
         value: '',
         isValid: false,
       },
+      isHidden: {
+        value: false,
+        isValid: false,
+      },
       jobDescriptions: {
         value: '',
         isValid: false,
@@ -119,6 +123,7 @@ const NewJob = (props) => {
 
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
+      isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       educationalStage: formState.inputs.educationalStage.value,
@@ -147,6 +152,7 @@ const NewJob = (props) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
+      isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       educationalStage: formState.inputs.educationalStage.value,
@@ -175,6 +181,7 @@ const NewJob = (props) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
+      isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
       educationalStage: formState.inputs.educationalStage.value,
@@ -237,6 +244,12 @@ const NewJob = (props) => {
 
   const handleLocationChange = (e, value) => {
     onInputHandler('placementLocation', value, true);
+  };
+
+  const onCheckedInputHandler = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.checked;
+    onInputHandler(elementId, elementValue, true);
   };
 
   let cities = [];
@@ -429,6 +442,21 @@ const NewJob = (props) => {
           label='Deskripsi pekerjaan*'
           helperText='Deskripsi pekerjaan wajib diisi'
         />
+      </div>
+
+      <div className={classes.CheckBoxDiv}>
+        <label
+          onChange={onCheckedInputHandler}
+          className={classes.CheckBoxLabel}
+        >
+          <input
+            id='isHidden'
+            type='checkbox'
+            name='isHidden'
+            className={classes.CheckBox}
+          />
+          <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+        </label>
       </div>
 
       <div className={classes.AdditionalContentContainer}>

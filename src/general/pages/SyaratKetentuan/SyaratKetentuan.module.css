@@ -1,56 +1,75 @@
 .SyaratKetentuan {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-flow: column;
-	width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 100%;
+}
+
+.Container {
+  width: 60%;
+  background-color: white;
+  padding: 24px;
+  margin: 32px 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+* h2 {
+  margin: 0 0 16px 0;
 }
 
 .SyaratKetentuan body {
-	display: flex;
-	flex-flow: column;
-	align-items: center;
-	justify-content: center;
-	width: 80%;
+  background-color: white;
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .Pengantar {
-	display: flex;
-	flex-flow: column;
-	align-items: center;
-	text-align: left;
-	margin: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  text-align: justify;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5rem;
 }
 
 .Pengantar p {
-	margin: .5rem 0;
+  margin: 0.5rem 0;
 }
 
 .MainPoints {
-	list-style: upper-alpha;
-	padding-left: 1rem;
-	box-sizing: border-box;
-	margin: 0;
+  list-style: upper-alpha;
+  padding-left: 1rem;
+  box-sizing: border-box;
+  margin: 0;
+  line-height: 1.8rem;
+  font-size: 0.9rem;
 }
 
 .MainPoints > li {
-	text-align: left;
-	margin-top: 1rem;
+  text-align: justify;
+  margin-top: 1rem;
 }
 
 .MainPoints > li > span {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .MainPoints > li > p {
-	margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 .MainPoints > li > ul {
-	list-style: decimal;
+  list-style: decimal;
 }
 .MainPoints > li > ul > li {
-	margin: .5rem 0;
+  margin: 0.5rem 0;
 }
 .MainPoints > li > ul > li > ul {
-	list-style: lower-roman;
+  list-style: lower-roman;
 }

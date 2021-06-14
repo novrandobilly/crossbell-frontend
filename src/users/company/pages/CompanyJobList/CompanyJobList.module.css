@@ -2,11 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 32px 0;
 }
 
 .Container a {
   text-decoration: none;
   color: inherit;
+}
+
+.ContainerTitle {
+  margin: 0;
+  text-align: left;
+  width: 72.6%;
+  font-size: 1.2rem;
+}
+
+.ContainerTitleDetail {
+  margin-top: 8px;
+  text-align: left;
+  width: 72.6%;
+  font-size: 1.1rem;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .CardContainer {
@@ -15,7 +31,7 @@
   justify-content: center;
   background-color: rgb(255, 255, 255);
   padding: 1rem;
-  margin: 2rem 0;
+  margin-top: 16px;
   width: 72.6%;
   border-radius: 1rem;
   box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3),

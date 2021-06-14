@@ -11,16 +11,16 @@ const FooterRoute = () => {
     <div className={classes.FooterRoute}>
       <div className={classes.RouteSection}>
         <p className={classes.CategoriesTitle}>Kategori #1</p>
-        <Link to='#'>
+        <Link to='/about-us'>
           <p>Tentang Kami</p>
         </Link>
         <Link to='#'>
           <p>Panduan Komunitas</p>
         </Link>
-        <Link to='#'>
+        <Link to='/syarat-ketentuan'>
           <p>Syarat & Ketentuan</p>
         </Link>
-        <Link to='#'>
+        <Link to='/kebijakan-privasi'>
           <p>Kebijakan Privasi</p>
         </Link>
       </div>

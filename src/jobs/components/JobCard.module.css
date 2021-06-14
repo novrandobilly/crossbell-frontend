@@ -78,6 +78,11 @@
   color: rgb(84, 103, 161, 1);
 }
 
+.TextSecret {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
+}
+
 .PlacementLocation {
   font-weight: 400;
   color: rgba(0, 0, 0, 0.7);
