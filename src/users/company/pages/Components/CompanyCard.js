@@ -37,7 +37,6 @@ const CompanyCard = (props) => {
     };
 
     getJobsInCompany(payload).then((res) => {
-      console.log(res);
       if (res && res.foundJob) {
         setDisplayData(
           res.foundJob
@@ -160,7 +159,8 @@ const CompanyCard = (props) => {
                 </div>
               </div>
 
-              {props.auth.isCompany && props.auth.userId === companyid && (
+              {(props.auth.isCompany && props.auth.userId === companyid) |
+                props.admin.isAdmin && (
                 <div className={classes.EditProfile}>
                   <Link to={`/co/${props.companyId}/compro/intro`}>
                     <IconButton />
@@ -207,7 +207,7 @@ const CompanyCard = (props) => {
                 </div>
               </div>
 
-              {props.auth.userId === companyid && (
+              {(props.auth.userId === companyid) | props.admin.isAdmin && (
                 <div className={classes.EditPIC}>
                   <Link to={`/co/${props.companyId}/compro/personincharge`}>
                     <IconButton />

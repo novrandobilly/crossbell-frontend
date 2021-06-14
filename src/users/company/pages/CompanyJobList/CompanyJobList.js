@@ -64,6 +64,12 @@ const CompanyJobList = (props) => {
   if (!props.isLoading && data && data.length > 0) {
     content = (
       <div className={classes.Container}>
+        <p className={classes.ContainerTitle}>
+          Hi, Selamat datang di crossbell
+        </p>
+        <p className={classes.ContainerTitleDetail}>
+          Lihat iklan pekerjaan perusahaan mu disini
+        </p>
         <div className={classes.CardContainer}>
           <div className={classes.DivContainer}>
             {data.map((job, i) => {

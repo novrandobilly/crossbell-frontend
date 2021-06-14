@@ -7,6 +7,7 @@ import IconButton from './IconButton';
 import classes from './TextOnly.module.css';
 
 const Button = (props) => {
+  console.log(props);
   return (
     <div className={classes.Wraper}>
       <div className={classes.Container}>
@@ -20,10 +21,13 @@ const Button = (props) => {
               <IconButton />
             </Link>
           )}
-          {props.auth.userId === props.companyid && (
+
+          {(props.auth.userId === props.companyid) | props.admin.isAdmin ? (
             <Link to={props.route}>
               <IconButton />
             </Link>
+          ) : (
+            <div />
           )}
         </div>
 

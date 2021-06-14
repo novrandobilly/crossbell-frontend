@@ -1,36 +1,67 @@
 .KebijakanPrivasi {
-	display: flex;
-	flex-flow: column;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.KebijakanPrivasi > * {
-	width: 80%;
+.Container {
+  width: 60%;
+  background-color: white;
+  padding: 24px 24px 24px 4px;
+  margin: 32px 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.ActiveSince {
+  font-size: 0.85rem;
+  text-align: left;
+  margin-left: 24px;
+}
+
+.ActiveSince span {
+  font-weight: bold;
+}
+
+.PrivacyDescription {
+  text-align: justify;
+  margin-left: 24px;
+  line-height: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.SubPoints {
+  list-style: decimal;
+  text-align: justify;
+  font-size: 0.9rem;
+  line-height: 1.5rem;
+  margin-left: 24px;
 }
 
 .MainPoints {
-	list-style: upper-alpha;
-	text-align: left;
+  list-style: upper-alpha;
+  text-align: justify;
+  line-height: 1.8rem;
 }
 
 .MainPoints p {
-	margin: 0;
+  margin: 0;
 }
 
 .MainPoints li {
-	margin: .7rem 0;
+  margin: 0.7rem 0;
 }
 
 .MainPoints > li > span {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .MainPoints > li > ul {
-	list-style: lower-roman;
+  list-style: lower-roman;
 }
 .MainPoints > li > ul > li {
-	margin: .3rem;
+  margin: 0.3rem;
 }

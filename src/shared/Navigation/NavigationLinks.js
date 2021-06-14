@@ -124,7 +124,14 @@ const NavigationLinks = (props) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/jobs-dashboard' activeClassName={classes.active}>
+          <NavLink
+            to={
+              props?.auth?.isLoggedIn && !props?.auth?.isCompany
+                ? '/jobs-dashboard'
+                : `/co/${props.auth.userId}/jobList`
+            }
+            activeClassName={classes.active}
+          >
             Dasboard Pekerjaan
           </NavLink>
         </li>
@@ -227,13 +234,13 @@ const NavigationLinks = (props) => {
                   >
                     <p>Pesanan</p>
                   </NavLink>
-                  <NavLink
+                  {/* <NavLink
                     to={`/co/${props.auth.userId}/jobList`}
                     activeClassName={classes.active}
                     onClick={DropdownList}
                   >
                     <p>Iklan Pekerjaan</p>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
               </div>
             </li>
