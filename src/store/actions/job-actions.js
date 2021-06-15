@@ -229,6 +229,7 @@ export const getJobsInCompany = (payload) => {
 
 export const updateJob = (payload) => {
   return async (dispatch) => {
+    console.log(payload);
     dispatch(fetchingStart());
     try {
       const res = await fetch(
@@ -241,6 +242,7 @@ export const updateJob = (payload) => {
           },
           body: JSON.stringify({
             jobDescriptions: payload.jobDescriptions,
+            isHidden: payload.isHidden,
             employment: payload.employment,
             educationalStage: payload.educationalStage,
             salary: payload.salary,

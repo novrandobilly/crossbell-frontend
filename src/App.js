@@ -335,7 +335,10 @@ const App = (props) => {
               path='/ap/:applicantid/appliedjobs'
               component={JobsApplied}
             />
-            <Route path='/ap/:applicantid' component={ApplicantDetails} />
+            <Route
+              path='/ap/:applicantid/profile'
+              component={ApplicantDetails}
+            />
             <Route path='/subscription/:applicantid' component={Subscription} />
             <Route path='/authentication/ap' component={AuthenticationAp} />
 
@@ -369,7 +372,10 @@ const App = (props) => {
               path='/co/:companyid/compro'
               component={CompanyProfileForm}
             />
-            <Route path='/co/:companyid' component={CompanyBriefDescriptions} />
+            <Route
+              path='/co/:companyid/profile'
+              component={CompanyBriefDescriptions}
+            />
             <Route path='/authentication/co' component={AuthenticationCo} />
 
             {/* Jobs Routes */}
