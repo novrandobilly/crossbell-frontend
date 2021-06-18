@@ -11,19 +11,13 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './FinancialAO.module.css';
 
-<<<<<<< HEAD
 const FinancialAO = props => {
-  let total = [];
-  let revenue = 0;
-=======
-const FinancialAO = (props) => {
   // let total = [];
   // let revenue = 0;
 
   const [total, setTotal] = useState([]);
   const [revenue, setRevenue] = useState(0);
 
->>>>>>> a67ce6caa04bff330333d53baa7ac95ebdbc0e30
   const [fetchData, setFetchData] = useState();
   const [displayData, setDisplayData] = useState();
 
@@ -82,7 +76,29 @@ const FinancialAO = (props) => {
       setDisplayData(filteredOrders);
     }
   }, [fetchData, formState.inputs.start.value, formState.inputs.end.value]);
-  // console.log(formState.inputs)
+
+  useEffect(() => {
+    if (displayData) {
+      let arrPrice = displayData.map(data => {
+        if (data.approvedAt !== null) {
+          return data.totalPrice;
+        }
+        return null;
+      });
+      setTotal(arrPrice);
+    }
+  }, [displayData]);
+
+  useEffect(() => {
+    if (total) {
+      let Rev = 0;
+      total.map(data => {
+        Rev = Rev + data;
+        return Rev;
+      });
+      setRevenue(Rev);
+    }
+  }, [total]);
 
   let content = <Spinner />;
 
@@ -118,7 +134,7 @@ const FinancialAO = (props) => {
                 views={['year', 'month', 'date']}
                 maxDate={moment()}
                 initIsValid={true}
-                initValue={null}
+                initValue={moment()}
                 format='dd/MM/yyyy'
               />
             </div>
@@ -142,18 +158,19 @@ const FinancialAO = (props) => {
               </thead>
 
               <tbody className={classes.ColumnField}>
-                {displayData.map((fin, i) => {
+                {displayData.map((display, i) => {
                   return (
-                    <tr key={fin._id}>
+                    <tr key={display._id}>
                       <th>{i + 1}</th>
-                      <th>{fin.companyId.companyName}</th>
-                      <th>{fin._id}</th>
-                      <th> {fin.slot ? 'order reguler' : 'order bulk candidate'}</th>
-                      <th>{fin.slot ? fin.packageName : '-'}</th>
-                      <th>{moment(fin.createdAt).format('D MMM YYYY')}</th>
-                      <th>{moment(fin.approvedAt).format('D MMM YYYY')}</th>
+                      <th>{display.companyId.companyName}</th>
+                      <th>{display._id}</th>
+                      <th> {display.slot ? 'order reguler' : 'order bulk candidate'}</th>
+                      <th>{display.slot ? display.packageName : '-'}</th>
+                      <th>{moment(display.createdAt).format('D MMM YYYY')}</th>
+                      <th>{moment(display.approvedAt).format('D MMM YYYY')}</th>
+
                       {/* ========== Slot ========== */}
-                      {fin.status === 'Pending' ? (
+                      {display.status === 'Pending' ? (
                         <th
                           style={{
                             fontSize: '0.9rem',
@@ -164,42 +181,35 @@ const FinancialAO = (props) => {
                       ) : (
                         <th style={{ fontSize: '0.9rem' }}>
                           <p style={{ margin: '-0.5rem 0 -1rem 0' }}>
-                            {fin.slot || fin.amount}
-                            <span style={{ margin: '0 0 0 1rem' }}>{fin.slot ? 'slot' : 'candidate'}</span>
+                            {display.slot || display.amount}
+                            <span style={{ margin: '0 0 0 1rem' }}>{display.slot ? 'slot' : 'candidate'}</span>
                           </p>
                         </th>
                       )}
 
                       {/* ========== Price/Slot ========== */}
-                      {fin.status === 'Pending' ? (
+                      {display.status === 'Pending' ? (
                         <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                       ) : (
-                        <th>Rp. {(fin.pricePerSlot || fin.price).toLocaleString()}</th>
+                        <th>Rp. {(display.pricePerSlot || display.price).toLocaleString()}</th>
                       )}
 
                       {/* ========== Total Price ========== */}
-                      {fin.status === 'Pending' ? (
-                        <th style={{ color: 'rgb(250, 129, 0)' }}>
-                          {/* {() => {
-                          parseInt((total[i] = 0));
-                          return null;
-                        }}
-                        {fin.totalPrice.toLocaleString()} */}
-                          pending
-                        </th>
+                      {display.status === 'Pending' ? (
+                        <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                       ) : (
-                        <th>Rp. {parseInt((total[i] = fin.totalPrice)).toLocaleString()}</th>
+                        <th>Rp. {parseInt(display.totalPrice).toLocaleString()}</th>
                       )}
 
                       <th
                         style={
-                          fin.status === 'Pending'
+                          display.status === 'Pending'
                             ? { color: 'rgb(250, 129, 0)', fontWeight: 'bold' }
-                            : fin.status === 'Expired'
+                            : display.status === 'Expired'
                             ? { color: 'Gray', fontWeight: 'bold' }
                             : { color: 'green', fontWeight: 'bold' }
                         }>
-                        {fin.status}
+                        {display.status}
                       </th>
                     </tr>
                   );
@@ -213,13 +223,7 @@ const FinancialAO = (props) => {
               <div className={classes.Label}>Revenue/ year</div>
             </div>
             <div className={classes.RevenueNumber}>
-              <div className={classes.Label}>
-                {total.map(tot => {
-                  revenue = revenue + tot;
-                  return null;
-                })}
-                Rp. {revenue.toLocaleString()},-
-              </div>
+              <div className={classes.Label}>Rp. {revenue.toLocaleString()},-</div>
               <div className={classes.Label}>Rp. {(revenue * 12).toLocaleString()},-</div>
             </div>
           </div>
@@ -231,11 +235,7 @@ const FinancialAO = (props) => {
   return content;
 };
 
-<<<<<<< HEAD
 const mapStateToProps = state => {
-=======
-const mapStateToProps = (state) => {
->>>>>>> a67ce6caa04bff330333d53baa7ac95ebdbc0e30
   return {
     admin: state.admin,
     isLoading: state.finance.isLoading,
@@ -243,18 +243,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-<<<<<<< HEAD
 const mapDispatchToProps = dispatch => {
   return {
     getWholeOrderREG: token => dispatch(actionCreators.getWholeOrderREG(token)),
     getWholeOrderBC: token => dispatch(actionCreators.getWholeOrderBC(token)),
-=======
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getWholeOrderREG: (token) =>
-      dispatch(actionCreators.getWholeOrderREG(token)),
-    getWholeOrderBC: (token) => dispatch(actionCreators.getWholeOrderBC(token)),
->>>>>>> a67ce6caa04bff330333d53baa7ac95ebdbc0e30
   };
 };
 
