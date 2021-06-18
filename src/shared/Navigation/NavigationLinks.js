@@ -101,14 +101,7 @@ const NavigationLinks = props => {
       <ul className={classes.NavLinks}>
         {props?.auth?.isLoggedIn && !props?.auth?.isCompany && (
           <li>
-<<<<<<< HEAD
-            <NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
-=======
-            <NavLink
-              to={`/ap/${props.auth.userId}/profile`}
-              activeClassName={classes.active}
-            >
->>>>>>> 74ca1750ecebb8859556fae80e651184938b4cad
+            <NavLink to={`/ap/${props.auth.userId}/profile`} activeClassName={classes.active}>
               <span>Selamat datang, </span>
               {data}
             </NavLink>
@@ -139,14 +132,7 @@ const NavigationLinks = props => {
         {props.auth.isLoggedIn && props.auth.isCompany && (
           <React.Fragment>
             <li>
-<<<<<<< HEAD
-              <NavLink to={`/co/${props.auth.userId}`} activeClassName={classes.active}>
-=======
-              <NavLink
-                to={`/co/${props.auth.userId}/profile`}
-                activeClassName={classes.active}
-              >
->>>>>>> 74ca1750ecebb8859556fae80e651184938b4cad
+              <NavLink to={`/co/${props.auth.userId}/profile`} activeClassName={classes.active}>
                 Profil Perusahaan
               </NavLink>
             </li>
