@@ -43,6 +43,11 @@ const EditJob = (props) => {
         value: identifiedJob ? identifiedJob.jobDescriptions : '',
         isValid: identifiedJob ? identifiedJob.description : false,
       },
+
+      isHidden: {
+        value: identifiedJob ? identifiedJob.isHidden : '',
+        isValid: identifiedJob && identifiedJob.isHidden ? true : false,
+      },
     },
     true
   );
@@ -70,6 +75,7 @@ const EditJob = (props) => {
     const payload = {
       jobId: jobid,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      isHidden: formState.inputs.isHidden.value,
       employment: formState.inputs.employment.value,
       educationalStage: formState.inputs.educationalStage.value,
       salary: formState.inputs.salary.value,
@@ -85,8 +91,13 @@ const EditJob = (props) => {
     }
   };
   useEffect(() => {
+    if (identifiedJob) {
+      const isHiddenEl = document.getElementById('isHidden');
+      isHiddenEl.checked = identifiedJob.isHidden;
+      onInputHandler('isHidden', identifiedJob.isHidden, true);
+    }
     onInputHandler('employment', formState.inputs.employment.value, true);
-  }, [onInputHandler, formState.inputs.employment.value]);
+  }, [identifiedJob, onInputHandler, formState.inputs.employment.value]);
 
   const handleEmploymentChange = (e) => {
     const elementId = e.target.name;
@@ -101,6 +112,12 @@ const EditJob = (props) => {
 
   const handleEmploymentOpen = () => {
     setEmploymentOpen(true);
+  };
+
+  const onCheckedInputHandler = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.checked;
+    onInputHandler(elementId, elementValue, true);
   };
 
   let formContent = <Spinner />;
@@ -209,6 +226,21 @@ const EditJob = (props) => {
                 initValue={identifiedJob.salary}
                 initIsValid={true}
               />
+            </div>
+
+            <div className={classes.CheckBoxDiv}>
+              <label
+                onChange={onCheckedInputHandler}
+                className={classes.CheckBoxLabel}
+              >
+                <input
+                  id='isHidden'
+                  type='checkbox'
+                  name='isHidden'
+                  className={classes.CheckBox}
+                />
+                <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+              </label>
             </div>
           </div>
         </div>

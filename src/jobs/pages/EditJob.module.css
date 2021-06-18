@@ -25,6 +25,27 @@
   margin-top: 8px;
 }
 
+.CheckBoxDiv {
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.CheckBoxLabel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: start;
+  font-size: 1rem;
+}
+
+.CheckBox {
+  margin: 0 8px 0 0px;
+  width: 15px;
+  height: 15px;
+}
+
 .FormTitle {
   font-size: 1.5rem;
   font-weight: bold;
