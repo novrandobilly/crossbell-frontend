@@ -7,7 +7,7 @@ const KebijakanPrivasi = () => {
     <div className={classes.KebijakanPrivasi}>
       <div className={classes.Container}>
         <header>
-          <h2>Kebijakan Privasi</h2>
+          <h2 className={classes.Header}>Kebijakan Privasi</h2>
           <p className={classes.ActiveSince}>
             Berlaku sejak: <span>13 Juni 2021</span>
           </p>

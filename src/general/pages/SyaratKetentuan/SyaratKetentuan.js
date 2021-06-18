@@ -7,7 +7,7 @@ const SyaratKetentuan = () => {
     <div className={classes.SyaratKetentuan}>
       <div className={classes.Container}>
         <header>
-          <h2>Syarat & Ketentuan</h2>
+          <h2 className={classes.Header}> Syarat & Ketentuan</h2>
         </header>
         <body>
           <div className={classes.Pengantar}>
