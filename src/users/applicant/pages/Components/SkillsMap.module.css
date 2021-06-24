@@ -12,7 +12,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 32px;
   background-color: #c2d7f2;
   padding: 4px 16px 4px 16px;
   align-items: center;
@@ -25,17 +24,18 @@
 
 .MapContainer {
   display: flex;
-  flex-wrap: wrap;
-  padding-bottom: 24px;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.ListContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
 .SkillContainer {
-  margin: 0 1rem;
-  padding: 0.5rem 1rem;
-  background-color: rgb(51, 51, 51);
-  border-radius: 2rem;
-  color: white;
-  font-weight: 400;
+  font-weight: 600;
+  margin: 6px 0;
 }
 
 .EmptyDescription {

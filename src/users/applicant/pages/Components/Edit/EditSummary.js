@@ -66,7 +66,7 @@ const EditSummary = (props) => {
       } else {
         console.log('no res detected');
       }
-      props.history.push(`/ap/${applicantid}`);
+      props.history.push(`/ap/${applicantid}/profile`);
     } catch (err) {
       console.log(err);
     }
@@ -78,9 +78,18 @@ const EditSummary = (props) => {
     formContent = (
       <React.Fragment>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Ringkasan diri</p>
+          <p className={classes.FormTitle}>Tentang saya</p>
 
           <div className={classes.FormRow}>
+            <p className={classes.Tips}>
+              *Ceritakan secara singkat tentang diri anda yang membuat
+              perusahaan pencari tenaga kerja menjadi tertarik untuk mengundang
+              anda mengikuti proses seleksi. Hal penting harus anda uraikan
+              adalah hubungan antara karakter, minat, dan kualifikasi yang kamu
+              miliki saat ini disertai dengan rancangan dirimu di masa depan.
+              Hal itu bisa dipaparkan dengan menceritakan pengalaman masa lalu
+              anda terkait karakter dan kompetensi yang anda miliki.
+            </p>
             <div className={classes.EditLabel}>
               <Input
                 inputType='textarea'

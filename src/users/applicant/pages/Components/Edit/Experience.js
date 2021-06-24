@@ -56,9 +56,9 @@ const Experience = (props) => {
         value: data ? data.prevCompany : null,
         isValid: data && data.prevCompany ? true : false,
       },
-      prevLocation: {
-        value: data ? data.prevLocation : null,
-        isValid: data && data.prevLocation ? true : false,
+      prevIndustry: {
+        value: data ? data.prevIndustry : null,
+        isValid: data && data.prevIndustry ? true : false,
       },
       startDate: {
         value: data ? data.startDate : null,
@@ -87,7 +87,7 @@ const Experience = (props) => {
       index: experienceindex,
       prevTitle: formState.inputs.prevTitle.value,
       prevCompany: formState.inputs.prevCompany.value,
-      prevLocation: formState.inputs.prevLocation.value,
+      prevIndustry: formState.inputs.prevIndustry.value,
       startDate: formState.inputs.startDate.value,
       endDate: formState.inputs.endDate.value,
       description: formState.inputs.description.value,
@@ -100,7 +100,7 @@ const Experience = (props) => {
         index: experienceindex,
         prevTitle: formState.inputs.prevTitle.value,
         prevCompany: formState.inputs.prevCompany.value,
-        prevLocation: formState.inputs.prevLocation.value,
+        prevIndustry: formState.inputs.prevIndustry.value,
         startDate: formState.inputs.startDate.value,
         endDate: null,
         description: formState.inputs.description.value,
@@ -116,7 +116,7 @@ const Experience = (props) => {
         console.log('no res detected');
       }
 
-      props.history.push(`/ap/${applicantid}`);
+      props.history.push(`/ap/${applicantid}/profile`);
     } catch (err) {
       console.log(err);
     }
@@ -132,7 +132,7 @@ const Experience = (props) => {
     formContent = (
       <React.Fragment>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Ubah pengalaman</p>
+          <p className={classes.FormTitle}>Ubah pengalaman kerja</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
@@ -142,7 +142,7 @@ const Experience = (props) => {
                 inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Posisi pekerjaan*'
+                label='Jabatan*'
                 initValue={data.prevTitle}
                 initIsValid={true}
               />
@@ -164,12 +164,12 @@ const Experience = (props) => {
             <div className={classes.EditLabel}>
               <Input
                 inputType='input'
-                id='prevLocation'
+                id='prevIndustry'
                 inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label='Alamat perusahaan*'
-                initValue={data.prevLocation}
+                initValue={data.prevIndustry}
                 initIsValid={true}
               />
             </div>
@@ -213,7 +213,12 @@ const Experience = (props) => {
             </div>
 
             <div className={classes.CheckboxDiv}>
-              <Checkbox color='primary' size='small' onChange={dateHandler} />
+              <Checkbox
+                color='primary'
+                size='small'
+                onChange={dateHandler}
+                style={{ padding: '0' }}
+              />
               <label className={classes.CheckboxText}>
                 Saya masih berkerja disini
               </label>
@@ -226,7 +231,7 @@ const Experience = (props) => {
                 inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
-                label='Deskripsi Pengalaman (Opsional)'
+                label='Uraian pekerjaan (Opsional)'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}

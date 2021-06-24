@@ -63,7 +63,7 @@ const EditDetails = (props) => {
       token: props.auth.token,
     };
     await props.updateSkills(updatedData);
-    props.history.push(`/ap/${applicantid}`);
+    props.history.push(`/ap/${applicantid}/profile`);
   };
 
   const addSkill = (e) => {

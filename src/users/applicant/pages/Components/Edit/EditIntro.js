@@ -386,7 +386,7 @@ const EditIntro = (props) => {
       if (res) {
         console.log(res);
       }
-      props.history.push(`/ap/${applicantid}`);
+      props.history.push(`/ap/${applicantid}/profile`);
     } catch (err) {
       console.log(err);
     }
@@ -672,7 +672,7 @@ const EditIntro = (props) => {
                         <TextField
                           {...params}
                           style={{ margin: '0' }}
-                          label='Bidang minat'
+                          label='Bidang pekerejaan yang diminati'
                           margin='normal'
                           variant='standard'
                         />
@@ -805,7 +805,6 @@ const EditIntro = (props) => {
       {formContent}
     </form>
   );
-
 };
 
 const mapStateToProps = (state) => {

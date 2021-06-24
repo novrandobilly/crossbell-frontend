@@ -9,7 +9,7 @@ import * as actionCreators from '../../../../store/actions/index';
 import { VALIDATOR_MIN } from '../../../../shared/utils/validator';
 import Button from '@material-ui/core/Button';
 
-import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Modal from '../../../../shared/UI_Element/Modal';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
 import Input from '../../../../shared/UI_Element/Input';
@@ -129,130 +129,134 @@ const CompanyOrderForm = (props) => {
     onInputHandler('state', slot, true);
   }, [onInputHandler, slot]);
 
-  let formContent = (
-    <React.Fragment>
-      <div className={classes.PackageList}>
-        <div onClick={OnclickBronze} className={classes.PackageCard}>
-          <OrderComponent
-            title='Bronze'
-            price={ORIGINAL_PRICE}
-            slot='1 slot'
-            createOrder={props.createOrder}
-          />
-        </div>
+  let formContent = <SpinnerCircle />;
 
-        <div onClick={OnclickSilver} className={classes.PackageCard}>
-          <OrderComponent
-            title='Silver'
-            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
-            slot='2 - 4 slot'
-            perks={['Diskon per slot sebesar 5%']}
-            createOrder={props.createOrder}
-          />
-        </div>
+  if (!props.isLoading) {
+    formContent = (
+      <React.Fragment>
+        <div className={classes.PackageList}>
+          <div onClick={OnclickBronze} className={classes.PackageCard}>
+            <OrderComponent
+              title='Bronze'
+              price={ORIGINAL_PRICE}
+              slot='1 slot'
+              createOrder={props.createOrder}
+            />
+          </div>
 
-        <div onClick={OnclickGold} className={classes.PackageCard}>
-          <OrderComponent
-            title='Gold'
-            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2}
-            slot='5 - 9 slot'
-            perks={['Diskon per slot sebesar 10%']}
-            createOrder={props.createOrder}
-          />
-        </div>
+          <div onClick={OnclickSilver} className={classes.PackageCard}>
+            <OrderComponent
+              title='Silver'
+              price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05}
+              slot='2 - 4 slot'
+              // perks={['Diskon per slot sebesar 5%']}
+              createOrder={props.createOrder}
+            />
+          </div>
 
-        <div onClick={OnclickPlatinum} className={classes.PackageCard}>
-          <OrderComponent
-            title='Platinum'
-            price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3}
-            slot='>9 slot'
-            perks={['Diskon per slot sebesar 15%']}
-            createOrder={props.createOrder}
-          />
-        </div>
-      </div>
-      <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
-        <div className={classes.InputAmount} style={{ marginTop: '20px' }}>
-          <p className={classes.SlotEqual}>
-            1 Slot = 2 minggu waktu tayang iklan
-          </p>
-        </div>
+          <div onClick={OnclickGold} className={classes.PackageCard}>
+            <OrderComponent
+              title='Gold'
+              price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+              slot='5 - 9 slot'
+              // perks={['Diskon per slot sebesar 10%']}
+              createOrder={props.createOrder}
+            />
+          </div>
 
-        <div className={classes.InputAmount}>
-          <p className={classes.Label}>Jumlah slot yang ingin dibeli</p>
-          <div className={classes.InputSlot}>
-            <Input
-              inputType='input'
-              id='slot'
-              InputClass='PackageSlot'
-              validatorMethod={[VALIDATOR_MIN(1)]}
-              onInputHandler={onInputHandler}
-              type='number'
-              value={slot}
-              initValue={slot}
-              min='0'
-              step='1'
-              helperText={
-                formState.inputs.slot.value <= 0
-                  ? 'Minimal pembelian 1 slot'
-                  : 'Mohon masukkan jumlah yang ingin dibeli'
-              }
+          <div onClick={OnclickPlatinum} className={classes.PackageCard}>
+            <OrderComponent
+              title='Platinum'
+              price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
+              slot='>9 slot'
+              // perks={['Diskon per slot sebesar 15%']}
+              createOrder={props.createOrder}
             />
           </div>
         </div>
+        <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
+          <div className={classes.InputAmount} style={{ marginTop: '20px' }}>
+            <p className={classes.SlotEqual}>
+              1 Slot = 2 minggu waktu tayang iklan
+            </p>
+          </div>
 
-        <div className={classes.InputAmount} style={{ marginBottom: '-16px' }}>
-          <p className={classes.Label}>Jenis paket:</p>
-          <p className={classes.InputSlot}>
-            {formState.inputs.slot.value <= 1
-              ? 'Bronze'
-              : formState.inputs.slot.value <= 4
-              ? 'Silver'
-              : formState.inputs.slot.value <= 9
-              ? 'Gold'
-              : 'Platinum'}
-          </p>
-        </div>
+          <div className={classes.InputAmount}>
+            <p className={classes.Label}>Jumlah slot yang ingin dibeli</p>
+            <div className={classes.InputSlot}>
+              <Input
+                inputType='input'
+                id='slot'
+                InputClass='PackageSlot'
+                validatorMethod={[VALIDATOR_MIN(1)]}
+                onInputHandler={onInputHandler}
+                type='number'
+                initValue={slot}
+                min='0'
+                step='1'
+                helperText={
+                  formState.inputs.slot.value <= 0
+                    ? 'Minimal pembelian 1 slot'
+                    : 'Mohon masukkan jumlah yang ingin dibeli'
+                }
+              />
+            </div>
+          </div>
 
-        <div
-          className={classes.InputAmount}
-          style={{ borderBottom: '1px solid black' }}
-        >
-          <p className={classes.Label}>Harga per slot:</p>
-          <p className={classes.InputSlot}>IDR {price.toLocaleString()}</p>
-        </div>
-        <div className={classes.InputAmount}>
-          <p className={classes.Label}>Total:</p>
-          <p className={classes.InputSlot}>
-            <strong>
-              IDR {(price * formState.inputs.slot.value).toLocaleString()}
-            </strong>
-          </p>
-        </div>
-
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          <Button
-            type='button'
-            variant='contained'
-            color='primary'
-            disableElevation
-            disabled={!formState.formIsValid}
-            style={{ width: '50%', marginTop: '1rem' }}
-            onClick={onOpenOrderModal}
+          <div
+            className={classes.InputAmount}
+            style={{ marginBottom: '-16px' }}
           >
-            Submit
-          </Button>
-        </div>
-      </form>
-    </React.Fragment>
-  );
+            <p className={classes.Label}>Jenis paket:</p>
+            <p className={classes.InputSlot}>
+              {formState.inputs.slot.value <= 1
+                ? 'Bronze'
+                : formState.inputs.slot.value <= 4
+                ? 'Silver'
+                : formState.inputs.slot.value <= 9
+                ? 'Gold'
+                : 'Platinum'}
+            </p>
+          </div>
+
+          <div
+            className={classes.InputAmount}
+            style={{ borderBottom: '1px solid black' }}
+          >
+            <p className={classes.Label}>Harga per slot:</p>
+            <p className={classes.InputSlot}>IDR {price.toLocaleString()}</p>
+          </div>
+          <div className={classes.InputAmount}>
+            <p className={classes.Label}>Total:</p>
+            <p className={classes.InputSlot}>
+              <strong>
+                IDR {(price * formState.inputs.slot.value).toLocaleString()}
+              </strong>
+            </p>
+          </div>
+
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <Button
+              type='button'
+              variant='contained'
+              color='primary'
+              disableElevation
+              disabled={!formState.formIsValid}
+              style={{ width: '50%', marginTop: '1rem' }}
+              onClick={onOpenOrderModal}
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      </React.Fragment>
+    );
+  }
 
   const onCancelHandler = () => {
     props.resetOrder();
     setValidationError(false);
   };
-
-  if (props.isLoading) formContent = <Spinner />;
 
   return (
     <div className={classes.Container}>

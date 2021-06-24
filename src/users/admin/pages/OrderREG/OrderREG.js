@@ -181,7 +181,7 @@ const OrderREG = (props) => {
                   </th>
                   <th>
                     <Link
-                      to={`/co/${order.companyId._id}`}
+                      to={`/co/${order.companyId._id}/profile`}
                       style={{ color: 'black', textDecoration: 'none' }}
                     >
                       {order.companyId.companyName}
@@ -192,7 +192,7 @@ const OrderREG = (props) => {
                   <th>
                     {' '}
                     <Link
-                      to={`/co/${order.id}`}
+                      to={`/co/${order._id}/invoice`}
                       style={{ color: 'black', textDecoration: 'none' }}
                     >
                       {order.packageName}

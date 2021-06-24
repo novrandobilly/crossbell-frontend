@@ -16,7 +16,7 @@
   box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
   border-radius: 1rem;
   margin-top: 2rem;
-  background-color: rgb(215, 226, 255);
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,10 +26,9 @@
 .Id {
   width: 100%;
   border-radius: 1rem 1rem 0 0;
-  background-color: rgba(58, 81, 153, 1);
+  background-color: rgb(215, 226, 255);
   margin: 0rem;
   font-size: 1.2rem;
-  color: white;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 2rem;
@@ -50,8 +49,15 @@
   width: 65%;
 }
 
-.Address {
-  line-height: 1.2rem;
+.CompanyName {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.InvoiceCompanyData {
+  margin: 10px 0;
 }
 
 .InvoiceRight {
@@ -59,11 +65,10 @@
 }
 
 .InvoiceTitle {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  letter-spacing: 0.4rem;
-  margin-bottom: 0;
-  margin-top: 1rem;
+  /* letter-spacing: 2px; */
+  margin: 0;
 }
 
 .InvoiceDetail {
@@ -75,12 +80,6 @@
 
 .DetailLabel {
   margin-right: 2rem;
-}
-
-.CompanyName {
-  color: black;
-  font-size: 1.2rem;
-  font-weight: bold;
 }
 
 .Table {
@@ -208,7 +207,7 @@ hr.UnderLine {
 
 @media print {
   .page-break {
-    margin-top: 1rem;
+    margin: 0;
     display: block;
     page-break-before: auto;
   }
@@ -216,7 +215,7 @@ hr.UnderLine {
 
 @page {
   size: auto;
-  margin: 20mm;
+  margin: 10mm;
 }
 
 @media (max-width: 1200px) {
@@ -242,6 +241,7 @@ hr.UnderLine {
     padding: 16px 16px 16px 16px;
   }
 }
+
 @media (max-width: 576px) {
   .DownloadButton {
     width: 90%;
@@ -254,8 +254,13 @@ hr.UnderLine {
   .Content {
     flex-direction: column;
   }
+
   .CompanyDetail {
     width: 100%;
+  }
+
+  .InvoiceTitle {
+    margin-top: 16px;
   }
 
   .InvoiceRight {
