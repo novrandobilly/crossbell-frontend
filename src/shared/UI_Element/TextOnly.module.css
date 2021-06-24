@@ -17,8 +17,11 @@
   justify-content: space-between;
   padding: 4px 16px 4px 16px;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #c2d7f2;
+}
+
+.HiddenDiv {
+  display: none;
 }
 
 .Label {

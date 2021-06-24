@@ -195,21 +195,21 @@ const EditJob = (props) => {
                     value='permanent'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Permanent
+                    Karyawan Tetap
                   </MenuItem>
                   <MenuItem
                     id={0}
                     value='contract'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Contract
+                    Karyawan kontrak (PKWT)
                   </MenuItem>
                   <MenuItem
                     id={0}
                     value='intern'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    intern
+                    Karyawan magang (Intern)
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -239,7 +239,7 @@ const EditJob = (props) => {
                   name='isHidden'
                   className={classes.CheckBox}
                 />
-                <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+                <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
               </label>
             </div>
           </div>

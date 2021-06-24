@@ -29,11 +29,18 @@
   align-self: flex-start;
 }
 
+.Tips {
+  text-align: left;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.7);
+  font-family: 'Roboto';
+  font-weight: 500;
+}
+
 .FormRow {
   display: flex;
   flex-direction: column;
   border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
-  padding-top: 2rem;
   width: 100%;
 }
 

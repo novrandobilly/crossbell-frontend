@@ -5,10 +5,10 @@ import moment from 'moment';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions';
-import OutsideClick from '../../../../shared/utils/outsideClick';
+// import OutsideClick from '../../../../shared/utils/outsideClick';
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Button from '@material-ui/core/Button';
+// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+// import Button from '@material-ui/core/Button';
 import IconButton from '../../../../shared/UI_Element/IconButton';
 import TextOnly from '../../../../shared/UI_Element/TextOnly';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
@@ -20,13 +20,13 @@ import classes from './CompanyCard.module.css';
 const CompanyCard = (props) => {
   const { companyid } = useParams();
 
-  const [companyDropdown, setCompanyDropdown] = useState(false);
+  // const [companyDropdown, setCompanyDropdown] = useState(false);
 
   const [unreleasedData, setUnreleasedData] = useState();
   const [expiredData, setExpiredData] = useState();
   const [displayData, setDisplayData] = useState();
 
-  const ref = useRef();
+  // const ref = useRef();
   const { getJobsInCompany } = props;
 
   useEffect(() => {
@@ -68,13 +68,13 @@ const CompanyCard = (props) => {
     });
   }, [getJobsInCompany, companyid, props.auth]);
 
-  const DropdownOrder = () => {
-    setCompanyDropdown(!companyDropdown);
-  };
+  // const DropdownOrder = () => {
+  //   setCompanyDropdown(!companyDropdown);
+  // };
 
-  OutsideClick(ref, () => {
-    if (companyDropdown) setCompanyDropdown(false);
-  });
+  // OutsideClick(ref, () => {
+  //   if (companyDropdown) setCompanyDropdown(false);
+  // });
 
   return (
     <div className={classes.BigContainer}>
@@ -239,52 +239,6 @@ const CompanyCard = (props) => {
               <div className={classes.HeaderTitleDiv}>
                 <p className={classes.Title}>IKLAN PEKERJAAN</p>
               </div>
-              {props.auth.isCompany && props.auth.userId === companyid && (
-                <div className={classes.ButtonsDiv}>
-                  <Link to={`/jobs/new`}>
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      disableElevation
-                      size='small'
-                    >
-                      Pasang Iklan
-                    </Button>
-                  </Link>
-
-                  <div className={classes.dropdown}>
-                    <button className={classes.dropbtn} onClick={DropdownOrder}>
-                      BUAT PESANAN
-                      <ArrowDropDownIcon
-                        style={{
-                          alignSelf: 'center',
-                          marginBottom: '-0.4rem',
-                        }}
-                      />
-                    </button>
-
-                    <div
-                      className={
-                        companyDropdown
-                          ? classes.dropdownShow
-                          : classes.dropdownContent
-                      }
-                      id='dropdownCompany'
-                      ref={ref}
-                    >
-                      <Link to={`/co/order/reguler`}>
-                        <p>Pesan Slot Iklan</p>
-                      </Link>
-                      <Link to={`/co/order/candidate`}>
-                        <p>Pesan Kandidat</p>
-                      </Link>
-                      <Link to={`/co/order/es`}>
-                        <p>Pesan Pencarian Eksekutif</p>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {!props.isLoading &&
@@ -414,6 +368,7 @@ const CompanyCard = (props) => {
                 </p>
               )}
             </div>
+
             {!props.isLoading &&
               props.auth.isCompany &&
               props.auth.userId === companyid && (

@@ -166,7 +166,7 @@ const ApplicantListAO = (props) => {
   useEffect(() => {
     const payload = { token: admin.token };
     getAllApplicant(payload).then((res) => {
-      setData(res.wholeApplicants);
+      setData(res.wholeApplicants.reverse());
       dispatch({
         type: ACTION.DATAINIT,
         payload: { init: res.wholeApplicants },
@@ -331,7 +331,7 @@ const ApplicantListAO = (props) => {
 
                           <th>
                             <Link
-                              to={`/ap/${app.id}`}
+                              to={`/ap/${app.id}/profile`}
                               style={{ color: 'black', textDecoration: 'none' }}
                             >
                               {app.id}
@@ -384,7 +384,7 @@ const ApplicantListAO = (props) => {
                         <th>
                           {' '}
                           <Link
-                            to={`/ap/${app.id}`}
+                            to={`/ap/${app.id}/profile`}
                             style={{ color: 'black', textDecoration: 'none' }}
                           >
                             {app.id}

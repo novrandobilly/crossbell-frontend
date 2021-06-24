@@ -206,7 +206,7 @@ const EditUnreleasedJob = (props) => {
       }
       const res = await props.releaseJob(jobData, authData);
       console.log(res);
-      props.history.push('/jobs-dashboard');
+      props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
       console.log(err);
     }
@@ -435,7 +435,7 @@ const EditUnreleasedJob = (props) => {
                 style={{ marginTop: '0' }}
               >
                 <InputLabel id='employmentLabel' style={{ fontSize: '1rem' }}>
-                  Jenis Kontrak*
+                  Status karyawan*
                 </InputLabel>
 
                 <Select
@@ -456,21 +456,21 @@ const EditUnreleasedJob = (props) => {
                     value='permanent'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Permanen
+                    Karyawan Tetap
                   </MenuItem>
                   <MenuItem
                     id={0}
                     value='contract'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Kontrak
+                    Karyawan kontrak (PKWT)
                   </MenuItem>
                   <MenuItem
                     id={0}
                     value='intern'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Intern/Magang
+                    Karyawan magang (Intern)
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -541,7 +541,7 @@ const EditUnreleasedJob = (props) => {
               name='isHidden'
               className={classes.CheckBox}
             />
-            <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+            <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
           </label>
         </div>
 
@@ -556,7 +556,7 @@ const EditUnreleasedJob = (props) => {
               InputClass='AddJobInput'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label='Keuntungan (optional)'
+              label='Fasilitas & benefit (optional)'
               error={false}
               initValue={loadedJob.benefit || ''}
               initIsValid={loadedJob.benefit}

@@ -103,7 +103,7 @@ const Certification = (props) => {
         } else {
           console.log('no res detected');
         }
-        props.history.push(`/ap/${applicantid}`);
+        props.history.push(`/ap/${applicantid}/profile`);
       } catch (err) {
         console.log(err);
       }
@@ -207,9 +207,7 @@ const Certification = (props) => {
 
             <div className={classes.CheckboxDiv}>
               <Checkbox color='primary' size='small' onChange={expiryHandler} />
-              <label className={classes.CheckboxText}>
-                Berlaku seumur hidup
-              </label>
+              <label className={classes.CheckboxText}>Berlaku selamanya</label>
             </div>
 
             <div className={classes.EditLabel}>
