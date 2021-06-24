@@ -12,22 +12,17 @@ import classes from './NavigationLinks.module.css';
 
 const NavigationLinks = (props) => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
-  const [companyMyList, setCompanyMyList] = useState(false);
 
   const [adminDropdownFinance, setAdminDropdownFinance] = useState(false);
   const [adminDropdownOperational, setAdminDropdownOperational] =
     useState(false);
 
-  const [adminMyList, setAdminMyList] = useState(false);
-
   const ref = useRef();
 
   OutsideClick(ref, () => {
     if (companyDropdown) setCompanyDropdown(false);
-    if (companyMyList) setCompanyMyList(false);
     if (adminDropdownFinance) setAdminDropdownFinance(false);
     if (adminDropdownOperational) setAdminDropdownOperational(false);
-    if (adminMyList) setAdminMyList(false);
   });
 
   const logoutHandler = () => {
@@ -40,29 +35,15 @@ const NavigationLinks = (props) => {
   };
 
   const DropdownOrder = () => {
-    setCompanyMyList(false);
     setCompanyDropdown(!companyDropdown);
   };
 
-  const DropdownList = () => {
-    setCompanyDropdown(false);
-    setCompanyMyList(!companyMyList);
-  };
-
   const DropdownOrderAdminFinance = () => {
-    setAdminMyList(false);
     setAdminDropdownOperational(false);
     setAdminDropdownFinance(!adminDropdownFinance);
   };
 
-  const DropdownListAdmin = () => {
-    setAdminDropdownFinance(false);
-    setAdminDropdownOperational(false);
-    setAdminMyList(!adminMyList);
-  };
-
   const DropdownOrderAdminOperational = () => {
-    setAdminMyList(false);
     setAdminDropdownFinance(false);
     setAdminDropdownOperational(!adminDropdownOperational);
   };
@@ -118,17 +99,19 @@ const NavigationLinks = (props) => {
           </li>
         )}
 
-        <li>
-          <NavLink to='/' exact activeClassName={classes.active}>
-            Beranda
-          </NavLink>
-        </li>
+        {!props.auth.isLoggedIn && (
+          <li>
+            <NavLink to='/' exact activeClassName={classes.active}>
+              Beranda
+            </NavLink>
+          </li>
+        )}
         <li>
           <NavLink
             to={
-              props?.auth?.isLoggedIn && !props?.auth?.isCompany
-                ? '/jobs-dashboard'
-                : `/co/${props.auth.userId}/jobList`
+              props.auth.isLoggedIn && props.auth.isCompany
+                ? `/co/${props.auth.userId}/jobList`
+                : '/jobs-dashboard'
             }
             activeClassName={classes.active}
           >
@@ -154,7 +137,7 @@ const NavigationLinks = (props) => {
                 to={`/co/${props.auth.userId}/profile`}
                 activeClassName={classes.active}
               >
-                Profil Perusahaan
+                Perusahaan anda
               </NavLink>
             </li>
             <li>
@@ -165,7 +148,7 @@ const NavigationLinks = (props) => {
             <li>
               <div className={classes.dropdown}>
                 <button className={classes.dropbtn} onClick={DropdownOrder}>
-                  Pesan Slot
+                  Pesan
                   <ArrowDropDownIcon
                     style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
                   />
@@ -203,44 +186,13 @@ const NavigationLinks = (props) => {
                   >
                     <p>Pesan Kandidat Eksekutif</p>
                   </NavLink>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className={classes.dropdown}>
-                <button
-                  className={classes.dropbtn}
-                  onClick={DropdownList}
-                  ref={ref}
-                >
-                  List
-                  <ArrowDropDownIcon
-                    style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
-                  />
-                </button>
-
-                <div
-                  className={
-                    companyMyList
-                      ? classes.dropdownShow
-                      : classes.dropdownContent
-                  }
-                  id='dropdownCompany'
-                >
                   <NavLink
                     to={`/co/${props.auth.userId}/listOrder`}
                     activeClassName={classes.active}
-                    onClick={DropdownList}
+                    onClick={DropdownOrder}
                   >
-                    <p>Pesanan</p>
+                    <p>Riwayat pesanan</p>
                   </NavLink>
-                  {/* <NavLink
-                    to={`/co/${props.auth.userId}/jobList`}
-                    activeClassName={classes.active}
-                    onClick={DropdownList}
-                  >
-                    <p>Iklan Pekerjaan</p>
-                  </NavLink> */}
                 </div>
               </div>
             </li>
@@ -365,48 +317,24 @@ const NavigationLinks = (props) => {
                   >
                     <p>Order Executive Search</p>
                   </NavLink>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className={classes.dropdown}>
-                <button
-                  className={classes.dropbtn}
-                  onClick={DropdownListAdmin}
-                  ref={ref}
-                >
-                  List
-                  <ArrowDropDownIcon
-                    style={{ alignSelf: 'center', marginBottom: '-0.4rem' }}
-                  />
-                </button>
-
-                <div
-                  className={
-                    adminMyList ? classes.dropdownShow : classes.dropdownContent
-                  }
-                  id='dropdownCompany'
-                >
                   <NavLink
                     to={`/ad/alphaomega/applicants`}
                     activeClassName={classes.active}
-                    onClick={DropdownListAdmin}
+                    onClick={DropdownOrderAdminOperational}
                   >
                     <p>Applicant List</p>
                   </NavLink>
-
                   <NavLink
                     to={`/ad/alphaomega/companies`}
                     activeClassName={classes.active}
-                    onClick={DropdownListAdmin}
+                    onClick={DropdownOrderAdminOperational}
                   >
                     <p>Company list</p>
                   </NavLink>
-
                   <NavLink
                     to={`/ad/alphaomega/jobs`}
                     activeClassName={classes.active}
-                    onClick={DropdownListAdmin}
+                    onClick={DropdownOrderAdminOperational}
                   >
                     <p>Job list</p>
                   </NavLink>

@@ -170,7 +170,7 @@ const ApplicantCard = (props) => {
 
           <RangeSegment
             id={props.id}
-            labelName='Pengalaman'
+            labelName='Pengalaman kerja'
             routeEdit={`/ap/${props.id}/experience`}
             routeAdd={`/ap/${props.id}/add/experience`}
             contents={props.experience.sort(
@@ -180,6 +180,7 @@ const ApplicantCard = (props) => {
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
             applicantid={props.id}
+            buttonText='Tambah pengalaman'
           />
 
           <RangeSegment
@@ -194,11 +195,12 @@ const ApplicantCard = (props) => {
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
             applicantid={props.id}
+            buttonText='Tambah pendidikan'
           />
 
           <RangeSegment
             id={props.id}
-            labelName='Sertifikasi/ Penghargaan'
+            labelName='Sertifikasi atau Penghargaan'
             routeEdit={`/ap/${props.id}/certification`}
             routeAdd={`/ap/${props.id}/add/certification`}
             contents={props.certification.sort(
@@ -208,6 +210,7 @@ const ApplicantCard = (props) => {
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
             applicantid={props.id}
+            buttonText='Tambah sertifikasi'
           />
 
           <SkillsMap

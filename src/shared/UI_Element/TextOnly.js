@@ -27,7 +27,7 @@ const Button = (props) => {
               <IconButton />
             </Link>
           ) : (
-            <div />
+            <div className={classes.HiddenDiv} />
           )}
         </div>
 

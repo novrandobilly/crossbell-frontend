@@ -41,7 +41,7 @@ const NewJob = (props) => {
       },
       isHidden: {
         value: false,
-        isValid: false,
+        isValid: true,
       },
       jobDescriptions: {
         value: '',
@@ -142,7 +142,7 @@ const NewJob = (props) => {
     try {
       const res = await props.createJob(jobData, authData);
       console.log(res);
-      props.history.push('/jobs-dashboard');
+      props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
       console.log(err);
     }
@@ -376,17 +376,17 @@ const NewJob = (props) => {
                   value='permanent'
                   style={{ fontSize: '0.9rem' }}
                 >
-                  Permanen
+                  Karyawan Tetap
                 </MenuItem>
                 <MenuItem
                   id={0}
                   value='contract'
                   style={{ fontSize: '0.9rem' }}
                 >
-                  Kontrak
+                  Karyawan kontrak (PKWT)
                 </MenuItem>
                 <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
-                  Intern/Magang
+                  Karyawan magang (Intern)
                 </MenuItem>
               </Select>
             </FormControl>
@@ -455,7 +455,7 @@ const NewJob = (props) => {
             name='isHidden'
             className={classes.CheckBox}
           />
-          <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+          <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
         </label>
       </div>
 
@@ -468,7 +468,7 @@ const NewJob = (props) => {
             InputClass='AddJobInput'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            label='Keuntungan (optional)'
+            label='Fasilitas & benefit (optional)'
             error={false}
           />
 

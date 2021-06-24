@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -58,7 +59,7 @@ const CompaniesListAO = (props) => {
   useEffect(() => {
     const payload = { token: admin.token };
     getWholeCompanies(payload).then((res) => {
-      setData(res.wholeCompanies);
+      setData(res.wholeCompanies.reverse());
     });
   }, [getWholeCompanies, setIsLoading, admin]);
 
@@ -231,7 +232,7 @@ const CompaniesListAO = (props) => {
                         <th>
                           {' '}
                           <Link
-                            to={`/co/${company.id}`}
+                            to={`/co/${company.id}/profile`}
                             style={{ color: 'black', textDecoration: 'none' }}
                           >
                             {company.companyName}
@@ -245,7 +246,7 @@ const CompaniesListAO = (props) => {
 
                         <th>
                           {props.company.isLoading && indexLoading === index ? (
-                            <SpinnerCircle />
+                            <Spinner />
                           ) : company.isActive ? (
                             <span
                               style={{ color: 'Green', fontWeight: 'bold' }}
@@ -305,7 +306,7 @@ const CompaniesListAO = (props) => {
                         <th>
                           {' '}
                           <Link
-                            to={`/co/${company.id}`}
+                            to={`/co/${company.id}/profile`}
                             style={{ color: 'black', textDecoration: 'none' }}
                           >
                             {company.companyName}
@@ -342,7 +343,7 @@ const CompaniesListAO = (props) => {
 
                         <th>
                           {props.company.isLoading && indexLoading === index ? (
-                            <SpinnerCircle />
+                            <Spinner />
                           ) : company.isActive ? (
                             <span
                               style={{ color: 'Green', fontWeight: 'bold' }}

@@ -129,7 +129,7 @@ const OrderREG = (props) => {
                   <th>{order._id}</th>
                   <th>
                     <Link
-                      to={`/co/${order.companyId._id}`}
+                      to={`/co/${order.companyId._id}/profile`}
                       style={{ color: 'black', textDecoration: 'none' }}
                     >
                       {order.companyId.companyName}

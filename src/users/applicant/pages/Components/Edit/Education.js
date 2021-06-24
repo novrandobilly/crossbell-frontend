@@ -127,7 +127,7 @@ const Education = (props) => {
       } else {
         console.log('no res detected');
       }
-      props.history.push(`/ap/${applicantid}`);
+      props.history.push(`/ap/${applicantid}/profile`);
     } catch (err) {
       console.log(err);
     }
@@ -156,36 +156,36 @@ const Education = (props) => {
   };
 
   const onAutoCompleteHandler = (event, newValue) => {
-		event.preventDefault();
-    console.log(newValue)
-		if (typeof newValue === 'string') {
-			setSchool({
-				institusi: newValue
-			});
-			onInputHandler('school', newValue.institusi, true);
-		} else if (newValue && newValue.inputValue) {
-			setSchool({
-				institusi: newValue.inputValue
-			});
-			onInputHandler('school', newValue.inputValue.institusi, true);
-		} else {
-			setSchool(newValue);
-			onInputHandler('school', newValue?.institusi || '', true);
-		}
-	};
+    event.preventDefault();
+    console.log(newValue);
+    if (typeof newValue === 'string') {
+      setSchool({
+        institusi: newValue,
+      });
+      onInputHandler('school', newValue.institusi, true);
+    } else if (newValue && newValue.inputValue) {
+      setSchool({
+        institusi: newValue.inputValue,
+      });
+      onInputHandler('school', newValue.inputValue.institusi, true);
+    } else {
+      setSchool(newValue);
+      onInputHandler('school', newValue?.institusi || '', true);
+    }
+  };
 
-	const onFilterHandler = (options, params) => {
-		const filtered = filter(options, params);
+  const onFilterHandler = (options, params) => {
+    const filtered = filter(options, params);
 
-		if (params.inputValue !== '') {
-			filtered.push({
-				inputValue: params.inputValue,
-				institusi: `Tambahkan "${params.inputValue}"`
-			});
-		}
+    if (params.inputValue !== '') {
+      filtered.push({
+        inputValue: params.inputValue,
+        institusi: `Tambahkan "${params.inputValue}"`,
+      });
+    }
 
-		return filtered;
-	};
+    return filtered;
+  };
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading && data) {
