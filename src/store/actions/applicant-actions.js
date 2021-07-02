@@ -249,7 +249,6 @@ export const updateApplicantIntro = (ApplicantData) => {
 export const updateApplicantSubscription = (ApplicantData) => {
   return async (dispatch) => {
     dispatch(updateApplicantStart());
-    console.log('from action', ApplicantData);
 
     try {
       const formData = new FormData();
