@@ -7,7 +7,6 @@ import IconButton from './IconButton';
 import classes from './TextOnly.module.css';
 
 const Button = (props) => {
-  console.log(props);
   return (
     <div className={classes.Wraper}>
       <div className={classes.Container}>

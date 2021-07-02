@@ -49,6 +49,31 @@
   width: 45%;
 }
 
+.ContentFull {
+  margin-top: 12px;
+}
+
+.SpecialRequirement {
+  text-align: left;
+  color: rgba(0, 0, 0, 0.54);
+  font-family: 'Roboto';
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.1876em;
+}
+
+.SpecialTips {
+  text-align: left;
+  color: rgba(0, 0, 0, 0.54);
+  font-family: 'Roboto';
+  font-weight: 400;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+}
+
 .ContentLeft {
   align-items: center;
   width: 95%;
@@ -68,7 +93,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 1rem;
+  margin-top: 10px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.8);
 }
@@ -107,6 +132,29 @@
 
 .AdditionalContent > * {
   width: 45%;
+}
+
+.RangeAge {
+  margin: 24px 0 0 0;
+}
+
+.AgeLabel {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.SliderDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SliderLabel {
+  margin: 0;
+}
+
+.Slider {
+  width: 80%;
 }
 
 .DurationContent {

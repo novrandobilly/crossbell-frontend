@@ -74,7 +74,7 @@ const JobDetails = (props) => {
       <div className={classes.LeftContainer}>
         <div className={classes.UpperContainer}>
           <div className={classes.AvatarContainer}>
-            {props.logo && props.logo.url && !props.isHidden ? (
+            {props.logo && !props.isHidden ? (
               <div
                 className={classes.Avatar}
                 style={{
@@ -190,11 +190,20 @@ const JobDetails = (props) => {
             </div>
             <div className={classes.MiddleSectionDiv}>
               <p className={classes.Caption}>Jenis Kontrak</p>
-              <p className={classes.Details}>{props.employment}</p>
+              <p className={classes.Details}>
+                {props.employment === 'permanent'
+                  ? 'Karyawan Tetap'
+                  : props.employment === 'contract'
+                  ? 'Karyawan Kontrak (PKWT)'
+                  : 'Karyawan Magang (Intern)'}
+              </p>
             </div>
+
             <div className={classes.SectionDiv}>
-              <p className={classes.Caption}>Jenjang Pendidikan (min)</p>
+              <p className={classes.Caption}>Minimal Pendidikan</p>
               <p className={classes.Details}>{props.educationalStage}</p>
+              <p className={classes.Caption}>Minimal Pengalaman Kerja</p>
+              <p className={classes.Details}>{props.jobExperience} tahun</p>
             </div>
           </div>
 
@@ -205,7 +214,7 @@ const JobDetails = (props) => {
 
           <div className={classes.JobDesc}>
             <p className={classes.TextLabel}>Syarat Teknis</p>
-            <p className={classes.TextDetail}>{props.technicalRequirement}</p>
+            <p className={classes.TextDetail}>{props.specialRequirement}</p>
           </div>
 
           <div>

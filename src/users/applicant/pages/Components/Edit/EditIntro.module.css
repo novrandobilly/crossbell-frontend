@@ -50,6 +50,19 @@
   width: 45%;
 }
 
+.ContentWrapFull {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ContentWrapFull > * {
+  width: 100%;
+}
+
 .ContentTop {
   width: 100%;
   display: flex;

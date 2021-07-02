@@ -153,7 +153,6 @@ export const getOneApplicant = (payload) => {
         }
       );
       const responseJSON = await response.json();
-      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
@@ -214,6 +213,7 @@ export const updateApplicantIntro = (ApplicantData) => {
       formData.append('state', ApplicantData.state);
       formData.append('zip', ApplicantData.zip);
       formData.append('phone', ApplicantData.phone);
+      formData.append('salary', ApplicantData.salary);
       formData.append('outOfTown', ApplicantData.outOfTown);
       formData.append('workShifts', ApplicantData.workShifts);
       formData.append('autoSend', ApplicantData.autoSend);
@@ -268,7 +268,6 @@ export const updateApplicantSubscription = (ApplicantData) => {
         }
       );
       const responseJSON = await response.json();
-      console.log(response, responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }

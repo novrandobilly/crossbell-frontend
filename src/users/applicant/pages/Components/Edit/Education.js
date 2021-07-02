@@ -157,7 +157,6 @@ const Education = (props) => {
 
   const onAutoCompleteHandler = (event, newValue) => {
     event.preventDefault();
-    console.log(newValue);
     if (typeof newValue === 'string') {
       setSchool({
         institusi: newValue,
@@ -186,6 +185,7 @@ const Education = (props) => {
 
     return filtered;
   };
+
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading && data) {

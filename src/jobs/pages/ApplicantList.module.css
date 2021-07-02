@@ -1,0 +1,86 @@
+.Container > * {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.CardContainer {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.CardLeft {
+  display: flex;
+  width: 20%;
+  padding: 8px;
+  justify-content: center;
+}
+
+.Avatar {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: solid 2px rgba(0, 0, 0, 0.3);
+}
+
+.CardMid {
+  width: 40%;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.CardMid > p {
+  margin: 0;
+}
+
+.Name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(58, 81, 153, 1);
+}
+
+.CardMidTitle {
+  font-weight: bold;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.CardMidLocation > span {
+  color: #7a7a7a;
+}
+
+.CardRight {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.ExtraDetails {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.City {
+  margin: 0;
+}
+
+.GenderAge {
+  margin: 0;
+}
+
+.Salary {
+  margin: 0;
+}

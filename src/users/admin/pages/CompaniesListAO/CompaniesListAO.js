@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -46,20 +46,30 @@ const CompaniesListAO = (props) => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: '' });
   const [data, setData] = useState();
+
   const [isLoading, setIsLoading] = useState(true);
   const [indexLoading, setIndexLoading] = useState(null);
   const [displayData, setDisplayData] = useState();
+
+  const [paginationNumber, setPaginationNumber] = useState(1);
+  const emptyText = useRef('');
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const { getWholeCompanies, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };
     getWholeCompanies(payload).then((res) => {
       setData(res.wholeCompanies.reverse());
+
+      if (res.message) {
+        emptyText.current =
+          'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+      }
     });
   }, [getWholeCompanies, setIsLoading, admin]);
 
@@ -105,10 +115,15 @@ const CompaniesListAO = (props) => {
       companyId: dataInput.companyId,
     };
     try {
-      await props.activateCo(payload);
+      const response = await props.activateCo(payload);
+      if (!response.id) {
+        throw new Error(response);
+      }
+
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.index].isActive = true;
+        const trueIndex = dataInput.index + (paginationNumber - 1) * 10;
+        tempData[trueIndex].isActive = true;
         return tempData;
       });
       setIndexLoading(null);
@@ -117,6 +132,7 @@ const CompaniesListAO = (props) => {
       setIndexLoading(null);
     }
   };
+
   const blockCompanyHandler = async (dataInput) => {
     setIndexLoading(dataInput.index);
     const payload = {
@@ -147,10 +163,10 @@ const CompaniesListAO = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
+    setPaginationNumber(value);
   };
 
   const rowsHandler = (event) => {
-    console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -158,9 +174,6 @@ const CompaniesListAO = (props) => {
       },
     });
   };
-
-  console.log(data);
-  console.log(displayData);
 
   let content = <SpinnerCircle />;
 
@@ -428,12 +441,8 @@ const CompaniesListAO = (props) => {
     );
   }
 
-  if (!props.isLoading && !data && !displayData) {
-    content = (
-      <p className={classes.EmptyText}>
-        Tidak ditemukan data akun terdaftar sebagai perusahaan
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return <div>{content}</div>;

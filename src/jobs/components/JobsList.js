@@ -240,7 +240,7 @@ const JobsList = (props) => {
           <Autocomplete
             id='fieldOfWorkFilter'
             name='fieldOfWorkFilter'
-            options={WorkFieldData.map((option) => option)}
+            options={WorkFieldData.map((option) => option.field)}
             onChange={handleWorkFieldChange}
             style={{ width: '100%' }}
             renderInput={(params) => (

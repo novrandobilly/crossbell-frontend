@@ -10,6 +10,7 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
   VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_MIN,
 } from '../../../../../shared/utils/validator';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -292,6 +293,10 @@ const EditIntro = (props) => {
         value: data ? data.phone : null,
         isValid: data && data.phone ? true : false,
       },
+      salary: {
+        value: data ? data.salary : null,
+        isValid: data && data.salary ? true : false,
+      },
       outOfTown: {
         value: data ? data.outOfTown : false,
         isValid: data && data.outOfTown ? true : false,
@@ -373,6 +378,7 @@ const EditIntro = (props) => {
       zip: formState.inputs.zip.value,
       phone: formState.inputs.phone.value,
       outOfTown: formState.inputs.outOfTown.value,
+      salary: formState.inputs.salary.value,
       workShifts: formState.inputs.workShifts.value,
       autoSend: formState.inputs.autoSend.value,
       autoRemind: formState.inputs.autoRemind.value,
@@ -518,20 +524,6 @@ const EditIntro = (props) => {
 
                 <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
-                    <Input
-                      inputType='input'
-                      id='headline'
-                      InputClass='AppInput'
-                      validatorMethod={[VALIDATOR_REQUIRE()]}
-                      onInputHandler={onInputHandler}
-                      label='Headline*'
-                      initValue={data.headline}
-                      initIsValid={data.headline ? true : false}
-                      helperText='Headline wajib diisi'
-                    />
-                  </div>
-
-                  <div className={classes.InputDiv}>
                     <div>
                       <p className={classes.Text} style={{ margin: '0' }}>
                         Tanggal Lahir*
@@ -554,9 +546,7 @@ const EditIntro = (props) => {
                       />
                     </div>
                   </div>
-                </div>
 
-                <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
                     <Input
                       inputType='input'
@@ -570,7 +560,9 @@ const EditIntro = (props) => {
                       helperText='Mohon input email yang valid'
                     />
                   </div>
+                </div>
 
+                <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
                     <Input
                       inputType='input'
@@ -584,9 +576,7 @@ const EditIntro = (props) => {
                       helperText='Mohon masukkan nomor telepon  yang aktif'
                     />
                   </div>
-                </div>
 
-                <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
                     <Autocomplete
                       id='state'
@@ -606,7 +596,9 @@ const EditIntro = (props) => {
                       )}
                     />
                   </div>
+                </div>
 
+                <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
                     <Autocomplete
                       id='city'
@@ -625,9 +617,7 @@ const EditIntro = (props) => {
                       )}
                     />
                   </div>
-                </div>
 
-                <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
                     <Input
                       inputType='input'
@@ -641,7 +631,9 @@ const EditIntro = (props) => {
                       helperText='Alamat wajib diisi'
                     />
                   </div>
+                </div>
 
+                <div className={classes.ContentWrap}>
                   <div className={classes.InputDiv}>
                     <Input
                       inputType='input'
@@ -653,30 +645,6 @@ const EditIntro = (props) => {
                       initValue={data.zip}
                       initIsValid={data.zip ? data.zip : false}
                       helperText='Kode pos wajib diisi'
-                    />
-                  </div>
-                </div>
-
-                <div className={classes.ContentWrap}>
-                  <div className={classes.InputDiv}>
-                    <Autocomplete
-                      multiple
-                      id='interest'
-                      name='interest'
-                      options={WorkFieldData.sort().map((option) => option)}
-                      getOptionLabel={(option) => option}
-                      onChange={fowHandler}
-                      value={interest ? interest : ''}
-                      style={{ margin: '0' }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          style={{ margin: '0' }}
-                          label='Bidang pekerejaan yang diminati'
-                          margin='normal'
-                          variant='standard'
-                        />
-                      )}
                     />
                   </div>
 
@@ -707,6 +675,71 @@ const EditIntro = (props) => {
                         </label>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className={classes.ContentWrapFull}>
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='headline'
+                      InputClass='AppInput'
+                      validatorMethod={[VALIDATOR_REQUIRE()]}
+                      onInputHandler={onInputHandler}
+                      label='Headline*'
+                      initValue={data.headline}
+                      initIsValid={data.headline ? true : false}
+                      helperText='Headline wajib diisi'
+                    />
+                  </div>
+                </div>
+
+                <div className={classes.ContentWrapFull}>
+                  <div className={classes.InputDiv}>
+                    <Autocomplete
+                      multiple
+                      id='interest'
+                      name='interest'
+                      options={WorkFieldData.sort().map(
+                        (option) => option.field
+                      )}
+                      getOptionLabel={(option) => option}
+                      onChange={fowHandler}
+                      value={interest ? interest : ''}
+                      style={{ margin: '0' }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          style={{ margin: '0' }}
+                          label='Bidang pekerejaan yang diminati'
+                          margin='normal'
+                          variant='standard'
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div className={classes.ContentWrapFull}>
+                  <div className={classes.InputDiv}>
+                    <Input
+                      inputType='input'
+                      id='salary'
+                      validatorMethod={[VALIDATOR_MIN(0)]}
+                      onInputHandler={onInputHandler}
+                      error={false}
+                      label='Harapan Gaji*'
+                      initValue={data.salary}
+                      initIsValid={data.salary ? true : false}
+                      type='number'
+                      min={0}
+                      step='100000'
+                      helperText={
+                        formState.inputs.salary.value < 0
+                          ? 'Harapan gaji minimal 0'
+                          : 'Harapan gaji wajib diisi'
+                      }
+                    />
                   </div>
                 </div>
               </div>
