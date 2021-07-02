@@ -12,7 +12,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import TextField from '@material-ui/core/TextField';
 import Input from '../../shared/UI_Element/Input';
@@ -23,15 +25,23 @@ import {
 } from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
 import CitiesData from '../../shared/UI_Element/CitiesData';
+import Slider from '@material-ui/core/Slider';
 
 import classes from './NewJob.module.css';
 
 const NewJob = (props) => {
   const [maxSlot, setMaxSlot] = useState(null);
+  const [jobExperience, setJobExperience] = useState('');
+  const [jobExperienceOpen, setJobExperienceOpen] = useState(false);
   const [employment, setEmployment] = useState('');
   const [employmentOpen, setEmploymentOpen] = useState(false);
   const [educationalStageOpen, setEducationalStageOpen] = useState(false);
   const [educationalStage, setEducationalStage] = useState('');
+
+  const [rangeAge, setRangeAge] = useState([18, 35]);
+  const [fieldOfWork, setFieldOfWork] = useState('');
+
+  const filter = createFilterOptions();
 
   const [formState, onInputHandler] = useForm(
     {
@@ -51,7 +61,7 @@ const NewJob = (props) => {
         value: '',
         isValid: false,
       },
-      technicalRequirement: {
+      specialRequirement: {
         value: '',
         isValid: false,
       },
@@ -80,8 +90,16 @@ const NewJob = (props) => {
         value: null,
         isValid: false,
       },
-      fieldOfWork: {
+      jobExperience: {
+        value: null,
+        isValid: false,
+      },
+      rangeAge: {
         value: [],
+        isValid: true,
+      },
+      fieldOfWork: {
+        value: null,
         isValid: false,
       },
     },
@@ -98,9 +116,11 @@ const NewJob = (props) => {
     const salary = document.getElementById('salary');
     const benefit = document.getElementById('benefit');
 
-    if (employment) onInputHandler('employment', employment.value, true);
-    if (salary) onInputHandler('salary', salary.value, true);
-    if (benefit) onInputHandler('benefit', benefit.value, true);
+    onInputHandler('fieldOfWork', fieldOfWork.field, true);
+    onInputHandler('employment', employment?.value, true);
+    onInputHandler('salary', salary?.value, true);
+    onInputHandler('benefit', benefit?.value, true);
+    onInputHandler('rangeAge', rangeAge, true);
 
     const getSlot = async () => {
       try {
@@ -113,7 +133,7 @@ const NewJob = (props) => {
       }
     };
     getSlot();
-  }, [onInputHandler, getOneCompany, auth]);
+  }, [onInputHandler, getOneCompany, auth, rangeAge, fieldOfWork]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -126,8 +146,10 @@ const NewJob = (props) => {
       isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      jobExperience: formState.inputs.jobExperience.value,
+      rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
-      technicalRequirement: formState.inputs.technicalRequirement.value,
+      specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
       benefit: formState.inputs.benefit.value,
@@ -155,8 +177,10 @@ const NewJob = (props) => {
       isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      jobExperience: formState.inputs.jobExperience.value,
+      rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
-      technicalRequirement: formState.inputs.technicalRequirement.value,
+      specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
       benefit: formState.inputs.benefit.value,
@@ -184,8 +208,10 @@ const NewJob = (props) => {
       isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      jobExperience: formState.inputs.jobExperience.value,
+      rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
-      technicalRequirement: formState.inputs.technicalRequirement.value,
+      specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
       benefit: formState.inputs.benefit.value,
@@ -207,9 +233,19 @@ const NewJob = (props) => {
     }
   };
 
-  const fowHandler = (e, value) => {
-    let elementArray = value;
-    onInputHandler('fieldOfWork', elementArray, true);
+  const handleJobExperienceChange = (e) => {
+    const elementId = e.target.name;
+    const elementValue = e.target.value;
+    onInputHandler(elementId, elementValue, true);
+    setJobExperience(e.target.value);
+  };
+
+  const handleJobExperienceClose = () => {
+    setJobExperienceOpen(false);
+  };
+
+  const handleJobExperienceOpen = () => {
+    setJobExperienceOpen(true);
   };
 
   const handleEmploymentChange = (e) => {
@@ -250,6 +286,42 @@ const NewJob = (props) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
+  };
+
+  const handleAgeChange = (event, newValue) => {
+    setRangeAge(newValue);
+    onInputHandler('rangeAge', newValue, true);
+  };
+
+  const onAutoCompleteHandler = (event, newValue) => {
+    event.preventDefault();
+    if (typeof newValue === 'string') {
+      setFieldOfWork({
+        field: newValue,
+      });
+      onInputHandler('fieldOfWork', newValue.field, true);
+    } else if (newValue && newValue.inputValue) {
+      setFieldOfWork({
+        field: newValue.inputValue,
+      });
+      onInputHandler('fieldOfWork', newValue.inputValue.field, true);
+    } else {
+      setFieldOfWork(newValue);
+      onInputHandler('fieldOfWork', newValue?.field || '', true);
+    }
+  };
+
+  const onFilterHandler = (options, params) => {
+    const filtered = filter(options, params);
+
+    if (params.inputValue !== '') {
+      filtered.push({
+        inputValue: params.inputValue,
+        field: `Tambahkan "${params.inputValue}"`,
+      });
+    }
+
+    return filtered;
   };
 
   let cities = [];
@@ -338,15 +410,41 @@ const NewJob = (props) => {
               </Select>
             </FormControl>
 
-            <Input
-              inputType='input'
-              id='technicalRequirement'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Persyaratan teknis*'
-              helperText='Persyaratan teknis wajib diisi'
-            />
+            <FormControl className={classes.FormControl}>
+              <InputLabel id='jobExperience' style={{ fontSize: '1rem' }}>
+                Pengalaman Kerja*
+              </InputLabel>
+
+              <Select
+                id='jobExperience'
+                name='jobExperience'
+                open={jobExperienceOpen}
+                onClose={handleJobExperienceClose}
+                onOpen={handleJobExperienceOpen}
+                value={jobExperience}
+                onChange={handleJobExperienceChange}
+                style={{
+                  fontSize: '0.9rem',
+                  textAlign: 'left',
+                }}
+              >
+                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                  <em>Pilih</em>
+                </MenuItem>
+                <MenuItem id={0} value='>2' style={{ fontSize: '0.9rem' }}>
+                  Kurang dari 2 tahun
+                </MenuItem>
+                <MenuItem id={0} value='2-5' style={{ fontSize: '0.9rem' }}>
+                  2 - 5 tahun
+                </MenuItem>
+                <MenuItem id={0} value='5-10' style={{ fontSize: '0.9rem' }}>
+                  5 - 10 tahun
+                </MenuItem>
+                <MenuItem id={0} value='>10' style={{ fontSize: '0.9rem' }}>
+                  Lebih dari 10 tahun
+                </MenuItem>
+              </Select>
+            </FormControl>
           </div>
 
           <div className={classes.ContentWrap}>
@@ -402,27 +500,55 @@ const NewJob = (props) => {
             />
           </div>
 
+          <div className={classes.ContentFull}>
+            <div>
+              <p className={classes.SpecialRequirement}>Persyaratan Khusus*</p>
+              <p className={classes.SpecialTips}>
+                skill teknis, karakter, atau persyaratan khusus lainnya
+              </p>
+              <Input
+                inputType='input'
+                id='specialRequirement'
+                InputClass='AddJobInput'
+                validatorMethod={[VALIDATOR_REQUIRE()]}
+                onInputHandler={onInputHandler}
+                helperText='Persyaratan khusus wajib diisi'
+              />
+            </div>
+          </div>
+
           <div className={classes.ContentWrap}>
             <Autocomplete
-              multiple
+              value={fieldOfWork}
+              onChange={onAutoCompleteHandler}
+              filterOptions={onFilterHandler}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
               id='fieldOfWork'
               name='fieldOfWork'
-              options={WorkFieldData.sort().map((option) => option)}
-              getOptionLabel={(option) => option}
-              onChange={fowHandler}
+              ccc='true'
+              options={WorkFieldData}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === 'string') {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.field;
+              }}
+              renderOption={(option) => option.field}
+              freeSolo
               style={{ margin: '0', width: '100%' }}
               renderInput={(params) => (
-                // <Input
-                //   params={{ ...params }}
-                //   inputType='autoComplete'
-                //   validatorMethod={[VALIDATOR_REQUIRE()]}
-                //   label='Bidang minat*'
-                //   helperText='Bidang minat wajib diisi'
-                // />
                 <TextField
                   {...params}
                   style={{ margin: '0' }}
-                  label='Bidang minat*'
+                  label='Bidang pekerjaan*'
                   margin='normal'
                   variant='standard'
                 />
@@ -432,7 +558,7 @@ const NewJob = (props) => {
         </div>
       </div>
 
-      <div style={{ width: '95%', marginTop: '2rem' }}>
+      <div style={{ width: '95%', marginTop: '20px' }}>
         <Input
           inputType='textarea'
           id='jobDescriptions'
@@ -484,6 +610,23 @@ const NewJob = (props) => {
             min={0}
             step='1000'
           />
+        </div>
+
+        <div className={classes.RangeAge}>
+          <p className={classes.AgeLabel}>Usia</p>
+          <div className={classes.SliderDiv}>
+            <p className={classes.SliderLabel}>min</p>
+            <div className={classes.Slider}>
+              <Slider
+                value={rangeAge}
+                onChange={handleAgeChange}
+                valueLabelDisplay='auto'
+                aria-labelledby='range-slider'
+                id='rangeAge'
+              />
+            </div>
+            <p className={classes.SliderLabel}>max</p>
+          </div>
         </div>
       </div>
 

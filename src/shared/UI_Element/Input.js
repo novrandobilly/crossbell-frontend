@@ -42,7 +42,6 @@ const Input = (props) => {
   const { id, onInputHandler } = props;
 
   useEffect(() => {
-    // console.log(state.value);
     onInputHandler && onInputHandler(id, state.value, state.isValid);
   }, [id, state.value, state.isValid, onInputHandler]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -55,6 +55,9 @@ const OrderES = (props) => {
     index: null,
   });
 
+  const [paginationNumber, setPaginationNumber] = useState(1);
+  const emptyText = useRef('');
+
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   useEffect(() => {
@@ -70,8 +73,12 @@ const OrderES = (props) => {
         .then((res) => {
           sort = res.orders;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
-          console.log(res);
           setData(sort);
+
+          if (res.message) {
+            emptyText.current =
+              'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -104,10 +111,15 @@ const OrderES = (props) => {
       status: dataInput.status,
     };
     try {
-      await props.updateOrderStatusES(payload);
+      const response = await props.updateOrderStatusES(payload);
+      if (!response.order) {
+        throw new Error(response);
+      }
+
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.i].status = dataInput.status;
+        const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
+        tempData[trueIndex].status = dataInput.status;
         return tempData;
       });
       setIndex(null);
@@ -127,10 +139,10 @@ const OrderES = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
+    setPaginationNumber(value);
   };
 
   const rowsHandler = (event) => {
-    console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -224,7 +236,11 @@ const OrderES = (props) => {
                               ? { color: 'Red' }
                               : { color: 'gray' }
                           }
-                          onClick={() => onOpenOrderModal(order._id, i)}
+                          onClick={
+                            order.status === 'Open'
+                              ? () => onOpenOrderModal(order._id, i)
+                              : null
+                          }
                         >
                           {order.status === 'Open' ? 'Close' : 'Sudah ditutup'}
                         </button>
@@ -267,12 +283,8 @@ const OrderES = (props) => {
     );
   }
 
-  if (!props.isLoading && data.length <= 0) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada perusahaan yang membuat pesanan untuk saat ini
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return (

@@ -52,15 +52,6 @@ const AdmSign = (props) => {
     } catch (err) {
       console.log(err);
     }
-
-    // if (res.token) {
-    // 	setIsLoading(false);
-    // 	props.login({ token: res.token, userId: res.userId, isCompany: res.isCompany });
-    // 	props.history.push('/jobs-dashboard');
-    // } else {
-    // 	console.log('error');
-
-    // }
   };
 
   const onCancelHandler = () => {

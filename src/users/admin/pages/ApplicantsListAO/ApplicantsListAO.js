@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useReducer, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useReducer,
+  useEffect,
+  useRef,
+} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -144,6 +150,8 @@ const ApplicantListAO = (props) => {
   const [displayData, setDisplayData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
+  const emptyText = useRef('');
+
   const [statePage, dispatchPage] = useReducer(
     paginationReducer,
     initPagination
@@ -171,6 +179,11 @@ const ApplicantListAO = (props) => {
         type: ACTION.DATAINIT,
         payload: { init: res.wholeApplicants },
       });
+
+      if (res.message) {
+        emptyText.current =
+          'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+      }
     });
   }, [getAllApplicant, setIsLoading, admin.token]);
 
@@ -469,12 +482,8 @@ const ApplicantListAO = (props) => {
     );
   }
 
-  if (!props.isLoading && !data) {
-    content = (
-      <p className={classes.EmptyText}>
-        Tidak ditemukan data akun terdaftar sebagai pelamar
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return <div>{content}</div>;

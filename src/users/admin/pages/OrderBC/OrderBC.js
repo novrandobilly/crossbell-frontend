@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -55,6 +55,9 @@ const OrderBC = (props) => {
     index: null,
   });
 
+  const [paginationNumber, setPaginationNumber] = useState(1);
+  const emptyText = useRef('');
+
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   useEffect(() => {
@@ -71,6 +74,11 @@ const OrderBC = (props) => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           setData(sort);
+
+          if (res.message) {
+            emptyText.current =
+              'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -103,10 +111,15 @@ const OrderBC = (props) => {
       orderId: dataInput.orderId,
     };
     try {
-      await props.approveOrderBC(payload);
+      const response = await props.approveOrderBC(payload);
+      if (!response) {
+        throw new Error(response);
+      }
+
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.i].status = 'Paid';
+        const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
+        tempData[trueIndex].status = 'Paid';
         return tempData;
       });
       setIndex(null);
@@ -126,10 +139,10 @@ const OrderBC = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
+    setPaginationNumber(value);
   };
 
   const rowsHandler = (event) => {
-    console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -148,10 +161,6 @@ const OrderBC = (props) => {
   };
 
   let content = <SpinnerCircle />;
-
-  //   if (!props.isLoading && data.length < 1) {
-  //     content = <h1>tidak ada order untuk saat ini</h1>;
-  //   }
 
   if (!props.isLoading && displayData) {
     content = (
@@ -176,15 +185,7 @@ const OrderBC = (props) => {
               {displayData.map((order, i) => (
                 <tr key={order._id}>
                   <th> {i + 1}</th>
-                  <th>
-                    {' '}
-                    <Link
-                      to={`/ad/alphaomega/order/${order._id}/candidate`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {order._id}
-                    </Link>
-                  </th>
+                  <th> {order._id}</th>
                   <th>
                     {' '}
                     <Link
@@ -280,12 +281,8 @@ const OrderBC = (props) => {
     );
   }
 
-  if (!props.isLoading && data.length <= 0) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada perusahaan yang membuat pesanan untuk saat ini
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return (
