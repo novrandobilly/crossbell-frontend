@@ -90,10 +90,15 @@ const Subscription = (props) => {
       const autoRemindEl = document.getElementById('autoRemind');
       autoSendEl.checked = data.autoSend.isAutoSend;
       autoRemindEl.checked = data.autoRemind.isAutoRemind;
-      // onInputHandler('autoSend', data.autoSend.isAutoSend, true);
-      // onInputHandler('autoRemind', data.autoRemind.isAutoRemind, true);
     }
   }, [data, onInputHandler]);
+
+  useEffect(() => {
+    if (data) {
+      onInputHandler('autoSend', autoSend, true);
+      onInputHandler('autoRemind', autoRemind, true);
+    }
+  }, [data, onInputHandler, autoSend, autoRemind]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -103,20 +108,11 @@ const Subscription = (props) => {
 
     const ApplicantData = {
       applicantId: applicantid,
-      autoSend: {
-        isAutoRemind: formState.inputs.autoSend.isAutoSend.value,
-        autoRemindIndustry: formState.inputs.autoSend.jobIndustry.value,
-        autoRemindield: formState.inputs.autoSend.jobField.value,
-      },
-      autoRemind: {
-        isAutoRemind: formState.inputs.autoRemind.isAutoRemind.value,
-        jobIndustry: formState.inputs.autoRemind.jobIndustry.value,
-        jobField: formState.inputs.autoRemind.jobField.value,
-      },
+      autoSend: formState.inputs.autoSend.value,
+      autoRemind: formState.inputs.autoRemind.value,
     };
 
     setOrderModal(false);
-
     try {
       const res = await props.updateApplicantSubscription(ApplicantData);
       if (res) {
@@ -128,18 +124,7 @@ const Subscription = (props) => {
     }
   };
 
-  console.log(autoSend);
-  // console.log(autoRemind);
-  // console.log(formState);
-
-  const onCheckedAutoRemind = (e) => {
-    const elementValue = e.target.checked;
-    setAutoRemind((prevState) => {
-      let tempObject = { ...prevState };
-      tempObject.isAutoRemind = elementValue;
-      return { ...tempObject };
-    });
-  };
+  console.log(formState);
 
   const onCheckedAutoSend = (e) => {
     const elementValue = e.target.checked;
@@ -151,17 +136,46 @@ const Subscription = (props) => {
   };
 
   const onChangeAutoSendIndustry = (e) => {
+    e.persist();
     setAutoSend((prevState) => {
-      console.log(e.target.value);
-      // let tempObject = { ...prevState };
-      // tempObject.jobIndustry = value;
+      let tempObject = { ...prevState };
+      tempObject.jobIndustry = e.target.value;
       prevState.jobIndustry = e.target.value;
-      return prevState;
+      return tempObject;
     });
   };
 
   const onChangeAutoSendField = (e) => {
+    e.persist();
     setAutoSend((prevState) => {
+      let tempObject = { ...prevState };
+      tempObject.jobField = e.target.value;
+      return { ...tempObject };
+    });
+  };
+
+  const onCheckedAutoRemind = (e) => {
+    const elementValue = e.target.checked;
+    setAutoRemind((prevState) => {
+      let tempObject = { ...prevState };
+      tempObject.isAutoRemind = elementValue;
+      return { ...tempObject };
+    });
+  };
+
+  const onChangeAutoRemindIndustry = (e) => {
+    e.persist();
+    setAutoRemind((prevState) => {
+      let tempObject = { ...prevState };
+      tempObject.jobIndustry = e.target.value;
+      prevState.jobIndustry = e.target.value;
+      return tempObject;
+    });
+  };
+
+  const onChangeAutoRemindField = (e) => {
+    e.persist();
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
       tempObject.jobField = e.target.value;
       return { ...tempObject };
@@ -212,6 +226,7 @@ const Subscription = (props) => {
                 id='jobIndustry'
                 label='Industri Perusahaan*'
                 onChange={onChangeAutoSendIndustry}
+                style={{ width: '100%' }}
                 value={autoSend.jobIndustry ? autoSend.jobIndustry : ''}
               />
             </div>
@@ -220,6 +235,7 @@ const Subscription = (props) => {
                 id='jobfield'
                 onChange={onChangeAutoSendField}
                 label='Bidang Pekerjaan*'
+                style={{ width: '100%' }}
                 value={autoSend.jobField ? autoSend.jobField : ''}
               />
             </div>
@@ -241,14 +257,18 @@ const Subscription = (props) => {
             <div className={classes.InputDiv}>
               <TextField
                 id='jobIndustry'
+                onChange={onChangeAutoRemindIndustry}
                 label='Industri Perusahaan*'
+                style={{ width: '100%' }}
                 value={autoRemind.jobIndustry ? autoRemind.jobIndustry : ''}
               />
             </div>
             <div className={classes.InputDiv}>
               <TextField
                 id='jobfield'
+                onChange={onChangeAutoRemindField}
                 label='Bidang Pekerjaan*'
+                style={{ width: '100%' }}
                 value={autoRemind.jobField ? autoRemind.jobField : ''}
               />
             </div>

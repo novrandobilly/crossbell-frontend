@@ -32,7 +32,6 @@
 .Content {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   /* padding: 16px 32px; */
-  margin-top: 16px;
   width: 100%;
 }
 
@@ -74,5 +73,6 @@
 }
 
 .InputDiv {
+  width: 100%;
   margin: 16px 0 0 0;
 }
