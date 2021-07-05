@@ -42,6 +42,8 @@ const Subscription = (props) => {
       token: props.auth.token,
     };
     getOneApplicant(payload).then((res) => {
+      setAutoSend(res.applicant.autoSend);
+      setAutoRemind(res.applicant.autoRemind);
       setData(res.applicant);
     });
   }, [getOneApplicant, applicantid, props.auth.token]);
@@ -51,34 +53,10 @@ const Subscription = (props) => {
       autoSend: {
         value: data ? data.autoSend : false,
         isValid: data && data.autoSend ? true : false,
-        // isAutoSend: {
-        //   value: data ? data.autoSend.isAutoSend : false,
-        //   isValid: data && data.autoSend.isAutoSend ? true : false,
-        // },
-        // jobIndustry: {
-        //   value: data ? data.autoSend.jobIndustry : false,
-        //   isValid: data && data.autoSend.jobIndustry ? true : false,
-        // },
-        // jobField: {
-        //   value: data ? data.autoSend.jobField : false,
-        //   isValid: data && data.autoSend.jobField ? true : false,
-        // },
       },
       autoRemind: {
         value: data ? data.autoRemind : false,
         isValid: data && data.autoRemind ? true : false,
-        // isAutoRemind: {
-        //   value: data ? data.autoRemind.isAutoRemind : false,
-        //   isValid: data && data.autoRemind.isAutoRemind ? true : false,
-        // },
-        // jobIndustry: {
-        //   value: data ? data.autoRemind.jobIndustry : false,
-        //   isValid: data && data.autoRemind.jobIndustry ? true : false,
-        // },
-        // jobField: {
-        //   value: data ? data.autoRemind.jobField : false,
-        //   isValid: data && data.autoRemind.jobField ? true : false,
-        // },
       },
     },
     false
@@ -108,6 +86,7 @@ const Subscription = (props) => {
 
     const ApplicantData = {
       applicantId: applicantid,
+      token: props.auth.token,
       autoSend: formState.inputs.autoSend.value,
       autoRemind: formState.inputs.autoRemind.value,
     };
@@ -115,16 +94,14 @@ const Subscription = (props) => {
     setOrderModal(false);
     try {
       const res = await props.updateApplicantSubscription(ApplicantData);
+
       if (res) {
-        console.log(res);
+        props.history.push(`/ap/${applicantid}/profile`);
       }
-      props.history.push(`/ap/${applicantid}`);
     } catch (err) {
       console.log(err);
     }
   };
-
-  console.log(formState);
 
   const onCheckedAutoSend = (e) => {
     const elementValue = e.target.checked;

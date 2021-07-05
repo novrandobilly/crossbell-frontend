@@ -152,6 +152,9 @@ const EditApplicantExperience = React.lazy(() =>
 const EditApplicantCertification = React.lazy(() =>
   import('./users/applicant/pages/Components/Edit/Certification')
 );
+const EditApplicantOrganization = React.lazy(() =>
+  import('./users/applicant/pages/Components/Edit/Organization')
+);
 const EditApplicantSkills = React.lazy(() =>
   import('./users/applicant/pages/Components/Edit/Skill')
 );
@@ -163,6 +166,9 @@ const AddApplicantExperience = React.lazy(() =>
 );
 const AddApplicantCertification = React.lazy(() =>
   import('./users/applicant/pages/Components/Add/Certification')
+);
+const AddApplicantOrganization = React.lazy(() =>
+  import('./users/applicant/pages/Components/Add/Organization')
 );
 // const AddApplicantSkills = React.lazy(() => import('./users/applicant/pages/Components/Add/Skill'));
 
@@ -227,7 +233,6 @@ const OrderBCOperational = React.lazy(() =>
 const OrderBCFinance = React.lazy(() =>
   import('./users/admin/pages/OrderBC/OrderBCFinance')
 );
-
 const OrderES = React.lazy(() => import('./users/admin/pages/OrderES/OrderES'));
 const DetailBC = React.lazy(() =>
   import('./users/admin/pages/OrderBC/DetailBC')
@@ -306,6 +311,10 @@ const App = (props) => {
               path='/ap/:applicantid/add/certification'
               component={AddApplicantCertification}
             />
+            <Route
+              path='/ap/:applicantid/add/organization'
+              component={AddApplicantOrganization}
+            />
 
             <Route
               path='/ap/:applicantid/intro'
@@ -326,6 +335,10 @@ const App = (props) => {
             <Route
               path='/ap/:applicantid/certification/:certificationindex'
               component={EditApplicantCertification}
+            />
+            <Route
+              path='/ap/:applicantid/organization/:organizationindex'
+              component={EditApplicantOrganization}
             />
             <Route
               path='/ap/:applicantid/skills'

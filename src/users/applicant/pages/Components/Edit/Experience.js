@@ -240,7 +240,7 @@ const Experience = (props) => {
           </div>
 
           <div className={classes.Footer}>
-            <Link to={`/ap/${applicantid}`}>
+            <Link to={`/ap/${applicantid}/profile`}>
               <Button
                 variant='outlined'
                 type='Button'
