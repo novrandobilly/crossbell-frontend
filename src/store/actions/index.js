@@ -13,6 +13,7 @@ export {
   updateApplicantEducation,
   updateApplicantExperience,
   updateApplicantCertification,
+  updateApplicantOrganization,
   updateApplicantSubscription,
   updateApplicantSkills,
   getOneApplicant,

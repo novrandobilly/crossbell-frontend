@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../../shared/utils/useForm';
@@ -12,19 +12,23 @@ import {
 } from '../../../../../shared/utils/validator';
 
 import Modal from '../../../../../shared/UI_Element/Modal';
+import Checkbox from '@material-ui/core/Checkbox';
 import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 
-import classes from './Certification.module.css';
+import classes from './Organization.module.css';
 
-const Certification = (props) => {
+const Organization = (props) => {
   const { applicantid } = useParams();
-  const { certificationindex } = useParams();
+  const { Organizationindex } = useParams();
 
   const [data, setData] = useState();
-  const [expiry, setExpiry] = useState(true);
+  const [tillNow, setTillNow] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const { getOneApplicant } = props;
   useEffect(() => {
@@ -34,20 +38,16 @@ const Certification = (props) => {
     };
     if (props.auth.token) {
       getOneApplicant(payload).then((res) => {
-        const certificationSort = res.applicant.certification.sort(
+        const OrganizationSort = res.applicant.Organization.sort(
           (a, b) => moment(b.startDate) - moment(a.startDate)
         );
-        setData(certificationSort[certificationindex]);
+        setData(OrganizationSort[Organizationindex]);
       });
     }
-  }, [getOneApplicant, applicantid, certificationindex, props.auth.token]);
+  }, [getOneApplicant, applicantid, Organizationindex, props.auth.token]);
 
   const [formState, onInputHandler] = useForm(
     {
-      title: {
-        value: data ? data.title : null,
-        isValid: data && data.title ? true : false,
-      },
       organization: {
         value: data ? data.organization : null,
         isValid: data && data.organization ? true : false,
@@ -62,19 +62,11 @@ const Certification = (props) => {
       },
       description: {
         value: data ? data.description : null,
-        isValid: true,
+        isValid: data && data.description ? true : false,
       },
     },
     false
   );
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const expiryHandler = (event) => {
-    setExpiry(!expiry);
-  };
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -82,56 +74,48 @@ const Certification = (props) => {
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
     }
+    let updatedOrganization = {
+      applicantId: applicantid,
+      index: Organizationindex,
+      organization: formState.inputs.organization.value,
+      prevCompany: formState.inputs.prevCompany.value,
+      prevIndustry: formState.inputs.prevIndustry.value,
+      startDate: formState.inputs.startDate.value,
+      endDate: formState.inputs.endDate.value,
+      description: formState.inputs.description.value,
+      token: props.auth.token,
+    };
 
-    if (expiry) {
-      const updatedCertification = {
+    if (tillNow) {
+      updatedOrganization = {
         applicantId: applicantid,
-        index: certificationindex,
-        title: formState.inputs.title.value,
+        index: Organizationindex,
         organization: formState.inputs.organization.value,
-        startDate: formState.inputs.startDate.value,
-        endDate: formState.inputs.endDate.value,
-        description: formState.inputs.description.value,
-        token: props.auth.token,
-      };
-      try {
-        const res = await props.updateApplicantCertification(
-          updatedCertification
-        );
-        if (res) {
-          console.log(res);
-        } else {
-          console.log('no res detected');
-        }
-        props.history.push(`/ap/${applicantid}/profile`);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      const updatedCertification = {
-        applicantId: applicantid,
-        index: certificationindex,
-        title: formState.inputs.title.value,
-        organization: formState.inputs.organization.value,
+        prevCompany: formState.inputs.prevCompany.value,
+        prevIndustry: formState.inputs.prevIndustry.value,
         startDate: formState.inputs.startDate.value,
         endDate: null,
         description: formState.inputs.description.value,
         token: props.auth.token,
       };
-      try {
-        const res = await props.updateApplicantCertification(
-          updatedCertification
-        );
-        if (res) {
-          console.log(res);
-        } else {
-          console.log('no res detected');
-        }
-        props.history.push(`/ap/${applicantid}/profile`);
-      } catch (err) {
-        console.log(err);
-      }
     }
+
+    try {
+      const res = await props.updateApplicantOrganization(updatedOrganization);
+      if (res) {
+        console.log(res);
+      } else {
+        console.log('no res detected');
+      }
+
+      props.history.push(`/ap/${applicantid}/profile`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const dateHandler = (event) => {
+    setTillNow(!tillNow);
   };
 
   let formContent = <SpinnerCircle />;
@@ -140,63 +124,52 @@ const Certification = (props) => {
     formContent = (
       <React.Fragment>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Ubah sertifikasi/ penghargaan</p>
+          <p className={classes.FormTitle}>Ubah pengalaman kerja</p>
 
           <div className={classes.FormRow}>
             <div className={classes.EditLabel}>
               <Input
                 inputType='input'
-                id='title'
+                id='prevTitle'
                 inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Nama sertifikasi/ penghargaan*'
-                initValue={data.title}
-                initIsValid={true}
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType='input'
-                id='organization'
-                inputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Organisasi penerbit*'
-                initValue={data.organization}
+                label='Nama Organisasi*'
+                initValue={data.prevTitle}
                 initIsValid={true}
               />
             </div>
 
             <div className={classes.Period}>
               <div className={classes.EditLabel}>
-                <p className={classes.Text}>Berlaku Sejak*</p>
+                <p className={classes.Text}>Waktu Mulai*</p>
                 <Input
                   inputType='customdate'
                   id='startDate'
+                  inputClass='EditProfileTextArea'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}
                   views={['year', 'month']}
-                  label='Tahun Mulai*'
+                  label='Tahun Mulai'
                   maxDate={moment()}
                   initValue={data.startDate}
                   initIsValid={true}
                 />
               </div>
 
-              {expiry ? (
+              {!tillNow ? (
                 <div className={classes.EditLabel}>
-                  <p className={classes.Text}>Berlaku Sampai*</p>
+                  <p className={classes.Text}>Waktu Selesai*</p>
                   <Input
                     inputType='customdate'
                     id='endDate'
+                    inputClass='EditProfileTextArea'
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                     onInputHandler={onInputHandler}
                     views={['year', 'month']}
-                    label='Tahun Selesai*'
+                    label='Tahun Selesai'
                     maxDate={moment()}
-                    initValue={data.endDate || moment()}
+                    initValue={data.endDate}
                     initIsValid={true}
                   />
                 </div>
@@ -206,8 +179,15 @@ const Certification = (props) => {
             </div>
 
             <div className={classes.CheckboxDiv}>
-              <Checkbox color='primary' size='small' onChange={expiryHandler} />
-              <label className={classes.CheckboxText}>Berlaku selamanya</label>
+              <Checkbox
+                color='primary'
+                size='small'
+                onChange={dateHandler}
+                style={{ padding: '0' }}
+              />
+              <label className={classes.CheckboxText}>
+                Saya masih berkerja disini
+              </label>
             </div>
 
             <div className={classes.EditLabel}>
@@ -217,7 +197,7 @@ const Certification = (props) => {
                 inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
-                label='Deskripsi Sertifikasi (Opsional)'
+                label='Uraian Organisasi (Opsional)'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
@@ -278,12 +258,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantCertification: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
+    updateApplicantOrganization: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Certification));
+)(withRouter(Organization));
