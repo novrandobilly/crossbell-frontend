@@ -109,7 +109,7 @@ const Certification = (props) => {
         } else {
           console.log('no res detected');
         }
-        !push && props.history.push(`/ap/${applicantid}`);
+        !push && props.history.push(`/ap/${applicantid}/profile`);
       } catch (err) {
         console.log(err);
       }

@@ -28,7 +28,6 @@ const ApplicantDetails = (props) => {
     // if ((props.auth.token && !props.auth.isCompany) || props.admin.token) {
     getOneApplicant(payload)
       .then((res) => {
-        console.log(res);
         setData(res.applicant);
         setIsLoading(false);
       })

@@ -17,9 +17,9 @@ import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircl
 import Input from '../../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
-import classes from './Experience.module.css';
+import classes from './Organization.module.css';
 
-const Experience = (props) => {
+const Organization = (props) => {
   const { applicantid } = useParams();
   const push = props.push;
 
@@ -27,18 +27,11 @@ const Experience = (props) => {
 
   const [formState, onInputHandler] = useForm(
     {
-      prevTitle: {
+      organization: {
         value: '',
         isValid: false,
       },
-      prevCompany: {
-        value: '',
-        isValid: false,
-      },
-      prevIndustry: {
-        value: '',
-        isValid: false,
-      },
+
       startDate: {
         value: '',
         isValid: true,
@@ -66,23 +59,19 @@ const Experience = (props) => {
       return props.updateApplicantFail();
     }
 
-    let updatedExperience = {
+    let updatedOrganization = {
       applicantId: applicantid,
-      prevTitle: formState.inputs.prevTitle.value,
-      prevCompany: formState.inputs.prevCompany.value,
-      prevIndustry: formState.inputs.prevIndustry.value,
+      organization: formState.inputs.organization.value,
+      description: formState.inputs.description.value,
       startDate: formState.inputs.startDate.value,
       endDate: formState.inputs.endDate.value,
-      description: formState.inputs.description.value,
       token: props.auth.token,
     };
 
     if (tillNow) {
-      updatedExperience = {
+      updatedOrganization = {
         applicantId: applicantid,
-        prevTitle: formState.inputs.prevTitle.value,
-        prevCompany: formState.inputs.prevCompany.value,
-        prevIndustry: formState.inputs.prevIndustry.value,
+        organization: formState.inputs.organization.value,
         startDate: formState.inputs.startDate.value,
         endDate: null,
         description: formState.inputs.description.value,
@@ -91,7 +80,7 @@ const Experience = (props) => {
     }
 
     try {
-      const res = await props.updateApplicantExperience(updatedExperience);
+      const res = await props.updateApplicantOrganization(updatedOrganization);
       if (res) {
         console.log(res);
       } else {
@@ -116,33 +105,11 @@ const Experience = (props) => {
           <div className={classes.EditLabel}>
             <Input
               inputType='input'
-              id='prevTitle'
+              id='organization'
               inputClass='AddJobInput'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Jabatan*'
-            />
-          </div>
-
-          <div className={classes.EditLabel}>
-            <Input
-              inputType='input'
-              id='prevCompany'
-              inputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Nama perusahaan*'
-            />
-          </div>
-
-          <div className={classes.EditLabel}>
-            <Input
-              inputType='input'
-              id='prevIndustry'
-              inputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Alamat perusahaan*'
+              label='Nama Organisasi*'
             />
           </div>
 
@@ -189,9 +156,7 @@ const Experience = (props) => {
               onChange={dateHandler}
               style={{ padding: '0' }}
             />
-            <label className={classes.CheckboxText}>
-              Saya masih berkerja disini
-            </label>
+            <label className={classes.CheckboxText}>Sampai saat ini</label>
           </div>
 
           <div className={classes.EditLabel}>
@@ -201,7 +166,7 @@ const Experience = (props) => {
               inputClass='EditProfileTextArea'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
-              label='Uraian pekerjaan (optional)'
+              label='Uraian Organisasi (optional)'
               rows={12}
             />
           </div>
@@ -264,12 +229,12 @@ const mapDispatchToProps = (dispatch) => {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () =>
       dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantExperience: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
+    updateApplicantOrganization: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Experience));
+)(withRouter(Organization));

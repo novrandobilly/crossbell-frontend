@@ -249,27 +249,35 @@ export const updateApplicantIntro = (ApplicantData) => {
 export const updateApplicantSubscription = (ApplicantData) => {
   return async (dispatch) => {
     dispatch(updateApplicantStart());
-
     try {
-      const formData = new FormData();
-
-      formData.append('autoSend', ApplicantData.autoSend);
-      formData.append('autoRemind', ApplicantData.autoRemind);
-
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`,
         {
           method: 'PATCH',
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${ApplicantData.token}`,
           },
-          body: formData,
+          body: JSON.stringify({
+            autoSend: {
+              isAutoSend: ApplicantData.autoSend.isAutoSend,
+              jobIndustry: ApplicantData.autoSend.jobIndustry,
+              jobField: ApplicantData.autoSend.jobField,
+            },
+            autoRemind: {
+              isAutoRemind: ApplicantData.autoRemind.isAutoRemind,
+              jobIndustry: ApplicantData.autoRemind.jobIndustry,
+              jobField: ApplicantData.autoRemind.jobField,
+            },
+          }),
         }
       );
+
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
+
       dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
       return responseJSON.foundApplicant;
     } catch (err) {
@@ -339,7 +347,6 @@ export const updateApplicantEducation = (ApplicantData) => {
         }
       );
       const responseJSON = await response.json();
-      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
@@ -392,7 +399,6 @@ export const updateApplicantExperience = (ApplicantData) => {
 export const updateApplicantCertification = (ApplicantData) => {
   return async (dispatch) => {
     dispatch(updateApplicantStart());
-    console.log(ApplicantData);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`,
@@ -406,6 +412,42 @@ export const updateApplicantCertification = (ApplicantData) => {
             id: ApplicantData.applicantId,
             certification: {
               title: ApplicantData.title,
+              organization: ApplicantData.organization,
+              startDate: ApplicantData.startDate,
+              endDate: ApplicantData.endDate ? ApplicantData.endDate : null,
+              description: ApplicantData.description,
+            },
+            index: ApplicantData.index ? ApplicantData.index : null,
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
+      return responseJSON.foundApplicant;
+    } catch (err) {
+      dispatch(updateApplicantFail);
+    }
+  };
+};
+
+export const updateApplicantOrganization = (ApplicantData) => {
+  return async (dispatch) => {
+    dispatch(updateApplicantStart());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${ApplicantData.token}`,
+          },
+          body: JSON.stringify({
+            id: ApplicantData.applicantId,
+            organization: {
               organization: ApplicantData.organization,
               startDate: ApplicantData.startDate,
               endDate: ApplicantData.endDate ? ApplicantData.endDate : null,

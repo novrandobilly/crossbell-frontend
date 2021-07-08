@@ -162,6 +162,9 @@ const ApplicantCard = (props) => {
               <div className={classes.SubscriptionButton}>Ubah Langganan</div>
             </Link>
           )}
+          <div className={classes.LangguagesDiv}>
+            <p className={classes.LangguageTitle}>Kemampuan bahasa</p>
+          </div>
         </div>
 
         <div className={classes.SegmentContainer}>
@@ -175,7 +178,7 @@ const ApplicantCard = (props) => {
 
           <RangeSegment
             id={props.id}
-            labelName='Pengalaman kerja'
+            labelName='Pengalaman Kerja'
             routeEdit={`/ap/${props.id}/experience`}
             routeAdd={`/ap/${props.id}/add/experience`}
             contents={props.experience.sort(
@@ -185,7 +188,7 @@ const ApplicantCard = (props) => {
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
             applicantid={props.id}
-            buttonText='Tambah pengalaman'
+            buttonText='Tambah Pengalaman'
           />
 
           <RangeSegment
@@ -200,7 +203,22 @@ const ApplicantCard = (props) => {
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
             applicantid={props.id}
-            buttonText='Tambah pendidikan'
+            buttonText='Tambah Pendidikan'
+          />
+
+          <RangeSegment
+            id={props.id}
+            labelName='Pengalaman Organisasi'
+            routeEdit={`/ap/${props.id}/organization`}
+            routeAdd={`/ap/${props.id}/add/organization`}
+            contents={props.organization.sort(
+              (a, b) => moment(b.startDate) - moment(a.startDate)
+            )}
+            state='organization'
+            isLoading={props.applicant.isLoading}
+            token={props.auth.token}
+            applicantid={props.id}
+            buttonText='Tambah Organisasi'
           />
 
           <RangeSegment
@@ -215,7 +233,7 @@ const ApplicantCard = (props) => {
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
             applicantid={props.id}
-            buttonText='Tambah sertifikasi'
+            buttonText='Tambah Sertifikasi'
           />
 
           <SkillsMap
