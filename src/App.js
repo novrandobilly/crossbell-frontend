@@ -45,6 +45,7 @@ const EditUnreleasedJob = React.lazy(() =>
 );
 const PackageAds = React.lazy(() => import('./jobs/pages/PackageAds'));
 const JobDetails = React.lazy(() => import('./jobs/pages/JobDetails'));
+const ApplicantList = React.lazy(() => import('./jobs/pages/ApplicantList'));
 
 //==================================== company =========================================================
 // import CompanyProfileForm from './users/company/pages/CompanyProfileForm/CompanyProfileForm';
@@ -387,6 +388,10 @@ const App = (props) => {
             <Route path='/jobs/new' component={NewJob} />
             <Route path='/jobs/packageads' component={PackageAds} />
             <Route path='/jobs/:jobsid/edit' component={EditJob} />
+            <Route
+              path='/jobs/applicantlist/:jobsid'
+              component={ApplicantList}
+            />
             <Route path='/jobs/:jobsid' component={JobDetails} />
 
             {/* Admin Routes */}

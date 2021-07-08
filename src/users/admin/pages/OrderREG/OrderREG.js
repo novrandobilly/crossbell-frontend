@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -55,6 +55,9 @@ const OrderREG = (props) => {
     index: null,
   });
 
+  const [paginationNumber, setPaginationNumber] = useState(1);
+  const emptyText = useRef('');
+
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   useEffect(() => {
@@ -69,7 +72,11 @@ const OrderREG = (props) => {
         sort = res.orderreg;
         sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setData(sort);
-        console.log(res);
+
+        if (res.message) {
+          emptyText.current =
+            'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+        }
       });
     }
   }, [getWholeOrderREG, props.admin]);
@@ -100,10 +107,12 @@ const OrderREG = (props) => {
     };
 
     try {
-      await props.approveOrderREG(payload);
-      setData((prevData) => {
+      const response = await props.approveOrderREG(payload);
+      console.log(response);
+      setDisplayData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.i].status = 'Paid';
+        const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
+        tempData[trueIndex].status = 'Paid';
         return tempData;
       });
       setIndex(null);
@@ -123,10 +132,10 @@ const OrderREG = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
+    setPaginationNumber(value);
   };
 
   const rowsHandler = (event) => {
-    console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -229,12 +238,25 @@ const OrderREG = (props) => {
                       </button>
                       <div className={classes.DropDownContent}>
                         <button
-                          style={{ color: 'green' }}
-                          onClick={() =>
-                            onOpenOrderModal(order._id, order.companyId._id, i)
+                          style={
+                            order.status === 'Pending'
+                              ? { color: 'green' }
+                              : { color: 'grey' }
+                          }
+                          onClick={
+                            order.status === 'Paid'
+                              ? null
+                              : () =>
+                                  onOpenOrderModal(
+                                    order._id,
+                                    order.companyId._id,
+                                    i
+                                  )
                           }
                         >
-                          Approve
+                          {order.status === 'Pending'
+                            ? 'Approve'
+                            : 'Telah Disetujui'}
                         </button>
                       </div>
                     </div>
@@ -274,12 +296,8 @@ const OrderREG = (props) => {
     );
   }
 
-  if (!props.isLoading && data.length <= 0) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada perusahaan yang membuat pesanan untuk saat ini
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return (

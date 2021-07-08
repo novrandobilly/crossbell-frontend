@@ -24,13 +24,14 @@ const JobDetailMap = (props) => {
         jobFunction={props.job.jobFunction}
         key={props.job.id}
         jobId={props.job.id}
-        technicalRequirement={props.job.technicalRequirement}
+        specialRequirement={props.job.specialRequirement}
         payment={parseInt(props.job.salary)}
         releasedAt={props.job.releasedAt}
         placementLocation={props.job.placementLocation}
         jobTitle={props.job.jobTitle}
         educationalStage={props.job.educationalStage}
         jobDescriptions={props.job.jobDescriptions}
+        jobExperience={props.job.jobExperience}
         jobApplicants={props.job.jobApplicants}
         fieldOfWork={props.job.fieldOfWork}
         expiredDate={props.job.expiredDate}

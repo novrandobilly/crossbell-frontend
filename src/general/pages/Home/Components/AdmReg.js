@@ -65,7 +65,6 @@ const Register = props => {
 		false
 	);
 
-	console.log(formState);
 
 	const onSubmitHandler = async event => {
 		event.preventDefault();
@@ -85,7 +84,6 @@ const Register = props => {
 
 		try {
 			const res = await props.admReg(newAdmin);
-			console.log(res);
 			if (res.token) {
 				props.history.push(`/jobs-dashboard`);
 			} else {

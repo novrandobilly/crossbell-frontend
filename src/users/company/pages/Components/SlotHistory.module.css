@@ -1,0 +1,73 @@
+.Container {
+  box-sizing: border-box;
+  padding: 8px;
+  width: 100%;
+}
+
+.Header {
+  display: flex;
+  width: 100%;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.Header > * {
+  box-sizing: border-box;
+}
+
+.HeaderMain {
+  width: 64%;
+  padding: 8px;
+  text-align: left;
+}
+
+.HeaderSlot {
+  width: 12%;
+  padding: 8px;
+}
+
+.HeaderApplied {
+  width: 12%;
+  padding: 8px;
+}
+
+.HeaderTime {
+  width: 12%;
+  padding: 8px;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.Content > * {
+  box-sizing: border-box;
+}
+
+.HistoryCard {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+  margin: 4px;
+  display: flex;
+  padding: 4px;
+  width: 100%;
+}
+
+.CardMain {
+  width: 64%;
+  text-align: left;
+}
+
+.CardSlot {
+  width: 12%;
+  font-size: 0.8rem;
+}
+.CardApplied {
+  width: 12%;
+  font-size: 0.8rem;
+}
+.CardTime {
+  width: 12%;
+  font-size: 0.8rem;
+}

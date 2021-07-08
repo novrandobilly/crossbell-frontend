@@ -22,7 +22,6 @@ const ForgotPwd = (props) => {
 
   const onSubmitResetHandler = async (event) => {
     event.preventDefault();
-    console.log(formState);
     const payload = {
       email: formState.inputs.email.value,
     };

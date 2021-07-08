@@ -45,7 +45,7 @@ const jobReducers = (state = initJobState, action) => {
         benefit: action.payload.updatedJob.benefit,
         employment: action.payload.updatedJob.employment,
         educationalStage: action.payload.updatedJob.educationalStage,
-        technicalRequirement: action.payload.updatedJob.technicalRequirement,
+        specialRequirement: action.payload.updatedJob.specialRequirement,
         salary: action.payload.updatedJob.salary,
       };
 

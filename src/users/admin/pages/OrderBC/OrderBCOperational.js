@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -47,6 +47,8 @@ const OrderBC = (props) => {
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
+  const emptyText = useRef('');
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -61,6 +63,11 @@ const OrderBC = (props) => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           setData(sort);
+
+          if (res.message) {
+            emptyText.current =
+              'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -205,12 +212,8 @@ const OrderBC = (props) => {
     );
   }
 
-  if (!props.isLoading && data.length <= 0) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada perusahaan yang membuat pesanan untuk saat ini
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return <div>{content}</div>;

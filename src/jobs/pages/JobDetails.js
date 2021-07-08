@@ -17,16 +17,19 @@ const JobDetails = (props) => {
   const { getOneJob } = props;
   useEffect(() => {
     const fetchJob = async () => {
+      const payload = {
+        token: props.auth.token,
+        jobsid: jobsid,
+      };
       try {
-        const res = await getOneJob(jobsid);
-        console.log(res);
+        const res = await getOneJob(payload);
         setLoadedJob(res);
       } catch (err) {
         console.log(err);
       }
     };
     fetchJob();
-  }, [getOneJob, jobsid]);
+  }, [getOneJob, jobsid, props.auth]);
 
   let jobDetails = <Spinner />;
   if (loadedJob) {
@@ -37,6 +40,7 @@ const JobDetails = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    auth: state.auth,
     jobStore: state.job.jobs,
   };
 };

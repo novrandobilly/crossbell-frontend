@@ -157,6 +157,11 @@ const ApplicantCard = (props) => {
               )}
             </div>
           </div>
+          {props.auth.userId === props.id && (
+            <Link to={`/subscription/${props.id}`}>
+              <div className={classes.SubscriptionButton}>Ubah Langganan</div>
+            </Link>
+          )}
         </div>
 
         <div className={classes.SegmentContainer}>

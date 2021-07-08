@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 2rem;
+  padding: 32px 0;
 }
 
 .Container {
@@ -25,13 +25,31 @@
 }
 
 .AppealText {
+  text-align: justify;
   color: rgba(0, 0, 0, 0.6);
 }
 
 .Content {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 16px 32px;
-  margin-top: 16px;
+  /* padding: 16px 32px; */
+  width: 100%;
+}
+
+.TopContent {
+  margin: 32px 0;
+  width: 100%;
+}
+
+.BottomContent {
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.ContentTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 .CheckBox {
@@ -42,8 +60,19 @@
   margin: 10px 0;
 }
 
+.Text {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .Box {
-  width: 20px;
-  height: 20px;
-  margin-left: 16px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.InputDiv {
+  width: 100%;
+  margin: 16px 0 0 0;
 }

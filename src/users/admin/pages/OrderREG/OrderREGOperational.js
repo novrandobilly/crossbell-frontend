@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -45,6 +45,8 @@ const OrderREG = (props) => {
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState();
 
+  const emptyText = useRef('');
+
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   useEffect(() => {
@@ -59,7 +61,11 @@ const OrderREG = (props) => {
         sort = res.orderreg;
         sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setData(sort);
-        console.log(res);
+
+        if (res.message) {
+          emptyText.current =
+            'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+        }
       });
     }
   }, [getWholeOrderREG, props.admin]);
@@ -201,12 +207,8 @@ const OrderREG = (props) => {
     );
   }
 
-  if (!props.isLoading && data.length <= 0) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada perusahaan yang membuat pesanan untuk saat ini
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return <div>{content}</div>;

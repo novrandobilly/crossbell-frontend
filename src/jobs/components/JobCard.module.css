@@ -35,9 +35,9 @@
   background-repeat: no-repeat; */
 }
 
-.Logo img {
-  width: 8rem;
-  height: 8rem;
+.Logo > img {
+  max-width: 8rem;
+  max-height: 8rem;
   background-size: cover;
   background-position: center;
 }

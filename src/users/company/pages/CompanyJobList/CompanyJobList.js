@@ -30,7 +30,6 @@ const CompanyJobList = (props) => {
       };
 
       getJobsInCompany(payload).then((res) => {
-        console.log(res);
         if (res && res.foundJob) {
           setDisplayData(
             res.foundJob
