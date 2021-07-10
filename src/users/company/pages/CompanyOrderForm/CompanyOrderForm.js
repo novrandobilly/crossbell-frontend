@@ -24,6 +24,7 @@ const CompanyOrderForm = (props) => {
 
   const [orderModal, setOrderModal] = useState(false);
   const [slot, setSlot] = useState('0');
+  const [price, setPrice] = useState(ORIGINAL_PRICE);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -85,17 +86,12 @@ const CompanyOrderForm = (props) => {
     }
   };
 
-  let price;
-
-  if (slot <= 1) {
-    price = ORIGINAL_PRICE;
-  } else if (slot <= 4) {
-    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05;
-  } else if (slot <= 9) {
-    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
-  } else if (slot > 9) {
-    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15;
-  }
+  useEffect(() => {
+    setPrice(ORIGINAL_PRICE);
+    if (slot > 1) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05);
+    if (slot > 4) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1);
+    if (slot > 9) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15);
+  }, [slot]);
 
   const onCloseOrderModal = () => {
     setOrderModal(false);
@@ -125,10 +121,13 @@ const CompanyOrderForm = (props) => {
     setSlot('10');
   };
 
+  const onSlotChange = (event) => {
+    setSlot(event?.target?.value);
+  };
+
   useEffect(() => {
     onInputHandler('state', slot, true);
   }, [onInputHandler, slot]);
-
   let formContent = <SpinnerCircle />;
 
   if (!props.isLoading) {
@@ -149,7 +148,6 @@ const CompanyOrderForm = (props) => {
               title='Silver'
               price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05}
               slot='2 - 4 slot'
-              // perks={['Diskon per slot sebesar 5%']}
               createOrder={props.createOrder}
             />
           </div>
@@ -159,7 +157,6 @@ const CompanyOrderForm = (props) => {
               title='Gold'
               price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
               slot='5 - 9 slot'
-              // perks={['Diskon per slot sebesar 10%']}
               createOrder={props.createOrder}
             />
           </div>
@@ -168,8 +165,7 @@ const CompanyOrderForm = (props) => {
             <OrderComponent
               title='Platinum'
               price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
-              slot='>9 slot'
-              // perks={['Diskon per slot sebesar 15%']}
+              slot='> 9 slot'
               createOrder={props.createOrder}
             />
           </div>
@@ -192,6 +188,8 @@ const CompanyOrderForm = (props) => {
                 onInputHandler={onInputHandler}
                 type='number'
                 initValue={slot}
+                onChange={onSlotChange}
+                value={slot}
                 min='0'
                 step='1'
                 helperText={

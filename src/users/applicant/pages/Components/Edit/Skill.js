@@ -33,6 +33,7 @@ const EditDetails = (props) => {
       };
 
       res = await getOneApplicant(payload);
+
       res.applicant.skills.forEach((skill, i) => {
         setSkills((prevState) => [...prevState, 'skill']);
         onInputHandler(`skill_${i}`, skill, true);
@@ -71,6 +72,7 @@ const EditDetails = (props) => {
     setSkills((skills) => [...skills, 'skill']);
     onInputHandler(`skill_${skills.length}`, '', true);
   };
+
   let formSkills = <Spinner />;
 
   if (skillsList && !props.applicant.isLoading) {

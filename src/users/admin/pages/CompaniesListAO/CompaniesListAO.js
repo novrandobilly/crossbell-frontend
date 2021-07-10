@@ -84,6 +84,7 @@ const CompaniesListAO = (props) => {
         state.startIndex,
         state.startIndex + state.rowsPerPage
       );
+      console.log(applicantArray);
       setDisplayData(applicantArray);
       setIsLoading(false);
     }
@@ -225,10 +226,11 @@ const CompaniesListAO = (props) => {
               <thead className={classes.RowField}>
                 <tr>
                   <th>No</th>
-                  <th>Company Name</th>
-                  <th>Industry</th>
+                  <th>Nama Perusahaan</th>
+                  <th>Industri</th>
                   <th>Email</th>
-                  <th>Address</th>
+                  <th>Alamat</th>
+                  <th>Slot Terpakai</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -238,173 +240,216 @@ const CompaniesListAO = (props) => {
                 <tbody className={classes.ColumnField}>
                   {displayData
                     .filter((company) => company.status === filter)
-                    .map((company, index) => (
-                      <tr key={company.id}>
-                        <th> {index + 1}</th>
+                    .map((company, index) => {
+                      let slotUsed = 0;
+                      if (company.jobAds) {
+                        company.jobAds.map((jobs, i) => {
+                          if (jobs.releasedAt) {
+                            slotUsed = slotUsed + jobs.slot;
+                          }
+                          return slotUsed;
+                        });
+                      }
 
-                        <th>
-                          {' '}
-                          <Link
-                            to={`/co/${company.id}/profile`}
-                            style={{ color: 'black', textDecoration: 'none' }}
+                      return (
+                        <tr key={company.id}>
+                          <th> {index + 1}</th>
+
+                          <th>
+                            {' '}
+                            <Link
+                              to={`/co/${company.id}/profile`}
+                              style={{ color: 'black', textDecoration: 'none' }}
+                            >
+                              {company.companyName}
+                            </Link>
+                          </th>
+                          <th>
+                            {company.industry ? company.industry : 'no data'}
+                          </th>
+                          <th>{company.email}</th>
+
+                          <th
+                            style={
+                              company.address
+                                ? { color: 'black', maxWidth: '24rem' }
+                                : {
+                                    color: 'rgba(255,0,0,0.7)',
+                                    fontWeight: 'bold',
+                                  }
+                            }
                           >
-                            {company.companyName}
-                          </Link>
-                        </th>
-                        <th>
-                          {company.industry ? company.industry : 'no data'}
-                        </th>
-                        <th>{company.email}</th>
-                        <th>{company.address}</th>
+                            {' '}
+                            {company.address ? company.address : 'no data'}
+                          </th>
 
-                        <th>
-                          {props.company.isLoading && indexLoading === index ? (
-                            <Spinner />
-                          ) : company.isActive ? (
-                            <span
-                              style={{ color: 'Green', fontWeight: 'bold' }}
-                            >
-                              Active
-                            </span>
-                          ) : (
-                            <span
-                              style={{ color: 'Orange', fontWeight: 'bold' }}
-                            >
-                              Pending
-                            </span>
-                          )}
-                        </th>
+                          <th>{slotUsed}</th>
 
-                        <th>
-                          <div className={classes.DropDown}>
-                            <button className={classes.DropButton}>
-                              <ArrowDropDownIcon />
-                            </button>
-                            <div className={classes.DropDownContent}>
-                              <button
-                                style={{ color: 'Green' }}
-                                onClick={() =>
-                                  activateCompanyHandler({
-                                    companyId: company.id,
-                                    index,
-                                  })
-                                }
+                          <th>
+                            {props.company.isLoading &&
+                            indexLoading === index ? (
+                              <Spinner />
+                            ) : company.isActive ? (
+                              <span
+                                style={{ color: 'Green', fontWeight: 'bold' }}
                               >
-                                Activate
-                              </button>
-                              <button
-                                style={{ color: 'red' }}
-                                onClick={() =>
-                                  blockCompanyHandler({
-                                    companyId: company.id,
-                                    index,
-                                  })
-                                }
+                                Active
+                              </span>
+                            ) : (
+                              <span
+                                style={{ color: 'Orange', fontWeight: 'bold' }}
                               >
-                                Block
+                                Pending
+                              </span>
+                            )}
+                          </th>
+
+                          <th>
+                            <div className={classes.DropDown}>
+                              <button className={classes.DropButton}>
+                                <ArrowDropDownIcon />
                               </button>
+                              <div className={classes.DropDownContent}>
+                                <button
+                                  style={{ color: 'Green' }}
+                                  onClick={() =>
+                                    activateCompanyHandler({
+                                      companyId: company.id,
+                                      index,
+                                    })
+                                  }
+                                >
+                                  Activate
+                                </button>
+                                <button
+                                  style={{ color: 'red' }}
+                                  onClick={() =>
+                                    blockCompanyHandler({
+                                      companyId: company.id,
+                                      index,
+                                    })
+                                  }
+                                >
+                                  Block
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        </th>
-                      </tr>
-                    ))}
+                          </th>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               ) : (
                 <tbody className={classes.ColumnField}>
                   {displayData &&
-                    displayData.map((company, index) => (
-                      <tr key={company.id}>
-                        <th> {index + 1}</th>
+                    displayData.map((company, index) => {
+                      let slotUsed = 0;
+                      if (company.jobAds) {
+                        company.jobAds.map((jobs, i) => {
+                          if (jobs.releasedAt) {
+                            slotUsed = slotUsed + jobs.slot;
+                          }
+                          return slotUsed;
+                        });
+                      }
 
-                        <th>
-                          {' '}
-                          <Link
-                            to={`/co/${company.id}/profile`}
-                            style={{ color: 'black', textDecoration: 'none' }}
+                      return (
+                        <tr key={company.id}>
+                          <th> {index + 1}</th>
+
+                          <th>
+                            {' '}
+                            <Link
+                              to={`/co/${company.id}/profile`}
+                              style={{ color: 'black', textDecoration: 'none' }}
+                            >
+                              {company.companyName}
+                            </Link>
+                          </th>
+                          <th
+                            style={
+                              company.industry
+                                ? { color: 'black' }
+                                : {
+                                    color: 'rgba(255,0,0,0.7)',
+                                    fontWeight: 'bold',
+                                  }
+                            }
                           >
-                            {company.companyName}
-                          </Link>
-                        </th>
-                        <th
-                          style={
-                            company.industry
-                              ? { color: 'black' }
-                              : {
-                                  color: 'rgba(255,0,0,0.7)',
-                                  fontWeight: 'bold',
-                                }
-                          }
-                        >
-                          {company.industry ? company.industry : 'no data'}
-                        </th>
+                            {company.industry ? company.industry : 'no data'}
+                          </th>
 
-                        <th>{company.email}</th>
+                          <th>{company.email}</th>
 
-                        <th
-                          style={
-                            company.address
-                              ? { color: 'black', maxWidth: '24rem' }
-                              : {
-                                  color: 'rgba(255,0,0,0.7)',
-                                  fontWeight: 'bold',
-                                }
-                          }
-                        >
-                          {' '}
-                          {company.address ? company.address : 'no data'}
-                        </th>
+                          <th
+                            style={
+                              company.address
+                                ? { color: 'black', maxWidth: '24rem' }
+                                : {
+                                    color: 'rgba(255,0,0,0.7)',
+                                    fontWeight: 'bold',
+                                  }
+                            }
+                          >
+                            {' '}
+                            {company.address ? company.address : 'no data'}
+                          </th>
 
-                        <th>
-                          {props.company.isLoading && indexLoading === index ? (
-                            <Spinner />
-                          ) : company.isActive ? (
-                            <span
-                              style={{ color: 'Green', fontWeight: 'bold' }}
-                            >
-                              Active
-                            </span>
-                          ) : (
-                            <span
-                              style={{ color: 'Orange', fontWeight: 'bold' }}
-                            >
-                              Pending
-                            </span>
-                          )}
-                        </th>
+                          <th>{slotUsed} slot</th>
 
-                        <th>
-                          <div className={classes.DropDown}>
-                            <button className={classes.DropButton}>
-                              <ArrowDropDownIcon />
-                            </button>
-                            <div className={classes.DropDownContent}>
-                              <button
-                                style={{ color: 'Green' }}
-                                onClick={() =>
-                                  activateCompanyHandler({
-                                    companyId: company.id,
-                                    index,
-                                  })
-                                }
+                          <th>
+                            {props.company.isLoading &&
+                            indexLoading === index ? (
+                              <Spinner />
+                            ) : company.isActive ? (
+                              <span
+                                style={{ color: 'Green', fontWeight: 'bold' }}
                               >
-                                Activate
-                              </button>
-                              <button
-                                style={{ color: 'red' }}
-                                onClick={() =>
-                                  blockCompanyHandler({
-                                    companyId: company.id,
-                                    index,
-                                  })
-                                }
+                                Active
+                              </span>
+                            ) : (
+                              <span
+                                style={{ color: 'Orange', fontWeight: 'bold' }}
                               >
-                                Block
+                                Pending
+                              </span>
+                            )}
+                          </th>
+
+                          <th>
+                            <div className={classes.DropDown}>
+                              <button className={classes.DropButton}>
+                                <ArrowDropDownIcon />
                               </button>
+                              <div className={classes.DropDownContent}>
+                                <button
+                                  style={{ color: 'Green' }}
+                                  onClick={() =>
+                                    activateCompanyHandler({
+                                      companyId: company.id,
+                                      index,
+                                    })
+                                  }
+                                >
+                                  Activate
+                                </button>
+                                <button
+                                  style={{ color: 'red' }}
+                                  onClick={() =>
+                                    blockCompanyHandler({
+                                      companyId: company.id,
+                                      index,
+                                    })
+                                  }
+                                >
+                                  Block
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        </th>
-                      </tr>
-                    ))}
+                          </th>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               )}
             </table>

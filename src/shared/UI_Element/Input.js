@@ -53,6 +53,7 @@ const Input = (props) => {
         validatorMethod: props.validatorMethod,
       },
     });
+    props.onChange && props.onChange(event);
   };
 
   const onCustomDateHandler = (payload) => {
@@ -221,6 +222,10 @@ const Input = (props) => {
             )}
             views={props.views || ['year', 'month', 'date']}
             value={moment(state.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label={props.label}
             style={props.style}
             onChange={(eventValue) => onCustomDateHandler(eventValue)}
             minDate={props.minDate}
