@@ -38,6 +38,9 @@ const NewJob = (props) => {
   const [educationalStageOpen, setEducationalStageOpen] = useState(false);
   const [educationalStage, setEducationalStage] = useState('');
 
+  const [requirement, setRequirement] = useState(['req']);
+  // const [requirementList, setRequirementList] = useState();
+
   const [rangeAge, setRangeAge] = useState([18, 35]);
   const [fieldOfWork, setFieldOfWork] = useState('');
 
@@ -61,15 +64,10 @@ const NewJob = (props) => {
         value: '',
         isValid: false,
       },
-      specialRequirement: {
-        value: '',
-        isValid: false,
-      },
       placementLocation: {
         value: '',
         isValid: false,
       },
-
       emailRecipient: {
         value: '',
         isValid: true,
@@ -102,9 +100,16 @@ const NewJob = (props) => {
         value: null,
         isValid: false,
       },
+      specialRequirement: {
+        value: [],
+        isValid: false,
+      },
     },
     false
   );
+
+  console.log(formState);
+  console.log(requirement);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -125,7 +130,10 @@ const NewJob = (props) => {
     const getSlot = async () => {
       try {
         if (auth.userId) {
-          const res = await getOneCompany({ userId: auth.userId });
+          const res = await getOneCompany({
+            userId: auth.userId,
+            token: auth.token,
+          });
           setMaxSlot(res.company.slotREG);
         }
       } catch (err) {
@@ -330,6 +338,12 @@ const NewJob = (props) => {
     if (key !== 'default') cities = [...cities, ...CitiesData[key]];
   }
 
+  const addRequirement = (e) => {
+    e.preventDefault();
+    setRequirement((req) => [...req, 'req']);
+    onInputHandler(`requirement_${requirement.length}`, '', true);
+  };
+
   let formContent = (
     <div className={classes.ContainerFlex}>
       <p className={classes.FormTitle}>Form Iklan Lowongan Pekerjaan</p>
@@ -500,23 +514,6 @@ const NewJob = (props) => {
             />
           </div>
 
-          <div className={classes.ContentFull}>
-            <div>
-              <p className={classes.SpecialRequirement}>Persyaratan Khusus*</p>
-              <p className={classes.SpecialTips}>
-                skill teknis, karakter, atau persyaratan khusus lainnya
-              </p>
-              <Input
-                inputType='input'
-                id='specialRequirement'
-                InputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                helperText='Persyaratan khusus wajib diisi'
-              />
-            </div>
-          </div>
-
           <div className={classes.ContentWrap}>
             <Autocomplete
               value={fieldOfWork}
@@ -612,8 +609,44 @@ const NewJob = (props) => {
           />
         </div>
 
+        <div className={classes.ContentFull}>
+          <div className={classes.SpecialReqDiv}>
+            <div>
+              <p className={classes.SpecialRequirement}>Persyaratan Khusus</p>
+              <p className={classes.SpecialTips}>
+                skill teknis, karakter, atau persyaratan khusus lainnya (maks 5)
+              </p>
+            </div>
+            <Button
+              variant='contained'
+              color='primary'
+              type='button'
+              disableElevation
+              onClick={requirement.length < 5 ? addRequirement : null}
+              style={{ height: 'fit-content', alignSelf: 'flex-end' }}
+              size='small'
+            >
+              Tambah Persyaratan
+            </Button>
+          </div>
+
+          {requirement.map((req, i) => {
+            return (
+              <div className={classes.AutoAddDiv} key={i}>
+                <Input
+                  inputType='input'
+                  id={`requirement_${i}`}
+                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                  onInputHandler={onInputHandler}
+                  initIsValid={true}
+                />
+              </div>
+            );
+          })}
+        </div>
+
         <div className={classes.RangeAge}>
-          <p className={classes.AgeLabel}>Usia</p>
+          <p className={classes.AgeLabel}>Syarat Usia</p>
           <div className={classes.SliderDiv}>
             <p className={classes.SliderLabel}>min</p>
             <div className={classes.Slider}>

@@ -28,7 +28,8 @@ const OrderComponent = (props) => {
                 <p className={classes.Slot}>{props.slot}</p>
               </div>
             </div>
-            <div
+
+            {/* <div
               className={classes.CardContent}
               style={
                 props.title === 'Bronze'
@@ -39,8 +40,8 @@ const OrderComponent = (props) => {
                   ? { backgroundColor: '#d4af4740' }
                   : { backgroundColor: 'rgba(58, 81, 153, 0.2)' }
               }
-            >
-              {/* {props.perks ? (
+            > */}
+            {/* {props.perks ? (
                 <ul>
                   {props.perks.map((perk, i) => {
                     return <li key={i}> {perk}</li>;
@@ -51,7 +52,7 @@ const OrderComponent = (props) => {
                   <li>Harga normal tanpa diskon</li>
                 </ul>
               )} */}
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>

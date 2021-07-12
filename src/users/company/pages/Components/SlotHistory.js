@@ -1,21 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '../../../../shared/UI_Element/Input';
+import FormControl from '@material-ui/core/FormControl';
+import Pagination from '@material-ui/lab/Pagination';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 import classes from './SlotHistory.module.css';
 
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  rowsPerPage: 10,
+  startIndex: 0,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 const SlotHistory = (props) => {
   const { companyid } = useParams();
 
-  const [expiredData, setExpiredData] = useState();
+  const [fetchData, setFetchData] = useState();
+  const [tempData, setTempData] = useState();
   const [displayData, setDisplayData] = useState();
 
+  const [state, dispatch] = useReducer(paginationReducer, initPagination);
+
   const { getJobsInCompany } = props;
+
+  const [formState, onInputHandler] = useForm(
+    {
+      sortDate: {
+        value: null,
+        isValid: true,
+      },
+    },
+    true
+  );
 
   useEffect(() => {
     const token = props.auth.token;
@@ -26,32 +75,76 @@ const SlotHistory = (props) => {
 
     getJobsInCompany(payload).then((res) => {
       if (res && res.foundJob) {
-        setDisplayData(
+        setFetchData(
           res.foundJob
-            .filter(
-              (dat) =>
-                dat.releasedAt != null && moment(dat.expiredDate) > moment()
-            )
-            .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-        );
-
-        setExpiredData(
-          res.foundJob
-            .filter(
-              (dat) =>
-                dat.releasedAt != null && moment(dat.expiredDate) < moment()
-            )
-            .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+            .filter((dat) => dat.releasedAt != null)
+            .sort((a, b) => moment(b.expiredDate) - moment(a.expiredDate))
         );
       } else {
-        setDisplayData(null);
-        setExpiredData(null);
+        setFetchData(null);
       }
     });
   }, [getJobsInCompany, companyid, props.auth]);
 
+  //================= Pagination ===========================
+
+  useEffect(() => {
+    if (tempData && tempData.length > 0) {
+      let applicantArray = [...tempData];
+      let pageCount = Math.ceil(applicantArray.length / state.rowsPerPage);
+      dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
+
+      //Slicing all jobs based on the number jobs may appear in one page
+      applicantArray = applicantArray.slice(
+        state.startIndex,
+        state.startIndex + state.rowsPerPage
+      );
+      setDisplayData(applicantArray);
+    }
+  }, [state.rowsPerPage, state.startIndex, tempData]);
+
+  const pageChangeHandler = (event, value) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: state.rowsPerPage * (value - 1),
+      },
+    });
+  };
+
+  const rowsHandler = (event) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        rowsPerPage: event.target.value,
+      },
+    });
+  };
+
+  //=========================== Filter ============================
+  useEffect(() => {
+    if (fetchData) {
+      let filterData = [...fetchData];
+      if (formState?.inputs?.sortDate?.value) {
+        // let filterYear = moment(formState.inputs.sortDate.value).year();
+        // let filterMonth = moment(formState.inputs.sortDate.value).month();
+
+        filterData = filterData.filter((order) =>
+          moment(order.releasedAt).isSame(
+            moment(formState.inputs.sortDate.value),
+            'month'
+          )
+        );
+      }
+      setTempData(filterData);
+    }
+  }, [fetchData, formState.inputs.sortDate.value]);
+
+  console.log();
+
   let Content = <SpinnerCircle />;
-  if (!props.isLoading && displayData && expiredData) {
+  if (!props.isLoading && displayData) {
     Content = (
       <div className={classes.Table}>
         <div className={classes.Header}>
@@ -79,18 +172,19 @@ const SlotHistory = (props) => {
                     style={
                       moment(dat.expiredDate).diff(moment(), 'days') > 7
                         ? { color: 'green' }
-                        : { color: 'orange' }
+                        : { color: 'grey' }
                     }
-                  >{`${moment(dat.expiredDate).diff(
-                    moment(),
-                    'days'
-                  )} hari`}</div>
+                  >
+                    {moment(dat.expiredDate) > moment()
+                      ? `${moment(dat.expiredDate).diff(moment(), 'days')} hari`
+                      : 'expired'}
+                  </div>
                 </div>
               </Link>
             );
           })}
 
-          {expiredData.map((dat, i) => {
+          {/* {expiredData.map((dat, i) => {
             return (
               <Link to={`/jobs/applicantlist/${dat.id}`} key={i}>
                 <div className={classes.HistoryCard}>
@@ -105,13 +199,58 @@ const SlotHistory = (props) => {
                 </div>
               </Link>
             );
-          })}
+          })} */}
         </div>
       </div>
     );
   }
 
-  return <div className={classes.Container}>{Content}</div>;
+  return (
+    <div className={classes.Container}>
+      <div className={classes.TableFilter}>
+        <div>
+          <Input
+            inputType='customdate'
+            id='sortDate'
+            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+            onInputHandler={onInputHandler}
+            views={['year', 'month']}
+            maxDate={moment()}
+            initIsValid={true}
+            format='MM/yyyy'
+            label='Filter History'
+          />
+        </div>
+      </div>
+      {Content}{' '}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '80%',
+        }}
+      >
+        <FormControl style={{ width: '4rem' }}>
+          <Select
+            labelId='rowPerPage'
+            id='rowPerPageSelect'
+            value={state.rowsPerPage}
+            onChange={rowsHandler}
+          >
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+          </Select>
+          <FormHelperText>Rows</FormHelperText>
+        </FormControl>
+        <Pagination
+          count={state.pageCount}
+          page={state.pageNumber}
+          onChange={pageChangeHandler}
+        />
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

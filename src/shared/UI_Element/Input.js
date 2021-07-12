@@ -180,6 +180,10 @@ const Input = props => {
             className={[classes.InputElements, classes[props.InputClass]].join(' ')}
             views={props.views || ['year', 'month', 'date']}
             value={moment(state.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label={props.label}
             style={props.style}
             onChange={eventValue => onCustomDateHandler(eventValue)}
             minDate={props.minDate}
