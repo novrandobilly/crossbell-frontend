@@ -50,7 +50,12 @@
 }
 
 .ContentFull {
-  margin-top: 12px;
+  margin-top: 24px;
+}
+
+.SpecialReqDiv {
+  display: flex;
+  justify-content: space-between;
 }
 
 .SpecialRequirement {
@@ -62,6 +67,14 @@
   margin: 0;
   font-size: 1rem;
   line-height: 1.1876em;
+}
+
+.AutoAddDiv {
+  margin-top: 10px;
+}
+
+.AddInput {
+  width: 15%;
 }
 
 .SpecialTips {
@@ -139,7 +152,9 @@
 }
 
 .AgeLabel {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
   margin: 0;
 }
 
@@ -151,6 +166,9 @@
 
 .SliderLabel {
   margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .Slider {

@@ -11,6 +11,8 @@ import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import PinDropOutlinedIcon from '@material-ui/icons/PinDropOutlined';
 import WcOutlinedIcon from '@material-ui/icons/WcOutlined';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
+import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 
 import classes from './ApplicantList.module.css';
 
@@ -79,6 +81,28 @@ const ApplicantList = (props) => {
                 </div>
                 <div className={classes.CardMidTitle}>
                   GPA: {dat.education[0].IPK}
+                </div>
+
+                <div className={classes.CardMidTitle}>
+                  <AssignmentTurnedInOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
+                  {dat.certification[0].title}
+                </div>
+                <div className={classes.CardMidLocation}>
+                  <span>from</span> {dat.certification[0].organization}
+                </div>
+
+                <div className={classes.CardMidTitle}>
+                  <PeopleAltOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
+                  <span>
+                    Organisasi <span> </span>
+                  </span>
+                  {dat.organization[0].organization}
                 </div>
               </div>
 
