@@ -16,6 +16,7 @@ export {
   updateApplicantOrganization,
   updateApplicantSubscription,
   updateApplicantSkills,
+  updateApplicantLanguages,
   getOneApplicant,
   deleteSegment,
   updateResume,

@@ -216,8 +216,6 @@ export const updateApplicantIntro = (ApplicantData) => {
       formData.append('salary', ApplicantData.salary);
       formData.append('outOfTown', ApplicantData.outOfTown);
       formData.append('workShifts', ApplicantData.workShifts);
-      formData.append('autoSend', ApplicantData.autoSend);
-      formData.append('autoRemind', ApplicantData.autoRemind);
       formData.append('headhunterProgram', ApplicantData.headhunterProgram);
       formData.append('interest', ApplicantData.interest);
 
@@ -488,6 +486,38 @@ export const updateApplicantSkills = (ApplicantData) => {
         }
       );
       const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
+      return responseJSON.foundApplicant;
+    } catch (err) {
+      dispatch(updateApplicantFail());
+      return err;
+    }
+  };
+};
+
+export const updateApplicantLanguages = (ApplicantData) => {
+  return async (dispatch) => {
+    dispatch(updateApplicantStart());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${ApplicantData.token}`,
+          },
+          body: JSON.stringify({
+            id: ApplicantData.applicantId,
+            languages: [...ApplicantData.languagesData],
+          }),
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }

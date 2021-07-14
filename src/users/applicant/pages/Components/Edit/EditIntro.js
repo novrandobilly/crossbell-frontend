@@ -62,7 +62,6 @@ const locationReducer = (state, action) => {
 const EditIntro = (props) => {
   const { applicantid } = useParams();
   const [data, setData] = useState();
-  // const [open, setOpen] = useState([false, false, false]);
 
   const [interest, setInterest] = useState([]);
 
@@ -76,8 +75,6 @@ const EditIntro = (props) => {
   }, []);
 
   const [city, setCity] = useState(Cities.default);
-  // const [ location, setLocation ] = useState('');
-  //   const [locationOpen, setLocationOpen] = useState(false);
 
   const ProvCityRelation = (prov) => {
     switch (prov) {
@@ -305,14 +302,7 @@ const EditIntro = (props) => {
         value: data ? data.workShifts : false,
         isValid: data && data.workShifts ? true : false,
       },
-      autoSend: {
-        value: data ? data.autoSend : false,
-        isValid: data && data.autoSend ? true : false,
-      },
-      autoRemind: {
-        value: data ? data.autoRemind : false,
-        isValid: data && data.autoRemind ? true : false,
-      },
+
       headhunterProgram: {
         value: data ? data.headhunterProgram : false,
         isValid: data && data.headhunterProgram ? true : false,
@@ -330,23 +320,17 @@ const EditIntro = (props) => {
       const genderEl = document.getElementById(data.gender);
       const outOfTownEl = document.getElementById('outOfTown');
       const workShiftsEl = document.getElementById('workShifts');
-      const autoSendEl = document.getElementById('autoSend');
-      const autoRemindEl = document.getElementById('autoRemind');
       const headhunterProgramEl = document.getElementById('headhunterProgram');
 
       if (genderEl) genderEl.checked = true;
       outOfTownEl.checked = data.outOfTown;
       workShiftsEl.checked = data.workShifts;
-      autoSendEl.checked = data.autoSend;
-      autoRemindEl.checked = data.autoRemind;
       headhunterProgramEl.checked = data.headhunterProgram;
 
       onInputHandler('interest', data.interest, true);
-      onInputHandler('autoSend', data.autoSend, true);
       onInputHandler('outOfTown', data.outOfTown, true);
       onInputHandler('gender', data.gender, !!genderEl);
       onInputHandler('workShifts', data.workShifts, true);
-      onInputHandler('autoRemind', data.autoRemind, true);
       onInputHandler('state', locationState.province, true);
       onInputHandler('headhunterProgram', data.headhunterProgram, true);
       onInputHandler(
@@ -380,8 +364,6 @@ const EditIntro = (props) => {
       outOfTown: formState.inputs.outOfTown.value,
       salary: formState.inputs.salary.value,
       workShifts: formState.inputs.workShifts.value,
-      autoSend: formState.inputs.autoSend.value,
-      autoRemind: formState.inputs.autoRemind.value,
       headhunterProgram: formState.inputs.headhunterProgram.value,
       interest: formState.inputs.interest.value,
       token: props.auth.token,
@@ -764,24 +746,7 @@ const EditIntro = (props) => {
                   Bersedia bekerja dengan sistem shift
                 </p>
               </label>
-              <label
-                onChange={onCheckedInputHandler}
-                className={classes.CheckBox}
-              >
-                <input id='autoSend' type='checkbox' name='autoSend' />
-                <p style={{ margin: '0', marginLeft: '4px' }}>
-                  Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell
-                </p>
-              </label>
-              <label
-                onChange={onCheckedInputHandler}
-                className={classes.CheckBox}
-              >
-                <input id='autoRemind' type='checkbox' name='autoRemind' />
-                <p style={{ margin: '0', marginLeft: '4px' }}>
-                  Berikan notifikasi bila ada pekerjaan sesuai bidang minat
-                </p>
-              </label>
+
               <label
                 onChange={onCheckedInputHandler}
                 className={classes.CheckBox}

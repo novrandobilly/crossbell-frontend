@@ -11,13 +11,13 @@ import Modal from '../../../../../shared/UI_Element/Modal';
 import Spinner from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../../../../shared/UI_Element/Input';
 
-import classes from './Skill.module.css';
+import classes from './Language.module.css';
 
-const Skills = (props) => {
-  const [skills, setSkills] = useState(['skill']);
-  const [skillsList, setSkillsList] = useState([{}]);
+const Language = (props) => {
+  const [language, setLanguages] = useState(['language']);
+  const [languagesList, setLanguagesList] = useState([{}]);
 
-  const [formState, onInputHandler] = useForm({}, true);
+  const [formState, onInputHandler] = useForm([], true);
   const { applicantid } = useParams();
 
   useEffect(() => {
@@ -35,10 +35,11 @@ const Skills = (props) => {
 
       res = await getOneApplicant(payload);
 
-      res.applicant.skills.forEach((skill, i) => {
-        setSkills((prevState) => [...prevState, 'skill']);
+      res.applicant.languages.forEach((language, i) => {
+        setLanguages((prevState) => [...prevState, 'language']);
       });
-      setSkillsList(res.applicant.skills);
+
+      setLanguagesList(res.applicant.languages);
     };
 
     if (props.auth.token) {
@@ -47,8 +48,8 @@ const Skills = (props) => {
   }, [getOneApplicant, applicantid, onInputHandler, props.auth.token]);
 
   useEffect(() => {
-    onInputHandler('skills', skillsList, true);
-  }, [onInputHandler, skillsList]);
+    onInputHandler('language', languagesList, true);
+  }, [onInputHandler, languagesList]);
 
   const onSubmitHandler = async (event) => {
     if (!formState.formIsValid) {
@@ -56,29 +57,26 @@ const Skills = (props) => {
     }
 
     event.preventDefault();
-    // let skillsData = [];
-    // for (const key in formState.inputs) {
-    //   skillsData = skillsData.concat(formState.inputs[key].value);
-    // }
-    // skillsData = skillsData.filter((skill) => !!skill.trim());
+
     const updatedData = {
       applicantId: applicantid,
-      skillsData: formState.inputs.skills.value,
+      languagesData: formState.inputs.language.value,
       token: props.auth.token,
     };
-    await props.updateSkills(updatedData);
+
+    await props.updateApplicantLanguages(updatedData);
     props.history.push(`/ap/${applicantid}/profile`);
   };
 
-  const addSkill = (e) => {
+  const addLanguage = (e) => {
     e.preventDefault();
-    setSkills((skills) => [...skills, 'skill']);
+    setLanguages((language) => [...language, 'language']);
   };
 
-  const onUpdateSkill = (event, i, type) => {
+  const onUpdateLang = (event, i, type) => {
     let inputValue = event.target.value;
 
-    setSkillsList((prevState) => {
+    setLanguagesList((prevState) => {
       let newState = [...prevState];
       if (typeof newState[i] !== 'object') newState[i] = {};
       newState[i][type] = inputValue;
@@ -86,26 +84,27 @@ const Skills = (props) => {
     });
   };
 
-  let formSkills = <Spinner />;
+  console.log(languagesList);
 
-  if (skillsList && !props.applicant.isLoading) {
-    formSkills = (
+  let formLanguages = <Spinner />;
+  if (languagesList && !props.applicant.isLoading) {
+    formLanguages = (
       <form onSubmit={onSubmitHandler} className={classes.Container}>
         <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Ubah keterampilan</p>
+          <p className={classes.FormTitle}>Ubah Kemampuan Bahasa</p>
 
-          {skills.map((skill, i) => {
+          {language.map((language, i) => {
             return (
               <div className={classes.FormRow} key={i}>
                 <div className={classes.LanguageDiv}>
                   <Input
                     inputType='input'
-                    id={`skill_${i}`}
+                    id={`language_${i}`}
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                    onChange={(e) => onUpdateSkill(e, i, 'skillName')}
+                    onChange={(e) => onUpdateLang(e, i, 'langName')}
                     initIsValid={true}
-                    label='Keterampilan'
-                    value={skillsList[i]?.skillName}
+                    label='Bahasa Yang Dikuasai'
+                    value={languagesList[i]?.langName}
                   />
                 </div>
 
@@ -114,16 +113,27 @@ const Skills = (props) => {
                     inputType='input'
                     id={`rating_${i}`}
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                    onChange={(e) => onUpdateSkill(e, i, 'rate')}
+                    onChange={(e) => onUpdateLang(e, i, 'rate')}
                     initIsValid={true}
                     type='number'
                     label='Rate'
                     min='0'
                     max='5'
                     step='1'
-                    value={skillsList[i]?.rate}
+                    value={languagesList[i]?.rate}
                   />
                 </div>
+                {/* <Slider
+                  id={`rate_${i}`}
+                  defaultValue={0}
+                  aria-labelledby='discrete-slider-small-steps'
+                  step={1}
+                  marks
+                  min={0}
+                  max={5}
+                  onChange={(e) => onUpdateLang(e, i, 'rate')}
+                  valueLabelDisplay='auto'
+                /> */}
               </div>
             );
           })}
@@ -133,7 +143,7 @@ const Skills = (props) => {
             color='primary'
             type='button'
             disableElevation
-            onClick={addSkill}
+            onClick={addLanguage}
             size='small'
           >
             Add Input
@@ -141,7 +151,7 @@ const Skills = (props) => {
 
           <div className={classes.Footer}>
             <Button
-              disabled={!formState.formIsValid}
+              // disabled={!formState.formIsValid}
               variant='contained'
               color='primary'
               type='submit'
@@ -164,7 +174,7 @@ const Skills = (props) => {
       <Modal show={props.error} onCancel={onCancelHandler}>
         Could not update changes at the moment, please try again later
       </Modal>
-      {formSkills}
+      {formLanguages}
     </React.Fragment>
   );
 };
@@ -180,8 +190,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSkills: (payload) =>
-      dispatch(actionCreators.updateApplicantSkills(payload)),
+    updateApplicantLanguages: (payload) =>
+      dispatch(actionCreators.updateApplicantLanguages(payload)),
     getOneApplicant: (applicantid) =>
       dispatch(actionCreators.getOneApplicant(applicantid)),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
@@ -190,4 +200,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Skills));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Language));
