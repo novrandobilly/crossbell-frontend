@@ -34,6 +34,8 @@ const ApplicantMap = (props) => {
         organization={props.items.organization}
         //=========================================== Applicant Skill
         skills={props.items.skills}
+        //=========================================== Applicant Languages
+        languages={props.items.languages}
       />
     </div>
   );

@@ -158,6 +158,9 @@ const EditApplicantOrganization = React.lazy(() =>
 const EditApplicantSkills = React.lazy(() =>
   import('./users/applicant/pages/Components/Edit/Skill')
 );
+const EditApplicantLanguage = React.lazy(() =>
+  import('./users/applicant/pages/Components/Edit/Language')
+);
 const AddApplicantEducation = React.lazy(() =>
   import('./users/applicant/pages/Components/Add/Education')
 );
@@ -343,6 +346,11 @@ const App = (props) => {
             <Route
               path='/ap/:applicantid/skills'
               component={EditApplicantSkills}
+            />
+
+            <Route
+              path='/ap/:applicantid/language'
+              component={EditApplicantLanguage}
             />
 
             <Route

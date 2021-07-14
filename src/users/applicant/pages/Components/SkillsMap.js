@@ -31,7 +31,8 @@ const SkillsMap = (props) => {
             props.skills.map((skill, i) => {
               return (
                 <div key={i} className={classes.ListContainer}>
-                  <p className={classes.SkillContainer}>{skill}</p>
+                  <p className={classes.SkillContainer}>{skill.skillName}</p>
+                  <p className={classes.SkillContainer}>{skill.rate}</p>
                 </div>
               );
             })}

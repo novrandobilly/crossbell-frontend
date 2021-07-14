@@ -103,7 +103,6 @@ const JobsDashboard = (props) => {
 
   const searchHandler = (event) => {
     event.preventDefault();
-
     if (state.search.value) {
       dispatch({
         type: ACTION.SEARCHEXECUTE,
