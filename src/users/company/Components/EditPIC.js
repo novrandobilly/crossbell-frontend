@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useForm } from '../../../../shared/utils/useForm';
+import { useForm } from '../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-} from '../../../../shared/utils/validator';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../shared/utils/validator';
 
 import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import Modal from '../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../shared/UI_Element/Input';
+import Modal from '../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../shared/UI_Element/Input';
 
 import classes from './EditPIC.module.css';
 
-const EditPIC = (props) => {
+const EditPIC = props => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
@@ -30,7 +27,7 @@ const EditPIC = (props) => {
 
   const { getOneCompany } = props;
   useEffect(() => {
-    getOneCompany({ userId: companyid }).then((res) => {
+    getOneCompany({ userId: companyid }).then(res => {
       setData(res.company);
     });
   }, [getOneCompany, companyid]);
@@ -63,7 +60,7 @@ const EditPIC = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -176,8 +173,7 @@ const EditPIC = (props) => {
                 className={classes.button}
                 startIcon={<NavigateBeforeIcon />}
                 onClick={props.onBackHandler}
-                style={{ marginRight: '2rem' }}
-              >
+                style={{ marginRight: '2rem' }}>
                 Back
               </Button>
             )}
@@ -188,8 +184,7 @@ const EditPIC = (props) => {
               color='primary'
               type='submit'
               className={classes.button}
-              endIcon={<NavigateNextIcon />}
-            >
+              endIcon={<NavigateNextIcon />}>
               Save
             </Button>
           </div>
@@ -213,7 +208,7 @@ const EditPIC = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -221,17 +216,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyPIC: (CompanyData) =>
-      dispatch(actionCreators.updateCompanyPIC(CompanyData)),
+    getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyPIC: CompanyData => dispatch(actionCreators.updateCompanyPIC(CompanyData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditPIC));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditPIC));

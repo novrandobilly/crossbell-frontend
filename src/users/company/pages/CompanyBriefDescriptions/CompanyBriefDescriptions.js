@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import * as actionCreators from '../../../../store/actions';
-import CompanyMap from '../Components/CompanyMap';
+import CompanyMap from '../../Components/CompanyMap';
 
-const CompanyBriefDescriptions = (props) => {
+const CompanyBriefDescriptions = props => {
   const { companyid } = useParams();
   const [loadedCompany, setLoadedCompany] = useState(null);
 
@@ -36,10 +36,9 @@ const CompanyBriefDescriptions = (props) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOneCompany: (companyData) =>
-      dispatch(actionCreators.getOneCompany(companyData)),
+    getOneCompany: companyData => dispatch(actionCreators.getOneCompany(companyData)),
   };
 };
 

@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_ALWAYSTRUE,
-} from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import classes from './Certification.module.css';
 
-const Certification = (props) => {
+const Certification = props => {
   const { applicantid } = useParams();
   const { certificationindex } = useParams();
 
@@ -33,10 +30,8 @@ const Certification = (props) => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then((res) => {
-        const certificationSort = res.applicant.certification.sort(
-          (a, b) => moment(b.startDate) - moment(a.startDate)
-        );
+      getOneApplicant(payload).then(res => {
+        const certificationSort = res.applicant.certification.sort((a, b) => moment(b.startDate) - moment(a.startDate));
         setData(certificationSort[certificationindex]);
       });
     }
@@ -72,11 +67,11 @@ const Certification = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const expiryHandler = (event) => {
+  const expiryHandler = event => {
     setExpiry(!expiry);
   };
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -95,9 +90,7 @@ const Certification = (props) => {
         token: props.auth.token,
       };
       try {
-        const res = await props.updateApplicantCertification(
-          updatedCertification
-        );
+        const res = await props.updateApplicantCertification(updatedCertification);
         if (res) {
           console.log(res);
         } else {
@@ -119,9 +112,7 @@ const Certification = (props) => {
         token: props.auth.token,
       };
       try {
-        const res = await props.updateApplicantCertification(
-          updatedCertification
-        );
+        const res = await props.updateApplicantCertification(updatedCertification);
         if (res) {
           console.log(res);
         } else {
@@ -227,21 +218,11 @@ const Certification = (props) => {
 
           <div className={classes.Footer}>
             <Link to={`/ap/${applicantid}/profile`}>
-              <Button
-                variant='outlined'
-                type='Button'
-                disableElevation
-                style={{ marginRight: '16px' }}
-              >
+              <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
                 Back
               </Button>
             </Link>
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='submit'
-            >
+            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
               Save
             </Button>
           </div>
@@ -264,7 +245,7 @@ const Certification = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -272,18 +253,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantCertification: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
+    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantCertification: ApplicantData => dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Certification));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Certification));

@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
-import { useForm } from '../../../../shared/utils/useForm';
+import { useForm } from '../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions/index';
+import { VALIDATOR_MINLENGTH } from '../../../shared/utils/validator';
 
 import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import Modal from '../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../shared/UI_Element/Input';
+import Modal from '../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../shared/UI_Element/Input';
 import classes from './EditCompanyBriefDescriptions.module.css';
 
-const BriefDescriptions = (props) => {
+const BriefDescriptions = props => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
@@ -26,7 +26,7 @@ const BriefDescriptions = (props) => {
 
   const { getOneCompany } = props;
   useEffect(() => {
-    getOneCompany({ userId: companyid }).then((res) => {
+    getOneCompany({ userId: companyid }).then(res => {
       setData(res.company);
     });
   }, [getOneCompany, companyid]);
@@ -43,7 +43,7 @@ const BriefDescriptions = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -102,8 +102,7 @@ const BriefDescriptions = (props) => {
                 className={classes.button}
                 startIcon={<NavigateBeforeIcon />}
                 onClick={props.onBackHandler}
-                style={{ marginRight: '2rem' }}
-              >
+                style={{ marginRight: '2rem' }}>
                 Back
               </Button>
             )}
@@ -114,8 +113,7 @@ const BriefDescriptions = (props) => {
               color='primary'
               type='submit'
               className={classes.button}
-              endIcon={<NavigateNextIcon />}
-            >
+              endIcon={<NavigateNextIcon />}>
               {push ? 'Next' : 'Save'}
             </Button>
           </div>
@@ -140,7 +138,7 @@ const BriefDescriptions = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -148,17 +146,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyBriefDescriptions: (CompanyData) =>
-      dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData)),
+    getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyBriefDescriptions: CompanyData => dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(BriefDescriptions));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BriefDescriptions));

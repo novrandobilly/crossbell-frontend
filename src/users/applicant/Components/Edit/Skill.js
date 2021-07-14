@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions';
-import { VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions';
+import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Button from '@material-ui/core/Button';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import Spinner from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './Skill.module.css';
 
-const Skills = (props) => {
+const Skills = props => {
   const [skills, setSkills] = useState(['skill']);
   const [skillsList, setSkillsList] = useState([{}]);
 
@@ -36,7 +36,7 @@ const Skills = (props) => {
       res = await getOneApplicant(payload);
 
       res.applicant.skills.forEach((skill, i) => {
-        setSkills((prevState) => [...prevState, 'skill']);
+        setSkills(prevState => [...prevState, 'skill']);
       });
       setSkillsList(res.applicant.skills);
     };
@@ -50,7 +50,7 @@ const Skills = (props) => {
     onInputHandler('skills', skillsList, true);
   }, [onInputHandler, skillsList]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
     }
@@ -70,15 +70,15 @@ const Skills = (props) => {
     props.history.push(`/ap/${applicantid}/profile`);
   };
 
-  const addSkill = (e) => {
+  const addSkill = e => {
     e.preventDefault();
-    setSkills((skills) => [...skills, 'skill']);
+    setSkills(skills => [...skills, 'skill']);
   };
 
   const onUpdateSkill = (event, i, type) => {
     let inputValue = event.target.value;
 
-    setSkillsList((prevState) => {
+    setSkillsList(prevState => {
       let newState = [...prevState];
       if (typeof newState[i] !== 'object') newState[i] = {};
       newState[i][type] = inputValue;
@@ -102,7 +102,7 @@ const Skills = (props) => {
                     inputType='input'
                     id={`skill_${i}`}
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                    onChange={(e) => onUpdateSkill(e, i, 'skillName')}
+                    onChange={e => onUpdateSkill(e, i, 'skillName')}
                     initIsValid={true}
                     label='Keterampilan'
                     value={skillsList[i]?.skillName}
@@ -114,7 +114,7 @@ const Skills = (props) => {
                     inputType='input'
                     id={`rating_${i}`}
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                    onChange={(e) => onUpdateSkill(e, i, 'rate')}
+                    onChange={e => onUpdateSkill(e, i, 'rate')}
                     initIsValid={true}
                     type='number'
                     label='Rate'
@@ -128,24 +128,12 @@ const Skills = (props) => {
             );
           })}
 
-          <Button
-            variant='contained'
-            color='primary'
-            type='button'
-            disableElevation
-            onClick={addSkill}
-            size='small'
-          >
+          <Button variant='contained' color='primary' type='button' disableElevation onClick={addSkill} size='small'>
             Add Input
           </Button>
 
           <div className={classes.Footer}>
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='submit'
-            >
+            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
               Save
             </Button>
           </div>
@@ -169,7 +157,7 @@ const Skills = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     applicant: state.applicant,
     isLoading: state.applicant.isLoading,
@@ -178,15 +166,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateSkills: (payload) =>
-      dispatch(actionCreators.updateApplicantSkills(payload)),
-    getOneApplicant: (applicantid) =>
-      dispatch(actionCreators.getOneApplicant(applicantid)),
+    updateSkills: payload => dispatch(actionCreators.updateApplicantSkills(payload)),
+    getOneApplicant: applicantid => dispatch(actionCreators.getOneApplicant(applicantid)),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
   };
 };
 

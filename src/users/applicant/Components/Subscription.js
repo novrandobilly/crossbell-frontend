@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
-import { useForm } from '../../../../shared/utils/useForm';
+import { useForm } from '../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
-// import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions/index';
+// import { VALIDATOR_REQUIRE } from '../../../shared/utils/validator';
 
-import Modal from '../../../../shared/UI_Element/Modal';
-import OrderModal from '../../../../shared/UI_Element/OrderModal';
+import Modal from '../../../shared/UI_Element/Modal';
+import OrderModal from '../../../shared/UI_Element/OrderModal';
 import Button from '@material-ui/core/Button';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
 import TextField from '@material-ui/core/TextField';
 
 import classes from './Subscription.module.css';
 
-const Subscription = (props) => {
+const Subscription = props => {
   const [data, setData] = useState();
   const [orderModal, setOrderModal] = useState(false);
   const [autoSend, setAutoSend] = useState({
@@ -41,7 +41,7 @@ const Subscription = (props) => {
       applicantId: applicantid,
       token: props.auth.token,
     };
-    getOneApplicant(payload).then((res) => {
+    getOneApplicant(payload).then(res => {
       setAutoSend(res.applicant.autoSend);
       setAutoRemind(res.applicant.autoRemind);
       setData(res.applicant);
@@ -78,7 +78,7 @@ const Subscription = (props) => {
     }
   }, [data, onInputHandler, autoSend, autoRemind]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
@@ -103,18 +103,18 @@ const Subscription = (props) => {
     }
   };
 
-  const onCheckedAutoSend = (e) => {
+  const onCheckedAutoSend = e => {
     const elementValue = e.target.checked;
-    setAutoSend((prevState) => {
+    setAutoSend(prevState => {
       let tempObject = { ...prevState };
       tempObject.isAutoSend = elementValue;
       return { ...tempObject };
     });
   };
 
-  const onChangeAutoSendIndustry = (e) => {
+  const onChangeAutoSendIndustry = e => {
     e.persist();
-    setAutoSend((prevState) => {
+    setAutoSend(prevState => {
       let tempObject = { ...prevState };
       tempObject.jobIndustry = e.target.value;
       prevState.jobIndustry = e.target.value;
@@ -122,27 +122,27 @@ const Subscription = (props) => {
     });
   };
 
-  const onChangeAutoSendField = (e) => {
+  const onChangeAutoSendField = e => {
     e.persist();
-    setAutoSend((prevState) => {
+    setAutoSend(prevState => {
       let tempObject = { ...prevState };
       tempObject.jobField = e.target.value;
       return { ...tempObject };
     });
   };
 
-  const onCheckedAutoRemind = (e) => {
+  const onCheckedAutoRemind = e => {
     const elementValue = e.target.checked;
-    setAutoRemind((prevState) => {
+    setAutoRemind(prevState => {
       let tempObject = { ...prevState };
       tempObject.isAutoRemind = elementValue;
       return { ...tempObject };
     });
   };
 
-  const onChangeAutoRemindIndustry = (e) => {
+  const onChangeAutoRemindIndustry = e => {
     e.persist();
-    setAutoRemind((prevState) => {
+    setAutoRemind(prevState => {
       let tempObject = { ...prevState };
       tempObject.jobIndustry = e.target.value;
       prevState.jobIndustry = e.target.value;
@@ -150,9 +150,9 @@ const Subscription = (props) => {
     });
   };
 
-  const onChangeAutoRemindField = (e) => {
+  const onChangeAutoRemindField = e => {
     e.persist();
-    setAutoRemind((prevState) => {
+    setAutoRemind(prevState => {
       let tempObject = { ...prevState };
       tempObject.jobField = e.target.value;
       return { ...tempObject };
@@ -178,9 +178,8 @@ const Subscription = (props) => {
           <strong>
             <em>(uncheck)</em>
           </strong>{' '}
-          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto
-          reminder) dan/atau fitur lamaran otomatis (auto apply) , keluar dari
-          halaman bila anda tidak ingin melakukan pembaruan
+          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto reminder) dan/atau fitur lamaran otomatis (auto apply) ,
+          keluar dari halaman bila anda tidak ingin melakukan pembaruan
         </p>
 
         <div className={classes.Content}>
@@ -188,15 +187,8 @@ const Subscription = (props) => {
             <p className={classes.ContentTitle}>Penyaluran otomatis</p>
 
             <label onChange={onCheckedAutoSend} className={classes.CheckBox}>
-              <input
-                id='autoSend'
-                type='checkbox'
-                name='autoSend'
-                className={classes.Box}
-              />
-              <p className={classes.Text}>
-                Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell
-              </p>{' '}
+              <input id='autoSend' type='checkbox' name='autoSend' className={classes.Box} />
+              <p className={classes.Text}>Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell</p>{' '}
             </label>
             <div className={classes.InputDiv}>
               <TextField
@@ -221,15 +213,8 @@ const Subscription = (props) => {
           <div className={classes.BottomContent}>
             <p className={classes.ContentTitle}>Notifikasi otomatis</p>
             <label onChange={onCheckedAutoRemind} className={classes.CheckBox}>
-              <input
-                id='autoRemind'
-                type='checkbox'
-                name='autoRemind'
-                className={classes.Box}
-              />
-              <p className={classes.Text}>
-                Berikan notifikasi bila ada pekerjaan sesuai bidang minat
-              </p>{' '}
+              <input id='autoRemind' type='checkbox' name='autoRemind' className={classes.Box} />
+              <p className={classes.Text}>Berikan notifikasi bila ada pekerjaan sesuai bidang minat</p>{' '}
             </label>
             <div className={classes.InputDiv}>
               <TextField
@@ -253,13 +238,7 @@ const Subscription = (props) => {
         </div>
 
         <div className={classes.Footer}>
-          <Button
-            disabled={!formState.formIsValid}
-            variant='contained'
-            color='primary'
-            type='button'
-            onClick={onOpenOrderModal}
-          >
+          <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='button' onClick={onOpenOrderModal}>
             Simpan
           </Button>
         </div>
@@ -277,20 +256,15 @@ const Subscription = (props) => {
       <Modal show={props.error} onCancel={onCancelHandler}>
         Could not update changes at the moment, please try again later
       </Modal>
-      <OrderModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        Accept={onSubmitHandler}
-      >
-        Apakah anda yakin ingin membuat perubahan pada subscription anda saat
-        ini?
+      <OrderModal show={orderModal} onCancel={onCloseOrderModal} Accept={onSubmitHandler}>
+        Apakah anda yakin ingin membuat perubahan pada subscription anda saat ini?
       </OrderModal>
       {content}
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -298,19 +272,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (payload) =>
-      dispatch(actionCreators.getOneApplicant(payload)),
-    updateApplicantSubscription: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantSubscription(ApplicantData)),
+    getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
+    updateApplicantSubscription: ApplicantData => dispatch(actionCreators.updateApplicantSubscription(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Subscription));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Subscription));

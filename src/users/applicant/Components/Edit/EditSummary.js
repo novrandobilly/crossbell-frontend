@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import { VALIDATOR_MINLENGTH } from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
 import Button from '@material-ui/core/Button';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './EditSummary.module.css';
 
-const EditSummary = (props) => {
+const EditSummary = props => {
   const { applicantid } = useParams();
 
   const [data, setData] = useState();
@@ -30,7 +30,7 @@ const EditSummary = (props) => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then((res) => {
+      getOneApplicant(payload).then(res => {
         setData(res.applicant);
       });
     }
@@ -46,7 +46,7 @@ const EditSummary = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -82,13 +82,10 @@ const EditSummary = (props) => {
 
           <div className={classes.FormRow}>
             <p className={classes.Tips}>
-              *Ceritakan secara singkat tentang diri anda yang membuat
-              perusahaan pencari tenaga kerja menjadi tertarik untuk mengundang
-              anda mengikuti proses seleksi. Hal penting harus anda uraikan
-              adalah hubungan antara karakter, minat, dan kualifikasi yang kamu
-              miliki saat ini disertai dengan rancangan dirimu di masa depan.
-              Hal itu bisa dipaparkan dengan menceritakan pengalaman masa lalu
-              anda terkait karakter dan kompetensi yang anda miliki.
+              *Ceritakan secara singkat tentang diri anda yang membuat perusahaan pencari tenaga kerja menjadi tertarik untuk mengundang
+              anda mengikuti proses seleksi. Hal penting harus anda uraikan adalah hubungan antara karakter, minat, dan kualifikasi yang
+              kamu miliki saat ini disertai dengan rancangan dirimu di masa depan. Hal itu bisa dipaparkan dengan menceritakan pengalaman
+              masa lalu anda terkait karakter dan kompetensi yang anda miliki.
             </p>
             <div className={classes.EditLabel}>
               <Input
@@ -107,21 +104,11 @@ const EditSummary = (props) => {
           </div>
           <div className={classes.Footer}>
             <Link to={`/ap/${applicantid}/profile`}>
-              <Button
-                variant='outlined'
-                type='Button'
-                disableElevation
-                style={{ marginRight: '16px' }}
-              >
+              <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
                 Back
               </Button>
             </Link>
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='submit'
-            >
+            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
               Save
             </Button>
           </div>
@@ -144,7 +131,7 @@ const EditSummary = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -152,18 +139,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantSummary: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
+    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantSummary: ApplicantData => dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditSummary));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditSummary));

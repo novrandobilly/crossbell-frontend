@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_ALWAYSTRUE,
-} from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 
-import Modal from '../../../../../shared/UI_Element/Modal';
+import Modal from '../../../../shared/UI_Element/Modal';
 import Checkbox from '@material-ui/core/Checkbox';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
-import classes from './Experience.module.css';
+import classes from './Organization.module.css';
 
-const Experience = (props) => {
+const Organization = props => {
   const { applicantid } = useParams();
-  const { experienceindex } = useParams();
+  const { Organizationindex } = useParams();
 
   const [data, setData] = useState();
   const [tillNow, setTillNow] = useState(false);
@@ -37,28 +34,18 @@ const Experience = (props) => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then((res) => {
-        const experienceSort = res.applicant.experience.sort(
-          (a, b) => moment(b.startDate) - moment(a.startDate)
-        );
-        setData(experienceSort[experienceindex]);
+      getOneApplicant(payload).then(res => {
+        const OrganizationSort = res.applicant.Organization.sort((a, b) => moment(b.startDate) - moment(a.startDate));
+        setData(OrganizationSort[Organizationindex]);
       });
     }
-  }, [getOneApplicant, applicantid, experienceindex, props.auth.token]);
+  }, [getOneApplicant, applicantid, Organizationindex, props.auth.token]);
 
   const [formState, onInputHandler] = useForm(
     {
-      prevTitle: {
-        value: data ? data.prevTitle : null,
-        isValid: data && data.prevTitle ? true : false,
-      },
-      prevCompany: {
-        value: data ? data.prevCompany : null,
-        isValid: data && data.prevCompany ? true : false,
-      },
-      prevIndustry: {
-        value: data ? data.prevIndustry : null,
-        isValid: data && data.prevIndustry ? true : false,
+      organization: {
+        value: data ? data.organization : null,
+        isValid: data && data.organization ? true : false,
       },
       startDate: {
         value: data ? data.startDate : null,
@@ -76,16 +63,16 @@ const Experience = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
     }
-    let updatedExperience = {
+    let updatedOrganization = {
       applicantId: applicantid,
-      index: experienceindex,
-      prevTitle: formState.inputs.prevTitle.value,
+      index: Organizationindex,
+      organization: formState.inputs.organization.value,
       prevCompany: formState.inputs.prevCompany.value,
       prevIndustry: formState.inputs.prevIndustry.value,
       startDate: formState.inputs.startDate.value,
@@ -95,10 +82,10 @@ const Experience = (props) => {
     };
 
     if (tillNow) {
-      updatedExperience = {
+      updatedOrganization = {
         applicantId: applicantid,
-        index: experienceindex,
-        prevTitle: formState.inputs.prevTitle.value,
+        index: Organizationindex,
+        organization: formState.inputs.organization.value,
         prevCompany: formState.inputs.prevCompany.value,
         prevIndustry: formState.inputs.prevIndustry.value,
         startDate: formState.inputs.startDate.value,
@@ -109,7 +96,7 @@ const Experience = (props) => {
     }
 
     try {
-      const res = await props.updateApplicantExperience(updatedExperience);
+      const res = await props.updateApplicantOrganization(updatedOrganization);
       if (res) {
         console.log(res);
       } else {
@@ -122,7 +109,7 @@ const Experience = (props) => {
     }
   };
 
-  const dateHandler = (event) => {
+  const dateHandler = event => {
     setTillNow(!tillNow);
   };
 
@@ -142,34 +129,8 @@ const Experience = (props) => {
                 inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
-                label='Jabatan*'
+                label='Nama Organisasi*'
                 initValue={data.prevTitle}
-                initIsValid={true}
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType='input'
-                id='prevCompany'
-                inputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Nama perusahaan*'
-                initValue={data.prevCompany}
-                initIsValid={true}
-              />
-            </div>
-
-            <div className={classes.EditLabel}>
-              <Input
-                inputType='input'
-                id='prevIndustry'
-                inputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Alamat perusahaan*'
-                initValue={data.prevIndustry}
                 initIsValid={true}
               />
             </div>
@@ -213,15 +174,8 @@ const Experience = (props) => {
             </div>
 
             <div className={classes.CheckboxDiv}>
-              <Checkbox
-                color='primary'
-                size='small'
-                onChange={dateHandler}
-                style={{ padding: '0' }}
-              />
-              <label className={classes.CheckboxText}>
-                Saya masih berkerja disini
-              </label>
+              <Checkbox color='primary' size='small' onChange={dateHandler} style={{ padding: '0' }} />
+              <label className={classes.CheckboxText}>Saya masih berkerja disini</label>
             </div>
 
             <div className={classes.EditLabel}>
@@ -231,7 +185,7 @@ const Experience = (props) => {
                 inputClass='EditProfileTextArea'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
-                label='Uraian pekerjaan (Opsional)'
+                label='Uraian Organisasi (Opsional)'
                 initValue={data.description}
                 initIsValid={true}
                 rows={12}
@@ -241,21 +195,11 @@ const Experience = (props) => {
 
           <div className={classes.Footer}>
             <Link to={`/ap/${applicantid}/profile`}>
-              <Button
-                variant='outlined'
-                type='Button'
-                disableElevation
-                style={{ marginRight: '16px' }}
-              >
+              <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
                 Back
               </Button>
             </Link>
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='submit'
-            >
+            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
               Save
             </Button>
           </div>
@@ -278,7 +222,7 @@ const Experience = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -286,18 +230,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantExperience: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
+    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantOrganization: ApplicantData => dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Experience));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Organization));

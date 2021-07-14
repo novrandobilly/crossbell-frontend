@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../../../store/actions/index';
 import * as actionTypes from '../../../../store/actions/actions';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Container from '../Components/ApplicantMap';
+import Container from '../../Components/ApplicantMap';
 import Modal from '../../../../shared/UI_Element/Modal';
 
-const ApplicantDetails = (props) => {
+const ApplicantDetails = props => {
   const { applicantid } = useParams();
 
   const [data, setData] = useState({});
@@ -27,23 +27,15 @@ const ApplicantDetails = (props) => {
     };
     // if ((props.auth.token && !props.auth.isCompany) || props.admin.token) {
     getOneApplicant(payload)
-      .then((res) => {
+      .then(res => {
         setData(res.applicant);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
     // } else {
     //   getApplicantFail();
     // }
-  }, [
-    setIsLoading,
-    getOneApplicant,
-    applicantid,
-    props.auth.token,
-    props.auth.isCompany,
-    props.admin.token,
-    getApplicantFail,
-  ]);
+  }, [setIsLoading, getOneApplicant, applicantid, props.auth.token, props.auth.isCompany, props.admin.token, getApplicantFail]);
 
   const onCancelHandler = () => {
     props.history.push(`/`);
@@ -65,16 +57,15 @@ const ApplicantDetails = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOneApplicant: (payload) =>
-      dispatch(actionCreators.getOneApplicant(payload)),
+    getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
     getApplicantFail: () => dispatch({ type: actionTypes.GETAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
   };
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     login: state.auth.isLogin,
     admin: state.admin,
@@ -84,7 +75,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(ApplicantDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ApplicantDetails));

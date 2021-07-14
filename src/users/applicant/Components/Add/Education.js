@@ -1,35 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_ALWAYSTRUE,
-  VALIDATOR_MAX,
-  VALIDATOR_MIN,
-} from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE, VALIDATOR_MAX, VALIDATOR_MIN } from '../../../../shared/utils/validator';
 
-import University from '../../../../../shared/UI_Element/UniversityData';
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+import University from '../../../../shared/UI_Element/UniversityData';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
 import classes from './Education.module.css';
 
-const Education = (props) => {
+const Education = props => {
   const { applicantid } = useParams();
   const push = props.push;
 
@@ -80,7 +73,7 @@ const Education = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -118,7 +111,7 @@ const Education = (props) => {
     }
   }, [onInputHandler, school]);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -182,7 +175,7 @@ const Education = (props) => {
             name='school'
             ccc='true'
             options={University}
-            getOptionLabel={(option) => {
+            getOptionLabel={option => {
               if (typeof option === 'string') {
                 return option;
               }
@@ -191,23 +184,13 @@ const Education = (props) => {
               }
               return option.institusi;
             }}
-            renderOption={(option) => option.institusi}
+            renderOption={option => option.institusi}
             freeSolo
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label='Nama sekolah/ universitas*'
-                margin='normal'
-                variant='standard'
-              />
-            )}
+            renderInput={params => <TextField {...params} label='Nama sekolah/ universitas*' margin='normal' variant='standard' />}
           />
         </div>
 
-        <FormControl
-          className={classes.formControl}
-          style={{ margin: '0 0 8px 0' }}
-        >
+        <FormControl className={classes.formControl} style={{ margin: '0 0 8px 0' }}>
           <InputLabel id='degree' style={{ fontSize: '1rem' }}>
             Tingkat Pendidikan*
           </InputLabel>
@@ -221,8 +204,7 @@ const Education = (props) => {
             onOpen={handleOpen}
             value={degree}
             onChange={handleChange}
-            style={{ fontSize: '0.9rem', textAlign: 'left' }}
-          >
+            style={{ fontSize: '0.9rem', textAlign: 'left' }}>
             <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
               SMA
             </MenuItem>
@@ -310,11 +292,7 @@ const Education = (props) => {
               max={4}
               step='0.1'
               helperText={
-                formState.inputs.IPK.value < 0
-                  ? 'Nilai IPK min 0'
-                  : formState.inputs.IPK.value > 4
-                  ? 'Nilai IPK max 4'
-                  : 'IPK wajib diisi'
+                formState.inputs.IPK.value < 0 ? 'Nilai IPK min 0' : formState.inputs.IPK.value > 4 ? 'Nilai IPK max 4' : 'IPK wajib diisi'
               }
             />
           </div>
@@ -336,21 +314,11 @@ const Education = (props) => {
 
       <div className={classes.Footer}>
         <Link to={`/ap/${applicantid}/profile`}>
-          <Button
-            variant='outlined'
-            type='Button'
-            disableElevation
-            style={{ marginRight: '16px' }}
-          >
+          <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
             Back
           </Button>
         </Link>
-        <Button
-          disabled={!formState.formIsValid}
-          variant='contained'
-          color='primary'
-          type='submit'
-        >
+        <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
           Save
         </Button>
       </div>
@@ -377,7 +345,7 @@ const Education = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -385,17 +353,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantEducation: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantEducation: ApplicantData => dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Education));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Education));

@@ -1,35 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_MAX,
-  VALIDATOR_MIN,
-  VALIDATOR_ALWAYSTRUE,
-} from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_MAX, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 
-import University from '../../../../../shared/UI_Element/UniversityData';
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+import University from '../../../../shared/UI_Element/UniversityData';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
 import classes from './Education.module.css';
 
-const Education = (props) => {
+const Education = props => {
   const { applicantid } = useParams();
   const { educationindex } = useParams();
 
@@ -51,11 +44,9 @@ const Education = (props) => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then((res) => {
+      getOneApplicant(payload).then(res => {
         console.log(res);
-        const educationSort = res.applicant.education.sort(
-          (a, b) => moment(b.startDate) - moment(a.startDate)
-        );
+        const educationSort = res.applicant.education.sort((a, b) => moment(b.startDate) - moment(a.startDate));
         setData(educationSort[educationindex]);
         setSchool(educationSort[educationindex].school);
       });
@@ -100,7 +91,7 @@ const Education = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -140,7 +131,7 @@ const Education = (props) => {
     }
   }, [data, onInputHandler, school]);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -206,7 +197,7 @@ const Education = (props) => {
               name='school'
               ccc='true'
               options={University}
-              getOptionLabel={(option) => {
+              getOptionLabel={option => {
                 // Value selected with enter, right from the input
                 if (typeof option === 'string') {
                   return option;
@@ -218,16 +209,9 @@ const Education = (props) => {
                 // Regular option
                 return option.institusi;
               }}
-              renderOption={(option) => option.institusi}
+              renderOption={option => option.institusi}
               freeSolo
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label='Nama sekolah/ universitas*'
-                  margin='normal'
-                  variant='standard'
-                />
-              )}
+              renderInput={params => <TextField {...params} label='Nama sekolah/ universitas*' margin='normal' variant='standard' />}
             />
           </div>
 
@@ -245,8 +229,7 @@ const Education = (props) => {
               onOpen={handleOpen}
               value={degree ? degree : data.degree}
               onChange={handleChange}
-              style={{ fontSize: '0.9rem', textAlign: 'left' }}
-            >
+              style={{ fontSize: '0.9rem', textAlign: 'left' }}>
               <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
                 SMA
               </MenuItem>
@@ -365,21 +348,11 @@ const Education = (props) => {
 
         <div className={classes.Footer}>
           <Link to={`/ap/${applicantid}/profile`}>
-            <Button
-              variant='outlined'
-              type='Button'
-              disableElevation
-              style={{ marginRight: '16px' }}
-            >
+            <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
               Back
             </Button>
           </Link>
-          <Button
-            disabled={!formState.formIsValid}
-            variant='contained'
-            color='primary'
-            type='submit'
-          >
+          <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
             Save
           </Button>
         </div>
@@ -401,7 +374,7 @@ const Education = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -409,18 +382,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantEducation: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
+    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantEducation: ApplicantData => dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Education));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Education));

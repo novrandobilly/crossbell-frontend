@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_ALWAYSTRUE,
-} from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 
 import Checkbox from '@material-ui/core/Checkbox';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
 import classes from './Experience.module.css';
 
-const Experience = (props) => {
+const Experience = props => {
   const { applicantid } = useParams();
   const push = props.push;
 
@@ -59,7 +56,7 @@ const Experience = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -103,7 +100,7 @@ const Experience = (props) => {
     }
   };
 
-  const dateHandler = (event) => {
+  const dateHandler = event => {
     setTillNow(!tillNow);
   };
 
@@ -183,15 +180,8 @@ const Experience = (props) => {
           </div>
 
           <div className={classes.CheckboxDiv}>
-            <Checkbox
-              color='primary'
-              size='small'
-              onChange={dateHandler}
-              style={{ padding: '0' }}
-            />
-            <label className={classes.CheckboxText}>
-              Saya masih berkerja disini
-            </label>
+            <Checkbox color='primary' size='small' onChange={dateHandler} style={{ padding: '0' }} />
+            <label className={classes.CheckboxText}>Saya masih berkerja disini</label>
           </div>
 
           <div className={classes.EditLabel}>
@@ -209,21 +199,11 @@ const Experience = (props) => {
 
         <div className={classes.Footer}>
           <Link to={`/ap/${applicantid}/profile`}>
-            <Button
-              variant='outlined'
-              type='Button'
-              disableElevation
-              style={{ marginRight: '16px' }}
-            >
+            <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
               Back
             </Button>
           </Link>
-          <Button
-            disabled={!formState.formIsValid}
-            variant='contained'
-            color='primary'
-            type='submit'
-          >
+          <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
             Save
           </Button>
         </div>
@@ -251,7 +231,7 @@ const Experience = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -259,17 +239,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantExperience: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantExperience: ApplicantData => dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Experience));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Experience));

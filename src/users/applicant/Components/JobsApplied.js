@@ -3,12 +3,12 @@ import { withRouter, useParams, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import * as actionCreators from '../../../../store/actions';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import * as actionCreators from '../../../store/actions';
+import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
 
 import classes from './JobsApplied.module.css';
 
-const JobsApplied = (props) => {
+const JobsApplied = props => {
   const { applicantid } = useParams();
 
   const [data, setData] = useState([]);
@@ -27,11 +27,9 @@ const JobsApplied = (props) => {
         applicantId: applicantid,
       };
 
-      getApplicantJobsApplied(payload).then((res) => {
+      getApplicantJobsApplied(payload).then(res => {
         console.log(res);
-        setData(
-          res.Jobs.sort((a, b) => moment(b.releasedAt) - moment(a.releasedAt))
-        );
+        setData(res.Jobs.sort((a, b) => moment(b.releasedAt) - moment(a.releasedAt)));
       });
     }
   }, [getApplicantJobsApplied, applicantid, props.auth]);
@@ -48,28 +46,17 @@ const JobsApplied = (props) => {
                 <div className={classes.CardContainer}>
                   <div className={classes.Header}>
                     <p className={classes.Title}>{items.jobTitle}</p>
-                    <p className={classes.Company}>
-                      {items.companyId.companyName}
-                    </p>
+                    <p className={classes.Company}>{items.companyId.companyName}</p>
                   </div>
                   <div className={classes.Content}>
                     <div className={classes.AvatarContainer}>
-                      <img
-                        className={classes.Avatar}
-                        src={`${items.companyId.logo.url}`}
-                        alt='Logo'
-                      />
+                      <img className={classes.Avatar} src={`${items.companyId.logo.url}`} alt='Logo' />
                     </div>
                   </div>
                   <div className={classes.Footer}>
                     <p className={classes.DateApplied}>
                       {moment().diff(moment(items.createdAt), 'days') > 0
-                        ? [
-                            `posted ${moment().diff(
-                              moment(items.createdAt),
-                              'days'
-                            )} days ago`,
-                          ]
+                        ? [`posted ${moment().diff(moment(items.createdAt), 'days')} days ago`]
                         : 'atas'}
                     </p>
                   </div>
@@ -90,7 +77,7 @@ const JobsApplied = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     applicant: state.applicant,
@@ -99,14 +86,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getApplicantJobsApplied: (payload) =>
-      dispatch(actionCreators.getApplicantJobsApplied(payload)),
+    getApplicantJobsApplied: payload => dispatch(actionCreators.getApplicantJobsApplied(payload)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(JobsApplied));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(JobsApplied));

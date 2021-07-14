@@ -2,27 +2,22 @@ import React, { useEffect, useState, useReducer } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-  VALIDATOR_ALWAYSTRUE,
-  VALIDATOR_MIN,
-} from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions/index';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE, VALIDATOR_MIN } from '../../../../shared/utils/validator';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Cities from '../../../../../shared/UI_Element/CitiesData';
-import Input from '../../../../../shared/UI_Element/Input';
-import WorkFieldData from '../../../../../shared/UI_Element/WorkFieldData';
-import LocationData from '../../../../../shared/UI_Element/LocationData';
+import Modal from '../../../../shared/UI_Element/Modal';
+import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Cities from '../../../../shared/UI_Element/CitiesData';
+import Input from '../../../../shared/UI_Element/Input';
+import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
+import LocationData from '../../../../shared/UI_Element/LocationData';
 
 import classes from './EditIntro.module.css';
 
@@ -59,16 +54,13 @@ const locationReducer = (state, action) => {
   }
 };
 
-const EditIntro = (props) => {
+const EditIntro = props => {
   const { applicantid } = useParams();
   const [data, setData] = useState();
 
   const [interest, setInterest] = useState([]);
 
-  const [locationState, dispatch] = useReducer(
-    locationReducer,
-    initialLocation
-  );
+  const [locationState, dispatch] = useReducer(locationReducer, initialLocation);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -76,7 +68,7 @@ const EditIntro = (props) => {
 
   const [city, setCity] = useState(Cities.default);
 
-  const ProvCityRelation = (prov) => {
+  const ProvCityRelation = prov => {
     switch (prov) {
       case 'Aceh':
         setCity(Cities.Aceh);
@@ -227,7 +219,7 @@ const EditIntro = (props) => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then((res) => {
+      getOneApplicant(payload).then(res => {
         setInterest(res.applicant.interest);
         dispatch({
           type: LOC.INITFETCH,
@@ -333,15 +325,11 @@ const EditIntro = (props) => {
       onInputHandler('workShifts', data.workShifts, true);
       onInputHandler('state', locationState.province, true);
       onInputHandler('headhunterProgram', data.headhunterProgram, true);
-      onInputHandler(
-        'city',
-        locationState.citySelected,
-        locationState.citySelected ? true : false
-      );
+      onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
     }
   }, [data, onInputHandler, locationState, city]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
@@ -387,20 +375,20 @@ const EditIntro = (props) => {
     onInputHandler('interest', elementArray, true);
   };
 
-  const onManualInputHandler = (e) => {
+  const onManualInputHandler = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
   };
 
-  const onCheckedInputHandler = (e) => {
+  const onCheckedInputHandler = e => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
   };
 
   //=================== Profile Picture Handler ====================
-  const onUploadHandler = (e) => {
+  const onUploadHandler = e => {
     const elementId = e.target.name;
     const elementFile = e.target.files[0];
     onInputHandler(elementId, elementFile, true);
@@ -446,13 +434,7 @@ const EditIntro = (props) => {
                 />
               )}
               <label className={classes.InputButton}>
-                <input
-                  type='file'
-                  name='picture'
-                  id='picture'
-                  onChange={onUploadHandler}
-                  accept='.jpg, .jpeg, .png'
-                />
+                <input type='file' name='picture' id='picture' onChange={onUploadHandler} accept='.jpg, .jpeg, .png' />
                 <span className={classes.InputButtonText}> Upload File </span>
               </label>
               <span>
@@ -461,9 +443,7 @@ const EditIntro = (props) => {
               {formState.inputs.picture.value ? (
                 formState.inputs.picture.value.size > 500000 ? (
                   <span>
-                    <em style={{ color: 'red' }}>
-                      File terlalu besar. Mohon gunakan file berukuran max 500kb
-                    </em>
+                    <em style={{ color: 'red' }}>File terlalu besar. Mohon gunakan file berukuran max 500kb</em>
                   </span>
                 ) : (
                   <span>
@@ -519,9 +499,7 @@ const EditIntro = (props) => {
                         label='Tanggal Lahir'
                         maxDate={moment()}
                         initValue={data.dateOfBirth ? data.dateOfBirth : null}
-                        initIsValid={
-                          data.dateOfBirth ? data.dateOfBirth : false
-                        }
+                        initIsValid={data.dateOfBirth ? data.dateOfBirth : false}
                         format='dd/MM/yyyy'
                         style={{ width: '100%' }}
                         helperText='Tanggal lahir wajib diisi'
@@ -563,18 +541,12 @@ const EditIntro = (props) => {
                     <Autocomplete
                       id='state'
                       name='state'
-                      options={LocationData.sort().map((option) => option)}
+                      options={LocationData.sort().map(option => option)}
                       onChange={handleStateChange}
                       value={locationState.province}
                       style={{ margin: '0' }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          style={{ margin: '0' }}
-                          label='Provinsi*'
-                          margin='normal'
-                          variant='standard'
-                        />
+                      renderInput={params => (
+                        <TextField {...params} style={{ margin: '0' }} label='Provinsi*' margin='normal' variant='standard' />
                       )}
                     />
                   </div>
@@ -585,17 +557,11 @@ const EditIntro = (props) => {
                     <Autocomplete
                       id='city'
                       name='city'
-                      options={city.map((option) => option)}
+                      options={city.map(option => option)}
                       onChange={handleCityChange}
                       value={locationState.citySelected}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          style={{ margin: '0' }}
-                          label='Kota*'
-                          margin='normal'
-                          variant='standard'
-                        />
+                      renderInput={params => (
+                        <TextField {...params} style={{ margin: '0' }} label='Kota*' margin='normal' variant='standard' />
                       )}
                     />
                   </div>
@@ -634,26 +600,11 @@ const EditIntro = (props) => {
                     <div id='gender' onChange={onManualInputHandler}>
                       <p className={classes.Text}>Jenis Kelamin*</p>
                       <div className={classes.RadioHolder}>
-                        <label
-                          style={{ marginRight: '2rem' }}
-                          className={classes.RadioButton}
-                        >
-                          <input
-                            type='radio'
-                            value='male'
-                            name='gender'
-                            id='male'
-                          />{' '}
-                          Pria
+                        <label style={{ marginRight: '2rem' }} className={classes.RadioButton}>
+                          <input type='radio' value='male' name='gender' id='male' /> Pria
                         </label>
                         <label className={classes.RadioButton}>
-                          <input
-                            type='radio'
-                            value='female'
-                            name='gender'
-                            id='female'
-                          />{' '}
-                          Wanita
+                          <input type='radio' value='female' name='gender' id='female' /> Wanita
                         </label>
                       </div>
                     </div>
@@ -682,14 +633,12 @@ const EditIntro = (props) => {
                       multiple
                       id='interest'
                       name='interest'
-                      options={WorkFieldData.sort().map(
-                        (option) => option.field
-                      )}
-                      getOptionLabel={(option) => option}
+                      options={WorkFieldData.sort().map(option => option.field)}
+                      getOptionLabel={option => option}
                       onChange={fowHandler}
                       value={interest ? interest : ''}
                       style={{ margin: '0' }}
-                      renderInput={(params) => (
+                      renderInput={params => (
                         <TextField
                           {...params}
                           style={{ margin: '0' }}
@@ -716,11 +665,7 @@ const EditIntro = (props) => {
                       type='number'
                       min={0}
                       step='100000'
-                      helperText={
-                        formState.inputs.salary.value < 0
-                          ? 'Harapan gaji minimal 0'
-                          : 'Harapan gaji wajib diisi'
-                      }
+                      helperText={formState.inputs.salary.value < 0 ? 'Harapan gaji minimal 0' : 'Harapan gaji wajib diisi'}
                     />
                   </div>
                 </div>
@@ -728,61 +673,33 @@ const EditIntro = (props) => {
             </div>
 
             <div className={classes.ContentBottom}>
-              <label
-                onChange={onCheckedInputHandler}
-                className={classes.CheckBox}
-              >
+              <label onChange={onCheckedInputHandler} className={classes.CheckBox}>
                 <input id='outOfTown' type='checkbox' name='outOfTown' />
-                <p style={{ margin: '0', marginLeft: '4px' }}>
-                  Bersedia ditempatkan di luar kota asal
-                </p>
+                <p style={{ margin: '0', marginLeft: '4px' }}>Bersedia ditempatkan di luar kota asal</p>
               </label>
-              <label
-                onChange={onCheckedInputHandler}
-                className={classes.CheckBox}
-              >
+              <label onChange={onCheckedInputHandler} className={classes.CheckBox}>
                 <input id='workShifts' type='checkbox' name='workShifts' />
-                <p style={{ margin: '0', marginLeft: '4px' }}>
-                  Bersedia bekerja dengan sistem shift
-                </p>
+                <p style={{ margin: '0', marginLeft: '4px' }}>Bersedia bekerja dengan sistem shift</p>
               </label>
 
-              <label
-                onChange={onCheckedInputHandler}
-                className={classes.CheckBox}
-              >
-                <input
-                  id='headhunterProgram'
-                  type='checkbox'
-                  name='headhunterProgram'
-                />
-                <p style={{ margin: '0', marginLeft: '4px' }}>
-                  Saya ingin mengikuti program headhunter Crossbell
-                </p>
+              <label onChange={onCheckedInputHandler} className={classes.CheckBox}>
+                <input id='headhunterProgram' type='checkbox' name='headhunterProgram' />
+                <p style={{ margin: '0', marginLeft: '4px' }}>Saya ingin mengikuti program headhunter Crossbell</p>
               </label>
             </div>
           </div>
 
           <div className={classes.Footer}>
             <Link to={`/ap/${applicantid}/profile`}>
-              <Button
-                variant='outlined'
-                type='Button'
-                disableElevation
-                style={{ marginRight: '16px' }}
-              >
+              <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
                 Back
               </Button>
             </Link>
             <Button
-              disabled={
-                formState.inputs.interest.value.length <= 0 ||
-                !formState.formIsValid
-              }
+              disabled={formState.inputs.interest.value.length <= 0 || !formState.formIsValid}
               variant='contained'
               color='primary'
-              type='submit'
-            >
+              type='submit'>
               Save
             </Button>
           </div>
@@ -805,7 +722,7 @@ const EditIntro = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -813,18 +730,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantIntro: (ApplicantData) =>
-      dispatch(actionCreators.updateApplicantIntro(ApplicantData)),
+    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantIntro: ApplicantData => dispatch(actionCreators.updateApplicantIntro(ApplicantData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));
