@@ -105,6 +105,10 @@
   margin-bottom: 0;
 }
 
+.SearchContainer {
+  margin-bottom: 24px;
+}
+
 .CardBody {
   display: flex;
   flex-direction: column;

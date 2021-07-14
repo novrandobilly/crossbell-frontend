@@ -1,20 +1,79 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import QueryBar from '../Components/QueryBar';
+
 import CloseIcon from '@material-ui/icons/Close';
 
 import classes from './CompanyJobList.module.css';
 
+const ACTION = {
+  SEARCHUPDATE: 'update-search',
+  SEARCHEXECUTE: 'search-execute',
+  SEARCHEMPTY: 'search-empty',
+};
+const searchReducer = (state, action) => {
+  switch (action.type) {
+    case ACTION.SEARCHUPDATE: {
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          id: action.payload.id,
+          value: action.payload.value,
+          isValid: action.payload.isValid,
+        },
+      };
+    }
+    case ACTION.SEARCHEXECUTE: {
+      const filteredJob = action.payload.jobs.filter((job) => {
+        let searchValidity = false;
+        for (const key in job) {
+          if (typeof job[key] === 'string') {
+            searchValidity =
+              searchValidity ||
+              job[key].toLowerCase().includes(state.search.value.toLowerCase());
+          }
+        }
+        return searchValidity;
+      });
+      return {
+        ...state,
+        jobList: filteredJob,
+      };
+    }
+    case ACTION.SEARCHEMPTY: {
+      return {
+        ...state,
+        jobList: action.payload.jobs,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const CompanyJobList = (props) => {
   const { companyid } = useParams();
+  const [allCompanyJobs, setAllCompanyJobs] = useState();
 
   const [unreleasedData, setUnreleasedData] = useState();
   const [expiredData, setExpiredData] = useState();
   const [displayData, setDisplayData] = useState();
+
+  const [state, dispatch] = useReducer(searchReducer, {
+    search: {
+      id: '',
+      value: '',
+      isValid: '',
+    },
+    jobList: null,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,37 +89,42 @@ const CompanyJobList = (props) => {
       };
 
       getJobsInCompany(payload).then((res) => {
-        if (res && res.foundJob) {
-          setDisplayData(
-            res.foundJob
-              .filter(
-                (dat) =>
-                  dat.releasedAt != null && moment(dat.expiredDate) > moment()
-              )
-              .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-          );
-
-          setExpiredData(
-            res.foundJob
-              .filter(
-                (dat) =>
-                  dat.releasedAt != null && moment(dat.expiredDate) < moment()
-              )
-              .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-          );
-
-          setUnreleasedData(
-            res.foundJob
-              .filter((dat) => dat.releasedAt === null)
-              .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-          );
-        } else {
-          setDisplayData(null);
-          setUnreleasedData(null);
-        }
+        setAllCompanyJobs(res.foundJob);
+        dispatch({
+          type: ACTION.SEARCHEMPTY,
+          payload: { jobs: res.foundJob },
+        });
       });
     }
   }, [getJobsInCompany, companyid, props.auth]);
+
+  useEffect(() => {
+    if (allCompanyJobs && state.jobList) {
+      setDisplayData(
+        state.jobList
+          .filter(
+            (dat) =>
+              dat.releasedAt != null && moment(dat.expiredDate) > moment()
+          )
+          .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+      );
+
+      setExpiredData(
+        state.jobList
+          .filter(
+            (dat) =>
+              dat.releasedAt != null && moment(dat.expiredDate) < moment()
+          )
+          .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+      );
+
+      setUnreleasedData(
+        state.jobList
+          .filter((dat) => dat.releasedAt === null)
+          .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+      );
+    }
+  }, [state.jobList, allCompanyJobs]);
 
   const onDeleteHandler = async (id) => {
     const token = props.auth.token;
@@ -81,6 +145,41 @@ const CompanyJobList = (props) => {
     }
   };
 
+  const searchHandler = (event) => {
+    event.preventDefault();
+    console.log(state.search.value);
+    if (state.search.value) {
+      dispatch({
+        type: ACTION.SEARCHEXECUTE,
+        payload: { jobs: allCompanyJobs },
+      });
+    } else {
+      dispatch({
+        type: ACTION.SEARCHEMPTY,
+        payload: { jobs: allCompanyJobs },
+      });
+    }
+  };
+
+  const clearHandler = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: ACTION.SEARCHEMPTY,
+      payload: { jobs: allCompanyJobs },
+    });
+  };
+
+  const searchInputHandler = useCallback((id, value, isValid) => {
+    dispatch({
+      type: ACTION.SEARCHUPDATE,
+      payload: {
+        id,
+        value,
+        isValid,
+      },
+    });
+  }, []);
+
   let content = <SpinnerCircle />;
 
   if (!props.isLoading && displayData && displayData.length > 0) {
@@ -93,6 +192,13 @@ const CompanyJobList = (props) => {
           Lihat iklan pekerjaan perusahaan mu disini
         </p>
         <div className={classes.CardContainer}>
+          <div className={classes.SearchContainer}>
+            <QueryBar
+              searchInputHandler={searchInputHandler}
+              searchHandler={searchHandler}
+              clearHandler={clearHandler}
+            />
+          </div>
           <div className={classes.BorderLine}>Belum ditayangkan</div>
 
           <div className={classes.DivContainer}>

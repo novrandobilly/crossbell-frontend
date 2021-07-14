@@ -162,8 +162,25 @@ const ApplicantCard = (props) => {
               <div className={classes.SubscriptionButton}>Ubah Langganan</div>
             </Link>
           )}
+
           <div className={classes.LangguagesDiv}>
-            <p className={classes.LangguageTitle}>Kemampuan bahasa</p>
+            <div className={classes.LanguageHeader}>
+              <p className={classes.LangguageTitle}>Kemampuan bahasa</p>
+              <Link to={`/ap/${props.id}/language`}>
+                <IconButton />
+              </Link>
+            </div>
+
+            <div className={classes.LanguagesContent}>
+              {props.languages.map((lang, i) => {
+                return (
+                  <div className={classes.LanguagesBox}>
+                    <p>{lang.langName}</p>
+                    <p>{lang.rate}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 

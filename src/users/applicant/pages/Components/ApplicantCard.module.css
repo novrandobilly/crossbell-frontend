@@ -136,6 +136,22 @@
   text-align: left;
 }
 
+.LanguageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.LanguagesContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.LanguagesBox {
+  display: flex;
+  justify-content: space-between;
+}
+
 .LangguageTitle {
   margin: 0;
 }
