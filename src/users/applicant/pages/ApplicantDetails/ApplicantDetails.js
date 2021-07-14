@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../../../../store/actions/index';
 import * as actionTypes from '../../../../store/actions/actions';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Container from '../../Components/ApplicantMap';
+import Container from '../../components/ApplicantMap';
 import Modal from '../../../../shared/UI_Element/Modal';
 
 const ApplicantDetails = props => {

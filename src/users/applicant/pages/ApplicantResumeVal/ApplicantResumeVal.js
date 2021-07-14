@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import EditIntro from '../../Components/Edit/EditIntro.js';
+import EditIntro from '../../components/Edit/EditIntro.js';
 
 import classes from './ApplicantResumeVal.module.css';
 
