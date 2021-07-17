@@ -75,19 +75,27 @@ const Invoice = (props) => {
                 <p className={classes.CompanyName}>
                   {orderData.companyId.companyName}
                 </p>
-                <p className={classes.Address}>{orderData.companyId.address}</p>
-                <p>{orderData.companyId.email}</p>
-                <p>{orderData.companyId.website}</p>
+                <p className={classes.InvoiceCompanyData}>
+                  {orderData.companyId.address}
+                </p>
+                <p className={classes.InvoiceCompanyData}>
+                  {orderData.companyId.email}
+                </p>
+                <p className={classes.InvoiceCompanyData}>
+                  {orderData.companyId.website}
+                </p>
               </div>
               <div className={classes.InvoiceRight}>
                 <p className={classes.InvoiceTitle}>INVOICE</p>
                 <div className={classes.InvoiceDetail}>
                   <div className={classes.DetailLabel}>
-                    <p>Date</p>
+                    <p className={classes.InvoiceCompanyData}>Date</p>
                     {/* <p>InvoiceId</p> */}
                   </div>
                   <div>
-                    <p>{moment(orderData.createdAt).format('D MMMM  YYYY')}</p>
+                    <p className={classes.InvoiceCompanyData}>
+                      {moment(orderData.createdAt).format('D MMMM  YYYY')}
+                    </p>
                     {/* <p>{orderData.invoiceId}</p> */}
                   </div>
                 </div>
@@ -145,19 +153,19 @@ const Invoice = (props) => {
                 <div className={classes.CommentContent}>
                   <ul>
                     <li>
-                      Pembayaran harus dilakukan sebelum tanggal jatuh tempo
-                      yaitu 14 hari dari tanggal pemesanan.
+                      Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14
+                      hari sejak tanggal invoice ini
                     </li>
                     <li>
                       Pembayaran dapat di transfer ke rekening BCA{' '}
                       <span style={{ fontWeight: '500' }}>1234567xxx</span> a/n
                       Bagong
                     </li>
-                    <li>
+                    {/* <li>
                       Pembayaran melalui virtual account dapat transfer melalui
                       bank BCA dengan nomor VA{' '}
                       <span style={{ fontWeight: '500' }}>807770817329xxx</span>
-                    </li>
+                    </li> */}
                     <li>
                       Setelah melakukan pembayaran, mohon kirimkan bukti
                       transfer kepada nomor wa{' '}

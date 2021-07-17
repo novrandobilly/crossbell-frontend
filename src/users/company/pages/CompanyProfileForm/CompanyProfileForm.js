@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import EditIntro from '../Components/EditIntro';
-import EditCompanyBriefDescriptions from '../Components/EditCompanyBriefDescriptions';
-import EditPIC from '../Components/EditPIC';
+import EditIntro from '../../components/EditIntro';
+import EditCompanyBriefDescriptions from '../../components/EditCompanyBriefDescriptions';
+import EditPIC from '../../components/EditPIC';
 
 import classes from './CompanyProfileForm.module.css';
 

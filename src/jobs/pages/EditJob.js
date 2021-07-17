@@ -26,9 +26,9 @@ const EditJob = (props) => {
         value: identifiedJob ? identifiedJob.educationalStage : '',
         isValid: identifiedJob ? identifiedJob.educationalStage : false,
       },
-      technicalRequirement: {
-        value: identifiedJob ? identifiedJob.technicalRequirement : '',
-        isValid: identifiedJob ? identifiedJob.technicalRequirement : false,
+      specialRequirement: {
+        value: identifiedJob ? identifiedJob.specialRequirement : '',
+        isValid: identifiedJob ? identifiedJob.specialRequirement : false,
       },
 
       employment: {
@@ -79,7 +79,7 @@ const EditJob = (props) => {
       employment: formState.inputs.employment.value,
       educationalStage: formState.inputs.educationalStage.value,
       salary: formState.inputs.salary.value,
-      technicalRequirement: formState.inputs.technicalRequirement.value,
+      specialRequirement: formState.inputs.specialRequirement.value,
       token: props.auth.token,
     };
 
@@ -156,12 +156,12 @@ const EditJob = (props) => {
             <div className={classes.InputDiv}>
               <Input
                 inputType='input'
-                id='technicalRequirement'
+                id='specialRequirement'
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label='Persyaratan teknis*'
-                initValue={identifiedJob.technicalRequirement}
+                initValue={identifiedJob.specialRequirement}
                 initIsValid={true}
               />
             </div>
@@ -195,21 +195,21 @@ const EditJob = (props) => {
                     value='permanent'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Permanent
+                    Karyawan Tetap
                   </MenuItem>
                   <MenuItem
                     id={0}
                     value='contract'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    Contract
+                    Karyawan kontrak (PKWT)
                   </MenuItem>
                   <MenuItem
                     id={0}
                     value='intern'
                     style={{ fontSize: '0.9rem' }}
                   >
-                    intern
+                    Karyawan magang (Intern)
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -239,7 +239,7 @@ const EditJob = (props) => {
                   name='isHidden'
                   className={classes.CheckBox}
                 />
-                <p style={{ margin: '0' }}>Rahasiakan informasi perusahaan</p>
+                <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
               </label>
             </div>
           </div>

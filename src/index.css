@@ -1,70 +1,76 @@
 body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	background-color: #f5f5fe;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  background-color: #f5f5fe;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 .centerGlobal {
-	display: flex;
-	text-align: center;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 main {
-	margin-top: 4rem;
-	min-height: 30rem;
+  margin-top: 4rem;
+  min-height: 30rem;
 }
 
 .slide-in-left-enter {
-	transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 .slide-in-left-enter-active {
-	transform: translateX(0);
-	opacity: 1;
-	transition: all 400ms;
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 400ms;
 }
 
 .slide-in-left-exit {
-	transform: translateX(0%);
-	opacity: 1;
+  transform: translateX(0%);
+  opacity: 1;
 }
 
 .slide-in-left-exit-active {
-	transform: translateX(-100%);
-	opacity: 0;
-	transition: all 400ms;
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: all 400ms;
 }
 
 .Modal-enter {
-	transform: translateY(-10rem);
-	opacity: 0;
+  transform: translateY(-10rem);
+  opacity: 0;
 }
 
 .Modal-enter-active {
-	transform: translateY(0);
-	opacity: 1;
-	transition: all 200ms;
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 200ms;
 }
 
 .Modal-exit {
-	transform: translateY(0);
-	opacity: 1;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .Modal-exit-active {
-	transform: translateY(-10rem);
-	opacity: 0;
-	transition: all 200ms;
+  transform: translateY(-10rem);
+  opacity: 0;
+  transition: all 200ms;
+}
+
+@font-face {
+  font-family: 'Nexa';
+  src: local('Nexa'), url('./fonts/NexaRegular.otf') format('opentype');
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');

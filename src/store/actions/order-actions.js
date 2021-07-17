@@ -136,7 +136,6 @@ export const createOrder = (orderData) => {
         }
       );
       const responseJSON = await response.json();
-      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
@@ -259,6 +258,40 @@ export const approveOrderREG = (orderData) => {
       dispatch(approveOrderSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
+      dispatch(approveOrderFail());
+    }
+  };
+};
+
+export const updatePaymentREG = (payload) => {
+  return async (dispatch) => {
+    dispatch(approveOrderStart());
+    try {
+      const formData = new FormData();
+      formData.append('file', payload.paymentFile);
+      formData.append('paymentDate', payload.date);
+      formData.append('paymentTime', payload.time);
+      formData.append('nominal', payload.nominal);
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.orderId}/approve/reg`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: formData,
+        }
+      );
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(approveOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      console.log(err, typeof err);
       dispatch(approveOrderFail());
     }
   };

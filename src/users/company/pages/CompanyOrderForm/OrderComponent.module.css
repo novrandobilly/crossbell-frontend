@@ -1,17 +1,15 @@
 .Container {
   margin-top: 2rem;
-  font-family: 'Roboto';
+  /* font-family: 'Roboto'; */
 }
 
 .OrderCard {
-  /* width: 20%; */
   background-color: white;
   cursor: pointer;
 }
 
 .CardHolder {
   width: 100%;
-  height: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,13 +43,13 @@
   color: rgb(255, 255, 255);
 }
 
-.CardContent {
+/* .CardContent {
   height: 14rem;
   text-align: left;
   font-size: 1rem;
   line-height: 2rem;
   padding: 1.6px 16px 16px 0;
-}
+} */
 
 @media (max-width: 768px) {
   .OrderCard {

@@ -36,10 +36,13 @@ const searchReducer = (state, action) => {
             searchValidity =
               searchValidity ||
               job[key].toLowerCase().includes(state.search.value.toLowerCase());
+            console.log(searchValidity);
           }
         }
         return searchValidity;
       });
+      console.log(filteredJob);
+
       return {
         ...state,
         jobList: filteredJob,
@@ -102,8 +105,8 @@ const JobsDashboard = (props) => {
   }, [getAllAvailableJobs]);
 
   const searchHandler = (event) => {
+    console.log('test1');
     event.preventDefault();
-
     if (state.search.value) {
       dispatch({
         type: ACTION.SEARCHEXECUTE,

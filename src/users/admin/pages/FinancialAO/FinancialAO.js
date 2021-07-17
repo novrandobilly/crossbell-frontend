@@ -163,10 +163,12 @@ const FinancialAO = (props) => {
 
               <tbody className={classes.ColumnField}>
                 {displayData.map((display, i) => {
+                  console.log(display.companyId);
+
                   return (
                     <tr key={display._id}>
                       <th>{i + 1}</th>
-                      <th>{display.companyId.companyName}</th>
+                      <th>{display.companyId?.companyName}</th>
                       <th>{display._id}</th>
                       <th>
                         {' '}

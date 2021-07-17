@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Login from './Login';
-import CompanyForm from '../Components/CompanyForm';
+import CompanyForm from './CompanyForm';
 import Register from './Register';
 import NavForm from './NavForm';
 

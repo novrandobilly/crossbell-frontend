@@ -1,91 +1,93 @@
 .Container {
-	display: flex;
-	background-color: rgb(250, 250, 250);
-	padding: 2rem 10% 0 10%;
+  display: flex;
+  background-color: rgb(250, 250, 250);
+  padding: 2rem 10% 0 10%;
+  margin-bottom: 24px;
 }
 
 .PageContainer {
-	width: 39%;
-	font-family: sans-serif;
-	display: flex;
-	flex-direction: column;
-	border-radius: 1rem;
-	margin-right: 2%;
-	background-color: rgba(58, 81, 153, 1);
+  width: 39%;
+  /* font-family: sans-serif; */
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  margin-right: 2%;
+
+  background-color: rgba(58, 81, 153, 1);
 }
 
 .PageHeader {
-	font-weight: 600;
-	font-size: 1.2rem;
-	color: white;
-	border-bottom: solid 0.1rem rgba(0, 0, 0, 0.2);
-	margin-right: 2rem;
-	margin-left: 2rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+  border-bottom: solid 0.1rem rgba(0, 0, 0, 0.2);
+  margin-right: 2rem;
+  margin-left: 2rem;
 }
 
 .DetailContainer {
-	display: flex;
-	flex-direction: column;
-	padding: 1rem 2rem 0rem 2rem;
-	color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem 0rem 2rem;
+  color: white;
 }
 
 .DescHolder {
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	line-height: 0;
-	margin-bottom: 1rem;
-	font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 0;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
 }
 
 .DescLabel {
-	font-size: 0.9rem;
-	margin-bottom: 0.7rem;
-	color: rgb(251, 255, 0);
+  font-size: 0.9rem;
+  margin-bottom: 0.7rem;
+  color: rgb(251, 255, 0);
 }
 
 .InputContainer {
-	width: 59%;
-	border-radius: 1rem;
-	background-color: white;
-	padding: 1rem;
-	box-shadow: 0 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
-	overflow-x: hidden;
+  width: 59%;
+  border-radius: 1rem;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 0 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+  overflow-x: hidden;
 }
 
 .CadidateContainer {
-	display: flex;
-	flex-direction: column;
-	margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
 }
 
 .CandidateCard {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	font-size: 0.9rem;
-	border-bottom: solid 0.05rem rgba(0, 0, 0, 0.2);
-	margin: 0 3rem 0.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  border-bottom: solid 0.05rem rgba(0, 0, 0, 0.2);
+  margin: 0 3rem 0.5rem 3rem;
 }
 
 .CandidateHead {
-	display: flex;
-	justify-content: space-between;
-	text-align: left;
-	margin-bottom: -1rem;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  margin-bottom: -1rem;
 }
 
 .CandidateBody {
-	display: flex;
-	text-align: left;
-	line-height: 0.3rem;
-	justify-content: space-between;
-	align-items: flex-start;
+  display: flex;
+  text-align: left;
+  line-height: 0.3rem;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .CandidateContact {
-	font-size: 0.8rem;
-	margin-right: 2rem;
-	color: rgb(100, 100, 100);
+  font-size: 0.8rem;
+  margin-right: 2rem;
+  color: rgb(100, 100, 100);
 }

@@ -13,8 +13,10 @@ export {
   updateApplicantEducation,
   updateApplicantExperience,
   updateApplicantCertification,
+  updateApplicantOrganization,
   updateApplicantSubscription,
   updateApplicantSkills,
+  updateApplicantLanguages,
   getOneApplicant,
   deleteSegment,
   updateResume,
@@ -56,6 +58,7 @@ export {
   getCompanyBC,
   deleteCandidateES,
   approveOrderBC,
+  updatePaymentREG,
 } from './order-actions';
 
 export {

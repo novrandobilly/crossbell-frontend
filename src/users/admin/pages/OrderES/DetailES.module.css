@@ -1,11 +1,12 @@
 .Container {
   display: flex;
   padding: 2rem 10% 0 10%;
+  margin-bottom: 24px;
 }
 
 .PageContainer {
   width: 39%;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   display: flex;
   flex-direction: column;
   border-radius: 1rem;

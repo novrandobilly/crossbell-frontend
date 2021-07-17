@@ -1,3 +1,9 @@
+.AddSegment {
+  font-size: 0.9rem;
+  /* font-family: 'Roboto'; */
+  font-weight: 600;
+}
+
 /* =============== Edit/ Defaut Button ===============  */
 
 .IconButton {
@@ -9,7 +15,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   position: relative;
@@ -25,7 +31,7 @@
 }
 
 .IconButton::after {
-  content: "Edit";
+  content: 'Edit';
   position: absolute;
   white-space: nowrap;
   top: 0.7rem;
@@ -48,7 +54,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   position: relative;
@@ -62,7 +68,7 @@
 }
 
 .IconAddJobButton::after {
-  content: "Add Job Advertisement";
+  content: 'Add Job Advertisement';
   position: absolute;
   white-space: nowrap;
   top: 0.7rem;
@@ -85,7 +91,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   position: relative;
@@ -99,7 +105,7 @@
 }
 
 .IconAddButton::after {
-  content: "Add";
+  content: 'Add';
   position: absolute;
   white-space: nowrap;
   top: 0.7rem;
@@ -122,7 +128,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   position: relative;
@@ -136,7 +142,7 @@
 }
 
 .IconDeleteButton::after {
-  content: "Delete";
+  content: 'Delete';
   position: absolute;
   white-space: nowrap;
   top: 0.7rem;
@@ -159,7 +165,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   position: relative;
@@ -173,7 +179,7 @@
 }
 
 .IconOrderButton::after {
-  content: "Purchase Slot";
+  content: 'Purchase Slot';
   position: absolute;
   white-space: nowrap;
   top: 0.7rem;
