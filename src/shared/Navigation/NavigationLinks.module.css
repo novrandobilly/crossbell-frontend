@@ -144,6 +144,10 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.NotificationsIcon:hover {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1080px) {
   .PhoneLinks {
     display: none;

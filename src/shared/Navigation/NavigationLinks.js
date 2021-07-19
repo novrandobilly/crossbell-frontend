@@ -7,6 +7,7 @@ import * as actionTypes from '../../store/actions/actions';
 import * as actionCreators from '../../store/actions/index';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import classes from './NavigationLinks.module.css';
 
@@ -225,6 +226,9 @@ const NavigationLinks = props => {
                   </NavLink>
                 </div>
               </div>
+            </li>
+            <li className={classes.NotificationsIcon}>
+              <NotificationsIcon style={{ color: 'rgba(58, 81, 153, 1)' }}></NotificationsIcon>
             </li>
           </React.Fragment>
         )}
