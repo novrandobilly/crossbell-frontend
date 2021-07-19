@@ -68,7 +68,7 @@
   margin-bottom: 1rem;
   outline: none;
   font-size: small;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
 }
 
 .QueryHome {
@@ -78,7 +78,7 @@
   border: solid 0.05rem;
   outline: none;
   font-size: medium;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   margin-left: 8rem;
 }
 

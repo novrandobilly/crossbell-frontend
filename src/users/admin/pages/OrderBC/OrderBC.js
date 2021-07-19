@@ -178,6 +178,8 @@ const OrderBC = (props) => {
                 <th>Tanggal Disetujui</th>
                 <th>Status</th>
                 <th>Aksi</th>
+                <th>Aksi</th>
+                {/* <th>Aksi</th> */}
               </tr>
             </thead>
 

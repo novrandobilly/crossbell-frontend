@@ -427,7 +427,7 @@ const OrderBCForm = (props) => {
                     <MenuItem value='' style={{ fontSize: '0.9rem' }}>
                       <em>Belum ada untuk saat ini</em>
                     </MenuItem>
-                    {WorkFieldData.field.sort().map((work, i) => {
+                    {WorkFieldData.field?.sort().map((work, i) => {
                       return (
                         <MenuItem
                           id={i}

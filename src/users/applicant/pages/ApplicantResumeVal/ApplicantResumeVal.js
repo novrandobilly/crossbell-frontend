@@ -4,7 +4,7 @@ import EditIntro from '../../components/Edit/EditIntro.js';
 
 import classes from './ApplicantResumeVal.module.css';
 
-const ApplicantResumeVal = props => {
+const ApplicantResumeVal = (props) => {
   const [push, setPush] = useState(true);
 
   const pushHandler = () => {

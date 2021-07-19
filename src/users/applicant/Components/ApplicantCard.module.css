@@ -29,7 +29,7 @@
 
   display: flex;
   flex-direction: column;
-  font-family: 'Roboto';
+  /* font-family: 'Roboto'; */
 
   width: 20%;
 }
@@ -187,7 +187,7 @@
 }
 
 .InputButtonText {
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  /* font-family: 'Roboto', Arial, Helvetica, sans-serif; */
   font-size: 0.9rem;
   font-weight: 400;
   color: white;

@@ -151,10 +151,10 @@ const OrderBC = (props) => {
                   <th>
                     {' '}
                     <Link
-                      to={`/co/${order.companyId._id}/profile`}
+                      to={`/co/${order?.companyId?._id}/profile`}
                       style={{ color: 'black', textDecoration: 'none' }}
                     >
-                      {order.companyId.companyName}
+                      {order.companyId?.companyName}
                     </Link>
                   </th>
 
