@@ -101,7 +101,6 @@ const FinancialAO = props => {
   }, [total]);
 
   let content = <Spinner />;
-
   if (displayData && !props.isLoading) {
     content = (
       <div className={classes.FlexContainer}>
