@@ -13,9 +13,11 @@ import classes from './NavigationLinks.module.css';
 
 const NavigationLinks = props => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
-
+  const [applicantFirstName, setApplicantFirstName] = useState('');
+  const [adminNotifications, setAdminNotifications] = useState([]);
   const [adminDropdownFinance, setAdminDropdownFinance] = useState(false);
   const [adminDropdownOperational, setAdminDropdownOperational] = useState(false);
+  const [adminDropdownNotification, setAdminDropdownNotification] = useState(false);
 
   const ref = useRef();
 
@@ -23,6 +25,7 @@ const NavigationLinks = props => {
     if (companyDropdown) setCompanyDropdown(false);
     if (adminDropdownFinance) setAdminDropdownFinance(false);
     if (adminDropdownOperational) setAdminDropdownOperational(false);
+    if (adminDropdownNotification) setAdminDropdownNotification(false);
   });
 
   const logoutHandler = () => {
@@ -40,17 +43,23 @@ const NavigationLinks = props => {
 
   const DropdownOrderAdminFinance = () => {
     setAdminDropdownOperational(false);
+    setAdminDropdownNotification(false);
     setAdminDropdownFinance(!adminDropdownFinance);
   };
 
   const DropdownOrderAdminOperational = () => {
     setAdminDropdownFinance(false);
+    setAdminDropdownNotification(false);
     setAdminDropdownOperational(!adminDropdownOperational);
   };
 
-  const [data, setData] = useState('');
+  const DropdownAdminNotification = () => {
+    setAdminDropdownFinance(false);
+    setAdminDropdownOperational(false);
+    setAdminDropdownNotification(!adminDropdownNotification);
+  };
 
-  const { getOneApplicant } = props;
+  const { getOneApplicant, getAdmin } = props;
 
   useEffect(() => {
     if (props.auth.isLoggedIn && !props.auth.isCompany) {
@@ -60,10 +69,24 @@ const NavigationLinks = props => {
         token: props.auth.token,
       };
       getOneApplicant(payload).then(res => {
-        setData(res.applicant.firstName);
+        setApplicantFirstName(res.applicant.firstName);
       });
     }
   }, [getOneApplicant, props.auth.isLoggedIn, props.auth.isCompany, props.auth.userId, props.auth.token]);
+
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      if (props.admin.isLoggedIn && props.admin.isAdmin) {
+        const payload = {
+          userId: props.admin.userId,
+          token: props.admin.token,
+        };
+        let res = await getAdmin(payload);
+        setAdminNotifications(res.admin.notifications);
+      }
+    };
+    fetchAdmin();
+  }, [props.admin.isLoggedIn, props.admin.isAdmin, props.admin.userId, props.admin.token, getAdmin]);
 
   let logout = null;
 
@@ -77,7 +100,6 @@ const NavigationLinks = props => {
       </li>
     );
   }
-
   return (
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
@@ -85,7 +107,7 @@ const NavigationLinks = props => {
           <li>
             <NavLink to={`/ap/${props.auth.userId}/profile`} activeClassName={classes.active}>
               <span>Selamat datang, </span>
-              {data}
+              {applicantFirstName}
             </NavLink>
           </li>
         )}
@@ -132,7 +154,7 @@ const NavigationLinks = props => {
                   <ArrowDropDownIcon style={{ alignSelf: 'center', marginBottom: '-0.4rem' }} />
                 </button>
 
-                <div className={companyDropdown ? classes.dropdownShow : classes.dropdownContent} id='dropdownCompany' ref={ref}>
+                <div className={companyDropdown ? classes.dropdownShow : classes.dropdownContent} ref={ref}>
                   <NavLink to={`/co/order/reguler`} activeClassName={classes.active} onClick={DropdownOrder}>
                     <p>Pesan Slot Iklan</p>
                   </NavLink>
@@ -172,7 +194,7 @@ const NavigationLinks = props => {
                   <ArrowDropDownIcon style={{ alignSelf: 'center', marginBottom: '-0.4rem' }} />
                 </button>
 
-                <div className={adminDropdownFinance ? classes.dropdownShow : classes.dropdownContent} id='dropdownCompany'>
+                <div className={adminDropdownFinance ? classes.dropdownShow : classes.dropdownContent}>
                   <NavLink to={`/ad/alphaomega/promo`} activeClassName={classes.active}>
                     <p>Update Promo</p>
                   </NavLink>
@@ -202,7 +224,7 @@ const NavigationLinks = props => {
                   <ArrowDropDownIcon style={{ alignSelf: 'center', marginBottom: '-0.4rem' }} />
                 </button>
 
-                <div className={adminDropdownOperational ? classes.dropdownShow : classes.dropdownContent} id='dropdownCompany'>
+                <div className={adminDropdownOperational ? classes.dropdownShow : classes.dropdownContent}>
                   <NavLink to={`/ad/alphaomega/order/reguler/opr`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
                     <p>Order Reguler</p>
                   </NavLink>
@@ -227,8 +249,25 @@ const NavigationLinks = props => {
                 </div>
               </div>
             </li>
-            <li className={classes.NotificationsIcon}>
-              <NotificationsIcon style={{ color: 'rgba(58, 81, 153, 1)' }}></NotificationsIcon>
+            <li className={classes.dropdown}>
+              <button className={classes.dropbtn} onClick={DropdownAdminNotification} ref={ref}>
+                <NotificationsIcon style={{ color: 'rgba(58, 81, 153, 1)' }}></NotificationsIcon>
+              </button>
+              <div
+                className={`${adminDropdownNotification ? classes.dropdownShow : classes.dropdownContent} ${classes.adminNotifications}`}
+                id='dropdownCompany'>
+                {adminNotifications.map((notif, index) => {
+                  return (
+                    <NavLink
+                      key={`notif_${index}`}
+                      to={`/ad/alphaomega/companies`}
+                      activeClassName={classes.active}
+                      onClick={DropdownOrderAdminOperational}>
+                      <p>{notif.message}</p>
+                    </NavLink>
+                  );
+                })}
+              </div>
             </li>
           </React.Fragment>
         )}
@@ -243,7 +282,7 @@ const NavigationLinks = props => {
             <span>
               Welcome,{' '}
               <NavLink to={`/ap/${props.auth.userId}`} activeClassName={classes.active}>
-                {data}
+                {applicantFirstName}
               </NavLink>
             </span>
           </li>
@@ -395,6 +434,7 @@ const mapDispatchToProps = dispatch => {
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
     admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
     getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
+    getAdmin: payload => dispatch(actionCreators.getAdmin(payload)),
   };
 };
 

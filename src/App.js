@@ -10,8 +10,8 @@ import AboutUs from './general/pages/AboutUs/AboutUs';
 import ContactUs from './general/pages/ContactUs/ContactUs';
 import SyaratKetentuan from './general/pages/SyaratKetentuan/SyaratKetentuan';
 import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi';
-import ForgotPwd from './general/pages/Home/Components/ForgotPwd';
-import ResetPwd from './general/pages/Home/Components/ResetPwd';
+import ForgotPwd from './general/pages/Home/components/ForgotPwd';
+import ResetPwd from './general/pages/Home/components/ResetPwd';
 import FAQ from './general/components/ContactUs/FAQ';
 
 import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
@@ -68,11 +68,11 @@ const AddApplicantEducation = React.lazy(() => import('./users/applicant/compone
 const AddApplicantExperience = React.lazy(() => import('./users/applicant/components/Add/Experience'));
 const AddApplicantCertification = React.lazy(() => import('./users/applicant/components/Add/Certification'));
 const AddApplicantOrganization = React.lazy(() => import('./users/applicant/components/Add/Organization'));
-// const AddApplicantSkills = React.lazy(() => import('./users/applicant/Components/Add/Skill'));
+// const AddApplicantSkills = React.lazy(() => import('./users/applicant/components/Add/Skill'));
 
 //==================================== admin =========================================================
 
-const AdmAuth = React.lazy(() => import('./general/pages/Home/Components/AdmAuth'));
+const AdmAuth = React.lazy(() => import('./general/pages/Home/components/AdmAuth'));
 const AdminProfile = React.lazy(() => import('./users/admin/pages/AdminProfile/AdminProfile'));
 const JobsListAO = React.lazy(() => import('./users/admin/pages/JobsListAO/JobsListAO'));
 const CompaniesListAO = React.lazy(() => import('./users/admin/pages/CompaniesListAO/CompaniesListAO'));

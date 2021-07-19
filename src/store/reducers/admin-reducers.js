@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from '../actions/actions';
 
 const initialState = {
   isLoading: false,
@@ -25,11 +25,9 @@ const adminReducer = (state = initialState, action) => {
       };
     }
     case actionTypes.AUTHADMINFINISH: {
-      const tokenExpirationDate =
-        action.payload.expiration ||
-        new Date(new Date().getTime() + 1000 * 60 * 60 * 3).toISOString();
+      const tokenExpirationDate = action.payload.expiration || new Date(new Date().getTime() + 1000 * 60 * 60 * 3).toISOString();
       localStorage.setItem(
-        "userData",
+        'userData',
         JSON.stringify({
           userId: action.payload.userId,
           token: action.payload.token,
@@ -61,7 +59,7 @@ const adminReducer = (state = initialState, action) => {
       };
     }
     case actionTypes.ADMINLOGOUT: {
-      localStorage.removeItem("userData");
+      localStorage.removeItem('userData');
       return {
         ...state,
         isLoading: false,
