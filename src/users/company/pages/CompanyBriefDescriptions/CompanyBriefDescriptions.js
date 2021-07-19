@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import * as actionCreators from '../../../../store/actions';
-import CompanyMap from '../../Components/CompanyMap';
+import CompanyMap from '../../components/CompanyMap';
 
 const CompanyBriefDescriptions = (props) => {
   const { companyid } = useParams();

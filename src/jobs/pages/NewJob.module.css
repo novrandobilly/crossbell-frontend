@@ -71,6 +71,14 @@
 
 .AutoAddDiv {
   margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ListNuber {
+  margin: 0;
+  margin-right: 10px;
 }
 
 .AddInput {
@@ -173,6 +181,16 @@
 
 .Slider {
   width: 80%;
+}
+
+.NumberDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.AgeNumber {
+  margin: 0;
 }
 
 .DurationContent {
