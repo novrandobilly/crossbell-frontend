@@ -197,7 +197,6 @@ export const getApplicantJobsApplied = (payload) => {
 export const updateApplicantIntro = (ApplicantData) => {
   return async (dispatch) => {
     dispatch(updateApplicantStart());
-    console.log('from action', ApplicantData);
     try {
       const formData = new FormData();
       formData.append('id', ApplicantData.applicantId);
@@ -230,7 +229,6 @@ export const updateApplicantIntro = (ApplicantData) => {
         }
       );
       const responseJSON = await response.json();
-      console.log(response, responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }

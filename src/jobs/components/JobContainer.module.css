@@ -1,7 +1,7 @@
 .Container {
   display: flex;
   flex-direction: row;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   padding: 3rem 4rem;
   box-sizing: border-box;
 }

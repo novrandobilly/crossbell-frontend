@@ -7,7 +7,7 @@ import AuthForm from './components/AuthForm';
 import ContactUsContent from './HomeContent/ContactUsContent';
 import classes from './Home.module.css';
 
-const Home = props => {
+const Home = (props) => {
   const [sign, setSign] = useState(true);
   const [role, setRole] = useState(false);
   const [touch, setTouch] = useState(false);
@@ -42,7 +42,10 @@ const Home = props => {
           <h1>CROSSBELL</h1>
           <div className={classes.About}>
             <p>Sudah saatnya berkarir dalam bidang impianmu!</p>
-            <p>Temukan pekerjaan favoritmu dan mulailah mengejar mimpi sesuai kata hati!</p>
+            <p>
+              Temukan pekerjaan favoritmu dan mulailah mengejar mimpi sesuai
+              kata hati!
+            </p>
             <p>Jika bukan sekarang, kapan lagi?</p>
           </div>
           <div className={classes.LinkRef}>
@@ -70,7 +73,10 @@ const Home = props => {
         <h1>CROSSBELL</h1>
         <div className={classes.About}>
           <p>Sudah saatnya berkarir dalam bidang impianmu!</p>
-          <p>Temukan pekerjaan favoritmu dan mulailah mengejar mimpi sesuai kata hati!</p>
+          <p>
+            Temukan pekerjaan favoritmu dan mulailah mengejar mimpi sesuai kata
+            hati!
+          </p>
           <p>Jika bukan sekarang, kapan lagi?</p>
         </div>
       </div>
@@ -80,7 +86,7 @@ const Home = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,

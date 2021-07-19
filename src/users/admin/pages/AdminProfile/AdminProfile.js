@@ -62,7 +62,6 @@ const AdminProfile = (props) => {
       };
       getAdmin(payload).then((res) => {
         setData(res.admin);
-        console.log(res);
       });
     }
   }, [getAdmin, props.admin.userId, props.admin.token]);

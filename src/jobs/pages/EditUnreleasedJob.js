@@ -12,22 +12,29 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE, VALIDATOR_EMAIL } from '../../shared/utils/validator';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MIN,
+  VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_EMAIL,
+} from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
 import CitiesData from '../../shared/UI_Element/CitiesData';
+import Slider from '@material-ui/core/Slider';
 
 import classes from './NewJob.module.css';
 
-const EditUnreleasedJob = props => {
+const EditUnreleasedJob = (props) => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
   const [maxSlot, setMaxSlot] = useState(null);
 
-  const [fieldOfWork, setFieldOfWork] = useState([]);
   const [placement, setPlacement] = useState('');
   const [jobExperience, setJobExperience] = useState('');
   const [jobExperienceOpen, setJobExperienceOpen] = useState(false);
@@ -35,6 +42,13 @@ const EditUnreleasedJob = props => {
   const [employmentOpen, setEmploymentOpen] = useState(false);
   const [educationalStageOpen, setEducationalStageOpen] = useState(false);
   const [educationalStage, setEducationalStage] = useState('');
+
+  const [requirement, setRequirement] = useState(['req']);
+  const [requirementList, setRequirementList] = useState([]);
+  const [rangeAge, setRangeAge] = useState([18, 35]);
+  const [fieldOfWork, setFieldOfWork] = useState([]);
+
+  const filter = createFilterOptions();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,11 +64,16 @@ const EditUnreleasedJob = props => {
         };
 
         const res = await getOneJob(payload);
+        res.specialRequirement.forEach((requirement, i) => {
+          setRequirement((prevState) => [...prevState, 'req']);
+        });
         setFieldOfWork(res.fieldOfWork);
         setEmployment(res.employment);
         setPlacement(res.placementLocation);
         setEducationalStage(res.educationalStage);
         setJobExperience(res.jobExperience);
+        setRequirementList(res.specialRequirement);
+        setRangeAge(res.rangeAge);
         setLoadedJob(res);
       } catch (err) {
         console.log(err);
@@ -74,6 +93,8 @@ const EditUnreleasedJob = props => {
     };
     getSlot();
   }, [getOneCompany, auth, getOneJob, jobsid]);
+
+  console.log(requirementList);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -135,6 +156,11 @@ const EditUnreleasedJob = props => {
         isValid: loadedJob && loadedJob.slotAllocation ? true : false,
       },
 
+      rangeAge: {
+        value: loadedJob ? loadedJob.rangeAge : [],
+        isValid: loadedJob && loadedJob.rangeAge ? true : false,
+      },
+
       fieldOfWork: {
         value: loadedJob ? loadedJob.fieldOfWork : [],
         isValid: loadedJob && loadedJob.fieldOfWork ? true : false,
@@ -167,17 +193,29 @@ const EditUnreleasedJob = props => {
       const salary = document.getElementById('salary');
       const benefit = document.getElementById('benefit');
 
-      onInputHandler('placementLocation', placement, true);
-      onInputHandler('fieldOfWork', fieldOfWork, true);
-      onInputHandler('educationalStage', educationalStage, true);
-      onInputHandler('jobExperience', jobExperience, true);
-      onInputHandler('employment', employment, true);
+      onInputHandler('rangeAge', rangeAge, true);
       onInputHandler('salary', salary.value, true);
+      onInputHandler('employment', employment, true);
       onInputHandler('benefit', benefit.value, true);
+      onInputHandler('fieldOfWork', fieldOfWork, true);
+      onInputHandler('placementLocation', placement, true);
+      onInputHandler('jobExperience', jobExperience, true);
+      onInputHandler('educationalStage', educationalStage, true);
+      onInputHandler('specialRequirement', requirementList, true);
     }
-  }, [jobExperience, onInputHandler, loadedJob, employment, educationalStage, fieldOfWork, placement]);
+  }, [
+    jobExperience,
+    onInputHandler,
+    loadedJob,
+    employment,
+    educationalStage,
+    fieldOfWork,
+    placement,
+    rangeAge,
+    requirementList,
+  ]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.createJobFail();
@@ -188,10 +226,11 @@ const EditUnreleasedJob = props => {
       isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      jobExperience: formState.inputs.jobExperience.value,
+      rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
-      jobExperience: formState.inputs.jobExperience.value,
       employment: formState.inputs.employment.value,
       benefit: formState.inputs.benefit.value,
       slot: formState.inputs.slotAllocation.value,
@@ -215,7 +254,7 @@ const EditUnreleasedJob = props => {
     }
   };
 
-  const onSaveHandler = async event => {
+  const onSaveHandler = async (event) => {
     event.preventDefault();
 
     const jobData = {
@@ -223,10 +262,11 @@ const EditUnreleasedJob = props => {
       isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      jobExperience: formState.inputs.jobExperience.value,
+      rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
-      jobExperience: formState.inputs.jobExperience.value,
       employment: formState.inputs.employment.value,
       benefit: formState.inputs.benefit.value,
       slot: formState.inputs.slotAllocation.value,
@@ -250,17 +290,18 @@ const EditUnreleasedJob = props => {
     }
   };
 
-  const onAddSlotHandler = async event => {
+  const onAddSlotHandler = async (event) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
       isHidden: formState.inputs.isHidden.value,
       placementLocation: formState.inputs.placementLocation.value,
       jobDescriptions: formState.inputs.jobDescriptions.value,
+      jobExperience: formState.inputs.jobExperience.value,
+      rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
-      jobExperience: formState.inputs.jobExperience.value,
       employment: formState.inputs.employment.value,
       benefit: formState.inputs.benefit.value,
       slot: formState.inputs.slotAllocation.value,
@@ -282,12 +323,38 @@ const EditUnreleasedJob = props => {
     }
   };
 
-  const fowHandler = (e, value) => {
-    let elementArray = value;
-    onInputHandler('fieldOfWork', elementArray, true);
+  const onAutoCompleteHandler = (event, newValue) => {
+    event.preventDefault();
+    if (typeof newValue === 'string') {
+      setFieldOfWork({
+        field: newValue,
+      });
+      onInputHandler('fieldOfWork', newValue.field, true);
+    } else if (newValue && newValue.inputValue) {
+      setFieldOfWork({
+        field: newValue.inputValue,
+      });
+      onInputHandler('fieldOfWork', newValue.inputValue.field, true);
+    } else {
+      setFieldOfWork(newValue);
+      onInputHandler('fieldOfWork', newValue?.field || '', true);
+    }
   };
 
-  const handleJobExperienceChange = e => {
+  const onFilterHandler = (options, params) => {
+    const filtered = filter(options, params);
+
+    if (params.inputValue !== '') {
+      filtered.push({
+        inputValue: params.inputValue,
+        field: `Tambahkan "${params.inputValue}"`,
+      });
+    }
+
+    return filtered;
+  };
+
+  const handleJobExperienceChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -302,7 +369,7 @@ const EditUnreleasedJob = props => {
     setJobExperienceOpen(true);
   };
 
-  const handleEmploymentChange = e => {
+  const handleEmploymentChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -317,7 +384,7 @@ const EditUnreleasedJob = props => {
     setEmploymentOpen(true);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -336,10 +403,30 @@ const EditUnreleasedJob = props => {
     onInputHandler('placementLocation', value, true);
   };
 
-  const onCheckedInputHandler = e => {
+  const handleAgeChange = (event, newValue) => {
+    setRangeAge(newValue);
+    onInputHandler('rangeAge', newValue, true);
+  };
+
+  const onCheckedInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
+  };
+
+  const addRequirement = (e) => {
+    e.preventDefault();
+    setRequirement((req) => [...req, 'req']);
+    // onInputHandler(`requirement_${requirement.length}`, '', true);
+  };
+
+  const onRequirementsUpdate = (event, reqIndex) => {
+    let inputValue = event.target.value;
+    setRequirementList((prevState) => {
+      let newState = [...prevState];
+      newState[reqIndex] = inputValue;
+      return newState;
+    });
   };
 
   let cities = [];
@@ -373,17 +460,35 @@ const EditUnreleasedJob = props => {
               <Autocomplete
                 id='placementLocation'
                 name='placementLocation'
-                options={cities.map(option => option)}
+                options={cities.map((option) => option)}
                 onChange={handleLocationChange}
                 style={{ margin: '0' }}
-                value={formState.inputs.placementLocation.value ? formState.inputs.placementLocation.value : ''}
-                renderInput={params => <TextField {...params} style={{ margin: '0' }} label='Lokasi*' margin='normal' variant='standard' />}
+                value={
+                  formState.inputs.placementLocation.value
+                    ? formState.inputs.placementLocation.value
+                    : ''
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    style={{ margin: '0' }}
+                    label='Lokasi*'
+                    margin='normal'
+                    variant='standard'
+                  />
+                )}
               />
             </div>
 
             <div className={classes.ContentWrap}>
-              <FormControl className={classes.formControl} style={{ margin: '0.8rem 0' }}>
-                <InputLabel id='educationalStageLabel' style={{ fontSize: '1rem' }}>
+              <FormControl
+                className={classes.formControl}
+                style={{ margin: '0.8rem 0' }}
+              >
+                <InputLabel
+                  id='educationalStageLabel'
+                  style={{ fontSize: '1rem' }}
+                >
                   Tingkat Pendidikan*
                 </InputLabel>
 
@@ -395,7 +500,8 @@ const EditUnreleasedJob = props => {
                   onOpen={handleEducationOpen}
                   value={educationalStage}
                   onChange={handleChange}
-                  style={{ fontSize: '0.9rem', textAlign: 'left' }}>
+                  style={{ fontSize: '0.9rem', textAlign: 'left' }}
+                >
                   <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
                     SMA
                   </MenuItem>
@@ -417,21 +523,48 @@ const EditUnreleasedJob = props => {
                 </Select>
               </FormControl>
 
-              <Input
-                inputType='input'
-                id='specialRequirement'
-                InputClass='AddJobInput'
-                validatorMethod={[VALIDATOR_REQUIRE()]}
-                onInputHandler={onInputHandler}
-                label='Persyaratan teknis*'
-                initValue={loadedJob.specialRequirement}
-                initIsValid={loadedJob.specialRequirement ? true : false}
-                helperText='Syarat teknis wajib diisi'
-              />
+              <FormControl className={classes.FormControl}>
+                <InputLabel id='jobExperience' style={{ fontSize: '1rem' }}>
+                  Pengalaman Kerja*
+                </InputLabel>
+
+                <Select
+                  id='jobExperience'
+                  name='jobExperience'
+                  open={jobExperienceOpen}
+                  onClose={handleJobExperienceClose}
+                  onOpen={handleJobExperienceOpen}
+                  value={jobExperience}
+                  onChange={handleJobExperienceChange}
+                  style={{
+                    fontSize: '0.9rem',
+                    textAlign: 'left',
+                  }}
+                >
+                  <MenuItem value='' style={{ fontSize: '0.9rem' }}>
+                    <em>Pilih</em>
+                  </MenuItem>
+                  <MenuItem id={0} value='>2' style={{ fontSize: '0.9rem' }}>
+                    Kurang dari 2 tahun
+                  </MenuItem>
+                  <MenuItem id={0} value='2-5' style={{ fontSize: '0.9rem' }}>
+                    2 - 5 tahun
+                  </MenuItem>
+                  <MenuItem id={0} value='5-10' style={{ fontSize: '0.9rem' }}>
+                    5 - 10 tahun
+                  </MenuItem>
+                  <MenuItem id={0} value='>10' style={{ fontSize: '0.9rem' }}>
+                    Lebih dari 10 tahun
+                  </MenuItem>
+                </Select>
+              </FormControl>
             </div>
 
             <div className={classes.ContentWrap}>
-              <FormControl className={classes.FormControl} style={{ marginTop: '0' }}>
+              <FormControl
+                className={classes.FormControl}
+                style={{ marginTop: '0' }}
+              >
                 <InputLabel id='employmentLabel' style={{ fontSize: '1rem' }}>
                   Status karyawan*
                 </InputLabel>
@@ -447,14 +580,27 @@ const EditUnreleasedJob = props => {
                   style={{
                     fontSize: '0.9rem',
                     textAlign: 'left',
-                  }}>
-                  <MenuItem id={0} value='permanent' style={{ fontSize: '0.9rem' }}>
+                  }}
+                >
+                  <MenuItem
+                    id={0}
+                    value='permanent'
+                    style={{ fontSize: '0.9rem' }}
+                  >
                     Karyawan Tetap
                   </MenuItem>
-                  <MenuItem id={0} value='contract' style={{ fontSize: '0.9rem' }}>
+                  <MenuItem
+                    id={0}
+                    value='contract'
+                    style={{ fontSize: '0.9rem' }}
+                  >
                     Karyawan kontrak (PKWT)
                   </MenuItem>
-                  <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
+                  <MenuItem
+                    id={0}
+                    value='intern'
+                    style={{ fontSize: '0.9rem' }}
+                  >
                     Karyawan magang (Intern)
                   </MenuItem>
                 </Select>
@@ -466,7 +612,7 @@ const EditUnreleasedJob = props => {
                 InputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_EMAIL()]}
                 onInputHandler={onInputHandler}
-                label='Email penerima*'
+                label='Email Penerima*'
                 helperText='Mohon masukkan email yang valid'
                 initValue={loadedJob.emailRecipient}
                 initIsValid={loadedJob.emailRecipient ? true : false}
@@ -490,7 +636,8 @@ const EditUnreleasedJob = props => {
                   style={{
                     fontSize: '0.9rem',
                     textAlign: 'left',
-                  }}>
+                  }}
+                >
                   <MenuItem value='' style={{ fontSize: '0.9rem' }}>
                     <em>Pilih</em>
                   </MenuItem>
@@ -512,23 +659,46 @@ const EditUnreleasedJob = props => {
 
             <div className={classes.ContentWrap}>
               <Autocomplete
-                multiple
+                value={fieldOfWork[0] ? fieldOfWork[0] : null}
+                onChange={onAutoCompleteHandler}
+                filterOptions={onFilterHandler}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
                 id='fieldOfWork'
                 name='fieldOfWork'
-                options={WorkFieldData.sort().map(option => option.field)}
-                getOptionLabel={option => option}
-                onChange={fowHandler}
+                ccc='true'
+                options={WorkFieldData}
+                getOptionLabel={(option) => {
+                  // Value selected with enter, right from the input
+                  if (typeof option === 'string') {
+                    return option;
+                  }
+                  // Add "xxx" option created dynamically
+                  if (option.inputValue) {
+                    return option.inputValue;
+                  }
+                  // Regular option
+                  return option.field;
+                }}
+                renderOption={(option) => option.field}
+                freeSolo
                 style={{ margin: '0', width: '100%' }}
-                value={formState.inputs.fieldOfWork.value ? formState.inputs.fieldOfWork.value : ''}
-                renderInput={params => (
-                  <TextField {...params} style={{ margin: '0' }} label='Bidang minat*' margin='normal' variant='standard' />
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    style={{ margin: '0' }}
+                    label='Bidang Pekerjaan*'
+                    margin='normal'
+                    variant='standard'
+                  />
                 )}
               />
             </div>
           </div>
         </div>
 
-        <div style={{ width: '95%', marginTop: '2rem' }}>
+        <div style={{ width: '95%', marginTop: '16px' }}>
           <Input
             inputType='textarea'
             id='jobDescriptions'
@@ -543,14 +713,24 @@ const EditUnreleasedJob = props => {
         </div>
 
         <div className={classes.CheckBoxDiv}>
-          <label onChange={onCheckedInputHandler} className={classes.CheckBoxLabel}>
-            <input id='isHidden' type='checkbox' name='isHidden' className={classes.CheckBox} />
+          <label
+            onChange={onCheckedInputHandler}
+            className={classes.CheckBoxLabel}
+          >
+            <input
+              id='isHidden'
+              type='checkbox'
+              name='isHidden'
+              className={classes.CheckBox}
+            />
             <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
           </label>
         </div>
 
         <div className={classes.AdditionalContentContainer}>
-          <h2 className={classes.AdditionalContentHeader}>Informasi Tambahan</h2>
+          <h2 className={classes.AdditionalContentHeader}>
+            Informasi Tambahan
+          </h2>
           <div className={classes.AdditionalContent}>
             <Input
               inputType='input'
@@ -577,6 +757,70 @@ const EditUnreleasedJob = props => {
               min={0}
               step='1000'
             />
+          </div>
+
+          <div className={classes.ContentFull}>
+            <div className={classes.SpecialReqDiv}>
+              <div>
+                <p className={classes.SpecialRequirement}>Persyaratan Khusus</p>
+                <p className={classes.SpecialTips}>
+                  skill teknis, karakter, atau persyaratan khusus lainnya (maks
+                  5)
+                </p>
+              </div>
+              <Button
+                variant='contained'
+                color='primary'
+                type='button'
+                disableElevation
+                onClick={requirement.length < 5 ? addRequirement : null}
+                style={{ height: 'fit-content', alignSelf: 'flex-end' }}
+                size='small'
+              >
+                Tambah Persyaratan
+              </Button>
+            </div>
+
+            {requirement.map((req, i) => {
+              return (
+                <div className={classes.AutoAddDiv} key={i}>
+                  <p className={classes.ListNuber}>{i + 1}.</p>
+                  {}
+                  <Input
+                    inputType='input'
+                    id={`requirement_${i}`}
+                    validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                    onChange={(event) => onRequirementsUpdate(event, i)}
+                    initIsValid={true}
+                    initValue={
+                      requirementList.length > 0 ? requirementList[i] : null
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className={classes.RangeAge}>
+            <div className={classes.SliderDiv}>
+              <p className={classes.SliderLabel}>min</p>
+              <p className={classes.AgeLabel}>Syarat Usia</p>
+              <p className={classes.SliderLabel}>max</p>
+            </div>
+
+            <div className={classes.SliderDiv}>
+              <p className={classes.AgeNumber}>{rangeAge[0]}</p>
+              <div className={classes.Slider}>
+                <Slider
+                  value={rangeAge}
+                  onChange={handleAgeChange}
+                  valueLabelDisplay='auto'
+                  aria-labelledby='range-slider'
+                  id='rangeAge'
+                />
+              </div>
+              <p className={classes.AgeNumber}>{rangeAge[1]}</p>
+            </div>
           </div>
         </div>
 
@@ -615,12 +859,22 @@ const EditUnreleasedJob = props => {
                 {formState.inputs.slotAllocation.value &&
                 formState.inputs.slotAllocation.value > 0 &&
                 formState.inputs.slotAllocation.value % 2 === 0 &&
-                parseInt(maxSlot) > parseInt(formState.inputs.slotAllocation.value) / 2
-                  ? (parseInt(maxSlot) - parseInt(formState.inputs.slotAllocation.value) / 2).toString()
+                parseInt(maxSlot) >
+                  parseInt(formState.inputs.slotAllocation.value) / 2
+                  ? (
+                      parseInt(maxSlot) -
+                      parseInt(formState.inputs.slotAllocation.value) / 2
+                    ).toString()
                   : maxSlot}
               </h3>
               <div className={classes.SlotAddButton}>
-                <Button disableElevation size='small' style={{ fontWeight: '600' }} startIcon={<AddIcon />} onClick={onAddSlotHandler}>
+                <Button
+                  disableElevation
+                  size='small'
+                  style={{ fontWeight: '600' }}
+                  startIcon={<AddIcon />}
+                  onClick={onAddSlotHandler}
+                >
                   Tambah Slot
                 </Button>
               </div>
@@ -633,8 +887,16 @@ const EditUnreleasedJob = props => {
             alignSelf: 'flex-end',
             marginRight: '1rem',
             marginTop: '2rem',
-          }}>
-          <Button variant='outlined' color='primary' type='submit' size='small' disableElevation onClick={onSaveHandler}>
+          }}
+        >
+          <Button
+            variant='outlined'
+            color='primary'
+            type='submit'
+            size='small'
+            disableElevation
+            onClick={onSaveHandler}
+          >
             save draft
           </Button>
 
@@ -647,7 +909,8 @@ const EditUnreleasedJob = props => {
               disableElevation
               onClick={onSubmitHandler}
               disabled={!formState.formIsValid}
-              style={{ marginLeft: '1rem' }}>
+              style={{ marginLeft: '1rem' }}
+            >
               save & publish
             </Button>
           )}
@@ -670,21 +933,26 @@ const EditUnreleasedJob = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    releaseJob: (jobData, authData) => dispatch(actionCreators.releaseJob(jobData, authData)),
-    editJobDraft: (jobData, authData) => dispatch(actionCreators.editJobDraft(jobData, authData)),
-    getOneCompany: payload => dispatch(actionCreators.getOneCompany(payload)),
+    releaseJob: (jobData, authData) =>
+      dispatch(actionCreators.releaseJob(jobData, authData)),
+    editJobDraft: (jobData, authData) =>
+      dispatch(actionCreators.editJobDraft(jobData, authData)),
+    getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
-    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
+    getOneJob: (jobsid) => dispatch(actionCreators.getOneJob(jobsid)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditUnreleasedJob));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditUnreleasedJob));
