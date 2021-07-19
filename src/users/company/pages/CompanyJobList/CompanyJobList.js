@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import QueryBar from '../../components/QueryBar';
+import QueryBar from '../../Components/QueryBar';
 
 import CloseIcon from '@material-ui/icons/Close';
 

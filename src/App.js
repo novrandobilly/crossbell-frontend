@@ -47,7 +47,7 @@ const CompanyProfileForm = React.lazy(() =>
   import('./users/company/pages/CompanyProfileForm/CompanyProfileForm')
 );
 const EditCompanyIntro = React.lazy(() =>
-  import('./users/company/components/EditIntro')
+  import('./users/company/Components/EditIntro')
 );
 const CompanyBriefDescriptions = React.lazy(() =>
   import(
@@ -55,10 +55,10 @@ const CompanyBriefDescriptions = React.lazy(() =>
   )
 );
 const EditCompanyBriefDescriptions = React.lazy(() =>
-  import('./users/company/components/EditCompanyBriefDescriptions')
+  import('./users/company/Components/EditCompanyBriefDescriptions')
 );
 const EditCompanyPIC = React.lazy(() =>
-  import('./users/company/components/EditPIC')
+  import('./users/company/Components/EditPIC')
 );
 
 const CompanyOrderForm = React.lazy(() =>
@@ -83,7 +83,7 @@ const CompanyJobList = React.lazy(() =>
 //==================================== applicant =========================================================
 
 const JobsApplied = React.lazy(() =>
-  import('./users/applicant/components/JobsApplied')
+  import('./users/applicant/Components/JobsApplied')
 );
 const ApplicantResumeVal = React.lazy(() =>
   import('./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal')
@@ -95,41 +95,41 @@ const ApplicantDetailsAO = React.lazy(() =>
   import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO')
 );
 const Subscription = React.lazy(() =>
-  import('./users/applicant/components/Subscription')
+  import('./users/applicant/Components/Subscription')
 );
 
 const EditApplicantIntro = React.lazy(() =>
-  import('./users/applicant/components/Edit/EditIntro')
+  import('./users/applicant/Components/Edit/EditIntro')
 );
 const EditApplicantSummary = React.lazy(() =>
-  import('./users/applicant/components/Edit/EditSummary')
+  import('./users/applicant/Components/Edit/EditSummary')
 );
 const EditApplicantEducation = React.lazy(() =>
-  import('./users/applicant/components/Edit/Education')
+  import('./users/applicant/Components/Edit/Education')
 );
 const EditApplicantExperience = React.lazy(() =>
-  import('./users/applicant/components/Edit/Experience')
+  import('./users/applicant/Components/Edit/Experience')
 );
 const EditApplicantCertification = React.lazy(() =>
-  import('./users/applicant/components/Edit/Certification')
+  import('./users/applicant/Components/Edit/Certification')
 );
 const EditApplicantOrganization = React.lazy(() =>
-  import('./users/applicant/components/Edit/Organization')
+  import('./users/applicant/Components/Edit/Organization')
 );
 const EditApplicantSkills = React.lazy(() =>
-  import('./users/applicant/components/Edit/Skill')
+  import('./users/applicant/Components/Edit/Skill')
 );
 const AddApplicantEducation = React.lazy(() =>
-  import('./users/applicant/components/Add/Education')
+  import('./users/applicant/Components/Add/Education')
 );
 const AddApplicantExperience = React.lazy(() =>
-  import('./users/applicant/components/Add/Experience')
+  import('./users/applicant/Components/Add/Experience')
 );
 const AddApplicantCertification = React.lazy(() =>
-  import('./users/applicant/components/Add/Certification')
+  import('./users/applicant/Components/Add/Certification')
 );
 const AddApplicantOrganization = React.lazy(() =>
-  import('./users/applicant/components/Add/Organization')
+  import('./users/applicant/Components/Add/Organization')
 );
 // const AddApplicantSkills = React.lazy(() => import('./users/applicant/components/Add/Skill'));
 
