@@ -16,18 +16,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../shared/UI_Element/Input';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_MIN,
-  VALIDATOR_ALWAYSTRUE,
-  VALIDATOR_EMAIL,
-} from '../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE, VALIDATOR_EMAIL } from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
 import CitiesData from '../../shared/UI_Element/CitiesData';
 
 import classes from './NewJob.module.css';
 
-const EditUnreleasedJob = (props) => {
+const EditUnreleasedJob = props => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
   const [maxSlot, setMaxSlot] = useState(null);
@@ -148,7 +143,7 @@ const EditUnreleasedJob = (props) => {
     false
   );
 
-  const checkmyinput = () => {
+  const checkMyInput = () => {
     if (formState && formState.slotAllocation) {
       let inputfield = document.getElementById('slotAllocation');
       let inputval = inputfield.value;
@@ -180,17 +175,9 @@ const EditUnreleasedJob = (props) => {
       onInputHandler('salary', salary.value, true);
       onInputHandler('benefit', benefit.value, true);
     }
-  }, [
-    jobExperience,
-    onInputHandler,
-    loadedJob,
-    employment,
-    educationalStage,
-    fieldOfWork,
-    placement,
-  ]);
+  }, [jobExperience, onInputHandler, loadedJob, employment, educationalStage, fieldOfWork, placement]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.createJobFail();
@@ -228,7 +215,7 @@ const EditUnreleasedJob = (props) => {
     }
   };
 
-  const onSaveHandler = async (event) => {
+  const onSaveHandler = async event => {
     event.preventDefault();
 
     const jobData = {
@@ -263,7 +250,7 @@ const EditUnreleasedJob = (props) => {
     }
   };
 
-  const onAddSlotHandler = async (event) => {
+  const onAddSlotHandler = async event => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
@@ -300,7 +287,7 @@ const EditUnreleasedJob = (props) => {
     onInputHandler('fieldOfWork', elementArray, true);
   };
 
-  const handleJobExperienceChange = (e) => {
+  const handleJobExperienceChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -315,7 +302,7 @@ const EditUnreleasedJob = (props) => {
     setJobExperienceOpen(true);
   };
 
-  const handleEmploymentChange = (e) => {
+  const handleEmploymentChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -330,7 +317,7 @@ const EditUnreleasedJob = (props) => {
     setEmploymentOpen(true);
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -349,7 +336,7 @@ const EditUnreleasedJob = (props) => {
     onInputHandler('placementLocation', value, true);
   };
 
-  const onCheckedInputHandler = (e) => {
+  const onCheckedInputHandler = e => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
@@ -386,35 +373,17 @@ const EditUnreleasedJob = (props) => {
               <Autocomplete
                 id='placementLocation'
                 name='placementLocation'
-                options={cities.map((option) => option)}
+                options={cities.map(option => option)}
                 onChange={handleLocationChange}
                 style={{ margin: '0' }}
-                value={
-                  formState.inputs.placementLocation.value
-                    ? formState.inputs.placementLocation.value
-                    : ''
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    style={{ margin: '0' }}
-                    label='Lokasi*'
-                    margin='normal'
-                    variant='standard'
-                  />
-                )}
+                value={formState.inputs.placementLocation.value ? formState.inputs.placementLocation.value : ''}
+                renderInput={params => <TextField {...params} style={{ margin: '0' }} label='Lokasi*' margin='normal' variant='standard' />}
               />
             </div>
 
             <div className={classes.ContentWrap}>
-              <FormControl
-                className={classes.formControl}
-                style={{ margin: '0.8rem 0' }}
-              >
-                <InputLabel
-                  id='educationalStageLabel'
-                  style={{ fontSize: '1rem' }}
-                >
+              <FormControl className={classes.formControl} style={{ margin: '0.8rem 0' }}>
+                <InputLabel id='educationalStageLabel' style={{ fontSize: '1rem' }}>
                   Tingkat Pendidikan*
                 </InputLabel>
 
@@ -426,8 +395,7 @@ const EditUnreleasedJob = (props) => {
                   onOpen={handleEducationOpen}
                   value={educationalStage}
                   onChange={handleChange}
-                  style={{ fontSize: '0.9rem', textAlign: 'left' }}
-                >
+                  style={{ fontSize: '0.9rem', textAlign: 'left' }}>
                   <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
                     SMA
                   </MenuItem>
@@ -463,10 +431,7 @@ const EditUnreleasedJob = (props) => {
             </div>
 
             <div className={classes.ContentWrap}>
-              <FormControl
-                className={classes.FormControl}
-                style={{ marginTop: '0' }}
-              >
+              <FormControl className={classes.FormControl} style={{ marginTop: '0' }}>
                 <InputLabel id='employmentLabel' style={{ fontSize: '1rem' }}>
                   Status karyawan*
                 </InputLabel>
@@ -482,27 +447,14 @@ const EditUnreleasedJob = (props) => {
                   style={{
                     fontSize: '0.9rem',
                     textAlign: 'left',
-                  }}
-                >
-                  <MenuItem
-                    id={0}
-                    value='permanent'
-                    style={{ fontSize: '0.9rem' }}
-                  >
+                  }}>
+                  <MenuItem id={0} value='permanent' style={{ fontSize: '0.9rem' }}>
                     Karyawan Tetap
                   </MenuItem>
-                  <MenuItem
-                    id={0}
-                    value='contract'
-                    style={{ fontSize: '0.9rem' }}
-                  >
+                  <MenuItem id={0} value='contract' style={{ fontSize: '0.9rem' }}>
                     Karyawan kontrak (PKWT)
                   </MenuItem>
-                  <MenuItem
-                    id={0}
-                    value='intern'
-                    style={{ fontSize: '0.9rem' }}
-                  >
+                  <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
                     Karyawan magang (Intern)
                   </MenuItem>
                 </Select>
@@ -538,8 +490,7 @@ const EditUnreleasedJob = (props) => {
                   style={{
                     fontSize: '0.9rem',
                     textAlign: 'left',
-                  }}
-                >
+                  }}>
                   <MenuItem value='' style={{ fontSize: '0.9rem' }}>
                     <em>Pilih</em>
                   </MenuItem>
@@ -564,23 +515,13 @@ const EditUnreleasedJob = (props) => {
                 multiple
                 id='fieldOfWork'
                 name='fieldOfWork'
-                options={WorkFieldData.sort().map((option) => option.field)}
-                getOptionLabel={(option) => option}
+                options={WorkFieldData.sort().map(option => option.field)}
+                getOptionLabel={option => option}
                 onChange={fowHandler}
                 style={{ margin: '0', width: '100%' }}
-                value={
-                  formState.inputs.fieldOfWork.value
-                    ? formState.inputs.fieldOfWork.value
-                    : ''
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    style={{ margin: '0' }}
-                    label='Bidang minat*'
-                    margin='normal'
-                    variant='standard'
-                  />
+                value={formState.inputs.fieldOfWork.value ? formState.inputs.fieldOfWork.value : ''}
+                renderInput={params => (
+                  <TextField {...params} style={{ margin: '0' }} label='Bidang minat*' margin='normal' variant='standard' />
                 )}
               />
             </div>
@@ -602,24 +543,14 @@ const EditUnreleasedJob = (props) => {
         </div>
 
         <div className={classes.CheckBoxDiv}>
-          <label
-            onChange={onCheckedInputHandler}
-            className={classes.CheckBoxLabel}
-          >
-            <input
-              id='isHidden'
-              type='checkbox'
-              name='isHidden'
-              className={classes.CheckBox}
-            />
+          <label onChange={onCheckedInputHandler} className={classes.CheckBoxLabel}>
+            <input id='isHidden' type='checkbox' name='isHidden' className={classes.CheckBox} />
             <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
           </label>
         </div>
 
         <div className={classes.AdditionalContentContainer}>
-          <h2 className={classes.AdditionalContentHeader}>
-            Informasi Tambahan
-          </h2>
+          <h2 className={classes.AdditionalContentHeader}>Informasi Tambahan</h2>
           <div className={classes.AdditionalContent}>
             <Input
               inputType='input'
@@ -666,7 +597,7 @@ const EditUnreleasedJob = (props) => {
                 initValue={loadedJob.slot || ''}
                 initIsValid={loadedJob.slot}
                 defaultValue={0}
-                onKeyUp={checkmyinput()}
+                onKeyUp={checkMyInput()}
                 helperText={
                   formState.inputs.slotAllocation.value < 0
                     ? 'Input slot minimal 2'
@@ -684,22 +615,12 @@ const EditUnreleasedJob = (props) => {
                 {formState.inputs.slotAllocation.value &&
                 formState.inputs.slotAllocation.value > 0 &&
                 formState.inputs.slotAllocation.value % 2 === 0 &&
-                parseInt(maxSlot) >
-                  parseInt(formState.inputs.slotAllocation.value) / 2
-                  ? (
-                      parseInt(maxSlot) -
-                      parseInt(formState.inputs.slotAllocation.value) / 2
-                    ).toString()
+                parseInt(maxSlot) > parseInt(formState.inputs.slotAllocation.value) / 2
+                  ? (parseInt(maxSlot) - parseInt(formState.inputs.slotAllocation.value) / 2).toString()
                   : maxSlot}
               </h3>
               <div className={classes.SlotAddButton}>
-                <Button
-                  disableElevation
-                  size='small'
-                  style={{ fontWeight: '600' }}
-                  startIcon={<AddIcon />}
-                  onClick={onAddSlotHandler}
-                >
+                <Button disableElevation size='small' style={{ fontWeight: '600' }} startIcon={<AddIcon />} onClick={onAddSlotHandler}>
                   Tambah Slot
                 </Button>
               </div>
@@ -712,16 +633,8 @@ const EditUnreleasedJob = (props) => {
             alignSelf: 'flex-end',
             marginRight: '1rem',
             marginTop: '2rem',
-          }}
-        >
-          <Button
-            variant='outlined'
-            color='primary'
-            type='submit'
-            size='small'
-            disableElevation
-            onClick={onSaveHandler}
-          >
+          }}>
+          <Button variant='outlined' color='primary' type='submit' size='small' disableElevation onClick={onSaveHandler}>
             save draft
           </Button>
 
@@ -734,8 +647,7 @@ const EditUnreleasedJob = (props) => {
               disableElevation
               onClick={onSubmitHandler}
               disabled={!formState.formIsValid}
-              style={{ marginLeft: '1rem' }}
-            >
+              style={{ marginLeft: '1rem' }}>
               save & publish
             </Button>
           )}
@@ -758,26 +670,21 @@ const EditUnreleasedJob = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    releaseJob: (jobData, authData) =>
-      dispatch(actionCreators.releaseJob(jobData, authData)),
-    editJobDraft: (jobData, authData) =>
-      dispatch(actionCreators.editJobDraft(jobData, authData)),
-    getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
+    releaseJob: (jobData, authData) => dispatch(actionCreators.releaseJob(jobData, authData)),
+    editJobDraft: (jobData, authData) => dispatch(actionCreators.editJobDraft(jobData, authData)),
+    getOneCompany: payload => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
-    getOneJob: (jobsid) => dispatch(actionCreators.getOneJob(jobsid)),
+    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditUnreleasedJob));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditUnreleasedJob));

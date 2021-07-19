@@ -108,12 +108,10 @@ const NewJob = props => {
 
   const { getOneCompany, auth } = props;
   useEffect(() => {
-    const employment = document.getElementById('employment');
     const salary = document.getElementById('salary');
     const benefit = document.getElementById('benefit');
 
     onInputHandler('fieldOfWork', fieldOfWork.field, true);
-    onInputHandler('employment', employment?.value, true);
     onInputHandler('salary', salary?.value, true);
     onInputHandler('benefit', benefit?.value, true);
     onInputHandler('rangeAge', rangeAge, true);
@@ -252,7 +250,7 @@ const NewJob = props => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
-    setEmployment(e.target.value);
+    setEmployment(elementValue);
   };
 
   const handleEmploymentClose = () => {
@@ -344,7 +342,7 @@ const NewJob = props => {
       return newState;
     });
   };
-  console.log(formState);
+  console.log(formState.inputs.employment.value);
 
   let formContent = (
     <div className={classes.ContainerFlex}>
