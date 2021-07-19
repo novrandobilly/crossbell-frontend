@@ -144,6 +144,10 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.NotificationsIcon:hover {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1080px) {
   .PhoneLinks {
     display: none;
@@ -209,10 +213,10 @@
 
   .dropdownContent {
     display: none;
-    position: absolute;
+    /* position: absolute;
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 1; */
   }
 
   .dropdownShow {
@@ -221,6 +225,10 @@
     background-color: white;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    /* width: 400px; */
+  }
+  .adminNotifications {
+    right: 10px;
   }
 
   .dropdownContent a,
@@ -235,6 +243,10 @@
     font-weight: 500;
     min-width: 100px;
     padding: 2px 11px;
+  }
+  .adminNotifications a {
+    font-size: 0.8rem;
+    padding: 0 11px;
   }
 
   .dropdownContent a:hover,

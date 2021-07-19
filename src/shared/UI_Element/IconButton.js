@@ -39,8 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   add: {
     marginLeft: '1rem',
-    width: '2.5rem',
+    width: '11.5rem',
     height: '2.5rem',
+    borderRadius: '5rem',
     backgroundColor: 'rgb(240,240,240)',
     transition: 'all 0.1s ease-in-out',
     '&:hover': {
@@ -78,6 +79,7 @@ const ButtonIcon = (props) => {
           onClick={props.onClick}
         >
           <AddIcon />
+          <span className={classes.AddSegment}>{props.text}</span>
         </IconButton>
       );
 

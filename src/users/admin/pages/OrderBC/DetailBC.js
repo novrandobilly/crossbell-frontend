@@ -111,7 +111,6 @@ const DetailBC = (props) => {
 
       getOrderInvoice(dataBC)
         .then((res) => {
-          console.log(res);
           setDataBC(res.order);
           setApplicantList(res.order.applicantSent);
         })
@@ -121,7 +120,6 @@ const DetailBC = (props) => {
 
       getAllApplicant(dataBC)
         .then((res) => {
-          console.log(res);
           setDataApplicant(res.wholeApplicants);
         })
         .catch((err) => {

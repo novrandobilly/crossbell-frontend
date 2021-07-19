@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -48,6 +48,8 @@ const JobsListAO = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [displayData, setDisplayData] = useState();
 
+  const emptyText = useRef('');
+
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   const handleAll = () => {
@@ -84,11 +86,14 @@ const JobsListAO = (props) => {
     if (admin.token) {
       let sort = [];
       getAllJob(payload).then((res) => {
-        if (res) {
-          sort = res.availableJobs;
-          sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
-          setData(sort);
-          setIsLoading(false);
+        sort = res.availableJobs;
+        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+        setData(sort);
+        setIsLoading(false);
+
+        if (res.message) {
+          emptyText.current =
+            'Belum ada perusahaan yang membuat pesanan untuk saat ini';
         }
       });
     }
@@ -381,12 +386,8 @@ const JobsListAO = (props) => {
     );
   }
 
-  if (!props.isLoading && !data) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada pekerjaan ditayangkan oleh perusahaan saat ini
-      </p>
-    );
+  if (!props.isLoading && emptyText.current) {
+    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
   return <div>{content}</div>;

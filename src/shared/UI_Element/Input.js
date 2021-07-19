@@ -32,7 +32,7 @@ const inputReducer = (state, action) => {
   }
 };
 
-const Input = (props) => {
+const Input = props => {
   const [state, dispatch] = useReducer(inputReducer, {
     value: props.initValue || '',
     isValid: props.initIsValid || false,
@@ -42,11 +42,10 @@ const Input = (props) => {
   const { id, onInputHandler } = props;
 
   useEffect(() => {
-    // console.log(state.value);
     onInputHandler && onInputHandler(id, state.value, state.isValid);
   }, [id, state.value, state.isValid, onInputHandler]);
 
-  const onChangeHandler = (event) => {
+  const onChangeHandler = event => {
     dispatch({
       type: ACTION.ONCHANGE,
       payload: {
@@ -54,9 +53,10 @@ const Input = (props) => {
         validatorMethod: props.validatorMethod,
       },
     });
+    props.onChange && props.onChange(event);
   };
 
-  const onCustomDateHandler = (payload) => {
+  const onCustomDateHandler = payload => {
     dispatch({
       type: ACTION.ONCHANGE,
       payload: {
@@ -76,26 +76,15 @@ const Input = (props) => {
       inputElement = (
         <TextField
           id={id}
-          className={[classes.InputElements, classes[props.InputClass]].join(
-            ' '
-          )}
+          className={[classes.InputElements, classes[props.InputClass]].join(' ')}
           label={props.label}
           name={props.name}
           value={props.value || state.value}
           type={props.type || 'text'}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          helperText={
-            props.helperText &&
-            !state.isValid &&
-            state.isTouched &&
-            props.helperText
-          }
-          error={
-            props.error !== undefined
-              ? props.error
-              : !state.isValid && state.isTouched
-          }
+          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+          error={props.error !== undefined ? props.error : !state.isValid && state.isTouched}
           InputProps={{
             style: { fontSize: 15 },
             inputProps: {
@@ -116,9 +105,7 @@ const Input = (props) => {
       inputElement = (
         <TextField
           id={id}
-          className={[classes.InputElements, classes[props.InputClass]].join(
-            ' '
-          )}
+          className={[classes.InputElements, classes[props.InputClass]].join(' ')}
           label={props.label}
           name={props.name}
           value={props.value || state.value}
@@ -126,17 +113,8 @@ const Input = (props) => {
           type={props.type || 'text'}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          helperText={
-            props.helperText &&
-            !state.isValid &&
-            state.isTouched &&
-            props.helperText
-          }
-          error={
-            props.error !== undefined
-              ? props.error
-              : !state.isValid && state.isTouched
-          }
+          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+          error={props.error !== undefined ? props.error : !state.isValid && state.isTouched}
           size='small'
           InputProps={{
             style: { fontSize: 15 },
@@ -158,9 +136,7 @@ const Input = (props) => {
       inputElement = (
         <TextField
           id={id}
-          className={[classes.TextareaElements, classes[props.InputClass]].join(
-            ' '
-          )}
+          className={[classes.TextareaElements, classes[props.InputClass]].join(' ')}
           style={{ margin: '0.5rem 0' }}
           label={props.label}
           name={props.name}
@@ -171,17 +147,8 @@ const Input = (props) => {
           multiline
           rows={props.rows || 4}
           variant='outlined'
-          helperText={
-            props.helperText &&
-            !state.isValid &&
-            state.isTouched &&
-            props.helperText
-          }
-          error={
-            props.isValid !== undefined
-              ? !props.isValid && state.isTouched
-              : !state.isValid && state.isTouched
-          }
+          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+          error={props.isValid !== undefined ? !props.isValid && state.isTouched : !state.isValid && state.isTouched}
         />
       );
       break;
@@ -194,22 +161,15 @@ const Input = (props) => {
           InputLabelProps={{
             shrink: true,
           }}
-          className={[classes.InputElements, classes[props.InputClass]].join(
-            ' '
-          )}
+          className={[classes.InputElements, classes[props.InputClass]].join(' ')}
           views={props.views || ['year', 'month', 'date']}
           value={moment(state.value)}
           style={props.style}
-          onChange={(eventValue) => onCustomDateHandler(eventValue)}
+          onChange={eventValue => onCustomDateHandler(eventValue)}
           minDate={props.minDate}
           maxDate={props.maxDate}
           format={props.format}
-          helperText={
-            props.helperText &&
-            !state.isValid &&
-            state.isTouched &&
-            props.helperText
-          }
+          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
         />
       );
       break;
@@ -217,23 +177,20 @@ const Input = (props) => {
       inputElement = (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <DatePicker
-            className={[classes.InputElements, classes[props.InputClass]].join(
-              ' '
-            )}
+            className={[classes.InputElements, classes[props.InputClass]].join(' ')}
             views={props.views || ['year', 'month', 'date']}
             value={moment(state.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label={props.label}
             style={props.style}
-            onChange={(eventValue) => onCustomDateHandler(eventValue)}
+            onChange={eventValue => onCustomDateHandler(eventValue)}
             minDate={props.minDate}
             maxDate={props.maxDate}
             id={id}
             format={props.format}
-            helperText={
-              props.helperText &&
-              !state.isValid &&
-              state.isTouched &&
-              props.helperText
-            }
+            helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
           />
         </MuiPickersUtilsProvider>
       );
@@ -244,17 +201,8 @@ const Input = (props) => {
         <TextField
           {...props.params}
           style={{ margin: '0' }}
-          error={
-            props.error !== undefined
-              ? props.error
-              : !state.isValid && state.isTouched
-          }
-          helperText={
-            props.helperText &&
-            !state.isValid &&
-            state.isTouched &&
-            props.helperText
-          }
+          error={props.error !== undefined ? props.error : !state.isValid && state.isTouched}
+          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
           label={props.label}
@@ -268,21 +216,14 @@ const Input = (props) => {
       return (inputElement = (
         <TextField
           id={id}
-          className={[classes.InputElements, classes[props.InputClass]].join(
-            ' '
-          )}
+          className={[classes.InputElements, classes[props.InputClass]].join(' ')}
           label={props.label}
           name={props.name}
           value={props.value || state.value}
           type={props.type || 'text'}
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
-          helperText={
-            props.helperText &&
-            !state.isValid &&
-            state.isTouched &&
-            props.helperText
-          }
+          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
           error={!state.isValid && state.isTouched}
           InputProps={{ style: { fontSize: 15 } }}
           style={{ margin: '.6rem 0' }}
@@ -291,11 +232,7 @@ const Input = (props) => {
   }
 
   return (
-    <div
-      className={`${classes.InputContainer} ${
-        !state.isValid && state.isTouched && classes.InputInvalid
-      }`}
-    >
+    <div className={`${classes.InputContainer} ${!state.isValid && state.isTouched && classes.InputInvalid}`}>
       {inputElement}
       {/* {!state.isValid && state.isTouched && props.errorText && <p>{props.errorText}</p>} */}
     </div>

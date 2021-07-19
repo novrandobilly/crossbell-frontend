@@ -1,0 +1,225 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.ContainerFlex {
+  width: 40rem;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  background-color: white;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 3rem 2rem 3rem;
+}
+
+.FormTitle {
+  font-size: 1.4rem;
+  color: black;
+  align-self: flex-start;
+}
+
+.Content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: solid 0.1rem rgba(0, 0, 0, 0.7);
+  padding-top: 2rem;
+}
+
+.ContentWrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ContentWrap > * {
+  width: 45%;
+}
+
+.ContentWrapFull {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ContentWrapFull > * {
+  width: 100%;
+}
+
+.ContentTop {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ProfilePicture {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.Avatar {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background-position: center center;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.InputButton {
+  border: none;
+  border-radius: 1rem;
+  background-color: rgba(58, 81, 153, 1);
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 6rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ContentLeft {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.Text {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 1;
+  letter-spacing: 0.00938em;
+  text-align: left;
+  margin-top: -3px;
+}
+
+.RadioHolder {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.RadioButton {
+  align-items: center;
+}
+
+.ContentBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1rem;
+  padding-left: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.Footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  margin-right: 2rem;
+}
+
+.ContentPhone {
+  display: none;
+}
+
+.CheckBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: start;
+}
+
+.Footer a {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .Container {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .Container {
+    padding: 0;
+  }
+
+  .ContainerFlex {
+    width: 100vh;
+    padding: 0px 16px 10px 16px;
+    border-radius: 0;
+  }
+
+  .ProfilePicture {
+    align-self: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .ContentPhone {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ContentWrap {
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .ContentWrap > * {
+    width: 100%;
+  }
+
+  .InputDiv {
+    margin-top: 8px;
+  }
+
+  .ContentBottom {
+    padding-left: 0;
+    text-align: left;
+    line-height: 20px;
+  }
+
+  .Text {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 440px) {
+  .Container {
+    padding-top: 0;
+  }
+
+  .ContainerFlex {
+    border-radius: 0;
+  }
+}

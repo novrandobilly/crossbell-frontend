@@ -31,9 +31,11 @@ export const createJob = (jobData, authData) => {
           isHidden: jobData.isHidden,
           placementLocation: jobData.placementLocation,
           jobDescriptions: jobData.jobDescriptions,
+          jobExperience: jobData.jobExperience,
           educationalStage: jobData.educationalStage,
-          technicalRequirement: jobData.technicalRequirement,
+          specialRequirement: jobData.specialRequirement,
           emailRecipient: jobData.emailRecipient,
+          rangeAge: jobData.rangeAge,
           employment: jobData.employment,
           benefit: jobData.benefit,
           salary: jobData.salary,
@@ -73,8 +75,10 @@ export const saveJobDraft = (jobData, authData) => {
             isHidden: jobData.isHidden,
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
+            jobExperience: jobData.jobExperience,
             educationalStage: jobData.educationalStage,
-            technicalRequirement: jobData.technicalRequirement,
+            specialRequirement: jobData.specialRequirement,
+            rangeAge: jobData.rangeAge,
             emailRecipient: jobData.emailRecipient,
             employment: jobData.employment,
             benefit: jobData.benefit,
@@ -117,7 +121,9 @@ export const editJobDraft = (jobData, authData) => {
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
             educationalStage: jobData.educationalStage,
-            technicalRequirement: jobData.technicalRequirement,
+            specialRequirement: jobData.specialRequirement,
+            jobExperience: jobData.jobExperience,
+            rangeAge: jobData.rangeAge,
             emailRecipient: jobData.emailRecipient,
             employment: jobData.employment,
             benefit: jobData.benefit,
@@ -177,12 +183,19 @@ export const getAllAvailableJobs = () => {
   };
 };
 
-export const getOneJob = (jobId) => {
+export const getOneJob = (payload) => {
   return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/${jobId}`
+        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/${payload.jobsid}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${payload.token}`,
+          },
+        }
       );
       const responseJSON = await res.json();
       if (!res.ok) {
@@ -246,7 +259,7 @@ export const updateJob = (payload) => {
             employment: payload.employment,
             educationalStage: payload.educationalStage,
             salary: payload.salary,
-            technicalRequirement: payload.technicalRequirement,
+            specialRequirement: payload.specialRequirement,
           }),
         }
       );
@@ -279,7 +292,6 @@ export const deleteJob = (payload) => {
         }
       );
       const responseJSON = res.json();
-      console.log(responseJSON);
       dispatch(fetchingFinish());
 
       return responseJSON;
@@ -339,9 +351,11 @@ export const releaseJob = (jobData, authData) => {
             isHidden: jobData.isHidden,
             placementLocation: jobData.placementLocation,
             jobDescriptions: jobData.jobDescriptions,
+            jobExperience: jobData.jobExperience,
             educationalStage: jobData.educationalStage,
-            technicalRequirement: jobData.technicalRequirement,
+            specialRequirement: jobData.specialRequirement,
             emailRecipient: jobData.emailRecipient,
+            rangeAge: jobData.rangeAge,
             employment: jobData.employment,
             benefit: jobData.benefit,
             salary: jobData.salary,

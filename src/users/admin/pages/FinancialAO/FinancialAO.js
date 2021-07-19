@@ -105,7 +105,6 @@ const FinancialAO = (props) => {
   }, [total]);
 
   let content = <Spinner />;
-
   if (displayData && !props.isLoading) {
     content = (
       <div className={classes.FlexContainer}>
@@ -166,7 +165,7 @@ const FinancialAO = (props) => {
                   return (
                     <tr key={display._id}>
                       <th>{i + 1}</th>
-                      <th>{display.companyId.companyName}</th>
+                      <th>{display?.companyId?.companyName}</th>
                       <th>{display._id}</th>
                       <th>
                         {' '}

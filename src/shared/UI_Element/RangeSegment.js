@@ -29,7 +29,7 @@ const RangeSegment = (props) => {
           {props.auth.userId === props.applicantid && (
             <div>
               <Link to={props.routeAdd}>
-                <IconButton iconType='NewSegment' />
+                <IconButton iconType='NewSegment' text={props.buttonText} />
               </Link>
             </div>
           )}
