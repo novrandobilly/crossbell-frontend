@@ -161,7 +161,7 @@ const FinancialAO = props => {
                   return (
                     <tr key={display._id}>
                       <th>{i + 1}</th>
-                      <th>{display.companyId.companyName}</th>
+                      <th>{display?.companyId?.companyName}</th>
                       <th>{display._id}</th>
                       <th> {display.slot ? 'order reguler' : 'order bulk candidate'}</th>
                       <th>{display.slot ? display.packageName : '-'}</th>
