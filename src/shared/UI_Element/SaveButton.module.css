@@ -9,7 +9,7 @@
   border-radius: 1rem;
   color: white;
   background-color: rgba(58, 81, 153, 1);
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   transition: all 0.5s;
@@ -30,7 +30,7 @@
 }
 
 .SaveButton:enabled span:after {
-  content: ">>";
+  content: '>>';
   position: absolute;
   opacity: 0;
   top: 0;

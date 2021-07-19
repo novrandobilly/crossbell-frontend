@@ -58,6 +58,7 @@ export {
   getCompanyBC,
   deleteCandidateES,
   approveOrderBC,
+  updatePaymentREG,
 } from './order-actions';
 
 export {

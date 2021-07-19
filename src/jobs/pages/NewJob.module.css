@@ -15,7 +15,7 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   background-color: white;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 0.8rem;
   font-weight: bold;
   padding: 0.5rem 3rem 2rem 3rem;
@@ -61,7 +61,7 @@
 .SpecialRequirement {
   text-align: left;
   color: rgba(0, 0, 0, 0.54);
-  font-family: 'Roboto';
+  /* font-family: 'Roboto'; */
   font-weight: 400;
   padding: 0;
   margin: 0;
@@ -71,6 +71,14 @@
 
 .AutoAddDiv {
   margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ListNuber {
+  margin: 0;
+  margin-right: 10px;
 }
 
 .AddInput {
@@ -80,7 +88,7 @@
 .SpecialTips {
   text-align: left;
   color: rgba(0, 0, 0, 0.54);
-  font-family: 'Roboto';
+  /* font-family: 'Roboto'; */
   font-weight: 400;
   margin: 0;
   font-size: 0.8rem;
@@ -175,6 +183,15 @@
   width: 80%;
 }
 
+.NumberDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.AgeNumber {
+  margin: 0;
+}
 .DurationContent {
   width: 100%;
   display: flex;
