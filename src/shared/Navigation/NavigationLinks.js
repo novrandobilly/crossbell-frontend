@@ -17,7 +17,6 @@ const NavigationLinks = props => {
   const [adminNotifications, setAdminNotifications] = useState([]);
   const [adminDropdownFinance, setAdminDropdownFinance] = useState(false);
   const [adminDropdownOperational, setAdminDropdownOperational] = useState(false);
-  const [adminDropdownNotification, setAdminDropdownNotification] = useState(false);
 
   const ref = useRef();
 
@@ -25,7 +24,6 @@ const NavigationLinks = props => {
     if (companyDropdown) setCompanyDropdown(false);
     if (adminDropdownFinance) setAdminDropdownFinance(false);
     if (adminDropdownOperational) setAdminDropdownOperational(false);
-    if (adminDropdownNotification) setAdminDropdownNotification(false);
   });
 
   const logoutHandler = () => {
@@ -43,20 +41,14 @@ const NavigationLinks = props => {
 
   const DropdownOrderAdminFinance = () => {
     setAdminDropdownOperational(false);
-    setAdminDropdownNotification(false);
+
     setAdminDropdownFinance(!adminDropdownFinance);
   };
 
   const DropdownOrderAdminOperational = () => {
     setAdminDropdownFinance(false);
-    setAdminDropdownNotification(false);
-    setAdminDropdownOperational(!adminDropdownOperational);
-  };
 
-  const DropdownAdminNotification = () => {
-    setAdminDropdownFinance(false);
-    setAdminDropdownOperational(false);
-    setAdminDropdownNotification(!adminDropdownNotification);
+    setAdminDropdownOperational(!adminDropdownOperational);
   };
 
   const { getOneApplicant, getAdmin } = props;
@@ -249,25 +241,11 @@ const NavigationLinks = props => {
                 </div>
               </div>
             </li>
-            <li className={classes.dropdown}>
-              <button className={classes.dropbtn} onClick={DropdownAdminNotification} ref={ref}>
+            <li className={classes['AdminNotification']}>
+              <NavLink to='/ad/alphaomega/notifications' id={classes['NotificationButton']} ref={ref}>
                 <NotificationsIcon style={{ color: 'rgba(58, 81, 153, 1)' }}></NotificationsIcon>
-              </button>
-              <div
-                className={`${adminDropdownNotification ? classes.dropdownShow : classes.dropdownContent} ${classes.adminNotifications}`}
-                id='dropdownCompany'>
-                {adminNotifications.map((notif, index) => {
-                  return (
-                    <NavLink
-                      key={`notif_${index}`}
-                      to={`/ad/alphaomega/notifications`}
-                      activeClassName={classes.active}
-                      onClick={DropdownAdminNotification}>
-                      <p>{notif.message}</p>
-                    </NavLink>
-                  );
-                })}
-              </div>
+                {adminNotifications.length > 0 && <span>{adminNotifications.filter(notif => !notif.isOpened).length}</span>}
+              </NavLink>
             </li>
           </React.Fragment>
         )}
