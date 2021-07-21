@@ -13,7 +13,7 @@ import { VALIDATOR_MIN } from '../utils/validator';
 
 import classes from './ApproveModal.module.css';
 
-const ModalOverlay = (props) => {
+const ModalOverlay = props => {
   const [file, setFile] = useState();
 
   const [formState, onInputHandler] = useForm(
@@ -41,14 +41,14 @@ const ModalOverlay = (props) => {
     false
   );
 
-  const onUploadHandler = (e) => {
+  const onUploadHandler = e => {
     const elementId = e.target.name;
     const elementFile = e.target.files[0];
     onInputHandler(elementId, elementFile, true);
     setFile(URL.createObjectURL(e.target.files[0]));
   };
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -75,10 +75,7 @@ const ModalOverlay = (props) => {
   };
 
   let content = (
-    <div
-      className={`${classes.Modal} ${props.ContainerClass}`}
-      style={props.style}
-    >
+    <div className={`${classes.Modal} ${props.ContainerClass}`} style={props.style}>
       <header className={`${classes.Header} ${props.HeaderClass}`}>
         <p> {props.children}</p>
       </header>
@@ -95,7 +92,7 @@ const ModalOverlay = (props) => {
               type='date'
               style={{ width: '100%' }}
               className={classes.textField}
-              onChange={(e) => onInputHandler('date', e.target.value, true)}
+              onChange={e => onInputHandler('date', e.target.value, true)}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -111,7 +108,7 @@ const ModalOverlay = (props) => {
               defaultValue='00:00'
               className={classes.textField}
               style={{ width: '100%' }}
-              onChange={(e) => onInputHandler('time', e.target.value, true)}
+              onChange={e => onInputHandler('time', e.target.value, true)}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -157,22 +154,14 @@ const ModalOverlay = (props) => {
                 style={{ width: '100%' }}
                 accept='.jpg, .jpeg, .png'
               />
-              <span className={classes.InputButtonText}>
-                {' '}
-                Upload Bukti Pembayaran{' '}
-              </span>
+              <span className={classes.InputButtonText}> Upload Bukti Pembayaran </span>
             </label>
           </div>
         </div>
 
         <footer className={`${classes.Footer} ${props.FooterClass}`}>
           <div className={`${classes.FooterButton}`}>
-            <Button
-              variant='contained'
-              disableElevation
-              style={{ marginRight: '16px', padding: '0' }}
-              onClick={props.onCancel}
-            >
+            <Button variant='contained' disableElevation style={{ marginRight: '16px', padding: '0' }} onClick={props.onCancel}>
               tidak
             </Button>
 
@@ -182,8 +171,7 @@ const ModalOverlay = (props) => {
               disableElevation
               onClick={onSubmitHandler}
               style={{ padding: '0' }}
-              disabled={!formState.formIsValid}
-            >
+              disabled={!formState.formIsValid}>
               ya
             </Button>
           </div>
@@ -194,24 +182,18 @@ const ModalOverlay = (props) => {
   return ReactDOM.createPortal(content, document.getElementById('modal-hook'));
 };
 
-const Modal = (props) => {
+const Modal = props => {
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
-      <CSSTransition
-        in={props.show}
-        mountOnEnter
-        unmountOnExit
-        timeout={200}
-        classNames='Modal'
-      >
+      <CSSTransition in={props.show} mountOnEnter unmountOnExit timeout={200} classNames='Modal'>
         <ModalOverlay {...props} />
       </CSSTransition>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     isLoading: state.finance.isLoading,
@@ -219,10 +201,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updatePaymentREG: (payload) =>
-      dispatch(actionCreators.updatePaymentREG(payload)),
+    updatePaymentREG: payload => dispatch(actionCreators.updatePaymentREG(payload)),
   };
 };
 
