@@ -54,9 +54,8 @@ const OrderREG = (props) => {
   const emptyText = useRef('');
 
   const [approveOrder, setApproveOrder] = useState({
-    orderId: null,
-    companyId: null,
-    index: null,
+    companyId: '',
+    index: '',
   });
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
@@ -97,32 +96,17 @@ const OrderREG = (props) => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const approveOrderREGHandler = async (dataInput) => {
-    setIndex(dataInput.i);
+  const approveDataChange = () => {
+    setIndex(approveOrder.index);
+
+    setData((prevData) => {
+      const tempData = [...prevData];
+      const trueIndex = approveOrder.index + (paginationNumber - 1) * 10;
+      tempData[trueIndex].status = 'Paid';
+      return tempData;
+    });
+    setIndex(null);
     setOrderModal(false);
-
-    const payload = {
-      token: props.admin.token,
-      companyId: dataInput.companyId,
-      orderId: dataInput.orderId,
-    };
-
-    try {
-      const response = await props.approveOrderREG(payload);
-      if (!response.id) {
-        throw new Error(response);
-      }
-      setData((prevData) => {
-        const tempData = [...prevData];
-        const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
-        tempData[trueIndex].status = 'Paid';
-        return tempData;
-      });
-      setIndex(null);
-    } catch (err) {
-      console.log(err);
-      setIndex(null);
-    }
   };
 
   //================= Pagination ===========================
@@ -151,8 +135,8 @@ const OrderREG = (props) => {
     setOrderModal(false);
   };
 
-  const onOpenOrderModal = (orderId, companyId, index) => {
-    setApproveOrder({ orderId: orderId, companyId: companyId, index: index });
+  const onOpenOrderModal = (orderId, index) => {
+    setApproveOrder({ orderId: orderId, index: index });
     setOrderModal(true);
   };
 
@@ -249,12 +233,7 @@ const OrderREG = (props) => {
                           onClick={
                             order.status === 'Paid'
                               ? null
-                              : () =>
-                                  onOpenOrderModal(
-                                    order._id,
-                                    order.companyId._id,
-                                    i
-                                  )
+                              : () => onOpenOrderModal(order._id, i)
                           }
                         >
                           {order.status === 'Pending'
@@ -309,13 +288,7 @@ const OrderREG = (props) => {
         show={orderModal}
         onCancel={onCloseOrderModal}
         orderId={approveOrder.orderId}
-        Accept={() =>
-          approveOrderREGHandler({
-            orderId: approveOrder.orderId,
-            companyId: approveOrder.companyId,
-            i: approveOrder.index,
-          })
-        }
+        approveDataChange={approveDataChange}
       >
         Form Persetujuan
       </ApproveModal>

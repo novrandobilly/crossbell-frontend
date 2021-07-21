@@ -91,7 +91,6 @@ input[type='file'] {
 }
 
 .InputButton {
-  border: black 1px solid;
   border-radius: 1rem;
   background-color: rgba(58, 81, 153, 1);
   color: white;
