@@ -144,10 +144,6 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-.NotificationsIcon:hover {
-  cursor: pointer;
-}
-
 @media screen and (min-width: 1080px) {
   .PhoneLinks {
     display: none;
@@ -179,6 +175,27 @@
   .NavLinks button {
     border: 1px solid white;
     background: transparent;
+  }
+
+  #NotificationButton {
+    position: relative;
+    border: none;
+  }
+  #NotificationButton > span {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgb(187, 0, 0);
+    color: white;
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 2px;
+    right: 7px;
+    font-size: 10px;
   }
 
   .NavLinks button:hover,
