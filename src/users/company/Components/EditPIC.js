@@ -74,7 +74,7 @@ const EditPIC = props => {
       picEmail: formState.inputs.picEmail.value,
       picPhone: formState.inputs.picPhone.value,
       picOfficePhone: formState.inputs.picOfficePhone.value,
-      token: props.auth.token,
+      token: props.auth.token || props.admin.token,
     };
     try {
       const res = await props.updateCompanyPIC(updatedData);
@@ -213,6 +213,7 @@ const mapStateToProps = state => {
     isLoading: state.company.isLoading,
     error: state.company.error,
     auth: state.auth,
+    admin: state.admin,
   };
 };
 

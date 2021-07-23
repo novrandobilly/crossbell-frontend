@@ -37,11 +37,13 @@ const Organization = (props) => {
       token: props.auth.token,
     };
     if (props.auth.token) {
+
       getOneApplicant(payload).then((res) => {
         const OrganizationSort = res.applicant.organization.sort(
           (a, b) => moment(b.startDate) - moment(a.startDate)
         );
         setData(OrganizationSort[organizationindex]);
+
       });
     }
   }, [getOneApplicant, applicantid, organizationindex, props.auth.token]);

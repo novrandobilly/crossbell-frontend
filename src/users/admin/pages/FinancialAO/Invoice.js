@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 
 import classes from './Invoice.module.css';
 
-const Invoice = (props) => {
+const Invoice = props => {
   let { orderid } = useParams();
   const [orderData, setOrderData] = useState();
 
@@ -23,19 +23,17 @@ const Invoice = (props) => {
 
   const { getOrderInvoice } = props;
   useEffect(() => {
-    if (props.auth.token) {
-      getOrderInvoice({ orderId: orderid, token: props.auth.token }).then(
-        (res) => {
-          if (res) {
-            setOrderData(res.order);
-            console.log(res);
-          } else {
-            throw new Error();
-          }
+    if (props.auth.token || props.admin.token) {
+      getOrderInvoice({ orderId: orderid, token: props.auth.token || props.admin.token }).then(res => {
+        if (res) {
+          setOrderData(res.order);
+          console.log(res);
+        } else {
+          throw new Error();
         }
-      );
+      });
     }
-  }, [getOrderInvoice, orderid, props.auth]);
+  }, [getOrderInvoice, orderid, props.admin.token, props.auth.token]);
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -60,8 +58,7 @@ const Invoice = (props) => {
               color='primary'
               className={classes.margin}
               onClick={handlePrint}
-              startIcon={<GetAppIcon />}
-            >
+              startIcon={<GetAppIcon />}>
               dowload/ print
             </Button>
           </div>
@@ -72,18 +69,10 @@ const Invoice = (props) => {
             </p>
             <div className={classes.Content}>
               <div className={classes.CompanyDetail}>
-                <p className={classes.CompanyName}>
-                  {orderData.companyId.companyName}
-                </p>
-                <p className={classes.InvoiceCompanyData}>
-                  {orderData.companyId.address}
-                </p>
-                <p className={classes.InvoiceCompanyData}>
-                  {orderData.companyId.email}
-                </p>
-                <p className={classes.InvoiceCompanyData}>
-                  {orderData.companyId.website}
-                </p>
+                <p className={classes.CompanyName}>{orderData.companyId.companyName}</p>
+                <p className={classes.InvoiceCompanyData}>{orderData.companyId.address}</p>
+                <p className={classes.InvoiceCompanyData}>{orderData.companyId.email}</p>
+                <p className={classes.InvoiceCompanyData}>{orderData.companyId.website}</p>
               </div>
               <div className={classes.InvoiceRight}>
                 <p className={classes.InvoiceTitle}>INVOICE</p>
@@ -93,9 +82,7 @@ const Invoice = (props) => {
                     {/* <p>InvoiceId</p> */}
                   </div>
                   <div>
-                    <p className={classes.InvoiceCompanyData}>
-                      {moment(orderData.createdAt).format('D MMMM  YYYY')}
-                    </p>
+                    <p className={classes.InvoiceCompanyData}>{moment(orderData.createdAt).format('D MMMM  YYYY')}</p>
                     {/* <p>{orderData.invoiceId}</p> */}
                   </div>
                 </div>
@@ -104,11 +91,7 @@ const Invoice = (props) => {
             <table className={classes.Table}>
               <thead>
                 <tr>
-                  {orderData.packageName ? (
-                    <th>Package Ads</th>
-                  ) : (
-                    <th>Order</th>
-                  )}
+                  {orderData.packageName ? <th>Package Ads</th> : <th>Order</th>}
                   <th>Jumlah</th>
                   <th>Harga Satuan</th>
                   <th>Sub Total</th>
@@ -116,29 +99,17 @@ const Invoice = (props) => {
               </thead>
               <tbody>
                 <tr>
-                  <th>
-                    {orderData.packageName
-                      ? orderData.packageName
-                      : orderData.amount
-                      ? 'bulk candidate'
-                      : 'executive search'}
-                  </th>
+                  <th>{orderData.packageName ? orderData.packageName : orderData.amount ? 'bulk candidate' : 'executive search'}</th>
                   <th>{orderData.slot ? orderData.slot : orderData.amount}</th>
                   <th>
-                    Rp.{' '}
-                    {orderData.pricePerSlot
-                      ? orderData.pricePerSlot.toLocaleString()
-                      : orderData.price.toLocaleString()}
+                    Rp. {orderData.pricePerSlot ? orderData.pricePerSlot.toLocaleString() : orderData.price.toLocaleString()}
                     ,-
                   </th>
                   <th>
                     Rp.{' '}
                     {orderData.packageName
-                      ? (subTotal =
-                          orderData.pricePerSlot *
-                          orderData.slot).toLocaleString()
-                      : (subTotal =
-                          orderData.price * orderData.amount).toLocaleString()}
+                      ? (subTotal = orderData.pricePerSlot * orderData.slot).toLocaleString()
+                      : (subTotal = orderData.price * orderData.amount).toLocaleString()}
                     ,-
                   </th>
                 </tr>
@@ -147,19 +118,12 @@ const Invoice = (props) => {
 
             <div className={classes.Footer}>
               <div className={classes.CommentContainer}>
-                <div className={classes.CommentHeader}>
-                  Instruksi Pembayaran
-                </div>
+                <div className={classes.CommentHeader}>Instruksi Pembayaran</div>
                 <div className={classes.CommentContent}>
                   <ul>
+                    <li>Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14 hari sejak tanggal invoice ini</li>
                     <li>
-                      Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14
-                      hari sejak tanggal invoice ini
-                    </li>
-                    <li>
-                      Pembayaran dapat di transfer ke rekening BCA{' '}
-                      <span style={{ fontWeight: '500' }}>1234567xxx</span> a/n
-                      Bagong
+                      Pembayaran dapat di transfer ke rekening BCA <span style={{ fontWeight: '500' }}>1234567xxx</span> a/n Bagong
                     </li>
                     {/* <li>
                       Pembayaran melalui virtual account dapat transfer melalui
@@ -167,8 +131,7 @@ const Invoice = (props) => {
                       <span style={{ fontWeight: '500' }}>807770817329xxx</span>
                     </li> */}
                     <li>
-                      Setelah melakukan pembayaran, mohon kirimkan bukti
-                      transfer kepada nomor wa{' '}
+                      Setelah melakukan pembayaran, mohon kirimkan bukti transfer kepada nomor wa{' '}
                       <span style={{ fontWeight: '500' }}>081732954xxx</span>
                     </li>
                   </ul>
@@ -215,10 +178,9 @@ const Invoice = (props) => {
                   <strong>
                     {terbilang(subTotal + tax - dis)
                       .split(' ')
-                      .map((word) => {
+                      .map(word => {
                         let upperCaseWord = '';
-                        upperCaseWord =
-                          word[0].toUpperCase() + word.slice(1, word.length);
+                        upperCaseWord = word[0].toUpperCase() + word.slice(1, word.length);
                         return upperCaseWord;
                       })
                       .join(' ')}{' '}
@@ -228,14 +190,9 @@ const Invoice = (props) => {
               </div>
             </div>
           </div>
-          <div
-            style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
-          >
+          <div style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
             <p className={classes.LinkedText}>
-              <Link
-                style={{ textDecoration: 'none', color: 'blue' }}
-                to={`/co/${props.auth.userId}/listOrder`}
-              >
+              <Link style={{ textDecoration: 'none', color: 'blue' }} to={`/co/${props.auth.userId}/listOrder`}>
                 Lanjut ke daftar order {'>>'}
               </Link>
             </p>
@@ -248,22 +205,19 @@ const Invoice = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     isLoading: state.finance.isLoading,
     error: state.finance.error,
+    admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOrderInvoice: (orderData) =>
-      dispatch(actionCreators.getOrderInvoice(orderData)),
+    getOrderInvoice: orderData => dispatch(actionCreators.getOrderInvoice(orderData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Invoice));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Invoice));
