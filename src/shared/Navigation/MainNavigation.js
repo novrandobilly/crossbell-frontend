@@ -19,19 +19,7 @@ const MainNavigation = () => {
   return (
     <React.Fragment>
       {drawerIsOpen && <Backdrop onClick={toggleDrawerHandler} />}
-
-      <SideDrawer show={drawerIsOpen}>
-        <nav className={classes.DrawerNav} onClick={toggleDrawerHandler}>
-          <NavigationLinks />
-        </nav>
-      </SideDrawer>
-
       <MainHeader>
-        <button className={classes.MenuBtn} onClick={toggleDrawerHandler}>
-          <span />
-          <span />
-          <span />
-        </button>
         <h2 className={classes.Title}>
           <Link to='/'>
             <Logo logoWidth='55px' />
@@ -41,7 +29,18 @@ const MainNavigation = () => {
           <NavigationLinks />
           {/* <NavLinks /> */}
         </nav>
+        <button className={classes.MenuBtn} onClick={toggleDrawerHandler}>
+          <span />
+          <span />
+          <span />
+        </button>
       </MainHeader>
+
+      <SideDrawer show={drawerIsOpen}>
+        <nav className={classes.DrawerNav} onClick={toggleDrawerHandler}>
+          <NavigationLinks />
+        </nav>
+      </SideDrawer>
     </React.Fragment>
   );
 };

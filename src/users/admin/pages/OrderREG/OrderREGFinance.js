@@ -54,9 +54,8 @@ const OrderREG = props => {
   const emptyText = useRef('');
 
   const [approveOrder, setApproveOrder] = useState({
-    orderId: null,
-    companyId: null,
-    index: null,
+    companyId: '',
+    index: '',
   });
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
@@ -93,6 +92,7 @@ const OrderREG = props => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
+
   const approveOrderREGHandler = async dataInput => {
     setIndex(dataInput.i);
     setOrderModal(false);
@@ -119,6 +119,7 @@ const OrderREG = props => {
       console.log(err);
       setIndex(null);
     }
+
   };
 
   //================= Pagination ===========================
@@ -147,8 +148,8 @@ const OrderREG = props => {
     setOrderModal(false);
   };
 
-  const onOpenOrderModal = (orderId, companyId, index) => {
-    setApproveOrder({ orderId: orderId, companyId: companyId, index: index });
+  const onOpenOrderModal = (orderId, index) => {
+    setApproveOrder({ orderId: orderId, index: index });
     setOrderModal(true);
   };
 
@@ -220,9 +221,11 @@ const OrderREG = props => {
                       </button>
                       <div className={classes.DropDownContent}>
                         <button
+
                           style={order.status === 'Pending' ? { color: 'green' } : { color: 'grey' }}
                           onClick={order.status === 'Paid' ? null : () => onOpenOrderModal(order._id, order.companyId._id, i)}>
                           {order.status === 'Pending' ? 'Approve' : 'Telah Disetujui'}
+
                         </button>
                       </div>
                     </div>
@@ -262,6 +265,7 @@ const OrderREG = props => {
         show={orderModal}
         onCancel={onCloseOrderModal}
         orderId={approveOrder.orderId}
+
         Accept={() =>
           approveOrderREGHandler({
             orderId: approveOrder.orderId,
@@ -269,6 +273,7 @@ const OrderREG = props => {
             i: approveOrder.index,
           })
         }>
+
         Form Persetujuan
       </ApproveModal>
       {content}
