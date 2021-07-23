@@ -158,7 +158,7 @@ const CompanyCard = props => {
                 <p className={classes.Title}>IKLAN PEKERJAAN</p>
               </div>
             </div>
-            <SlotHistory />
+            {(props.auth.userId === companyid || props.admin.isAdmin) && <SlotHistory />}
           </div>
         </div>
       </div>

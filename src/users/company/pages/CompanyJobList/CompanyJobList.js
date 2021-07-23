@@ -30,13 +30,11 @@ const searchReducer = (state, action) => {
       };
     }
     case ACTION.SEARCHEXECUTE: {
-      const filteredJob = action.payload.jobs.filter((job) => {
+      const filteredJob = action.payload.jobs.filter(job => {
         let searchValidity = false;
         for (const key in job) {
           if (typeof job[key] === 'string') {
-            searchValidity =
-              searchValidity ||
-              job[key].toLowerCase().includes(state.search.value.toLowerCase());
+            searchValidity = searchValidity || job[key].toLowerCase().includes(state.search.value.toLowerCase());
           }
         }
         return searchValidity;
@@ -58,7 +56,7 @@ const searchReducer = (state, action) => {
   }
 };
 
-const CompanyJobList = (props) => {
+const CompanyJobList = props => {
   const { companyid } = useParams();
   const [allCompanyJobs, setAllCompanyJobs] = useState();
 
@@ -88,7 +86,7 @@ const CompanyJobList = (props) => {
         companyId: companyid,
       };
 
-      getJobsInCompany(payload).then((res) => {
+      getJobsInCompany(payload).then(res => {
         setAllCompanyJobs(res.foundJob);
         dispatch({
           type: ACTION.SEARCHEMPTY,
@@ -102,31 +100,21 @@ const CompanyJobList = (props) => {
     if (allCompanyJobs && state.jobList) {
       setDisplayData(
         state.jobList
-          .filter(
-            (dat) =>
-              dat.releasedAt != null && moment(dat.expiredDate) > moment()
-          )
+          .filter(dat => dat.releasedAt != null && moment(dat.expiredDate) > moment())
           .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
       );
 
       setExpiredData(
         state.jobList
-          .filter(
-            (dat) =>
-              dat.releasedAt != null && moment(dat.expiredDate) < moment()
-          )
+          .filter(dat => dat.releasedAt != null && moment(dat.expiredDate) < moment())
           .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
       );
 
-      setUnreleasedData(
-        state.jobList
-          .filter((dat) => dat.releasedAt === null)
-          .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
-      );
+      setUnreleasedData(state.jobList.filter(dat => dat.releasedAt === null).sort((a, b) => moment(b.createdAt) - moment(a.createdAt)));
     }
   }, [state.jobList, allCompanyJobs]);
 
-  const onDeleteHandler = async (id) => {
+  const onDeleteHandler = async id => {
     const token = props.auth.token;
     try {
       const payload = {
@@ -136,7 +124,7 @@ const CompanyJobList = (props) => {
       const res = await props.deleteJob(payload);
       if (res) {
         console.log(res);
-        setUnreleasedData(unreleasedData.filter((fil) => fil._id !== id));
+        setUnreleasedData(unreleasedData.filter(fil => fil._id !== id));
       } else {
         console.log('No job with id:' + { id } + 'found');
       }
@@ -145,7 +133,7 @@ const CompanyJobList = (props) => {
     }
   };
 
-  const searchHandler = (event) => {
+  const searchHandler = event => {
     event.preventDefault();
     console.log(state.search.value);
     if (state.search.value) {
@@ -161,7 +149,7 @@ const CompanyJobList = (props) => {
     }
   };
 
-  const clearHandler = (event) => {
+  const clearHandler = event => {
     event.preventDefault();
     dispatch({
       type: ACTION.SEARCHEMPTY,
@@ -179,27 +167,19 @@ const CompanyJobList = (props) => {
       },
     });
   }, []);
-
+  console.log(props.auth);
   let content = <SpinnerCircle />;
 
   if (!props.isLoading && displayData && displayData.length > 0) {
     content = (
       <div className={classes.Container}>
-        <p className={classes.ContainerTitle}>
-          Hi, Selamat datang di crossbell
-        </p>
-        <p className={classes.ContainerTitleDetail}>
-          Lihat iklan pekerjaan perusahaan mu disini
-        </p>
+        <p className={classes.ContainerTitle}>Selamat datang di Crossbell</p>
+        <p className={classes.ContainerTitleDetail}>Lihat iklan pekerjaan perusahaan mu disini</p>
         <div className={classes.CardContainer}>
           <div className={classes.SearchContainer}>
-            <QueryBar
-              searchInputHandler={searchInputHandler}
-              searchHandler={searchHandler}
-              clearHandler={clearHandler}
-            />
+            <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} />
           </div>
-          <div className={classes.BorderLine}>Belum ditayangkan</div>
+          <div className={classes.BorderLine}>BELUM TAYANG</div>
 
           <div className={classes.DivContainer}>
             {unreleasedData && unreleasedData.length > 0 ? (
@@ -210,9 +190,7 @@ const CompanyJobList = (props) => {
                       <div className={classes.CardHeader}>
                         <div>
                           <p className={classes.CardTitle}>{job.jobTitle}</p>
-                          <p className={classes.CardAddress}>
-                            {job.placementLocation}
-                          </p>
+                          <p className={classes.CardAddress}>{job.placementLocation}</p>
                         </div>
                         <div>
                           <button onClick={() => onDeleteHandler(job.id)}>
@@ -222,20 +200,13 @@ const CompanyJobList = (props) => {
                       </div>
                       <Link to={`/jobs/new/edit/${job.id}`}>
                         <div>
-                          <p className={classes.CardRecipient}>
-                            {job.emailRecipient}
-                          </p>
+                          <p className={classes.CardRecipient}>{job.emailRecipient}</p>
                           <div className={classes.CardBody}>
-                            <p className={classes.CardApplicant}>
-                              {job.jobApplicants.length}
-                            </p>
+                            <p className={classes.CardApplicant}>{job.jobApplicants.length}</p>
                             <p>applicants applied </p>
                           </div>
                           <div className={classes.CardFooter}>
-                            <p
-                              className={classes.ExpDate}
-                              style={{ color: '#FF8C00' }}
-                            >
+                            <p className={classes.ExpDate} style={{ color: '#FF8C00' }}>
                               belum ditayangkan
                             </p>
                           </div>
@@ -246,13 +217,11 @@ const CompanyJobList = (props) => {
                 );
               })
             ) : (
-              <p className={classes.EmptyText}>
-                Belum ada draft iklan pekerjaan tersimpan
-              </p>
+              <p className={classes.EmptyText}>Belum ada draft iklan pekerjaan tersimpan</p>
             )}
           </div>
 
-          <div className={classes.BorderLine}>Sedang ditayangkan</div>
+          <div className={classes.BorderLine}>SEDANG TAYANG</div>
 
           <div className={classes.DivContainer}>
             {!props.isLoading && displayData && displayData.length > 0 ? (
@@ -263,37 +232,26 @@ const CompanyJobList = (props) => {
                       <div className={classes.CardHeader}>
                         <div>
                           <p className={classes.CardTitle}>{job.jobTitle}</p>
-                          <p className={classes.CardAddress}>
-                            {job.placementLocation}
-                          </p>
+                          <p className={classes.CardAddress}>{job.placementLocation}</p>
                         </div>
                       </div>
-                      <Link to={`/jobs/${job.id}`}>
+                      <Link to={`/jobs/applicantlist/${job.id}`}>
                         <div>
-                          <p className={classes.CardRecipient}>
-                            {job.emailRecipient}
-                          </p>
+                          <p className={classes.CardRecipient}>{job.emailRecipient}</p>
                           <div className={classes.CardBody}>
                             <p
                               style={{
                                 fontSize: '3rem',
                                 marginBottom: '-0.5rem',
                                 marginTop: '1rem',
-                              }}
-                            >
+                              }}>
                               {job.jobApplicants.length}
                             </p>
                             <p>applicants applied </p>
                           </div>
                           <div className={classes.CardFooter}>
-                            <p
-                              className={classes.ExpDate}
-                              style={{ color: '#32CD32' }}
-                            >
-                              {`expired in ${moment(job.expiredDate).diff(
-                                moment(),
-                                'days'
-                              )} days`}
+                            <p className={classes.ExpDate} style={{ color: '#32CD32' }}>
+                              {`expired in ${moment(job.expiredDate).diff(moment(), 'days')} days`}
                             </p>
                           </div>
                         </div>
@@ -302,18 +260,14 @@ const CompanyJobList = (props) => {
                   </div>
                 );
               })
-            ) : props.isLoading &&
-              unreleasedData &&
-              unreleasedData.length > 0 ? (
+            ) : props.isLoading && unreleasedData && unreleasedData.length > 0 ? (
               <div />
             ) : (
-              <p className={classes.EmptyText}>
-                Belum ada pekerjaan yang ditayangkan oleh perusahaan ini
-              </p>
+              <p className={classes.EmptyText}>Belum ada pekerjaan yang ditayangkan oleh perusahaan ini</p>
             )}
           </div>
 
-          <div className={classes.BorderLine}>Sudah lewat masa tayang</div>
+          <div className={classes.BorderLine}>SELESAI TAYANG</div>
 
           <div className={classes.DivContainer}>
             {expiredData && expiredData.length > 0 ? (
@@ -324,24 +278,19 @@ const CompanyJobList = (props) => {
                       <div className={classes.CardHeader}>
                         <div>
                           <p className={classes.CardTitle}>{job.jobTitle}</p>
-                          <p className={classes.CardAddress}>
-                            {job.placementLocation}
-                          </p>
+                          <p className={classes.CardAddress}>{job.placementLocation}</p>
                         </div>
                       </div>
-                      <Link to={`/jobs/new/edit/${job.id}`}>
+                      <Link to={`/jobs/applicantlist/${job.id}`}>
                         <div>
-                          <p className={classes.CardRecipient}>
-                            {job.emailRecipient}
-                          </p>
+                          <p className={classes.CardRecipient}>{job.emailRecipient}</p>
                           <div className={classes.CardBody}>
                             <p
                               style={{
                                 fontSize: '3rem',
                                 marginBottom: '-0.5rem',
                                 marginTop: '1rem',
-                              }}
-                            >
+                              }}>
                               {job.jobApplicants.length}
                             </p>
                             <p>applicants applied </p>
@@ -356,9 +305,7 @@ const CompanyJobList = (props) => {
                 );
               })
             ) : (
-              <p className={classes.EmptyText}>
-                Belum ada iklan pekerjaan habis masa tayang
-              </p>
+              <p className={classes.EmptyText}>Belum ada iklan pekerjaan habis masa tayang</p>
             )}
           </div>
         </div>
@@ -367,17 +314,13 @@ const CompanyJobList = (props) => {
   }
 
   if (!props.isLoading && (!displayData || displayData.length < 1)) {
-    content = (
-      <p className={classes.EmptyText}>
-        Anda belum memasang iklan pekerjaan sebelumnya
-      </p>
-    );
+    content = <p className={classes.EmptyText}>Anda belum memasang iklan pekerjaan sebelumnya</p>;
   }
 
   return content;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     isLoading: state.job.isLoading,
@@ -385,11 +328,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    deleteJob: (payload) => dispatch(actionCreators.deleteJob(payload)),
-    getJobsInCompany: (payload) =>
-      dispatch(actionCreators.getJobsInCompany(payload)),
+    deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
+    getJobsInCompany: payload => dispatch(actionCreators.getJobsInCompany(payload)),
   };
 };
 
