@@ -42,7 +42,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const CompaniesListAO = (props) => {
+const CompaniesListAO = props => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: '' });
   const [data, setData] = useState();
@@ -63,12 +63,11 @@ const CompaniesListAO = (props) => {
   const { getWholeCompanies, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };
-    getWholeCompanies(payload).then((res) => {
+    getWholeCompanies(payload).then(res => {
       setData(res.wholeCompanies.reverse());
 
       if (res.message) {
-        emptyText.current =
-          'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+        emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
       }
     });
   }, [getWholeCompanies, setIsLoading, admin]);
@@ -80,10 +79,7 @@ const CompaniesListAO = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       console.log(applicantArray);
       setDisplayData(applicantArray);
       setIsLoading(false);
@@ -109,7 +105,7 @@ const CompaniesListAO = (props) => {
     setfilter('Premium');
   };
 
-  const activateCompanyHandler = async (dataInput) => {
+  const activateCompanyHandler = async dataInput => {
     setIndexLoading(dataInput.index);
     const payload = {
       token: props.admin.token,
@@ -121,7 +117,7 @@ const CompaniesListAO = (props) => {
         throw new Error(response);
       }
 
-      setData((prevData) => {
+      setData(prevData => {
         const tempData = [...prevData];
         const trueIndex = dataInput.index + (paginationNumber - 1) * 10;
         tempData[trueIndex].isActive = true;
@@ -134,7 +130,7 @@ const CompaniesListAO = (props) => {
     }
   };
 
-  const blockCompanyHandler = async (dataInput) => {
+  const blockCompanyHandler = async dataInput => {
     setIndexLoading(dataInput.index);
     const payload = {
       token: props.admin.token,
@@ -142,7 +138,7 @@ const CompaniesListAO = (props) => {
     };
     try {
       await props.blockCo(payload);
-      setData((prevData) => {
+      setData(prevData => {
         const tempData = [...prevData];
         tempData[dataInput.index].isActive = false;
         return tempData;
@@ -167,7 +163,7 @@ const CompaniesListAO = (props) => {
     setPaginationNumber(value);
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -194,27 +190,15 @@ const CompaniesListAO = (props) => {
                   All
                 </button>
 
-                <button
-                  style={{ color: 'red' }}
-                  value='Blocked'
-                  onClick={handleRegular}
-                >
+                <button style={{ color: 'red' }} value='Blocked' onClick={handleRegular}>
                   Blocked
                 </button>
 
-                <button
-                  style={{ color: 'rgb(250, 129, 0)' }}
-                  value='Premium'
-                  onClick={handlePremium}
-                >
+                <button style={{ color: 'rgb(250, 129, 0)' }} value='Premium' onClick={handlePremium}>
                   Premium
                 </button>
 
-                <button
-                  style={{ color: 'rgb(33, 153, 0)' }}
-                  value='Member'
-                  onClick={handleMember}
-                >
+                <button style={{ color: 'rgb(33, 153, 0)' }} value='Member' onClick={handleMember}>
                   Member
                 </button>
               </div>
@@ -239,7 +223,7 @@ const CompaniesListAO = (props) => {
               {find ? (
                 <tbody className={classes.ColumnField}>
                   {displayData
-                    .filter((company) => company.status === filter)
+                    .filter(company => company.status === filter)
                     .map((company, index) => {
                       let slotUsed = 0;
                       if (company.jobAds) {
@@ -257,16 +241,11 @@ const CompaniesListAO = (props) => {
 
                           <th>
                             {' '}
-                            <Link
-                              to={`/co/${company.id}/profile`}
-                              style={{ color: 'black', textDecoration: 'none' }}
-                            >
+                            <Link to={`/co/${company.id}/profile`} style={{ color: 'black', textDecoration: 'none' }}>
                               {company.companyName}
                             </Link>
                           </th>
-                          <th>
-                            {company.industry ? company.industry : 'no data'}
-                          </th>
+                          <th>{company.industry ? company.industry : 'no data'}</th>
                           <th>{company.email}</th>
 
                           <th
@@ -277,8 +256,7 @@ const CompaniesListAO = (props) => {
                                     color: 'rgba(255,0,0,0.7)',
                                     fontWeight: 'bold',
                                   }
-                            }
-                          >
+                            }>
                             {' '}
                             {company.address ? company.address : 'no data'}
                           </th>
@@ -286,21 +264,12 @@ const CompaniesListAO = (props) => {
                           <th>{slotUsed}</th>
 
                           <th>
-                            {props.company.isLoading &&
-                            indexLoading === index ? (
+                            {props.company.isLoading && indexLoading === index ? (
                               <Spinner />
                             ) : company.isActive ? (
-                              <span
-                                style={{ color: 'Green', fontWeight: 'bold' }}
-                              >
-                                Active
-                              </span>
+                              <span style={{ color: 'Green', fontWeight: 'bold' }}>Active</span>
                             ) : (
-                              <span
-                                style={{ color: 'Orange', fontWeight: 'bold' }}
-                              >
-                                Pending
-                              </span>
+                              <span style={{ color: 'Orange', fontWeight: 'bold' }}>Pending</span>
                             )}
                           </th>
 
@@ -317,8 +286,7 @@ const CompaniesListAO = (props) => {
                                       companyId: company.id,
                                       index,
                                     })
-                                  }
-                                >
+                                  }>
                                   Activate
                                 </button>
                                 <button
@@ -328,8 +296,7 @@ const CompaniesListAO = (props) => {
                                       companyId: company.id,
                                       index,
                                     })
-                                  }
-                                >
+                                  }>
                                   Block
                                 </button>
                               </div>
@@ -359,10 +326,7 @@ const CompaniesListAO = (props) => {
 
                           <th>
                             {' '}
-                            <Link
-                              to={`/co/${company.id}/profile`}
-                              style={{ color: 'black', textDecoration: 'none' }}
-                            >
+                            <Link to={`/co/${company.id}/profile`} style={{ color: 'black', textDecoration: 'none' }}>
                               {company.companyName}
                             </Link>
                           </th>
@@ -374,8 +338,7 @@ const CompaniesListAO = (props) => {
                                     color: 'rgba(255,0,0,0.7)',
                                     fontWeight: 'bold',
                                   }
-                            }
-                          >
+                            }>
                             {company.industry ? company.industry : 'no data'}
                           </th>
 
@@ -389,8 +352,7 @@ const CompaniesListAO = (props) => {
                                     color: 'rgba(255,0,0,0.7)',
                                     fontWeight: 'bold',
                                   }
-                            }
-                          >
+                            }>
                             {' '}
                             {company.address ? company.address : 'no data'}
                           </th>
@@ -398,21 +360,12 @@ const CompaniesListAO = (props) => {
                           <th>{slotUsed} slot</th>
 
                           <th>
-                            {props.company.isLoading &&
-                            indexLoading === index ? (
+                            {props.company.isLoading && indexLoading === index ? (
                               <Spinner />
                             ) : company.isActive ? (
-                              <span
-                                style={{ color: 'Green', fontWeight: 'bold' }}
-                              >
-                                Active
-                              </span>
+                              <span style={{ color: 'Green', fontWeight: 'bold' }}>Active</span>
                             ) : (
-                              <span
-                                style={{ color: 'Orange', fontWeight: 'bold' }}
-                              >
-                                Pending
-                              </span>
+                              <span style={{ color: 'Orange', fontWeight: 'bold' }}>Pending</span>
                             )}
                           </th>
 
@@ -429,8 +382,7 @@ const CompaniesListAO = (props) => {
                                       companyId: company.id,
                                       index,
                                     })
-                                  }
-                                >
+                                  }>
                                   Activate
                                 </button>
                                 <button
@@ -440,8 +392,7 @@ const CompaniesListAO = (props) => {
                                       companyId: company.id,
                                       index,
                                     })
-                                  }
-                                >
+                                  }>
                                   Block
                                 </button>
                               </div>
@@ -460,26 +411,16 @@ const CompaniesListAO = (props) => {
               display: 'flex',
               justifyContent: 'space-around',
               width: '100%',
-            }}
-          >
+            }}>
             <FormControl style={{ width: '4rem' }}>
-              <Select
-                labelId='rowPerPage'
-                id='rowPerPageSelect'
-                value={state.rowsPerPage}
-                onChange={rowsHandler}
-              >
+              <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={20}>20</MenuItem>
                 <MenuItem value={30}>30</MenuItem>
               </Select>
               <FormHelperText>Rows</FormHelperText>
             </FormControl>
-            <Pagination
-              count={state.pageCount}
-              page={state.pageNumber}
-              onChange={pageChangeHandler}
-            />
+            <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
           </div>
         </div>
       </div>
@@ -493,19 +434,18 @@ const CompaniesListAO = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     company: state.company,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getWholeCompanies: (payload) =>
-      dispatch(actionCreators.getWholeCompanies(payload)),
-    activateCo: (payload) => dispatch(actionCreators.activateCompany(payload)),
-    blockCo: (payload) => dispatch(actionCreators.blockCompany(payload)),
+    getWholeCompanies: payload => dispatch(actionCreators.getWholeCompanies(payload)),
+    activateCo: payload => dispatch(actionCreators.activateCompany(payload)),
+    blockCo: payload => dispatch(actionCreators.blockCompany(payload)),
   };
 };
 

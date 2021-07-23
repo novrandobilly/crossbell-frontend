@@ -35,7 +35,8 @@ const Organization = props => {
     };
     if (props.auth.token) {
       getOneApplicant(payload).then(res => {
-        const OrganizationSort = res.applicant.Organization.sort((a, b) => moment(b.startDate) - moment(a.startDate));
+        console.log(res);
+        const OrganizationSort = res.applicant.organization.sort((a, b) => moment(b.startDate) - moment(a.startDate));
         setData(OrganizationSort[Organizationindex]);
       });
     }

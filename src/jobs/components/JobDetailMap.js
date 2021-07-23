@@ -2,7 +2,7 @@ import React from 'react';
 
 import JobContainer from './JobContainer';
 
-const JobDetailMap = (props) => {
+const JobDetailMap = props => {
   if (!props.job) {
     return (
       <div className='centerGlobal'>
@@ -14,12 +14,12 @@ const JobDetailMap = (props) => {
   return (
     <div>
       <JobContainer
-        companyName={props.job.companyId.companyName}
+        companyName={props.job.companyId?.companyName}
         isHidden={props.job.isHidden}
-        companyDetails={props.job.companyId.briefDescriptions}
-        companyId={props.job.companyId.id}
-        companyLocation={props.job.companyId.address}
-        logo={props.job.companyId.logo}
+        companyDetails={props.job.companyId?.briefDescriptions}
+        companyId={props.job.companyId?.id}
+        companyLocation={props.job.companyId?.address}
+        logo={props.job.companyId?.logo}
         level={props.job.level}
         jobFunction={props.job.jobFunction}
         key={props.job.id}

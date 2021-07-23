@@ -16,7 +16,7 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 
 import classes from './ApplicantList.module.css';
 
-const ApplicantList = (props) => {
+const ApplicantList = props => {
   const { jobsid } = useParams();
 
   const [displayData, setDisplayData] = useState();
@@ -24,12 +24,7 @@ const ApplicantList = (props) => {
   const { getOneJob } = props;
 
   useEffect(() => {
-    const token = props.auth.token;
-    const payload = {
-      token: token,
-      jobsid: jobsid,
-    };
-    getOneJob(payload).then((res) => {
+    getOneJob(jobsid).then(res => {
       if (res) {
         setDisplayData(res.jobApplicants);
       }
@@ -59,10 +54,7 @@ const ApplicantList = (props) => {
                   {dat.firstName} {dat.lastName}
                 </p>
                 <div className={classes.CardMidTitle}>
-                  <WorkOutlineIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
+                  <WorkOutlineIcon fontSize='small' style={{ marginRight: '6px' }} />
                   {dat.experience[0].prevTitle}
                 </div>
                 <div className={classes.CardMidLocation}>
@@ -70,24 +62,16 @@ const ApplicantList = (props) => {
                 </div>
 
                 <div className={classes.CardMidTitle}>
-                  <SchoolOutlinedIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
+                  <SchoolOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
                   {dat.education[0].major}
                 </div>
                 <div className={classes.CardMidLocation}>
                   <span>at</span> {dat.education[0].school}
                 </div>
-                <div className={classes.CardMidTitle}>
-                  GPA: {dat.education[0].IPK}
-                </div>
+                <div className={classes.CardMidTitle}>GPA: {dat.education[0].IPK}</div>
 
                 <div className={classes.CardMidTitle}>
-                  <AssignmentTurnedInOutlinedIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
+                  <AssignmentTurnedInOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
                   {dat.certification[0].title}
                 </div>
                 <div className={classes.CardMidLocation}>
@@ -95,10 +79,7 @@ const ApplicantList = (props) => {
                 </div>
 
                 <div className={classes.CardMidTitle}>
-                  <PeopleAltOutlinedIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
+                  <PeopleAltOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
                   <span>
                     Organisasi <span> </span>
                   </span>
@@ -108,32 +89,20 @@ const ApplicantList = (props) => {
 
               <div className={classes.CardRight}>
                 <div className={classes.ExtraDetails}>
-                  <PinDropOutlinedIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
+                  <PinDropOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
                   <p className={classes.City}>{dat.city}</p>
                 </div>
 
                 <div className={classes.ExtraDetails}>
-                  <WcOutlinedIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
+                  <WcOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
                   <p className={classes.GenderAge}>
-                    {dat.gender === 'male' ? 'Pria' : 'Wanita'},{' '}
-                    {moment().diff(moment(dat.dateOfBirth), 'year')} tahun
+                    {dat.gender === 'male' ? 'Pria' : 'Wanita'}, {moment().diff(moment(dat.dateOfBirth), 'year')} tahun
                   </p>{' '}
                 </div>
 
                 <div className={classes.ExtraDetails}>
-                  <MonetizationOnOutlinedIcon
-                    fontSize='small'
-                    style={{ marginRight: '6px' }}
-                  />
-                  <p className={classes.Salary}>
-                    Harapan gaji: Rp. {dat.salary.toLocaleString()}
-                  </p>
+                  <MonetizationOnOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <p className={classes.Salary}>Harapan gaji: Rp. {dat.salary.toLocaleString()}</p>
                 </div>
               </div>
             </div>
@@ -146,7 +115,7 @@ const ApplicantList = (props) => {
   return <div className={classes.Container}>{Content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -155,9 +124,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOneJob: (payload) => dispatch(actionCreators.getOneJob(payload)),
+    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
     resetCompany: () => dispatch({ type: actionTypes.FETCHINGFINISH }),
   };
 };
