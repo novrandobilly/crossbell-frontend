@@ -209,7 +209,7 @@ const EditIntro = (props) => {
                   inputClass='AddJobInput'
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label='Bergerak di bidang*'
+                  label='Industri*'
                   initValue={data.industry || ''}
                   initIsValid={data.industry}
                   helperText='Bidang perusahaan wajib diisi'

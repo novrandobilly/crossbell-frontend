@@ -101,7 +101,9 @@ const ApplicantDetailsAO = React.lazy(() =>
 const Subscription = React.lazy(() =>
   import('./users/applicant/components/Subscription')
 );
-
+const Language = React.lazy(() =>
+  import('./users/applicant/components/Edit/Language')
+);
 const EditApplicantIntro = React.lazy(() =>
   import('./users/applicant/components/Edit/EditIntro')
 );
@@ -306,6 +308,8 @@ const App = (props) => {
               path='/ap/:applicantid/organization/:organizationindex'
               component={EditApplicantOrganization}
             />
+            <Route path='/ap/:applicantid/language' component={Language} />
+
             <Route
               path='/ap/:applicantid/skills'
               component={EditApplicantSkills}
@@ -315,6 +319,7 @@ const App = (props) => {
               path='/ap/:applicantid/appliedjobs'
               component={JobsApplied}
             />
+
             <Route
               path='/ap/:applicantid/profile'
               component={ApplicantDetails}

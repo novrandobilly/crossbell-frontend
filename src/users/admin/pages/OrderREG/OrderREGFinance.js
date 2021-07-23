@@ -50,6 +50,7 @@ const OrderREG = (props) => {
   const [displayData, setDisplayData] = useState();
   const [orderModal, setOrderModal] = useState(false);
 
+  const [rowsNumber, setRowsNumber] = useState(10);
   const [paginationNumber, setPaginationNumber] = useState(1);
   const emptyText = useRef('');
 
@@ -101,7 +102,8 @@ const OrderREG = (props) => {
 
     setData((prevData) => {
       const tempData = [...prevData];
-      const trueIndex = approveOrder.index + (paginationNumber - 1) * 10;
+      const trueIndex =
+        approveOrder.index + (paginationNumber - 1) * rowsNumber;
       tempData[trueIndex].status = 'Paid';
       return tempData;
     });
@@ -129,6 +131,7 @@ const OrderREG = (props) => {
         rowsPerPage: event.target.value,
       },
     });
+    setRowsNumber(event.target.value);
   };
 
   const onCloseOrderModal = () => {
