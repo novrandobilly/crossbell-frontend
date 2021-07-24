@@ -50,6 +50,7 @@ const OrderREG = props => {
   const [displayData, setDisplayData] = useState();
   const [orderModal, setOrderModal] = useState(false);
 
+  const [rowsNumber, setRowsNumber] = useState(10);
   const [paginationNumber, setPaginationNumber] = useState(1);
   const emptyText = useRef('');
 
@@ -93,8 +94,16 @@ const OrderREG = props => {
   }, [state.rowsPerPage, state.startIndex, data]);
 
 
-  const approveOrderREGHandler = async dataInput => {
-    setIndex(dataInput.i);
+
+    setData((prevData) => {
+      const tempData = [...prevData];
+      const trueIndex =
+        approveOrder.index + (paginationNumber - 1) * rowsNumber;
+      tempData[trueIndex].status = 'Paid';
+      return tempData;
+    });
+    setIndex(null);
+
     setOrderModal(false);
 
     const payload = {
@@ -142,6 +151,7 @@ const OrderREG = props => {
         rowsPerPage: event.target.value,
       },
     });
+    setRowsNumber(event.target.value);
   };
 
   const onCloseOrderModal = () => {

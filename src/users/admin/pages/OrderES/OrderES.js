@@ -55,6 +55,7 @@ const OrderES = (props) => {
     index: null,
   });
 
+  const [rowsNumber, setRowsNumber] = useState(10);
   const [paginationNumber, setPaginationNumber] = useState(1);
   const emptyText = useRef('');
 
@@ -118,7 +119,7 @@ const OrderES = (props) => {
 
       setData((prevData) => {
         const tempData = [...prevData];
-        const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
+        const trueIndex = dataInput.i + (paginationNumber - 1) * rowsNumber;
         tempData[trueIndex].status = dataInput.status;
         return tempData;
       });
@@ -149,6 +150,7 @@ const OrderES = (props) => {
         rowsPerPage: event.target.value,
       },
     });
+    setRowsNumber(event.target.value);
   };
 
   const onCloseOrderModal = () => {

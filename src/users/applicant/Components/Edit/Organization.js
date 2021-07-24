@@ -6,7 +6,10 @@ import moment from 'moment';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_ALWAYSTRUE,
+} from '../../../../shared/utils/validator';
 
 import Modal from '../../../../shared/UI_Element/Modal';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -16,9 +19,9 @@ import Button from '@material-ui/core/Button';
 
 import classes from './Organization.module.css';
 
-const Organization = props => {
+const Organization = (props) => {
   const { applicantid } = useParams();
-  const { Organizationindex } = useParams();
+  const { organizationindex } = useParams();
 
   const [data, setData] = useState();
   const [tillNow, setTillNow] = useState(false);
@@ -34,13 +37,16 @@ const Organization = props => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then(res => {
-        console.log(res);
-        const OrganizationSort = res.applicant.organization.sort((a, b) => moment(b.startDate) - moment(a.startDate));
-        setData(OrganizationSort[Organizationindex]);
+
+      getOneApplicant(payload).then((res) => {
+        const OrganizationSort = res.applicant.organization.sort(
+          (a, b) => moment(b.startDate) - moment(a.startDate)
+        );
+        setData(OrganizationSort[organizationindex]);
+
       });
     }
-  }, [getOneApplicant, applicantid, Organizationindex, props.auth.token]);
+  }, [getOneApplicant, applicantid, organizationindex, props.auth.token]);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -64,7 +70,7 @@ const Organization = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -72,7 +78,7 @@ const Organization = props => {
     }
     let updatedOrganization = {
       applicantId: applicantid,
-      index: Organizationindex,
+      index: organizationindex,
       organization: formState.inputs.organization.value,
       prevCompany: formState.inputs.prevCompany.value,
       prevIndustry: formState.inputs.prevIndustry.value,
@@ -85,7 +91,7 @@ const Organization = props => {
     if (tillNow) {
       updatedOrganization = {
         applicantId: applicantid,
-        index: Organizationindex,
+        index: organizationindex,
         organization: formState.inputs.organization.value,
         prevCompany: formState.inputs.prevCompany.value,
         prevIndustry: formState.inputs.prevIndustry.value,
@@ -110,7 +116,7 @@ const Organization = props => {
     }
   };
 
-  const dateHandler = event => {
+  const dateHandler = (event) => {
     setTillNow(!tillNow);
   };
 
@@ -126,19 +132,18 @@ const Organization = props => {
             <div className={classes.EditLabel}>
               <Input
                 inputType='input'
-                id='prevTitle'
+                id='organization'
                 inputClass='AddJobInput'
                 validatorMethod={[VALIDATOR_REQUIRE()]}
                 onInputHandler={onInputHandler}
                 label='Nama Organisasi*'
-                initValue={data.prevTitle}
+                initValue={data.organization}
                 initIsValid={true}
               />
             </div>
 
             <div className={classes.Period}>
               <div className={classes.EditLabel}>
-                <p className={classes.Text}>Waktu Mulai*</p>
                 <Input
                   inputType='customdate'
                   id='startDate'
@@ -155,7 +160,6 @@ const Organization = props => {
 
               {!tillNow ? (
                 <div className={classes.EditLabel}>
-                  <p className={classes.Text}>Waktu Selesai*</p>
                   <Input
                     inputType='customdate'
                     id='endDate'
@@ -175,8 +179,15 @@ const Organization = props => {
             </div>
 
             <div className={classes.CheckboxDiv}>
-              <Checkbox color='primary' size='small' onChange={dateHandler} style={{ padding: '0' }} />
-              <label className={classes.CheckboxText}>Saya masih berkerja disini</label>
+              <Checkbox
+                color='primary'
+                size='small'
+                onChange={dateHandler}
+                style={{ padding: '0' }}
+              />
+              <label className={classes.CheckboxText}>
+                Saya masih berkerja disini
+              </label>
             </div>
 
             <div className={classes.EditLabel}>
@@ -196,11 +207,21 @@ const Organization = props => {
 
           <div className={classes.Footer}>
             <Link to={`/ap/${applicantid}/profile`}>
-              <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
+              <Button
+                variant='outlined'
+                type='Button'
+                disableElevation
+                style={{ marginRight: '16px' }}
+              >
                 Back
               </Button>
             </Link>
-            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
+            <Button
+              disabled={!formState.formIsValid}
+              variant='contained'
+              color='primary'
+              type='submit'
+            >
               Save
             </Button>
           </div>
@@ -223,7 +244,7 @@ const Organization = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -231,13 +252,18 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantOrganization: ApplicantData => dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantOrganization: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Organization));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Organization));

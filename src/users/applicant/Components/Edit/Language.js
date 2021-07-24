@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useForm } from '../../../../../shared/utils/useForm';
+import { useForm } from '../../../../shared/utils/useForm';
 
-import * as actionTypes from '../../../../../store/actions/actions';
-import * as actionCreators from '../../../../../store/actions';
-import { VALIDATOR_ALWAYSTRUE } from '../../../../../shared/utils/validator';
+import * as actionTypes from '../../../../store/actions/actions';
+import * as actionCreators from '../../../../store/actions';
+import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Button from '@material-ui/core/Button';
-import Modal from '../../../../../shared/UI_Element/Modal';
-import Spinner from '../../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Input from '../../../../../shared/UI_Element/Input';
+import Modal from '../../../../shared/UI_Element/Modal';
+import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './Language.module.css';
 

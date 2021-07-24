@@ -52,6 +52,8 @@ const CompaniesListAO = props => {
   const [displayData, setDisplayData] = useState();
 
   const [paginationNumber, setPaginationNumber] = useState(1);
+  const [rowsNumber, setRowsNumber] = useState(10);
+
   const emptyText = useRef('');
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
@@ -119,7 +121,7 @@ const CompaniesListAO = props => {
 
       setData(prevData => {
         const tempData = [...prevData];
-        const trueIndex = dataInput.index + (paginationNumber - 1) * 10;
+        const trueIndex = dataInput.index + (paginationNumber - 1) * rowsNumber;
         tempData[trueIndex].isActive = true;
         return tempData;
       });
@@ -170,6 +172,7 @@ const CompaniesListAO = props => {
         rowsPerPage: event.target.value,
       },
     });
+    setRowsNumber(event.target.value);
   };
 
   let content = <SpinnerCircle />;
