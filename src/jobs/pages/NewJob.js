@@ -116,7 +116,7 @@ const NewJob = (props) => {
     const salary = document.getElementById('salary');
     const benefit = document.getElementById('benefit');
 
-    onInputHandler('fieldOfWork', fieldOfWork.field, true);
+    onInputHandler('fieldOfWork', fieldOfWork?.field, true);
     onInputHandler('salary', salary?.value, true);
     onInputHandler('benefit', benefit?.value, true);
     onInputHandler('rangeAge', rangeAge, true);

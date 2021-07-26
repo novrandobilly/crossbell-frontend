@@ -67,7 +67,7 @@ const EditUnreleasedJob = (props) => {
         res.specialRequirement.forEach((requirement, i) => {
           setRequirement((prevState) => [...prevState, 'req']);
         });
-        setFieldOfWork(res.fieldOfWork);
+        setFieldOfWork({ field: res?.fieldOfWork[0] });
         setEmployment(res.employment);
         setPlacement(res.placementLocation);
         setEducationalStage(res.educationalStage);
@@ -93,8 +93,6 @@ const EditUnreleasedJob = (props) => {
     };
     getSlot();
   }, [getOneCompany, auth, getOneJob, jobsid]);
-
-  console.log(requirementList);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -197,7 +195,7 @@ const EditUnreleasedJob = (props) => {
       onInputHandler('salary', salary.value, true);
       onInputHandler('employment', employment, true);
       onInputHandler('benefit', benefit.value, true);
-      onInputHandler('fieldOfWork', fieldOfWork, true);
+      onInputHandler('fieldOfWork', fieldOfWork?.field, true);
       onInputHandler('placementLocation', placement, true);
       onInputHandler('jobExperience', jobExperience, true);
       onInputHandler('educationalStage', educationalStage, true);
@@ -659,7 +657,7 @@ const EditUnreleasedJob = (props) => {
 
             <div className={classes.ContentWrap}>
               <Autocomplete
-                value={fieldOfWork[0] ? fieldOfWork[0] : null}
+                value={fieldOfWork}
                 onChange={onAutoCompleteHandler}
                 filterOptions={onFilterHandler}
                 selectOnFocus

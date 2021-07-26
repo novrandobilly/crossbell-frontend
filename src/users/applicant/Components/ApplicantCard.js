@@ -71,6 +71,12 @@ const ApplicantCard = (props) => {
                   {props.firstName} {props.lastName}
                 </p>
                 <p className={classes.Title}>{props.headline}</p>
+                {props.auth.isCompany ||
+                  (props.auth.isAdmin && (
+                    <p className={classes.Email}>
+                      Harapan gaji: Rp.{props.salary.toLocaleString()},-
+                    </p>
+                  ))}
                 <p className={classes.Email}>{props.email}</p>
                 <p className={classes.Email}>{props.phone}</p>
                 <p className={classes.Address}>{props.address}</p>
@@ -157,12 +163,6 @@ const ApplicantCard = (props) => {
               )}
             </div>
           </div>
-          {props.auth.userId === props.id && (
-            <Link to={`/subscription/${props.id}`}>
-              <div className={classes.SubscriptionButton}>Ubah Langganan</div>
-            </Link>
-          )}
-
           <div className={classes.LangguagesDiv}>
             <div className={classes.LanguageHeader}>
               <p className={classes.LangguageTitle}>Kemampuan bahasa</p>
@@ -181,7 +181,12 @@ const ApplicantCard = (props) => {
                 );
               })}
             </div>
-          </div>
+          </div>{' '}
+          {props.auth.userId === props.id && (
+            <Link to={`/subscription/${props.id}`}>
+              <div className={classes.SubscriptionButton}>Ubah Langganan</div>
+            </Link>
+          )}
         </div>
 
         <div className={classes.SegmentContainer}>

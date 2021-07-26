@@ -31,6 +31,7 @@ const ApplicantDetails = (props) => {
       .then((res) => {
         setData(res.applicant);
         setIsLoading(false);
+        console.log(res);
       })
       .catch((err) => console.log(err));
     // } else {
