@@ -7,15 +7,17 @@ import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
 // import { VALIDATOR_REQUIRE } from '../../../shared/utils/validator';
 
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Modal from '../../../shared/UI_Element/Modal';
 import OrderModal from '../../../shared/UI_Element/OrderModal';
-import Button from '@material-ui/core/Button';
+import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
 import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
-import TextField from '@material-ui/core/TextField';
 
 import classes from './Subscription.module.css';
 
-const Subscription = props => {
+const Subscription = (props) => {
   const [data, setData] = useState();
   const [orderModal, setOrderModal] = useState(false);
   const [autoSend, setAutoSend] = useState({
@@ -41,7 +43,7 @@ const Subscription = props => {
       applicantId: applicantid,
       token: props.auth.token,
     };
-    getOneApplicant(payload).then(res => {
+    getOneApplicant(payload).then((res) => {
       setAutoSend(res.applicant.autoSend);
       setAutoRemind(res.applicant.autoRemind);
       setData(res.applicant);
@@ -78,7 +80,7 @@ const Subscription = props => {
     }
   }, [data, onInputHandler, autoSend, autoRemind]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
@@ -103,58 +105,58 @@ const Subscription = props => {
     }
   };
 
-  const onCheckedAutoSend = e => {
+  const onCheckedAutoSend = (e) => {
     const elementValue = e.target.checked;
-    setAutoSend(prevState => {
+    setAutoSend((prevState) => {
       let tempObject = { ...prevState };
       tempObject.isAutoSend = elementValue;
       return { ...tempObject };
     });
   };
 
-  const onChangeAutoSendIndustry = e => {
+  const onChangeAutoSendIndustry = (e, newVal) => {
     e.persist();
-    setAutoSend(prevState => {
+    setAutoSend((prevState) => {
       let tempObject = { ...prevState };
-      tempObject.jobIndustry = e.target.value;
-      prevState.jobIndustry = e.target.value;
+      tempObject.jobIndustry = newVal;
+      prevState.jobIndustry = newVal;
       return tempObject;
     });
   };
 
-  const onChangeAutoSendField = e => {
+  const onChangeAutoSendField = (e, newVal) => {
     e.persist();
-    setAutoSend(prevState => {
+    setAutoSend((prevState) => {
       let tempObject = { ...prevState };
-      tempObject.jobField = e.target.value;
+      tempObject.jobField = newVal;
       return { ...tempObject };
     });
   };
 
-  const onCheckedAutoRemind = e => {
+  const onCheckedAutoRemind = (e) => {
     const elementValue = e.target.checked;
-    setAutoRemind(prevState => {
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
       tempObject.isAutoRemind = elementValue;
       return { ...tempObject };
     });
   };
 
-  const onChangeAutoRemindIndustry = e => {
+  const onChangeAutoRemindIndustry = (e, newVal) => {
     e.persist();
-    setAutoRemind(prevState => {
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
-      tempObject.jobIndustry = e.target.value;
-      prevState.jobIndustry = e.target.value;
+      tempObject.jobIndustry = newVal;
+      prevState.jobIndustry = newVal;
       return tempObject;
     });
   };
 
-  const onChangeAutoRemindField = e => {
+  const onChangeAutoRemindField = (e, newVal) => {
     e.persist();
-    setAutoRemind(prevState => {
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
-      tempObject.jobField = e.target.value;
+      tempObject.jobField = newVal;
       return { ...tempObject };
     });
   };
@@ -169,6 +171,9 @@ const Subscription = props => {
 
   let content = <SpinnerCircle />;
 
+  console.log(autoSend);
+  console.log(autoRemind);
+
   if (!props.isLoading && data) {
     content = (
       <form className={classes.Container}>
@@ -178,8 +183,9 @@ const Subscription = props => {
           <strong>
             <em>(uncheck)</em>
           </strong>{' '}
-          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto reminder) dan/atau fitur lamaran otomatis (auto apply) ,
-          keluar dari halaman bila anda tidak ingin melakukan pembaruan
+          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto
+          reminder) dan/atau fitur lamaran otomatis (auto apply) , keluar dari
+          halaman bila anda tidak ingin melakukan pembaruan
         </p>
 
         <div className={classes.Content}>
@@ -187,25 +193,52 @@ const Subscription = props => {
             <p className={classes.ContentTitle}>Lamaran otomatis</p>
 
             <label onChange={onCheckedAutoSend} className={classes.CheckBox}>
-              <input id='autoSend' type='checkbox' name='autoSend' className={classes.Box} />
-              <p className={classes.Text}>Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell</p>{' '}
+              <input
+                id='autoSend'
+                type='checkbox'
+                name='autoSend'
+                className={classes.Box}
+              />
+              <p className={classes.Text}>
+                Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell
+              </p>{' '}
             </label>
             <div className={classes.InputDiv}>
-              <TextField
+              <Autocomplete
+                value={autoSend.jobIndustry}
                 id='jobIndustry'
-                label='Industri Perusahaan*'
+                name='jobIndustry'
+                options={WorkFieldData.map((option) => option.field)}
                 onChange={onChangeAutoSendIndustry}
                 style={{ width: '100%' }}
-                value={autoSend.jobIndustry ? autoSend.jobIndustry : ''}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Industri Perusahaan'
+                    margin='normal'
+                    variant='standard'
+                  />
+                )}
               />
             </div>
             <div className={classes.InputDiv}>
-              <TextField
-                id='jobfield'
+              <Autocomplete
+                value={autoSend.jobField}
+                id='jobField'
+                name='jobField'
+                options={WorkFieldData.map((option) => option.field)}
                 onChange={onChangeAutoSendField}
-                label='Bidang Pekerjaan*'
                 style={{ width: '100%' }}
-                value={autoSend.jobField ? autoSend.jobField : ''}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Bidang Pekerjaan'
+                    margin='normal'
+                    variant='standard'
+                  />
+                )}
               />
             </div>
           </div>
@@ -213,32 +246,67 @@ const Subscription = props => {
           <div className={classes.BottomContent}>
             <p className={classes.ContentTitle}>Notifikasi otomatis</p>
             <label onChange={onCheckedAutoRemind} className={classes.CheckBox}>
-              <input id='autoRemind' type='checkbox' name='autoRemind' className={classes.Box} />
-              <p className={classes.Text}>Berikan notifikasi bila ada pekerjaan sesuai bidang minat</p>{' '}
+              <input
+                value={autoRemind.jobIndustry}
+                id='autoRemind'
+                type='checkbox'
+                name='autoRemind'
+                className={classes.Box}
+              />
+              <p className={classes.Text}>
+                Berikan notifikasi bila ada pekerjaan sesuai bidang minat
+              </p>{' '}
             </label>
             <div className={classes.InputDiv}>
-              <TextField
+              <Autocomplete
+                value={autoRemind.jobIndustry}
                 id='jobIndustry'
+                name='jobIndustry'
+                options={WorkFieldData.map((option) => option.field)}
                 onChange={onChangeAutoRemindIndustry}
-                label='Industri Perusahaan*'
                 style={{ width: '100%' }}
-                value={autoRemind.jobIndustry ? autoRemind.jobIndustry : ''}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Industri Perusahaan'
+                    margin='normal'
+                    variant='standard'
+                  />
+                )}
               />
             </div>
+
             <div className={classes.InputDiv}>
-              <TextField
-                id='jobfield'
+              <Autocomplete
+                value={autoRemind.jobField}
+                id='jobField'
+                name='jobField'
+                options={WorkFieldData.map((option) => option.field)}
                 onChange={onChangeAutoRemindField}
-                label='Bidang Pekerjaan*'
                 style={{ width: '100%' }}
-                value={autoRemind.jobField ? autoRemind.jobField : ''}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Bidang Pekerjaan'
+                    margin='normal'
+                    variant='standard'
+                  />
+                )}
               />
             </div>
           </div>
         </div>
 
         <div className={classes.Footer}>
-          <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='button' onClick={onOpenOrderModal}>
+          <Button
+            disabled={!formState.formIsValid}
+            variant='contained'
+            color='primary'
+            type='button'
+            onClick={onOpenOrderModal}
+          >
             Simpan
           </Button>
         </div>
@@ -256,15 +324,20 @@ const Subscription = props => {
       <Modal show={props.error} onCancel={onCancelHandler}>
         Could not update changes at the moment, please try again later
       </Modal>
-      <OrderModal show={orderModal} onCancel={onCloseOrderModal} Accept={onSubmitHandler}>
-        Apakah anda yakin ingin membuat perubahan pada subscription anda saat ini?
+      <OrderModal
+        show={orderModal}
+        onCancel={onCloseOrderModal}
+        Accept={onSubmitHandler}
+      >
+        Apakah anda yakin ingin membuat perubahan pada subscription anda saat
+        ini?
       </OrderModal>
       {content}
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -272,13 +345,19 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () =>
+      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
-    updateApplicantSubscription: ApplicantData => dispatch(actionCreators.updateApplicantSubscription(ApplicantData)),
+    getOneApplicant: (payload) =>
+      dispatch(actionCreators.getOneApplicant(payload)),
+    updateApplicantSubscription: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantSubscription(ApplicantData)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Subscription));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Subscription));

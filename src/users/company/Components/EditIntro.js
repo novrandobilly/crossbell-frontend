@@ -9,17 +9,25 @@ import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
 
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
+import classes from './EditIntro.module.css';
+import TextField from '@material-ui/core/TextField';
+import Input from '../../../shared/UI_Element/Input';
 import Modal from '../../../shared/UI_Element/Modal';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Input from '../../../shared/UI_Element/Input';
+import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
 import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
-import classes from './EditIntro.module.css';
 
 const EditIntro = props => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
   const [file, setFile] = useState();
+  const [industry, setIndustry] = useState('');
+
+  const filter = createFilterOptions();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,6 +37,7 @@ const EditIntro = props => {
   useEffect(() => {
     getOneCompany({ userId: companyid }).then(res => {
       setData(res.company);
+      setIndustry({ field: res.company.industry });
     });
   }, [getOneCompany, companyid]);
 
@@ -68,7 +77,13 @@ const EditIntro = props => {
     true
   );
 
-  const onSubmitHandler = async event => {
+
+  useEffect(() => {
+    onInputHandler('industry', industry?.field, true);
+  }, [onInputHandler, industry]);
+
+  const onSubmitHandler = async (event) => {
+
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -108,6 +123,37 @@ const EditIntro = props => {
     const elementFile = e.target.files[0];
     onInputHandler(elementId, elementFile, true);
     setFile(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const onAutoCompleteHandler = (event, newValue) => {
+    event.preventDefault();
+    if (typeof newValue === 'string') {
+      setIndustry({
+        field: newValue,
+      });
+      onInputHandler('industry', newValue.field, true);
+    } else if (newValue && newValue.inputValue) {
+      setIndustry({
+        field: newValue.inputValue,
+      });
+      onInputHandler('industry', newValue.inputValue.field, true);
+    } else {
+      setIndustry(newValue);
+      onInputHandler('industry', newValue?.field || '', true);
+    }
+  };
+
+  const onFilterHandler = (options, params) => {
+    const filtered = filter(options, params);
+
+    if (params.inputValue !== '') {
+      filtered.push({
+        inputValue: params.inputValue,
+        field: `Tambahkan "${params.inputValue}"`,
+      });
+    }
+
+    return filtered;
   };
 
   let formContent = <SpinnerCircle />;
@@ -197,16 +243,41 @@ const EditIntro = props => {
                 />
               </div>
               <div className={classes.InputBox}>
-                <Input
-                  inputType='input'
+                <Autocomplete
+                  value={industry}
+                  onChange={onAutoCompleteHandler}
+                  filterOptions={onFilterHandler}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
                   id='industry'
-                  inputClass='AddJobInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Industri*'
-                  initValue={data.industry || ''}
-                  initIsValid={data.industry}
-                  helperText='Bidang perusahaan wajib diisi'
+                  name='industry'
+                  ccc='true'
+                  options={WorkFieldData}
+                  getOptionLabel={(option) => {
+                    // Value selected with enter, right from the input
+                    if (typeof option === 'string') {
+                      return option;
+                    }
+                    // Add "xxx" option created dynamically
+                    if (option.inputValue) {
+                      return option.inputValue;
+                    }
+                    // Regular option
+                    return option.field;
+                  }}
+                  renderOption={(option) => option.field}
+                  freeSolo
+                  style={{ margin: '0', width: '100%' }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      style={{ margin: '0' }}
+                      label='Bidang Pekerjaan*'
+                      margin='normal'
+                      variant='standard'
+                    />
+                  )}
                 />
               </div>
               <div className={classes.InputBox}>

@@ -19,11 +19,11 @@ const ApplicantMap = (props) => {
         zip={props.items.zip}
         email={props.items.email}
         phone={props.items.phone}
-        websites={props.items.websites}
         details={props.items.details}
-        dob={props.items.dob}
+        dob={props.items.dateOfBirth}
         picture={props.items.picture}
         resume={props.items.resume}
+        salary={props.items.salary}
         // ======================================== Applicant Education
         education={props.items.education}
         //============================================= Applicant Experience
