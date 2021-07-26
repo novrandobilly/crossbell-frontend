@@ -12,16 +12,16 @@ import SkillsMap from './SkillsMap';
 
 import classes from './ApplicantCard.module.css';
 
-const ApplicantCard = (props) => {
+const ApplicantCard = props => {
   const [resumeFile, setResumeFile] = useState();
   const [loadingResume, setLoadingResume] = useState(false);
 
-  const onUploadHandler = (event) => {
+  const onUploadHandler = event => {
     event.preventDefault();
     setResumeFile(event.target.files[0]);
   };
 
-  const onSubmitResumeHandler = async (event) => {
+  const onSubmitResumeHandler = async event => {
     setLoadingResume(true);
     event.preventDefault();
     const payload = {
@@ -38,6 +38,8 @@ const ApplicantCard = (props) => {
       setLoadingResume(false);
     }
   };
+  console.log(props.auth.isCompany);
+  console.log(props.admin.isAdmin);
 
   return (
     <div className={classes.Pages}>
@@ -71,12 +73,9 @@ const ApplicantCard = (props) => {
                   {props.firstName} {props.lastName}
                 </p>
                 <p className={classes.Title}>{props.headline}</p>
-                {props.auth.isCompany ||
-                  (props.auth.isAdmin && (
-                    <p className={classes.Email}>
-                      Harapan gaji: Rp.{props.salary.toLocaleString()},-
-                    </p>
-                  ))}
+                {(props.auth.isCompany || props.admin.isAdmin) && (
+                  <p className={classes.Email}>Harapan gaji: Rp.{props.salary.toLocaleString()},-</p>
+                )}
                 <p className={classes.Email}>{props.email}</p>
                 <p className={classes.Email}>{props.phone}</p>
                 <p className={classes.Address}>{props.address}</p>
@@ -86,24 +85,10 @@ const ApplicantCard = (props) => {
                     <div className={classes.ResumeHolder}>
                       <img
                         className={classes.ResumePicture}
-                        src={`${
-                          props.resume.url.slice(
-                            0,
-                            props.resume.url.length - 4
-                          ) + '.jpg'
-                        }`}
+                        src={`${props.resume.url.slice(0, props.resume.url.length - 4) + '.jpg'}`}
                         alt='resume-preview'
                       />
-                      <a
-                        href={
-                          props.resume.url.slice(
-                            0,
-                            props.resume.url.length - 4
-                          ) + '.jpg'
-                        }
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
+                      <a href={props.resume.url.slice(0, props.resume.url.length - 4) + '.jpg'} target='_blank' rel='noopener noreferrer'>
                         Preview Resume Here
                       </a>
                     </div>
@@ -112,18 +97,8 @@ const ApplicantCard = (props) => {
                 {props.auth.userId === props.id && (
                   <div>
                     <label className={classes.InputButton}>
-                      <input
-                        type='file'
-                        name='resume'
-                        id='resume'
-                        onChange={onUploadHandler}
-                        accept='.pdf'
-                        style={{ display: 'none' }}
-                      />
-                      <span className={classes.InputButtonText}>
-                        {' '}
-                        Upload Resume{' '}
-                      </span>
+                      <input type='file' name='resume' id='resume' onChange={onUploadHandler} accept='.pdf' style={{ display: 'none' }} />
+                      <span className={classes.InputButtonText}> Upload Resume </span>
                     </label>
                   </div>
                 )}
@@ -137,10 +112,7 @@ const ApplicantCard = (props) => {
                         <Spinner />
                       </div>
                     ) : (
-                      <span
-                        className={classes.SaveText}
-                        onClick={onSubmitResumeHandler}
-                      >
+                      <span className={classes.SaveText} onClick={onSubmitResumeHandler}>
                         {' '}
                         Save{' '}
                       </span>
@@ -190,22 +162,14 @@ const ApplicantCard = (props) => {
         </div>
 
         <div className={classes.SegmentContainer}>
-          <TextOnly
-            id={props.id}
-            labelName='Tentang Saya'
-            route={`/ap/${props.id}/summary`}
-            text={props.details}
-            applicantid={props.id}
-          />
+          <TextOnly id={props.id} labelName='Tentang Saya' route={`/ap/${props.id}/summary`} text={props.details} applicantid={props.id} />
 
           <RangeSegment
             id={props.id}
             labelName='Pengalaman Kerja'
             routeEdit={`/ap/${props.id}/experience`}
             routeAdd={`/ap/${props.id}/add/experience`}
-            contents={props.experience.sort(
-              (a, b) => moment(b.startDate) - moment(a.startDate)
-            )}
+            contents={props.experience.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
             state='experience'
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
@@ -218,9 +182,7 @@ const ApplicantCard = (props) => {
             labelName='Pendidikan'
             routeEdit={`/ap/${props.id}/education`}
             routeAdd={`/ap/${props.id}/add/education`}
-            contents={props.education.sort(
-              (a, b) => moment(b.startDate) - moment(a.startDate)
-            )}
+            contents={props.education.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
             state='education'
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
@@ -233,9 +195,7 @@ const ApplicantCard = (props) => {
             labelName='Pengalaman Organisasi'
             routeEdit={`/ap/${props.id}/organization`}
             routeAdd={`/ap/${props.id}/add/organization`}
-            contents={props.organization.sort(
-              (a, b) => moment(b.startDate) - moment(a.startDate)
-            )}
+            contents={props.organization.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
             state='organization'
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
@@ -248,9 +208,7 @@ const ApplicantCard = (props) => {
             labelName='Sertifikasi atau Penghargaan'
             routeEdit={`/ap/${props.id}/certification`}
             routeAdd={`/ap/${props.id}/add/certification`}
-            contents={props.certification.sort(
-              (a, b) => moment(b.startDate) - moment(a.startDate)
-            )}
+            contents={props.certification.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
             state='certification'
             isLoading={props.applicant.isLoading}
             token={props.auth.token}
@@ -273,16 +231,17 @@ const ApplicantCard = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     applicant: state.applicant,
+    admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateResume: (payload) => dispatch(actionCreators.updateResume(payload)),
+    updateResume: payload => dispatch(actionCreators.updateResume(payload)),
   };
 };
 
