@@ -93,42 +93,17 @@ const OrderREG = props => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
+  const approveDataChange = () => {
+    setIndex(approveOrder.index);
 
-
-    setData((prevData) => {
+    setData(prevData => {
       const tempData = [...prevData];
-      const trueIndex =
-        approveOrder.index + (paginationNumber - 1) * rowsNumber;
+      const trueIndex = approveOrder.index + (paginationNumber - 1) * rowsNumber;
       tempData[trueIndex].status = 'Paid';
       return tempData;
     });
     setIndex(null);
-
     setOrderModal(false);
-
-    const payload = {
-      token: props.admin.token,
-      companyId: dataInput.companyId,
-      orderId: dataInput.orderId,
-    };
-
-    try {
-      const response = await props.approveOrderREG(payload);
-      if (!response.id) {
-        throw new Error(response);
-      }
-      setData(prevData => {
-        const tempData = [...prevData];
-        const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
-        tempData[trueIndex].status = 'Paid';
-        return tempData;
-      });
-      setIndex(null);
-    } catch (err) {
-      console.log(err);
-      setIndex(null);
-    }
-
   };
 
   //================= Pagination ===========================
@@ -231,11 +206,9 @@ const OrderREG = props => {
                       </button>
                       <div className={classes.DropDownContent}>
                         <button
-
                           style={order.status === 'Pending' ? { color: 'green' } : { color: 'grey' }}
-                          onClick={order.status === 'Paid' ? null : () => onOpenOrderModal(order._id, order.companyId._id, i)}>
+                          onClick={order.status === 'Paid' ? null : () => onOpenOrderModal(order._id, i)}>
                           {order.status === 'Pending' ? 'Approve' : 'Telah Disetujui'}
-
                         </button>
                       </div>
                     </div>
@@ -271,19 +244,7 @@ const OrderREG = props => {
 
   return (
     <div>
-      <ApproveModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        orderId={approveOrder.orderId}
-
-        Accept={() =>
-          approveOrderREGHandler({
-            orderId: approveOrder.orderId,
-            companyId: approveOrder.companyId,
-            i: approveOrder.index,
-          })
-        }>
-
+      <ApproveModal show={orderModal} onCancel={onCloseOrderModal} orderId={approveOrder.orderId} approveDataChange={approveDataChange}>
         Form Persetujuan
       </ApproveModal>
       {content}
