@@ -190,7 +190,7 @@ const Subscription = (props) => {
 
         <div className={classes.Content}>
           <div className={classes.TopContent}>
-            <p className={classes.ContentTitle}>Penyaluran otomatis</p>
+            <p className={classes.ContentTitle}>Lamaran otomatis</p>
 
             <label onChange={onCheckedAutoSend} className={classes.CheckBox}>
               <input

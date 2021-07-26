@@ -53,7 +53,7 @@ const BriefDescriptions = props => {
     const updatedData = {
       companyId: companyid,
       briefDescriptions: formState.inputs.briefDescriptions.value,
-      token: props.auth.token,
+      token: props.auth.token || props.admin.token,
     };
 
     try {
@@ -143,6 +143,7 @@ const mapStateToProps = state => {
     isLoading: state.company.isLoading,
     error: state.company.error,
     auth: state.auth,
+    admin: state.admin,
   };
 };
 

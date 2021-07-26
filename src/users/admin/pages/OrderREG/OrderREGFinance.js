@@ -44,7 +44,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const OrderREG = (props) => {
+const OrderREG = props => {
   const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
@@ -69,14 +69,13 @@ const OrderREG = (props) => {
   useEffect(() => {
     if (props.admin.token) {
       let sort = [];
-      getWholeOrderREG(props.admin.token).then((res) => {
+      getWholeOrderREG(props.admin.token).then(res => {
         sort = res.orderreg;
         sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setData(sort);
 
         if (res.message) {
-          emptyText.current =
-            'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+          emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
         }
       });
     }
@@ -89,10 +88,7 @@ const OrderREG = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, data]);
@@ -100,10 +96,9 @@ const OrderREG = (props) => {
   const approveDataChange = () => {
     setIndex(approveOrder.index);
 
-    setData((prevData) => {
+    setData(prevData => {
       const tempData = [...prevData];
-      const trueIndex =
-        approveOrder.index + (paginationNumber - 1) * rowsNumber;
+      const trueIndex = approveOrder.index + (paginationNumber - 1) * rowsNumber;
       tempData[trueIndex].status = 'Paid';
       return tempData;
     });
@@ -124,7 +119,7 @@ const OrderREG = (props) => {
     setPaginationNumber(value);
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -171,18 +166,12 @@ const OrderREG = (props) => {
                 <tr key={order._id}>
                   <th> {i + 1}</th>
                   <th>
-                    <Link
-                      to={`/co/${order._id}/invoice`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/co/${order._id}/invoice`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order._id}
                     </Link>
                   </th>
                   <th>
-                    <Link
-                      to={`/co/${order.companyId._id}/profile`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/co/${order.companyId._id}/profile`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order.companyId.companyName}
                     </Link>
                   </th>
@@ -190,10 +179,7 @@ const OrderREG = (props) => {
 
                   <th>
                     {' '}
-                    <Link
-                      to={`/co/${order._id}/invoice`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/co/${order._id}/invoice`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order.packageName}
                     </Link>
                   </th>
@@ -201,23 +187,15 @@ const OrderREG = (props) => {
 
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
 
-                  <th>
-                    {order.approvedAt
-                      ? moment(order.approvedAt).format('D MMM YYYY')
-                      : 'not approved'}
-                  </th>
+                  <th>{order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : 'not approved'}</th>
 
                   <th>
                     {props.indexIsLoading && index === i ? (
                       <Spinner />
                     ) : order.status === 'Paid' ? (
-                      <span style={{ color: 'Green', fontWeight: 'bold' }}>
-                        Paid
-                      </span>
+                      <span style={{ color: 'Green', fontWeight: 'bold' }}>Paid</span>
                     ) : (
-                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>
-                        Pending
-                      </span>
+                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>Pending</span>
                     )}
                   </th>
 
@@ -228,20 +206,9 @@ const OrderREG = (props) => {
                       </button>
                       <div className={classes.DropDownContent}>
                         <button
-                          style={
-                            order.status === 'Pending'
-                              ? { color: 'green' }
-                              : { color: 'grey' }
-                          }
-                          onClick={
-                            order.status === 'Paid'
-                              ? null
-                              : () => onOpenOrderModal(order._id, i)
-                          }
-                        >
-                          {order.status === 'Pending'
-                            ? 'Approve'
-                            : 'Telah Disetujui'}
+                          style={order.status === 'Pending' ? { color: 'green' } : { color: 'grey' }}
+                          onClick={order.status === 'Paid' ? null : () => onOpenOrderModal(order._id, i)}>
+                          {order.status === 'Pending' ? 'Approve' : 'Telah Disetujui'}
                         </button>
                       </div>
                     </div>
@@ -256,26 +223,16 @@ const OrderREG = (props) => {
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}
-        >
+          }}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={30}>30</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
       </div>
     );
@@ -287,12 +244,7 @@ const OrderREG = (props) => {
 
   return (
     <div>
-      <ApproveModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        orderId={approveOrder.orderId}
-        approveDataChange={approveDataChange}
-      >
+      <ApproveModal show={orderModal} onCancel={onCloseOrderModal} orderId={approveOrder.orderId} approveDataChange={approveDataChange}>
         Form Persetujuan
       </ApproveModal>
       {content}
@@ -300,7 +252,7 @@ const OrderREG = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     indexIsLoading: state.finance.indexIsLoading,
@@ -309,11 +261,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getWholeOrderREG: (data) => dispatch(actionCreators.getWholeOrderREG(data)),
-    approveOrderREG: (payload) =>
-      dispatch(actionCreators.approveOrderREG(payload)),
+    getWholeOrderREG: data => dispatch(actionCreators.getWholeOrderREG(data)),
+    approveOrderREG: payload => dispatch(actionCreators.approveOrderREG(payload)),
   };
 };
 

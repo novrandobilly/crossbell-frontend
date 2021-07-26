@@ -73,8 +73,13 @@ const NavigationLinks = props => {
           userId: props.admin.userId,
           token: props.admin.token,
         };
-        let res = await getAdmin(payload);
-        setAdminNotifications(res.admin.notifications);
+
+        try {
+          let res = await getAdmin(payload);
+          setAdminNotifications(res.admin.notifications);
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
     fetchAdmin();
