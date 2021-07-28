@@ -375,7 +375,6 @@ export const getAdmin = payload => {
         body: null,
       });
       const responseJSON = await response.json();
-      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }

@@ -167,10 +167,11 @@ const CompanyJobList = props => {
       },
     });
   }, []);
-  console.log(props.auth);
   let content = <SpinnerCircle />;
-
-  if (!props.isLoading && displayData && displayData.length > 0) {
+  if (
+    !props.isLoading &&
+    ((displayData && displayData.length > 0) || (unreleasedData && unreleasedData.length > 0) || (expiredData && expiredData.length > 0))
+  ) {
     content = (
       <div className={classes.Container}>
         <p className={classes.ContainerTitle}>Selamat datang di Crossbell</p>
@@ -313,7 +314,10 @@ const CompanyJobList = props => {
     );
   }
 
-  if (!props.isLoading && (!displayData || displayData.length < 1)) {
+  if (
+    !props.isLoading &&
+    (!displayData || (displayData.length < 1 && !unreleasedData && unreleasedData.length < 1 && !expiredData && expiredData.length < 1))
+  ) {
     content = <p className={classes.EmptyText}>Anda belum memasang iklan pekerjaan sebelumnya</p>;
   }
 
