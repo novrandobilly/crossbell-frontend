@@ -15,14 +15,21 @@
 }
 
 .Content {
-  font-size: 1.4rem;
-  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  margin: 0;
   padding: 1rem 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.Details {
+  font-size: 0.8rem;
+  text-align: left;
+  line-height: 1.2rem;
+  color: red;
+}
+
 .Footer {
-  padding: 1rem 1rem;
+  padding: 8px;
 }
 
 .Footer {
@@ -32,7 +39,7 @@
 
 @media (min-width: 768px) {
   .Modal {
-    left: calc(59.5% - 20rem);
-    width: 20rem;
+    left: calc(59.5% - 30rem);
+    width: 40rem;
   }
 }

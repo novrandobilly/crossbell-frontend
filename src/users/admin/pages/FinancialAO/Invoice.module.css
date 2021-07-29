@@ -190,6 +190,11 @@ hr.UnderLine {
   width: 60%;
 }
 
+.AdditionalInfo {
+  margin: 2px 0;
+  font-size: 0.8rem;
+}
+
 @media all {
   .page-break {
     display: none;

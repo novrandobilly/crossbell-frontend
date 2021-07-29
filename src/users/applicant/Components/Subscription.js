@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Modal from '../../../shared/UI_Element/Modal';
 import OrderModal from '../../../shared/UI_Element/OrderModal';
+import IndustryData from '../../../shared/UI_Element/IndustryData';
 import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
 import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
 
@@ -208,7 +209,7 @@ const Subscription = (props) => {
                 value={autoSend.jobIndustry}
                 id='jobIndustry'
                 name='jobIndustry'
-                options={WorkFieldData.map((option) => option.field)}
+                options={IndustryData.map((option) => option.industry)}
                 onChange={onChangeAutoSendIndustry}
                 style={{ width: '100%' }}
                 renderInput={(params) => (
@@ -262,7 +263,7 @@ const Subscription = (props) => {
                 value={autoRemind.jobIndustry}
                 id='jobIndustry'
                 name='jobIndustry'
-                options={WorkFieldData.map((option) => option.field)}
+                options={IndustryData.map((option) => option.industry)}
                 onChange={onChangeAutoRemindIndustry}
                 style={{ width: '100%' }}
                 renderInput={(params) => (

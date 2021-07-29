@@ -434,15 +434,16 @@ const EditIntro = (props) => {
               {data.picture && data.picture.url ? (
                 <div
                   className={classes.Avatar}
-                  style={
-                    file
-                      ? {
-                          backgroundImage: `url('${file}')`,
-                        }
-                      : {
-                          backgroundImage: `url('${data.picture.url}')`,
-                        }
-                  }
+                  style={{
+                    backgroundImage: `url('${data.picture.url}')`,
+                  }}
+                />
+              ) : file ? (
+                <div
+                  className={classes.Avatar}
+                  style={{
+                    backgroundImage: `url('${file}')`,
+                  }}
                 />
               ) : (
                 <AccountCircleIcon

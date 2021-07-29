@@ -22,15 +22,20 @@ const ModalOverlay = (props) => {
         <div className={`${classes.Content} ${props.ContentClass}`}>
           {props.children}
         </div>
+
+        <div className={`${classes.Details} ${props.DetailClass}`}>
+          * {props.Detail}
+        </div>
+
         <footer className={`${classes.Footer} ${props.FooterClass}`}>
           <div className={`${classes.FooterButton}`}>
             <Button
               variant='contained'
               disableElevation
-              style={{ marginRight: '16px', padding: '0' }}
+              style={{ marginRight: '16px', padding: '0 8px' }}
               onClick={props.onCancel}
             >
-              tidak
+              tidak berkewajiban
             </Button>
 
             <Button
@@ -38,9 +43,9 @@ const ModalOverlay = (props) => {
               color='primary'
               disableElevation
               onClick={props.Accept}
-              style={{ padding: '0' }}
+              style={{ padding: '0 8px' }}
             >
-              ya
+              berkewajiban
             </Button>
           </div>
         </footer>
