@@ -14,17 +14,21 @@ import Tabs from './Tabs';
 
 import classes from './CompanyCard.module.css';
 
-const CompanyCard = props => {
+const CompanyCard = (props) => {
   const { companyid } = useParams();
 
   return (
     <div className={classes.BigContainer}>
-      {props.auth.isCompany && props.auth.userId === companyid && !props.isActive && (
-        <div className={classes.VerificationNotif}>
-          <ErrorOutlineIcon style={{ fontSize: 35 }} />
-          <span>Perusahaan berhasil terdaftar dan sedang dalam proses verifikasi.</span>
-        </div>
-      )}
+      {props.auth.isCompany &&
+        props.auth.userId === companyid &&
+        !props.isActive && (
+          <div className={classes.VerificationNotif}>
+            <ErrorOutlineIcon style={{ fontSize: 35 }} />
+            <span>
+              Perusahaan berhasil terdaftar dan sedang dalam proses verifikasi.
+            </span>
+          </div>
+        )}
       <div className={classes.Wraper}>
         <div className={classes.Container}>
           <div className={classes.CompanyContainer}>
@@ -51,7 +55,13 @@ const CompanyCard = props => {
 
                   {props.auth.isCompany && props.auth.userId === companyid && (
                     <div>
-                      <p style={props.isActive ? { color: '#007cba', fontSize: '0.9rem' } : { color: 'gray', fontSize: '0.9rem' }}>
+                      <p
+                        style={
+                          props.isActive
+                            ? { color: '#007cba', fontSize: '0.9rem' }
+                            : { color: 'gray', fontSize: '0.9rem' }
+                        }
+                      >
                         {props.isActive ? (
                           <span className={classes.VerifiedDiv}>
                             <VerifiedUserIcon /> Verified
@@ -60,7 +70,14 @@ const CompanyCard = props => {
                           'Menunggu verifikasi admin'
                         )}{' '}
                       </p>
-                      <p className={classes.Slot} style={props.slotREG < 1 ? { color: 'rgb(255, 46, 46)' } : { color: 'rgb(0, 135, 9)' }}>
+                      <p
+                        className={classes.Slot}
+                        style={
+                          props.slotREG < 1
+                            ? { color: 'rgb(255, 46, 46)' }
+                            : { color: 'rgb(0, 135, 9)' }
+                        }
+                      >
                         Remaining Slot: {props.slotREG}
                       </p>
                     </div>
@@ -74,13 +91,17 @@ const CompanyCard = props => {
 
                   <p className={classes.CompanyHeadquarter}>{props.address}</p>
 
-                  <a href={`https://${props.website}`} className={classes.CompanyWebsites}>
+                  <a
+                    href={`https://${props.website}`}
+                    className={classes.CompanyWebsites}
+                  >
                     {props.website ? props.website : '-'}
                   </a>
                 </div>
               </div>
 
-              {(props.auth.isCompany && props.auth.userId === companyid) | props.admin.isAdmin && (
+              {(props.auth.isCompany && props.auth.userId === companyid) |
+                props.admin.isAdmin && (
                 <div className={classes.EditProfile}>
                   <Link to={`/co/${props.companyId}/compro/intro`}>
                     <IconButton />
@@ -142,7 +163,9 @@ const CompanyCard = props => {
 
         <div className={classes.Content}>
           <div className={classes.CompanyExclusive}>
-            {props.auth.isCompany && props.auth.userId === companyid && <Tabs />}
+            {props.auth.isCompany && props.auth.userId === companyid && (
+              <Tabs />
+            )}
             <TextOnly
               id={props.companyId}
               labelName='COMPANY BRIEF DESCRIPTION'
@@ -158,7 +181,9 @@ const CompanyCard = props => {
                 <p className={classes.Title}>IKLAN PEKERJAAN</p>
               </div>
             </div>
-            {(props.auth.userId === companyid || props.admin.isAdmin) && <SlotHistory />}
+            {(props.auth.userId === companyid || props.admin.isAdmin) && (
+              <SlotHistory />
+            )}
           </div>
         </div>
       </div>
@@ -166,7 +191,7 @@ const CompanyCard = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -175,9 +200,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getJobsInCompany: payload => dispatch(actionCreators.getJobsInCompany(payload)),
+    getJobsInCompany: (payload) =>
+      dispatch(actionCreators.getJobsInCompany(payload)),
     resetCompany: () => dispatch({ type: actionTypes.FETCHINGFINISH }),
   };
 };

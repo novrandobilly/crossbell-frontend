@@ -30,8 +30,7 @@ const ApplicantCard = props => {
       token: props.auth.token,
     };
     try {
-      const res = await props.updateResume(payload);
-      console.log(res);
+      await props.updateResume(payload);
       setLoadingResume(false);
     } catch (err) {
       console.log(err);
