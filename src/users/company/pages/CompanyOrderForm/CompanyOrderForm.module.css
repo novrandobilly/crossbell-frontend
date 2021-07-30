@@ -54,8 +54,10 @@
   width: 100%;
   margin: 0 0 16px 0;
   /* text-align: start; */
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.6);
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: red;
+  text-align: left;
 }
 
 .InputSlot {
@@ -65,6 +67,41 @@
 
 .PricePerSlot span {
   color: black;
+}
+
+.PPHDiv {
+  margin-top: 8px;
+  text-align: left;
+}
+
+.Question {
+  margin: 0;
+  width: 555px;
+  line-height: 1.2rem;
+}
+
+.Question span {
+  font-weight: bold;
+}
+
+.CheckBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: start;
+  margin-top: 16px;
+}
+
+.Box {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.Text {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 .PurchaseButton {

@@ -7,11 +7,13 @@ import * as actionCreators from '../../../../store/actions';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import Input from '../../../../shared/UI_Element/Input';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 // import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 import classes from './FinancialAO.module.css';
 
-const FinancialAO = props => {
+const FinancialAO = (props) => {
   // let total = [];
   // let revenue = 0;
 
@@ -53,7 +55,9 @@ const FinancialAO = props => {
           console.log(err);
         }
         totalOrder = [...resreg.orderreg, ...resbc.orderbc];
-        totalOrder = totalOrder.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+        totalOrder = totalOrder.sort(
+          (a, b) => moment(b.createdAt) - moment(a.createdAt)
+        );
         setFetchData(totalOrder);
       };
       fetchData();
@@ -64,10 +68,12 @@ const FinancialAO = props => {
     if (fetchData) {
       let filteredOrders = [...fetchData];
       if (formState?.inputs?.start?.value && formState?.inputs?.end?.value) {
-        filteredOrders = filteredOrders.filter(order =>
+        filteredOrders = filteredOrders.filter((order) =>
           moment(order.createdAt).isBetween(
             moment(moment(formState.inputs.start.value).format('LL')),
-            moment(`${moment(formState.inputs.end.value).format('LL')} 23:59:59`),
+            moment(
+              `${moment(formState.inputs.end.value).format('LL')} 23:59:59`
+            ),
             undefined,
             []
           )
@@ -79,7 +85,7 @@ const FinancialAO = props => {
 
   useEffect(() => {
     if (displayData) {
-      let arrPrice = displayData.map(data => {
+      let arrPrice = displayData.map((data) => {
         if (data.approvedAt !== null) {
           return data.totalPrice;
         }
@@ -92,7 +98,7 @@ const FinancialAO = props => {
   useEffect(() => {
     if (total) {
       let Rev = 0;
-      total.map(data => {
+      total.map((data) => {
         Rev = Rev + data;
         return Rev;
       });
@@ -146,6 +152,7 @@ const FinancialAO = props => {
                   <th>Company name</th>
                   <th>Order ID</th>
                   <th>Order type</th>
+                  <th>PPH</th>
                   <th>Package name</th>
                   <th>Created at</th>
                   <th>Approved at</th>
@@ -158,14 +165,25 @@ const FinancialAO = props => {
 
               <tbody className={classes.ColumnField}>
                 {displayData.map((display, i) => {
-                  console.log(display.companyId);
-
                   return (
                     <tr key={display._id}>
                       <th>{i + 1}</th>
                       <th>{display.companyId?.companyName}</th>
                       <th>{display._id}</th>
-                      <th> {display.slot ? 'order reguler' : 'order bulk candidate'}</th>
+                      <th>
+                        {' '}
+                        {display.slot
+                          ? 'order reguler'
+                          : 'order bulk candidate'}
+                      </th>
+                      <th>
+                        {display.PPH ? (
+                          <CheckCircleIcon style={{ color: '#00A30E' }} />
+                        ) : (
+                          <CancelIcon color='secondary' />
+                        )}
+                      </th>
+
                       <th>{display.slot ? display.packageName : '-'}</th>
                       <th>{moment(display.createdAt).format('D MMM YYYY')}</th>
                       <th>{moment(display.approvedAt).format('D MMM YYYY')}</th>
@@ -176,14 +194,17 @@ const FinancialAO = props => {
                           style={{
                             fontSize: '0.9rem',
                             color: 'rgb(250, 129, 0)',
-                          }}>
+                          }}
+                        >
                           pending
                         </th>
                       ) : (
                         <th style={{ fontSize: '0.9rem' }}>
                           <p style={{ margin: '-0.5rem 0 -1rem 0' }}>
                             {display.slot || display.amount}
-                            <span style={{ margin: '0 0 0 1rem' }}>{display.slot ? 'slot' : 'candidate'}</span>
+                            <span style={{ margin: '0 0 0 1rem' }}>
+                              {display.slot ? 'slot' : 'candidate'}
+                            </span>
                           </p>
                         </th>
                       )}
@@ -192,14 +213,21 @@ const FinancialAO = props => {
                       {display.status === 'Pending' ? (
                         <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                       ) : (
-                        <th>Rp. {(display.pricePerSlot || display.price).toLocaleString()}</th>
+                        <th>
+                          Rp.{' '}
+                          {(
+                            display.pricePerSlot || display.price
+                          ).toLocaleString()}
+                        </th>
                       )}
 
                       {/* ========== Total Price ========== */}
                       {display.status === 'Pending' ? (
                         <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                       ) : (
-                        <th>Rp. {parseInt(display.totalPrice).toLocaleString()}</th>
+                        <th>
+                          Rp. {parseInt(display.totalPrice).toLocaleString()}
+                        </th>
                       )}
 
                       <th
@@ -209,7 +237,8 @@ const FinancialAO = props => {
                             : display.status === 'Expired'
                             ? { color: 'Gray', fontWeight: 'bold' }
                             : { color: 'green', fontWeight: 'bold' }
-                        }>
+                        }
+                      >
                         {display.status}
                       </th>
                     </tr>
@@ -224,8 +253,12 @@ const FinancialAO = props => {
               <div className={classes.Label}>Revenue/ year</div>
             </div>
             <div className={classes.RevenueNumber}>
-              <div className={classes.Label}>Rp. {revenue.toLocaleString()},-</div>
-              <div className={classes.Label}>Rp. {(revenue * 12).toLocaleString()},-</div>
+              <div className={classes.Label}>
+                Rp. {revenue.toLocaleString()},-
+              </div>
+              <div className={classes.Label}>
+                Rp. {(revenue * 12).toLocaleString()},-
+              </div>
             </div>
           </div>
         </div>
@@ -236,7 +269,7 @@ const FinancialAO = props => {
   return content;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     admin: state.admin,
     isLoading: state.finance.isLoading,
@@ -244,10 +277,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getWholeOrderREG: token => dispatch(actionCreators.getWholeOrderREG(token)),
-    getWholeOrderBC: token => dispatch(actionCreators.getWholeOrderBC(token)),
+    getWholeOrderREG: (token) =>
+      dispatch(actionCreators.getWholeOrderREG(token)),
+    getWholeOrderBC: (token) => dispatch(actionCreators.getWholeOrderBC(token)),
   };
 };
 

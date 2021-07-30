@@ -6,7 +6,6 @@ const WorkList = [
   { field: 'Business Intelligence' },
   { field: 'Business Analyst' },
   { field: 'Business Development' },
-  { field: 'Business Development' },
   { field: 'Consultant' },
   { field: 'Cashier' },
   { field: 'Chef' },

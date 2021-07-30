@@ -23,9 +23,11 @@ const ModalOverlay = (props) => {
           {props.children}
         </div>
 
-        <div className={`${classes.Details} ${props.DetailClass}`}>
-          * {props.Detail}
-        </div>
+        {props.detail && (
+          <div className={`${classes.Details} ${props.DetailClass}`}>
+            * {props.detail}
+          </div>
+        )}
 
         <footer className={`${classes.Footer} ${props.FooterClass}`}>
           <div className={`${classes.FooterButton}`}>
@@ -35,7 +37,7 @@ const ModalOverlay = (props) => {
               style={{ marginRight: '16px', padding: '0 8px' }}
               onClick={props.onCancel}
             >
-              tidak berkewajiban
+              tidak
             </Button>
 
             <Button
@@ -45,7 +47,7 @@ const ModalOverlay = (props) => {
               onClick={props.Accept}
               style={{ padding: '0 8px' }}
             >
-              berkewajiban
+              ya
             </Button>
           </div>
         </footer>

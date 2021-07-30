@@ -179,22 +179,60 @@
 
 .DropDownDiv {
   width: 50%;
-  margin-top: 0.3rem;
 }
 
 .EducationalInput {
   display: flex;
   justify-content: space-between;
+  margin-top: 8px;
 }
 
 .IPK {
   width: 30%;
-  margin-top: 12px;
+  margin-top: 2px;
 }
 
 .InputSlot {
   display: flex;
   overflow: hidden;
+}
+
+.PPHDiv {
+  margin: 8px 0 16px 0;
+  text-align: left;
+  color: black;
+  font-weight: normal;
+}
+
+.Question {
+  margin: 0;
+  width: 650px;
+  line-height: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.Question span {
+  font-weight: bold;
+}
+
+.CheckBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: start;
+  margin-top: 16px;
+}
+
+.Box {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.Text {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 .Footer {

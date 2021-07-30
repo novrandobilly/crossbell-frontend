@@ -13,11 +13,13 @@ import {
 } from '../../../../shared/utils/validator';
 
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
+// import InputLabel from '@material-ui/core/InputLabel';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import FormControl from '@material-ui/core/FormControl';
+// import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
@@ -31,8 +33,11 @@ import classes from './OrderBCForm.module.css';
 const ORIGINAL_PRICE = 40000;
 
 const OrderBCForm = (props) => {
-  const [employment, setEmployment] = useState('');
-  const [open, setOpen] = useState(false);
+  const [fieldOfWork, setFieldOfWork] = useState('');
+
+  const filter = createFilterOptions();
+  const [PPH, setPPH] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
 
   const [formState, onInputHandler] = useForm(
@@ -118,6 +123,7 @@ const OrderBCForm = (props) => {
       jobFunction: formState.inputs.jobFunction.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       amount: formState.inputs.amount.value,
+      PPH: PPH,
     };
 
     setOrderModal(false);
@@ -146,11 +152,35 @@ const OrderBCForm = (props) => {
     onInputHandler(e.target.name, element.checked, true);
   };
 
-  const handleChange = (e) => {
-    const elementId = e.target.name;
-    const elementValue = e.target.value;
-    onInputHandler(elementId, elementValue, true);
-    setEmployment(e.target.value);
+  const onAutoCompleteHandler = (event, newValue) => {
+    event.preventDefault();
+    if (typeof newValue === 'string') {
+      setFieldOfWork({
+        field: newValue,
+      });
+      onInputHandler('jobFunction', newValue.field, true);
+    } else if (newValue && newValue.inputValue) {
+      setFieldOfWork({
+        field: newValue.inputValue,
+      });
+      onInputHandler('jobFunction', newValue.inputValue.field, true);
+    } else {
+      setFieldOfWork(newValue);
+      onInputHandler('jobFunction', newValue?.field || '', true);
+    }
+  };
+
+  const onFilterHandler = (options, params) => {
+    const filtered = filter(options, params);
+
+    if (params.inputValue !== '') {
+      filtered.push({
+        inputValue: params.inputValue,
+        field: `Tambahkan "${params.inputValue}"`,
+      });
+    }
+
+    return filtered;
   };
 
   const educationHandler = (e) => {
@@ -163,13 +193,13 @@ const OrderBCForm = (props) => {
     return [tempArray, onInputHandler('education', tempArray, true)];
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
 
   const onCloseOrderModal = () => {
     setOrderModal(false);
@@ -182,6 +212,15 @@ const OrderBCForm = (props) => {
   const handleSchoolChange = (e, value) => {
     onInputHandler('school', value, true);
   };
+
+  const onCheckedPPH = (e) => {
+    const elementValue = e.target.checked;
+    setPPH(elementValue);
+  };
+
+  useEffect(() => {
+    onInputHandler('jobFunction', fieldOfWork?.field, true);
+  }, [onInputHandler, fieldOfWork]);
 
   let price;
 
@@ -205,7 +244,7 @@ const OrderBCForm = (props) => {
             <div className={classes.EditLabel}>
               <div className={classes.Inputs}>
                 <div className={classes.RadioGroup}>
-                  <p className={classes.RadioLabel}>Pendidikan*</p>
+                  <p className={classes.RadioLabel}>Pendidikan</p>
                   <div
                     className={classes.RadioGroupInput}
                     onChange={educationHandler}
@@ -341,8 +380,8 @@ const OrderBCForm = (props) => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label='Universitas preferensi*'
-                        margin='normal'
+                        label='Universitas preferensi'
+                        // margin='normal'
                         variant='standard'
                       />
                     )}
@@ -402,51 +441,46 @@ const OrderBCForm = (props) => {
               </div>
 
               <div>
-                <FormControl
-                  className={classes.formControl}
-                  style={{ width: '100%', margin: '8px 0' }}
-                >
-                  <InputLabel id='jobFunction'>Bidang pekerjaan*</InputLabel>
-
-                  <Select
-                    labelId='jobFunction'
-                    id='jobFunction'
-                    name='jobFunction'
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={employment}
-                    onChange={handleChange}
-                    style={{
-                      fontSize: '0.9rem',
-                      textAlign: 'left',
-                      paddingBottom: '0.15rem',
-                      color: 'black',
-                    }}
-                  >
-                    <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                      <em>Belum ada untuk saat ini</em>
-                    </MenuItem>
-                    {WorkFieldData.field?.sort().map((work, i) => {
-                      return (
-                        <MenuItem
-                          id={i}
-                          value={work}
-                          style={{ fontSize: '0.9rem' }}
-                          key={i}
-                        >
-                          {work}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
+                <Autocomplete
+                  value={fieldOfWork}
+                  onChange={onAutoCompleteHandler}
+                  filterOptions={onFilterHandler}
+                  selectOnFocus
+                  clearOnBlur
+                  handleHomeEndKeys
+                  ccc='true'
+                  options={WorkFieldData}
+                  getOptionLabel={(option) => {
+                    // Value selected with enter, right from the input
+                    if (typeof option === 'string') {
+                      return option;
+                    }
+                    // Add "xxx" option created dynamically
+                    if (option.inputValue) {
+                      return option.inputValue;
+                    }
+                    // Regular option
+                    return option.field;
+                  }}
+                  renderOption={(option) => option.field}
+                  freeSolo
+                  style={{ margin: '0', width: '100%' }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      style={{ margin: '0' }}
+                      label='Bidang Pekerjaan*'
+                      margin='normal'
+                      variant='standard'
+                    />
+                  )}
+                />
               </div>
 
               <div style={{ margin: '8px 0 16px 0' }}>
                 <Input
                   inputType='input'
-                  id='emailRecipient*'
+                  id='emailRecipient'
                   inputClass='Position'
                   validatorMethod={[VALIDATOR_EMAIL()]}
                   onInputHandler={onInputHandler}
@@ -460,9 +494,29 @@ const OrderBCForm = (props) => {
                 InputClass='JobSpec'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
-                label='Catatan tambahan*'
+                label='Catatan tambahan'
                 initIsValid={true}
               />
+
+              <div className={classes.PPHDiv}>
+                <p className={classes.Question}>
+                  Apakah perusahaan anda memiliki kewajiban untuk memotong{' '}
+                  <span>PPH pasal 23</span>? Jika ya mohon mencentang kotak
+                  dibawah ini!
+                </p>{' '}
+                <label onChange={onCheckedPPH} className={classes.CheckBox}>
+                  <input
+                    id='PPH'
+                    type='checkbox'
+                    name='PPH'
+                    className={classes.Box}
+                  />
+                  <p className={classes.Text}>
+                    Ya, dan bersedia memberikan bukti potong PPH pasal 23 kepada
+                    pihak crossbell
+                  </p>
+                </label>
+              </div>
 
               <div className={classes.FooterSection}>
                 <div className={classes.PriceDescription}>
