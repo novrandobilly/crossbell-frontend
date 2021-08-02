@@ -158,10 +158,10 @@ const JobsList = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
+    localStorage.setItem('dasboardPage', value);
   };
 
   const rowsHandler = (event) => {
-    console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {

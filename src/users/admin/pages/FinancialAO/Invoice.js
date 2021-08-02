@@ -242,7 +242,7 @@ const Invoice = (props) => {
                 </div>
                 <div className={classes.NumberToText}>
                   <strong>
-                    {terbilang(subTotal + tax - dis)
+                    {terbilang(subTotal - tax - dis)
                       .split(' ')
                       .map((word) => {
                         let upperCaseWord = '';

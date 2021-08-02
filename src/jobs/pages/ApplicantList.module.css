@@ -2,7 +2,10 @@
   box-sizing: border-box;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 24px;
+  width: 100%;
+  min-height: calc(100vh - 30rem);
 }
 
 .CardContainer {
@@ -14,6 +17,7 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   background-color: white;
+  overflow-y: hidden;
 }
 
 .CardLeft {
@@ -45,14 +49,15 @@
   box-sizing: border-box;
 }
 
-.CardMid > p {
-  margin: 0;
+.CardMid a {
+  text-decoration: none;
 }
 
 .Name {
   font-size: 1.2rem;
   font-weight: 600;
   color: rgba(58, 81, 153, 1);
+  margin: 0;
 }
 
 .CardMidTitle {
@@ -98,5 +103,14 @@
 }
 
 .Salary {
+  margin: 0;
+}
+
+.Mail {
+  margin: 0;
+  padding-right: 8px;
+}
+
+.Phone {
   margin: 0;
 }

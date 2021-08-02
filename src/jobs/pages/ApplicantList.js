@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -11,12 +11,12 @@ import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import PinDropOutlinedIcon from '@material-ui/icons/PinDropOutlined';
 import WcOutlinedIcon from '@material-ui/icons/WcOutlined';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
-import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import CallIcon from '@material-ui/icons/Call';
 
 import classes from './ApplicantList.module.css';
 
-const ApplicantList = props => {
+const ApplicantList = (props) => {
   const { jobsid } = useParams();
 
   const [displayData, setDisplayData] = useState();
@@ -24,22 +24,21 @@ const ApplicantList = props => {
   const { getOneJob } = props;
 
   useEffect(() => {
-    getOneJob(jobsid).then(res => {
+    getOneJob(jobsid).then((res) => {
       if (res) {
         setDisplayData(res.jobApplicants);
       }
     });
   }, [getOneJob, jobsid, props.auth]);
 
-  console.log(displayData);
-
   let Content = <SpinnerCircle />;
+
   if (!props.isLoading && displayData) {
     Content = (
       <div className={classes.CardHolder}>
         {displayData.map((dat, i) => {
           return (
-            <div className={classes.CardContainer} key={i}>
+            <div className={classes.CardContainer} key={dat.id}>
               <div className={classes.CardLeft}>
                 <div
                   className={classes.Avatar}
@@ -50,11 +49,16 @@ const ApplicantList = props => {
               </div>
 
               <div className={classes.CardMid}>
-                <p className={classes.Name}>
-                  {dat.firstName} {dat.lastName}
-                </p>
+                <Link to={`/ap/${dat.id}/profile`}>
+                  <p className={classes.Name}>
+                    {dat.firstName} {dat.lastName}
+                  </p>
+                </Link>
                 <div className={classes.CardMidTitle}>
-                  <WorkOutlineIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <WorkOutlineIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
                   {dat.experience[0].prevTitle}
                 </div>
                 <div className={classes.CardMidLocation}>
@@ -62,16 +66,24 @@ const ApplicantList = props => {
                 </div>
 
                 <div className={classes.CardMidTitle}>
-                  <SchoolOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <SchoolOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
                   {dat.education[0].major}
                 </div>
                 <div className={classes.CardMidLocation}>
                   <span>at</span> {dat.education[0].school}
                 </div>
-                <div className={classes.CardMidTitle}>GPA: {dat.education[0].IPK}</div>
-
                 <div className={classes.CardMidTitle}>
-                  <AssignmentTurnedInOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  GPA: {dat.education[0].IPK}
+                </div>
+
+                {/* <div className={classes.CardMidTitle}>
+                  <AssignmentTurnedInOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
                   {dat.certification[0].title}
                 </div>
                 <div className={classes.CardMidLocation}>
@@ -79,30 +91,58 @@ const ApplicantList = props => {
                 </div>
 
                 <div className={classes.CardMidTitle}>
-                  <PeopleAltOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <PeopleAltOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
                   <span>
                     Organisasi <span> </span>
                   </span>
                   {dat.organization[0].organization}
-                </div>
+                </div> */}
               </div>
 
               <div className={classes.CardRight}>
                 <div className={classes.ExtraDetails}>
-                  <PinDropOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <PinDropOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
                   <p className={classes.City}>{dat.city}</p>
                 </div>
 
                 <div className={classes.ExtraDetails}>
-                  <WcOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <WcOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
                   <p className={classes.GenderAge}>
-                    {dat.gender === 'male' ? 'Pria' : 'Wanita'}, {moment().diff(moment(dat.dateOfBirth), 'year')} tahun
+                    {dat.gender === 'male' ? 'Pria' : 'Wanita'},{' '}
+                    {moment().diff(moment(dat.dateOfBirth), 'year')} tahun
                   </p>{' '}
                 </div>
 
                 <div className={classes.ExtraDetails}>
-                  <MonetizationOnOutlinedIcon fontSize='small' style={{ marginRight: '6px' }} />
-                  <p className={classes.Salary}>Harapan gaji: Rp. {dat.salary.toLocaleString()}</p>
+                  <MonetizationOnOutlinedIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
+                  <p className={classes.Salary}>
+                    Harapan gaji: Rp. {dat.salary.toLocaleString()}
+                  </p>
+                </div>
+
+                <div className={classes.ExtraDetails}>
+                  <AlternateEmailIcon
+                    fontSize='small'
+                    style={{ marginRight: '6px' }}
+                  />
+                  <p className={classes.Mail}>{dat.email}</p>
+                </div>
+
+                <div className={classes.ExtraDetails}>
+                  <CallIcon fontSize='small' style={{ marginRight: '6px' }} />
+                  <p className={classes.Phone}>{dat.phone}</p>
                 </div>
               </div>
             </div>
@@ -115,7 +155,7 @@ const ApplicantList = props => {
   return <div className={classes.Container}>{Content}</div>;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -124,9 +164,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
+    getOneJob: (jobsid) => dispatch(actionCreators.getOneJob(jobsid)),
     resetCompany: () => dispatch({ type: actionTypes.FETCHINGFINISH }),
   };
 };
