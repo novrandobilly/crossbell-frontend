@@ -177,17 +177,25 @@ const Invoice = (props) => {
                     {orderData.PPH && (
                       <li>
                         bukti potong PPH pasal 23 paling lambat dikirimkan pada
-                        akhir bulan berikutnya setelah pesanan ini dibuat{' '}
+                        akhir bulan berikutnya setelah pesanan ini dibuat.{' '}
+                        <ul
+                          className={classes.CrossbellInfo}
+                          style={{ listStyleType: 'circle' }}
+                        >
+                          <li className={classes.AdditionalInfo}>
+                            Nama perusahaan: PT. Inti Dinamis
+                          </li>
+                          <li className={classes.AdditionalInfo}>
+                            Nomor Pokok Wajib Pajak: 23001939900293
+                          </li>
+                          <li className={classes.AdditionalInfo}>
+                            Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi
+                            17435
+                          </li>
+                        </ul>
                       </li>
                     )}
                   </ul>
-                  <div>
-                    <p className={classes.AdditionalInfo}>PT. Inti Dinamis</p>
-                    <p className={classes.AdditionalInfo}>23001939900293</p>
-                    <p className={classes.AdditionalInfo}>
-                      Taman Laguna Blok K, Jati Sampurna Bekasi 17435
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -234,7 +242,7 @@ const Invoice = (props) => {
                 </div>
                 <div className={classes.NumberToText}>
                   <strong>
-                    {terbilang(subTotal + tax - dis)
+                    {terbilang(subTotal - tax - dis)
                       .split(' ')
                       .map((word) => {
                         let upperCaseWord = '';

@@ -60,16 +60,16 @@
   margin: 10px 0;
 }
 
-.Text {
-  margin: 0;
-  color: rgba(0, 0, 0, 0.6);
-}
-
 .Box {
   width: 16px;
   height: 16px;
   margin: 0;
   margin-right: 10px;
+}
+
+.Text {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .InputDiv {

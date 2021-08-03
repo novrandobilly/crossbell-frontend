@@ -195,6 +195,14 @@ hr.UnderLine {
   font-size: 0.8rem;
 }
 
+.CrossbellInfo {
+  margin: 0;
+}
+
+.CrossbellInfo li {
+  margin: 4px 0;
+}
+
 @media all {
   .page-break {
     display: none;

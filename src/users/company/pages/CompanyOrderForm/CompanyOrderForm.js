@@ -22,6 +22,7 @@ const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
   const [validationError, setValidationError] = useState(false);
 
+  const [PPH, setPPH] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
   const [slot, setSlot] = useState('0');
   const [price, setPrice] = useState(ORIGINAL_PRICE);
@@ -63,7 +64,7 @@ const CompanyOrderForm = (props) => {
         companyId: companyData.userId,
         packageName: title,
         slot: formState.inputs.slot.value,
-        PPH: true,
+        PPH: PPH,
         token: props.auth.token,
       };
 
@@ -94,55 +95,8 @@ const CompanyOrderForm = (props) => {
     if (slot > 9) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15);
   }, [slot]);
 
-  const onCloseOrderModal = async (event) => {
-    event.preventDefault();
-    if (!formState.formIsValid) {
-      return props.createOrderFail();
-    }
-
-    if (!props.auth.isActive) {
-      setValidationError(true);
-    }
-
-    let title = 'bronze';
-
-    if (formState.inputs.slot.value > 1) {
-      title = 'silver';
-    }
-    if (formState.inputs.slot.value > 4) {
-      title = 'gold';
-    }
-    if (formState.inputs.slot.value > 9) {
-      title = 'platinum';
-    }
-    if (props.auth.isActive) {
-      const orderData = {
-        invoiceId: companyData.userId.slice(0, 3),
-        companyId: companyData.userId,
-        packageName: title,
-        slot: formState.inputs.slot.value,
-        PPH: false,
-        token: props.auth.token,
-      };
-
-      try {
-        if (orderData.slot < 1) {
-          throw new Error('jumlah pembelian tidak boleh dibawah 1');
-        }
-
-        setOrderModal(false);
-
-        const res = await props.createOrder(orderData);
-        if (res) {
-          console.log(res);
-          props.history.push(`/co/${res.orderreg.id}/invoice`);
-        } else {
-          throw new Error(res);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  const onCloseOrderModal = (event) => {
+    setOrderModal(false);
   };
 
   const onOpenOrderModal = () => {
@@ -171,6 +125,11 @@ const CompanyOrderForm = (props) => {
 
   const onSlotChange = (event) => {
     setSlot(event?.target?.value);
+  };
+
+  const onCheckedPPH = (e) => {
+    const elementValue = e.target.checked;
+    setPPH(elementValue);
   };
 
   useEffect(() => {
@@ -221,10 +180,9 @@ const CompanyOrderForm = (props) => {
         <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
           <div className={classes.InputAmount} style={{ marginTop: '20px' }}>
             <p className={classes.SlotEqual}>
-              1 Slot = 2 minggu waktu tayang iklan
+              *1 Slot = 2 minggu waktu tayang iklan
             </p>
           </div>
-
           <div className={classes.InputAmount}>
             <p className={classes.Label}>Jumlah slot yang ingin dibeli</p>
             <div className={classes.InputSlot}>
@@ -248,7 +206,6 @@ const CompanyOrderForm = (props) => {
               />
             </div>
           </div>
-
           <div
             className={classes.InputAmount}
             style={{ marginBottom: '-16px' }}
@@ -264,7 +221,6 @@ const CompanyOrderForm = (props) => {
                 : 'Platinum'}
             </p>
           </div>
-
           <div
             className={classes.InputAmount}
             style={{ borderBottom: '1px solid black' }}
@@ -279,6 +235,26 @@ const CompanyOrderForm = (props) => {
                 IDR {(price * formState.inputs.slot.value).toLocaleString()}
               </strong>
             </p>
+          </div>
+
+          <div className={classes.PPHDiv}>
+            <p className={classes.Question}>
+              Apakah perusahaan anda memiliki kewajiban untuk memotong{' '}
+              <span>PPH pasal 23</span>? Jika ya mohon mencentang kotak dibawah
+              ini!
+            </p>{' '}
+            <label onChange={onCheckedPPH} className={classes.CheckBox}>
+              <input
+                id='PPH'
+                type='checkbox'
+                name='PPH'
+                className={classes.Box}
+              />
+              <p className={classes.Text}>
+                Ya, dan bersedia memberikan bukti potong PPH pasal 23 kepada
+                pihak crossbell
+              </p>
+            </label>
           </div>
 
           <div style={{ width: '100%', textAlign: 'center' }}>
@@ -323,9 +299,8 @@ const CompanyOrderForm = (props) => {
         show={orderModal && !validationError}
         onCancel={onCloseOrderModal}
         Accept={onSubmitHandler}
-        Detail='jika anda memilih berkewajiban, maka anda dianggap bersedia untuk memberikan bukti potong PPH pasal 23'
       >
-        Apakah perusahaan anda memiliki kewajiban untuk memotong PPH pasal 23?
+        Apakah anda ingin melanjutkan pembelian slot iklan?
       </OrderModal>
       {formContent}
     </div>
