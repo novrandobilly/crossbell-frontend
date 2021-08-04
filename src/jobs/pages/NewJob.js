@@ -12,18 +12,24 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
 import TextField from '@material-ui/core/TextField';
 import Input from '../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../shared/utils/validator';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MIN,
+  VALIDATOR_ALWAYSTRUE,
+} from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
 import CitiesData from '../../shared/UI_Element/CitiesData';
 import Slider from '@material-ui/core/Slider';
 
 import classes from './NewJob.module.css';
 
-const NewJob = props => {
+const NewJob = (props) => {
   const [maxSlot, setMaxSlot] = useState(null);
   const [jobExperience, setJobExperience] = useState('');
   const [jobExperienceOpen, setJobExperienceOpen] = useState(false);
@@ -101,6 +107,8 @@ const NewJob = props => {
     false
   );
 
+  console.log(formState);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -110,7 +118,11 @@ const NewJob = props => {
     const salary = document.getElementById('salary');
     const benefit = document.getElementById('benefit');
 
-    onInputHandler('fieldOfWork', fieldOfWork?.field, true);
+    onInputHandler(
+      'fieldOfWork',
+      fieldOfWork?.field,
+      fieldOfWork.field ? true : false
+    );
     onInputHandler('salary', salary?.value, true);
     onInputHandler('benefit', benefit?.value, true);
     onInputHandler('rangeAge', rangeAge, true);
@@ -130,9 +142,16 @@ const NewJob = props => {
       }
     };
     getSlot();
-  }, [onInputHandler, getOneCompany, auth, rangeAge, fieldOfWork, requirementList]);
+  }, [
+    onInputHandler,
+    getOneCompany,
+    auth,
+    rangeAge,
+    fieldOfWork,
+    requirementList,
+  ]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.createJobFail();
@@ -167,7 +186,7 @@ const NewJob = props => {
     }
   };
 
-  const onSaveHandler = async event => {
+  const onSaveHandler = async (event) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
@@ -198,7 +217,7 @@ const NewJob = props => {
     }
   };
 
-  const onAddSlotHandler = async event => {
+  const onAddSlotHandler = async (event) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
@@ -230,7 +249,7 @@ const NewJob = props => {
     }
   };
 
-  const handleJobExperienceChange = e => {
+  const handleJobExperienceChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -245,7 +264,7 @@ const NewJob = props => {
     setJobExperienceOpen(true);
   };
 
-  const handleEmploymentChange = e => {
+  const handleEmploymentChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -260,7 +279,7 @@ const NewJob = props => {
     setEmploymentOpen(true);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -279,7 +298,7 @@ const NewJob = props => {
     onInputHandler('placementLocation', value, true);
   };
 
-  const onCheckedInputHandler = e => {
+  const onCheckedInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
@@ -327,15 +346,15 @@ const NewJob = props => {
     if (key !== 'default') cities = [...cities, ...CitiesData[key]];
   }
 
-  const addRequirement = e => {
+  const addRequirement = (e) => {
     e.preventDefault();
-    setRequirement(req => [...req, 'req']);
+    setRequirement((req) => [...req, 'req']);
     // onInputHandler(`requirement_${requirement.length}`, '', true);
   };
 
   const onRequirementsUpdate = (event, reqIndex) => {
     let inputValue = event.target.value;
-    setRequirementList(prevState => {
+    setRequirementList((prevState) => {
       let newState = [...prevState];
       newState[reqIndex] = inputValue;
       return newState;
@@ -362,10 +381,10 @@ const NewJob = props => {
             <Autocomplete
               id='placementLocation'
               name='placementLocation'
-              options={cities.map(option => option)}
+              options={cities.map((option) => option)}
               onChange={handleLocationChange}
               style={{ margin: '0' }}
-              renderInput={params => (
+              renderInput={(params) => (
                 // <Input
                 //   params={{ ...params }}
                 //   inputType='autoComplete'
@@ -373,7 +392,13 @@ const NewJob = props => {
                 //   label='Lokasi*'
                 //   helperText='Lokasi pekerjaan wajib diisi'
                 // />
-                <TextField {...params} style={{ margin: '0' }} label='Lokasi*' margin='normal' variant='standard' />
+                <TextField
+                  {...params}
+                  style={{ margin: '0' }}
+                  label='Lokasi*'
+                  margin='normal'
+                  variant='standard'
+                />
               )}
             />
           </div>
@@ -393,7 +418,8 @@ const NewJob = props => {
                 onOpen={handleEducationOpen}
                 value={educationalStage}
                 onChange={handleChange}
-                style={{ fontSize: '0.9rem', textAlign: 'left' }}>
+                style={{ fontSize: '0.9rem', textAlign: 'left' }}
+              >
                 <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
                   SMA
                 </MenuItem>
@@ -431,7 +457,8 @@ const NewJob = props => {
                 style={{
                   fontSize: '0.9rem',
                   textAlign: 'left',
-                }}>
+                }}
+              >
                 <MenuItem value='' style={{ fontSize: '0.9rem' }}>
                   <em>Pilih</em>
                 </MenuItem>
@@ -468,14 +495,23 @@ const NewJob = props => {
                 style={{
                   fontSize: '0.9rem',
                   textAlign: 'left',
-                }}>
+                }}
+              >
                 <MenuItem value='' style={{ fontSize: '0.9rem' }}>
                   <em>Pilih</em>
                 </MenuItem>
-                <MenuItem id={0} value='permanent' style={{ fontSize: '0.9rem' }}>
+                <MenuItem
+                  id={0}
+                  value='permanent'
+                  style={{ fontSize: '0.9rem' }}
+                >
                   Karyawan Tetap
                 </MenuItem>
-                <MenuItem id={0} value='contract' style={{ fontSize: '0.9rem' }}>
+                <MenuItem
+                  id={0}
+                  value='contract'
+                  style={{ fontSize: '0.9rem' }}
+                >
                   Karyawan kontrak (PKWT)
                 </MenuItem>
                 <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
@@ -507,7 +543,7 @@ const NewJob = props => {
               name='fieldOfWork'
               ccc='true'
               options={WorkFieldData}
-              getOptionLabel={option => {
+              getOptionLabel={(option) => {
                 // Value selected with enter, right from the input
                 if (typeof option === 'string') {
                   return option;
@@ -519,11 +555,17 @@ const NewJob = props => {
                 // Regular option
                 return option.field;
               }}
-              renderOption={option => option.field}
+              renderOption={(option) => option.field}
               freeSolo
               style={{ margin: '0', width: '100%' }}
-              renderInput={params => (
-                <TextField {...params} style={{ margin: '0' }} label='Bidang Pekerjaan*' margin='normal' variant='standard' />
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  style={{ margin: '0' }}
+                  label='Bidang Pekerjaan*'
+                  margin='normal'
+                  variant='standard'
+                />
               )}
             />
           </div>
@@ -543,8 +585,16 @@ const NewJob = props => {
       </div>
 
       <div className={classes.CheckBoxDiv}>
-        <label onChange={onCheckedInputHandler} className={classes.CheckBoxLabel}>
-          <input id='isHidden' type='checkbox' name='isHidden' className={classes.CheckBox} />
+        <label
+          onChange={onCheckedInputHandler}
+          className={classes.CheckBoxLabel}
+        >
+          <input
+            id='isHidden'
+            type='checkbox'
+            name='isHidden'
+            className={classes.CheckBox}
+          />
           <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
         </label>
       </div>
@@ -580,7 +630,9 @@ const NewJob = props => {
           <div className={classes.SpecialReqDiv}>
             <div>
               <p className={classes.SpecialRequirement}>Persyaratan Khusus</p>
-              <p className={classes.SpecialTips}>skill teknis, karakter, atau persyaratan khusus lainnya (maks 5)</p>
+              <p className={classes.SpecialTips}>
+                skill teknis, karakter, atau persyaratan khusus lainnya (maks 5)
+              </p>
             </div>
             <Button
               variant='contained'
@@ -589,7 +641,8 @@ const NewJob = props => {
               disableElevation
               onClick={requirement.length < 5 ? addRequirement : null}
               style={{ height: 'fit-content', alignSelf: 'flex-end' }}
-              size='small'>
+              size='small'
+            >
               Tambah Persyaratan
             </Button>
           </div>
@@ -603,7 +656,7 @@ const NewJob = props => {
                   inputType='input'
                   id={`requirement_${i}`}
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                  onChange={event => onRequirementsUpdate(event, i)}
+                  onChange={(event) => onRequirementsUpdate(event, i)}
                   initIsValid={true}
                 />
               </div>
@@ -622,7 +675,13 @@ const NewJob = props => {
           <div className={classes.SliderDiv}>
             <p className={classes.AgeNumber}>{rangeAge[0]}</p>
             <div className={classes.Slider}>
-              <Slider value={rangeAge} onChange={handleAgeChange} valueLabelDisplay='auto' aria-labelledby='range-slider' id='rangeAge' />
+              <Slider
+                value={rangeAge}
+                onChange={handleAgeChange}
+                valueLabelDisplay='auto'
+                aria-labelledby='range-slider'
+                id='rangeAge'
+              />
             </div>
             <p className={classes.AgeNumber}>{rangeAge[1]}</p>
           </div>
@@ -651,13 +710,23 @@ const NewJob = props => {
               Sisa slot:{' '}
               {formState.inputs.slotAllocation.value &&
               formState.inputs.slotAllocation.value > 0 &&
-              parseInt(maxSlot) > parseInt(formState.inputs.slotAllocation.value) / 2
-                ? (parseInt(maxSlot) - parseInt(formState.inputs.slotAllocation.value) / 2).toString()
+              parseInt(maxSlot) >
+                parseInt(formState.inputs.slotAllocation.value) / 2
+                ? (
+                    parseInt(maxSlot) -
+                    parseInt(formState.inputs.slotAllocation.value) / 2
+                  ).toString()
                 : maxSlot}
             </h3>
 
             <div className={classes.SlotAddButton}>
-              <Button disableElevation size='small' style={{ fontWeight: '600' }} startIcon={<AddIcon />} onClick={onAddSlotHandler}>
+              <Button
+                disableElevation
+                size='small'
+                style={{ fontWeight: '600' }}
+                startIcon={<AddIcon />}
+                onClick={onAddSlotHandler}
+              >
                 Tambah Slot
               </Button>
             </div>
@@ -670,8 +739,16 @@ const NewJob = props => {
           alignSelf: 'flex-end',
           marginRight: '1rem',
           marginTop: '2rem',
-        }}>
-        <Button variant='outlined' color='primary' type='submit' size='small' disableElevation onClick={onSaveHandler}>
+        }}
+      >
+        <Button
+          variant='outlined'
+          color='primary'
+          type='submit'
+          size='small'
+          disableElevation
+          onClick={onSaveHandler}
+        >
           save draft
         </Button>
 
@@ -684,7 +761,8 @@ const NewJob = props => {
             disableElevation
             onClick={onSubmitHandler}
             disabled={!formState.formIsValid}
-            style={{ marginLeft: '1rem' }}>
+            style={{ marginLeft: '1rem' }}
+          >
             save & publish
           </Button>
         )}
@@ -710,17 +788,19 @@ const NewJob = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    createJob: (jobData, authData) => dispatch(actionCreators.createJob(jobData, authData)),
-    saveJobDraft: (jobData, authData) => dispatch(actionCreators.saveJobDraft(jobData, authData)),
-    getOneCompany: payload => dispatch(actionCreators.getOneCompany(payload)),
+    createJob: (jobData, authData) =>
+      dispatch(actionCreators.createJob(jobData, authData)),
+    saveJobDraft: (jobData, authData) =>
+      dispatch(actionCreators.saveJobDraft(jobData, authData)),
+    getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
   };
