@@ -58,7 +58,7 @@
 }
 
 .Content h3 {
-  margin: 0 0 1rem 0;
+  margin: 0;
 }
 
 .Content > h3:hover {
@@ -71,13 +71,25 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.TitleDateWrap {
+  display: flex;
+  align-items: center;
+}
+
+.Date {
+  font-size: 0.8rem;
+  margin: 0 8px;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .TopContent {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2.6rem;
+  height: 36px;
   text-align: left;
 }
 
@@ -105,7 +117,15 @@
   font-size: 0.9rem;
   font-style: italic;
   color: rgba(0, 0, 0, 0.5);
-  padding-bottom: 8px;
+  padding-top: 8px;
+  /* padding-right: 80px; */
+  display: flex;
+  justify-content: space-between;
+  width: 99%;
+}
+
+.BottomContent p {
+  margin: 0;
 }
 
 .JobCard > footer {
