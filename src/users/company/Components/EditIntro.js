@@ -7,15 +7,9 @@ import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-  VALIDATOR_ALWAYSTRUE,
-} from '../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
 
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import classes from './EditIntro.module.css';
 import TextField from '@material-ui/core/TextField';
 import Input from '../../../shared/UI_Element/Input';
@@ -24,7 +18,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IndustryData from '../../../shared/UI_Element/IndustryData';
 import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
 
-const EditIntro = (props) => {
+const EditIntro = props => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
@@ -39,7 +33,7 @@ const EditIntro = (props) => {
 
   const { getOneCompany } = props;
   useEffect(() => {
-    getOneCompany({ userId: companyid }).then((res) => {
+    getOneCompany({ userId: companyid }).then(res => {
       setData(res.company);
       setIndustry({ field: res.company.industry });
     });
@@ -85,7 +79,7 @@ const EditIntro = (props) => {
     onInputHandler('industry', industry?.field, true);
   }, [onInputHandler, industry]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -120,7 +114,7 @@ const EditIntro = (props) => {
     }
   };
 
-  const onUploadHandler = (e) => {
+  const onUploadHandler = e => {
     const elementId = e.target.name;
     const elementFile = e.target.files[0];
     onInputHandler(elementId, elementFile, true);
@@ -209,9 +203,7 @@ const EditIntro = (props) => {
                 {formState.inputs.logo.value ? (
                   formState.inputs.logo.value.size > 500000 ? (
                     <span>
-                      <em style={{ color: 'red' }}>
-                        File is too large. Please provide max. 500kb image
-                      </em>
+                      <em style={{ color: 'red' }}>File is too large. Please provide max. 500kb image</em>
                     </span>
                   ) : (
                     <span>
@@ -259,7 +251,7 @@ const EditIntro = (props) => {
                   name='industry'
                   ccc='true'
                   options={IndustryData}
-                  getOptionLabel={(option) => {
+                  getOptionLabel={option => {
                     // Value selected with enter, right from the input
                     if (typeof option === 'string') {
                       return option;
@@ -271,17 +263,11 @@ const EditIntro = (props) => {
                     // Regular option
                     return option.field;
                   }}
-                  renderOption={(option) => option.field}
+                  renderOption={option => option.field}
                   freeSolo
                   style={{ margin: '0', width: '100%' }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      style={{ margin: '0' }}
-                      label='Industri Perusahaan*'
-                      margin='normal'
-                      variant='standard'
-                    />
+                  renderInput={params => (
+                    <TextField {...params} style={{ margin: '0' }} label='Industri Perusahaan*' margin='normal' variant='standard' />
                   )}
                 />
               </div>
@@ -333,8 +319,7 @@ const EditIntro = (props) => {
               color='primary'
               type='submit'
               className={classes.button}
-              endIcon={<NavigateNextIcon />}
-            >
+              endIcon={<NavigateNextIcon />}>
               {push ? 'Next' : 'Save'}
             </Button>
           </div>
@@ -359,7 +344,7 @@ const EditIntro = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -368,16 +353,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyIntro: (CompanyData) =>
-      dispatch(actionCreators.updateCompanyIntro(CompanyData)),
+    getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyIntro: CompanyData => dispatch(actionCreators.updateCompanyIntro(CompanyData)),
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditIntro));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));
