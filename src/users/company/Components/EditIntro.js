@@ -35,7 +35,7 @@ const EditIntro = props => {
   useEffect(() => {
     getOneCompany({ userId: companyid }).then(res => {
       setData(res.company);
-      setIndustry({ field: res.company.industry });
+      setIndustry({ industry: res.company.industry });
     });
   }, [getOneCompany, companyid]);
 
@@ -76,7 +76,7 @@ const EditIntro = props => {
   );
 
   useEffect(() => {
-    onInputHandler('industry', industry?.field, true);
+    onInputHandler('industry', industry?.industry, true);
   }, [onInputHandler, industry]);
 
   const onSubmitHandler = async event => {
@@ -125,17 +125,17 @@ const EditIntro = props => {
     event.preventDefault();
     if (typeof newValue === 'string') {
       setIndustry({
-        field: newValue,
+        industry: newValue,
       });
-      onInputHandler('industry', newValue.field, true);
+      onInputHandler('industry', newValue.industry, true);
     } else if (newValue && newValue.inputValue) {
       setIndustry({
-        field: newValue.inputValue,
+        industry: newValue.inputValue,
       });
-      onInputHandler('industry', newValue.inputValue.field, true);
+      onInputHandler('industry', newValue.inputValue.industry, true);
     } else {
       setIndustry(newValue);
-      onInputHandler('industry', newValue?.field || '', true);
+      onInputHandler('industry', newValue?.industry || '', true);
     }
   };
 
@@ -145,7 +145,7 @@ const EditIntro = props => {
     if (params.inputValue !== '') {
       filtered.push({
         inputValue: params.inputValue,
-        field: `Tambahkan "${params.inputValue}"`,
+        industry: `Tambahkan "${params.inputValue}"`,
       });
     }
 
@@ -239,6 +239,7 @@ const EditIntro = props => {
                   helperText='Please input a valid email address'
                 />
               </div>
+
               <div className={classes.InputBox}>
                 <Autocomplete
                   value={industry}
@@ -261,9 +262,9 @@ const EditIntro = props => {
                       return option.inputValue;
                     }
                     // Regular option
-                    return option.field;
+                    return option.industry;
                   }}
-                  renderOption={option => option.field}
+                  renderOption={option => option.industry}
                   freeSolo
                   style={{ margin: '0', width: '100%' }}
                   renderInput={params => (
@@ -271,6 +272,7 @@ const EditIntro = props => {
                   )}
                 />
               </div>
+
               <div className={classes.InputBox}>
                 <Input
                   inputType='input'

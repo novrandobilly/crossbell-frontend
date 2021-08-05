@@ -146,7 +146,8 @@ const CompaniesListAO = (props) => {
       await props.blockCo(payload);
       setData((prevData) => {
         const tempData = [...prevData];
-        tempData[dataInput.index].isActive = false;
+        const trueIndex = dataInput.index + (paginationNumber - 1) * rowsNumber;
+        tempData[trueIndex].isActive = false;
         return tempData;
       });
       setIndexLoading(null);
