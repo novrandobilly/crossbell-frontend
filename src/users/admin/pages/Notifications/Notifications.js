@@ -65,6 +65,7 @@ const Notifications = (props) => {
               <p>(dd/mm/yyyy)</p>
             </div>
           </div>
+
           <div className={classes.Content}>
             {adminNotifications?.map((notif, index) => (
               <div

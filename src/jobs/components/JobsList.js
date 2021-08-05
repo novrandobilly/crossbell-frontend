@@ -361,6 +361,7 @@ const JobsList = (props) => {
                 jobApplicant={job.jobApplicants}
                 setModalError={props.setModalError}
                 modalError={props.modalError}
+                releasedAt={job.releasedAt}
               />
             ))
           ) : props.jobEmpty ? (
