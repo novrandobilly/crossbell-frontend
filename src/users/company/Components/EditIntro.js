@@ -227,7 +227,7 @@ const EditIntro = (props) => {
                   inputClass='AddJobInput'
                   validatorMethod={[VALIDATOR_REQUIRE()]}
                   onInputHandler={onInputHandler}
-                  label='Nama perusahaan*'
+                  label='Nama Perusahaan*'
                   initValue={data.companyName || ''}
                   initIsValid={data.companyName}
                   helperText='Nama perusahaan wajib diisi'
@@ -241,7 +241,7 @@ const EditIntro = (props) => {
                   inputClass='AddJobInput'
                   validatorMethod={[VALIDATOR_EMAIL()]}
                   onInputHandler={onInputHandler}
-                  label='Email login*'
+                  label='Email Login*'
                   initValue={data.email || ''}
                   initIsValid={data.email}
                   helperText='Please input a valid email address'
@@ -278,7 +278,7 @@ const EditIntro = (props) => {
                     <TextField
                       {...params}
                       style={{ margin: '0' }}
-                      label='Bidang Pekerjaan*'
+                      label='Industri Perusahaan*'
                       margin='normal'
                       variant='standard'
                     />

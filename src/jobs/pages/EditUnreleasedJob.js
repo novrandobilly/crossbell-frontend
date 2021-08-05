@@ -190,7 +190,11 @@ const EditUnreleasedJob = (props) => {
       onInputHandler('salary', salary.value, true);
       onInputHandler('employment', employment, true);
       onInputHandler('benefit', benefit.value, true);
-      onInputHandler('fieldOfWork', fieldOfWork?.field, true);
+      onInputHandler(
+        'fieldOfWork',
+        fieldOfWork?.field,
+        fieldOfWork.field ? true : false
+      );
       onInputHandler('placementLocation', placement, true);
       onInputHandler('jobExperience', jobExperience, true);
       onInputHandler('educationalStage', educationalStage, true);
