@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions';
+import * as actionTypes from '../../../../store/actions/actions';
 
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 
@@ -10,7 +11,7 @@ import classes from './Notifications.module.css';
 
 const Notifications = (props) => {
   const [adminNotifications, setAdminNotifications] = useState([]);
-  const { getAdmin, admin } = props;
+  const { getAdmin, admin, updateNotification } = props;
 
   useEffect(() => {
     const payload = {
@@ -19,11 +20,16 @@ const Notifications = (props) => {
     };
     const getCurrentAdmin = async () => {
       const res = await getAdmin(payload);
-      if (res.admin.notifications)
+      if (res.admin.notifications) {
         setAdminNotifications(res.admin.notifications);
+        const newNotif = res.admin.notifications.filter((notif) => {
+          return notif.isOpened === false;
+        });
+        updateNotification(newNotif);
+      }
     };
     getCurrentAdmin();
-  }, [admin.token, admin.userId, getAdmin]);
+  }, [admin.token, admin.userId, getAdmin, updateNotification]);
 
   const openNotification = async (notifId) => {
     const payload = {
@@ -48,6 +54,12 @@ const Notifications = (props) => {
         }
         return tempData;
       });
+
+      const notificationCount = adminNotifications.filter((adm) => {
+        return adm.isOpened === false;
+      });
+
+      localStorage.setItem('notificationCount', notificationCount.length);
     } catch (err) {
       console.log(err);
     }
@@ -102,6 +114,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateNotification: (payload) =>
+      dispatch({ type: actionTypes.ADMINNOTIFICATIONUPDATE, payload }),
     getAdmin: (payload) => dispatch(actionCreators.getAdmin(payload)),
     notificationUpdate: (payload) =>
       dispatch(actionCreators.notificationUpdate(payload)),

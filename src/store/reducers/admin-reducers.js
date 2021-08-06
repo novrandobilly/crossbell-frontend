@@ -25,7 +25,9 @@ const adminReducer = (state = initialState, action) => {
       };
     }
     case actionTypes.AUTHADMINFINISH: {
-      const tokenExpirationDate = action.payload.expiration || new Date(new Date().getTime() + 1000 * 60 * 60 * 3).toISOString();
+      const tokenExpirationDate =
+        action.payload.expiration ||
+        new Date(new Date().getTime() + 1000 * 60 * 60 * 3).toISOString();
       localStorage.setItem(
         'userData',
         JSON.stringify({
