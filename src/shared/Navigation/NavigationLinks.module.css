@@ -69,6 +69,15 @@
   background: rgba(58, 81, 153, 1);
 }
 
+.notificationVisible {
+  display: contents;
+}
+
+.notificationInvisible {
+  display: none;
+  visibility: hidden;
+}
+
 /*=========================*/
 
 .PhoneLinks {

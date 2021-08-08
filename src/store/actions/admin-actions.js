@@ -467,34 +467,3 @@ export const getPromo = (payload) => {
     }
   };
 };
-
-export const notificationUpdate = (payload) => {
-  return async (dispatch) => {
-    dispatch(updateAdminStart());
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/profile`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: JSON.stringify({
-            notificationId: payload.notificationId,
-          }),
-        }
-      );
-      const responseJSON = await response.json();
-      if (!response.ok) {
-        throw new Error(responseJSON.message);
-      }
-      dispatch(updateAdminSuccess(responseJSON.foundAdmin));
-      return responseJSON.foundAdmin;
-    } catch (err) {
-      console.log(err, typeof err);
-      dispatch(updateAdminFail());
-      return err;
-    }
-  };
-};

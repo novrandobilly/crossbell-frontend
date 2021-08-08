@@ -14,6 +14,8 @@ import authReducers from './store/reducers/auth-reducers';
 import feedbackReducers from './store/reducers/feedback-reducers';
 import financeReducers from './store/reducers/finance-reducer';
 import adminReducers from './store/reducers/admin-reducers';
+import notificationReducers from './store/reducers/notification-reducers';
+
 import './fonts/NexaRegular.otf';
 
 const rootReducers = combineReducers({
@@ -24,11 +26,15 @@ const rootReducers = combineReducers({
   feed: feedbackReducers,
   finance: financeReducers,
   admin: adminReducers,
+  notification: notificationReducers,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducers, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(
+  rootReducers,
+  composeEnhancers(applyMiddleware(thunk))
+);
 
 ReactDOM.render(
   <Provider store={store}>
