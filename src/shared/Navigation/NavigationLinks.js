@@ -14,7 +14,7 @@ import classes from './NavigationLinks.module.css';
 const NavigationLinks = (props) => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
   const [applicantFirstName, setApplicantFirstName] = useState('');
-  const [adminNotifications, setAdminNotifications] = useState([]);
+  const [adminNotifications, setAdminNotifications] = useState(0);
   const [adminDropdownFinance, setAdminDropdownFinance] = useState(false);
   const [adminDropdownOperational, setAdminDropdownOperational] =
     useState(false);
@@ -83,7 +83,10 @@ const NavigationLinks = (props) => {
 
         try {
           let res = await getAdmin(payload);
-          setAdminNotifications(res.admin.notifications);
+          const dummyCount = res.admin.notifications.filter(
+            (notif) => !notif.isOpened
+          );
+          setAdminNotifications(dummyCount.length);
         } catch (err) {
           console.log(err);
         }
@@ -98,6 +101,12 @@ const NavigationLinks = (props) => {
     getAdmin,
   ]);
 
+  useEffect(() => {
+    if (props.notification.adminNotification !== null) {
+      setAdminNotifications(props.notification.adminNotification);
+    }
+  }, [props.notification]);
+
   let logout = null;
 
   if (props.auth.isLoggedIn || props.admin.isLoggedIn) {
@@ -110,6 +119,9 @@ const NavigationLinks = (props) => {
       </li>
     );
   }
+
+  console.log(adminNotifications);
+
   return (
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
@@ -366,14 +378,15 @@ const NavigationLinks = (props) => {
                 ref={ref}
               >
                 <NotificationsIcon style={{ color: 'rgba(58, 81, 153, 1)' }} />
-                {adminNotifications.length > 0 && (
-                  <span>
-                    {
-                      adminNotifications.filter((notif) => !notif.isOpened)
-                        .length
-                    }
-                  </span>
-                )}
+                <span
+                  className={
+                    adminNotifications > 0
+                      ? classes.notificationVisible
+                      : classes.notificationInvisible
+                  }
+                >
+                  {adminNotifications}
+                </span>
               </NavLink>
             </li>
           </React.Fragment>
@@ -587,6 +600,7 @@ const mapStateToProps = (state) => {
     auth: state.auth,
     admin: state.admin,
     applicant: state.applicant,
+    notification: state.notification,
   };
 };
 

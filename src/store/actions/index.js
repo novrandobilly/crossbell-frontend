@@ -36,7 +36,6 @@ export {
   updateAdminIntro,
   updatePromo,
   getPromo,
-  notificationUpdate,
 } from './admin-actions';
 
 export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
@@ -82,3 +81,5 @@ export {
   getResetPwd,
   resetPwd,
 } from './auth-actions';
+
+export { notificationUpdate } from './notification-actions';
