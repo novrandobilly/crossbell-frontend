@@ -120,8 +120,6 @@ const NavigationLinks = (props) => {
     );
   }
 
-  console.log(adminNotifications);
-
   return (
     <div className={classes.NavContainer}>
       <ul className={classes.NavLinks}>
@@ -367,6 +365,13 @@ const NavigationLinks = (props) => {
                     onClick={DropdownOrderAdminOperational}
                   >
                     <p>Job list</p>
+                  </NavLink>
+                  <NavLink
+                    to={`/ad/alphaomega/slot/reguler`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}
+                  >
+                    <p>Slot list</p>
                   </NavLink>
                 </div>
               </div>

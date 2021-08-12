@@ -19,7 +19,7 @@ const CompanyBriefDescriptions = (props) => {
     const getCompany = async () => {
       try {
         let res = await getOneCompany({ userId: companyid });
-        // console.log(res);
+        console.log(res);
 
         setLoadedCompany(res.company);
       } catch (err) {
