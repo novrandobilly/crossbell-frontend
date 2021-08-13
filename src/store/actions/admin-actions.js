@@ -467,3 +467,30 @@ export const getPromo = (payload) => {
     }
   };
 };
+
+export const getAllSlot = (payload) => {
+  return async (dispatch) => {
+    dispatch(getAdminStart());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/slot/reguler`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${payload}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getAdminSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAdminFail);
+    }
+  };
+};
