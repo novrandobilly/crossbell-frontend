@@ -1,7 +1,11 @@
-.Container {
+.Page {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.Container {
+  width: 80%;
 }
 
 .Container a {
@@ -10,15 +14,22 @@
 }
 
 .Header {
-  align-self: flex-start;
-  margin-left: 10%;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  align-items: center;
+}
+
+.FilterDiv {
+  display: flex;
+  align-items: center;
+  width: 50%;
 }
 
 .TableHolder {
   overflow-y: hidden;
   margin-bottom: 2rem;
   border-radius: 6px;
-  width: 80%;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
@@ -121,7 +132,7 @@
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   font-weight: bold;
-  width: 80%;
+  width: 70%;
 }
 
 .RevenueLabel {

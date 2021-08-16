@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
@@ -10,6 +11,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '../../../../shared/UI_Element/Input';
+import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 
 import classes from './SlotReguler.module.css';
 
@@ -43,14 +47,31 @@ const paginationReducer = (state, action) => {
 
 const SlotReg = (props) => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [displayData, setDisplayData] = useState();
+
   const [usedPrice, setUsedPrice] = useState([]);
   const [usedRevenue, setUsedRevenue] = useState(0);
+
   const [idlePrice, setIdlePrice] = useState([]);
   const [idleRevenue, setIdleRevenue] = useState(0);
+
+  const [expiredPrice, setExpiredPrice] = useState([]);
+  const [expiredRevenue, setExpiredRevenue] = useState(0);
   const emptyText = useRef('');
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
+
+  const [statusFilter, setStatusFilter] = useState('');
+  const [formState, onInputHandler] = useForm(
+    {
+      timeFilter: {
+        value: null,
+        isValid: true,
+      },
+    },
+    true
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,8 +96,31 @@ const SlotReg = (props) => {
   }, [getAllSlot, props.admin.token]);
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      let applicantArray = [...data];
+    let filterData = [...data];
+    if (formState?.inputs?.timeFilter?.value) {
+      filterData = filterData.filter((data) => {
+        return moment(data.slotPaymentDate).isSame(
+          moment(formState.inputs.timeFilter.value),
+          'month'
+        );
+      });
+    }
+
+    console.log(filterData);
+    if (statusFilter !== 'All' && statusFilter !== '') {
+      filterData = filterData.filter((data) => {
+        return data.status === statusFilter;
+      });
+    } else {
+      filterData = [...data];
+    }
+
+    setFilteredData(filterData);
+  }, [formState.inputs.timeFilter.value, statusFilter, data]);
+
+  useEffect(() => {
+    if (filteredData && filteredData.length > 0) {
+      let applicantArray = [...filteredData];
       let pageCount = Math.ceil(applicantArray.length / state.rowsPerPage);
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
@@ -86,7 +130,7 @@ const SlotReg = (props) => {
       );
       setDisplayData(applicantArray);
     }
-  }, [state.rowsPerPage, state.startIndex, data]);
+  }, [state.rowsPerPage, state.startIndex, filteredData]);
 
   useEffect(() => {
     if (data) {
@@ -107,6 +151,15 @@ const SlotReg = (props) => {
           return data.pricePerSlot;
         });
       setUsedPrice(arrUsedPrice);
+
+      let arrExpiredPrice = data
+        .filter((fil) => {
+          return fil.status === 'Expired';
+        })
+        .map((data) => {
+          return data.pricePerSlot;
+        });
+      setExpiredPrice(arrExpiredPrice);
     }
   }, [data]);
 
@@ -128,7 +181,16 @@ const SlotReg = (props) => {
       });
       setUsedRevenue(usedRev);
     }
-  }, [idlePrice, usedPrice]);
+
+    if (expiredPrice) {
+      let expiredRev = 0;
+      expiredPrice.map((data) => {
+        expiredRev = expiredRev + data;
+        return expiredRev;
+      });
+      setExpiredRevenue(expiredRev);
+    }
+  }, [idlePrice, expiredPrice, usedPrice]);
 
   //================= Pagination ===========================
 
@@ -151,12 +213,15 @@ const SlotReg = (props) => {
     });
   };
 
+  const handleChange = (event) => {
+    setStatusFilter(event.target.value);
+  };
+
   let content = <SpinnerCircle />;
 
   if (!props.isLoading && data && displayData) {
     content = (
       <div className={classes.Container}>
-        <h1 className={classes.Header}>Slot Reguler</h1>
         <div className={classes.TableHolder}>
           <table className={classes.Table}>
             <thead className={classes.RowField}>
@@ -206,47 +271,6 @@ const SlotReg = (props) => {
             </tbody>
           </table>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            width: '100%',
-          }}
-        >
-          <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
-            </Select>
-            <FormHelperText>Rows</FormHelperText>
-          </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
-        </div>
-
-        <div className={classes.RevenueContainer}>
-          <div className={classes.RevenueLabel}>
-            <div className={classes.Label}>Revenue Used</div>
-            <div className={classes.Label}>Revenue Idle</div>
-          </div>
-          <div className={classes.RevenueNumber}>
-            <div className={classes.Label}>
-              Rp. {idleRevenue.toLocaleString()},-
-            </div>
-            <div className={classes.Label}>
-              Rp. {usedRevenue.toLocaleString()},-
-            </div>
-          </div>
-        </div>
       </div>
     );
   }
@@ -255,7 +279,94 @@ const SlotReg = (props) => {
     content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
-  return <div>{content}</div>;
+  return (
+    <div className={classes.Page}>
+      {' '}
+      <div className={classes.Header}>
+        <h1 className={classes.PageTitle}>Slot Reguler</h1>
+
+        <div className={classes.FilterDiv}>
+          <Input
+            inputType='customdate'
+            id='timeFilter'
+            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+            onInputHandler={onInputHandler}
+            views={['year', 'month']}
+            maxDate={moment()}
+            initIsValid={true}
+            format='MM/yyyy'
+            label='Filter Waktu'
+            style={{ width: '50%' }}
+          />
+
+          <FormControl
+            style={{
+              width: '50%',
+              textAlign: 'left',
+            }}
+          >
+            <InputLabel id='statusFilter'>Filter Status</InputLabel>
+            <Select
+              labelId='statusFilter'
+              id='statusFilter'
+              value={statusFilter}
+              onChange={handleChange}
+            >
+              <MenuItem value='All'>Semua Data</MenuItem>
+              <MenuItem value='Idle'>Belum Terpakai</MenuItem>
+              <MenuItem value='Used'>Terpakai</MenuItem>
+              <MenuItem value='Expired'>Expired</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+      </div>
+      {content}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          width: '100%',
+        }}
+      >
+        <FormControl style={{ width: '4rem' }}>
+          <Select
+            labelId='rowPerPage'
+            id='rowPerPageSelect'
+            value={state.rowsPerPage}
+            onChange={rowsHandler}
+          >
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+          </Select>
+          <FormHelperText>Rows</FormHelperText>
+        </FormControl>
+        <Pagination
+          count={state.pageCount}
+          page={state.pageNumber}
+          onChange={pageChangeHandler}
+        />
+      </div>
+      <div className={classes.RevenueContainer}>
+        <div className={classes.RevenueLabel}>
+          <div className={classes.Label}>Revenue Used</div>
+          <div className={classes.Label}>Revenue Idle</div>
+          <div className={classes.Label}>Revenue Expired</div>
+        </div>
+        <div className={classes.RevenueNumber}>
+          <div className={classes.Label}>
+            Rp. {idleRevenue.toLocaleString()},-
+          </div>
+          <div className={classes.Label}>
+            Rp. {usedRevenue.toLocaleString()},-
+          </div>
+          <div className={classes.Label}>
+            Rp. {expiredRevenue.toLocaleString()},-
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
