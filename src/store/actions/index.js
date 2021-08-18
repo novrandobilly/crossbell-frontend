@@ -36,6 +36,7 @@ export {
   updateAdminIntro,
   updatePromo,
   getPromo,
+  getAllSlot,
 } from './admin-actions';
 
 export { createFeed, getFeedback, deleteFeed } from './feedback-actions';

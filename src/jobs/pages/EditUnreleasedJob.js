@@ -243,8 +243,7 @@ const EditUnreleasedJob = (props) => {
       if (formState.inputs.slotAllocation.value % 2 !== 0) {
         throw new Error('Slot allocation harus genap');
       }
-      const res = await props.releaseJob(jobData, authData);
-      console.log(res);
+      await props.releaseJob(jobData, authData);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
       console.log(err);
@@ -312,8 +311,7 @@ const EditUnreleasedJob = (props) => {
     };
 
     try {
-      const res = await props.editJobDraft(jobData, authData);
-      console.log(res);
+      await props.editJobDraft(jobData, authData);
       props.history.push(`/co/order/reguler`);
     } catch (err) {
       console.log(err);
@@ -415,7 +413,6 @@ const EditUnreleasedJob = (props) => {
   const addRequirement = (e) => {
     e.preventDefault();
     setRequirement((req) => [...req, 'req']);
-    // onInputHandler(`requirement_${requirement.length}`, '', true);
   };
 
   const onRequirementsUpdate = (event, reqIndex) => {
@@ -793,17 +790,15 @@ const EditUnreleasedJob = (props) => {
                 onInputHandler={onInputHandler}
                 type='number'
                 min={0}
-                max={parseInt(maxSlot) * 2 || 0}
-                step='2'
+                max={parseInt(maxSlot) || 0}
+                step='1'
                 initValue={loadedJob.slot || ''}
                 initIsValid={loadedJob.slot}
                 defaultValue={0}
                 onKeyUp={checkMyInput()}
                 helperText={
                   formState.inputs.slotAllocation.value < 0
-                    ? 'Input slot minimal 2'
-                    : formState.inputs.slotAllocation.value % 2 !== 0
-                    ? 'Input slot harus genap'
+                    ? 'Input slot minimal 1'
                     : 'Slot wajib diisi'
                 }
               />
@@ -815,12 +810,11 @@ const EditUnreleasedJob = (props) => {
                 Sisa slot:{' '}
                 {formState.inputs.slotAllocation.value &&
                 formState.inputs.slotAllocation.value > 0 &&
-                formState.inputs.slotAllocation.value % 2 === 0 &&
                 parseInt(maxSlot) >
-                  parseInt(formState.inputs.slotAllocation.value) / 2
+                  parseInt(formState.inputs.slotAllocation.value)
                   ? (
                       parseInt(maxSlot) -
-                      parseInt(formState.inputs.slotAllocation.value) / 2
+                      parseInt(formState.inputs.slotAllocation.value)
                     ).toString()
                   : maxSlot}
               </h3>
@@ -857,7 +851,7 @@ const EditUnreleasedJob = (props) => {
             save draft
           </Button>
 
-          {formState.inputs.slotAllocation.value <= maxSlot * 2 && (
+          {formState.inputs.slotAllocation.value <= maxSlot && (
             <Button
               variant='contained'
               color='primary'

@@ -107,8 +107,6 @@ const NewJob = (props) => {
     false
   );
 
-  console.log(formState);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -178,8 +176,7 @@ const NewJob = (props) => {
       userId: props.auth.userId,
     };
     try {
-      const res = await props.createJob(jobData, authData);
-      console.log(res);
+      await props.createJob(jobData, authData);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
       console.log(err);
@@ -700,10 +697,10 @@ const NewJob = (props) => {
               onInputHandler={onInputHandler}
               type='number'
               min={0}
-              max={parseInt(maxSlot) * 2 || 0}
-              step='2'
+              max={parseInt(maxSlot) || 0}
+              step='1'
             />
-            <span>minggu</span>
+            <span>bulan</span>
           </div>
           <div className={classes.RemainingSlot}>
             <h3>
