@@ -14,7 +14,9 @@ const Footer = () => {
         <FooterRoute />
         <Address />
       </div>
-      <div className={classes.Copyright}>Copyright PT Crossbell 2020</div>
+      <div className={classes.Copyright}>
+        © 2021 Crossbell. All Rights Reserved.
+      </div>
     </div>
   );
 };

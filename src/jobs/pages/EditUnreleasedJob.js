@@ -432,6 +432,8 @@ const EditUnreleasedJob = (props) => {
 
   let formContent = <Spinner />;
 
+  console.log(jobExperience);
+
   if (!props.job.isLoading && loadedJob) {
     formContent = (
       <div className={classes.ContainerFlex}>
@@ -536,7 +538,7 @@ const EditUnreleasedJob = (props) => {
                   <MenuItem value='' style={{ fontSize: '0.9rem' }}>
                     <em>Pilih</em>
                   </MenuItem>
-                  <MenuItem id={0} value='>2' style={{ fontSize: '0.9rem' }}>
+                  <MenuItem id={0} value='<2' style={{ fontSize: '0.9rem' }}>
                     Kurang dari 2 tahun
                   </MenuItem>
                   <MenuItem id={0} value='2-5' style={{ fontSize: '0.9rem' }}>
@@ -555,7 +557,7 @@ const EditUnreleasedJob = (props) => {
             <div className={classes.ContentWrap}>
               <FormControl
                 className={classes.FormControl}
-                style={{ marginTop: '0' }}
+                // style={{ marginTop: '0' }}
               >
                 <InputLabel id='employmentLabel' style={{ fontSize: '1rem' }}>
                   Status karyawan*
@@ -637,7 +639,7 @@ const EditUnreleasedJob = (props) => {
                 }}
                 renderOption={(option) => option.field}
                 freeSolo
-                style={{ margin: '0', width: '100%' }}
+                style={{ width: '100%' }}
                 renderInput={(params) => (
                   <TextField
                     {...params}

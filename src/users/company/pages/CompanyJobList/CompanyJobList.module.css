@@ -146,10 +146,6 @@
 }
 
 @media (max-width: 992px) {
-  .Container {
-    padding: 0 24px;
-  }
-
   .CardContainer {
     box-sizing: border-box;
     width: 100%;
@@ -163,6 +159,28 @@
 @media (max-width: 768px) {
   .CardHolder {
     width: 50%;
+  }
+
+  .CardContainer {
+    border-radius: 0;
+  }
+
+  .BorderLine {
+    margin: 30px 8px 8px 8px;
+    padding: 0 8px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+  }
+
+  .EmptyText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 568px) {
+  .Container {
+    padding-bottom: 0;
   }
 }
 

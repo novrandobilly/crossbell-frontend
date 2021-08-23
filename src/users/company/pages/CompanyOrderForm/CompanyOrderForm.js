@@ -180,7 +180,7 @@ const CompanyOrderForm = (props) => {
         <form className={classes.FormContainer} onSubmit={onSubmitHandler}>
           <div className={classes.InputAmount} style={{ marginTop: '20px' }}>
             <p className={classes.SlotEqual}>
-              *1 Slot = 2 minggu waktu tayang iklan
+              *1 Slot = 30 hari waktu tayang iklan
             </p>
           </div>
           <div className={classes.InputAmount}>

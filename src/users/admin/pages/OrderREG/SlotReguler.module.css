@@ -5,7 +5,15 @@
 }
 
 .Container {
-  width: 80%;
+  background-color: white;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  min-height: 200px;
+  min-width: 70%;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  margin-bottom: 2rem;
 }
 
 .Container a {
@@ -27,18 +35,13 @@
 }
 
 .TableHolder {
-  overflow-y: hidden;
-  margin-bottom: 2rem;
+  min-width: 100%;
   border-radius: 6px;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  overflow-y: hidden;
 }
 
 .Table {
   border-collapse: collapse;
-  box-shadow: 0 0 15px rgb(0, 0, 0, 0.2);
-  background-color: white;
-  width: 100%;
 }
 
 .Table th {
@@ -115,11 +118,7 @@
 .EmptyText {
   font-size: 1.5rem;
   width: 100%;
-  text-align: center;
-  /* font-family: Arial, Helvetica, sans-serif; */
   margin: 0;
-  position: absolute;
-  top: 40%;
   font-weight: bold;
 }
 

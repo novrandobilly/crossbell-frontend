@@ -255,12 +255,6 @@
   margin-bottom: 8px;
 }
 
-@media (max-width: 1200px) {
-  .Avatar {
-    height: 11rem;
-  }
-}
-
 @media (max-width: 992px) {
   .Wraper {
     flex-direction: column;
@@ -279,12 +273,11 @@
 
   .ApplicantContainer {
     flex-direction: row;
-    width: 100%;
   }
 
   .ContainerLeft {
     flex-direction: row;
-    width: 90%;
+    width: 100%;
   }
 
   .ContainerLeftDivider {
@@ -295,12 +288,17 @@
     width: 100%;
   }
 
+  .ContainerLeft a {
+    width: auto;
+    height: auto;
+  }
+
   .Avatar {
-    width: 180px;
-    height: 180px;
-    margin-right: 32px;
+    width: 192px;
+    min-height: 192px;
+    height: auto;
+    margin-right: 16px;
     border: solid 1px rgba(0, 0, 0, 0.2);
-    margin-left: 42px;
   }
 
   .ContainerRight {
@@ -324,7 +322,6 @@
 
   .ApplicantContainer {
     flex-direction: column;
-    width: 100%;
   }
 
   .ContainerLeft {
@@ -337,8 +334,7 @@
   }
 
   .Avatar {
-    width: 180px;
-    height: 180px;
+    margin-right: 0;
   }
 
   .ContainerLeftDivider {
