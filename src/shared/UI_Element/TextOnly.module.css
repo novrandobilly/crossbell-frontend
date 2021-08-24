@@ -54,16 +54,12 @@
   .Wraper {
     margin-bottom: 16px;
   }
-  /*
-  .Container {
-    padding: 16px;
-  }
-
-  .Header {
-    margin-top: 0;
-  }
 
   .Label {
-    text-align: left;
-  } */
+    font-size: 1rem;
+  }
+
+  .Description {
+    font-size: 0.8rem;
+  }
 }

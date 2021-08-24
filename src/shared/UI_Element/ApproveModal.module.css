@@ -3,12 +3,13 @@
   position: fixed;
   top: 10vh;
   left: 10%;
-  width: 80%;
+  width: 100%;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
   padding: 0 16px;
 }
+
 .Header {
   text-align: left;
   font-size: 1.4rem;

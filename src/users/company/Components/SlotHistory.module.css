@@ -95,3 +95,29 @@
   width: 12%;
   font-size: 0.8rem;
 }
+
+@media (max-width: 420px) {
+  .Table {
+    height: auto;
+  }
+
+  .TableFilter {
+    width: 100%;
+  }
+
+  .HeaderMain {
+    width: 34%;
+  }
+
+  .HeaderSlot {
+    width: 22%;
+  }
+
+  .HeaderApplied {
+    width: 22%;
+  }
+
+  .HeaderTime {
+    width: 22%;
+  }
+}

@@ -1,6 +1,5 @@
 .Container {
-  margin-top: 2rem;
-  /* font-family: 'Roboto'; */
+  margin-top: 32px;
 }
 
 .OrderCard {
@@ -54,5 +53,28 @@
 @media (max-width: 768px) {
   .OrderCard {
     margin-right: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Container {
+    margin-top: 16px;
+  }
+
+  .CardHeader {
+    font-weight: normal;
+  }
+
+  .Title {
+    font-size: 1.4rem;
+  }
+
+  .Price {
+    font-size: 1rem;
+  }
+
+  .Slot {
+    font-size: 0.9rem;
+    color: rgb(255, 255, 255);
   }
 }

@@ -33,5 +33,9 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 576px) {
+  .Label {
+    font-size: 1rem;
+    font-weight: bold;
+  }
 }

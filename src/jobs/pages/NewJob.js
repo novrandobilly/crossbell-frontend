@@ -625,7 +625,7 @@ const NewJob = (props) => {
 
         <div className={classes.ContentFull}>
           <div className={classes.SpecialReqDiv}>
-            <div>
+            <div className={classes.SpecialReqHeader}>
               <p className={classes.SpecialRequirement}>Persyaratan Khusus</p>
               <p className={classes.SpecialTips}>
                 skill teknis, karakter, atau persyaratan khusus lainnya (maks 5)

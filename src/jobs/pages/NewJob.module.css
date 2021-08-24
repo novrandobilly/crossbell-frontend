@@ -290,6 +290,24 @@
   .AdditionalContent > * {
     width: 100%;
   }
+
+  .RemainingSlot {
+    width: 60%;
+  }
+
+  .SlotInput {
+    width: 40%;
+  }
+
+  .SpecialReqHeader {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ContentWrap > * {
+    margin: 8px 0;
+  }
 }
 
 @media (max-width: 440px) {

@@ -27,29 +27,28 @@
 .Title {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: -0.5rem;
-  margin-top: 0rem;
+  margin: 4px 0;
 }
 
 .SubTitle {
   font-size: 1rem;
-  margin-bottom: -0.8rem;
+  margin: 4px 0;
 }
 
 .PeriodSegment {
   display: flex;
   flex-direction: row;
   color: rgba(0, 0, 0, 0.5);
-  margin-bottom: -1rem;
+  margin: 4px 0;
 }
 
 .Period {
+  margin: 0;
   font-size: 1rem;
 }
 
 .Space {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin: 0 8px;
 }
 
 .Description {
@@ -71,6 +70,14 @@
 
   .Square {
     display: none;
+  }
+
+  .Title {
+    font-size: 1rem;
+  }
+
+  .SubTitle {
+    font-size: 0.9rem;
   }
 
   .Description {
