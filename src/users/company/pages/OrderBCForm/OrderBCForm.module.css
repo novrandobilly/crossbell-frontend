@@ -5,7 +5,7 @@
 }
 
 .ContainerFlex {
-  margin-top: 2rem;
+  margin: 32px 0;
   width: 45rem;
   height: auto;
   display: flex;
@@ -244,9 +244,13 @@
 
 @media (max-width: 768px) {
   .ContainerFlex {
-    margin-top: 0;
+    margin: 0;
     width: 100%;
     border-radius: 0;
+  }
+
+  .Question {
+    width: auto;
   }
 }
 
@@ -302,6 +306,10 @@
   .PriceHolder {
     width: 100%;
     order: 1;
+  }
+
+  .Question {
+    width: auto;
   }
 }
 

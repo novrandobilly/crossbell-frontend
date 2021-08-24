@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer, useRef } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -58,7 +58,6 @@ const SlotReg = (props) => {
 
   const [expiredPrice, setExpiredPrice] = useState([]);
   const [expiredRevenue, setExpiredRevenue] = useState(0);
-  const emptyText = useRef('');
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -87,26 +86,12 @@ const SlotReg = (props) => {
           (a, b) => moment(a.slotExpirationDate) - moment(b.slotExpirationDate)
         );
         setData(sort);
-        if (res.message) {
-          emptyText.current =
-            'Belum ada perusahaan yang membuat pesanan untuk saat ini';
-        }
       });
     }
   }, [getAllSlot, props.admin.token]);
 
   useEffect(() => {
     let filterData = [...data];
-    if (formState?.inputs?.timeFilter?.value) {
-      filterData = filterData.filter((data) => {
-        return moment(data.slotPaymentDate).isSame(
-          moment(formState.inputs.timeFilter.value),
-          'month'
-        );
-      });
-    }
-
-    console.log(filterData);
     if (statusFilter !== 'All' && statusFilter !== '') {
       filterData = filterData.filter((data) => {
         return data.status === statusFilter;
@@ -115,7 +100,17 @@ const SlotReg = (props) => {
       filterData = [...data];
     }
 
-    setFilteredData(filterData);
+    let statusData = [...filterData];
+    if (formState?.inputs?.timeFilter?.value) {
+      statusData = statusData.filter((data) => {
+        return moment(data.slotPaymentDate).isSame(
+          moment(formState.inputs.timeFilter.value),
+          'month'
+        );
+      });
+    }
+
+    setFilteredData(statusData);
   }, [formState.inputs.timeFilter.value, statusFilter, data]);
 
   useEffect(() => {
@@ -133,8 +128,8 @@ const SlotReg = (props) => {
   }, [state.rowsPerPage, state.startIndex, filteredData]);
 
   useEffect(() => {
-    if (data) {
-      let arrIdlePrice = data
+    if (filteredData) {
+      let arrIdlePrice = filteredData
         .filter((fil) => {
           return fil.status === 'Idle';
         })
@@ -143,7 +138,7 @@ const SlotReg = (props) => {
         });
       setIdlePrice(arrIdlePrice);
 
-      let arrUsedPrice = data
+      let arrUsedPrice = filteredData
         .filter((fil) => {
           return fil.status === 'Used';
         })
@@ -152,7 +147,7 @@ const SlotReg = (props) => {
         });
       setUsedPrice(arrUsedPrice);
 
-      let arrExpiredPrice = data
+      let arrExpiredPrice = filteredData
         .filter((fil) => {
           return fil.status === 'Expired';
         })
@@ -161,7 +156,7 @@ const SlotReg = (props) => {
         });
       setExpiredPrice(arrExpiredPrice);
     }
-  }, [data]);
+  }, [filteredData]);
 
   useEffect(() => {
     if (idlePrice) {
@@ -221,62 +216,60 @@ const SlotReg = (props) => {
 
   if (!props.isLoading && data && displayData) {
     content = (
-      <div className={classes.Container}>
-        <div className={classes.TableHolder}>
-          <table className={classes.Table}>
-            <thead className={classes.RowField}>
-              <tr>
-                <th>No</th>
-                <th>Nama Paket</th>
-                <th>Perusahaan</th>
-                <th>Harga</th>
-                <th>Status</th>
-                <th>Job Id</th>
-                <th>Tanggal Pembayaran</th>
-                <th>Tanggal Expired</th>
-                <th>Tanggal Digunakan</th>
+      <div className={classes.TableHolder}>
+        <table className={classes.Table}>
+          <thead className={classes.RowField}>
+            <tr>
+              <th>No</th>
+              <th>Nama Paket</th>
+              <th>Perusahaan</th>
+              <th>Harga</th>
+              <th>Status</th>
+              <th>Job Id</th>
+              <th>Tanggal Pembayaran</th>
+              <th>Tanggal Expired</th>
+              <th>Tanggal Digunakan</th>
+            </tr>
+          </thead>
+
+          <tbody className={classes.ColumnField}>
+            {displayData.map((slot, i) => (
+              <tr key={slot._id}>
+                <th> {i + 1}</th>
+                <th>{slot.package}</th>
+                <th>
+                  <Link
+                    to={`/co/${slot.companyId._id}/profile`}
+                    style={{ color: 'black', textDecoration: 'none' }}
+                  >
+                    {slot.companyId.companyName}
+                  </Link>
+                </th>
+                <th>Rp.{slot.pricePerSlot.toLocaleString()},-</th>
+
+                <th>{slot.status}</th>
+                <th>{slot.jobId ? slot.jobId : 'Belum terpakai'}</th>
+
+                <th>{moment(slot.slotPaymentDate).format('D MMM YYYY')}</th>
+                <th>{moment(slot.slotExpirationDate).format('D MMM YYYY')}</th>
+
+                <th>
+                  {slot.slotUsedDate
+                    ? moment(slot.usedDate).format('D MMM YYYY')
+                    : 'Kosong'}
+                </th>
               </tr>
-            </thead>
-
-            <tbody className={classes.ColumnField}>
-              {displayData.map((slot, i) => (
-                <tr key={slot._id}>
-                  <th> {i + 1}</th>
-                  <th>{slot.package}</th>
-                  <th>
-                    <Link
-                      to={`/co/${slot.companyId._id}/profile`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {slot.companyId.companyName}
-                    </Link>
-                  </th>
-                  <th>Rp.{slot.pricePerSlot.toLocaleString()},-</th>
-
-                  <th>{slot.status}</th>
-                  <th>{slot.jobId ? slot.jobId : 'Belum terpakai'}</th>
-
-                  <th>{moment(slot.slotPaymentDate).format('D MMM YYYY')}</th>
-                  <th>
-                    {moment(slot.slotExpirationDate).format('D MMM YYYY')}
-                  </th>
-
-                  <th>
-                    {slot.slotUsedDate
-                      ? moment(slot.usedDate).format('D MMM YYYY')
-                      : 'Kosong'}
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
 
-  if (!props.isLoading && emptyText.current) {
-    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
+  if (!props.isLoading && filteredData.length < 1) {
+    content = (
+      <p className={classes.EmptyText}>TIdak ditemukan data sesuai filter</p>
+    );
   }
 
   return (
@@ -320,7 +313,7 @@ const SlotReg = (props) => {
           </FormControl>
         </div>
       </div>
-      {content}
+      <div className={classes.Container}>{content}</div>
       <div
         style={{
           display: 'flex',
@@ -355,10 +348,10 @@ const SlotReg = (props) => {
         </div>
         <div className={classes.RevenueNumber}>
           <div className={classes.Label}>
-            Rp. {idleRevenue.toLocaleString()},-
+            Rp. {usedRevenue.toLocaleString()},-
           </div>
           <div className={classes.Label}>
-            Rp. {usedRevenue.toLocaleString()},-
+            Rp. {idleRevenue.toLocaleString()},-
           </div>
           <div className={classes.Label}>
             Rp. {expiredRevenue.toLocaleString()},-

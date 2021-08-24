@@ -3,6 +3,7 @@
   flex-direction: column;
   margin: auto;
   width: 80%;
+  padding-bottom: 0.83rem;
 }
 
 .Container a {
@@ -78,5 +79,18 @@
 
   .Container {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .Wraper {
+    padding: 0;
+  }
+  .Title {
+    padding: 0 8px;
+  }
+  .TableHolder {
+    margin-bottom: 1rem;
+    border-radius: 0;
   }
 }

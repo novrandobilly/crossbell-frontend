@@ -24,8 +24,9 @@
 }
 
 @media (max-width: 768px) {
-  .SearchContainer {
-    width: 60%;
+  .SearchForm {
+    width: 100%;
+    display: flex;
   }
 }
 

@@ -151,7 +151,9 @@ const CompanyOrderList = (props) => {
   if (!displayIsLoading && displayData) {
     content = (
       <div className={classes.Container}>
-        <h2>Riwayat pesanan</h2>
+        <div className={classes.Title}>
+          <h2>Riwayat pesanan</h2>
+        </div>
         <div className={classes.TableHolder}>
           <table className={classes.Table}>
             <thead className={classes.RowField}>

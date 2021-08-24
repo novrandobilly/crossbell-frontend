@@ -12,9 +12,11 @@ import Input from '../UI_Element/Input';
 import { VALIDATOR_MIN } from '../utils/validator';
 
 import classes from './ApproveModal.module.css';
+import ModalSpinner from './Spinner/ModalSpinner';
 
 const ModalOverlay = (props) => {
   const [file, setFile] = useState();
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -50,7 +52,7 @@ const ModalOverlay = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
+    setSubmitLoading(true);
     if (!formState.formIsValid) {
       throw new Error('Approve order can not be done at the moment');
     }
@@ -71,8 +73,10 @@ const ModalOverlay = (props) => {
       }
 
       props.approveDataChange();
+      setSubmitLoading(false);
     } catch (err) {
       console.log(err);
+      setSubmitLoading(false);
     }
   };
 
@@ -85,114 +89,117 @@ const ModalOverlay = (props) => {
         <p> {props.children}</p>
       </header>
 
-      <form
-      // onSubmit={props.OnSubmit ? props.onSubmit : (e) => e.preventDefault()}
-      >
-        <div className={`${classes.Content} ${props.ContentClass}`}>
-          <div className={classes.ContentDiv}>
-            {' '}
-            <TextField
-              id='date'
-              label='Tanggal Transfer Masuk (dd/mm/yyyy)*'
-              type='date'
-              style={{ width: '100%' }}
-              className={classes.textField}
-              onChange={(e) => onInputHandler('date', e.target.value, true)}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </div>
-
-          <div className={classes.ContentDiv}>
-            {' '}
-            <TextField
-              id='time'
-              label='Jam Transfer Masuk*'
-              type='time'
-              defaultValue='00:00'
-              className={classes.textField}
-              style={{ width: '100%' }}
-              onChange={(e) => onInputHandler('time', e.target.value, true)}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300,
-              }}
-            />
-          </div>
-
-          <div className={classes.ContentDiv}>
-            <Input
-              inputType='input'
-              id='nominal'
-              validatorMethod={[VALIDATOR_MIN(0)]}
-              onInputHandler={onInputHandler}
-              error={false}
-              initIsValid={true}
-              type='number'
-              min={0}
-              step='100000'
-              label='Nominal Pembayaran*'
-              helperText='Jumlah transfer wajib diisi'
-              InputLabelProps={{ shrink: true }}
-            />
-          </div>
-
-          <div className={classes.ContentDiv}>
-            {file && (
-              <div
-                className={classes.File}
-                style={{
-                  backgroundImage: `url('${file}')`,
+      {submitLoading ? (
+        <ModalSpinner />
+      ) : (
+        <form>
+          <div className={`${classes.Content} ${props.ContentClass}`}>
+            <div className={classes.ContentDiv}>
+              {' '}
+              <TextField
+                id='date'
+                label='Tanggal Transfer Masuk (dd/mm/yyyy)*'
+                type='date'
+                style={{ width: '100%' }}
+                className={classes.textField}
+                onChange={(e) => onInputHandler('date', e.target.value, true)}
+                InputLabelProps={{
+                  shrink: true,
                 }}
               />
-            )}
+            </div>
 
-            <label className={classes.InputButton}>
-              <input
-                type='file'
-                name='paymentFile'
-                id='paymentFile'
-                onChange={onUploadHandler}
+            <div className={classes.ContentDiv}>
+              {' '}
+              <TextField
+                id='time'
+                label='Jam Transfer Masuk*'
+                type='time'
+                defaultValue='00:00'
+                className={classes.textField}
                 style={{ width: '100%' }}
-                accept='.jpg, .jpeg, .png'
+                onChange={(e) => onInputHandler('time', e.target.value, true)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300,
+                }}
               />
-              <span className={classes.InputButtonText}>
-                {' '}
-                Upload Bukti Pembayaran{' '}
-              </span>
-            </label>
-          </div>
-        </div>
+            </div>
 
-        <footer className={`${classes.Footer} ${props.FooterClass}`}>
-          <div className={`${classes.FooterButton}`}>
-            <Button
-              variant='contained'
-              disableElevation
-              style={{ marginRight: '16px', padding: '0' }}
-              onClick={props.onCancel}
-            >
-              tidak
-            </Button>
+            <div className={classes.ContentDiv}>
+              <Input
+                inputType='input'
+                id='nominal'
+                validatorMethod={[VALIDATOR_MIN(0)]}
+                onInputHandler={onInputHandler}
+                error={false}
+                initIsValid={true}
+                type='number'
+                min={0}
+                step='100000'
+                label='Nominal Pembayaran*'
+                helperText='Jumlah transfer wajib diisi'
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
 
-            <Button
-              variant='contained'
-              color='primary'
-              disableElevation
-              onClick={onSubmitHandler}
-              style={{ padding: '0' }}
-              disabled={!formState.formIsValid}
-            >
-              ya
-            </Button>
+            <div className={classes.ContentDiv}>
+              {file && (
+                <div
+                  className={classes.File}
+                  style={{
+                    backgroundImage: `url('${file}')`,
+                  }}
+                />
+              )}
+
+              <label className={classes.InputButton}>
+                <input
+                  type='file'
+                  name='paymentFile'
+                  id='paymentFile'
+                  onChange={onUploadHandler}
+                  style={{ width: '100%' }}
+                  accept='.jpg, .jpeg, .png'
+                />
+                <span className={classes.InputButtonText}>
+                  {' '}
+                  Upload Bukti Pembayaran{' '}
+                </span>
+              </label>
+            </div>
           </div>
-        </footer>
-      </form>
+
+          <footer className={`${classes.Footer} ${props.FooterClass}`}>
+            <div className={`${classes.FooterButton}`}>
+              <Button
+                variant='contained'
+                disableElevation
+                style={{ marginRight: '16px', padding: '0' }}
+                onClick={props.onCancel}
+              >
+                tidak
+              </Button>
+
+              <Button
+                variant='contained'
+                color='primary'
+                disableElevation
+                onClick={onSubmitHandler}
+                style={{ padding: '0' }}
+                disabled={!formState.formIsValid}
+              >
+                ya
+              </Button>
+            </div>
+          </footer>
+        </form>
+      )}
     </div>
   );
+
   return ReactDOM.createPortal(content, document.getElementById('modal-hook'));
 };
 

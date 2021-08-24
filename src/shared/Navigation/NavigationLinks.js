@@ -421,8 +421,15 @@ const NavigationLinks = (props) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/jobs-dashboard' activeClassName={classes.active}>
-            Explore Jobs
+          <NavLink
+            to={
+              props.auth.isLoggedIn && props.auth.isCompany
+                ? `/co/${props.auth.userId}/jobList`
+                : '/jobs-dashboard'
+            }
+            activeClassName={classes.active}
+          >
+            Dasboard Perusahaan
           </NavLink>
         </li>
 
@@ -430,10 +437,10 @@ const NavigationLinks = (props) => {
           <React.Fragment>
             <li>
               <NavLink
-                to={`/co/${props.auth.userId}`}
+                to={`/co/${props.auth.userId}/profile`}
                 activeClassName={classes.active}
               >
-                My Company Profile
+                Perusahaan Anda
               </NavLink>
             </li>
             <li>

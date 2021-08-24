@@ -53,7 +53,6 @@
 .SlotEqual {
   width: 100%;
   margin: 0 0 16px 0;
-  /* text-align: start; */
   font-weight: 400;
   font-size: 0.8rem;
   color: red;
@@ -127,22 +126,40 @@
 @media (max-width: 768px) {
   .Container {
     padding-bottom: 32px;
+    margin: 0;
   }
+
   .PackageCard {
     width: 50%;
   }
 }
 
 @media (max-width: 576px) {
+  .Container {
+    padding-bottom: 0;
+  }
+
   .PackageList {
     justify-content: center;
   }
 
-  .PackageCard {
-    width: 80%;
-  }
-
   .FormContainer {
     line-height: 1.5rem;
+    border-radius: 0;
+  }
+
+  .Question {
+    margin: 0;
+    width: auto;
+    line-height: 1.2rem;
+  }
+
+  .Box {
+    width: 24px;
+    height: 24px;
+  }
+
+  .PackageCard {
+    padding: 0 8px;
   }
 }
