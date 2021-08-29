@@ -429,9 +429,20 @@ const NavigationLinks = (props) => {
             }
             activeClassName={classes.active}
           >
-            Dasboard Perusahaan
+            Dasboard Pekerjaan
           </NavLink>
         </li>
+
+        {props?.auth?.isLoggedIn && !props?.auth?.isCompany && (
+          <li>
+            <NavLink
+              to={`/ap/${props.auth.userId}/appliedjobs`}
+              activeClassName={classes.active}
+            >
+              Pekerjaan Dilamar
+            </NavLink>
+          </li>
+        )}
 
         {props.auth.isLoggedIn && props.auth.isCompany && (
           <React.Fragment>
@@ -445,18 +456,18 @@ const NavigationLinks = (props) => {
             </li>
             <li>
               <NavLink to={`/jobs/new`} activeClassName={classes.active}>
-                Post New Job
+                Pasan Iklan
               </NavLink>
             </li>
 
-            <div className={classes.Divider}> Post Order </div>
+            <div className={classes.Divider}> Pesan </div>
 
             <li>
               <NavLink
                 to={`/co/order/reguler`}
                 activeClassName={classes.active}
               >
-                Order Job Slot
+                Pesan Slot Iklan
               </NavLink>
             </li>
             <li>
@@ -464,31 +475,21 @@ const NavigationLinks = (props) => {
                 to={`/co/order/candidate`}
                 activeClassName={classes.active}
               >
-                Order Bulk Candidate
+                <em>Pesan Bulk Candidates</em>
               </NavLink>
             </li>
             <li>
               <NavLink to={`/co/order/es`} activeClassName={classes.active}>
-                Order Executive Search
+                Pesan Kandidat Eksekutif
               </NavLink>
             </li>
-
-            <div className={classes.Divider}> My List </div>
 
             <li>
               <NavLink
                 to={`/co/${props.auth.userId}/listOrder`}
                 activeClassName={classes.active}
               >
-                Order List
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={`/co/${props.auth.userId}/jobList`}
-                activeClassName={classes.active}
-              >
-                Job list
+                Riwayat Pesanan
               </NavLink>
             </li>
           </React.Fragment>
@@ -573,8 +574,6 @@ const NavigationLinks = (props) => {
                 Order Executive Search
               </NavLink>
             </li>
-
-            <div className={classes.Divider}>List</div>
             <li>
               <NavLink
                 to={`/ad/alphaomega/applicants`}
@@ -597,6 +596,14 @@ const NavigationLinks = (props) => {
                 activeClassName={classes.active}
               >
                 Job list
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`/ad/alphaomega/slot/reguler`}
+                activeClassName={classes.active}
+              >
+                Slot list
               </NavLink>
             </li>
           </React.Fragment>

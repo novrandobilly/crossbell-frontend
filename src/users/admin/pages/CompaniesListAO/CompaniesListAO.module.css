@@ -1,7 +1,6 @@
 .FlexContainer {
   display: flex;
   flex-direction: column;
-  /* font-family: sans-serif; */
 }
 
 .Container {
@@ -9,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 16px 0;
 }
 
 .HeaderContainer {
@@ -23,7 +23,7 @@
 
 .TableHolder {
   overflow-y: hidden;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-radius: 6px;
   width: 80%;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
@@ -38,7 +38,7 @@
 }
 
 .Table th {
-  padding: 1rem;
+  padding: 4px 8px;
   text-align: left;
   font-weight: normal;
 }
@@ -120,11 +120,12 @@
 
 @media (max-width: 992px) {
   .Header {
-    margin-left: 5%;
+    font-size: 1.5rem;
   }
 
   .TableHolder {
     width: 90%;
+    margin-bottom: 16px;
   }
 }
 

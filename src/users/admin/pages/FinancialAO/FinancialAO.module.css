@@ -1,13 +1,14 @@
 .FlexContainer {
   display: flex;
   flex-direction: column;
-  /* font-family: sans-serif; */
-  margin-bottom: 16px;
+  align-items: center;
+  margin-bottom: 32px;
 }
 
 .Container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   align-self: center;
   width: 80%;
 }
@@ -17,6 +18,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 .Header {
@@ -35,6 +37,8 @@
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
+  width: 100%;
+  min-height: 362px;
 }
 
 .Table {
@@ -45,7 +49,7 @@
 }
 
 .Table th {
-  padding: 1rem;
+  padding: 2px 8px;
   text-align: left;
   font-weight: normal;
 }
@@ -66,14 +70,33 @@
   font-size: 0.85rem;
 }
 
-.RevenueContainer {
-  margin-top: 2rem;
+.Pagination {
   display: flex;
+  margin-top: 16px;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.RevenueContainer {
+  margin-top: 16px;
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #d7e2ff;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+.DetailsDiv {
+  display: flex;
+  margin-top: 8px;
+  justify-content: space-around;
+  border-top: 1px dashed rgba(0, 0, 0, 0.4);
+  padding-top: 4px;
+}
+
+.RevenueDiv {
+  display: flex;
   font-weight: bold;
 }
 
@@ -97,22 +120,33 @@
   align-items: flex-start;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .Container {
-    width: 100%;
+    width: 90%;
+  }
+
+  .Header {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .HeaderContainer {
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .DateFilter {
+    margin-bottom: 8px;
   }
 
   .TableHolder {
-    border-radius: 0;
+    border-radius: 4px;
   }
 
   .Table th {
     padding: 8px;
     text-align: left;
     font-weight: normal;
-  }
-
-  .RevenueContainer {
-    border-radius: 0;
   }
 }

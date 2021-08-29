@@ -71,6 +71,12 @@
   background-color: rgba(58, 81, 153, 1);
 }
 
+@media (max-width: 768px) {
+  .FooterRoute {
+    width: 80%;
+  }
+}
+
 @media (max-width: 576px) {
   .FooterRoute {
     width: 50%;

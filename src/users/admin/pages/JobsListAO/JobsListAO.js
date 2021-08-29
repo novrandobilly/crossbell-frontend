@@ -138,7 +138,7 @@ const JobsListAO = (props) => {
   };
 
   let content = <SpinnerCircle />;
-
+  console.log(displayData);
   if (!isLoading) {
     content = (
       <div className={classes.FlexContainer}>
@@ -196,10 +196,11 @@ const JobsListAO = (props) => {
                 <tr>
                   <th>No</th>
                   <th>Id</th>
-                  <th>Company</th>
-                  <th>JobTitle</th>
-                  <th>Location</th>
-                  <th>Date posted</th>
+                  <th>Perusahaan</th>
+                  <th>Judul</th>
+                  <th>Pelamar</th>
+                  <th>Lokasi</th>
+                  <th>Tanggal posting</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -228,6 +229,7 @@ const JobsListAO = (props) => {
                             </th>
                             <th>{job.companyId.companyName}</th>
                             <th>{job.jobTitle}</th>
+                            <th>{job.jobApplicants.length}</th>
                             <th>{job.placementLocation}</th>
                             <th
                               style={
@@ -304,6 +306,7 @@ const JobsListAO = (props) => {
                           </th>
                           <th>{job.companyId.companyName}</th>
                           <th>{job.jobTitle}</th>
+                          <th>{job.jobApplicants.length}</th>
                           <th style={{ width: '20rem' }}>
                             {job.placementLocation}
                           </th>

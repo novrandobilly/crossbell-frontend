@@ -100,6 +100,18 @@
   .AuthForm {
     width: 80%;
   }
+
+  .SmallAbout {
+    padding: 0;
+  }
+
+  .SmallAbout > h1 {
+    font-size: 2rem;
+  }
+
+  .About {
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -117,6 +129,6 @@
   }
 
   .SmallAbout {
-    padding-bottom: 1rem;
+    padding: 1rem;
   }
 }

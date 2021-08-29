@@ -9,6 +9,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 16px 0;
 }
 
 .HeaderContainer {
@@ -38,7 +39,7 @@
 }
 
 .Table th {
-  padding: 1rem;
+  padding: 4px 8px;
   text-align: left;
   font-weight: normal;
 }
@@ -120,11 +121,12 @@
 
 @media (max-width: 992px) {
   .Header {
-    margin-left: 5%;
+    font-size: 1.5rem;
   }
 
   .TableHolder {
     width: 90%;
+    margin-bottom: 16px;
   }
 }
 

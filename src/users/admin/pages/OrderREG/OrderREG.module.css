@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 16px 0;
 }
 
 .Container a {
@@ -112,6 +113,17 @@
   font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  .Header {
+    font-size: 1.5rem;
+  }
+
+  .TableHolder {
+    margin-bottom: 16px;
+    width: 90%;
+  }
+}
+
 @media (max-width: 576px) {
   .Header {
     width: 100%;
@@ -121,9 +133,5 @@
 
   .RowField th {
     padding: 8px 14px;
-  }
-
-  .TableHolder {
-    width: 90%;
   }
 }

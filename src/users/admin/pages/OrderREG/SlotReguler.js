@@ -62,9 +62,23 @@ const SlotReg = (props) => {
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
   const [statusFilter, setStatusFilter] = useState('');
+  // const [formState, onInputHandler] = useForm(
+  //   {
+  //     timeFilter: {
+  //       value: null,
+  //       isValid: true,
+  //     },
+  //   },
+  //   true
+  // );
+
   const [formState, onInputHandler] = useForm(
     {
-      timeFilter: {
+      start: {
+        value: null,
+        isValid: true,
+      },
+      end: {
         value: null,
         isValid: true,
       },
@@ -101,17 +115,25 @@ const SlotReg = (props) => {
     }
 
     let statusData = [...filterData];
-    if (formState?.inputs?.timeFilter?.value) {
-      statusData = statusData.filter((data) => {
-        return moment(data.slotPaymentDate).isSame(
-          moment(formState.inputs.timeFilter.value),
-          'month'
-        );
-      });
+    if (formState?.inputs?.start?.value && formState?.inputs?.end?.value) {
+      statusData = statusData.filter((order) =>
+        moment(order.slotPaymentDate).isBetween(
+          moment(moment(formState.inputs.start.value).format('LL')),
+          moment(`${moment(formState.inputs.end.value).format('LL')} 23:59:59`),
+          undefined,
+          []
+        )
+      );
     }
+    setDisplayData(statusData);
 
     setFilteredData(statusData);
-  }, [formState.inputs.timeFilter.value, statusFilter, data]);
+  }, [
+    formState.inputs.start.value,
+    formState.inputs.end.value,
+    statusFilter,
+    data,
+  ]);
 
   useEffect(() => {
     if (filteredData && filteredData.length > 0) {
@@ -235,7 +257,7 @@ const SlotReg = (props) => {
           <tbody className={classes.ColumnField}>
             {displayData.map((slot, i) => (
               <tr key={slot._id}>
-                <th> {i + 1}</th>
+                <th> {i + 1 + (state.pageNumber - 1) * state.rowsPerPage}</th>
                 <th>{slot.package}</th>
                 <th>
                   <Link
@@ -279,7 +301,7 @@ const SlotReg = (props) => {
         <h1 className={classes.PageTitle}>Slot Reguler</h1>
 
         <div className={classes.FilterDiv}>
-          <Input
+          {/* <Input
             inputType='customdate'
             id='timeFilter'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
@@ -290,7 +312,37 @@ const SlotReg = (props) => {
             format='MM/yyyy'
             label='Filter Waktu'
             style={{ width: '50%' }}
-          />
+          /> */}
+          <div className={classes.DateFilter}>
+            <p className={classes.DateLabel}>Tanggal awal</p>
+            <Input
+              inputType='customdate'
+              id='start'
+              validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+              onInputHandler={onInputHandler}
+              onChange
+              views={['year', 'month', 'date']}
+              maxDate={moment()}
+              initIsValid={true}
+              initValue={null}
+              format='dd/MM/yyyy'
+            />
+          </div>
+
+          <div className={classes.DateFilter}>
+            <p className={classes.DateLabel}>Tanggal akhir</p>
+            <Input
+              inputType='customdate'
+              id='end'
+              validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+              onInputHandler={onInputHandler}
+              views={['year', 'month', 'date']}
+              maxDate={moment()}
+              initIsValid={true}
+              initValue={moment()}
+              format='dd/MM/yyyy'
+            />
+          </div>
 
           <FormControl
             style={{
@@ -341,20 +393,35 @@ const SlotReg = (props) => {
         />
       </div>
       <div className={classes.RevenueContainer}>
-        <div className={classes.RevenueLabel}>
-          <div className={classes.Label}>Revenue Used</div>
-          <div className={classes.Label}>Revenue Idle</div>
-          <div className={classes.Label}>Revenue Expired</div>
+        <div className={classes.AmountDiv}>
+          <div className={classes.AmountLabel}>
+            <div className={classes.Label}>Jumlah Slot Terpakai</div>
+            <div className={classes.Label}>Jumlah Slot Belum Terpakai</div>
+            <div className={classes.Label}>Jumlah Slot Expired</div>
+          </div>
+          <div className={classes.AmountNumber}>
+            <div className={classes.Label}>{usedPrice.length}</div>
+            <div className={classes.Label}>{idlePrice.length}</div>
+            <div className={classes.Label}>{expiredPrice.length}</div>
+          </div>
         </div>
-        <div className={classes.RevenueNumber}>
-          <div className={classes.Label}>
-            Rp. {usedRevenue.toLocaleString()},-
+
+        <div className={classes.RevenueDiv}>
+          <div className={classes.RevenueLabel}>
+            <div className={classes.Label}>Revenue Used</div>
+            <div className={classes.Label}>Revenue Idle</div>
+            <div className={classes.Label}>Revenue Expired</div>
           </div>
-          <div className={classes.Label}>
-            Rp. {idleRevenue.toLocaleString()},-
-          </div>
-          <div className={classes.Label}>
-            Rp. {expiredRevenue.toLocaleString()},-
+          <div className={classes.RevenueNumber}>
+            <div className={classes.Label}>
+              Rp. {usedRevenue.toLocaleString()},-
+            </div>
+            <div className={classes.Label}>
+              Rp. {idleRevenue.toLocaleString()},-
+            </div>
+            <div className={classes.Label}>
+              Rp. {expiredRevenue.toLocaleString()},-
+            </div>
           </div>
         </div>
       </div>

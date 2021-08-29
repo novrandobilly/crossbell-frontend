@@ -60,7 +60,6 @@ const EditCompanyBriefDescriptions = React.lazy(() =>
 const EditCompanyPIC = React.lazy(() =>
   import('./users/company/components/EditPIC')
 );
-
 const CompanyOrderForm = React.lazy(() =>
   import('./users/company/pages/CompanyOrderForm/CompanyOrderForm')
 );
