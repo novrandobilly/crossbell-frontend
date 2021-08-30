@@ -105,10 +105,11 @@
   .Container {
     padding: 0;
     margin: 0;
+    width: 100%;
   }
 
   .ContainerFlex {
-    width: 90vw;
+    width: 100vw;
     padding: 0px 16px 10px 16px;
     margin-top: 0rem;
     border-radius: 0;

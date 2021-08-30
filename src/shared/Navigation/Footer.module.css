@@ -25,6 +25,12 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+  .Logo {
+    display: none;
+  }
+}
+
 @media (max-width: 576px) {
   .LogoAddress {
     align-items: flex-start;

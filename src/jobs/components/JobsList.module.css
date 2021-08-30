@@ -153,6 +153,10 @@
   .Container {
     width: 100%;
   }
+
+  .Pagination {
+    width: 100%;
+  }
 }
 
 @media (max-width: 576px) {

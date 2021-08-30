@@ -1,7 +1,6 @@
 .FlexContainer {
   display: flex;
   flex-direction: column;
-  /* font-family: sans-serif; */
 }
 
 .Container {
@@ -9,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 16px 0;
 }
 
 .HeaderContainer {
@@ -38,7 +38,7 @@
 }
 
 .Table th {
-  padding: 1rem;
+  padding: 8px 16px;
   text-align: left;
   font-weight: normal;
 }
@@ -129,11 +129,12 @@
 
 @media (max-width: 992px) {
   .Header {
-    margin-left: 5%;
+    font-size: 1.5rem;
   }
 
   .TableHolder {
     width: 90%;
+    margin-bottom: 16px;
   }
 }
 

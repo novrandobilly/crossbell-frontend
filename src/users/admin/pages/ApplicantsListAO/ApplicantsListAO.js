@@ -6,7 +6,8 @@ import React, {
   useRef,
 } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
@@ -272,6 +273,8 @@ const ApplicantListAO = (props) => {
 
   let content = <SpinnerCircle />;
 
+  console.log(displayData);
+
   if (!isLoading && displayData && displayData.length > 0) {
     content = (
       <div className={classes.FlexContainer}>
@@ -324,12 +327,15 @@ const ApplicantListAO = (props) => {
               <thead className={classes.RowField}>
                 <tr>
                   <th>No</th>
-                  <th>Id</th>
-                  <th>Applicant Name</th>
+                  <th>Nama</th>
                   <th>Email</th>
-                  <th>Address</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>Usia</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Pendidikan</th>
+                  <th>Jurusan</th>
+
+                  {/* <th>Status</th> */}
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
 
@@ -342,14 +348,14 @@ const ApplicantListAO = (props) => {
                         <tr key={app.id}>
                           <th>{i + 1}</th>
 
-                          <th>
+                          {/* <th>
                             <Link
                               to={`/ap/${app.id}/profile`}
                               style={{ color: 'black', textDecoration: 'none' }}
-                            >
-                              {app.id}
-                            </Link>
-                          </th>
+                            > */}
+                          {/* {app.id} */}
+                          {/* </Link>
+                          </th> */}
 
                           <th>
                             <div className={classes.NameRow}>
@@ -361,7 +367,7 @@ const ApplicantListAO = (props) => {
                             </div>
                           </th>
                           <th>{app.email}</th>
-                          <th
+                          {/* <th
                             style={
                               app.address
                                 ? { color: 'black' }
@@ -369,9 +375,13 @@ const ApplicantListAO = (props) => {
                             }
                           >
                             {app.address ? app.address : 'no data'}
-                          </th>
-
+                          </th> */}
                           <th>
+                            {app.dateOfBirth
+                              ? moment().diff(moment(app.dateOfBirth), 'year')
+                              : 'null'}
+                          </th>
+                          {/* <th>
                             <div className={classes.DropDown}>
                               <button className={classes.DropButton}>
                                 <ArrowDropDownIcon />
@@ -383,7 +393,7 @@ const ApplicantListAO = (props) => {
                                 <button style={{ color: 'red' }}>Block</button>
                               </div>
                             </div>
-                          </th>
+                          </th> */}
                         </tr>
                       ))}
                 </tbody>
@@ -394,7 +404,7 @@ const ApplicantListAO = (props) => {
                       <tr key={app.id}>
                         <th>{i + 1}</th>
 
-                        <th>
+                        {/* <th>
                           {' '}
                           <Link
                             to={`/ap/${app.id}/profile`}
@@ -402,7 +412,7 @@ const ApplicantListAO = (props) => {
                           >
                             {app.id}
                           </Link>
-                        </th>
+                        </th> */}
 
                         <th>
                           <div className={classes.NameRow}>
@@ -414,7 +424,7 @@ const ApplicantListAO = (props) => {
                           </div>
                         </th>
                         <th>{app.email}</th>
-                        <th
+                        {/* <th
                           style={
                             app.address
                               ? { color: 'black' }
@@ -422,8 +432,20 @@ const ApplicantListAO = (props) => {
                           }
                         >
                           {app.address ? app.address : 'no data'}
+                        </th> */}
+
+                        <th>
+                          {app.dateOfBirth
+                            ? moment().diff(moment(app.dateOfBirth), 'year')
+                            : 'null'}
                         </th>
-                        <th
+
+                        <th>{app.gender === 'male' ? 'Pria' : 'Wanita'}</th>
+
+                        <th>{app.education[0].degree}</th>
+                        <th>{app.education[0].major}</th>
+
+                        {/* <th
                           style={
                             app.status
                               ? { color: 'green', fontWeight: '600' }
@@ -444,7 +466,7 @@ const ApplicantListAO = (props) => {
                               <button style={{ color: 'red' }}>Block</button>
                             </div>
                           </div>
-                        </th>
+                        </th> */}
                       </tr>
                     ))}
                 </tbody>

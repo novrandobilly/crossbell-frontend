@@ -132,6 +132,15 @@
   .PackageCard {
     width: 50%;
   }
+
+  .FormContainer {
+    font-size: 0.8rem;
+  }
+
+  .Text {
+    font-size: 0.8rem;
+    line-height: 1rem;
+  }
 }
 
 @media (max-width: 576px) {

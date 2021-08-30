@@ -13,6 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import classes from './CompaniesListAO.module.css';
+import moment from 'moment';
 
 const ACTIONPAGE = {
   PAGEUPDATE: 'PAGEUPDATE',
@@ -86,7 +87,6 @@ const CompaniesListAO = (props) => {
         state.startIndex,
         state.startIndex + state.rowsPerPage
       );
-      console.log(applicantArray);
       setDisplayData(applicantArray);
       setIsLoading(false);
     }
@@ -182,6 +182,8 @@ const CompaniesListAO = (props) => {
 
   let content = <SpinnerCircle />;
 
+  console.log(data);
+
   if (!isLoading && data && displayData) {
     content = (
       <div className={classes.FlexContainer}>
@@ -233,9 +235,12 @@ const CompaniesListAO = (props) => {
                   <th>Nama Perusahaan</th>
                   <th>Industri</th>
                   <th>Email</th>
-                  <th>Alamat</th>
+                  {/* <th>Alamat</th> */}
+                  <th>Iklan Tayang</th>
+                  <th>Total Iklan</th>
                   <th>Slot Terpakai</th>
                   <th>Sisa Slot</th>
+                  <th>Slot Expired</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -256,6 +261,38 @@ const CompaniesListAO = (props) => {
                         });
                       }
 
+                      let totalJobs = 0;
+                      if (company.jobAds) {
+                        company.jobAds.map((jobs, i) => {
+                          if (jobs.releasedAt) {
+                            totalJobs = totalJobs + 1;
+                          }
+                          return totalJobs;
+                        });
+                      }
+
+                      let expSlot = 0;
+                      if (company.unusedSlot) {
+                        company.unusedSlot.map((jobs, i) => {
+                          if (jobs.status === 'Expired') {
+                            expSlot = expSlot + 1;
+                          }
+                          return expSlot;
+                        });
+                      }
+
+                      let liveJobs = 0;
+                      if (company.jobAds) {
+                        company.jobAds.map((jobs, i) => {
+                          if (
+                            jobs.releasedAt &&
+                            moment(jobs.expiredDate).diff(moment()) > 0
+                          ) {
+                            liveJobs = liveJobs + 1;
+                          }
+                          return liveJobs;
+                        });
+                      }
                       return (
                         <tr key={company.id}>
                           <th> {index + 1}</th>
@@ -274,7 +311,7 @@ const CompaniesListAO = (props) => {
                           </th>
                           <th>{company.email}</th>
 
-                          <th
+                          {/* <th
                             style={
                               company.address
                                 ? { color: 'black', maxWidth: '24rem' }
@@ -286,10 +323,13 @@ const CompaniesListAO = (props) => {
                           >
                             {' '}
                             {company.address ? company.address : 'no data'}
-                          </th>
+                          </th> */}
 
                           <th>{slotUsed}</th>
+                          <th>{totalJobs} </th>
+                          <th>{slotUsed} </th>
                           <th>{company.slotREG}</th>
+                          <th>{expSlot}</th>
 
                           <th>
                             {props.company.isLoading &&
@@ -359,6 +399,39 @@ const CompaniesListAO = (props) => {
                         });
                       }
 
+                      let expSlot = 0;
+                      if (company.unusedSlot) {
+                        company.unusedSlot.map((jobs, i) => {
+                          if (jobs.status === 'Expired') {
+                            expSlot = expSlot + 1;
+                          }
+                          return expSlot;
+                        });
+                      }
+
+                      let totalJobs = 0;
+                      if (company.jobAds) {
+                        company.jobAds.map((jobs, i) => {
+                          if (jobs.releasedAt) {
+                            totalJobs = totalJobs + 1;
+                          }
+                          return totalJobs;
+                        });
+                      }
+
+                      let liveJobs = 0;
+                      if (company.jobAds) {
+                        company.jobAds.map((jobs, i) => {
+                          if (
+                            jobs.releasedAt &&
+                            moment(jobs.expiredDate).diff(moment()) > 0
+                          ) {
+                            liveJobs = liveJobs + 1;
+                          }
+                          return liveJobs;
+                        });
+                      }
+
                       return (
                         <tr key={company.id}>
                           <th> {index + 1}</th>
@@ -386,7 +459,7 @@ const CompaniesListAO = (props) => {
                           </th>
 
                           <th>{company.email}</th>
-
+                          {/* 
                           <th
                             style={
                               company.address
@@ -399,10 +472,13 @@ const CompaniesListAO = (props) => {
                           >
                             {' '}
                             {company.address ? company.address : 'no data'}
-                          </th>
+                          </th> */}
 
+                          <th>{liveJobs} </th>
+                          <th>{totalJobs} </th>
                           <th>{slotUsed} </th>
                           <th>{company.slotREG}</th>
+                          <th>{expSlot}</th>
 
                           <th>
                             {props.company.isLoading &&

@@ -247,11 +247,38 @@ hr.UnderLine {
 
 @media (max-width: 768px) {
   .CompanyDetail {
-    width: 70%;
+    width: 60%;
   }
 
   .Content {
     padding: 16px 16px 16px 16px;
+  }
+
+  .InvoiceTitle {
+    font-size: 1rem;
+  }
+
+  .CompanyName {
+    font-size: 1rem;
+  }
+
+  .InvoiceCompanyData {
+    font-size: 0.8rem;
+  }
+  .InvoiceDetail {
+    justify-content: flex-end;
+  }
+
+  .Table thead th {
+    font-size: 0.8rem;
+  }
+
+  .Table tbody th {
+    font-size: 0.8rem;
+  }
+
+  .CommentContent li {
+    font-size: 0.8rem;
   }
 }
 
@@ -302,5 +329,9 @@ hr.UnderLine {
     max-width: 300px;
     align-self: flex-end;
     margin-top: 16px;
+  }
+
+  .InvoiceDetail {
+    justify-content: flex-start;
   }
 }

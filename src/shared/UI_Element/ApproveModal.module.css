@@ -8,6 +8,8 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
   padding: 0 16px;
+  left: calc(59.5% - 20rem);
+  width: 20rem;
 }
 
 .Header {
@@ -68,9 +70,14 @@ input[type='file'] {
   justify-content: flex-end;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .Modal {
-    left: calc(59.5% - 20rem);
-    width: 20rem;
+    left: calc(59.5% - 15rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .Modal {
+    left: calc(59.5% - 14rem);
   }
 }
