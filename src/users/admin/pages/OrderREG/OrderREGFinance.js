@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import ApproveModal from '../../../../shared/UI_Element/ApproveModal';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './OrderREG.module.css';
 
@@ -96,18 +96,29 @@ const OrderREG = (props) => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const approveDataChange = () => {
-    setIndex(approveOrder.index);
-
-    setData((prevData) => {
-      const tempData = [...prevData];
-      const trueIndex =
-        approveOrder.index + (paginationNumber - 1) * rowsNumber;
-      tempData[trueIndex].status = 'Paid';
-      return tempData;
-    });
-    setIndex(null);
+  const approveOrderREGHandler = async (dataInput) => {
+    setIndex(dataInput.i);
     setOrderModal(false);
+
+    const payload = {
+      token: props.admin.token,
+      companyId: dataInput.companyId,
+      orderId: dataInput.orderId,
+    };
+
+    try {
+      await props.approveOrderREG(payload);
+      setDisplayData((prevData) => {
+        const tempData = [...prevData];
+        const trueIndex = dataInput.i + (paginationNumber - 1) * rowsNumber;
+        tempData[trueIndex].status = 'Paid';
+        return tempData;
+      });
+      setIndex(null);
+    } catch (err) {
+      console.log(err);
+      setIndex(null);
+    }
   };
 
   //================= Pagination ===========================
@@ -286,14 +297,19 @@ const OrderREG = (props) => {
 
   return (
     <div>
-      <ApproveModal
+      <OrderModal
         show={orderModal}
         onCancel={onCloseOrderModal}
-        orderId={approveOrder.orderId}
-        approveDataChange={approveDataChange}
+        Accept={() =>
+          approveOrderREGHandler({
+            orderId: approveOrder.orderId,
+            companyId: approveOrder.companyId,
+            i: approveOrder.index,
+          })
+        }
       >
-        Form Persetujuan
-      </ApproveModal>
+        Setujui pembelian dari perusahaan ini?
+      </OrderModal>
       {content}
     </div>
   );

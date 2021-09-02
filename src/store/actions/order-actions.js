@@ -109,6 +109,7 @@ const approveOrderFail = () => {
     type: actionTypes.APPROVEORDERFAIL,
   };
 };
+
 const approveOrderStart = () => {
   return {
     type: actionTypes.APPROVEORDERSTART,
@@ -269,15 +270,15 @@ export const updatePaymentREG = (payload) => {
     dispatch(approveOrderStart());
     try {
       const formData = new FormData();
-      formData.append('payment-reguler', payload.paymentFile);
       formData.append('paymentDate', payload.date);
       formData.append('paymentTime', payload.time);
+      formData.append('orderRegId', payload.orderRegId);
       formData.append('nominal', payload.nominal);
-
+      formData.append('payment-reguler', payload.paymentFile);
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.orderId}/approve/reg`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`,
         {
-          method: 'PATCH',
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${payload.token}`,
           },

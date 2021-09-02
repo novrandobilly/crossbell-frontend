@@ -217,7 +217,7 @@ export const updateApplicantIntro = (ApplicantData) => {
       formData.append('workShifts', ApplicantData.workShifts);
       formData.append('headhunterProgram', ApplicantData.headhunterProgram);
       formData.append('interest', ApplicantData.interest);
-
+      console.log(formData);
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`,
         {
