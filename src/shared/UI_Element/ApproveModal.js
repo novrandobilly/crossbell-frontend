@@ -56,27 +56,40 @@ const ModalOverlay = (props) => {
     if (!formState.formIsValid) {
       throw new Error('Approve order can not be done at the moment');
     }
+    let payload;
+    if (props.orderType === 'Reg') {
+      payload = {
+        orderRegId: props.orderId,
+        paymentFile: formState.inputs.paymentFile.value,
+        date: formState.inputs.date.value,
+        time: formState.inputs.time.value,
+        nominal: formState.inputs.nominal.value,
+        token: props.admin.token,
+      };
 
-    let payload = {
-      orderId: props.orderId,
-      paymentFile: formState.inputs.paymentFile.value,
-      date: formState.inputs.date.value,
-      time: formState.inputs.time.value,
-      nominal: formState.inputs.nominal.value,
-      token: props.admin.token,
-    };
+      try {
+        const res = await props.updatePaymentREG(payload);
+        if (!res) {
+          throw new Error('gagal menyetujui pesanan');
+        }
 
-    try {
-      const res = await props.updatePaymentREG(payload);
-      if (!res.foundOrder.approvedAt) {
-        throw new Error('gagal menyetujui pesanan');
+        // props.onCancel();
+        setSubmitLoading(false);
+      } catch (err) {
+        console.log(err);
+        setSubmitLoading(false);
       }
+    }
 
-      props.approveDataChange();
-      setSubmitLoading(false);
-    } catch (err) {
-      console.log(err);
-      setSubmitLoading(false);
+    if (props.orderType === 'Bc') {
+      payload = {
+        orderBcId: props.orderId,
+        paymentFile: formState.inputs.paymentFile.value,
+        date: formState.inputs.date.value,
+        time: formState.inputs.time.value,
+        nominal: formState.inputs.nominal.value,
+        token: props.admin.token,
+      };
     }
   };
 

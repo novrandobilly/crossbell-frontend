@@ -1,18 +1,23 @@
+.FlexContainer {
+  padding: 16px 0;
+  display: flex;
+}
+
 .Container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 60%;
+  border: black solid 1px;
 }
 
 .DownloadButton {
   display: flex;
-  width: 60%;
-  margin-top: 32px;
   justify-content: flex-end;
+  width: 90%;
 }
 
 .InvoiceContainer {
-  width: 60%;
   box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
   border-radius: 1rem;
   margin-top: 2rem;
@@ -21,6 +26,7 @@
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  width: 90%;
 }
 
 .Id {
@@ -187,7 +193,8 @@ hr.UnderLine {
   font-style: italic;
   font-size: 20px;
   text-align: right;
-  width: 60%;
+  width: 90%;
+  margin: 16px 0 0 0;
 }
 
 .AdditionalInfo {
@@ -202,6 +209,34 @@ hr.UnderLine {
 .CrossbellInfo li {
   margin: 4px 0;
 }
+
+.PaymentDiv {
+  width: 40%;
+  border: solid black 1px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.PaymentHeader {
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.ContentHead {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.PaymentButton {
+  background-color: rgba(58, 81, 153, 1);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ================================================================ */
 
 @media all {
   .page-break {
