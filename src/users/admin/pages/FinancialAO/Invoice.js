@@ -11,6 +11,7 @@ import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Button from '@material-ui/core/Button';
 import ApproveModal from '../../../../shared/UI_Element/ApproveModal';
+import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './Invoice.module.css';
 
@@ -18,6 +19,10 @@ const Invoice = (props) => {
   let { orderid } = useParams();
   const [orderData, setOrderData] = useState();
   const [orderModal, setOrderModal] = useState(false);
+  const [approveModal, setApproveModal] = useState(false);
+
+  const [paymentData, setPaymentData] = useState([]);
+  const [payOff, setPayOff] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,8 +35,9 @@ const Invoice = (props) => {
         orderId: orderid,
         token: props.auth.token || props.admin.token,
       }).then((res) => {
-        if (res) {
+        if (res.order) {
           setOrderData(res.order);
+          setPaymentData(res.order.payment);
           console.log(res);
         } else {
           throw new Error();
@@ -40,12 +46,46 @@ const Invoice = (props) => {
     }
   }, [getOrderInvoice, orderid, props.admin.token, props.auth.token]);
 
+  useEffect(() => {
+    if (paymentData && paymentData.length > 0) {
+      let tempPay = 0;
+      paymentData.map((pay, i) => {
+        return (tempPay = tempPay + pay.nominal);
+      });
+      setPayOff(tempPay);
+    }
+  }, [paymentData]);
+
+  const onCloseApproveModal = () => {
+    setApproveModal(false);
+  };
+
+  const onOpenApproveModal = () => {
+    setApproveModal(true);
+  };
+
   const onCloseOrderModal = () => {
     setOrderModal(false);
   };
 
   const onOpenOrderModal = () => {
     setOrderModal(true);
+  };
+
+  const approveOrderREGHandler = async (dataInput) => {
+    setOrderModal(false);
+
+    const payload = {
+      token: props.admin.token,
+      companyId: dataInput.companyId,
+      orderId: dataInput.orderId,
+    };
+
+    try {
+      await props.approveOrderREG(payload);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const componentRef = useRef();
@@ -59,6 +99,7 @@ const Invoice = (props) => {
   let subTotal = 0;
 
   let content = <SpinnerCircle />;
+
   if (!props.isLoading && orderData) {
     content = (
       <div className={classes.Container}>
@@ -100,13 +141,11 @@ const Invoice = (props) => {
               <div className={classes.InvoiceDetail}>
                 <div className={classes.DetailLabel}>
                   <p className={classes.InvoiceCompanyData}>Date</p>
-                  {/* <p>InvoiceId</p> */}
                 </div>
                 <div>
                   <p className={classes.InvoiceCompanyData}>
                     {moment(orderData.createdAt).format('D MMMM  YYYY')}
                   </p>
-                  {/* <p>{orderData.invoiceId}</p> */}
                 </div>
               </div>
             </div>
@@ -276,30 +315,96 @@ const Invoice = (props) => {
     );
   }
 
+  let payment = null;
+
+  if (!props.isLoading && orderData && props.admin.isAdmin && paymentData) {
+    payment = (
+      <div className={classes.PaymentDiv}>
+        <div className={classes.PaymentHeader}>Pembayaran</div>
+        <div className={classes.PaymentContent}>
+          <div className={classes.ContentHead}>
+            <Button
+              type='button'
+              variant='contained'
+              color='primary'
+              size='small'
+              disableElevation
+              disabled={orderData?.totalPrice <= payOff}
+              onClick={onOpenApproveModal}
+            >
+              + Tambah Pembayaran
+            </Button>
+          </div>
+          <div className={classes.ContentBody}>
+            <div className={classes.PaymentCardHead}>
+              <div className={classes.Numbering}>No</div>
+              <div className={classes.Nominals}>Nominal</div>
+              <div className={classes.PaymentDate}>Tanggal</div>
+              <div className={classes.PaymentTime}>WIB</div>
+            </div>
+            {paymentData &&
+              paymentData.length > 0 &&
+              paymentData.map((payment, i) => {
+                return (
+                  <div className={classes.PaymentCard} key={i}>
+                    <div className={classes.Numbering}>{i + 1}</div>
+                    <div className={classes.Nominals}>
+                      Rp. {payment.nominal.toLocaleString()}{' '}
+                    </div>
+                    <div className={classes.PaymentDate}>
+                      {moment(payment.paymentDate).format('DD MMM YYYY ')}
+                    </div>
+                    <div className={classes.PaymentTime}>
+                      {payment.paymentTime}
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          <div className={classes.PaymentCardFooter}>
+            <Button
+              type='button'
+              variant='contained'
+              color='primary'
+              size='small'
+              disableElevation
+              disabled={
+                orderData.status !== 'Pending' || orderData?.totalPrice > payOff
+              }
+              onClick={onOpenOrderModal}
+            >
+              Setujui Pesanan
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.FlexContainer}>
-      <ApproveModal
+      <OrderModal
         show={orderModal}
         onCancel={onCloseOrderModal}
+        Accept={() =>
+          approveOrderREGHandler({
+            orderId: orderData._id,
+            companyId: orderData.companyId._id,
+          })
+        }
+      >
+        Setujui pembelian dari perusahaan ini?
+      </OrderModal>
+      <ApproveModal
+        show={approveModal}
+        onCancel={onCloseApproveModal}
         orderId={orderid}
         orderType='Reg'
       >
         Form Persetujuan
       </ApproveModal>
       {content}
-      <div className={classes.PaymentDiv}>
-        <div className={classes.PaymentHeader}>Pembayaran</div>
-        <div className={classes.PaymentContent}>
-          <div className={classes.ContentHead}>
-            <div
-              className={classes.PaymentButton}
-              onClick={() => onOpenOrderModal()}
-            >
-              + Tambah Pembayaran
-            </div>
-          </div>
-        </div>
-      </div>
+      {payment}
     </div>
   );
 };
@@ -315,6 +420,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    approveOrderREG: (payload) =>
+      dispatch(actionCreators.approveOrderREG(payload)),
     getOrderInvoice: (orderData) =>
       dispatch(actionCreators.getOrderInvoice(orderData)),
   };

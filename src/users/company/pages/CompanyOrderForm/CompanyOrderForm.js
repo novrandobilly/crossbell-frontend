@@ -16,8 +16,6 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './CompanyOrderForm.module.css';
 
-const ORIGINAL_PRICE = 500000;
-
 const CompanyOrderForm = (props) => {
   const companyData = JSON.parse(localStorage.getItem('userData'));
   const [validationError, setValidationError] = useState(false);
@@ -25,7 +23,7 @@ const CompanyOrderForm = (props) => {
   const [PPH, setPPH] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
   const [slot, setSlot] = useState('0');
-  const [price, setPrice] = useState(ORIGINAL_PRICE);
+  const [price, setPrice] = useState(0);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -77,7 +75,6 @@ const CompanyOrderForm = (props) => {
 
         const res = await props.createOrder(orderData);
         if (res) {
-          console.log(res);
           props.history.push(`/co/${res.orderreg.id}/invoice`);
         } else {
           throw new Error(res);
@@ -89,10 +86,10 @@ const CompanyOrderForm = (props) => {
   };
 
   useEffect(() => {
-    setPrice(ORIGINAL_PRICE);
-    if (slot > 1) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05);
-    if (slot > 4) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1);
-    if (slot > 9) setPrice(ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15);
+    setPrice(600000);
+    if (slot > 1) setPrice(575000);
+    if (slot > 4) setPrice(525000);
+    if (slot > 9) setPrice(450000);
   }, [slot]);
 
   const onCloseOrderModal = (event) => {
@@ -144,7 +141,7 @@ const CompanyOrderForm = (props) => {
           <div onClick={OnclickBronze} className={classes.PackageCard}>
             <OrderComponent
               title='Bronze'
-              price={ORIGINAL_PRICE}
+              price={600000}
               slot='1 slot'
               createOrder={props.createOrder}
             />
@@ -153,7 +150,7 @@ const CompanyOrderForm = (props) => {
           <div onClick={OnclickSilver} className={classes.PackageCard}>
             <OrderComponent
               title='Silver'
-              price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.05}
+              price={575000}
               slot='2 - 4 slot'
               createOrder={props.createOrder}
             />
@@ -162,7 +159,7 @@ const CompanyOrderForm = (props) => {
           <div onClick={OnclickGold} className={classes.PackageCard}>
             <OrderComponent
               title='Gold'
-              price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1}
+              price={525000}
               slot='5 - 9 slot'
               createOrder={props.createOrder}
             />
@@ -171,7 +168,7 @@ const CompanyOrderForm = (props) => {
           <div onClick={OnclickPlatinum} className={classes.PackageCard}>
             <OrderComponent
               title='Platinum'
-              price={ORIGINAL_PRICE - ORIGINAL_PRICE * 0.15}
+              price={450000}
               slot='> 9 slot'
               createOrder={props.createOrder}
             />
