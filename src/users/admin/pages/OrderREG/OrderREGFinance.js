@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './OrderREG.module.css';
 
@@ -46,18 +43,9 @@ const paginationReducer = (state, action) => {
 
 const OrderREG = (props) => {
   const [data, setData] = useState([]);
-  const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
-  const [orderModal, setOrderModal] = useState(false);
 
-  const [rowsNumber, setRowsNumber] = useState(10);
-  const [paginationNumber, setPaginationNumber] = useState(1);
   const emptyText = useRef('');
-
-  const [approveOrder, setApproveOrder] = useState({
-    companyId: '',
-    index: '',
-  });
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -96,31 +84,6 @@ const OrderREG = (props) => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const approveOrderREGHandler = async (dataInput) => {
-    setIndex(dataInput.i);
-    setOrderModal(false);
-
-    const payload = {
-      token: props.admin.token,
-      companyId: dataInput.companyId,
-      orderId: dataInput.orderId,
-    };
-
-    try {
-      await props.approveOrderREG(payload);
-      setDisplayData((prevData) => {
-        const tempData = [...prevData];
-        const trueIndex = dataInput.i + (paginationNumber - 1) * rowsNumber;
-        tempData[trueIndex].status = 'Paid';
-        return tempData;
-      });
-      setIndex(null);
-    } catch (err) {
-      console.log(err);
-      setIndex(null);
-    }
-  };
-
   //================= Pagination ===========================
 
   const pageChangeHandler = (event, value) => {
@@ -131,7 +94,6 @@ const OrderREG = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
-    setPaginationNumber(value);
   };
 
   const rowsHandler = (event) => {
@@ -141,16 +103,6 @@ const OrderREG = (props) => {
         rowsPerPage: event.target.value,
       },
     });
-    setRowsNumber(event.target.value);
-  };
-
-  const onCloseOrderModal = () => {
-    setOrderModal(false);
-  };
-
-  const onOpenOrderModal = (orderId, index) => {
-    setApproveOrder({ orderId: orderId, index: index });
-    setOrderModal(true);
   };
 
   let content = <SpinnerCircle />;
@@ -172,7 +124,6 @@ const OrderREG = (props) => {
                 <th>Tanggal Order</th>
                 <th>Tanggal Disetujui</th>
                 <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
 
@@ -218,9 +169,7 @@ const OrderREG = (props) => {
                   </th>
 
                   <th>
-                    {props.indexIsLoading && index === i ? (
-                      <Spinner />
-                    ) : order.status === 'Paid' ? (
+                    {order.status === 'Paid' ? (
                       <span style={{ color: 'Green', fontWeight: 'bold' }}>
                         Paid
                       </span>
@@ -229,32 +178,6 @@ const OrderREG = (props) => {
                         Pending
                       </span>
                     )}
-                  </th>
-
-                  <th>
-                    <div className={classes.DropDown}>
-                      <button className={classes.DropButton}>
-                        <ArrowDropDownIcon />
-                      </button>
-                      <div className={classes.DropDownContent}>
-                        <button
-                          style={
-                            order.status === 'Pending'
-                              ? { color: 'green' }
-                              : { color: 'grey' }
-                          }
-                          onClick={
-                            order.status === 'Paid'
-                              ? null
-                              : () => onOpenOrderModal(order._id, i)
-                          }
-                        >
-                          {order.status === 'Pending'
-                            ? 'Approve'
-                            : 'Telah Disetujui'}
-                        </button>
-                      </div>
-                    </div>
                   </th>
                 </tr>
               ))}
@@ -295,24 +218,7 @@ const OrderREG = (props) => {
     content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
-  return (
-    <div>
-      <OrderModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        Accept={() =>
-          approveOrderREGHandler({
-            orderId: approveOrder.orderId,
-            companyId: approveOrder.companyId,
-            i: approveOrder.index,
-          })
-        }
-      >
-        Setujui pembelian dari perusahaan ini?
-      </OrderModal>
-      {content}
-    </div>
-  );
+  return <div>{content}</div>;
 };
 
 const mapStateToProps = (state) => {

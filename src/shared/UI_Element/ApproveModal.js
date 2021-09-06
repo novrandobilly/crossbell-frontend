@@ -73,7 +73,7 @@ const ModalOverlay = (props) => {
           throw new Error('gagal menyetujui pesanan');
         }
 
-        // props.onCancel();
+        props.onCancel();
         setSubmitLoading(false);
       } catch (err) {
         console.log(err);

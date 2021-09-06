@@ -1,6 +1,7 @@
 .FlexContainer {
   padding: 16px 0;
   display: flex;
+  justify-content: center;
 }
 
 .Container {
@@ -8,7 +9,6 @@
   flex-direction: column;
   align-items: center;
   width: 60%;
-  border: black solid 1px;
 }
 
 .DownloadButton {
@@ -73,13 +73,12 @@
 .InvoiceTitle {
   font-size: 1.2rem;
   font-weight: bold;
-  /* letter-spacing: 2px; */
   margin: 0;
 }
 
 .InvoiceDetail {
   display: flex;
-  text-align: right;
+  justify-content: flex-end;
   color: rgba(0, 0, 0, 0.7);
   line-height: 1rem;
 }
@@ -212,7 +211,6 @@ hr.UnderLine {
 
 .PaymentDiv {
   width: 40%;
-  border: solid black 1px;
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -235,6 +233,48 @@ hr.UnderLine {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.PaymentCardHead {
+  display: flex;
+  justify-content: space-between;
+  background-color: #d7e2ff;
+  margin: 8px 0;
+  padding: 4px 6px;
+  text-align: left;
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.PaymentCard {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  margin: 8px 0;
+  padding: 3px 4px;
+  text-align: left;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
+}
+
+.Numbering {
+  width: 10%;
+}
+
+.Nominals {
+  width: 30%;
+}
+
+.PaymentDate {
+  width: 30%;
+}
+
+.PaymentTime {
+  width: 30%;
+}
+
+/* .PaymentCardFooter {
+} */
 
 /* ================================================================ */
 
