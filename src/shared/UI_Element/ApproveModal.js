@@ -61,8 +61,8 @@ const ModalOverlay = (props) => {
       payload = {
         orderRegId: props.orderId,
         paymentFile: formState.inputs.paymentFile.value,
-        date: formState.inputs.date.value,
-        time: formState.inputs.time.value,
+        paymentDate: formState.inputs.date.value,
+        paymentTime: formState.inputs.time.value,
         nominal: formState.inputs.nominal.value,
         token: props.admin.token,
       };
@@ -70,9 +70,10 @@ const ModalOverlay = (props) => {
       try {
         const res = await props.updatePaymentREG(payload);
         if (!res) {
-          throw new Error('gagal menyetujui pesanan');
+          throw new Error('gagal menambah pembayaran');
         }
 
+        props.onUpdatePaymentInput(payload);
         props.onCancel();
         setSubmitLoading(false);
       } catch (err) {
@@ -85,8 +86,8 @@ const ModalOverlay = (props) => {
       payload = {
         orderBcId: props.orderId,
         paymentFile: formState.inputs.paymentFile.value,
-        date: formState.inputs.date.value,
-        time: formState.inputs.time.value,
+        paymentDate: formState.inputs.date.value,
+        paymentTime: formState.inputs.time.value,
         nominal: formState.inputs.nominal.value,
         token: props.admin.token,
       };
