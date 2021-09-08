@@ -256,8 +256,8 @@ export const updatePaymentREG = payload => {
     dispatch(approveOrderStart());
     try {
       const formData = new FormData();
-      formData.append('paymentDate', payload.date);
-      formData.append('paymentTime', payload.time);
+      formData.append('paymentDate', payload.paymentDate);
+      formData.append('paymentTime', payload.paymentTime);
       formData.append('orderRegId', payload.orderRegId);
       formData.append('nominal', payload.nominal);
       formData.append('payment-reguler', payload.paymentFile);
