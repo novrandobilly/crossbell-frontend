@@ -23,6 +23,7 @@ const Invoice = (props) => {
 
   const [paymentData, setPaymentData] = useState([]);
   const [payOff, setPayOff] = useState(0);
+  const [paymentInput, setPaymentInput] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,7 +39,6 @@ const Invoice = (props) => {
         if (res.order) {
           setOrderData(res.order);
           setPaymentData(res.order.payment);
-          console.log(res);
         } else {
           throw new Error();
         }
@@ -56,6 +56,12 @@ const Invoice = (props) => {
     }
   }, [paymentData]);
 
+  useEffect(() => {
+    if (paymentInput) {
+      setPaymentData((prevState) => [...prevState, paymentInput]);
+    }
+  }, [paymentInput]);
+
   const onCloseApproveModal = () => {
     setApproveModal(false);
   };
@@ -70,6 +76,10 @@ const Invoice = (props) => {
 
   const onOpenOrderModal = () => {
     setOrderModal(true);
+  };
+
+  const onUpdatePaymentInput = (payload) => {
+    setPaymentInput(payload);
   };
 
   const approveOrderREGHandler = async (dataInput) => {
@@ -400,6 +410,7 @@ const Invoice = (props) => {
         onCancel={onCloseApproveModal}
         orderId={orderid}
         orderType='Reg'
+        onUpdatePaymentInput={(pay) => onUpdatePaymentInput(pay)}
       >
         Form Persetujuan
       </ApproveModal>
