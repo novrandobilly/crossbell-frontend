@@ -52,6 +52,7 @@ const ModalOverlay = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    props.onCancel();
     setSubmitLoading(true);
     if (!formState.formIsValid) {
       throw new Error('Approve order can not be done at the moment');
@@ -74,7 +75,6 @@ const ModalOverlay = (props) => {
         }
 
         props.onUpdatePaymentInput(payload);
-        props.onCancel();
         setSubmitLoading(false);
       } catch (err) {
         console.log(err);
