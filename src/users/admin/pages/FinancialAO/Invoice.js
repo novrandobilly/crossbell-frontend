@@ -24,6 +24,7 @@ const Invoice = props => {
   const [paymentData, setPaymentData] = useState([]);
   const [payOff, setPayOff] = useState(0);
   const [paymentInput, setPaymentInput] = useState();
+  const [approveSuccess, setApproveSuccess] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,8 +41,7 @@ const Invoice = props => {
           setOrderData(res.order);
           setPaymentData(res.order.payment);
         } else {
-          console.log(res);
-          // throw new Error();
+          throw new Error('Can not retrive order data at the moment');
         }
       });
     }
@@ -63,6 +63,15 @@ const Invoice = props => {
     }
   }, [paymentInput]);
 
+  useEffect(() => {
+    if (approveSuccess) {
+      setOrderData(prevState => {
+        prevState.status = 'Paid';
+        return prevState;
+      });
+      setApproveSuccess(false);
+    }
+  }, [approveSuccess]);
   const onCloseApproveModal = () => {
     setApproveModal(false);
   };
@@ -93,7 +102,10 @@ const Invoice = props => {
     };
 
     try {
-      await props.approveOrderREG(payload);
+      const res = await props.approveOrderREG(payload);
+      if (res.message === 'Successfully approve order!') {
+        setApproveSuccess(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -223,7 +235,7 @@ const Invoice = props => {
                 <p>Diskon</p>
                 <p>
                   - Rp.
-                  {(dis = subTotal * 0).toLocaleString()}
+                  {(dis = (subTotal * orderData.promo) / 100).toLocaleString()}
                   ,-
                 </p>
               </div>
@@ -234,8 +246,7 @@ const Invoice = props => {
                     PPH<span>(2%)</span>
                   </p>
                   <p>
-                    Rp.
-                    {(tax = subTotal * 0.02).toLocaleString()}
+                    - Rp. {(tax = subTotal * 0.02).toLocaleString()}
                     ,-
                   </p>
                 </div>
