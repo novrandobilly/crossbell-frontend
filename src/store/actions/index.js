@@ -60,6 +60,7 @@ export {
   deleteCandidateES,
   approveOrderBC,
   updatePaymentREG,
+  updatePaymentBC,
 } from './order-actions';
 
 export {

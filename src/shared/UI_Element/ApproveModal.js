@@ -91,6 +91,19 @@ const ModalOverlay = (props) => {
         nominal: formState.inputs.nominal.value,
         token: props.admin.token,
       };
+
+      try {
+        const res = await props.updatePaymentREG(payload);
+        if (!res) {
+          throw new Error('gagal menambah pembayaran');
+        }
+
+        props.onUpdatePaymentInput(payload);
+        setSubmitLoading(false);
+      } catch (err) {
+        console.log(err);
+        setSubmitLoading(false);
+      }
     }
   };
 
@@ -246,6 +259,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updatePaymentREG: (payload) =>
       dispatch(actionCreators.updatePaymentREG(payload)),
+    updatePaymentBC: (payload) =>
+      dispatch(actionCreators.updatePaymentBC(payload)),
   };
 };
 

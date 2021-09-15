@@ -163,6 +163,9 @@ const FinancialAO = React.lazy(() =>
 const Invoice = React.lazy(() =>
   import('./users/admin/pages/FinancialAO/Invoice')
 );
+const InvoiceBC = React.lazy(() =>
+  import('./users/admin/pages/FinancialAO/InvoiceBC')
+);
 const OrderREG = React.lazy(() =>
   import('./users/admin/pages/OrderREG/OrderREG')
 );
@@ -351,6 +354,7 @@ const App = (props) => {
             />
             <Route path='/co/:companyid/jobList' component={CompanyJobList} />
             <Route path='/co/:orderid/invoice' component={Invoice} />
+            <Route path='/co/:orderid/invoiceBC' component={InvoiceBC} />
             <Route
               path='/co/:companyid/compro'
               component={CompanyProfileForm}
@@ -427,7 +431,6 @@ const App = (props) => {
               path='/ad/alphaomega/order/candidate/opr'
               component={OrderBCOperational}
             />
-
             <Route path='/ad/alphaomega/order/es' component={OrderES} />
             <Route
               path='/ad/alphaomega/order/:orderid/candidate'
