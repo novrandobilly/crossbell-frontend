@@ -15,7 +15,7 @@ import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './Invoice.module.css';
 
-const Invoice = props => {
+const Invoice = (props) => {
   let { orderid } = useParams();
   const [orderData, setOrderData] = useState();
   const [orderModal, setOrderModal] = useState(false);
@@ -36,7 +36,7 @@ const Invoice = props => {
       getOrderInvoice({
         orderId: orderid,
         token: props.auth.token || props.admin.token,
-      }).then(res => {
+      }).then((res) => {
         if (res.order) {
           setOrderData(res.order);
           setPaymentData(res.order.payment);
@@ -59,13 +59,13 @@ const Invoice = props => {
 
   useEffect(() => {
     if (paymentInput) {
-      setPaymentData(prevState => [...prevState, paymentInput]);
+      setPaymentData((prevState) => [...prevState, paymentInput]);
     }
   }, [paymentInput]);
 
   useEffect(() => {
     if (approveSuccess) {
-      setOrderData(prevState => {
+      setOrderData((prevState) => {
         prevState.status = 'Paid';
         return prevState;
       });
@@ -88,11 +88,11 @@ const Invoice = props => {
     setOrderModal(true);
   };
 
-  const onUpdatePaymentInput = payload => {
+  const onUpdatePaymentInput = (payload) => {
     setPaymentInput(payload);
   };
 
-  const approveOrderREGHandler = async dataInput => {
+  const approveOrderREGHandler = async (dataInput) => {
     setOrderModal(false);
 
     const payload = {
@@ -133,7 +133,8 @@ const Invoice = props => {
             color='primary'
             className={classes.margin}
             onClick={handlePrint}
-            startIcon={<GetAppIcon />}>
+            startIcon={<GetAppIcon />}
+          >
             dowload/ print
           </Button>
         </div>
@@ -143,23 +144,36 @@ const Invoice = props => {
           </p>
           <div className={classes.Content}>
             <div className={classes.CompanyDetail}>
-              <p className={classes.CompanyName}>{orderData.companyId.companyName}</p>
-              <p className={classes.InvoiceCompanyData}>{orderData.companyId.address}</p>
-              <p className={classes.InvoiceCompanyData}>{orderData.companyId.email}</p>
-              <p className={classes.InvoiceCompanyData}>{orderData.companyId.website}</p>
+              <p className={classes.CompanyName}>
+                {orderData.companyId.companyName}
+              </p>
+              <p className={classes.InvoiceCompanyData}>
+                {orderData.companyId.address}
+              </p>
+              <p className={classes.InvoiceCompanyData}>
+                {orderData.companyId.email}
+              </p>
+              <p className={classes.InvoiceCompanyData}>
+                {orderData.companyId.website}
+              </p>
             </div>
             <div className={classes.InvoiceRight}>
-              <p className={classes.InvoiceTitle}>Informasi Rincian Pemesanan</p>
+              <p className={classes.InvoiceTitle}>
+                Informasi Rincian Pemesanan
+              </p>
               <div className={classes.InvoiceDetail}>
                 <div className={classes.DetailLabel}>
                   <p className={classes.InvoiceCompanyData}>Date</p>
                 </div>
                 <div>
-                  <p className={classes.InvoiceCompanyData}>{moment(orderData.createdAt).format('D MMMM  YYYY')}</p>
+                  <p className={classes.InvoiceCompanyData}>
+                    {moment(orderData.createdAt).format('D MMMM  YYYY')}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
+
           <table className={classes.Table}>
             <thead>
               <tr>
@@ -171,17 +185,29 @@ const Invoice = props => {
             </thead>
             <tbody>
               <tr>
-                <th>{orderData.packageName ? orderData.packageName : orderData.amount ? 'bulk candidate' : 'executive search'}</th>
+                <th>
+                  {orderData.packageName
+                    ? orderData.packageName
+                    : orderData.amount
+                    ? 'bulk candidate'
+                    : 'executive search'}
+                </th>
                 <th>{orderData.slot ? orderData.slot : orderData.amount}</th>
                 <th>
-                  Rp. {orderData.pricePerSlot ? orderData.pricePerSlot.toLocaleString() : orderData.price.toLocaleString()}
+                  Rp.{' '}
+                  {orderData.pricePerSlot
+                    ? orderData.pricePerSlot.toLocaleString()
+                    : orderData.price.toLocaleString()}
                   ,-
                 </th>
                 <th>
                   Rp.{' '}
                   {orderData.packageName
-                    ? (subTotal = orderData.pricePerSlot * orderData.slot).toLocaleString()
-                    : (subTotal = orderData.price * orderData.amount).toLocaleString()}
+                    ? (subTotal =
+                        orderData.pricePerSlot *
+                        orderData.slot).toLocaleString()
+                    : (subTotal =
+                        orderData.price * orderData.amount).toLocaleString()}
                   ,-
                 </th>
               </tr>
@@ -193,9 +219,14 @@ const Invoice = props => {
               <div className={classes.CommentHeader}>Instruksi Pembayaran</div>
               <div className={classes.CommentContent}>
                 <ul>
-                  <li>Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14 hari sejak tanggal invoice ini</li>
                   <li>
-                    Pembayaran dapat di transfer ke rekening BCA <span style={{ fontWeight: '500' }}>1234567xxx</span> a/n Bagong
+                    Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14
+                    hari sejak tanggal invoice ini
+                  </li>
+                  <li>
+                    Pembayaran dapat di transfer ke rekening BCA{' '}
+                    <span style={{ fontWeight: '500' }}>1234567xxx</span> a/n
+                    Bagong
                   </li>
                   {/* <li>
                       Pembayaran melalui virtual account dapat transfer melalui
@@ -203,16 +234,28 @@ const Invoice = props => {
                       <span style={{ fontWeight: '500' }}>807770817329xxx</span>
                     </li> */}
                   <li>
-                    Setelah melakukan pembayaran, mohon kirimkan bukti transfer kepada nomor wa{' '}
+                    Setelah melakukan pembayaran, mohon kirimkan bukti transfer
+                    kepada nomor wa{' '}
                     <span style={{ fontWeight: '500' }}>081732954xxx</span>
                   </li>
                   {orderData.PPH && (
                     <li>
-                      bukti potong PPH pasal 23 paling lambat dikirimkan pada akhir bulan berikutnya setelah pesanan ini dibuat.{' '}
-                      <ul className={classes.CrossbellInfo} style={{ listStyleType: 'circle' }}>
-                        <li className={classes.AdditionalInfo}>Nama perusahaan: PT. Inti Dinamis</li>
-                        <li className={classes.AdditionalInfo}>Nomor Pokok Wajib Pajak: 23001939900293</li>
-                        <li className={classes.AdditionalInfo}>Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi 17435</li>
+                      bukti potong PPH pasal 23 paling lambat dikirimkan pada
+                      akhir bulan berikutnya setelah pesanan ini dibuat.{' '}
+                      <ul
+                        className={classes.CrossbellInfo}
+                        style={{ listStyleType: 'circle' }}
+                      >
+                        <li className={classes.AdditionalInfo}>
+                          Nama perusahaan: PT. Inti Dinamis
+                        </li>
+                        <li className={classes.AdditionalInfo}>
+                          Nomor Pokok Wajib Pajak: 23001939900293
+                        </li>
+                        <li className={classes.AdditionalInfo}>
+                          Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi
+                          17435
+                        </li>
                       </ul>
                     </li>
                   )}
@@ -264,9 +307,10 @@ const Invoice = props => {
                 <strong>
                   {terbilang(subTotal - tax - dis)
                     .split(' ')
-                    .map(word => {
+                    .map((word) => {
                       let upperCaseWord = '';
-                      upperCaseWord = word[0].toUpperCase() + word.slice(1, word.length);
+                      upperCaseWord =
+                        word[0].toUpperCase() + word.slice(1, word.length);
                       return upperCaseWord;
                     })
                     .join(' ')}{' '}
@@ -277,9 +321,14 @@ const Invoice = props => {
           </div>
         </div>
         {props.auth.isCompany && (
-          <div style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <div
+            style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
+          >
             <p className={classes.LinkedText}>
-              <Link style={{ textDecoration: 'none', color: 'blue' }} to={`/co/${props.auth.userId}/listOrder`}>
+              <Link
+                style={{ textDecoration: 'none', color: 'blue' }}
+                to={`/co/${props.auth.userId}/listOrder`}
+              >
                 Lanjut ke daftar order {'>>'}
               </Link>
             </p>
@@ -304,7 +353,8 @@ const Invoice = props => {
               size='small'
               disableElevation
               disabled={orderData?.totalPrice <= payOff}
-              onClick={onOpenApproveModal}>
+              onClick={onOpenApproveModal}
+            >
               + Tambah Pembayaran
             </Button>
           </div>
@@ -321,9 +371,15 @@ const Invoice = props => {
                 return (
                   <div className={classes.PaymentCard} key={i}>
                     <div className={classes.Numbering}>{i + 1}</div>
-                    <div className={classes.Nominals}>Rp. {payment.nominal.toLocaleString()} </div>
-                    <div className={classes.PaymentDate}>{moment(payment.paymentDate).format('DD MMM YYYY ')}</div>
-                    <div className={classes.PaymentTime}>{payment.paymentTime}</div>
+                    <div className={classes.Nominals}>
+                      Rp. {payment.nominal.toLocaleString()}{' '}
+                    </div>
+                    <div className={classes.PaymentDate}>
+                      {moment(payment.paymentDate).format('DD MMM YYYY ')}
+                    </div>
+                    <div className={classes.PaymentTime}>
+                      {payment.paymentTime}
+                    </div>
                   </div>
                 );
               })}
@@ -335,8 +391,11 @@ const Invoice = props => {
               color='primary'
               size='small'
               disableElevation
-              disabled={orderData.status !== 'Pending' || orderData?.totalPrice > payOff}
-              onClick={onOpenOrderModal}>
+              disabled={
+                orderData.status !== 'Pending' || orderData?.totalPrice > payOff
+              }
+              onClick={onOpenOrderModal}
+            >
               Setujui Pesanan
             </Button>
           </div>
@@ -355,15 +414,17 @@ const Invoice = props => {
             orderId: orderData._id,
             companyId: orderData.companyId._id,
           })
-        }>
+        }
+      >
         Setujui pembelian dari perusahaan ini?
       </OrderModal>
       <ApproveModal
         show={approveModal}
         onCancel={onCloseApproveModal}
         orderId={orderid}
-        orderType='Reg'
-        onUpdatePaymentInput={pay => onUpdatePaymentInput(pay)}>
+        orderType='Bc'
+        onUpdatePaymentInput={(pay) => onUpdatePaymentInput(pay)}
+      >
         Form Persetujuan
       </ApproveModal>
       {content}
@@ -372,7 +433,7 @@ const Invoice = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     isLoading: state.finance.isLoading,
@@ -381,11 +442,16 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    approveOrderREG: payload => dispatch(actionCreators.approveOrderREG(payload)),
-    getOrderInvoice: orderData => dispatch(actionCreators.getOrderInvoice(orderData)),
+    approveOrderREG: (payload) =>
+      dispatch(actionCreators.approveOrderREG(payload)),
+    getOrderInvoice: (orderData) =>
+      dispatch(actionCreators.getOrderInvoice(orderData)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Invoice));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Invoice));

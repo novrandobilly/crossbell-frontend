@@ -634,3 +634,37 @@ export const approveOrderBC = orderData => {
     }
   };
 };
+
+export const updatePaymentBC = (payload) => {
+  return async (dispatch) => {
+    dispatch(approveOrderStart());
+    try {
+      const formData = new FormData();
+      formData.append('paymentDate', payload.paymentDate);
+      formData.append('paymentTime', payload.paymentTime);
+      formData.append('orderRegId', payload.orderRegId);
+      formData.append('nominal', payload.nominal);
+      formData.append('payment-reguler', payload.paymentFile);
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: formData,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(approveOrderSuccess(responseJSON));
+      return responseJSON;
+    } catch (err) {
+      dispatch(approveOrderFail());
+      return err;
+    }
+  };
+};

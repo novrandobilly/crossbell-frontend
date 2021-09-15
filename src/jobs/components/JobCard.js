@@ -132,7 +132,7 @@ const JobCard = (props) => {
             </span>
           </div>
           <div>
-            <em>{props.fieldOfWork.filter((fow) => fow).join(', ')}</em>
+            <em>{props.fieldOfWork?.filter((fow) => fow).join(', ')}</em>
           </div>
           <p className={classes.BottomContent}>
             <p className={classes.BottomSalary}>
