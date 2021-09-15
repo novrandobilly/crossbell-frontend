@@ -68,7 +68,7 @@ const CompaniesListAO = (props) => {
     const payload = { token: admin.token };
     getWholeCompanies(payload).then((res) => {
       setData(res.wholeCompanies.reverse());
-
+      console.log(res);
       if (res.message) {
         emptyText.current =
           'Belum ada perusahaan yang membuat pesanan untuk saat ini';
@@ -328,7 +328,7 @@ const CompaniesListAO = (props) => {
                           <th>{slotUsed}</th>
                           <th>{totalJobs} </th>
                           <th>{slotUsed} </th>
-                          <th>{company.slotREG}</th>
+                          <th>{company.slotREG.length}</th>
                           <th>{expSlot}</th>
 
                           <th>
@@ -457,27 +457,11 @@ const CompaniesListAO = (props) => {
                           >
                             {company.industry ? company.industry : 'no data'}
                           </th>
-
                           <th>{company.email}</th>
-                          {/* 
-                          <th
-                            style={
-                              company.address
-                                ? { color: 'black', maxWidth: '24rem' }
-                                : {
-                                    color: 'rgba(255,0,0,0.7)',
-                                    fontWeight: 'bold',
-                                  }
-                            }
-                          >
-                            {' '}
-                            {company.address ? company.address : 'no data'}
-                          </th> */}
-
                           <th>{liveJobs} </th>
                           <th>{totalJobs} </th>
                           <th>{slotUsed} </th>
-                          <th>{company.slotREG}</th>
+                          <th>{company.slotREG.length}</th>
                           <th>{expSlot}</th>
 
                           <th>

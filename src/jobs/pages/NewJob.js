@@ -119,7 +119,7 @@ const NewJob = (props) => {
     onInputHandler(
       'fieldOfWork',
       fieldOfWork?.field,
-      fieldOfWork.field ? true : false
+      fieldOfWork?.field ? true : false
     );
     onInputHandler('salary', salary?.value, true);
     onInputHandler('benefit', benefit?.value, true);
@@ -133,7 +133,7 @@ const NewJob = (props) => {
             userId: auth.userId,
             token: auth.token,
           });
-          setMaxSlot(res.company.slotREG);
+          setMaxSlot(res.company.slotREG?.length);
         }
       } catch (err) {
         console.log(err);

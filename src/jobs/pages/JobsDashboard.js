@@ -90,6 +90,7 @@ const JobsDashboard = (props) => {
           payload: { jobs: res.availableJobs },
         });
         setAllAvailableJobs(res.availableJobs);
+        console.log(res);
       } catch (err) {
         setJobEmpty(true);
         setAllAvailableJobs([]);

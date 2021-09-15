@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
 import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './OrderBC.module.css';
 
@@ -46,17 +43,8 @@ const paginationReducer = (state, action) => {
 
 const OrderBC = (props) => {
   const [data, setData] = useState([]);
-  const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
-  const [orderModal, setOrderModal] = useState(false);
-  const [approveOrder, setApproveOrder] = useState({
-    orderId: null,
-    companyId: null,
-    index: null,
-  });
 
-  const [rowsNumber, setRowsNumber] = useState(10);
-  const [paginationNumber, setPaginationNumber] = useState(1);
   const emptyText = useRef('');
 
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
@@ -102,33 +90,33 @@ const OrderBC = (props) => {
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const approveOrderBCHandler = async (dataInput) => {
-    setIndex(dataInput.i);
-    setOrderModal(false);
+  // const approveOrderBCHandler = async (dataInput) => {
+  //   setIndex(dataInput.i);
+  //   setOrderModal(false);
 
-    const payload = {
-      token: props.admin.token,
-      companyId: dataInput.companyId,
-      orderId: dataInput.orderId,
-    };
-    try {
-      const response = await props.approveOrderBC(payload);
-      if (!response) {
-        throw new Error(response);
-      }
+  //   const payload = {
+  //     token: props.admin.token,
+  //     companyId: dataInput.companyId,
+  //     orderId: dataInput.orderId,
+  //   };
+  //   try {
+  //     const response = await props.approveOrderBC(payload);
+  //     if (!response) {
+  //       throw new Error(response);
+  //     }
 
-      setData((prevData) => {
-        const tempData = [...prevData];
-        const trueIndex = dataInput.i + (paginationNumber - 1) * rowsNumber;
-        tempData[trueIndex].status = 'Paid';
-        return tempData;
-      });
-      setIndex(null);
-    } catch (err) {
-      console.log(err);
-      setIndex(null);
-    }
-  };
+  //     setData((prevData) => {
+  //       const tempData = [...prevData];
+  //       const trueIndex = dataInput.i + (paginationNumber - 1) * rowsNumber;
+  //       tempData[trueIndex].status = 'Paid';
+  //       return tempData;
+  //     });
+  //     setIndex(null);
+  //   } catch (err) {
+  //     console.log(err);
+  //     setIndex(null);
+  //   }
+  // };
 
   //================= Pagination ===========================
 
@@ -140,7 +128,6 @@ const OrderBC = (props) => {
         startIndex: state.rowsPerPage * (value - 1),
       },
     });
-    setPaginationNumber(value);
   };
 
   const rowsHandler = (event) => {
@@ -150,16 +137,6 @@ const OrderBC = (props) => {
         rowsPerPage: event.target.value,
       },
     });
-    setRowsNumber(event.target.value);
-  };
-
-  const onCloseOrderModal = () => {
-    setOrderModal(false);
-  };
-
-  const onOpenOrderModal = (orderId, companyId, index) => {
-    setApproveOrder({ orderId: orderId, companyId: companyId, index: index });
-    setOrderModal(true);
   };
 
   let content = <SpinnerCircle />;
@@ -179,7 +156,6 @@ const OrderBC = (props) => {
                 <th>Tanggal Order</th>
                 <th>Tanggal Disetujui</th>
                 <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
 
@@ -187,7 +163,17 @@ const OrderBC = (props) => {
               {displayData.map((order, i) => (
                 <tr key={order._id}>
                   <th> {i + 1}</th>
-                  <th> {order._id}</th>
+
+                  <th>
+                    {' '}
+                    <Link
+                      to={`/co/${order._id}/invoiceBC`}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      {order._id}
+                    </Link>
+                  </th>
+
                   <th>
                     {' '}
                     <Link
@@ -197,9 +183,11 @@ const OrderBC = (props) => {
                       {order.companyId?.companyName}
                     </Link>
                   </th>
+
                   <th>Rp.{order.totalPrice.toLocaleString()}</th>
 
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
+
                   <th>
                     {order.approvedAt
                       ? moment(order.approvedAt).format('D MMM YYYY')
@@ -207,9 +195,7 @@ const OrderBC = (props) => {
                   </th>
 
                   <th>
-                    {props.indexIsLoading && index === i ? (
-                      <Spinner />
-                    ) : order.status === 'Paid' ? (
+                    {props.indexIsLoading && order.status === 'Paid' ? (
                       <span style={{ color: 'Green', fontWeight: 'bold' }}>
                         Paid
                       </span>
@@ -218,34 +204,6 @@ const OrderBC = (props) => {
                         Pending
                       </span>
                     )}
-                  </th>
-
-                  <th>
-                    <div className={classes.DropDown}>
-                      <button className={classes.DropButton}>
-                        <ArrowDropDownIcon />
-                      </button>
-                      <div className={classes.DropDownContent}>
-                        {order.status === 'Pending' ? (
-                          <button
-                            style={{ color: 'green' }}
-                            onClick={() =>
-                              onOpenOrderModal(
-                                order._id,
-                                order.companyId._id,
-                                i
-                              )
-                            }
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          <button style={{ color: 'gray', fontWeight: 'bold' }}>
-                            Telah disetujui
-                          </button>
-                        )}
-                      </div>
-                    </div>
                   </th>
                 </tr>
               ))}
@@ -287,24 +245,7 @@ const OrderBC = (props) => {
     content = <p className={classes.EmptyText}>{emptyText.current}</p>;
   }
 
-  return (
-    <div>
-      <OrderModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        Accept={() =>
-          approveOrderBCHandler({
-            orderId: approveOrder.orderId,
-            companyId: approveOrder.companyId,
-            i: approveOrder.index,
-          })
-        }
-      >
-        Setujui pembelian dari perusahaan ini?
-      </OrderModal>
-      {content}
-    </div>
-  );
+  return <div>{content}</div>;
 };
 
 const mapStateToProps = (state) => {

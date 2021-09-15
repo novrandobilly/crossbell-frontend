@@ -80,7 +80,7 @@ const EditUnreleasedJob = (props) => {
       try {
         if (auth.userId) {
           const res = await getOneCompany({ userId: auth.userId });
-          setMaxSlot(res.company.slotREG);
+          setMaxSlot(res.company.slotREG?.length);
         }
       } catch (err) {
         console.log(err);
@@ -193,7 +193,7 @@ const EditUnreleasedJob = (props) => {
       onInputHandler(
         'fieldOfWork',
         fieldOfWork?.field,
-        fieldOfWork.field ? true : false
+        fieldOfWork?.field ? true : false
       );
       onInputHandler('placementLocation', placement, true);
       onInputHandler('jobExperience', jobExperience, true);
@@ -274,6 +274,7 @@ const EditUnreleasedJob = (props) => {
       userId: props.auth.userId,
       id: jobsid,
     };
+
     try {
       if (formState.inputs.slotAllocation.value % 2 !== 0) {
         throw new Error('Slot allocation harus genap');

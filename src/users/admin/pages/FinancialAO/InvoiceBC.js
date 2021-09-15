@@ -173,6 +173,7 @@ const Invoice = (props) => {
               </div>
             </div>
           </div>
+
           <table className={classes.Table}>
             <thead>
               <tr>
@@ -421,7 +422,7 @@ const Invoice = (props) => {
         show={approveModal}
         onCancel={onCloseApproveModal}
         orderId={orderid}
-        orderType='Reg'
+        orderType='Bc'
         onUpdatePaymentInput={(pay) => onUpdatePaymentInput(pay)}
       >
         Form Persetujuan
