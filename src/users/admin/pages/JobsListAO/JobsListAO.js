@@ -41,7 +41,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const JobsListAO = (props) => {
+const JobsListAO = props => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: 'Approved' });
   const [data, setData] = useState();
@@ -85,15 +85,14 @@ const JobsListAO = (props) => {
     const payload = { token: admin.token };
     if (admin.token) {
       let sort = [];
-      getAllJob(payload).then((res) => {
-        sort = res.availableJobs;
-        sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
+      getAllJob(payload).then(res => {
+        sort = res?.availableJobs;
+        sort = sort?.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setData(sort);
         setIsLoading(false);
 
-        if (res.message) {
-          emptyText.current =
-            'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+        if (res?.message) {
+          emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
         }
       });
     }
@@ -106,10 +105,7 @@ const JobsListAO = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setIsLoading(false);
       setDisplayData(applicantArray);
     }
@@ -127,7 +123,7 @@ const JobsListAO = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -151,39 +147,19 @@ const JobsListAO = (props) => {
                 <ArrowDropDownIcon />
               </button>
               <div className={classes.DropDownContent}>
-                <button
-                  style={{ color: 'black' }}
-                  value='All'
-                  onClick={handleAll}
-                >
+                <button style={{ color: 'black' }} value='All' onClick={handleAll}>
                   All
                 </button>
-                <button
-                  style={{ color: 'rgb(33, 153, 0)' }}
-                  value='Approved'
-                  onClick={handleApproved}
-                >
+                <button style={{ color: 'rgb(33, 153, 0)' }} value='Approved' onClick={handleApproved}>
                   Approved
                 </button>
-                <button
-                  style={{ color: 'red' }}
-                  value='Canceled'
-                  onClick={handleCanceled}
-                >
+                <button style={{ color: 'red' }} value='Canceled' onClick={handleCanceled}>
                   Canceled
                 </button>
-                <button
-                  style={{ color: 'rgb(250, 129, 0)' }}
-                  value='Pending'
-                  onClick={handlePending}
-                >
+                <button style={{ color: 'rgb(250, 129, 0)' }} value='Pending' onClick={handlePending}>
                   Pending
                 </button>
-                <button
-                  style={{ color: 'rgb(130, 130, 130)' }}
-                  value='Expired'
-                  onClick={handleExpired}
-                >
+                <button style={{ color: 'rgb(130, 130, 130)' }} value='Expired' onClick={handleExpired}>
                   Expired
                 </button>
               </div>
@@ -210,7 +186,7 @@ const JobsListAO = (props) => {
                 <tbody className={classes.ColumnField}>
                   {displayData &&
                     displayData
-                      .filter((status) => status.status === filter)
+                      .filter(status => status.status === filter)
                       .map((job, i) => {
                         return (
                           <tr key={job.id}>
@@ -222,8 +198,7 @@ const JobsListAO = (props) => {
                                 style={{
                                   color: 'black',
                                   textDecoration: 'none',
-                                }}
-                              >
+                                }}>
                                 {job._id}
                               </Link>
                             </th>
@@ -231,16 +206,8 @@ const JobsListAO = (props) => {
                             <th>{job.jobTitle}</th>
                             <th>{job.jobApplicants.length}</th>
                             <th>{job.placementLocation}</th>
-                            <th
-                              style={
-                                job.releasedAt
-                                  ? { color: 'black' }
-                                  : { color: 'red' }
-                              }
-                            >
-                              {job.releasedAt
-                                ? moment(job.releasedAt).format('D MMM YYYY')
-                                : 'Belum terbit'}
+                            <th style={job.releasedAt ? { color: 'black' } : { color: 'red' }}>
+                              {job.releasedAt ? moment(job.releasedAt).format('D MMM YYYY') : 'Belum terbit'}
                             </th>
                             <th
                               style={
@@ -260,8 +227,7 @@ const JobsListAO = (props) => {
                                       color: 'rgb(250, 129, 0)',
                                       fontWeight: 'bold',
                                     }
-                              }
-                            >
+                              }>
                               {job.status}
                             </th>
                             <th>
@@ -270,15 +236,9 @@ const JobsListAO = (props) => {
                                   <ArrowDropDownIcon />
                                 </button>
                                 <div className={classes.DropDownContent}>
-                                  <button style={{ color: 'rgb(33, 153, 0)' }}>
-                                    Approved
-                                  </button>
-                                  <button style={{ color: 'red' }}>
-                                    Canceled
-                                  </button>
-                                  <button style={{ color: 'rgb(250, 129, 0)' }}>
-                                    Pending
-                                  </button>
+                                  <button style={{ color: 'rgb(33, 153, 0)' }}>Approved</button>
+                                  <button style={{ color: 'red' }}>Canceled</button>
+                                  <button style={{ color: 'rgb(250, 129, 0)' }}>Pending</button>
                                 </div>
                               </div>
                             </th>
@@ -297,40 +257,24 @@ const JobsListAO = (props) => {
 
                           <th>
                             {' '}
-                            <Link
-                              to={`/jobs/${job._id}`}
-                              style={{ color: 'black', textDecoration: 'none' }}
-                            >
+                            <Link to={`/jobs/${job._id}`} style={{ color: 'black', textDecoration: 'none' }}>
                               {job._id}
                             </Link>
                           </th>
                           <th>{job.companyId.companyName}</th>
                           <th>{job.jobTitle}</th>
                           <th>{job.jobApplicants.length}</th>
-                          <th style={{ width: '20rem' }}>
-                            {job.placementLocation}
-                          </th>
-                          <th
-                            style={
-                              job.releasedAt
-                                ? { color: 'black' }
-                                : { color: 'red' }
-                            }
-                          >
-                            {job.releasedAt
-                              ? moment(job.releasedAt).format('D MMM YYYY')
-                              : 'Belum terbit'}
+                          <th style={{ width: '20rem' }}>{job.placementLocation}</th>
+                          <th style={job.releasedAt ? { color: 'black' } : { color: 'red' }}>
+                            {job.releasedAt ? moment(job.releasedAt).format('D MMM YYYY') : 'Belum terbit'}
                           </th>
                           <th
                             style={
                               moment(job.expiredDate) >= moment()
                                 ? { color: 'green', fontWeight: '600' }
                                 : { color: 'gray', fontWeight: '600' }
-                            }
-                          >
-                            {moment(job.expiredDate) >= moment()
-                              ? 'Aktif'
-                              : 'Expired'}
+                            }>
+                            {moment(job.expiredDate) >= moment() ? 'Aktif' : 'Expired'}
                           </th>
                           <th>
                             <div className={classes.DropDown}>
@@ -338,15 +282,9 @@ const JobsListAO = (props) => {
                                 <ArrowDropDownIcon />
                               </button>
                               <div className={classes.DropDownContent}>
-                                <button style={{ color: 'rgb(33, 153, 0)' }}>
-                                  Approved
-                                </button>
-                                <button style={{ color: 'red' }}>
-                                  Canceled
-                                </button>
-                                <button style={{ color: 'rgb(250, 129, 0)' }}>
-                                  Pending
-                                </button>
+                                <button style={{ color: 'rgb(33, 153, 0)' }}>Approved</button>
+                                <button style={{ color: 'red' }}>Canceled</button>
+                                <button style={{ color: 'rgb(250, 129, 0)' }}>Pending</button>
                               </div>
                             </div>
                           </th>
@@ -363,26 +301,16 @@ const JobsListAO = (props) => {
               display: 'flex',
               justifyContent: 'space-around',
               width: '100%',
-            }}
-          >
+            }}>
             <FormControl style={{ width: '4rem' }}>
-              <Select
-                labelId='rowPerPage'
-                id='rowPerPageSelect'
-                value={state.rowsPerPage}
-                onChange={rowsHandler}
-              >
+              <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={20}>20</MenuItem>
                 <MenuItem value={30}>30</MenuItem>
               </Select>
               <FormHelperText>Rows</FormHelperText>
             </FormControl>
-            <Pagination
-              count={state.pageCount}
-              page={state.pageNumber}
-              onChange={pageChangeHandler}
-            />
+            <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
           </div>
         </div>
       </div>
@@ -396,15 +324,15 @@ const JobsListAO = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getAllJob: (payload) => dispatch(actionCreators.getAllJob(payload)),
+    getAllJob: payload => dispatch(actionCreators.getAllJob(payload)),
   };
 };
 

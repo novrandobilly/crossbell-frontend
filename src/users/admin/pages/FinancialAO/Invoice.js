@@ -134,7 +134,7 @@ const Invoice = props => {
             className={classes.margin}
             onClick={handlePrint}
             startIcon={<GetAppIcon />}>
-            dowload/ print
+            download/ print
           </Button>
         </div>
         <div className={classes.InvoiceContainer} ref={componentRef}>
@@ -246,7 +246,7 @@ const Invoice = props => {
                     PPH<span>(2%)</span>
                   </p>
                   <p>
-                    - Rp. {(tax = subTotal * 0.02).toLocaleString()}
+                    - Rp. {(tax = (subTotal - dis) * 0.02).toLocaleString()}
                     ,-
                   </p>
                 </div>

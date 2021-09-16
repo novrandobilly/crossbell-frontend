@@ -239,10 +239,11 @@ export const approveOrderREG = orderData => {
         }),
       });
       const responseJSON = await response.json();
+
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
-      console.log(responseJSON);
+
       dispatch(approveOrderSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
@@ -635,8 +636,8 @@ export const approveOrderBC = orderData => {
   };
 };
 
-export const updatePaymentBC = (payload) => {
-  return async (dispatch) => {
+export const updatePaymentBC = payload => {
+  return async dispatch => {
     dispatch(approveOrderStart());
     try {
       const formData = new FormData();
@@ -646,16 +647,13 @@ export const updatePaymentBC = (payload) => {
       formData.append('nominal', payload.nominal);
       formData.append('payment-reguler', payload.paymentFile);
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`,
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: formData,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
