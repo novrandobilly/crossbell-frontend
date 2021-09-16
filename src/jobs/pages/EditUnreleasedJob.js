@@ -80,7 +80,11 @@ const EditUnreleasedJob = (props) => {
       try {
         if (auth.userId) {
           const res = await getOneCompany({ userId: auth.userId });
-          setMaxSlot(res.company.slotREG?.length);
+          setMaxSlot(
+            res.company.slotREG?.filter((slot) => {
+              return slot.status === 'Idle';
+            }).length
+          );
         }
       } catch (err) {
         console.log(err);
@@ -167,7 +171,7 @@ const EditUnreleasedJob = (props) => {
       let inputfield = document.getElementById('slotAllocation');
       let inputval = inputfield.value;
       let numeric = inputval.replace(/[^0-9]+/, 0);
-      if (numeric.length !== inputval.length || numeric % 2 !== 0) {
+      if (numeric.length !== inputval.length) {
         inputfield.value = '0';
       }
     }
@@ -240,9 +244,6 @@ const EditUnreleasedJob = (props) => {
       userId: props.auth.userId,
     };
     try {
-      if (formState.inputs.slotAllocation.value % 2 !== 0) {
-        throw new Error('Slot allocation harus genap');
-      }
       await props.releaseJob(jobData, authData);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
@@ -276,9 +277,6 @@ const EditUnreleasedJob = (props) => {
     };
 
     try {
-      if (formState.inputs.slotAllocation.value % 2 !== 0) {
-        throw new Error('Slot allocation harus genap');
-      }
       const res = await props.editJobDraft(jobData, authData);
       console.log(res);
       props.history.push(`/co/${props.auth.userId}/jobList`);
@@ -432,8 +430,6 @@ const EditUnreleasedJob = (props) => {
   }
 
   let formContent = <Spinner />;
-
-  console.log(jobExperience);
 
   if (!props.job.isLoading && loadedJob) {
     formContent = (
