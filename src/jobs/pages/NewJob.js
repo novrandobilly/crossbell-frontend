@@ -133,7 +133,11 @@ const NewJob = (props) => {
             userId: auth.userId,
             token: auth.token,
           });
-          setMaxSlot(res.company.slotREG?.length);
+          setMaxSlot(
+            res.company.slotREG?.filter((slot) => {
+              return slot.status === 'Idle';
+            }).length
+          );
         }
       } catch (err) {
         console.log(err);
@@ -207,7 +211,6 @@ const NewJob = (props) => {
     };
     try {
       const res = await props.saveJobDraft(jobData, authData);
-      console.log(res);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
       console.log(err);
@@ -708,10 +711,10 @@ const NewJob = (props) => {
               {formState.inputs.slotAllocation.value &&
               formState.inputs.slotAllocation.value > 0 &&
               parseInt(maxSlot) >
-                parseInt(formState.inputs.slotAllocation.value) / 2
+                parseInt(formState.inputs.slotAllocation.value)
                 ? (
                     parseInt(maxSlot) -
-                    parseInt(formState.inputs.slotAllocation.value) / 2
+                    parseInt(formState.inputs.slotAllocation.value)
                   ).toString()
                 : maxSlot}
             </h3>
@@ -749,7 +752,7 @@ const NewJob = (props) => {
           save draft
         </Button>
 
-        {formState.inputs.slotAllocation.value <= maxSlot * 2 && (
+        {formState.inputs.slotAllocation.value <= maxSlot && (
           <Button
             variant='contained'
             color='primary'

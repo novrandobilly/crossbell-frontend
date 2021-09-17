@@ -73,12 +73,19 @@ const CompanyCard = (props) => {
                       <p
                         className={classes.Slot}
                         style={
-                          props.slotREG.length < 1
+                          props.slotREG.filter((slot) => {
+                            return slot.status === 'Idle';
+                          }).length < 1
                             ? { color: 'rgb(255, 46, 46)' }
                             : { color: 'rgb(0, 135, 9)' }
                         }
                       >
-                        Remaining Slot: {props.slotREG.length}
+                        Remaining Slot:{' '}
+                        {
+                          props.slotREG.filter((slot) => {
+                            return slot.status === 'Idle';
+                          }).length
+                        }
                       </p>
                     </div>
                   )}
