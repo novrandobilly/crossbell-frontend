@@ -39,7 +39,6 @@
 .LinkRef a {
   text-decoration: none;
   color: white;
-  /* text-shadow: 1px 1px 0 rgb(0, 0, 0); */
 }
 
 .Explore {
@@ -52,6 +51,30 @@
 
 .LinkRef:hover {
   background-color: black;
+}
+
+.HeadhunterButton {
+  width: fit-content;
+  background-color: black;
+  border-radius: 5px;
+  margin-top: 16px;
+}
+
+.HeadhunterButton a {
+  text-decoration: none;
+  color: white;
+}
+
+.Order {
+  background-color: #ff7700ee;
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.HeadhunterButton:hover {
+  background-color: white;
 }
 
 .SmallAbout {

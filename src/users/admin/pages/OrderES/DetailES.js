@@ -177,259 +177,265 @@ const DetailES = (props) => {
   if (!props.isLoading && dataES && displayData) {
     content = (
       <div className={classes.Container}>
-        <div className={classes.PageContainer}>
-          <div className={classes.PageHeader}>
-            <p>{dataES.companyId.companyName}</p>
-            <p>{dataES.companyId.emailRecipient}</p>
-          </div>
-          <div className={classes.DetailContainer}>
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Posisi</p>
-              <p>{dataES.positionLevel}</p>
+        <div className={classes.ContainerFlex}>
+          <div className={classes.PageContainer}>
+            <div className={classes.PageHeader}>
+              <p>{dataES.companyName}</p>
             </div>
 
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Pengalaman</p>
-              <p>{dataES.experience}</p>
-            </div>
+            <div className={classes.DetailContainer}>
+              <div className={classes.DescHolder}>
+                <p className={classes.DescLabel}>Nama Pelanggan</p>
+                <p>{dataES.name}</p>
+              </div>
 
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Bidang keahlian</p>
-              <p>{dataES.expertise}</p>
-            </div>
+              <div className={classes.DescHolder}>
+                <p className={classes.DescLabel}>Email</p>
+                <p>{dataES.email}</p>
+              </div>
 
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Kisaran Gaji</p>
-              <p>
-                IDR {dataES.salaryRange.min} - IDR {dataES.salaryRange.max}
-              </p>
-            </div>
+              <div className={classes.DescHolder}>
+                <p className={classes.DescLabel}>Nomor Telepon</p>
+                <p>{dataES.phone}</p>
+              </div>
 
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Tugas utama</p>
-              <p>{dataES.mainTask}</p>
-            </div>
+              <div className={classes.DescHolder}>
+                <p className={classes.DescLabel}>Industri Perusahaan</p>
+                <p>{dataES.industry}</p>
+              </div>
 
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Tanggung jawab</p>
-              <p>{dataES.responsibility}</p>
-            </div>
+              <div className={classes.DescHolder}>
+                <p className={classes.DescLabel}>Persyaratan Minimum</p>
+                <p>
+                  {dataES.candidateRequirement
+                    ? dataES.candidateRequirement
+                    : 'Kosong'}
+                </p>
+              </div>
 
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Wewenang</p>
-              <p>{dataES.authority}</p>
-            </div>
-
-            <div className={classes.DescHolder}>
-              <p className={classes.DescLabel}>Catatan tambahan</p>
-              <p>{dataES.specification}</p>
+              <div className={classes.DescHolder}>
+                <p className={classes.DescLabel}>Persyaratan tambahan</p>
+                <p>
+                  {dataES.specialRequirement
+                    ? dataES.specialRequirement
+                    : 'Kosong'}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={classes.InputContainer}>
-          <form className={classes.InputField}>
-            <TextField
-              label='nama kandidat'
-              id='candidateName'
-              name='candidateName'
-              size='small'
-              onChange={(event) =>
-                onManualHandler(event, {
-                  validator: [VALIDATOR_REQUIRE()],
-                })
-              }
-              inputProps={{
-                style: {
-                  fontSize: '0.8rem',
-                },
-              }}
-              style={{ width: '80%' }}
-            />
+          <div className={classes.InputContainer}>
+            <form className={classes.InputField}>
+              <div className={classes.CandidateInput}>
+                <TextField
+                  label='nama kandidat'
+                  id='candidateName'
+                  name='candidateName'
+                  size='small'
+                  onChange={(event) =>
+                    onManualHandler(event, {
+                      validator: [VALIDATOR_REQUIRE()],
+                    })
+                  }
+                  style={{ width: '100%' }}
+                  inputProps={{
+                    style: {
+                      fontSize: '0.8rem',
+                    },
+                  }}
+                />
+              </div>
 
-            <TextField
-              label='email'
-              id='candidateEmail'
-              name='candidateEmail'
-              size='small'
-              onChange={(event) =>
-                onManualHandler(event, {
-                  validator: [VALIDATOR_REQUIRE()],
-                })
-              }
-              inputProps={{
-                style: {
-                  fontSize: '0.8rem',
-                },
-              }}
-              style={{ width: '80%' }}
-            />
-            <TextField
-              label='No.HP'
-              id='candidateContact'
-              name='candidateContact'
-              size='small'
-              onChange={(event) =>
-                onManualHandler(event, {
-                  validator: [VALIDATOR_REQUIRE()],
-                })
-              }
-              style={{ width: '80%' }}
-              inputProps={{
-                style: {
-                  fontSize: '0.8rem',
-                },
-              }}
-            />
-            <div className={classes.Button}>
-              <Button
-                variant='outlined'
-                color='primary'
-                style={{ height: '2rem' }}
-                className={classes.AddButton}
-                onClick={onSubmitHandler}
-                startIcon={<AddIcon />}
-              >
-                Add
-              </Button>
-            </div>
-          </form>
-          <div className={classes.CadidateContainer}>
-            {displayData.map((can, i) => {
-              return (
-                <div className={classes.CandidateCard} key={i}>
-                  <div className={classes.CandidateHead}>
-                    <div className={classes.DeleteCandidate}>
-                      <button
-                        onClick={(e) =>
-                          onDeleteHandler(e, can.id, can.candidateName)
-                        }
-                        style={{
-                          border: 'none',
-                          outline: 'none',
-                          backgroundColor: 'transparent',
-                          margin: '0.2rem 0.5rem -0.2rem 0',
-                          padding: '0',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <CloseIcon
+              <div className={classes.CandidateInput}>
+                <TextField
+                  label='email'
+                  id='candidateEmail'
+                  name='candidateEmail'
+                  size='small'
+                  onChange={(event) =>
+                    onManualHandler(event, {
+                      validator: [VALIDATOR_REQUIRE()],
+                    })
+                  }
+                  style={{ width: '100%' }}
+                  inputProps={{
+                    style: {
+                      fontSize: '0.8rem',
+                    },
+                  }}
+                />
+              </div>
+
+              <div className={classes.CandidateInput}>
+                <TextField
+                  label='No.HP'
+                  id='candidateContact'
+                  name='candidateContact'
+                  size='small'
+                  onChange={(event) =>
+                    onManualHandler(event, {
+                      validator: [VALIDATOR_REQUIRE()],
+                    })
+                  }
+                  style={{ width: '100%' }}
+                  inputProps={{
+                    style: {
+                      fontSize: '0.8rem',
+                    },
+                  }}
+                />
+              </div>
+
+              <div className={classes.Button}>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  style={{ height: '2rem' }}
+                  className={classes.AddButton}
+                  onClick={onSubmitHandler}
+                  startIcon={<AddIcon />}
+                >
+                  Add
+                </Button>
+              </div>
+            </form>
+            <div className={classes.CadidateContainer}>
+              {displayData.map((can, i) => {
+                return (
+                  <div className={classes.CandidateCard} key={i}>
+                    <div className={classes.CandidateHead}>
+                      <div className={classes.DeleteCandidate}>
+                        <button
+                          onClick={(e) =>
+                            onDeleteHandler(e, can.id, can.candidateName)
+                          }
                           style={{
-                            color: 'gray',
-                            fontSize: '1rem',
-                            margin: '0',
+                            border: 'none',
+                            outline: 'none',
+                            backgroundColor: 'transparent',
+                            margin: '0.2rem 0.5rem -0.2rem 0',
+                            padding: '0',
+                            cursor: 'pointer',
                           }}
-                        />
-                      </button>
-                      <p>{can.candidateName}</p>
+                        >
+                          <CloseIcon
+                            style={{
+                              color: 'gray',
+                              fontSize: '1rem',
+                              margin: '0',
+                            }}
+                          />
+                        </button>
+                        <p>{can.candidateName}</p>
+                      </div>
+                      <div className={classes.DropDown}>
+                        {props.indexIsLoading && statusIndex === i ? (
+                          <SpinnerCircle />
+                        ) : (
+                          <p
+                            style={
+                              can.status === 'Open'
+                                ? { color: 'green' }
+                                : { color: 'gray' }
+                            }
+                          >
+                            {can.status}
+                          </p>
+                        )}
+                        <button className={classes.DropButton}>
+                          <ArrowDropDownIcon />
+                        </button>
+                        <div className={classes.DropDownContent}>
+                          <button
+                            style={{ color: 'Green' }}
+                            onClick={() =>
+                              candidateStatusHandler({
+                                applicantId: can.id,
+                                value: 'Open',
+                                i,
+                              })
+                            }
+                          >
+                            Open
+                          </button>
+                          <button
+                            style={{ color: 'red' }}
+                            onClick={() =>
+                              candidateStatusHandler({
+                                applicantId: can.id,
+                                value: 'Closed',
+                                i,
+                              })
+                            }
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div className={classes.DropDown}>
-                      {props.indexIsLoading && statusIndex === i ? (
-                        <SpinnerCircle />
+                    <div className={classes.CandidateBody}>
+                      <div className={classes.CandidateContact}>
+                        <p>{can.candidateEmail}</p>
+                        <p>{can.candidateContact}</p>
+                      </div>
+                      {reply && replyIndex === i ? (
+                        <div className={classes.ReplyInput}>
+                          <TextField
+                            name='note'
+                            id='note'
+                            label='catatan'
+                            multiline
+                            rowsMax={4}
+                            variant='outlined'
+                            size='small'
+                            defaultValue={can.note}
+                            inputProps={{
+                              style: {
+                                fontSize: '0.8rem',
+                              },
+                            }}
+                            style={{
+                              marginBottom: '0.5rem',
+                              width: '25rem',
+                              marginRight: '0.5rem',
+                            }}
+                            onChange={(event) =>
+                              onManualHandler(event, {
+                                validator: [VALIDATOR_REQUIRE()],
+                              })
+                            }
+                          />
+                          <Button
+                            color='primary'
+                            style={{ height: '2.5rem' }}
+                            className={classes.button}
+                            onClick={() =>
+                              updateNoteES({
+                                applicantId: can.id,
+                                i,
+                              })
+                            }
+                          >
+                            save
+                          </Button>
+                        </div>
                       ) : (
-                        <p
-                          style={
-                            can.status === 'Open'
-                              ? { color: 'green' }
-                              : { color: 'gray' }
-                          }
-                        >
-                          {can.status}
-                        </p>
+                        <div className={classes.CandidateNote}>
+                          <p className={classes.NoteText}>{can.note}</p>
+                          <Button
+                            color='primary'
+                            style={{ height: '2.5rem' }}
+                            className={classes.button}
+                            onClick={(e) => replyHandler(i)}
+                          >
+                            reply
+                          </Button>
+                        </div>
                       )}
-                      <button className={classes.DropButton}>
-                        <ArrowDropDownIcon />
-                      </button>
-                      <div className={classes.DropDownContent}>
-                        <button
-                          style={{ color: 'Green' }}
-                          onClick={() =>
-                            candidateStatusHandler({
-                              applicantId: can.id,
-                              value: 'Open',
-                              i,
-                            })
-                          }
-                        >
-                          Open
-                        </button>
-                        <button
-                          style={{ color: 'red' }}
-                          onClick={() =>
-                            candidateStatusHandler({
-                              applicantId: can.id,
-                              value: 'Closed',
-                              i,
-                            })
-                          }
-                        >
-                          Close
-                        </button>
-                      </div>
                     </div>
                   </div>
-                  <div className={classes.CandidateBody}>
-                    <div className={classes.CandidateContact}>
-                      <p>{can.candidateEmail}</p>
-                      <p>{can.candidateContact}</p>
-                    </div>
-                    {reply && replyIndex === i ? (
-                      <div className={classes.ReplyInput}>
-                        <TextField
-                          name='note'
-                          id='note'
-                          label='catatan'
-                          multiline
-                          rowsMax={4}
-                          variant='outlined'
-                          size='small'
-                          defaultValue={can.note}
-                          inputProps={{
-                            style: {
-                              fontSize: '0.8rem',
-                            },
-                          }}
-                          style={{
-                            marginBottom: '0.5rem',
-                            width: '25rem',
-                            marginRight: '0.5rem',
-                          }}
-                          onChange={(event) =>
-                            onManualHandler(event, {
-                              validator: [VALIDATOR_REQUIRE()],
-                            })
-                          }
-                        />
-                        <Button
-                          color='primary'
-                          style={{ height: '2.5rem' }}
-                          className={classes.button}
-                          onClick={() =>
-                            updateNoteES({
-                              applicantId: can.id,
-                              i,
-                            })
-                          }
-                        >
-                          save
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className={classes.CandidateNote}>
-                        <p className={classes.NoteText}>{can.note}</p>
-                        <Button
-                          color='primary'
-                          style={{ height: '2.5rem' }}
-                          className={classes.button}
-                          onClick={(e) => replyHandler(i)}
-                        >
-                          reply
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
