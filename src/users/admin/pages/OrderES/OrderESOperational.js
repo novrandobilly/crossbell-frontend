@@ -177,7 +177,6 @@ const OrderES = (props) => {
               <tr>
                 <th>No</th>
                 <th>Order Id</th>
-                <th>Nama Perusahaan</th>
                 <th>Tanggal Order</th>
                 <th>Status</th>
                 <th>Aksi</th>
@@ -191,21 +190,13 @@ const OrderES = (props) => {
                   <th>
                     {' '}
                     <Link
-                      to={`/ad/alphaomega/order/${order._id}/es`}
+                      to={`/ad/alphaomega/order/es`}
                       style={{ color: 'black', textDecoration: 'none' }}
                     >
                       {order._id}
                     </Link>
                   </th>
-                  <th>
-                    {' '}
-                    <Link
-                      to={`/co/${order.companyId._id}/profile`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {order.companyId.companyName}
-                    </Link>
-                  </th>
+
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
 
                   <th>

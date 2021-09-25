@@ -210,7 +210,7 @@ const NewJob = (props) => {
       userId: props.auth.userId,
     };
     try {
-      const res = await props.saveJobDraft(jobData, authData);
+      await props.saveJobDraft(jobData, authData);
       props.history.push(`/co/${props.auth.userId}/jobList`);
     } catch (err) {
       console.log(err);

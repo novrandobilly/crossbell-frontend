@@ -48,12 +48,20 @@ const Home = (props) => {
             </p>
             <p>Jika bukan sekarang, kapan lagi?</p>
           </div>
+
           <div className={classes.LinkRef}>
             <Link to={`/jobs-dashboard`}>
               <div className={classes.Explore}>CARI PEKERJAAN DISINI</div>
             </Link>
           </div>
+
+          <div className={classes.HeadhunterButton}>
+            <Link to={`/co/order/es`}>
+              <div className={classes.Order}>JASA HEADHUNTER</div>
+            </Link>
+          </div>
         </div>
+
         <div className={classes.AuthForm}>
           {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
             <AuthForm

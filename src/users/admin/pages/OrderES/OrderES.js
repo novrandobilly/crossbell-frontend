@@ -198,15 +198,7 @@ const OrderES = (props) => {
                       {order._id}
                     </Link>
                   </th>
-                  <th>
-                    {' '}
-                    <Link
-                      to={`/co/${order.companyId._id}/profile`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
-                      {order.companyId.companyName}
-                    </Link>
-                  </th>
+                  <th>{order.companyName}</th>
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
 
                   <th>

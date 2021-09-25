@@ -214,13 +214,7 @@ const NavigationLinks = (props) => {
                       Pesan <em>Bulk Candidates</em>
                     </p>
                   </NavLink>
-                  <NavLink
-                    to={`/co/order/es`}
-                    activeClassName={classes.active}
-                    onClick={DropdownOrder}
-                  >
-                    <p>Pesan Kandidat Eksekutif</p>
-                  </NavLink>
+
                   <NavLink
                     to={`/co/${props.auth.userId}/listOrder`}
                     activeClassName={classes.active}
@@ -476,11 +470,6 @@ const NavigationLinks = (props) => {
                 activeClassName={classes.active}
               >
                 <em>Pesan Bulk Candidates</em>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={`/co/order/es`} activeClassName={classes.active}>
-                Pesan Kandidat Eksekutif
               </NavLink>
             </li>
 
