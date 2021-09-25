@@ -48,7 +48,7 @@ const IndustryList = [
   { industry: 'Traveling' },
   { industry: 'Consulting' },
   { industry: 'Fashion' },
-  { industry: 'Tecnology' },
+  { industry: 'Technology' },
   { industry: 'Investment' },
 ];
 export default IndustryList;

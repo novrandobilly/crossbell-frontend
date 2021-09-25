@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 import classes from './AdminProfile.module.css';
 import BlankProfile from '../../../../assets/images/Blank_Profile.png';
 
-const AdminProfile = (props) => {
+const AdminProfile = props => {
   const [data, setData] = useState();
   const [edit, setEdit] = useState(false);
 
@@ -60,13 +60,13 @@ const AdminProfile = (props) => {
         userId: props.admin.userId,
         token: props.admin.token,
       };
-      getAdmin(payload).then((res) => {
-        setData(res.admin);
+      getAdmin(payload).then(res => {
+        setData(res?.admin);
       });
     }
   }, [getAdmin, props.admin.userId, props.admin.token]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateAdminFail();
@@ -94,12 +94,12 @@ const AdminProfile = (props) => {
     }
   };
 
-  const onEditHandler = (e) => {
+  const onEditHandler = e => {
     e.preventDefault();
     setEdit(true);
   };
 
-  const onUploadHandler = (e) => {
+  const onUploadHandler = e => {
     const elementId = e.target.name;
     const elementFile = e.target.files[0];
     onInputHandler(elementId, elementFile, true);
@@ -115,9 +115,7 @@ const AdminProfile = (props) => {
             <div
               className={classes.Picture}
               style={{
-                backgroundImage: `url('${
-                  data.picture ? data.picture.url : BlankProfile
-                }')`,
+                backgroundImage: `url('${data.picture ? data.picture.url : BlankProfile}')`,
               }}
             />
             {edit ? (
@@ -133,36 +131,18 @@ const AdminProfile = (props) => {
                 />
                 <label htmlFor='picture'>
                   {' '}
-                  <Button
-                    variant='outlined'
-                    color='primary'
-                    disableElevation
-                    style={{ marginBottom: '1rem' }}
-                    component='span'
-                  >
+                  <Button variant='outlined' color='primary' disableElevation style={{ marginBottom: '1rem' }} component='span'>
                     upload
                   </Button>
                 </label>
               </div>
             ) : null}
             {edit ? (
-              <Button
-                variant='contained'
-                color='primary'
-                disableElevation
-                type='submit'
-                disabled={!formState.formIsValid}
-              >
+              <Button variant='contained' color='primary' disableElevation type='submit' disabled={!formState.formIsValid}>
                 Save
               </Button>
             ) : (
-              <Button
-                variant='contained'
-                color='primary'
-                disableElevation
-                onClick={onEditHandler}
-                type='button'
-              >
+              <Button variant='contained' color='primary' disableElevation onClick={onEditHandler} type='button'>
                 Edit Profile
               </Button>
             )}
@@ -191,9 +171,7 @@ const AdminProfile = (props) => {
 
               <div className={classes.LabelWraper}>
                 <p className={classes.Label}>Tanggal Lahir</p>
-                <p className={classes.LabelData}>
-                  {moment(data.dateOfBirth).format('LL')}
-                </p>
+                <p className={classes.LabelData}>{moment(data.dateOfBirth).format('LL')}</p>
               </div>
             </div>
 
@@ -282,22 +260,18 @@ const AdminProfile = (props) => {
   return <div className={classes.Container}>{content} </div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getAdmin: (payload) => dispatch(actionCreators.getAdmin(payload)),
-    updateAdminIntro: (payload) =>
-      dispatch(actionCreators.updateAdminIntro(payload)),
+    getAdmin: payload => dispatch(actionCreators.getAdmin(payload)),
+    updateAdminIntro: payload => dispatch(actionCreators.updateAdminIntro(payload)),
     updateAdminFail: () => dispatch({ type: actionTypes.UPDATEADMINFAIL }),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(AdminProfile));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminProfile));
