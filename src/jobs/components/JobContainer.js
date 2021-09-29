@@ -10,13 +10,13 @@ import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobContainer.module.css';
 
-const JobDetails = props => {
+const JobDetails = (props) => {
   const [jobId, setJobId] = useState(null);
   const [applicantList, setApplicantList] = useState([]);
 
   const { jobsid } = useParams();
 
-  const onSaveHandler = async event => {
+  const onSaveHandler = async (event) => {
     event.preventDefault();
     setJobId(props.jobId);
     const payload = {
@@ -27,7 +27,6 @@ const JobDetails = props => {
     let res;
     try {
       res = await props.applyJob(payload);
-      console.log(res);
       if (res.message === 'Successfully applied to the job') {
         let applicantArray = [...applicantList, props.auth.userId];
         setApplicantList(applicantArray);
@@ -54,7 +53,8 @@ const JobDetails = props => {
   // 		console.log(err);
   // 	}
   // };
-  const onReleaseHandler = async event => {
+
+  const onReleaseHandler = async (event) => {
     event.preventDefault();
 
     const payload = {
@@ -69,7 +69,6 @@ const JobDetails = props => {
     }
   };
 
-  console.log(props);
   let containerContent = (
     <div className={classes.Container}>
       <div className={classes.LeftContainer}>
@@ -83,14 +82,20 @@ const JobDetails = props => {
                 }}
               />
             ) : (
-              <div className={classes.Avatar} style={{ backgroundImage: `url(${BlankCompany})` }} />
+              <div
+                className={classes.Avatar}
+                style={{ backgroundImage: `url(${BlankCompany})` }}
+              />
             )}
           </div>
 
           <div className={classes.ContainerIntro}>
             <div className={classes.Header}>
               <p className={classes.JobTitle}>{props.jobTitle} </p>
-              <p className={classes.TextDate}>Posted {moment().diff(moment(props.releasedAt), 'days')} days ago</p>
+              <p className={classes.TextDate}>
+                Posted {moment().diff(moment(props.releasedAt), 'days')} days
+                ago
+              </p>
             </div>
             <div className={classes.ContainerFirst}>
               {props.isHidden ? (
@@ -101,7 +106,8 @@ const JobDetails = props => {
                   style={{
                     textDecoration: 'none',
                     color: 'rgba(58, 81, 153, 1)',
-                  }}>
+                  }}
+                >
                   <p className={classes.TextLeft}>{props.companyName}</p>
                 </Link>
               )}
@@ -109,13 +115,24 @@ const JobDetails = props => {
 
             <div className={classes.ContainerSecond}>
               <p className={classes.TextLeft}>
-                Gaji: IDR {props.payment ? props.payment.toLocaleString() : 'tidak dipaparkan oleh perusahaan'}
+                Gaji: IDR{' '}
+                {props.payment
+                  ? props.payment.toLocaleString()
+                  : 'tidak dipaparkan oleh perusahaan'}
               </p>
             </div>
 
             <div className={classes.ContainerThird}>
-              {props.auth.isCompany || (props.admin.isAdmin && <p className={classes.TextLeft}>email HR: {props.emailRecipient}</p>)}
-              <p className={classes.TextDateMobile}>Posted {moment().diff(moment(props.releasedAt), 'days')} days ago</p>
+              {props.auth.isCompany ||
+                (props.admin.isAdmin && (
+                  <p className={classes.TextLeft}>
+                    email HR: {props.emailRecipient}
+                  </p>
+                ))}
+              <p className={classes.TextDateMobile}>
+                Posted {moment().diff(moment(props.releasedAt), 'days')} days
+                ago
+              </p>
               <div className={classes.ButtonContainer}>
                 {props.auth.userId === props.companyId && (
                   <Link to={`/jobs/${props.jobId}/edit`}>
@@ -125,7 +142,10 @@ const JobDetails = props => {
                   </Link>
                 )}
                 {!props.releasedAt && props.auth.userId === props.companyId && (
-                  <button onClick={onReleaseHandler} className={classes.InstantButton}>
+                  <button
+                    onClick={onReleaseHandler}
+                    className={classes.InstantButton}
+                  >
                     <span>Release</span>
                   </button>
                 )}
@@ -140,8 +160,17 @@ const JobDetails = props => {
                   <Button
                     btnType='InstantApply'
                     onClick={onSaveHandler}
-                    disabled={props.jobApplicants.some(appId => appId.toString() === props.auth.userId.toString())}>
-                    {props.jobApplicants.some(appId => appId.toString() === props.auth.userId.toString()) ? 'Applied' : 'Apply'}
+                    disabled={props.jobApplicants.some(
+                      (appId) =>
+                        appId.id.toString() === props.auth.userId.toString()
+                    )}
+                  >
+                    {props.jobApplicants.some(
+                      (appId) =>
+                        appId.id.toString() === props.auth.userId.toString()
+                    )
+                      ? 'Applied'
+                      : 'Apply'}
                   </Button>
                 )}
               </div>
@@ -200,7 +229,8 @@ const JobDetails = props => {
           style={{
             marginBottom: '16px',
             borderBottom: 'solid 1px rgba(0, 0, 0, 0.2)',
-          }}>
+          }}
+        >
           <p className={classes.AboutLabel}>About Company</p>
           {props.isHidden ? (
             <p className={classes.AboutText}>Data perusahaan dirahasiakan</p>
@@ -223,7 +253,7 @@ const JobDetails = props => {
 
   return containerContent;
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     admin: state.admin,
     auth: state.auth,
@@ -232,12 +262,15 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     // deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
-    applyJob: payload => dispatch(actionCreators.applyJob(payload)),
-    releaseJob: payload => dispatch(actionCreators.releaseJob(payload)),
+    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
+    releaseJob: (payload) => dispatch(actionCreators.releaseJob(payload)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(JobDetails));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(JobDetails));
