@@ -13,6 +13,7 @@ import WcOutlinedIcon from '@material-ui/icons/WcOutlined';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import CallIcon from '@material-ui/icons/Call';
+import BlankProfile from '../../assets/images/Blank_Profile.png';
 
 import classes from './ApplicantList.module.css';
 
@@ -43,7 +44,9 @@ const ApplicantList = (props) => {
                 <div
                   className={classes.Avatar}
                   style={{
-                    backgroundImage: `url('${dat.picture.url}')`,
+                    backgroundImage: `url('${
+                      dat.picture ? dat.picture.url : <BlankProfile />
+                    }')`,
                   }}
                 />
               </div>
@@ -59,10 +62,15 @@ const ApplicantList = (props) => {
                     fontSize='small'
                     style={{ marginRight: '6px' }}
                   />
-                  {dat.experience[0].prevTitle}
+                  {dat.experience.length > 0
+                    ? dat.experience[0].prevTitle
+                    : ' - '}
                 </div>
                 <div className={classes.CardMidLocation}>
-                  <span>at</span> {dat.experience[0].prevCompany}
+                  <span>at</span>{' '}
+                  {dat.experience.length > 0
+                    ? dat.experience[0].prevCompany
+                    : ' - '}
                 </div>
 
                 <div className={classes.CardMidTitle}>
@@ -70,13 +78,14 @@ const ApplicantList = (props) => {
                     fontSize='small'
                     style={{ marginRight: '6px' }}
                   />
-                  {dat.education[0].major}
+                  {dat.education.length > 0 ? dat.education[0].major : ' - '}
                 </div>
                 <div className={classes.CardMidLocation}>
-                  <span>at</span> {dat.education[0].school}
+                  <span>at</span>{' '}
+                  {dat.education.length > 0 ? dat.education[0].school : ' - '}
                 </div>
                 <div className={classes.CardMidTitle}>
-                  GPA: {dat.education[0].IPK}
+                  GPA: {dat.education.length > 0 ? dat.education[0].IPK : ' - '}
                 </div>
 
                 {/* <div className={classes.CardMidTitle}>
@@ -108,7 +117,7 @@ const ApplicantList = (props) => {
                     fontSize='small'
                     style={{ marginRight: '6px' }}
                   />
-                  <p className={classes.City}>{dat.city}</p>
+                  <p className={classes.City}>{dat.city ? dat.city : ' - '}</p>
                 </div>
 
                 <div className={classes.ExtraDetails}>
@@ -117,8 +126,16 @@ const ApplicantList = (props) => {
                     style={{ marginRight: '6px' }}
                   />
                   <p className={classes.GenderAge}>
-                    {dat.gender === 'male' ? 'Pria' : 'Wanita'},{' '}
-                    {moment().diff(moment(dat.dateOfBirth), 'year')} tahun
+                    {!dat.gender
+                      ? ' - '
+                      : dat.gender === 'male'
+                      ? 'Pria'
+                      : 'Wanita'}
+                    ,{' '}
+                    {dat.dateOfBirth
+                      ? moment().diff(moment(dat.dateOfBirth), 'year')
+                      : '0'}{' '}
+                    tahun
                   </p>{' '}
                 </div>
 
@@ -128,7 +145,8 @@ const ApplicantList = (props) => {
                     style={{ marginRight: '6px' }}
                   />
                   <p className={classes.Salary}>
-                    Harapan gaji: Rp. {dat.salary.toLocaleString()}
+                    Harapan gaji: Rp.{' '}
+                    {dat.salary ? dat.salary.toLocaleString() : '0'}
                   </p>
                 </div>
 
@@ -142,7 +160,9 @@ const ApplicantList = (props) => {
 
                 <div className={classes.ExtraDetails}>
                   <CallIcon fontSize='small' style={{ marginRight: '6px' }} />
-                  <p className={classes.Phone}>{dat.phone}</p>
+                  <p className={classes.Phone}>
+                    {dat.phone ? dat.phone : ' - '}
+                  </p>
                 </div>
               </div>
             </div>

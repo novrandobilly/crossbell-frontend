@@ -264,21 +264,36 @@ const CompanyJobList = (props) => {
               displayData.map((job, i) => {
                 return (
                   <div key={job.id} className={classes.CardHolder}>
-                    <Link to={`/jobs/applicantlist/${job.id}`}>
-                      <div className={classes.JobCard}>
-                        <div className={classes.CardHeader}>
-                          <div>
-                            <p className={classes.CardTitle}>{job.jobTitle}</p>
-                            <p className={classes.CardAddress}>
-                              {job.placementLocation}
-                            </p>
-                          </div>
-                        </div>
+                    <div className={classes.JobCard}>
+                      <div className={classes.CardHeader}>
                         <div>
-                          <p className={classes.CardRecipient}>
-                            {job.emailRecipient}
+                          <p className={classes.CardTitle}>{job.jobTitle}</p>
+                          <p className={classes.CardAddress}>
+                            {job.placementLocation}
                           </p>
-                          <div className={classes.CardBody}>
+                        </div>
+
+                        <div className={classes.PreviewEditButton}>
+                          <Link to={`/jobs/${job.id}`}>
+                            <button className={classes.JobPreview}>
+                              Preview Job
+                            </button>
+                          </Link>
+
+                          <Link to={`/jobs/${job.id}/edit`}>
+                            <button className={classes.JobEdit}>
+                              Edit Job
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
+                      <div>
+                        <p className={classes.CardRecipient}>
+                          {job.emailRecipient}
+                        </p>
+
+                        <div className={classes.CardBody}>
+                          <Link to={`/jobs/applicantlist/${job.id}`}>
                             <p
                               style={{
                                 fontSize: '3rem',
@@ -289,21 +304,22 @@ const CompanyJobList = (props) => {
                               {job.jobApplicants.length}
                             </p>
                             <p>Lihat Pelamar Pekerjaan</p>
-                          </div>
-                          <div className={classes.CardFooter}>
-                            <p
-                              className={classes.ExpDate}
-                              style={{ color: '#32CD32' }}
-                            >
-                              {`expired in ${moment(job.expiredDate).diff(
-                                moment(),
-                                'days'
-                              )} days`}
-                            </p>
-                          </div>
+                          </Link>
+                        </div>
+
+                        <div className={classes.CardFooter}>
+                          <p
+                            className={classes.ExpDate}
+                            style={{ color: '#32CD32' }}
+                          >
+                            {`expired in ${moment(job.expiredDate).diff(
+                              moment(),
+                              'days'
+                            )} days`}
+                          </p>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   </div>
                 );
               })

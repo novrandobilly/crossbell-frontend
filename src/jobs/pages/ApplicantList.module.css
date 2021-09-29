@@ -1,6 +1,7 @@
 .Container > * {
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 24px;
@@ -18,6 +19,7 @@
   border-radius: 0.5rem;
   background-color: white;
   overflow-y: hidden;
+  margin-top: 16px;
 }
 
 .CardLeft {
