@@ -54,7 +54,7 @@ const Home = props => {
 
           <div className={classes.HeadhunterButton}>
             <Link to={`/co/order/es`}>
-              <div className={classes.Order}>JASA HEADHUNTER BOSS</div>
+              <div className={classes.Order}>JASA HEADHUNTER BOSS SIAPA TAKUT</div>
             </Link>
           </div>
         </div>
