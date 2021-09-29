@@ -38,6 +38,8 @@ const Invoice = (props) => {
         token: props.auth.token || props.admin.token,
       }).then((res) => {
         if (res.order) {
+          console.log(res);
+
           setOrderData(res.order);
           setPaymentData(res.order.payment);
         } else {
@@ -92,7 +94,7 @@ const Invoice = (props) => {
     setPaymentInput(payload);
   };
 
-  const approveOrderREGHandler = async (dataInput) => {
+  const approveOrderBCHandler = async (dataInput) => {
     setOrderModal(false);
 
     const payload = {
@@ -102,7 +104,7 @@ const Invoice = (props) => {
     };
 
     try {
-      const res = await props.approveOrderREG(payload);
+      const res = await props.approveOrderBC(payload);
       if (res.message === 'Successfully approve order!') {
         setApproveSuccess(true);
       }
@@ -410,7 +412,7 @@ const Invoice = (props) => {
         show={orderModal}
         onCancel={onCloseOrderModal}
         Accept={() =>
-          approveOrderREGHandler({
+          approveOrderBCHandler({
             orderId: orderData._id,
             companyId: orderData.companyId._id,
           })
@@ -444,8 +446,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    approveOrderREG: (payload) =>
-      dispatch(actionCreators.approveOrderREG(payload)),
+    approveOrderBC: (payload) =>
+      dispatch(actionCreators.approveOrderBC(payload)),
     getOrderInvoice: (orderData) =>
       dispatch(actionCreators.getOrderInvoice(orderData)),
   };
