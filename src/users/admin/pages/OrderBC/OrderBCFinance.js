@@ -63,7 +63,6 @@ const OrderBC = (props) => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           setData(sort);
-
           if (res.message) {
             emptyText.current =
               'Belum ada perusahaan yang membuat pesanan untuk saat ini';

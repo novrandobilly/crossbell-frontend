@@ -695,7 +695,7 @@ export const updatePaymentBC = (payload) => {
       const formData = new FormData();
       formData.append('paymentDate', payload.paymentDate);
       formData.append('paymentTime', payload.paymentTime);
-      formData.append('orderRegId', payload.orderRegId);
+      formData.append('orderBcId', payload.orderBcId);
       formData.append('nominal', payload.nominal);
       formData.append('payment-reguler', payload.paymentFile);
 
