@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import MainHeader from './MainHeader';
+import MainDrawer from './MainDrawer';
 import NavigationLinks from './NavigationLinks';
 import SideDrawer from './SideDrawer';
 import Backdrop from '../UI_Element/Backdrop';
 import Logo from '../UI_Element/Logo';
-// import NavLinks from './NavLinks';
-import classes from './MainNavigation.module.css';
+import classes from './NavigationWrapper.module.css';
 
-const MainNavigation = () => {
+const NavigationWrapper = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const toggleDrawerHandler = () => {
@@ -19,22 +18,20 @@ const MainNavigation = () => {
   return (
     <React.Fragment>
       {drawerIsOpen && <Backdrop onClick={toggleDrawerHandler} />}
-      <MainHeader>
-        <h2 className={classes.Title}>
-          <Link to='/'>
-            <Logo logoWidth='55px' />
-          </Link>
-        </h2>
+      <MainDrawer>
+        <Link to='/'>
+          <Logo width='250px' />
+        </Link>
+
         <nav className={classes.HeaderNav}>
           <NavigationLinks />
-          {/* <NavLinks /> */}
         </nav>
         <button className={classes.MenuBtn} onClick={toggleDrawerHandler}>
           <span />
           <span />
           <span />
         </button>
-      </MainHeader>
+      </MainDrawer>
 
       <SideDrawer show={drawerIsOpen}>
         <nav className={classes.DrawerNav} onClick={toggleDrawerHandler}>
@@ -45,4 +42,4 @@ const MainNavigation = () => {
   );
 };
 
-export default MainNavigation;
+export default NavigationWrapper;

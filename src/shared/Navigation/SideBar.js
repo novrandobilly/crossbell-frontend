@@ -15,7 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import classes from './SideBar.module.css';
 
-const SideBar = (props) => {
+const SideBar = props => {
   const [sideBar, setSideBar] = useState(false);
 
   const toggleSideBar = () => {
@@ -29,9 +29,7 @@ const SideBar = (props) => {
           <Link to={'/ad/alphaomega/profile'}>
             <span>Profile</span>
           </Link>
-          <PersonIcon
-            style={{ margin: '0.4rem 0rem -0.4rem 1rem', color: 'black' }}
-          />
+          <PersonIcon style={{ margin: '0.4rem 0rem -0.4rem 1rem', color: 'black' }} />
         </li>
 
         <li>
@@ -130,15 +128,9 @@ const SideBar = (props) => {
     <React.Fragment>
       <div className={classes.Burger}>
         {!sideBar ? (
-          <MenuIcon
-            onClick={toggleSideBar}
-            style={{ fontSize: 40, cursor: 'pointer' }}
-          />
+          <MenuIcon onClick={toggleSideBar} style={{ fontSize: 40, cursor: 'pointer' }} />
         ) : (
-          <CloseIcon
-            onClick={toggleSideBar}
-            style={{ fontSize: 40, cursor: 'pointer' }}
-          />
+          <CloseIcon onClick={toggleSideBar} style={{ fontSize: 40, cursor: 'pointer' }} />
         )}
       </div>
       {content}
@@ -146,7 +138,7 @@ const SideBar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     admin: state.admin,
