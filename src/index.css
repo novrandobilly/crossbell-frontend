@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -9,8 +8,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .centerGlobal {
@@ -66,11 +64,6 @@ main {
   transform: translateY(-10rem);
   opacity: 0;
   transition: all 200ms;
-}
-
-@font-face {
-  font-family: 'Nexa';
-  src: local('Nexa'), url('./fonts/NexaRegular.otf') format('opentype');
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
