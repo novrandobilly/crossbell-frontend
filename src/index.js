@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import './fonts/Lato/Lato-Regular.ttf';
+import './fonts/Lato/Lato-Bold.ttf';
 
 import './index.css';
 import App from './App';

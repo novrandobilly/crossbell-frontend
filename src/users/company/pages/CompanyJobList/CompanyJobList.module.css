@@ -43,8 +43,7 @@
   margin-top: 16px;
   width: 72.6%;
   border-radius: 1rem;
-  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.22);
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3), 0px 1px 1px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.22);
 }
 
 .DivContainer {
@@ -59,7 +58,7 @@
   width: 100%;
   text-align: center;
   margin: 0;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .CardHolder {
@@ -75,8 +74,7 @@
   border-radius: 0.2rem;
   border: solid 0.05rem rgba(0, 0, 0, 0.2);
   text-align: left;
-  box-shadow: 0px 1px 1px 0.3px rgba(0, 0, 0, 0.2),
-    0px 0px 1px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px 0.3px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 

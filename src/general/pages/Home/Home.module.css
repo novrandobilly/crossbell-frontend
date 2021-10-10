@@ -1,4 +1,119 @@
-.Content {
+.HomeContainer {
+  width: 100%;
+  max-width: 1366px;
+  padding: 0;
+  padding-top: 30px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* ====================================================WELCOME TO CROSSBELL SECTION=========================================================== */
+.WelcomeToCrossbell {
+  display: flex;
+  justify-content: space-around;
+}
+.WelcomeText {
+  max-width: 450px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.WelcomeText h1 {
+  font-size: 48px;
+  font-weight: 900;
+  text-align: start;
+  line-height: 45px;
+  color: #f79f35;
+  margin: 0;
+}
+.WelcomeText p {
+  font-weight: 400;
+  text-align: start;
+  color: #686868;
+  line-height: 1.5em;
+  margin: 0;
+}
+.WelcomeSearchBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 15px 0;
+  width: 100%;
+}
+.WelcomeSearchBar input {
+  width: 100%;
+  max-width: 300px;
+  outline: none;
+  border: 3px solid #f79f35;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  min-height: 30px;
+  padding: 5px;
+  padding-left: 15px;
+  font-size: 20px;
+}
+.WelcomeSearchBar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 80px;
+  min-height: 46px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #f79f35;
+  padding: 5px;
+  font-size: 20px;
+  border: 3px solid #f79f35;
+  color: #fff;
+}
+.WelcomeSearchBar button:hover,
+.ExploreButton:hover,
+.RegistrationButton:hover {
+  cursor: pointer;
+}
+.WelcomeButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.ExploreButton,
+.RegistrationButton {
+  outline: none;
+  max-width: 200px;
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 1em;
+  padding: 0.5em;
+}
+.ExploreButton {
+  background-color: #f79f35;
+  color: #fff;
+  border: 3px solid #f79f35;
+  margin-right: 20px;
+}
+.RegistrationButton {
+  background-color: #ffe3c7;
+  color: #686868;
+  border: 3px solid #ffe3c7;
+}
+
+.WelcomeIllustrationContainer {
+  display: flex;
+  align-items: flex-end;
+}
+.WelcomeIllustrationContainer > img {
+  max-width: 500px;
+  width: 100%;
+}
+
+/* ====================================================FEATURE SECTION=========================================================== */
+/* ============================================================================ */
+/* .Content {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,7 +161,7 @@
   padding: 5px 15px;
   border-radius: 4px;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .LinkRef:hover {
@@ -70,7 +185,7 @@
   padding: 5px 15px;
   border-radius: 4px;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .HeadhunterButton:hover {
@@ -154,4 +269,4 @@
   .SmallAbout {
     padding: 1rem;
   }
-}
+} */

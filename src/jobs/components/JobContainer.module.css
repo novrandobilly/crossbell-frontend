@@ -14,8 +14,7 @@
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .RightContainer {
@@ -23,8 +22,7 @@
   flex-direction: column;
   align-self: flex-start;
   width: 30%;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   padding: 16px;
   background-color: white;
@@ -96,7 +94,7 @@
 }
 
 .JobTitle {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.8rem;
   margin-right: 1rem;
 }
@@ -164,7 +162,7 @@
   border: none;
   color: rgba(58, 81, 153, 1);
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   outline: none;
   margin-left: 0.5rem;
@@ -181,7 +179,7 @@
 .TextLabel {
   margin: 16px 0 0 0;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   text-align: left;
   color: rgba(0, 0, 0, 0.8);
 }
@@ -195,7 +193,7 @@
 .AboutLabel {
   margin-left: 1rem;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   text-align: left;
   color: rgba(0, 0, 0, 0.7);
   margin-bottom: 2rem;

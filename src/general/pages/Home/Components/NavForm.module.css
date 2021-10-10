@@ -28,7 +28,7 @@
   letter-spacing: 0.5px;
   cursor: pointer;
   color: rgba(58, 81, 153, 1);
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .SelectorSection:hover {

@@ -16,10 +16,9 @@
   background-color: rgba(255, 255, 255, 0.7);
   /* font-family: sans-serif; */
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 700;
   color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .FormTitle {
@@ -202,7 +201,7 @@
   margin: 8px 0 16px 0;
   text-align: left;
   color: black;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .Question {
@@ -213,7 +212,7 @@
 }
 
 .Question span {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .CheckBox {

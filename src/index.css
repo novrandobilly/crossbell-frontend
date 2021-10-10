@@ -1,14 +1,26 @@
+@font-face {
+  font-family: 'Lato';
+  src: local('Lato'), url('./fonts/Lato/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Lato';
+  src: local('Lato'), url('./fonts/Lato/Lato-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Lato';
+  src: local('Lato'), url('./fonts/Lato/Lato-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #f5f5fe;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  background-color: #fff;
 }
 
 .centerGlobal {
@@ -19,8 +31,9 @@ code {
 }
 
 main {
-  margin-top: 4rem;
-  min-height: 30.33rem;
+  padding-top: 100px;
+  min-height: 500px;
+  margin: 0;
 }
 
 .slide-in-left-enter {
@@ -65,5 +78,3 @@ main {
   opacity: 0;
   transition: all 200ms;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');

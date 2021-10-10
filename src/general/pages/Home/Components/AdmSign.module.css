@@ -15,14 +15,13 @@
   /* font-family: sans-serif; */
   padding: 0rem 2rem 1rem 2rem;
   margin-top: 2rem;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .FormTitle {
   margin-bottom: 0rem;
   font-size: 1.7rem;
-  font-weight: bold;
+  font-weight: 700;
   align-self: flex-start;
 }
 
@@ -43,7 +42,7 @@
   color: blue;
   background-color: transparent;
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   outline: none;
 }

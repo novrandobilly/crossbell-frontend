@@ -12,13 +12,12 @@
   flex-direction: column;
   align-items: center;
   border: none;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   background-color: white;
   /* font-family: sans-serif; */
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 700;
   color: rgba(0, 0, 0, 0.5);
   padding: 0.5rem 3rem 2rem 3rem;
 }
@@ -55,7 +54,7 @@
   color: white;
   outline: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
   width: 6rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

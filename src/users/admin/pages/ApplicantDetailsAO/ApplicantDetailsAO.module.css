@@ -31,7 +31,7 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   text-align: left;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .Table tr:nth-child(even) {
@@ -40,7 +40,7 @@
 
 .RowField th {
   background-color: #d7e2ff;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .ColumnField {
@@ -51,7 +51,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1rem;
 }
 
@@ -75,7 +75,7 @@
   display: block;
   padding: 1rem;
   width: 8rem;
-  font-weight: bold;
+  font-weight: 700;
   outline: none;
   cursor: pointer;
 }

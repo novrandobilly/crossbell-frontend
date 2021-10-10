@@ -27,7 +27,7 @@
 .FormTitle {
   margin-bottom: 16px;
   font-size: 1.7rem;
-  font-weight: bold;
+  font-weight: 700;
   align-self: flex-start;
 }
 
@@ -49,7 +49,7 @@
   color: blue;
   background-color: transparent;
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   outline: none;
 }
@@ -73,5 +73,5 @@
   align-self: flex-end;
   background-color: transparent;
   margin-right: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
 }

@@ -6,8 +6,7 @@
 
 .Container {
   background-color: white;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   min-height: 200px;
   min-width: 70%;
   display: flex;
@@ -46,7 +45,7 @@
 
 .Table th {
   text-align: left;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .Table tr {
@@ -71,7 +70,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1rem;
 }
 
@@ -97,7 +96,7 @@
   display: block;
   padding: 10px;
   width: 96px;
-  font-weight: bold;
+  font-weight: 700;
   outline: none;
   cursor: pointer;
 }
@@ -119,7 +118,7 @@
   font-size: 1.5rem;
   width: 100%;
   margin: 0;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .RevenueContainer {
@@ -128,8 +127,7 @@
   margin: 16px 0;
   border-radius: 6px;
   background-color: #d7e2ff;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   width: 70%;
 }
 
@@ -151,7 +149,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .RevenueDiv {
@@ -176,7 +174,7 @@
 .RevenueNumber {
   display: flex;
   flex-direction: column;
-  font-weight: bold;
+  font-weight: 700;
   align-items: flex-start;
 }
 

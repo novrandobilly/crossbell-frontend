@@ -13,7 +13,7 @@
   text-align: left;
   font-size: 0.8rem;
   line-height: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   color: rgba(0, 0, 0, 0.5);
   width: 30%;
 }
@@ -36,7 +36,7 @@
 .SocialSection {
   text-align: left;
   line-height: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   width: 30%;
   padding: 0 16px;
@@ -91,7 +91,7 @@
   .SocialSection {
     text-align: left;
     line-height: 1.5rem;
-    font-weight: bold;
+    font-weight: 700;
     border-left: none;
     width: 100%;
     padding: 0;

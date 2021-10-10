@@ -20,9 +20,8 @@ const NavigationWrapper = () => {
       {drawerIsOpen && <Backdrop onClick={toggleDrawerHandler} />}
       <MainDrawer>
         <Link to='/'>
-          <Logo width='250px' />
+          <Logo width='200px' />
         </Link>
-
         <nav className={classes.HeaderNav}>
           <NavigationLinks />
         </nav>

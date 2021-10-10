@@ -26,8 +26,7 @@
   flex-direction: column;
   align-items: flex-start;
   border: none;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.2rem;
   background-color: white;
   margin-top: 2rem;
@@ -80,7 +79,7 @@
 }
 
 .Question span {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .CheckBox {
@@ -110,7 +109,7 @@
   color: white;
   background-color: rgba(58, 81, 153, 1);
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   outline: none;
   border: none;
   cursor: pointer;

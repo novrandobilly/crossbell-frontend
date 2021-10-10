@@ -92,12 +92,12 @@
 }
 
 .TextLeft {
-  font-weight: bold;
+  font-weight: 700;
   color: rgb(84, 103, 161, 1);
 }
 
 .TextSecret {
-  font-weight: bold;
+  font-weight: 700;
   color: rgba(0, 0, 0, 0.8);
 }
 

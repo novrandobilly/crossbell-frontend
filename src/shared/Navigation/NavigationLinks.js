@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import OutsideClick from '../utils/outsideClick';
@@ -106,8 +106,8 @@ const NavigationLinks = props => {
   }
 
   return (
-    <div className={classes.NavContainer}>
-      <ul className={classes.NavLinks}>
+    <Fragment>
+      <ul className={classes.NavigationLink}>
         {props?.auth?.isLoggedIn && !props?.auth?.isCompany && (
           <li>
             <NavLink to={`/ap/${props.auth.userId}/profile`} activeClassName={classes.active}>
@@ -117,20 +117,35 @@ const NavigationLinks = props => {
           </li>
         )}
 
-        {!props.auth.isLoggedIn && (
-          <li>
-            <NavLink to='/' exact activeClassName={classes.active}>
-              Beranda
-            </NavLink>
-          </li>
-        )}
         <li>
           <NavLink
             to={props.auth.isLoggedIn && props.auth.isCompany ? `/co/${props.auth.userId}/jobList` : '/jobs-dashboard'}
             activeClassName={classes.active}>
-            Dasboard Pekerjaan
+            Explore
           </NavLink>
         </li>
+        {!props.auth.isLoggedIn && (
+          <Fragment>
+            <div className={classes.ApplicantAuthenticationWrapper}>
+              <li>
+                <NavLink to={`/daftar`} activeClassName={classes.active}>
+                  Daftar
+                </NavLink>
+              </li>
+              <span>|</span>
+              <li>
+                <NavLink to={`/masuk`} activeClassName={classes.active}>
+                  Masuk
+                </NavLink>
+              </li>
+            </div>
+            <li className={classes.CompanyPageLink}>
+              <NavLink to={`/perusahaan`} activeClassName={classes.active}>
+                Perusahaan
+              </NavLink>
+            </li>
+          </Fragment>
+        )}
 
         {props?.auth?.isLoggedIn && !props?.auth?.isCompany && (
           <li>
@@ -141,7 +156,7 @@ const NavigationLinks = props => {
         )}
 
         {props.auth.isLoggedIn && props.auth.isCompany && (
-          <React.Fragment>
+          <Fragment>
             <li>
               <NavLink to={`/co/${props.auth.userId}/profile`} activeClassName={classes.active}>
                 Perusahaan anda
@@ -175,11 +190,11 @@ const NavigationLinks = props => {
                 </div>
               </div>
             </li>
-          </React.Fragment>
+          </Fragment>
         )}
 
         {props.admin.isAdmin && props.admin.isLoggedIn && (
-          <React.Fragment>
+          <Fragment>
             <li>
               <NavLink to={`/ad/alphaomega/profile`} activeClassName={classes.active}>
                 My Profile
@@ -258,14 +273,14 @@ const NavigationLinks = props => {
                 </span>
               </NavLink>
             </li>
-          </React.Fragment>
+          </Fragment>
         )}
         {logout}
       </ul>
 
       {/*======================================================================*/}
 
-      <ul className={classes.PhoneLinks}>
+      <ul className={classes.MobileNavigationLink}>
         {props.auth.isLoggedIn && !props.auth.isCompany && (
           <li>
             <span>
@@ -298,7 +313,7 @@ const NavigationLinks = props => {
         )}
 
         {props.auth.isLoggedIn && props.auth.isCompany && (
-          <React.Fragment>
+          <Fragment>
             <li>
               <NavLink to={`/co/${props.auth.userId}/profile`} activeClassName={classes.active}>
                 Perusahaan Anda
@@ -328,11 +343,11 @@ const NavigationLinks = props => {
                 Riwayat Pesanan
               </NavLink>
             </li>
-          </React.Fragment>
+          </Fragment>
         )}
 
         {props.admin.isAdmin && props.admin.isLoggedIn && (
-          <React.Fragment>
+          <Fragment>
             <li>
               <NavLink to={`/ad/alphaomega/profile`} activeClassName={classes.active}>
                 My Profile
@@ -403,11 +418,11 @@ const NavigationLinks = props => {
                 Slot list
               </NavLink>
             </li>
-          </React.Fragment>
+          </Fragment>
         )}
         {logout}
       </ul>
-    </div>
+    </Fragment>
   );
 };
 

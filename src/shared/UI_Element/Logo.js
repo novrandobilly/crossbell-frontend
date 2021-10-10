@@ -4,7 +4,7 @@ import CrossbellLogo from '../../assets/Crossbell_Logo.svg';
 const Logo = props => {
   return (
     <img
-      src={CrossbellLogo}
+      src={props.src || CrossbellLogo}
       alt='Crossbell logo'
       style={{ width: `${props.width || '36px'}`, height: 'auto', margin: '0', padding: '0' }}
     />

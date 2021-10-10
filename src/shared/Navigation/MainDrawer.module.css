@@ -6,9 +6,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  padding: 10px;
-  background: #faeee0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 10px 60px;
+  background: #fff;
   z-index: 5;
   box-sizing: border-box;
   justify-content: space-between;

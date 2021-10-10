@@ -58,7 +58,7 @@
 .CompanyName {
   color: black;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -72,7 +72,7 @@
 
 .InvoiceTitle {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -107,7 +107,7 @@
 .Table tbody th {
   padding-top: 1.5rem;
   padding-bottom: 1rem;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 1rem;
 }
 

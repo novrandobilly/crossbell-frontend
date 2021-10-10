@@ -21,7 +21,7 @@
 .CardHeader {
   color: white;
   padding: 1.6px 8px 16px 8px;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 0.1rem;
 }
 
@@ -62,7 +62,7 @@
   }
 
   .CardHeader {
-    font-weight: normal;
+    font-weight: 400;
   }
 
   .Title {
