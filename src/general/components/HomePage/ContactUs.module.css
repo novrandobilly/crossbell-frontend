@@ -1,0 +1,102 @@
+.ContactUsContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 1000px;
+  padding: 40px 0 80px;
+  background-color: #fff;
+  border-radius: 15px;
+  margin: auto;
+  z-index: 10;
+}
+
+.ContactUsInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 350px;
+  align-self: flex-start;
+}
+.ContactUsInfo h3 {
+  font-weight: 700;
+  font-size: 36px;
+  margin: 0 0 10px;
+}
+.ContactUsInfo p {
+  margin: 10px 0;
+  text-align: start;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.SocialMediaIcons {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 15px;
+}
+.SocialMediaIcons img {
+  max-width: 30px;
+  margin-right: 10px;
+}
+
+.OfficePhone::before {
+  background: url('../../../assets/icons/phone.svg');
+  margin-right: 10px;
+}
+.CompanyEmail::before {
+  background: url('../../../assets/icons/email.svg');
+  margin-right: 10px;
+}
+.CompanyAddress::before {
+  background: url('../../../assets/icons/location.svg');
+  margin-right: 10px;
+}
+
+.OfficePhone::before,
+.CompanyEmail::before,
+.CompanyAddress::before {
+  content: '';
+  display: inline-block;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+}
+
+.ContactUsForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.ContactUsForm input,
+.ContactUsForm textarea {
+  border-radius: 5px;
+  background-color: #ffeedd;
+  width: 100%;
+  border: 1px solid #ffeedd;
+  margin-bottom: 10px;
+  font-size: 18px;
+  padding: 10px 5px;
+  font-family: 'Lato', sans-serif;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.ContactUsForm button {
+  outline: none;
+  background-color: #f79f35;
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 3px solid #f79f35;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 1.5px 1.5px 5px #71430b;
+  width: 100%;
+}

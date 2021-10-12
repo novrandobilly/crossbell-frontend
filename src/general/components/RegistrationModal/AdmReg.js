@@ -1,25 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useForm } from '../../../../shared/utils/useForm';
+import { useForm } from '../../../shared/utils/useForm';
 import moment from 'moment';
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions/index';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions/index';
 
 import Button from '@material-ui/core/Button';
-import Modal from '../../../../shared/UI_Element/Modal';
-import Input from '../../../../shared/UI_Element/Input';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_ALWAYSTRUE,
-} from '../../../../shared/utils/validator';
+import Modal from '../../../shared/UI_Element/Modal';
+import Input from '../../../shared/UI_Element/Input';
+import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
 
 import classes from './AdmReg.module.css';
 
-const Register = (props) => {
+const Register = props => {
   const [formState, onInputHandler] = useForm(
     {
       NIK: {
@@ -70,7 +65,7 @@ const Register = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     const newAdmin = {
       NIK: formState.inputs.NIK.value,
@@ -98,7 +93,7 @@ const Register = (props) => {
     }
   };
 
-  const onManualInputHandler = (e) => {
+  const onManualInputHandler = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
 
@@ -224,26 +219,11 @@ const Register = (props) => {
                 <div id='gender' onChange={onManualInputHandler}>
                   <p className={classes.Text}>Jenis Kelamin*</p>
                   <div className={classes.RadioHolder}>
-                    <label
-                      style={{ marginRight: '2rem' }}
-                      className={classes.RadioButton}
-                    >
-                      <input
-                        type='radio'
-                        value='male'
-                        name='gender'
-                        id='male'
-                      />{' '}
-                      Pria
+                    <label style={{ marginRight: '2rem' }} className={classes.RadioButton}>
+                      <input type='radio' value='male' name='gender' id='male' /> Pria
                     </label>
                     <label className={classes.RadioButton}>
-                      <input
-                        type='radio'
-                        value='female'
-                        name='gender'
-                        id='female'
-                      />{' '}
-                      Wanita
+                      <input type='radio' value='female' name='gender' id='female' /> Wanita
                     </label>
                   </div>
                 </div>
@@ -271,17 +251,12 @@ const Register = (props) => {
               disabled={!formState.formIsValid}
               style={{
                 marginTop: '1rem',
-              }}
-            >
+              }}>
               submit
             </Button>
 
             <span className={classes.Sign}>
-              <button
-                className={classes.ChangeSign}
-                type='button'
-                onClick={props.switchSignIn}
-              >
+              <button className={classes.ChangeSign} type='button' onClick={props.switchSignIn}>
                 Admin Sign In
               </button>
             </span>
@@ -308,22 +283,19 @@ const Register = (props) => {
     </form>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     isLoading: state.admin.isLoading,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
-    admReg: (payload) => dispatch(actionCreators.admReg(payload)),
-    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+    admReg: payload => dispatch(actionCreators.admReg(payload)),
+    login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Register));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));

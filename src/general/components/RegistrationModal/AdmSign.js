@@ -1,23 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions';
-import { useForm } from '../../../../shared/utils/useForm';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions';
+import { useForm } from '../../../shared/utils/useForm';
 
 import Button from '@material-ui/core/Button';
-import Input from '../../../../shared/UI_Element/Input';
-import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Modal from '../../../../shared/UI_Element/Modal';
+import Input from '../../../shared/UI_Element/Input';
+import Spinner from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Modal from '../../../shared/UI_Element/Modal';
 
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-} from '../../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../shared/utils/validator';
 
 import classes from './AdmSign.module.css';
 
-const AdmSign = (props) => {
+const AdmSign = props => {
   const [formState, onInputHandler] = useForm(
     {
       email: {
@@ -32,7 +29,7 @@ const AdmSign = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     const loginData = {
@@ -95,18 +92,13 @@ const AdmSign = (props) => {
         disabled={!formState.formIsValid}
         style={{
           marginTop: '1rem',
-        }}
-      >
+        }}>
         submit
       </Button>
 
       <span className={classes.Sign}>
         Admin Registration
-        <button
-          className={classes.ChangeSign}
-          onClick={props.switchSignUp}
-          type='button'
-        >
+        <button className={classes.ChangeSign} onClick={props.switchSignUp} type='button'>
           Here
         </button>{' '}
       </span>
@@ -129,20 +121,17 @@ const AdmSign = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
-    admSignIn: (payload) => dispatch(actionCreators.admSignIn(payload)),
+    admSignIn: payload => dispatch(actionCreators.admSignIn(payload)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(AdmSign));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdmSign));

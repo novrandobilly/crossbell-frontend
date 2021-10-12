@@ -2,11 +2,9 @@ import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Logo from '../../../shared/UI_Element/Logo';
+import ContactUs from '../../components/HomePage/ContactUs';
 
-// import Carousel from './components/Carousel';
-// import AuthForm from './components/AuthForm';
-// import ContactUsContent from './HomeContent/ContactUsContent';
-import classes from './Home.module.css';
+import classes from './HomePage.module.css';
 import WelcomeIllustration from '../../../assets/Work.png';
 import ProfileIcon from '../../../assets/icons/profile-icon.svg';
 import MailAutoReminder from '../../../assets/icons/mail-reminder.svg';
@@ -17,32 +15,9 @@ import CheckMark from '../../../assets/icons/check-mark.svg';
 import RequestHH from '../../../assets/images/Request.png';
 import Screening from '../../../assets/images/Screening.png';
 import Headhunter from '../../../assets/images/Headhunter.png';
-import FinalRegistration from '../../../assets/images/FinalRegistration.png';
 import IntiDinamisLogo from '../../../assets/Inti-Dinamis-Logo.png';
 
-const Home = props => {
-  // const [sign, setSign] = useState(true);
-  // const [role, setRole] = useState(false);
-  // const [touch, setTouch] = useState(false);
-  // const [nav, setNav] = useState(false);
-
-  // const toggleSign = () => {
-  //   setSign(!sign);
-  //   setNav(true);
-  // };
-
-  // const toggleRole = () => {
-  //   setRole(!role);
-  // };
-
-  // const toggleTouch = () => {
-  //   setTouch(true);
-  // };
-  // const toggleTouchCompany = () => {
-  //   setTouch(true);
-  //   setRole(!role);
-  // };
-
+const HomePage = props => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -212,72 +187,12 @@ const Home = props => {
           </div>
         </div>
       </section>
-      <section className={classes.FinalRegistrationBackground}>
-        <div className={classes.FinalRegistrationContainer}>
-          <div className={classes.FinalRegistrationImage}>
-            <img alt='Final Registration' src={FinalRegistration} />
-          </div>
-          <div className={classes.FinalRegistrationText}>
-            <h2>Tunggu apa lagi?</h2>
-            <h2>Jadilah agen perubahan untuk dirimu sendiri sekarang!</h2>
-            <Link to='/registration'>
-              <button type='button'>Daftar Sekarang</button>
-            </Link>
-          </div>
-        </div>
+      <section className={classes.ContactUsBackground}>
+        <div className={classes.BackStripe}></div>
+
+        <ContactUs />
       </section>
     </Fragment>
-
-    // <React.Fragment>
-    //   <Carousel />
-    //   <div className={classes.Content}>
-    //     <div className={classes.ContentHolder}>
-    //       <h1>CROSSBELL</h1>
-    //       <div className={classes.About}>
-    //         <p>Sudah saatnya berkarir dalam bidang impianmu!</p>
-    //         <p>Temukan pekerjaan favoritmu dan mulailah mengejar mimpi sesuai kata hati!</p>
-    //         <p>Jika bukan sekarang, kapan lagi?</p>
-    //       </div>
-
-    //       <div className={classes.LinkRef}>
-    //         <Link to={`/jobs-dashboard`}>
-    //           <div className={classes.Explore}>CARI PEKERJAAN DISINI</div>
-    //         </Link>
-    //       </div>
-
-    //       <div className={classes.HeadhunterButton}>
-    //         <Link to={`/co/order/es`}>
-    //           <div className={classes.Order}>JASA HEADHUNTER GENGS</div>
-    //         </Link>
-    //       </div>
-    //     </div>
-
-    //     <div className={classes.AuthForm}>
-    //       {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
-    //         <AuthForm
-    //           role={role}
-    //           sign={sign}
-    //           touch={touch}
-    //           nav={nav}
-    //           toggleSign={toggleSign}
-    //           toggleRole={toggleRole}
-    //           toggleTouch={toggleTouch}
-    //           toggleTouchCompany={toggleTouchCompany}
-    //         />
-    //       )}
-    //     </div>
-    //   </div>
-    //   <div className={classes.SmallAbout}>
-    //     <h1>CROSSBELL</h1>
-    //     <div className={classes.About}>
-    //       <p>Sudah saatnya berkarir dalam bidang impianmu!</p>
-    //       <p>Temukan pekerjaan favoritmu dan mulailah mengejar mimpi sesuai kata hati!</p>
-    //       <p>Jika bukan sekarang, kapan lagi?</p>
-    //     </div>
-    //   </div>
-
-    //   <ContactUsContent />
-    // </React.Fragment>
   );
 };
 
@@ -288,4 +203,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(HomePage);

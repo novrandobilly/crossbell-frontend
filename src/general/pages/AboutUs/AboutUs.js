@@ -1,10 +1,5 @@
 import React from 'react';
 
-import ContentTextLeft from '../Home/HomeContent/ContentTextLeft';
-import ContentTextRight from '../Home/HomeContent/ContentTextRight';
-import FeatureContent from '../Home/HomeContent/FeatureContent';
-import TeamContent from '../Home/HomeContent/TeamContent';
-
 import classes from './AboutUs.module.css';
 
 const AboutUs = () => {
@@ -75,11 +70,6 @@ const AboutUs = () => {
           a.
         </p>
       </div> */}
-      <div className={classes.AboutUsBanner}>Company Banner</div>
-      <FeatureContent />
-      <ContentTextLeft />
-      <ContentTextRight />
-      <TeamContent />
     </div>
   );
 };

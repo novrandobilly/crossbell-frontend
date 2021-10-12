@@ -12,15 +12,15 @@
   align-items: center;
   padding: 0.5rem 1.5rem;
   box-sizing: border-box;
-  background-color: rgb(215, 226, 255);
+  background-color: #71430b;
   padding: 24px;
 }
 
 .Copyright {
   width: 100%;
   padding: 0.5rem;
-  background-color: rgba(58, 81, 153, 1);
-  color: white;
+  background-color: #71430b;
+  color: #ffeedd;
   font-size: 1rem;
   box-sizing: border-box;
 }

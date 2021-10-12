@@ -1,15 +1,15 @@
 import React from 'react';
-import { VALIDATOR_EMAIL } from '../../../../shared/utils/validator';
-import { useForm } from '../../../../shared/utils/useForm';
+import { VALIDATOR_EMAIL } from '../../../shared/utils/validator';
+import { useForm } from '../../../shared/utils/useForm';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../../../store/actions';
+import * as actionCreators from '../../../store/actions';
 
 import classes from './ForgotPwd.module.css';
-import Input from '../../../../shared/UI_Element/Input';
-// import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-// import Modal from '../../../../shared/UI_Element/Modal';
+import Input from '../../../shared/UI_Element/Input';
+// import Spinner from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+// import Modal from '../../../shared/UI_Element/Modal';
 
-const ForgotPwd = (props) => {
+const ForgotPwd = props => {
   const [formState, onInputHandler] = useForm(
     {
       email: {
@@ -20,7 +20,7 @@ const ForgotPwd = (props) => {
     false
   );
 
-  const onSubmitResetHandler = async (event) => {
+  const onSubmitResetHandler = async event => {
     event.preventDefault();
     const payload = {
       email: formState.inputs.email.value,
@@ -38,10 +38,7 @@ const ForgotPwd = (props) => {
       <div className={classes.ContainerFlex}>
         <p className={classes.FormTitle}>Forgot Password Page</p>
         <p className={classes.SubTitle}>
-          <em>
-            Confirm your email address to get the instruction for restarting
-            your password
-          </em>
+          <em>Confirm your email address to get the instruction for restarting your password</em>
         </p>
         <Input
           inputType='input'
@@ -52,10 +49,7 @@ const ForgotPwd = (props) => {
           label='Email*'
         />
 
-        <button
-          disabled={!formState.formIsValid}
-          className={classes.SubmitButton}
-        >
+        <button disabled={!formState.formIsValid} className={classes.SubmitButton}>
           <span>Submit</span>
         </button>
       </div>
@@ -63,15 +57,15 @@ const ForgotPwd = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    forgotPwd: (payload) => dispatch(actionCreators.forgotPwd(payload)),
+    forgotPwd: payload => dispatch(actionCreators.forgotPwd(payload)),
   };
 };
 

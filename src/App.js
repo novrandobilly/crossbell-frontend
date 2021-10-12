@@ -4,15 +4,13 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import Pusher from 'pusher-js';
 import * as actionTypes from './store/actions/actions';
 
-import Home from './general/pages/Home/Home';
+import HomePage from './general/pages/HomePage/HomePage';
 import Blogs from './general/pages/Blogs/Blogs';
 import AboutUs from './general/pages/AboutUs/AboutUs';
-import ContactUs from './general/pages/ContactUs/ContactUs';
 import SyaratKetentuan from './general/pages/SyaratKetentuan/SyaratKetentuan';
 import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi';
-import ForgotPwd from './general/pages/Home/components/ForgotPwd';
-import ResetPwd from './general/pages/Home/components/ResetPwd';
-import FAQ from './general/components/ContactUs/FAQ';
+import ForgotPwd from './general/components/RegistrationModal/ForgotPwd';
+import ResetPwd from './general/components/RegistrationModal/ResetPwd';
 
 import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
 import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
@@ -71,7 +69,7 @@ const AddApplicantOrganization = React.lazy(() => import('./users/applicant/comp
 
 //==================================== admin =========================================================
 
-const AdmAuth = React.lazy(() => import('./general/pages/Home/components/AdmAuth'));
+const AdmAuth = React.lazy(() => import('./general/components/RegistrationModal/AdmAuth'));
 const AdminProfile = React.lazy(() => import('./users/admin/pages/AdminProfile/AdminProfile'));
 const JobsListAO = React.lazy(() => import('./users/admin/pages/JobsListAO/JobsListAO'));
 const CompaniesListAO = React.lazy(() => import('./users/admin/pages/CompaniesListAO/CompaniesListAO'));
@@ -225,15 +223,13 @@ const App = props => {
             <Route path='/ad/alphaomega/notifications' component={Notifications} />
 
             {/* General Routes */}
-            <Route path='/FrequentlyAskedQuestion/:faqId' component={FAQ} />
             <Route path='/blogs' component={Blogs} />
             <Route path='/about-us' component={AboutUs} />
-            <Route path='/contact-us' component={ContactUs} />
             <Route path='/syarat-ketentuan' component={SyaratKetentuan} />
             <Route path='/kebijakan-privasi' component={KebijakanPrivasi} />
             <Route path='/forgot' component={ForgotPwd} />
             <Route path='/reset/:token' component={ResetPwd} />
-            <Route path='/' component={Home} />
+            <Route path='/' component={HomePage} />
 
             {/* Absurd Routes */}
             <Redirect to='/' />
