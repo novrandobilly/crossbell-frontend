@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Logo from '../../../shared/UI_Element/Logo';
 
 // import Carousel from './components/Carousel';
 // import AuthForm from './components/AuthForm';
@@ -16,6 +17,8 @@ import CheckMark from '../../../assets/icons/check-mark.svg';
 import RequestHH from '../../../assets/images/Request.png';
 import Screening from '../../../assets/images/Screening.png';
 import Headhunter from '../../../assets/images/Headhunter.png';
+import FinalRegistration from '../../../assets/images/FinalRegistration.png';
+import IntiDinamisLogo from '../../../assets/Inti-Dinamis-Logo.png';
 
 const Home = props => {
   // const [sign, setSign] = useState(true);
@@ -201,8 +204,28 @@ const Home = props => {
           </div>
         </div>
       </section>
-      <section className={classes.PartnersBackground}></section>
-      <section className={classes.FinalRegistrationBackground}>FinalRegistration</section>
+      <section className={classes.PartnersBackground}>
+        <div className={classes.PartnersContainer}>
+          <h2>Our Partners:</h2>
+          <div className={classes.PartnersGallery}>
+            <Logo src={IntiDinamisLogo} alt='Inti Dinamis' width='200px' />
+          </div>
+        </div>
+      </section>
+      <section className={classes.FinalRegistrationBackground}>
+        <div className={classes.FinalRegistrationContainer}>
+          <div className={classes.FinalRegistrationImage}>
+            <img alt='Final Registration' src={FinalRegistration} />
+          </div>
+          <div className={classes.FinalRegistrationText}>
+            <h2>Tunggu apa lagi?</h2>
+            <h2>Jadilah agen perubahan untuk dirimu sendiri sekarang!</h2>
+            <Link to='/registration'>
+              <button type='button'>Daftar Sekarang</button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </Fragment>
 
     // <React.Fragment>

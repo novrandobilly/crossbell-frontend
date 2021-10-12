@@ -295,7 +295,7 @@
   align-items: center;
   margin: auto;
   box-sizing: border-box;
-  padding: 50px 0;
+  padding: 50px 0 150px;
 }
 .HeadhunterContainer > h2 {
   max-width: 800px;
@@ -356,6 +356,77 @@
   box-shadow: 1.5px 1.5px 5px #71430b;
 }
 
+/* ====================================================OUR PARTNERS======================================================== */
+
+.PartnersBackground {
+  background-color: #fff;
+}
+
+.PartnersContainer {
+  max-width: 1366px;
+  margin: auto;
+  padding-bottom: 50px;
+}
+.PartnersContainer h2 {
+  font-size: 36px;
+  margin-bottom: 50px;
+}
+
+.PartnersGallery {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ====================================================FINAL REGISTRATION======================================================== */
+.FinalRegistrationBackground {
+  background-color: #ffe3c7;
+}
+
+.FinalRegistrationContainer {
+  max-width: 1366px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 40px 0;
+}
+.FinalRegistrationContainer img {
+  max-width: 400px;
+  border-radius: 22px;
+  box-shadow: -1.5px -1.5px 5px #71430b;
+}
+.FinalRegistrationText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+  margin-left: 50px;
+  max-width: 500px;
+}
+
+.FinalRegistrationText h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: start;
+  margin-bottom: 30px;
+}
+.FinalRegistrationText a {
+  text-decoration: none;
+}
+.FinalRegistrationText button {
+  outline: none;
+  background-color: #f79f35;
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 3px solid #f79f35;
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 1.5px 1.5px 5px #71430b;
+}
 /* ============================================================================ */
 /* .Content {
   display: flex;

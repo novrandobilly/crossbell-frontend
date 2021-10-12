@@ -5,7 +5,7 @@ const Logo = props => {
   return (
     <img
       src={props.src || CrossbellLogo}
-      alt='Crossbell logo'
+      alt={props.alt || 'Crossbell logo'}
       style={{ width: `${props.width || '36px'}`, height: 'auto', margin: '0', padding: '0' }}
     />
   );
