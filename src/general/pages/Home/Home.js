@@ -11,6 +11,11 @@ import ProfileIcon from '../../../assets/icons/profile-icon.svg';
 import MailAutoReminder from '../../../assets/icons/mail-reminder.svg';
 import MailAutoSend from '../../../assets/icons/mail-auto-send.svg';
 import Briefcase from '../../../assets/icons/briefcase.svg';
+import AllInOneProfile from '../../../assets/AllInOneProfile.svg';
+import CheckMark from '../../../assets/icons/check-mark.svg';
+import RequestHH from '../../../assets/images/Request.png';
+import Screening from '../../../assets/images/Screening.png';
+import Headhunter from '../../../assets/images/Headhunter.png';
 
 const Home = props => {
   // const [sign, setSign] = useState(true);
@@ -78,52 +83,126 @@ const Home = props => {
               <em>One-Stop-Solution</em> untuk meningkatkan kualitas karir.
             </h1>
             <p>Pilih strategi yang paling cocok dengan-mu agar mencari kerja menjadi lebih menyenangkan.</p>
-            <button>Daftar Sekarang</button>
+            <Link to='/registration'>
+              <button>Daftar Sekarang</button>
+            </Link>
           </div>
           <div className={classes.FeatureList}>
             <div className={classes.FirstPairFeatures}>
               <div className={classes.FeatureCard}>
-                <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoReminder} />
+                <div className={classes.FeatureIconBackground}>
+                  <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoReminder} />
+                </div>
                 <h2>Auto Reminder</h2>
                 <p>
                   Auto Reminder Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend, faucibus erat in,
                   molestie justo.{' '}
                 </p>
-                <span>MORE</span>
+                <Link to='/jobs-dashboard'>
+                  <span>MORE</span>
+                </Link>
               </div>
               <div className={classes.FeatureCard}>
-                <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoSend} />
+                <div className={classes.FeatureIconBackground}>
+                  <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoSend} />
+                </div>
                 <h2>Auto Apply</h2>
                 <p>
                   Auto Apply Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend, faucibus erat in,
                   molestie justo.{' '}
                 </p>
-                <span>MORE</span>
+                <Link to='/jobs-dashboard'>
+                  <span>MORE</span>
+                </Link>
               </div>
             </div>
             <div className={classes.SecondPairFeatures}>
               <div className={classes.FeatureCard}>
-                <img className={classes.FeatureIcon} alt='Feature Icon' src={Briefcase} />
+                <div className={classes.FeatureIconBackground}>
+                  <img className={classes.FeatureIcon} alt='Feature Icon' src={Briefcase} />
+                </div>
                 <h2>Executive Search Programme</h2>
                 <p>
                   Executive Search Programme Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend,
                   faucibus erat in, molestie justo.{' '}
-                </p>
-                <span>MORE</span>
+                </p>{' '}
+                <Link to='/jobs-dashboard'>
+                  <span>MORE</span>
+                </Link>
               </div>
               <div className={classes.FeatureCard}>
-                <img className={classes.FeatureIcon} alt='Feature Icon' src={ProfileIcon} />
+                <div className={classes.FeatureIconBackground}>
+                  <img className={classes.FeatureIcon} alt='Feature Icon' src={ProfileIcon} />
+                </div>
                 <h2>One Resume for All</h2>
                 <p>
                   One Resume for All Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend, faucibus erat
                   in, molestie justo.{' '}
                 </p>
-                <span>MORE</span>
+                <Link to='/jobs-dashboard'>
+                  <span>MORE</span>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <section className={classes.AllInOneProfileBackground}>
+        <div className={classes.AllInOneProfileContainer}>
+          <div className={classes.AllInOneProfileImage}>
+            <img alt='All in One Profile' src={AllInOneProfile} />
+          </div>
+          <div className={classes.AllInOneProfileText}>
+            <p>
+              <em>
+                Tunjukkan pengalaman, deskripsi diri, riwayat pendidikan lengkap dengan keahlian yang kamu miliki untuk tampil sebagai
+                kandidat yang menarik bagi perusahaan-perusahaan favoritmu. All in One Profile!
+              </em>
+            </p>
+            <Link to='/registration'>
+              <button type='button'>Buat Profile Sekarang</button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className={classes.HeadhunterBackground}>
+        <div className={classes.HeadhunterContainer}>
+          <div className={classes.HeadhunterImage}>
+            <img alt='RequestHH' src={RequestHH} />
+            <img alt='Screening' src={Screening} />
+            <img alt='Headhunter' src={Headhunter} />
+          </div>
+          <h2>Apakah perusahaan anda sedang mencari kandidat berkualitas untuk posisi managerial ke atas?</h2>
+          <div className={classes.HeadhunterFeatures}>
+            <div className={classes.HeadhunterScreeningItem}>
+              <img alt='Check mark' src={CheckMark} />
+              <h3>Pre-Employment Screening</h3>
+              <p>Kami melakukan screening cermat untuk memastikan kandidat memiliki kualitas terbaik bagi kebutuhan bisnis anda</p>
+            </div>
+            <div className={classes.HeadhunterScreeningItem}>
+              <img alt='Check mark' src={CheckMark} />
+              <h3>Background Checking</h3>
+              <p>Kandidat yang profesional untuk mengemban tanggung jawab yang akan anda berikan</p>
+            </div>
+            <div className={classes.HeadhunterScreeningItem}>
+              <img alt='Check mark' src={CheckMark} />
+              <h3>Assessment Test</h3>
+              <p>
+                Kami bekerja sama dengan <strong>PT Inti Dinamis</strong> untuk memberikan <em>Assessment Test</em> demi mendapatkan
+                kandidat yang paling sesuai dengan kebutuhan bisnis anda
+              </p>
+            </div>
+          </div>
+          <div className={classes.HeadhunterRequest}>
+            <Link to='/co/order/es'>
+              <span>Request For Candidates</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className={classes.PartnersBackground}></section>
+      <section className={classes.FinalRegistrationBackground}>FinalRegistration</section>
     </Fragment>
 
     // <React.Fragment>

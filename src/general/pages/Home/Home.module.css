@@ -5,13 +5,11 @@
 .WelcomeToCrossbell {
   display: flex;
   justify-content: space-around;
-  width: 100%;
   max-width: 1366px;
   padding: 0;
   padding-top: 30px;
   margin: auto;
   margin-bottom: 40px;
-  /* box-sizing: border-box; */
 }
 .WelcomeText {
   max-width: 450px;
@@ -90,6 +88,7 @@
   font-size: 18px;
   line-height: 1em;
   padding: 0.5em;
+  box-shadow: 1.5px 1.5px 5px #71430b;
 }
 .ExploreButton {
   background-color: #f79f35;
@@ -117,7 +116,6 @@
   background-color: #ffeedd;
 }
 .FeatureContainer {
-  width: 100%;
   max-width: 1366px;
   min-height: 400px;
   display: flex;
@@ -165,6 +163,10 @@
   color: #fff;
   border: 3px solid #f79f35;
   margin-right: 20px;
+  box-shadow: 1.5px 1.5px 5px #71430b;
+}
+.FeatureText button:hover {
+  cursor: pointer;
 }
 
 .FeatureList {
@@ -203,18 +205,155 @@
   box-sizing: border-box;
 }
 
+.FeatureCard a {
+  text-decoration: none;
+  border-bottom: 2px solid #f79f35;
+  color: #000;
+}
+
 .FirstPairFeatures > .FeatureCard:nth-child(1),
 .SecondPairFeatures > .FeatureCard:nth-child(1) {
   min-height: 400px;
   margin: 20px 0;
 }
 
+.FeatureIconBackground {
+  border-radius: 50%;
+  background-color: #ffeedd;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .FeatureIcon {
   width: 100%;
   max-width: 60px;
   height: auto;
-  border-radius: 50%;
+}
+
+/* ==================================================All In One Profile========================================================= */
+.AllInOneProfileBackground {
+  background-color: #fff;
+}
+
+.AllInOneProfileContainer {
+  max-width: 1366px;
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 20px;
+  margin: auto;
+}
+
+.AllInOneProfileImage {
+  width: 50%;
+}
+.AllInOneProfileImage img {
+  max-width: 550px;
+  height: auto;
+}
+.AllInOneProfileText {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.AllInOneProfileText p {
+  font-size: 24px;
+  line-height: 1.6em;
+  color: #686868;
+}
+.AllInOneProfileText a {
+  width: fit-content;
+}
+.AllInOneProfileText button {
+  outline: none;
+  background-color: #f79f35;
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 3px solid #f79f35;
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 1.5px 1.5px 5px #71430b;
+}
+.AllInOneProfileText button:hover {
+  cursor: pointer;
+}
+
+/* ====================================================HEADHUNTER======================================================== */
+.HeadhunterBackground {
   background-color: #ffeedd;
+}
+
+.HeadhunterContainer {
+  min-height: 400px;
+  width: 100%;
+  max-width: 1366px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 50px 0;
+}
+.HeadhunterContainer > h2 {
+  max-width: 800px;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.HeadhunterImage {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 80%;
+  margin-bottom: 15px;
+}
+.HeadhunterImage img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 50%;
+}
+.HeadhunterFeatures {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.HeadhunterScreeningItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 350px;
+}
+.HeadhunterScreeningItem > img {
+  max-width: 50px;
+  margin-bottom: 10px;
+}
+.HeadhunterScreeningItem > h3 {
+  margin: 0;
+  margin-bottom: 10px;
+  color: #f79f35;
+  font-size: 24px;
+}
+.HeadhunterScreeningItem > p {
+  margin: 0;
+  color: #686868;
+}
+
+.HeadhunterRequest a {
+  text-decoration: none;
+}
+.HeadhunterRequest span {
+  outline: none;
+  background-color: #f79f35;
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 3px solid #f79f35;
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 1.5px 1.5px 5px #71430b;
 }
 
 /* ============================================================================ */
