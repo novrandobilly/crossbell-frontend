@@ -1,5 +1,6 @@
-import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, Fragment, useRef } from 'react';
+
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Logo from '../../../shared/UI_Element/Logo';
 import ContactUs from '../../components/HomePage/ContactUs';
@@ -18,9 +19,16 @@ import Headhunter from '../../../assets/images/Headhunter.png';
 import IntiDinamisLogo from '../../../assets/Inti-Dinamis-Logo.png';
 
 const HomePage = props => {
+  const searchInputRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const onSearchHandler = e => {
+    e.preventDefault();
+    const searchValue = searchInputRef.current.value;
+    props.history.push(`/jobs-dashboard?search=${searchValue}`);
+  };
 
   return (
     <Fragment>
@@ -28,10 +36,12 @@ const HomePage = props => {
         <div className={classes.WelcomeToCrossbell}>
           <div className={classes.WelcomeText}>
             <h1>Sudah saatnya berkarir dalam bidang impianmu!</h1>
-            <div className={classes.WelcomeSearchBar}>
-              <input type='text' placeholder='Cari pekerjaan favoritmu' />
-              <button type='button'>Cari</button>
-            </div>
+            <form className={classes.WelcomeSearchBar} onSubmit={onSearchHandler}>
+              <input type='text' placeholder='Cari pekerjaan favoritmu' name='search job' ref={searchInputRef} />
+              <button type='submit' onClick={onSearchHandler}>
+                Cari
+              </button>
+            </form>
             <p>
               <em>
                 Crossbell menyediakan beragam peluang kerja bagi insan-insan terbaik bangsa, baik untuk mereka yang baru mulai berkarir
@@ -71,11 +81,8 @@ const HomePage = props => {
                 <div className={classes.FeatureIconBackground}>
                   <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoReminder} />
                 </div>
-                <h2>Auto Reminder</h2>
-                <p>
-                  Auto Reminder Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend, faucibus erat in,
-                  molestie justo.{' '}
-                </p>
+                <h2>Auto Remind</h2>
+                <p>Dapatkan informasi terupdate untuk pekerjaan-pekerjaan favoritmu yang langsung terkirim ke email.</p>
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
                 </Link>
@@ -86,8 +93,8 @@ const HomePage = props => {
                 </div>
                 <h2>Auto Apply</h2>
                 <p>
-                  Auto Apply Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend, faucibus erat in,
-                  molestie justo.{' '}
+                  Tidak ingin terlewat untuk submit resume-mu ke pekerjaan favorit? Aktifkan fitur <em>Auto Apply</em> untuk mengirimkan
+                  secara langsung ke pekerjaan favoritmu.
                 </p>
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
@@ -100,10 +107,7 @@ const HomePage = props => {
                   <img className={classes.FeatureIcon} alt='Feature Icon' src={Briefcase} />
                 </div>
                 <h2>Executive Search Programme</h2>
-                <p>
-                  Executive Search Programme Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend,
-                  faucibus erat in, molestie justo.{' '}
-                </p>{' '}
+                <p>Raih kesempatan menjadi top talent untuk berpeluang menjadi kandidat headhunter bagi client kami.</p>{' '}
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
                 </Link>
@@ -113,10 +117,7 @@ const HomePage = props => {
                   <img className={classes.FeatureIcon} alt='Feature Icon' src={ProfileIcon} />
                 </div>
                 <h2>One Resume for All</h2>
-                <p>
-                  One Resume for All Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra libero eleifend, faucibus erat
-                  in, molestie justo.{' '}
-                </p>
+                <p>Cukup satu kali mengisi riwayat pekerjaan & pendidikan untuk bisa melamar ke berbagai macam pekerjaan.</p>
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
                 </Link>
@@ -189,7 +190,6 @@ const HomePage = props => {
       </section>
       <section className={classes.ContactUsBackground}>
         <div className={classes.BackStripe}></div>
-
         <ContactUs />
       </section>
     </Fragment>
@@ -203,4 +203,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(withRouter(HomePage));

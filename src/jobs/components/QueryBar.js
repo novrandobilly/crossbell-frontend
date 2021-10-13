@@ -6,16 +6,11 @@ import Button from '@material-ui/core/Button';
 
 import classes from './QueryBar.module.css';
 
-const QueryBar = (props) => {
+const QueryBar = props => {
   return (
     <div className={classes.QueryBar}>
       <div className={classes.SearchContainer}>
-        <form
-          onSubmit={props.searchHandler}
-          action='/jobs-dashboard'
-          method='GET'
-          className={classes.SearchForm}
-        >
+        <form onSubmit={props.onSubmit} action='/jobs-dashboard' method='GET' className={classes.SearchForm}>
           <Input
             inputType='input'
             id='search'
@@ -23,17 +18,12 @@ const QueryBar = (props) => {
             label='Job search'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             name='search'
-            onInputHandler={props.searchInputHandler}
+            onInputHandler={props.onChange}
             error={false}
+            initValue={props.initValue}
           />
           <div className={classes.ButtonContainer}>
-            <Button
-              variant='contained'
-              type='submit'
-              color='primary'
-              disableElevation
-              style={{ padding: ' 0 1rem', marginLeft: '2rem' }}
-            >
+            <Button variant='contained' type='submit' color='primary' disableElevation style={{ padding: ' 0 1rem', marginLeft: '2rem' }}>
               search
             </Button>
 
@@ -42,8 +32,7 @@ const QueryBar = (props) => {
               type='button'
               onClick={props.clearHandler}
               disableElevation
-              style={{ padding: ' 0 1rem', marginLeft: '16px' }}
-            >
+              style={{ padding: ' 0 1rem', marginLeft: '16px' }}>
               clear
             </Button>
           </div>

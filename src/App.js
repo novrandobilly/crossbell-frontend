@@ -30,7 +30,7 @@ const JobsDashboard = React.lazy(() => import('./jobs/pages/JobsDashboard'));
 const EditUnreleasedJob = React.lazy(() => import('./jobs/pages/EditUnreleasedJob'));
 const PackageAds = React.lazy(() => import('./jobs/pages/PackageAds'));
 const JobDetails = React.lazy(() => import('./jobs/pages/JobDetails'));
-const ApplicantList = React.lazy(() => import('./jobs/pages/ApplicantList'));
+const AppliedCandidatesList = React.lazy(() => import('./jobs/pages/AppliedCandidatesList/AppliedCandidatesList'));
 
 //==================================== company =========================================================
 
@@ -195,7 +195,7 @@ const App = props => {
             <Route path='/jobs/new' component={NewJob} />
             <Route path='/jobs/packageads' component={PackageAds} />
             <Route path='/jobs/:jobsid/edit' component={EditJob} />
-            <Route path='/jobs/applicantlist/:jobsid' component={ApplicantList} />
+            <Route path='/jobs/appliedCandidatesList/:jobsid' component={AppliedCandidatesList} />
             <Route path='/jobs/:jobsid' component={JobDetails} />
 
             {/* Admin Routes */}

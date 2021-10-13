@@ -29,13 +29,11 @@ const searchReducer = (state, action) => {
       };
     }
     case ACTION.SEARCHEXECUTE: {
-      const filteredJob = action.payload.jobs.filter((job) => {
+      const filteredJob = action.payload.jobs.filter(job => {
         let searchValidity = false;
         for (const key in job) {
           if (typeof job[key] === 'string') {
-            searchValidity =
-              searchValidity ||
-              job[key].toLowerCase().includes(state.search.value.toLowerCase());
+            searchValidity = searchValidity || job[key].toLowerCase().includes(state.search.value.toLowerCase());
           }
         }
         return searchValidity;
@@ -59,7 +57,11 @@ const searchReducer = (state, action) => {
   }
 };
 
-const JobsDashboard = (props) => {
+const JobsDashboard = props => {
+  let search = window.location.search;
+  let params = new URLSearchParams(search);
+
+  const searchValue = useState(params.get('search'))[0];
   const [jobEmpty, setJobEmpty] = useState(false);
   const [allAvailableJobs, setAllAvailableJobs] = useState();
   const [modalError, setModalError] = useState(false);
@@ -77,20 +79,41 @@ const JobsDashboard = (props) => {
   }, []);
 
   const { getAllAvailableJobs } = props;
+
+  const checkQueryParams = useCallback(
+    res => {
+      if (!searchValue) {
+        dispatch({
+          type: ACTION.SEARCHEMPTY,
+          payload: { jobs: res.availableJobs },
+        });
+        return;
+      }
+      dispatch({
+        type: ACTION.SEARCHUPDATE,
+        payload: {
+          id: 'name',
+          value: searchValue,
+          isValid: true,
+        },
+      });
+      dispatch({
+        type: ACTION.SEARCHEXECUTE,
+        payload: { jobs: res.availableJobs },
+      });
+      return;
+    },
+    [searchValue]
+  );
+
   useEffect(() => {
     const getJobs = async () => {
       setJobEmpty(false);
       try {
         const res = await getAllAvailableJobs();
-        if (!res.availableJobs) {
-          throw new Error('No Job available at the moment');
-        }
-        dispatch({
-          type: ACTION.SEARCHEMPTY,
-          payload: { jobs: res.availableJobs },
-        });
+        if (!res.availableJobs) throw new Error('No Job available at the moment');
+        checkQueryParams(res);
         setAllAvailableJobs(res.availableJobs);
-        console.log(res);
       } catch (err) {
         setJobEmpty(true);
         setAllAvailableJobs([]);
@@ -102,10 +125,9 @@ const JobsDashboard = (props) => {
       }
     };
     getJobs();
-  }, [getAllAvailableJobs]);
+  }, [getAllAvailableJobs, checkQueryParams]);
 
-  const searchHandler = (event) => {
-    console.log('test1');
+  const onSearchSubmitHandler = event => {
     event.preventDefault();
     if (state.search.value) {
       dispatch({
@@ -120,7 +142,7 @@ const JobsDashboard = (props) => {
     }
   };
 
-  const clearHandler = (event) => {
+  const clearHandler = event => {
     event.preventDefault();
     dispatch({
       type: ACTION.SEARCHEMPTY,
@@ -128,7 +150,7 @@ const JobsDashboard = (props) => {
     });
   };
 
-  const searchInputHandler = useCallback((id, value, isValid) => {
+  const onChangeValueHandler = useCallback((id, value, isValid) => {
     dispatch({
       type: ACTION.SEARCHUPDATE,
       payload: {
@@ -141,14 +163,7 @@ const JobsDashboard = (props) => {
 
   let jobLists = <Spinner />;
   if (state.jobList) {
-    jobLists = (
-      <JobsList
-        items={state.jobList}
-        jobEmpty={jobEmpty}
-        setModalError={setModalError}
-        modalError={modalError}
-      />
-    );
+    jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />;
   }
 
   const onCancelHandler = () => {
@@ -159,16 +174,17 @@ const JobsDashboard = (props) => {
   return (
     <div className={classes.JobsDashboard}>
       <Modal show={modalError} onCancel={onCancelHandler}>
-        Mohon masuk terlebih dahulu agar dapat melamar pekerjaan
+        Silahkan login untuk melamar pekerjaan
       </Modal>
       <div className={classes.Dashboard}>
         <div className={classes.Header}>
           <div className={classes.HeaderSection1} />
           <div className={classes.HeaderSection2}>
             <QueryBar
-              searchInputHandler={searchInputHandler}
-              searchHandler={searchHandler}
+              onChange={onChangeValueHandler}
+              onSubmit={onSearchSubmitHandler}
               clearHandler={clearHandler}
+              initValue={searchValue || ''}
             />
           </div>
         </div>
@@ -179,20 +195,17 @@ const JobsDashboard = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     jobs: state.job,
     companyStore: state.company.companies,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     getAllAvailableJobs: () => dispatch(actionCreators.getAllAvailableJobs()),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(JobsDashboard));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(JobsDashboard));
