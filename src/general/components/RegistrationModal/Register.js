@@ -62,6 +62,7 @@ const Register = props => {
         userId: res.userId,
         isCompany: res.isCompany,
       });
+      props.onSucceedRegister();
       props.history.push(`/ap/${res.userId}/res-val`);
     } catch (err) {
       setErrorMessage(err.message);

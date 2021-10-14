@@ -40,9 +40,9 @@ const NavigationWrapper = () => {
         headerText={isLogin ? 'Login ' : 'Registration Form'}
         style={{ top: !isLogin && '10vh', '--containerWidth': '400px' }}>
         {isLogin ? (
-          <Login onSwitchToRegister={onSwitchToRegister} onForgotPassword={onCancelAuth} />
+          <Login onSwitchToRegister={onSwitchToRegister} onForgotPassword={onCancelAuth} onSucceedLogin={onCancelAuth} />
         ) : (
-          <Register onSwitchToLogin={onSwitchToLogin} />
+          <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} />
         )}
       </Modal>
 
