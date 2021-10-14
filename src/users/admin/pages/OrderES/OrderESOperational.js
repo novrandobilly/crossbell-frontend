@@ -5,8 +5,8 @@ import moment from 'moment';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -44,7 +44,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const OrderES = (props) => {
+const OrderES = props => {
   const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
@@ -71,17 +71,16 @@ const OrderES = (props) => {
     if (token) {
       let sort = [];
       getWholeOrderES(token)
-        .then((res) => {
+        .then(res => {
           sort = res.orders;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           setData(sort);
 
           if (res.message) {
-            emptyText.current =
-              'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+            emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -94,15 +93,12 @@ const OrderES = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const updateStatusHandler = async (dataInput) => {
+  const updateStatusHandler = async dataInput => {
     setIndex(dataInput.i);
     setOrderModal(false);
 
@@ -116,7 +112,7 @@ const OrderES = (props) => {
       if (!response.order) {
         throw new Error(response);
       }
-      setData((prevData) => {
+      setData(prevData => {
         const tempData = [...prevData];
         const trueIndex = dataInput.i + (paginationNumber - 1) * rowsNumber;
         tempData[trueIndex].status = dataInput.status;
@@ -142,7 +138,7 @@ const OrderES = (props) => {
     setPaginationNumber(value);
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -161,7 +157,7 @@ const OrderES = (props) => {
     setOrderModal(true);
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   // if (!props.isLoading && data.length < 1) {
   //   content = <h1>tidak ada order untuk saat ini</h1>;
@@ -189,10 +185,7 @@ const OrderES = (props) => {
                   <th> {i + 1}</th>
                   <th>
                     {' '}
-                    <Link
-                      to={`/ad/alphaomega/order/es`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/ad/alphaomega/order/es`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order._id}
                     </Link>
                   </th>
@@ -203,14 +196,7 @@ const OrderES = (props) => {
                     {props.indexIsLoading && index === i ? (
                       <Spinner />
                     ) : (
-                      <p
-                        className={classes.Content}
-                        style={
-                          order.status === 'Closed'
-                            ? { color: 'red' }
-                            : { color: 'green' }
-                        }
-                      >
+                      <p className={classes.Content} style={order.status === 'Closed' ? { color: 'red' } : { color: 'green' }}>
                         {order.status}
                       </p>
                     )}
@@ -223,17 +209,8 @@ const OrderES = (props) => {
                       </button>
                       <div className={classes.DropDownContent}>
                         <button
-                          style={
-                            order.status === 'Open'
-                              ? { color: 'Red' }
-                              : { color: 'gray' }
-                          }
-                          onClick={
-                            order.status === 'Open'
-                              ? () => onOpenOrderModal(order._id, i)
-                              : null
-                          }
-                        >
+                          style={order.status === 'Open' ? { color: 'Red' } : { color: 'gray' }}
+                          onClick={order.status === 'Open' ? () => onOpenOrderModal(order._id, i) : null}>
                           {order.status === 'Open' ? 'Close' : 'Sudah ditutup'}
                         </button>
                       </div>
@@ -250,26 +227,16 @@ const OrderES = (props) => {
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}
-        >
+          }}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={30}>30</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
       </div>
     );
@@ -290,8 +257,7 @@ const OrderES = (props) => {
             status: approveOrder.status,
             i: approveOrder.index,
           })
-        }
-      >
+        }>
         {' '}
         Setujui pembelian dari perusahaan ini?
       </OrderModal>
@@ -300,7 +266,7 @@ const OrderES = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     indexIsLoading: state.finance.indexIsLoading,
@@ -309,11 +275,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getWholeOrderES: (data) => dispatch(actionCreators.getWholeOrderES(data)),
-    updateOrderStatusES: (payload) =>
-      dispatch(actionCreators.updateOrderStatusES(payload)),
+    getWholeOrderES: data => dispatch(actionCreators.getWholeOrderES(data)),
+    updateOrderStatusES: payload => dispatch(actionCreators.updateOrderStatusES(payload)),
   };
 };
 

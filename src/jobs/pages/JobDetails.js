@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions/';
 
-import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
 import JobDetailMap from '../components/JobDetailMap';
 
-const JobDetails = (props) => {
+const JobDetails = props => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
 
@@ -34,7 +34,7 @@ const JobDetails = (props) => {
   return jobDetails;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -42,9 +42,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOneJob: (jobsid) => dispatch(actionCreators.getOneJob(jobsid)),
+    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
   };
 };
 

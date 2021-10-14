@@ -2,12 +2,12 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as actionCreators from '../../../../store/actions';
+import * as actionCreators from '../../../store/actions';
 
 import classes from './GoogleLoginButton.module.css';
 
-const GoogleLoginButton = (props) => {
-  const responseSuccessGoogle = async (response) => {
+const GoogleLoginButton = props => {
+  const responseSuccessGoogle = async response => {
     const payload = {
       idToken: response.tokenId,
     };
@@ -19,7 +19,7 @@ const GoogleLoginButton = (props) => {
       console.log(err);
     }
   };
-  const responseErrorGoogle = (response) => {};
+  const responseErrorGoogle = response => {};
   return (
     <div className={classes.GoogleLogin}>
       <GoogleLogin
@@ -33,9 +33,9 @@ const GoogleLoginButton = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    googleLogin: (payload) => dispatch(actionCreators.googleLogin(payload)),
+    googleLogin: payload => dispatch(actionCreators.googleLogin(payload)),
   };
 };
 

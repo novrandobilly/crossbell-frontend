@@ -12,7 +12,7 @@
   border: none;
   border-radius: 1rem;
   background-color: white;
-  /* font-family: sans-serif; */
+
   overflow: hidden;
 }
 
@@ -39,39 +39,39 @@
 }
 
 .InputBox {
-  height: 65px;
-  margin-bottom: 8px;
+  min-height: 70px;
 }
 
-.ChangeSign {
-  margin-top: 1.5rem;
-  border: none;
-  color: blue;
-  background-color: transparent;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
+.RegisterButton {
   outline: none;
+  border-radius: 5px;
+  background-color: #f79f35;
+  color: #fff;
+  padding: 0.6em;
+  font-family: 'Lato', sans-serif;
+  border: 3px solid #f79f35;
+  font-size: 16px;
+}
+.RegisterButton:hover {
+  cursor: pointer;
+}
+.RegisterButton:disabled {
+  background-color: #8b8b8b;
+  border: 3px solid #8b8b8b;
+  cursor: not-allowed;
 }
 
-.Sign {
-  color: black;
-  font-size: 0.8rem;
+.AdditionalLinks {
+  margin: 0;
+  font-size: 12px;
 }
 
-.Footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: rgb(245, 245, 245);
-  padding: 0.5rem 0;
-}
-
-.Footer button {
-  font-size: 1rem;
-  padding: 0;
-  align-self: flex-end;
-  background-color: transparent;
-  margin-right: 1.5rem;
+.LoginSwitch {
+  font-style: italic;
+  color: #f79f35;
   font-weight: 700;
+}
+.LoginSwitch:hover {
+  cursor: pointer;
+  text-shadow: 0 0 5px #f8c688;
 }

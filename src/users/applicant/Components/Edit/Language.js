@@ -8,12 +8,12 @@ import * as actionCreators from '../../../../store/actions';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
-import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './Language.module.css';
 
-const Language = (props) => {
+const Language = props => {
   const [language, setLanguages] = useState(['language']);
   const [languagesList, setLanguagesList] = useState([{}]);
 
@@ -36,7 +36,7 @@ const Language = (props) => {
       res = await getOneApplicant(payload);
 
       res.applicant.languages.forEach((language, i) => {
-        setLanguages((prevState) => [...prevState, 'language']);
+        setLanguages(prevState => [...prevState, 'language']);
       });
 
       setLanguagesList(res.applicant.languages);
@@ -51,7 +51,7 @@ const Language = (props) => {
     onInputHandler('language', languagesList, true);
   }, [onInputHandler, languagesList]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
     }
@@ -68,15 +68,15 @@ const Language = (props) => {
     props.history.push(`/ap/${applicantid}/profile`);
   };
 
-  const addLanguage = (e) => {
+  const addLanguage = e => {
     e.preventDefault();
-    setLanguages((language) => [...language, 'language']);
+    setLanguages(language => [...language, 'language']);
   };
 
   const onUpdateLang = (event, i, type) => {
     let inputValue = event.target.value;
 
-    setLanguagesList((prevState) => {
+    setLanguagesList(prevState => {
       let newState = [...prevState];
       if (typeof newState[i] !== 'object') newState[i] = {};
       newState[i][type] = inputValue;
@@ -101,7 +101,7 @@ const Language = (props) => {
                     inputType='input'
                     id={`language_${i}`}
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                    onChange={(e) => onUpdateLang(e, i, 'langName')}
+                    onChange={e => onUpdateLang(e, i, 'langName')}
                     initIsValid={true}
                     label='Bahasa Yang Dikuasai'
                     value={languagesList[i]?.langName}
@@ -113,7 +113,7 @@ const Language = (props) => {
                     inputType='input'
                     id={`rating_${i}`}
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                    onChange={(e) => onUpdateLang(e, i, 'rate')}
+                    onChange={e => onUpdateLang(e, i, 'rate')}
                     initIsValid={true}
                     type='number'
                     label='Rate'
@@ -138,14 +138,7 @@ const Language = (props) => {
             );
           })}
 
-          <Button
-            variant='contained'
-            color='primary'
-            type='button'
-            disableElevation
-            onClick={addLanguage}
-            size='small'
-          >
+          <Button variant='contained' color='primary' type='button' disableElevation onClick={addLanguage} size='small'>
             Add Input
           </Button>
 
@@ -154,8 +147,7 @@ const Language = (props) => {
               // disabled={!formState.formIsValid}
               variant='contained'
               color='primary'
-              type='submit'
-            >
+              type='submit'>
               Save
             </Button>
           </div>
@@ -179,7 +171,7 @@ const Language = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     applicant: state.applicant,
     isLoading: state.applicant.isLoading,
@@ -188,19 +180,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateApplicantLanguages: (payload) =>
-      dispatch(actionCreators.updateApplicantLanguages(payload)),
-    getOneApplicant: (applicantid) =>
-      dispatch(actionCreators.getOneApplicant(applicantid)),
+    updateApplicantLanguages: payload => dispatch(actionCreators.updateApplicantLanguages(payload)),
+    getOneApplicant: applicantid => dispatch(actionCreators.getOneApplicant(applicantid)),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    updateApplicantFail: () =>
-      dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
+    updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Language));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Language));

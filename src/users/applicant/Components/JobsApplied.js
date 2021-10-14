@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import * as actionCreators from '../../../store/actions';
-import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import classes from './JobsApplied.module.css';
 
@@ -34,7 +34,7 @@ const JobsApplied = props => {
     }
   }, [getApplicantJobsApplied, applicantid, props.auth]);
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!props.isLoading && data) {
     content = (

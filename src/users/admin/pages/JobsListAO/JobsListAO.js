@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -133,7 +133,7 @@ const JobsListAO = props => {
     });
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
   console.log(displayData);
   if (!isLoading) {
     content = (

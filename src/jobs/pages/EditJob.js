@@ -9,12 +9,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE } from '../../shared/utils/validator';
 import classes from './EditJob.module.css';
 
-const EditJob = (props) => {
+const EditJob = props => {
   const jobid = useParams().jobsid;
   const [identifiedJob, setIdentifiedJob] = useState(null);
   const [employment, setEmployment] = useState('');
@@ -70,7 +70,7 @@ const EditJob = (props) => {
     fetchJob();
   }, [getOneJob, jobid]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     const payload = {
       jobId: jobid,
@@ -99,7 +99,7 @@ const EditJob = (props) => {
     onInputHandler('employment', formState.inputs.employment.value, true);
   }, [identifiedJob, onInputHandler, formState.inputs.employment.value]);
 
-  const handleEmploymentChange = (e) => {
+  const handleEmploymentChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -114,7 +114,7 @@ const EditJob = (props) => {
     setEmploymentOpen(true);
   };
 
-  const onCheckedInputHandler = (e) => {
+  const onCheckedInputHandler = e => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
@@ -171,8 +171,7 @@ const EditJob = (props) => {
                 className={classes.formControl}
                 style={{
                   width: '100%',
-                }}
-              >
+                }}>
                 <InputLabel id='employment' style={{ fontSize: '1rem' }}>
                   Jenis Pekerjaan*
                 </InputLabel>
@@ -188,27 +187,14 @@ const EditJob = (props) => {
                   style={{
                     fontSize: '0.9rem',
                     textAlign: 'left',
-                  }}
-                >
-                  <MenuItem
-                    id={0}
-                    value='permanent'
-                    style={{ fontSize: '0.9rem' }}
-                  >
+                  }}>
+                  <MenuItem id={0} value='permanent' style={{ fontSize: '0.9rem' }}>
                     Karyawan Tetap
                   </MenuItem>
-                  <MenuItem
-                    id={0}
-                    value='contract'
-                    style={{ fontSize: '0.9rem' }}
-                  >
+                  <MenuItem id={0} value='contract' style={{ fontSize: '0.9rem' }}>
                     Karyawan kontrak (PKWT)
                   </MenuItem>
-                  <MenuItem
-                    id={0}
-                    value='intern'
-                    style={{ fontSize: '0.9rem' }}
-                  >
+                  <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
                     Karyawan magang (Intern)
                   </MenuItem>
                 </Select>
@@ -229,16 +215,8 @@ const EditJob = (props) => {
             </div>
 
             <div className={classes.CheckBoxDiv}>
-              <label
-                onChange={onCheckedInputHandler}
-                className={classes.CheckBoxLabel}
-              >
-                <input
-                  id='isHidden'
-                  type='checkbox'
-                  name='isHidden'
-                  className={classes.CheckBox}
-                />
+              <label onChange={onCheckedInputHandler} className={classes.CheckBoxLabel}>
+                <input id='isHidden' type='checkbox' name='isHidden' className={classes.CheckBox} />
                 <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
               </label>
             </div>
@@ -253,8 +231,7 @@ const EditJob = (props) => {
             disableElevation
             onClick={onSubmitHandler}
             disabled={!formState.formIsValid}
-            style={{ marginTop: '1rem' }}
-          >
+            style={{ marginTop: '1rem' }}>
             save
           </Button>
         </div>
@@ -269,21 +246,18 @@ const EditJob = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateJob: (payload) => dispatch(actionCreators.updateJob(payload)),
-    getOneJob: (jobId) => dispatch(actionCreators.getOneJob(jobId)),
+    updateJob: payload => dispatch(actionCreators.updateJob(payload)),
+    getOneJob: jobId => dispatch(actionCreators.getOneJob(jobId)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(EditJob));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditJob));

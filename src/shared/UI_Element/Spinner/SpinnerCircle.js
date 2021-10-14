@@ -1,20 +1,20 @@
 import React from 'react';
 
-import classes from './SpinnerCircle.module.css';
+import classes from './LoadingBar.module.css';
 
-const SpinnerCircle = () => {
-	return (
-		<div className={classes.LdsRoller}>
-			<div />
-			<div />
-			<div />
-			<div />
-			<div />
-			<div />
-			<div />
-			<div />
-		</div>
-	);
+const LoadingBar = () => {
+  return (
+    <div className={classes.LdsRoller}>
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+  );
 };
 
-export default SpinnerCircle;
+export default LoadingBar;

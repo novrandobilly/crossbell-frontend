@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -176,7 +176,7 @@ const CompaniesListAO = props => {
     setRowsNumber(event.target.value);
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   console.log(data);
 

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions';
-import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import PinDropOutlinedIcon from '@material-ui/icons/PinDropOutlined';
@@ -32,7 +32,7 @@ const AppliedCandidatesList = props => {
     });
   }, [getOneJob, jobsid, props.auth]);
 
-  let Content = <SpinnerCircle />;
+  let Content = <LoadingBar />;
 
   if (!props.isLoading && displayData) {
     Content = (

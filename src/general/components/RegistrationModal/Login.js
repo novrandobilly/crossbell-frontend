@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import * as actionTypes from '../../../../store/actions/actions';
-import * as actionCreators from '../../../../store/actions';
-import { useForm } from '../../../../shared/utils/useForm';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions';
+import { useForm } from '../../../shared/utils/useForm';
 
 import GoogleLoginButton from './GoogleLoginButton';
-import Input from '../../../../shared/UI_Element/Input';
-import Button from '@material-ui/core/Button';
-import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Modal from '../../../../shared/UI_Element/Modal';
+import Input from '../../../shared/UI_Element/Input';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import Modal from '../../../shared/UI_Element/Modal';
 
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-} from '../../../../shared/utils/validator';
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../shared/utils/validator';
 
 import classes from './Login.module.css';
 
-const Login = (props) => {
+const Login = props => {
   const [formState, onInputHandler] = useForm(
     {
       email: {
@@ -33,7 +29,7 @@ const Login = (props) => {
     false
   );
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     const loginData = {
@@ -64,89 +60,59 @@ const Login = (props) => {
   };
 
   let formContent = (
-    <React.Fragment>
-      <div className={classes.ContainerFlex}>
-        <div className={classes.Header}>
-          <p className={classes.FormTitle}>Sign In</p>
-        </div>
-
-        <div className={classes.Content}>
-          <div className={classes.InputBox}>
-            <Input
-              inputType='input'
-              id='email'
-              InputClass='Login'
-              validatorMethod={[VALIDATOR_EMAIL()]}
-              onInputHandler={onInputHandler}
-              label='Email'
-              helperText='Mohon masukkan email yang valid.'
-            />
-          </div>
-          <div className={classes.InputBox}>
-            <Input
-              inputType='input'
-              id='password'
-              InputClass='Login'
-              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-              onInputHandler={onInputHandler}
-              label='Password'
-              type='password'
-              helperText='Password minimal berjumlah 6 karakter.'
-            />
-          </div>
-
-          <Button
-            variant='contained'
-            color='primary'
-            type='submit'
-            disableElevation
-            disabled={!formState.formIsValid}
-            style={{
-              marginTop: '1rem',
-            }}
-          >
-            Sign in
-          </Button>
-
-          <GoogleLoginButton />
-
-          <span className={classes.Sign}>
-            Tidak punya akun?
-            <button
-              className={classes.ChangeSign}
-              onClick={props.sign}
-              type='button'
-            >
-              Daftar disini
-            </button>
-          </span>
-
-          <span className={classes.Sign}>
-            <em>
-              Lupa password?
-              <button className={classes.ChangeSign} type='button'>
-                <Link
-                  style={{
-                    textDecoration: 'none',
-                    color: 'rgba(58, 81, 153, 1)',
-                  }}
-                  to='/forgot'
-                >
-                  Klik disini
-                </Link>
-              </button>
-            </em>
-          </span>
-        </div>
-
-        <div className={classes.Footer} />
+    <div className={classes.LoginContainer}>
+      <div className={classes.InputBox}>
+        <Input
+          inputType='input'
+          id='email'
+          InputClass='Login'
+          validatorMethod={[VALIDATOR_EMAIL()]}
+          onInputHandler={onInputHandler}
+          label='Email'
+          helperText='Silahkan gunakan email yang valid.'
+        />
       </div>
-    </React.Fragment>
+      <div className={classes.InputBox}>
+        <Input
+          inputType='input'
+          id='password'
+          InputClass='Login'
+          validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+          onInputHandler={onInputHandler}
+          label='Password'
+          type='password'
+          helperText='Silahkan isi password anda.'
+        />
+      </div>
+
+      {props.auth.isLoading ? (
+        <LoadingBar />
+      ) : (
+        <Fragment>
+          <button type='submit' className={classes.SubmitButton} disabled={!formState.formIsValid}>
+            Masuk
+          </button>
+          <GoogleLoginButton />
+        </Fragment>
+      )}
+      <LoadingBar />
+
+      <p className={classes.AdditionalLinks}>
+        Tidak punya akun?{' '}
+        <span className={classes.RegistrationSwitch} onClick={props.onSwitchToRegister}>
+          Daftar sekarang
+        </span>
+      </p>
+
+      <p className={classes.AdditionalLinks}>
+        Lupa password?{' '}
+        <Link className={classes.ForgotPasswordLink} to='/forgot'>
+          Klik disini
+        </Link>
+      </p>
+    </div>
   );
 
-  if (props.auth.isLoading) {
-    formContent = <Spinner />;
-  }
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
       <Modal show={props.auth.isError} onCancel={onCancelHandler}>
@@ -157,17 +123,17 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-    loginServer: (loginData) => dispatch(actionCreators.login(loginData)),
+    loginServer: loginData => dispatch(actionCreators.login(loginData)),
   };
 };
 

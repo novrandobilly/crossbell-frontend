@@ -4,66 +4,71 @@
   justify-content: center;
 }
 
-.ContainerFlex {
+.LoginContainer {
   width: 22rem;
   height: auto;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 1.5em 1em;
   border: none;
   border-radius: 1rem;
   background-color: white;
-  /* font-family: sans-serif; */
   overflow: hidden;
 }
 
-.Header {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 0rem 1.5rem 0 1.5rem;
-  margin-top: -0.4rem;
-  margin-bottom: 1rem;
-}
-
-.FormTitle {
-  margin-bottom: 0rem;
-  font-size: 1.7rem;
-  font-weight: 700;
-  align-self: flex-start;
-}
-
-.Content {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 0rem 1.5rem;
-}
-
 .InputBox {
-  height: 65px;
-  margin-bottom: 8px;
+  min-height: 70px;
+}
+.InputBox:nth-of-type(2) {
+  margin-bottom: 15px;
 }
 
-.ChangeSign {
-  margin-top: 1.5rem;
-  border: none;
-  color: blue;
-  background-color: transparent;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
+.SubmitButton {
   outline: none;
+  border-radius: 5px;
+  background-color: #f79f35;
+  color: #fff;
+  padding: 0.6em;
+  font-family: 'Lato', sans-serif;
+  border: 3px solid #f79f35;
+  font-size: 16px;
 }
 
-.Sign {
-  color: black;
-  font-size: 0.8rem;
+.SubmitButton:hover {
+  cursor: pointer;
+}
+.SubmitButton:disabled {
+  background-color: #8b8b8b;
+  border: 3px solid #8b8b8b;
+
+  cursor: not-allowed;
+}
+
+.AdditionalLinks {
+  margin: 0;
+  font-size: 12px;
+}
+
+.AdditionalLinks:nth-of-type(1) {
+  margin-bottom: 10px;
+}
+.RegistrationSwitch,
+.ForgotPasswordLink {
+  text-decoration: none;
+  font-style: italic;
+  font-weight: 700;
+  color: #f79f35;
+}
+.RegistrationSwitch:hover,
+.ForgotPasswordLink:hover {
+  cursor: pointer;
+  text-shadow: 0 0 5px #f8c688;
 }
 
 .Footer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* background-color: rgb(245, 245, 245); */
   padding: 1rem 0;
 }

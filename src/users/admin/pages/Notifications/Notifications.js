@@ -5,7 +5,7 @@ import moment from 'moment';
 import * as actionCreators from '../../../../store/actions';
 import * as actionTypes from '../../../../store/actions/actions';
 
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 
 import classes from './Notifications.module.css';
 
@@ -65,7 +65,7 @@ const Notifications = props => {
     }
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!props.admin.isLoading && adminNotifications) {
     content = (

@@ -1,9 +1,11 @@
 .LdsRoller {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
-  margin-top: 150px;
+  width: 100%;
+  max-width: 80px;
+  min-height: 80px;
+  margin: 10px auto;
+  box-sizing: border-box;
 }
 
 .LdsRoller div {
@@ -15,10 +17,10 @@
   content: ' ';
   display: block;
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: rgba(58, 81, 153, 1);
+  background: #f79f35;
   margin: -4px 0 0 -4px;
 }
 .LdsRoller div:nth-child(1) {

@@ -5,7 +5,7 @@ import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionCreators from '../../../../store/actions';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
-import Spinner from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -44,7 +44,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const FinancialAO = (props) => {
+const FinancialAO = props => {
   const [total, setTotal] = useState([]);
   const [revenue, setRevenue] = useState(0);
   const [paidOrder, setPaidOrder] = useState([]);
@@ -88,22 +88,20 @@ const FinancialAO = (props) => {
           console.log(err);
         }
         totalOrder = [...resreg.orderreg, ...resbc.orderbc];
-        totalOrder = totalOrder.sort(
-          (a, b) => moment(b.createdAt) - moment(a.createdAt)
-        );
+        totalOrder = totalOrder.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setFetchData(totalOrder);
         setPaidOrder(
-          totalOrder.filter((order) => {
+          totalOrder.filter(order => {
             return order.status === 'Paid';
           })
         );
         setPendingOrder(
-          totalOrder.filter((order) => {
+          totalOrder.filter(order => {
             return order.status === 'Pending';
           })
         );
         setExpiredOrder(
-          totalOrder.filter((order) => {
+          totalOrder.filter(order => {
             return order.status === 'Expired';
           })
         );
@@ -116,12 +114,10 @@ const FinancialAO = (props) => {
     if (fetchData) {
       let filteredOrders = [...fetchData];
       if (formState?.inputs?.start?.value && formState?.inputs?.end?.value) {
-        filteredOrders = filteredOrders.filter((order) =>
+        filteredOrders = filteredOrders.filter(order =>
           moment(order.createdAt).isBetween(
             moment(moment(formState.inputs.start.value).format('LL')),
-            moment(
-              `${moment(formState.inputs.end.value).format('LL')} 23:59:59`
-            ),
+            moment(`${moment(formState.inputs.end.value).format('LL')} 23:59:59`),
             undefined,
             []
           )
@@ -138,10 +134,7 @@ const FinancialAO = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, filteredData]);
@@ -158,7 +151,7 @@ const FinancialAO = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -170,7 +163,7 @@ const FinancialAO = (props) => {
 
   useEffect(() => {
     if (filteredData) {
-      let arrPrice = filteredData.map((data) => {
+      let arrPrice = filteredData.map(data => {
         if (data.approvedAt !== null) {
           return data.totalPrice;
         }
@@ -183,7 +176,7 @@ const FinancialAO = (props) => {
   useEffect(() => {
     if (total) {
       let Rev = 0;
-      total.map((data) => {
+      total.map(data => {
         Rev = Rev + data;
         return Rev;
       });
@@ -254,17 +247,8 @@ const FinancialAO = (props) => {
                     <th>{i + 1}</th>
                     <th>{display.companyId?.companyName}</th>
                     <th>{display._id}</th>
-                    <th>
-                      {' '}
-                      {display.slot ? 'order reguler' : 'order bulk candidate'}
-                    </th>
-                    <th>
-                      {display.PPH ? (
-                        <CheckCircleIcon style={{ color: '#00A30E' }} />
-                      ) : (
-                        <CancelIcon color='secondary' />
-                      )}
-                    </th>
+                    <th> {display.slot ? 'order reguler' : 'order bulk candidate'}</th>
+                    <th>{display.PPH ? <CheckCircleIcon style={{ color: '#00A30E' }} /> : <CancelIcon color='secondary' />}</th>
 
                     <th>{display.slot ? display.packageName : '-'}</th>
                     <th>{moment(display.createdAt).format('D MMM YYYY')}</th>
@@ -276,17 +260,14 @@ const FinancialAO = (props) => {
                         style={{
                           fontSize: '0.9rem',
                           color: 'rgb(250, 129, 0)',
-                        }}
-                      >
+                        }}>
                         pending
                       </th>
                     ) : (
                       <th style={{ fontSize: '0.9rem' }}>
                         <p style={{ margin: '-0.5rem 0 -1rem 0' }}>
                           {display.slot || display.amount}
-                          <span style={{ margin: '0 0 0 1rem' }}>
-                            {display.slot ? 'slot' : 'candidate'}
-                          </span>
+                          <span style={{ margin: '0 0 0 1rem' }}>{display.slot ? 'slot' : 'candidate'}</span>
                         </p>
                       </th>
                     )}
@@ -295,21 +276,14 @@ const FinancialAO = (props) => {
                     {display.status === 'Pending' ? (
                       <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                     ) : (
-                      <th>
-                        Rp.{' '}
-                        {(
-                          display.pricePerSlot || display.price
-                        ).toLocaleString()}
-                      </th>
+                      <th>Rp. {(display.pricePerSlot || display.price).toLocaleString()}</th>
                     )}
 
                     {/* ========== Total Price ========== */}
                     {display.status === 'Pending' ? (
                       <th style={{ color: 'rgb(250, 129, 0)' }}>pending</th>
                     ) : (
-                      <th>
-                        Rp. {parseInt(display.totalPrice).toLocaleString()}
-                      </th>
+                      <th>Rp. {parseInt(display.totalPrice).toLocaleString()}</th>
                     )}
 
                     <th
@@ -319,8 +293,7 @@ const FinancialAO = (props) => {
                           : display.status === 'Expired'
                           ? { color: 'Gray', fontWeight: 'bold' }
                           : { color: 'green', fontWeight: 'bold' }
-                      }
-                    >
+                      }>
                       {display.status}
                     </th>
                   </tr>
@@ -332,23 +305,14 @@ const FinancialAO = (props) => {
 
         <div className={classes.Pagination}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={30}>30</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
 
         <div className={classes.RevenueContainer}>
@@ -358,28 +322,16 @@ const FinancialAO = (props) => {
               <div className={classes.Label}>Revenue/ year</div>
             </div>
             <div className={classes.RevenueNumber}>
-              <div className={classes.Label}>
-                Rp. {revenue.toLocaleString()},-
-              </div>
-              <div className={classes.Label}>
-                Rp. {(revenue * 12).toLocaleString()},-
-              </div>
+              <div className={classes.Label}>Rp. {revenue.toLocaleString()},-</div>
+              <div className={classes.Label}>Rp. {(revenue * 12).toLocaleString()},-</div>
             </div>
           </div>
 
           <div className={classes.DetailsDiv}>
-            <div className={classes.OrderAmount}>
-              Order Masuk: {fetchData.length}
-            </div>
-            <div className={classes.OrderAmount}>
-              Order Lunas: {paidOrder.length}
-            </div>
-            <div className={classes.OrderAmount}>
-              Order Pending: {pendingOrder.length}
-            </div>
-            <div className={classes.OrderAmount}>
-              Order Expired: {expiredOrder.length}
-            </div>
+            <div className={classes.OrderAmount}>Order Masuk: {fetchData.length}</div>
+            <div className={classes.OrderAmount}>Order Lunas: {paidOrder.length}</div>
+            <div className={classes.OrderAmount}>Order Pending: {pendingOrder.length}</div>
+            <div className={classes.OrderAmount}>Order Expired: {expiredOrder.length}</div>
           </div>
         </div>
       </div>
@@ -389,7 +341,7 @@ const FinancialAO = (props) => {
   return <div className={classes.FlexContainer}>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     isLoading: state.finance.isLoading,
@@ -397,11 +349,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getWholeOrderREG: (token) =>
-      dispatch(actionCreators.getWholeOrderREG(token)),
-    getWholeOrderBC: (token) => dispatch(actionCreators.getWholeOrderBC(token)),
+    getWholeOrderREG: token => dispatch(actionCreators.getWholeOrderREG(token)),
+    getWholeOrderBC: token => dispatch(actionCreators.getWholeOrderBC(token)),
   };
 };
 

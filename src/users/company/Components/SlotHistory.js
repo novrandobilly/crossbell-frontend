@@ -13,7 +13,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
-import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import classes from './SlotHistory.module.css';
 
@@ -45,7 +45,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const SlotHistory = (props) => {
+const SlotHistory = props => {
   const { companyid } = useParams();
 
   const [fetchData, setFetchData] = useState();
@@ -73,13 +73,9 @@ const SlotHistory = (props) => {
       companyId: companyid,
     };
 
-    getJobsInCompany(payload).then((res) => {
+    getJobsInCompany(payload).then(res => {
       if (res && res.foundJob) {
-        setFetchData(
-          res.foundJob
-            .filter((dat) => dat.releasedAt != null)
-            .sort((a, b) => moment(b.expiredDate) - moment(a.expiredDate))
-        );
+        setFetchData(res.foundJob.filter(dat => dat.releasedAt != null).sort((a, b) => moment(b.expiredDate) - moment(a.expiredDate)));
       } else {
         setFetchData(null);
       }
@@ -95,10 +91,7 @@ const SlotHistory = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, tempData]);
@@ -113,7 +106,7 @@ const SlotHistory = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -127,18 +120,13 @@ const SlotHistory = (props) => {
     if (fetchData) {
       let filterData = [...fetchData];
       if (formState?.inputs?.sortDate?.value) {
-        filterData = filterData.filter((order) =>
-          moment(order.releasedAt).isSame(
-            moment(formState.inputs.sortDate.value),
-            'month'
-          )
-        );
+        filterData = filterData.filter(order => moment(order.releasedAt).isSame(moment(formState.inputs.sortDate.value), 'month'));
       }
       setTempData(filterData);
     }
   }, [fetchData, formState.inputs.sortDate.value]);
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
   if (!props.isLoading && displayData) {
     content = (
       <div className={classes.Table}>
@@ -159,20 +147,11 @@ const SlotHistory = (props) => {
                 <div className={classes.HistoryCard}>
                   <div className={classes.CardMain}>{dat.jobTitle}</div>
                   <div className={classes.CardSlot}>{dat.slot}</div>
-                  <div className={classes.CardApplied}>
-                    {dat.jobApplicants.length}
-                  </div>
+                  <div className={classes.CardApplied}>{dat.jobApplicants.length}</div>
                   <div
                     className={classes.CardTime}
-                    style={
-                      moment(dat.expiredDate).diff(moment(), 'days') > 7
-                        ? { color: 'green' }
-                        : { color: 'grey' }
-                    }
-                  >
-                    {moment(dat.expiredDate) > moment()
-                      ? `${moment(dat.expiredDate).diff(moment(), 'days')} hari`
-                      : 'expired'}
+                    style={moment(dat.expiredDate).diff(moment(), 'days') > 7 ? { color: 'green' } : { color: 'grey' }}>
+                    {moment(dat.expiredDate) > moment() ? `${moment(dat.expiredDate).diff(moment(), 'days')} hari` : 'expired'}
                   </div>
                 </div>
               </Link>
@@ -227,32 +206,22 @@ const SlotHistory = (props) => {
           display: 'flex',
           justifyContent: 'space-between',
           width: '90%',
-        }}
-      >
+        }}>
         <FormControl style={{ width: '4rem' }}>
-          <Select
-            labelId='rowPerPage'
-            id='rowPerPageSelect'
-            value={state.rowsPerPage}
-            onChange={rowsHandler}
-          >
+          <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
             <MenuItem value={30}>30</MenuItem>
           </Select>
           <FormHelperText>Rows</FormHelperText>
         </FormControl>
-        <Pagination
-          count={state.pageCount}
-          page={state.pageNumber}
-          onChange={pageChangeHandler}
-        />
+        <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -261,10 +230,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getJobsInCompany: (payload) =>
-      dispatch(actionCreators.getJobsInCompany(payload)),
+    getJobsInCompany: payload => dispatch(actionCreators.getJobsInCompany(payload)),
     resetCompany: () => dispatch({ type: actionTypes.FETCHINGFINISH }),
   };
 };

@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 
 import { VALIDATOR_REQUIRE } from '../../../../shared/utils/validator';
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import classes from './CustomerSupportsAO.module.css';
 
-const CustomerSupportsAO = (props) => {
+const CustomerSupportsAO = props => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,13 +20,13 @@ const CustomerSupportsAO = (props) => {
   const { getFeedback } = props;
   useEffect(() => {
     const token = props.admin.token;
-    getFeedback(token).then((res) => {
+    getFeedback(token).then(res => {
       setData(res.Feedback);
       setIsLoading(false);
     });
   }, [getFeedback, setIsLoading, props.admin.token]);
 
-  const onDeleteHandler = async (id) => {
+  const onDeleteHandler = async id => {
     try {
       const res = await props.deleteFeed(id);
       if (res) {
@@ -39,7 +39,7 @@ const CustomerSupportsAO = (props) => {
     }
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!isLoading && data) {
     content = (
@@ -51,10 +51,7 @@ const CustomerSupportsAO = (props) => {
                 <div className={classes.Header}>
                   <div>Created By: {feed.name}</div>
                   <div>
-                    <button
-                      className={classes.DeleteFeed}
-                      onClick={() => onDeleteHandler(feed._id)}
-                    >
+                    <button className={classes.DeleteFeed} onClick={() => onDeleteHandler(feed._id)}>
                       <DeleteForeverIcon />
                     </button>
                   </div>
@@ -66,12 +63,7 @@ const CustomerSupportsAO = (props) => {
                 <div className={classes.Date}> {feed.datePosted} </div>
 
                 <div className={classes.ReplyForm}>
-                  <Input
-                    inputType='textarea'
-                    id='reply'
-                    label='Reply Here'
-                    validatorMethod={[VALIDATOR_REQUIRE()]}
-                  />
+                  <Input inputType='textarea' id='reply' label='Reply Here' validatorMethod={[VALIDATOR_REQUIRE()]} />
 
                   <button className={classes.ReplyButton}>Reply</button>
                 </div>
@@ -84,26 +76,22 @@ const CustomerSupportsAO = (props) => {
   }
 
   if (!isLoading && data && data.length < 1) {
-    content = (
-      <p className={classes.EmptyText}>
-        Belum ada feedback dari pengguna untuk saat ini
-      </p>
-    );
+    content = <p className={classes.EmptyText}>Belum ada feedback dari pengguna untuk saat ini</p>;
   }
 
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    deleteFeed: (feedId) => dispatch(actionCreators.deleteFeed(feedId)),
-    getFeedback: (payload) => dispatch(actionCreators.getFeedback(payload)),
+    deleteFeed: feedId => dispatch(actionCreators.deleteFeed(feedId)),
+    getFeedback: payload => dispatch(actionCreators.getFeedback(payload)),
   };
 };
 

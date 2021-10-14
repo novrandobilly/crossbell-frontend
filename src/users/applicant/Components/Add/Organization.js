@@ -10,7 +10,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../../shared/util
 
 import Checkbox from '@material-ui/core/Checkbox';
 import Modal from '../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
@@ -179,7 +179,7 @@ const Organization = props => {
   );
 
   if (props.isLoading) {
-    formContent = <SpinnerCircle />;
+    formContent = <LoadingBar />;
   }
 
   const onCancelHandler = () => {

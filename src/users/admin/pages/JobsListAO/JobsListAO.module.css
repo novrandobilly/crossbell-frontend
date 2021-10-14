@@ -1,7 +1,6 @@
 .FlexContainer {
   display: flex;
   flex-direction: column;
-  /* font-family: sans-serif; */
 }
 
 .Container {
@@ -111,7 +110,7 @@
   font-size: 1.5rem;
   width: 100%;
   text-align: center;
-  /* font-family: Arial, Helvetica, sans-serif; */
+
   margin: 0;
   position: absolute;
   top: 40%;

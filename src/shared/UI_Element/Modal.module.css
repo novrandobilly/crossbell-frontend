@@ -1,37 +1,28 @@
 .Modal {
-	z-index: 100;
-	position: fixed;
-	top: 22vh;
-	left: 10%;
-	width: 80%;
-	background: white;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-	border-radius: 8px;
+  z-index: 100;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 15vh;
+  max-width: 500px;
+  width: 100%;
+  background: white;
+  box-shadow: 0 0 10px #f79f35;
 }
 
 .Header {
-	width: 100%;
-	padding: 1rem 0.5rem;
-	background: #2a006e;
-	color: white;
-	box-sizing: border-box;
+  width: 100%;
+  background: #f79f35;
+  color: white;
+  box-sizing: border-box;
+  padding: 10px 15px;
 }
 
 .Header h2 {
-	margin: 0.5rem;
+  margin: 0;
+  text-align: start;
 }
 
 .Content {
-	padding: 1rem 0.5rem;
-}
-
-.Footer {
-	padding: 1rem 0.5rem;
-}
-
-@media (min-width: 768px) {
-	.Modal {
-		left: calc(50% - 20rem);
-		width: 40rem;
-	}
+  padding: 1rem 0.5rem;
 }

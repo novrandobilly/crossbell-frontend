@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // import * as actionTypes from "../../../../store/actions/actions";
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -41,7 +41,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const CompanyOrderList = (props) => {
+const CompanyOrderList = props => {
   const { companyid } = useParams();
   const [orderData, setOrderData] = useState([]);
   const [displayData, setDisplayData] = useState();
@@ -86,9 +86,7 @@ const CompanyOrderList = (props) => {
         orderES = reses.orderes;
         allOrder = [...orderReg, ...orderBC, ...orderES];
         console.log(allOrder);
-        allOrder = allOrder.sort(
-          (a, b) => moment(b.createdAt) - moment(a.createdAt)
-        );
+        allOrder = allOrder.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
         setOrderData(allOrder);
       };
       fetchData();
@@ -102,10 +100,7 @@ const CompanyOrderList = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, orderData]);
@@ -122,7 +117,7 @@ const CompanyOrderList = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -134,19 +129,19 @@ const CompanyOrderList = (props) => {
 
   const history = useHistory();
 
-  const rowPushInvoice = (id) => {
+  const rowPushInvoice = id => {
     if (id) {
       history.push(`/co/${id}/invoice`);
     }
   };
 
-  const rowPushES = (id) => {
+  const rowPushES = id => {
     if (id) {
       history.push(`/co/order/${id}/es`);
     }
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!displayIsLoading && displayData) {
     content = (
@@ -171,34 +166,15 @@ const CompanyOrderList = (props) => {
 
             <tbody className={classes.ColumnField}>
               {displayData.map((order, i) => {
-                let dueDate = Math.ceil(
-                  moment(order.dueDate).diff(moment(), 'days', true)
-                );
+                let dueDate = Math.ceil(moment(order.dueDate).diff(moment(), 'days', true));
                 return (
-                  <tr
-                    key={order._id}
-                    onClick={() =>
-                      order.slot || order.amount
-                        ? rowPushInvoice(order._id)
-                        : rowPushES(order._id)
-                    }
-                  >
+                  <tr key={order._id} onClick={() => (order.slot || order.amount ? rowPushInvoice(order._id) : rowPushES(order._id))}>
                     <td> {i + 1}</td>
                     <td>{order._id}</td>
 
-                    <td>
-                      {order.slot
-                        ? 'Reguler'
-                        : order.amount
-                        ? 'Bulk Candidate'
-                        : 'Executive Search'}
-                    </td>
+                    <td>{order.slot ? 'Reguler' : order.amount ? 'Bulk Candidate' : 'Executive Search'}</td>
                     <td>{moment(order.createdAt).format('D MMM YYYY')}</td>
-                    <td style={{ color: 'green' }}>
-                      {order.approvedAt
-                        ? moment(order.approvedAt).format('D MMM YYYY')
-                        : '-'}
-                    </td>
+                    <td style={{ color: 'green' }}>{order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : '-'}</td>
                     <td>
                       <p
                         style={
@@ -209,22 +185,11 @@ const CompanyOrderList = (props) => {
                             : dueDate <= 7
                             ? { color: '#FF8C00' }
                             : { color: 'green' }
-                        }
-                      >
-                        {dueDate > 0
-                          ? `${dueDate} day`
-                          : dueDate <= 0
-                          ? 'no due'
-                          : '0 day'}
+                        }>
+                        {dueDate > 0 ? `${dueDate} day` : dueDate <= 0 ? 'no due' : '0 day'}
                       </p>
                     </td>
-                    <td>
-                      {order.slot
-                        ? order.slot
-                        : order.amount
-                        ? order.amount
-                        : '-'}
-                    </td>
+                    <td>{order.slot ? order.slot : order.amount ? order.amount : '-'}</td>
                     <td>
                       <p
                         className={classes.Content}
@@ -234,8 +199,7 @@ const CompanyOrderList = (props) => {
                             : order.status === 'Pending'
                             ? { color: 'orange' }
                             : { color: 'green' }
-                        }
-                      >
+                        }>
                         {order.status}
                       </p>
                     </td>
@@ -251,43 +215,29 @@ const CompanyOrderList = (props) => {
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}
-        >
+          }}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={30}>30</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
       </div>
     );
   }
 
   if (!displayIsLoading && orderData && orderData.length < 1) {
-    content = (
-      <p className={classes.EmptyText}>
-        Anda belum melakukan pembelian sebelumnya
-      </p>
-    );
+    content = <p className={classes.EmptyText}>Anda belum melakukan pembelian sebelumnya</p>;
   }
 
   return <div className={classes.Wraper}>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     isLoading: state.finance.isLoading,
@@ -295,15 +245,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOrder: (data) => dispatch(actionCreators.getOrder(data)),
-    getCompanyBC: (data) => dispatch(actionCreators.getCompanyBC(data)),
-    getCompanyES: (data) => dispatch(actionCreators.getCompanyES(data)),
+    getOrder: data => dispatch(actionCreators.getOrder(data)),
+    getCompanyBC: data => dispatch(actionCreators.getCompanyBC(data)),
+    getCompanyES: data => dispatch(actionCreators.getCompanyES(data)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CompanyOrderList));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyOrderList));

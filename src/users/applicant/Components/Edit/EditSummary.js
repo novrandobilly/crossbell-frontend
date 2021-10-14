@@ -9,7 +9,7 @@ import { VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './EditSummary.module.css';
@@ -72,7 +72,7 @@ const EditSummary = props => {
     }
   };
 
-  let formContent = <SpinnerCircle />;
+  let formContent = <LoadingBar />;
 
   if (!props.isLoading && data) {
     formContent = (

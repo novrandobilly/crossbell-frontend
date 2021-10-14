@@ -5,8 +5,8 @@ import moment from 'moment';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -44,7 +44,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const OrderBC = (props) => {
+const OrderBC = props => {
   const [data, setData] = useState([]);
   const [index, setIndex] = useState(null);
   const [displayData, setDisplayData] = useState();
@@ -70,17 +70,16 @@ const OrderBC = (props) => {
     if (token) {
       let sort = [];
       getWholeOrderBC(token)
-        .then((res) => {
+        .then(res => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           setData(sort);
 
           if (res.message) {
-            emptyText.current =
-              'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+            emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -93,15 +92,12 @@ const OrderBC = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, data]);
 
-  const approveOrderBCHandler = async (dataInput) => {
+  const approveOrderBCHandler = async dataInput => {
     setIndex(dataInput.i);
     setOrderModal(false);
 
@@ -116,7 +112,7 @@ const OrderBC = (props) => {
         throw new Error(response);
       }
 
-      setData((prevData) => {
+      setData(prevData => {
         const tempData = [...prevData];
         const trueIndex = dataInput.i + (paginationNumber - 1) * 10;
         tempData[trueIndex].status = 'Paid';
@@ -142,7 +138,7 @@ const OrderBC = (props) => {
     setPaginationNumber(value);
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -160,7 +156,7 @@ const OrderBC = (props) => {
     setOrderModal(true);
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!props.isLoading && displayData) {
     content = (
@@ -190,33 +186,22 @@ const OrderBC = (props) => {
                   <th> {order._id}</th>
                   <th>
                     {' '}
-                    <Link
-                      to={`/co/${order.companyId._id}/profile`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/co/${order.companyId._id}/profile`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order.companyId.companyName}
                     </Link>
                   </th>
                   <th>Rp.{order.totalPrice.toLocaleString()}</th>
 
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
-                  <th>
-                    {order.approvedAt
-                      ? moment(order.approvedAt).format('D MMM YYYY')
-                      : 'not approved'}
-                  </th>
+                  <th>{order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : 'not approved'}</th>
 
                   <th>
                     {props.indexIsLoading && index === i ? (
                       <Spinner />
                     ) : order.status === 'Paid' ? (
-                      <span style={{ color: 'Green', fontWeight: 'bold' }}>
-                        Paid
-                      </span>
+                      <span style={{ color: 'Green', fontWeight: 'bold' }}>Paid</span>
                     ) : (
-                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>
-                        Pending
-                      </span>
+                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>Pending</span>
                     )}
                   </th>
 
@@ -227,22 +212,11 @@ const OrderBC = (props) => {
                       </button>
                       <div className={classes.DropDownContent}>
                         {order.status === 'Pending' ? (
-                          <button
-                            style={{ color: 'green' }}
-                            onClick={() =>
-                              onOpenOrderModal(
-                                order._id,
-                                order.companyId._id,
-                                i
-                              )
-                            }
-                          >
+                          <button style={{ color: 'green' }} onClick={() => onOpenOrderModal(order._id, order.companyId._id, i)}>
                             Approve
                           </button>
                         ) : (
-                          <button style={{ color: 'gray', fontWeight: 'bold' }}>
-                            Telah disetujui
-                          </button>
+                          <button style={{ color: 'gray', fontWeight: 'bold' }}>Telah disetujui</button>
                         )}
                       </div>
                     </div>
@@ -258,26 +232,16 @@ const OrderBC = (props) => {
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}
-        >
+          }}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={30}>30</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
       </div>
     );
@@ -298,8 +262,7 @@ const OrderBC = (props) => {
             companyId: approveOrder.companyId,
             i: approveOrder.index,
           })
-        }
-      >
+        }>
         Setujui pembelian dari perusahaan ini?
       </OrderModal>
       {content}
@@ -307,7 +270,7 @@ const OrderBC = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     indexIsLoading: state.finance.indexIsLoading,
@@ -316,11 +279,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
-    approveOrderBC: (payload) =>
-      dispatch(actionCreators.approveOrderBC(payload)),
+    getWholeOrderBC: data => dispatch(actionCreators.getWholeOrderBC(data)),
+    approveOrderBC: payload => dispatch(actionCreators.approveOrderBC(payload)),
   };
 };
 

@@ -5,24 +5,17 @@ import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import {
-  VALIDATOR_MIN,
-  VALIDATOR_EMAIL,
-  VALIDATOR_ALWAYSTRUE,
-  VALIDATOR_MAX,
-} from '../../../../shared/utils/validator';
+import { VALIDATOR_MIN, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE, VALIDATOR_MAX } from '../../../../shared/utils/validator';
 
 import TextField from '@material-ui/core/TextField';
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 // import InputLabel from '@material-ui/core/InputLabel';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import FormControl from '@material-ui/core/FormControl';
 // import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import University from '../../../../shared/UI_Element/UniversityData';
 import Input from '../../../../shared/UI_Element/Input';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
@@ -32,7 +25,7 @@ import classes from './OrderBCForm.module.css';
 
 const ORIGINAL_PRICE = 40000;
 
-const OrderBCForm = (props) => {
+const OrderBCForm = props => {
   const [fieldOfWork, setFieldOfWork] = useState('');
 
   const filter = createFilterOptions();
@@ -98,7 +91,7 @@ const OrderBCForm = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -141,13 +134,13 @@ const OrderBCForm = (props) => {
     }
   };
 
-  const genderHandler = (e) => {
+  const genderHandler = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
   };
 
-  const checkHandler = (e) => {
+  const checkHandler = e => {
     const element = document.getElementById(e.target.name);
     onInputHandler(e.target.name, element.checked, true);
   };
@@ -183,12 +176,12 @@ const OrderBCForm = (props) => {
     return filtered;
   };
 
-  const educationHandler = (e) => {
+  const educationHandler = e => {
     let tempArray = [...formState.inputs.education.value];
     if (e.target.checked) {
       tempArray = [...tempArray, e.target.value];
     } else {
-      tempArray = tempArray.filter((el) => el !== e.target.value);
+      tempArray = tempArray.filter(el => el !== e.target.value);
     }
     return [tempArray, onInputHandler('education', tempArray, true)];
   };
@@ -213,7 +206,7 @@ const OrderBCForm = (props) => {
     onInputHandler('school', value, true);
   };
 
-  const onCheckedPPH = (e) => {
+  const onCheckedPPH = e => {
     const elementValue = e.target.checked;
     setPPH(elementValue);
   };
@@ -225,14 +218,11 @@ const OrderBCForm = (props) => {
   let price;
 
   if (formState.inputs.amount.value <= 1) price = ORIGINAL_PRICE;
-  if (formState.inputs.amount.value > 1)
-    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
-  if (formState.inputs.amount.value > 4)
-    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2;
-  if (formState.inputs.amount.value > 9)
-    price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3;
+  if (formState.inputs.amount.value > 1) price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.1;
+  if (formState.inputs.amount.value > 4) price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.2;
+  if (formState.inputs.amount.value > 9) price = ORIGINAL_PRICE - ORIGINAL_PRICE * 0.3;
 
-  let formContent = <SpinnerCircle />;
+  let formContent = <LoadingBar />;
 
   if (!props.isLoading) {
     formContent = (
@@ -245,51 +235,18 @@ const OrderBCForm = (props) => {
               <div className={classes.Inputs}>
                 <div className={classes.RadioGroup}>
                   <p className={classes.RadioLabel}>Pendidikan</p>
-                  <div
-                    className={classes.RadioGroupInput}
-                    onChange={educationHandler}
-                  >
-                    <input
-                      type='checkbox'
-                      value='SMA'
-                      name='education'
-                      className={classes.RadioValue}
-                    />{' '}
+                  <div className={classes.RadioGroupInput} onChange={educationHandler}>
+                    <input type='checkbox' value='SMA' name='education' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>SMA</p>
-                    <input
-                      type='checkbox'
-                      value='SMK'
-                      name='education'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='checkbox' value='SMK' name='education' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>SMK</p>
-                    <input
-                      type='checkbox'
-                      value='D3'
-                      name='education'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='checkbox' value='D3' name='education' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>D3</p>
-                    <input
-                      type='checkbox'
-                      value='S1'
-                      name='education'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='checkbox' value='S1' name='education' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>S1</p>
-                    <input
-                      type='checkbox'
-                      value='S2'
-                      name='education'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='checkbox' value='S2' name='education' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>S2</p>
-                    <input
-                      type='checkbox'
-                      value='S3'
-                      name='education'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='checkbox' value='S3' name='education' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>S3</p>
                   </div>
                 </div>
@@ -330,26 +287,11 @@ const OrderBCForm = (props) => {
                 <div onChange={genderHandler} className={classes.RadioGroup}>
                   <p className={classes.RadioLabel}>Jenis kelamin*</p>
                   <div className={classes.RadioGroupInput}>
-                    <input
-                      type='radio'
-                      value='pria'
-                      name='gender'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='radio' value='pria' name='gender' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>Pria</p>
-                    <input
-                      type='radio'
-                      value='wanita'
-                      name='gender'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='radio' value='wanita' name='gender' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioText}>Wanita</p>
-                    <input
-                      type='radio'
-                      value='bebas'
-                      name='gender'
-                      className={classes.RadioValue}
-                    />{' '}
+                    <input type='radio' value='bebas' name='gender' className={classes.RadioValue} />{' '}
                     <p className={classes.RadioTextGender}>Keduanya</p>
                   </div>
                 </div>
@@ -375,9 +317,9 @@ const OrderBCForm = (props) => {
                   <Autocomplete
                     id='school'
                     name='school'
-                    options={University.map((option) => option.institusi)}
+                    options={University.map(option => option.institusi)}
                     onChange={handleSchoolChange}
-                    renderInput={(params) => (
+                    renderInput={params => (
                       <TextField
                         {...params}
                         label='Universitas preferensi'
@@ -421,9 +363,7 @@ const OrderBCForm = (props) => {
                     className={classes.CheckValue}
                     onChange={checkHandler}
                   />
-                  <p className={classes.CheckText}>
-                    Bersedia ditempatkan diluar kota asal
-                  </p>
+                  <p className={classes.CheckText}>Bersedia ditempatkan diluar kota asal</p>
                 </div>
                 <div className={classes.CheckGroup}>
                   <input
@@ -434,9 +374,7 @@ const OrderBCForm = (props) => {
                     className={classes.CheckValue}
                     onChange={checkHandler}
                   />
-                  <p className={classes.CheckText}>
-                    Bersedia bekerja secara shift
-                  </p>
+                  <p className={classes.CheckText}>Bersedia bekerja secara shift</p>
                 </div>
               </div>
 
@@ -450,7 +388,7 @@ const OrderBCForm = (props) => {
                   handleHomeEndKeys
                   ccc='true'
                   options={WorkFieldData}
-                  getOptionLabel={(option) => {
+                  getOptionLabel={option => {
                     // Value selected with enter, right from the input
                     if (typeof option === 'string') {
                       return option;
@@ -462,17 +400,11 @@ const OrderBCForm = (props) => {
                     // Regular option
                     return option.field;
                   }}
-                  renderOption={(option) => option.field}
+                  renderOption={option => option.field}
                   freeSolo
                   style={{ margin: '0', width: '100%' }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      style={{ margin: '0' }}
-                      label='Bidang Pekerjaan*'
-                      margin='normal'
-                      variant='standard'
-                    />
+                  renderInput={params => (
+                    <TextField {...params} style={{ margin: '0' }} label='Bidang Pekerjaan*' margin='normal' variant='standard' />
                   )}
                 />
               </div>
@@ -500,53 +432,33 @@ const OrderBCForm = (props) => {
 
               <div className={classes.PPHDiv}>
                 <p className={classes.Question}>
-                  Apakah perusahaan anda memiliki kewajiban untuk memotong{' '}
-                  <span>PPH pasal 23</span>? Jika ya mohon mencentang kotak
-                  dibawah ini!
+                  Apakah perusahaan anda memiliki kewajiban untuk memotong <span>PPH pasal 23</span>? Jika ya mohon mencentang kotak dibawah
+                  ini!
                 </p>{' '}
                 <label onChange={onCheckedPPH} className={classes.CheckBox}>
-                  <input
-                    id='PPH'
-                    type='checkbox'
-                    name='PPH'
-                    className={classes.Box}
-                  />
-                  <p className={classes.Text}>
-                    Ya, dan bersedia memberikan bukti potong PPH pasal 23 kepada
-                    pihak crossbell
-                  </p>
+                  <input id='PPH' type='checkbox' name='PPH' className={classes.Box} />
+                  <p className={classes.Text}>Ya, dan bersedia memberikan bukti potong PPH pasal 23 kepada pihak crossbell</p>
                 </label>
               </div>
 
               <div className={classes.FooterSection}>
                 <div className={classes.PriceDescription}>
                   <div className={classes.PackageDesc}>
-                    Untuk pemesanan kandidat, konsumen akan diberikan diskon
-                    untuk setiap kelipatan tertentu:
+                    Untuk pemesanan kandidat, konsumen akan diberikan diskon untuk setiap kelipatan tertentu:
                     <p>1. pemesanan 2-4 diskon (10%)</p>
                     <p>2. pemesanan 5-9 diskon (20%)</p>
                     <p>3. pemesanan lebih dari 9 diskon (30%)</p>
                   </div>
                 </div>
                 <div className={classes.PriceHolder}>
-                  <div
-                    className={classes.InputAmount}
-                    style={{ borderBottom: '1px solid black' }}
-                  >
+                  <div className={classes.InputAmount} style={{ borderBottom: '1px solid black' }}>
                     <p className={classes.Label}>Harga per slot:</p>
-                    <p className={classes.InputSlot}>
-                      IDR {price.toLocaleString()}
-                    </p>
+                    <p className={classes.InputSlot}>IDR {price.toLocaleString()}</p>
                   </div>
                   <div className={classes.InputAmount}>
                     <p className={classes.Label}>Total:</p>
                     <p className={classes.InputSlot}>
-                      <strong>
-                        IDR{' '}
-                        {(
-                          price * formState.inputs.amount.value
-                        ).toLocaleString()}
-                      </strong>
+                      <strong>IDR {(price * formState.inputs.amount.value).toLocaleString()}</strong>
                     </p>
                   </div>
                 </div>
@@ -555,13 +467,7 @@ const OrderBCForm = (props) => {
           </div>
 
           <div className={classes.Footer}>
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='button'
-              onClick={onOpenOrderModal}
-            >
+            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='button' onClick={onOpenOrderModal}>
               Save
             </Button>
           </div>
@@ -579,11 +485,7 @@ const OrderBCForm = (props) => {
       <Modal show={props.error} onCancel={onCancelHandler}>
         Tidak dapat melakukan pembelian saat ini{' '}
       </Modal>
-      <OrderModal
-        show={orderModal}
-        onCancel={onCloseOrderModal}
-        Accept={onSubmitHandler}
-      >
+      <OrderModal show={orderModal} onCancel={onCloseOrderModal} Accept={onSubmitHandler}>
         Buat pesanan sekarang?
       </OrderModal>
       {formContent}
@@ -591,7 +493,7 @@ const OrderBCForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     isLoading: state.finance.isLoading,
@@ -599,17 +501,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    createOrderCandidate: (data) =>
-      dispatch(actionCreators.createOrderCandidate(data)),
-    createOrderFail: () =>
-      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    createOrderCandidate: data => dispatch(actionCreators.createOrderCandidate(data)),
+    createOrderFail: () => dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
     resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(OrderBCForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderBCForm));

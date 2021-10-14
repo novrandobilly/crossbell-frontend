@@ -1,7 +1,6 @@
 .FlexContainer {
   display: flex;
   flex-direction: column;
-  /* font-family: sans-serif; */
 }
 
 .Container {

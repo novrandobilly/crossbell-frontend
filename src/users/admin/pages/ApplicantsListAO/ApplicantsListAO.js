@@ -1,16 +1,10 @@
-import React, {
-  useState,
-  useCallback,
-  useReducer,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { useState, useCallback, useReducer, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import QueryBar from './Component/QueryBar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Pagination from '@material-ui/lab/Pagination';
@@ -54,44 +48,29 @@ const searchReducer = (state, action) => {
         let searchValidity = false;
         for (const key in app) {
           searchValidity =
-            searchValidity ||
-            (typeof app[key] === 'string' &&
-              app[key]
-                .toLowerCase()
-                .includes(state.search.value.toLowerCase()));
+            searchValidity || (typeof app[key] === 'string' && app[key].toLowerCase().includes(state.search.value.toLowerCase()));
 
           let eduValidity = false;
-          app.education.forEach((edu) => {
+          app.education.forEach(edu => {
             for (const key in edu) {
               eduValidity =
-                eduValidity ||
-                (typeof edu[key] === 'string' &&
-                  edu[key]
-                    .toLowerCase()
-                    .includes(state.search.value.toLowerCase()));
+                eduValidity || (typeof edu[key] === 'string' && edu[key].toLowerCase().includes(state.search.value.toLowerCase()));
             }
           });
           searchValidity = searchValidity || eduValidity;
 
           let expValidity = false;
-          app.experience.forEach((exp) => {
+          app.experience.forEach(exp => {
             for (const key in exp) {
               expValidity =
-                expValidity ||
-                (typeof exp[key] === 'string' &&
-                  exp[key]
-                    .toLowerCase()
-                    .includes(state.search.value.toLowerCase()));
+                expValidity || (typeof exp[key] === 'string' && exp[key].toLowerCase().includes(state.search.value.toLowerCase()));
             }
           });
           searchValidity = searchValidity || expValidity;
 
           let skillValidity = false;
-          app.skills.forEach((skill) => {
-            skillValidity =
-              skillValidity ||
-              (typeof skill === 'string' &&
-                skill.toLowerCase().includes(state.search.value.toLowerCase()));
+          app.skills.forEach(skill => {
+            skillValidity = skillValidity || (typeof skill === 'string' && skill.toLowerCase().includes(state.search.value.toLowerCase()));
           });
           searchValidity = searchValidity || skillValidity;
         }
@@ -144,7 +123,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const ApplicantListAO = (props) => {
+const ApplicantListAO = props => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: '' });
   const [data, setData] = useState();
@@ -153,10 +132,7 @@ const ApplicantListAO = (props) => {
 
   const emptyText = useRef('');
 
-  const [statePage, dispatchPage] = useReducer(
-    paginationReducer,
-    initPagination
-  );
+  const [statePage, dispatchPage] = useReducer(paginationReducer, initPagination);
 
   const [state, dispatch] = useReducer(searchReducer, {
     search: {
@@ -174,7 +150,7 @@ const ApplicantListAO = (props) => {
   const { getAllApplicant, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };
-    getAllApplicant(payload).then((res) => {
+    getAllApplicant(payload).then(res => {
       setData(res.wholeApplicants.reverse());
       dispatch({
         type: ACTION.DATAINIT,
@@ -182,8 +158,7 @@ const ApplicantListAO = (props) => {
       });
 
       if (res.message) {
-        emptyText.current =
-          'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+        emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
       }
     });
   }, [getAllApplicant, setIsLoading, admin.token]);
@@ -195,10 +170,7 @@ const ApplicantListAO = (props) => {
       dispatchPage({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        statePage.startIndex,
-        statePage.startIndex + statePage.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(statePage.startIndex, statePage.startIndex + statePage.rowsPerPage);
       setIsLoading(false);
       setDisplayData(applicantArray);
     }
@@ -223,7 +195,7 @@ const ApplicantListAO = (props) => {
     setfilter('Premium');
   };
 
-  const searchHandler = (event) => {
+  const searchHandler = event => {
     event.preventDefault();
     if (state.search.value) {
       dispatch({
@@ -261,7 +233,7 @@ const ApplicantListAO = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     console.log(event.target.value);
     dispatchPage({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -271,18 +243,14 @@ const ApplicantListAO = (props) => {
     });
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   console.log(displayData);
 
   if (!isLoading && displayData && displayData.length > 0) {
     content = (
       <div className={classes.FlexContainer}>
-        <QueryBar
-          searchInputHandler={searchInputHandler}
-          searchHandler={searchHandler}
-          action={`/AO/applicantlist`}
-        />
+        <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} action={`/AO/applicantlist`} />
 
         <div className={classes.Container}>
           <div className={classes.HeaderContainer}>
@@ -296,26 +264,14 @@ const ApplicantListAO = (props) => {
                 <button style={{ color: 'black' }} onClick={handleAll}>
                   All
                 </button>
-                <button
-                  style={{ color: 'rgb(33, 153, 0)' }}
-                  value='Blocked'
-                  onClick={handleBlocked}
-                >
+                <button style={{ color: 'rgb(33, 153, 0)' }} value='Blocked' onClick={handleBlocked}>
                   Blocked
                 </button>
-                <button
-                  style={{ color: 'red' }}
-                  value='Regular'
-                  onClick={handleRegular}
-                >
+                <button style={{ color: 'red' }} value='Regular' onClick={handleRegular}>
                   Regular
                 </button>
 
-                <button
-                  style={{ color: 'rgb(250, 129, 0)' }}
-                  value='Premium'
-                  onClick={handlePremium}
-                >
+                <button style={{ color: 'rgb(250, 129, 0)' }} value='Premium' onClick={handlePremium}>
                   Premium
                 </button>
               </div>
@@ -343,7 +299,7 @@ const ApplicantListAO = (props) => {
                 <tbody className={classes.ColumnField}>
                   {displayData &&
                     displayData
-                      .filter((app) => app.status === filter)
+                      .filter(app => app.status === filter)
                       .map((app, i) => (
                         <tr key={app.id}>
                           <th>{i + 1}</th>
@@ -376,11 +332,7 @@ const ApplicantListAO = (props) => {
                           >
                             {app.address ? app.address : 'no data'}
                           </th> */}
-                          <th>
-                            {app.dateOfBirth
-                              ? moment().diff(moment(app.dateOfBirth), 'year')
-                              : 'null'}
-                          </th>
+                          <th>{app.dateOfBirth ? moment().diff(moment(app.dateOfBirth), 'year') : 'null'}</th>
                           {/* <th>
                             <div className={classes.DropDown}>
                               <button className={classes.DropButton}>
@@ -434,11 +386,7 @@ const ApplicantListAO = (props) => {
                           {app.address ? app.address : 'no data'}
                         </th> */}
 
-                        <th>
-                          {app.dateOfBirth
-                            ? moment().diff(moment(app.dateOfBirth), 'year')
-                            : 'null'}
-                        </th>
+                        <th>{app.dateOfBirth ? moment().diff(moment(app.dateOfBirth), 'year') : 'null'}</th>
 
                         <th>{app.gender === 'male' ? 'Pria' : 'Wanita'}</th>
 
@@ -478,26 +426,16 @@ const ApplicantListAO = (props) => {
               display: 'flex',
               justifyContent: 'space-around',
               width: '100%',
-            }}
-          >
+            }}>
             <FormControl style={{ width: '4rem' }}>
-              <Select
-                labelId='rowPerPage'
-                id='rowPerPageSelect'
-                value={statePage.rowsPerPage}
-                onChange={rowsHandler}
-              >
+              <Select labelId='rowPerPage' id='rowPerPageSelect' value={statePage.rowsPerPage} onChange={rowsHandler}>
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={20}>20</MenuItem>
                 <MenuItem value={30}>30</MenuItem>
               </Select>
               <FormHelperText>Rows</FormHelperText>
             </FormControl>
-            <Pagination
-              count={statePage.pageCount}
-              page={statePage.pageNumber}
-              onChange={pageChangeHandler}
-            />
+            <Pagination count={statePage.pageCount} page={statePage.pageNumber} onChange={pageChangeHandler} />
           </div>
         </div>
       </div>
@@ -511,16 +449,15 @@ const ApplicantListAO = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getAllApplicant: (payload) =>
-      dispatch(actionCreators.getAllApplicant(payload)),
+    getAllApplicant: payload => dispatch(actionCreators.getAllApplicant(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicantListAO);

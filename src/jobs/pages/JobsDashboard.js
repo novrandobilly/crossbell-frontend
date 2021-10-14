@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
 
-import Spinner from '../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
 import JobsList from '../components/JobsList';
 import QueryBar from '../components/QueryBar';
 import Modal from '../../shared/UI_Element/Modal';

@@ -7,23 +7,17 @@ import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-} from '../../../../shared/utils/validator';
+import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../../shared/utils/validator';
 
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import classes from './CompanyExecutiveSearch.module.css';
 import TextField from '@material-ui/core/TextField';
 import Input from '../../../../shared/UI_Element/Input';
 import Modal from '../../../../shared/UI_Element/Modal';
 import IndustryData from '../../../../shared/UI_Element/IndustryData';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 
-const CompanyExecutiveSearch = (props) => {
+const CompanyExecutiveSearch = props => {
   const [industry, setIndustry] = useState('');
   const [successModal, setSuccessModal] = useState(false);
 
@@ -76,14 +70,10 @@ const CompanyExecutiveSearch = (props) => {
   );
 
   useEffect(() => {
-    onInputHandler(
-      'industry',
-      industry?.industry,
-      industry?.industry ? true : false
-    );
+    onInputHandler('industry', industry?.industry, industry?.industry ? true : false);
   }, [onInputHandler, industry]);
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -145,7 +135,7 @@ const CompanyExecutiveSearch = (props) => {
     return filtered;
   };
 
-  let formContent = <SpinnerCircle />;
+  let formContent = <LoadingBar />;
 
   if (!props.isLoading) {
     formContent = (
@@ -215,7 +205,7 @@ const CompanyExecutiveSearch = (props) => {
                   name='industry'
                   ccc='true'
                   options={IndustryData}
-                  getOptionLabel={(option) => {
+                  getOptionLabel={option => {
                     // Value selected with enter, right from the input
                     if (typeof option === 'string') {
                       return option;
@@ -227,17 +217,11 @@ const CompanyExecutiveSearch = (props) => {
                     // Regular option
                     return option.industry;
                   }}
-                  renderOption={(option) => option.industry}
+                  renderOption={option => option.industry}
                   freeSolo
                   style={{ margin: '0', width: '100%' }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      style={{ margin: '0' }}
-                      label='Industri Perusahaan*'
-                      margin='normal'
-                      variant='standard'
-                    />
+                  renderInput={params => (
+                    <TextField {...params} style={{ margin: '0' }} label='Industri Perusahaan*' margin='normal' variant='standard' />
                   )}
                 />
               </div>
@@ -275,8 +259,7 @@ const CompanyExecutiveSearch = (props) => {
               color='primary'
               type='submit'
               className={classes.button}
-              endIcon={<NavigateNextIcon />}
-            >
+              endIcon={<NavigateNextIcon />}>
               Kirim Pesanan
             </Button>
           </div>
@@ -300,8 +283,7 @@ const CompanyExecutiveSearch = (props) => {
           Could not update changes at the moment, please try again later
         </Modal>
         <Modal show={successModal} onCancel={onUnderstand}>
-          Pesanan anda telah terkirim, kami akan segera memproses pesanan dan
-          menghubungi anda kembali.
+          Pesanan anda telah terkirim, kami akan segera memproses pesanan dan menghubungi anda kembali.
         </Modal>
         {formContent}
       </form>
@@ -309,7 +291,7 @@ const CompanyExecutiveSearch = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -318,15 +300,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    createRequest: (payload) => dispatch(actionCreators.createOrderES(payload)),
-    createOrderFail: () =>
-      dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
+    createRequest: payload => dispatch(actionCreators.createOrderES(payload)),
+    createOrderFail: () => dispatch({ type: actionTypes.CREATEORDERCANDIDATEFAIL }),
     resetOrder: () => dispatch({ type: actionTypes.ORDERRESET }),
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CompanyExecutiveSearch));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyExecutiveSearch));

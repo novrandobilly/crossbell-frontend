@@ -5,7 +5,7 @@ import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -45,7 +45,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const SlotReg = (props) => {
+const SlotReg = props => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [displayData, setDisplayData] = useState();
@@ -94,11 +94,9 @@ const SlotReg = (props) => {
   useEffect(() => {
     if (props.admin.token) {
       let sort = [];
-      getAllSlot(props.admin.token).then((res) => {
+      getAllSlot(props.admin.token).then(res => {
         sort = res.slotReg;
-        sort = sort.sort(
-          (a, b) => moment(a.slotExpirationDate) - moment(b.slotExpirationDate)
-        );
+        sort = sort.sort((a, b) => moment(a.slotExpirationDate) - moment(b.slotExpirationDate));
         setData(sort);
       });
     }
@@ -107,7 +105,7 @@ const SlotReg = (props) => {
   useEffect(() => {
     let filterData = [...data];
     if (statusFilter !== 'All' && statusFilter !== '') {
-      filterData = filterData.filter((data) => {
+      filterData = filterData.filter(data => {
         return data.status === statusFilter;
       });
     } else {
@@ -116,7 +114,7 @@ const SlotReg = (props) => {
 
     let statusData = [...filterData];
     if (formState?.inputs?.start?.value && formState?.inputs?.end?.value) {
-      statusData = statusData.filter((order) =>
+      statusData = statusData.filter(order =>
         moment(order.slotPaymentDate).isBetween(
           moment(moment(formState.inputs.start.value).format('LL')),
           moment(`${moment(formState.inputs.end.value).format('LL')} 23:59:59`),
@@ -128,12 +126,7 @@ const SlotReg = (props) => {
     setDisplayData(statusData);
 
     setFilteredData(statusData);
-  }, [
-    formState.inputs.start.value,
-    formState.inputs.end.value,
-    statusFilter,
-    data,
-  ]);
+  }, [formState.inputs.start.value, formState.inputs.end.value, statusFilter, data]);
 
   useEffect(() => {
     if (filteredData && filteredData.length > 0) {
@@ -141,10 +134,7 @@ const SlotReg = (props) => {
       let pageCount = Math.ceil(applicantArray.length / state.rowsPerPage);
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, filteredData]);
@@ -152,28 +142,28 @@ const SlotReg = (props) => {
   useEffect(() => {
     if (filteredData) {
       let arrIdlePrice = filteredData
-        .filter((fil) => {
+        .filter(fil => {
           return fil.status === 'Idle';
         })
-        .map((data) => {
+        .map(data => {
           return data.pricePerSlot;
         });
       setIdlePrice(arrIdlePrice);
 
       let arrUsedPrice = filteredData
-        .filter((fil) => {
+        .filter(fil => {
           return fil.status === 'Used';
         })
-        .map((data) => {
+        .map(data => {
           return data.pricePerSlot;
         });
       setUsedPrice(arrUsedPrice);
 
       let arrExpiredPrice = filteredData
-        .filter((fil) => {
+        .filter(fil => {
           return fil.status === 'Expired';
         })
-        .map((data) => {
+        .map(data => {
           return data.pricePerSlot;
         });
       setExpiredPrice(arrExpiredPrice);
@@ -183,7 +173,7 @@ const SlotReg = (props) => {
   useEffect(() => {
     if (idlePrice) {
       let idleRev = 0;
-      idlePrice.map((data) => {
+      idlePrice.map(data => {
         idleRev = idleRev + data;
         return idleRev;
       });
@@ -192,7 +182,7 @@ const SlotReg = (props) => {
 
     if (usedPrice) {
       let usedRev = 0;
-      usedPrice.map((data) => {
+      usedPrice.map(data => {
         usedRev = usedRev + data;
         return usedRev;
       });
@@ -201,7 +191,7 @@ const SlotReg = (props) => {
 
     if (expiredPrice) {
       let expiredRev = 0;
-      expiredPrice.map((data) => {
+      expiredPrice.map(data => {
         expiredRev = expiredRev + data;
         return expiredRev;
       });
@@ -221,7 +211,7 @@ const SlotReg = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -230,11 +220,11 @@ const SlotReg = (props) => {
     });
   };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setStatusFilter(event.target.value);
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!props.isLoading && data && displayData) {
     content = (
@@ -260,10 +250,7 @@ const SlotReg = (props) => {
                 <th> {i + 1 + (state.pageNumber - 1) * state.rowsPerPage}</th>
                 <th>{slot.package}</th>
                 <th>
-                  <Link
-                    to={`/co/${slot.companyId._id}/profile`}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
+                  <Link to={`/co/${slot.companyId._id}/profile`} style={{ color: 'black', textDecoration: 'none' }}>
                     {slot.companyId.companyName}
                   </Link>
                 </th>
@@ -275,11 +262,7 @@ const SlotReg = (props) => {
                 <th>{moment(slot.slotPaymentDate).format('D MMM YYYY')}</th>
                 <th>{moment(slot.slotExpirationDate).format('D MMM YYYY')}</th>
 
-                <th>
-                  {slot.slotUsedDate
-                    ? moment(slot.usedDate).format('D MMM YYYY')
-                    : 'Kosong'}
-                </th>
+                <th>{slot.slotUsedDate ? moment(slot.usedDate).format('D MMM YYYY') : 'Kosong'}</th>
               </tr>
             ))}
           </tbody>
@@ -289,9 +272,7 @@ const SlotReg = (props) => {
   }
 
   if (!props.isLoading && filteredData.length < 1) {
-    content = (
-      <p className={classes.EmptyText}>TIdak ditemukan data sesuai filter</p>
-    );
+    content = <p className={classes.EmptyText}>TIdak ditemukan data sesuai filter</p>;
   }
 
   return (
@@ -348,15 +329,9 @@ const SlotReg = (props) => {
             style={{
               width: '50%',
               textAlign: 'left',
-            }}
-          >
+            }}>
             <InputLabel id='statusFilter'>Filter Status</InputLabel>
-            <Select
-              labelId='statusFilter'
-              id='statusFilter'
-              value={statusFilter}
-              onChange={handleChange}
-            >
+            <Select labelId='statusFilter' id='statusFilter' value={statusFilter} onChange={handleChange}>
               <MenuItem value='All'>Semua Data</MenuItem>
               <MenuItem value='Idle'>Belum Terpakai</MenuItem>
               <MenuItem value='Used'>Terpakai</MenuItem>
@@ -371,26 +346,16 @@ const SlotReg = (props) => {
           display: 'flex',
           justifyContent: 'space-around',
           width: '100%',
-        }}
-      >
+        }}>
         <FormControl style={{ width: '4rem' }}>
-          <Select
-            labelId='rowPerPage'
-            id='rowPerPageSelect'
-            value={state.rowsPerPage}
-            onChange={rowsHandler}
-          >
+          <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
             <MenuItem value={30}>30</MenuItem>
           </Select>
           <FormHelperText>Rows</FormHelperText>
         </FormControl>
-        <Pagination
-          count={state.pageCount}
-          page={state.pageNumber}
-          onChange={pageChangeHandler}
-        />
+        <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
       </div>
       <div className={classes.RevenueContainer}>
         <div className={classes.AmountDiv}>
@@ -413,15 +378,9 @@ const SlotReg = (props) => {
             <div className={classes.Label}>Revenue Expired</div>
           </div>
           <div className={classes.RevenueNumber}>
-            <div className={classes.Label}>
-              Rp. {usedRevenue.toLocaleString()},-
-            </div>
-            <div className={classes.Label}>
-              Rp. {idleRevenue.toLocaleString()},-
-            </div>
-            <div className={classes.Label}>
-              Rp. {expiredRevenue.toLocaleString()},-
-            </div>
+            <div className={classes.Label}>Rp. {usedRevenue.toLocaleString()},-</div>
+            <div className={classes.Label}>Rp. {idleRevenue.toLocaleString()},-</div>
+            <div className={classes.Label}>Rp. {expiredRevenue.toLocaleString()},-</div>
           </div>
         </div>
       </div>
@@ -429,7 +388,7 @@ const SlotReg = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     isLoading: state.admin.isLoading,
@@ -437,9 +396,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getAllSlot: (data) => dispatch(actionCreators.getAllSlot(data)),
+    getAllSlot: data => dispatch(actionCreators.getAllSlot(data)),
   };
 };
 

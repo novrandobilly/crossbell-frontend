@@ -4,13 +4,13 @@ import { useParams, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 // import * as actionTypes from "../../store/actions/actions";
-import Spinner from './Spinner/SpinnerCircle';
+import Spinner from './Spinner/LoadingBar';
 import * as actionCreators from '../../store/actions/index';
 import IconButton from './IconButton';
 
 import classes from './RangeSegmentMap.module.css';
 
-const RangeSegmentMap = (props) => {
+const RangeSegmentMap = props => {
   const { applicantid } = useParams();
   const [indexLoading, setIndexLoading] = useState(null);
 
@@ -62,10 +62,7 @@ const RangeSegmentMap = (props) => {
               <IconButton />
             </Link>
 
-            <IconButton
-              iconType='Delete'
-              onClick={(event) => onDeleteHandler(event, props.index)}
-            />
+            <IconButton iconType='Delete' onClick={event => onDeleteHandler(event, props.index)} />
           </div>
         )}
       </div>
@@ -83,7 +80,7 @@ const RangeSegmentMap = (props) => {
   return segmentElement;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -92,14 +89,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    deleteSegment: (segmentData) =>
-      dispatch(actionCreators.deleteSegment(segmentData)),
+    deleteSegment: segmentData => dispatch(actionCreators.deleteSegment(segmentData)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(RangeSegmentMap));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RangeSegmentMap));

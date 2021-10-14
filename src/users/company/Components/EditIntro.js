@@ -16,7 +16,7 @@ import Input from '../../../shared/UI_Element/Input';
 import Modal from '../../../shared/UI_Element/Modal';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import IndustryData from '../../../shared/UI_Element/IndustryData';
-import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 const EditIntro = props => {
   const { companyid } = useParams();
@@ -152,7 +152,7 @@ const EditIntro = props => {
     return filtered;
   };
 
-  let formContent = <SpinnerCircle />;
+  let formContent = <LoadingBar />;
 
   if (!props.isLoading && data) {
     formContent = (

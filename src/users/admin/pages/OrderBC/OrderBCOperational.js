@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -41,7 +41,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const OrderBC = (props) => {
+const OrderBC = props => {
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState();
 
@@ -59,17 +59,16 @@ const OrderBC = (props) => {
     if (token) {
       let sort = [];
       getWholeOrderBC(token)
-        .then((res) => {
+        .then(res => {
           sort = res.orderbc;
           sort = sort.sort((a, b) => moment(b.createdAt) - moment(a.createdAt));
           setData(sort);
 
           if (res.message) {
-            emptyText.current =
-              'Belum ada perusahaan yang membuat pesanan untuk saat ini';
+            emptyText.current = 'Belum ada perusahaan yang membuat pesanan untuk saat ini';
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -82,10 +81,7 @@ const OrderBC = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      applicantArray = applicantArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      applicantArray = applicantArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(applicantArray);
     }
   }, [state.rowsPerPage, state.startIndex, data]);
@@ -102,7 +98,7 @@ const OrderBC = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -112,7 +108,7 @@ const OrderBC = (props) => {
     });
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   //   if (!props.isLoading && data.length < 1) {
   //     content = <h1>tidak ada order untuk saat ini</h1>;
@@ -141,39 +137,25 @@ const OrderBC = (props) => {
                   <th> {i + 1}</th>
                   <th>
                     {' '}
-                    <Link
-                      to={`/ad/alphaomega/order/${order._id}/candidate`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/ad/alphaomega/order/${order._id}/candidate`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order._id}
                     </Link>
                   </th>
                   <th>
                     {' '}
-                    <Link
-                      to={`/co/${order?.companyId?._id}/profile`}
-                      style={{ color: 'black', textDecoration: 'none' }}
-                    >
+                    <Link to={`/co/${order?.companyId?._id}/profile`} style={{ color: 'black', textDecoration: 'none' }}>
                       {order.companyId?.companyName}
                     </Link>
                   </th>
 
                   <th>{moment(order.createdAt).format('D MMM YYYY')}</th>
-                  <th>
-                    {order.approvedAt
-                      ? moment(order.approvedAt).format('D MMM YYYY')
-                      : 'not approved'}
-                  </th>
+                  <th>{order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : 'not approved'}</th>
 
                   <th>
                     {order.status === 'Paid' ? (
-                      <span style={{ color: 'Green', fontWeight: 'bold' }}>
-                        Paid
-                      </span>
+                      <span style={{ color: 'Green', fontWeight: 'bold' }}>Paid</span>
                     ) : (
-                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>
-                        Pending
-                      </span>
+                      <span style={{ color: 'Orange', fontWeight: 'bold' }}>Pending</span>
                     )}
                   </th>
                 </tr>
@@ -187,26 +169,16 @@ const OrderBC = (props) => {
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}
-        >
+          }}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={30}>30</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
       </div>
     );
@@ -219,7 +191,7 @@ const OrderBC = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     indexIsLoading: state.finance.indexIsLoading,
@@ -228,11 +200,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getWholeOrderBC: (data) => dispatch(actionCreators.getWholeOrderBC(data)),
-    approveOrderBC: (payload) =>
-      dispatch(actionCreators.approveOrderBC(payload)),
+    getWholeOrderBC: data => dispatch(actionCreators.getWholeOrderBC(data)),
+    approveOrderBC: payload => dispatch(actionCreators.approveOrderBC(payload)),
   };
 };
 

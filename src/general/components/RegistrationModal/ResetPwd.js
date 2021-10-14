@@ -7,7 +7,7 @@ import * as actionCreators from '../../../store/actions';
 
 import classes from './ForgotPwd.module.css';
 import Input from '../../../shared/UI_Element/Input';
-import Spinner from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import Spinner from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 const ResetPwd = props => {
   const [tokenIsValid, setTokenIsValid] = useState(false);

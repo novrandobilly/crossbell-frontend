@@ -5,18 +5,15 @@ import { useForm } from '../../../../shared/utils/useForm';
 import moment from 'moment';
 
 import * as actionCreators from '../../../../store/actions/index';
-import {
-  VALIDATOR_MIN,
-  VALIDATOR_MAX,
-} from '../../../../shared/utils/validator';
+import { VALIDATOR_MIN, VALIDATOR_MAX } from '../../../../shared/utils/validator';
 import Input from '../../../../shared/UI_Element/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
-import Spinner from '../../../../shared/UI_Element/Spinner/Spinner';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -56,7 +53,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const DetailBC = (props) => {
+const DetailBC = props => {
   const { orderid } = useParams();
 
   const [genderFilter, setGenderFilter] = useState([]);
@@ -110,19 +107,19 @@ const DetailBC = (props) => {
       };
 
       getOrderInvoice(dataBC)
-        .then((res) => {
+        .then(res => {
           setDataBC(res.order);
           setApplicantList(res.order.applicantSent);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
 
       getAllApplicant(dataBC)
-        .then((res) => {
+        .then(res => {
           setDataApplicant(res.wholeApplicants);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -133,56 +130,56 @@ const DetailBC = (props) => {
       let filteredArray = [...dataApplicant];
 
       if (genderFilter && genderFilter.length > 0) {
-        filteredArray = filteredArray.filter((el) => {
-          return genderFilter.some((gen) => gen === el.gender);
+        filteredArray = filteredArray.filter(el => {
+          return genderFilter.some(gen => gen === el.gender);
         });
       }
 
       if (educationFilter && educationFilter.length > 0) {
-        filteredArray = filteredArray.filter((app) => {
-          return app.education.some((edu) => {
-            return educationFilter.some((fil) => fil === edu.degree);
+        filteredArray = filteredArray.filter(app => {
+          return app.education.some(edu => {
+            return educationFilter.some(fil => fil === edu.degree);
           });
         });
       }
 
       if (formState.inputs.min.value > 0) {
-        filteredArray = filteredArray.filter((el) => {
+        filteredArray = filteredArray.filter(el => {
           let tempAge = moment().diff(moment(el.dateOfBirth), 'year');
           return tempAge >= formState.inputs.min.value;
         });
       }
 
       if (formState.inputs.max.value > 0) {
-        filteredArray = filteredArray.filter((el) => {
+        filteredArray = filteredArray.filter(el => {
           let tempAge = moment().diff(moment(el.dateOfBirth), 'year');
           return tempAge <= formState.inputs.max.value;
         });
       }
 
       if (locationFilter) {
-        filteredArray = filteredArray.filter((el) => {
+        filteredArray = filteredArray.filter(el => {
           return el.outOfTown === true;
         });
       }
 
       if (shiftFilter) {
-        filteredArray = filteredArray.filter((el) => {
+        filteredArray = filteredArray.filter(el => {
           return el.workShifts === true;
         });
       }
 
       if (formState.inputs.IPK.value > 0 && formState.inputs.IPK.value <= 4) {
-        filteredArray = filteredArray.filter((app) => {
-          return app.education.some((edu) => {
+        filteredArray = filteredArray.filter(app => {
+          return app.education.some(edu => {
             return edu.IPK >= formState.inputs.IPK.value;
           });
         });
       }
 
       if (formState.inputs.school.value) {
-        filteredArray = filteredArray.filter((app) => {
-          return app.education.some((edu) => {
+        filteredArray = filteredArray.filter(app => {
+          return app.education.some(edu => {
             return edu.school === formState.inputs.school.value;
           });
         });
@@ -192,54 +189,42 @@ const DetailBC = (props) => {
       dispatch({ type: ACTIONPAGE.PAGEUPDATE, payload: { pageCount } });
 
       //Slicing all jobs based on the number jobs may appear in one page
-      filteredArray = filteredArray.slice(
-        state.startIndex,
-        state.startIndex + state.rowsPerPage
-      );
+      filteredArray = filteredArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(filteredArray);
     }
-  }, [
-    dataApplicant,
-    genderFilter,
-    educationFilter,
-    locationFilter,
-    shiftFilter,
-    formState,
-    state.rowsPerPage,
-    state.startIndex,
-  ]);
+  }, [dataApplicant, genderFilter, educationFilter, locationFilter, shiftFilter, formState, state.rowsPerPage, state.startIndex]);
 
   //================= Gender Filter ===========================
-  const onGenderHandler = (e) => {
-    setGenderFilter((prevState) => {
+  const onGenderHandler = e => {
+    setGenderFilter(prevState => {
       let tempArray = [...prevState];
       if (e.target.checked) {
         tempArray = [...tempArray, e.target.value];
       } else {
-        tempArray = tempArray.filter((el) => el !== e.target.value);
+        tempArray = tempArray.filter(el => el !== e.target.value);
       }
       return tempArray;
     });
   };
 
   //================= Education Filter ===========================
-  const onEducationHandler = (e) => {
-    setEducationFilter((prevState) => {
+  const onEducationHandler = e => {
+    setEducationFilter(prevState => {
       let tempArray = [...prevState];
       if (e.target.checked) {
         tempArray = [...tempArray, e.target.value];
       } else {
-        tempArray = tempArray.filter((el) => el !== e.target.value);
+        tempArray = tempArray.filter(el => el !== e.target.value);
       }
       return tempArray;
     });
   };
 
   //================= Loc/Shift Filter ===========================
-  const onLocationHandler = (e) => {
+  const onLocationHandler = e => {
     setLocationFilter(e.target.checked ? true : false);
   };
-  const onShiftHandler = (e) => {
+  const onShiftHandler = e => {
     setShiftFilter(e.target.checked ? true : false);
   };
 
@@ -249,7 +234,7 @@ const DetailBC = (props) => {
   };
 
   //================= Sent Function ===========================
-  const onSentHandler = async (dataBC) => {
+  const onSentHandler = async dataBC => {
     setIndex(dataBC.i);
     setIndexIsLoading(true);
     const applicantBC = {
@@ -281,7 +266,7 @@ const DetailBC = (props) => {
     });
   };
 
-  const rowsHandler = (event) => {
+  const rowsHandler = event => {
     console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -292,7 +277,7 @@ const DetailBC = (props) => {
   };
 
   //================= Element Component ===========================
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (!props.isLoading && displayData && dataBC) {
     content = (
@@ -304,21 +289,11 @@ const DetailBC = (props) => {
               <div onChange={onGenderHandler}>
                 <div>
                   <div className={classes.CheckboxHolder}>
-                    <Checkbox
-                      color='primary'
-                      size='small'
-                      value='male'
-                      id='pria'
-                    />
+                    <Checkbox color='primary' size='small' value='male' id='pria' />
                     <p>Pria</p>
                   </div>
                   <div className={classes.CheckboxHolder}>
-                    <Checkbox
-                      color='primary'
-                      size='small'
-                      value='female'
-                      id='wanita'
-                    />
+                    <Checkbox color='primary' size='small' value='female' id='wanita' />
                     <p>Wanita</p>
                   </div>
                 </div>
@@ -329,23 +304,11 @@ const DetailBC = (props) => {
               <p className={classes.FilterLabel}>Kebersediaan</p>
               <div>
                 <div className={classes.CheckboxHolder}>
-                  <Checkbox
-                    color='primary'
-                    size='small'
-                    id='location'
-                    value='location'
-                    onChange={onLocationHandler}
-                  />
+                  <Checkbox color='primary' size='small' id='location' value='location' onChange={onLocationHandler} />
                   <p>Luar kota</p>
                 </div>
                 <div className={classes.CheckboxHolder}>
-                  <Checkbox
-                    color='primary'
-                    size='small'
-                    id='shift'
-                    value='shift'
-                    onChange={onShiftHandler}
-                  />
+                  <Checkbox color='primary' size='small' id='shift' value='shift' onChange={onShiftHandler} />
                   <p>Bekerja shift</p>
                 </div>
               </div>
@@ -418,16 +381,10 @@ const DetailBC = (props) => {
                 <Autocomplete
                   id='school'
                   name='school'
-                  options={University.map((option) => option.institusi)}
+                  options={University.map(option => option.institusi)}
                   onChange={handleSchoolChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label='Universitas tertentu'
-                      margin='normal'
-                      variant='standard'
-                      style={{ margin: '0' }}
-                    />
+                  renderInput={params => (
+                    <TextField {...params} label='Universitas tertentu' margin='normal' variant='standard' style={{ margin: '0' }} />
                   )}
                 />
               </div>
@@ -573,9 +530,7 @@ const DetailBC = (props) => {
                         </div>
                       </th>
                       <th style={app.dateOfBirth ? null : { color: 'gray' }}>
-                        {app.dateOfBirth
-                          ? moment().diff(moment(app.dateOfBirth), 'year')
-                          : 'null'}
+                        {app.dateOfBirth ? moment().diff(moment(app.dateOfBirth), 'year') : 'null'}
                       </th>
                       <th>
                         {app.outOfTown ? (
@@ -623,17 +578,13 @@ const DetailBC = (props) => {
                               className={classes.button}
                               size='small'
                               endIcon={<SendIcon />}
-                              disabled={applicantList.some(
-                                (appId) =>
-                                  appId.toString() === app.id.toString()
-                              )}
+                              disabled={applicantList.some(appId => appId.toString() === app.id.toString())}
                               onClick={() =>
                                 onSentHandler({
                                   applicantId: app.id,
                                   i,
                                 })
-                              }
-                            >
+                              }>
                               Send
                             </Button>
                           )}
@@ -653,26 +604,16 @@ const DetailBC = (props) => {
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}
-        >
+          }}>
           <FormControl style={{ width: '4rem' }}>
-            <Select
-              labelId='rowPerPage'
-              id='rowPerPageSelect'
-              value={state.rowsPerPage}
-              onChange={rowsHandler}
-            >
+            <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={5}>5</MenuItem>
               <MenuItem value={10}>10</MenuItem>
             </Select>
             <FormHelperText>Rows</FormHelperText>
           </FormControl>
-          <Pagination
-            count={state.pageCount}
-            page={state.pageNumber}
-            onChange={pageChangeHandler}
-          />
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
         </div>
       </div>
     );
@@ -681,7 +622,7 @@ const DetailBC = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     isLoading: state.admin.isLoading,
@@ -689,11 +630,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
-    getAllApplicant: (token) => dispatch(actionCreators.getAllApplicant(token)),
-    sentApplicantBC: (data) => dispatch(actionCreators.sentApplicantBC(data)),
+    getOrderInvoice: data => dispatch(actionCreators.getOrderInvoice(data)),
+    getAllApplicant: token => dispatch(actionCreators.getAllApplicant(token)),
+    sentApplicantBC: data => dispatch(actionCreators.sentApplicantBC(data)),
   };
 };
 

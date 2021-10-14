@@ -12,10 +12,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import classes from './DetailES.module.css';
 
-const DetailES = (props) => {
+const DetailES = props => {
   const { orderid } = useParams();
 
   const [reply, setReply] = useState(false);
@@ -56,7 +56,7 @@ const DetailES = (props) => {
     onInputHandler(id, value, isValid);
   };
 
-  const onSubmitHandler = async (event) => {
+  const onSubmitHandler = async event => {
     event.preventDefault();
     const executiveCandidate = {
       token: props.admin.token,
@@ -76,7 +76,7 @@ const DetailES = (props) => {
     try {
       const res = await props.addCandidateES(executiveCandidate);
       console.log(res);
-      setDisplayData((prevState) => [...prevState, CandidateState]);
+      setDisplayData(prevState => [...prevState, CandidateState]);
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +91,7 @@ const DetailES = (props) => {
     };
     try {
       const res = await props.deleteCandidateES(deleteCandidate);
-      setDisplayData(displayData.filter((fil) => fil.candidateName !== name));
+      setDisplayData(displayData.filter(fil => fil.candidateName !== name));
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -111,18 +111,18 @@ const DetailES = (props) => {
       };
 
       getOrderInvoice(dataES)
-        .then((res) => {
+        .then(res => {
           console.log(res);
           setDataES(res.order);
           setDisplayData(res.order.candidates);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
   }, [getOrderInvoice, orderid, props.admin]);
 
-  const candidateStatusHandler = async (dataInput) => {
+  const candidateStatusHandler = async dataInput => {
     setStatusIndex(dataInput.i);
     const updatedStatus = {
       token: props.admin.token,
@@ -134,7 +134,7 @@ const DetailES = (props) => {
     try {
       await props.updateCandidateStatusES(updatedStatus);
 
-      setDisplayData((prevData) => {
+      setDisplayData(prevData => {
         const tempData = [...prevData];
         tempData[dataInput.i].status = dataInput.value;
         return tempData;
@@ -147,7 +147,7 @@ const DetailES = (props) => {
     }
   };
 
-  const updateNoteES = async (note) => {
+  const updateNoteES = async note => {
     const updatedNote = {
       token: props.admin.token,
       applicantId: note.applicantId,
@@ -163,12 +163,12 @@ const DetailES = (props) => {
     }
   };
 
-  const replyHandler = (i) => {
+  const replyHandler = i => {
     setReply(true);
     setReplyIndex(i);
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   // if (!props.isLoading && data.length < 1) {
   //   content = <h1>tidak ada order untuk saat ini</h1>;
@@ -206,20 +206,12 @@ const DetailES = (props) => {
 
               <div className={classes.DescHolder}>
                 <p className={classes.DescLabel}>Persyaratan Minimum</p>
-                <p>
-                  {dataES.candidateRequirement
-                    ? dataES.candidateRequirement
-                    : 'Kosong'}
-                </p>
+                <p>{dataES.candidateRequirement ? dataES.candidateRequirement : 'Kosong'}</p>
               </div>
 
               <div className={classes.DescHolder}>
                 <p className={classes.DescLabel}>Persyaratan tambahan</p>
-                <p>
-                  {dataES.specialRequirement
-                    ? dataES.specialRequirement
-                    : 'Kosong'}
-                </p>
+                <p>{dataES.specialRequirement ? dataES.specialRequirement : 'Kosong'}</p>
               </div>
             </div>
           </div>
@@ -231,7 +223,7 @@ const DetailES = (props) => {
                   id='candidateName'
                   name='candidateName'
                   size='small'
-                  onChange={(event) =>
+                  onChange={event =>
                     onManualHandler(event, {
                       validator: [VALIDATOR_REQUIRE()],
                     })
@@ -251,7 +243,7 @@ const DetailES = (props) => {
                   id='candidateEmail'
                   name='candidateEmail'
                   size='small'
-                  onChange={(event) =>
+                  onChange={event =>
                     onManualHandler(event, {
                       validator: [VALIDATOR_REQUIRE()],
                     })
@@ -271,7 +263,7 @@ const DetailES = (props) => {
                   id='candidateContact'
                   name='candidateContact'
                   size='small'
-                  onChange={(event) =>
+                  onChange={event =>
                     onManualHandler(event, {
                       validator: [VALIDATOR_REQUIRE()],
                     })
@@ -292,8 +284,7 @@ const DetailES = (props) => {
                   style={{ height: '2rem' }}
                   className={classes.AddButton}
                   onClick={onSubmitHandler}
-                  startIcon={<AddIcon />}
-                >
+                  startIcon={<AddIcon />}>
                   Add
                 </Button>
               </div>
@@ -305,9 +296,7 @@ const DetailES = (props) => {
                     <div className={classes.CandidateHead}>
                       <div className={classes.DeleteCandidate}>
                         <button
-                          onClick={(e) =>
-                            onDeleteHandler(e, can.id, can.candidateName)
-                          }
+                          onClick={e => onDeleteHandler(e, can.id, can.candidateName)}
                           style={{
                             border: 'none',
                             outline: 'none',
@@ -315,8 +304,7 @@ const DetailES = (props) => {
                             margin: '0.2rem 0.5rem -0.2rem 0',
                             padding: '0',
                             cursor: 'pointer',
-                          }}
-                        >
+                          }}>
                           <CloseIcon
                             style={{
                               color: 'gray',
@@ -329,17 +317,9 @@ const DetailES = (props) => {
                       </div>
                       <div className={classes.DropDown}>
                         {props.indexIsLoading && statusIndex === i ? (
-                          <SpinnerCircle />
+                          <LoadingBar />
                         ) : (
-                          <p
-                            style={
-                              can.status === 'Open'
-                                ? { color: 'green' }
-                                : { color: 'gray' }
-                            }
-                          >
-                            {can.status}
-                          </p>
+                          <p style={can.status === 'Open' ? { color: 'green' } : { color: 'gray' }}>{can.status}</p>
                         )}
                         <button className={classes.DropButton}>
                           <ArrowDropDownIcon />
@@ -353,8 +333,7 @@ const DetailES = (props) => {
                                 value: 'Open',
                                 i,
                               })
-                            }
-                          >
+                            }>
                             Open
                           </button>
                           <button
@@ -365,8 +344,7 @@ const DetailES = (props) => {
                                 value: 'Closed',
                                 i,
                               })
-                            }
-                          >
+                            }>
                             Close
                           </button>
                         </div>
@@ -398,7 +376,7 @@ const DetailES = (props) => {
                               width: '25rem',
                               marginRight: '0.5rem',
                             }}
-                            onChange={(event) =>
+                            onChange={event =>
                               onManualHandler(event, {
                                 validator: [VALIDATOR_REQUIRE()],
                               })
@@ -413,20 +391,14 @@ const DetailES = (props) => {
                                 applicantId: can.id,
                                 i,
                               })
-                            }
-                          >
+                            }>
                             save
                           </Button>
                         </div>
                       ) : (
                         <div className={classes.CandidateNote}>
                           <p className={classes.NoteText}>{can.note}</p>
-                          <Button
-                            color='primary'
-                            style={{ height: '2.5rem' }}
-                            className={classes.button}
-                            onClick={(e) => replyHandler(i)}
-                          >
+                          <Button color='primary' style={{ height: '2.5rem' }} className={classes.button} onClick={e => replyHandler(i)}>
                             reply
                           </Button>
                         </div>
@@ -445,7 +417,7 @@ const DetailES = (props) => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     admin: state.admin,
     indexIsLoading: state.finance.indexIsLoading,
@@ -454,14 +426,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOrderInvoice: (data) => dispatch(actionCreators.getOrderInvoice(data)),
-    addCandidateES: (data) => dispatch(actionCreators.addCandidateES(data)),
-    deleteCandidateES: (data) =>
-      dispatch(actionCreators.deleteCandidateES(data)),
-    updateCandidateStatusES: (data) =>
-      dispatch(actionCreators.updateCandidateStatusES(data)),
+    getOrderInvoice: data => dispatch(actionCreators.getOrderInvoice(data)),
+    addCandidateES: data => dispatch(actionCreators.addCandidateES(data)),
+    deleteCandidateES: data => dispatch(actionCreators.deleteCandidateES(data)),
+    updateCandidateStatusES: data => dispatch(actionCreators.updateCandidateStatusES(data)),
   };
 };
 

@@ -10,7 +10,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../../shared/util
 
 import Modal from '../../../../shared/UI_Element/Modal';
 import Checkbox from '@material-ui/core/Checkbox';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 import Button from '@material-ui/core/Button';
 
@@ -121,7 +121,7 @@ const Experience = props => {
     setTillNow(!tillNow);
   };
 
-  let formContent = <SpinnerCircle />;
+  let formContent = <LoadingBar />;
 
   if (!props.isLoading && data) {
     formContent = (

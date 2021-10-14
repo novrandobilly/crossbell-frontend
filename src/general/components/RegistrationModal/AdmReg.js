@@ -9,7 +9,7 @@ import * as actionCreators from '../../../store/actions/index';
 import Button from '@material-ui/core/Button';
 import Modal from '../../../shared/UI_Element/Modal';
 import Input from '../../../shared/UI_Element/Input';
-import SpinnerCircle from '../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
 
 import classes from './AdmReg.module.css';
@@ -267,7 +267,7 @@ const Register = props => {
   );
 
   if (props.isLoading) {
-    formContent = <SpinnerCircle />;
+    formContent = <LoadingBar />;
   }
 
   const onCancelHandler = () => {

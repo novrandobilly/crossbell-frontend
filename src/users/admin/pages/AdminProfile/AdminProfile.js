@@ -8,7 +8,7 @@ import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Input from '../../../../shared/UI_Element/Input';
-import SpinnerCircle from '../../../../shared/UI_Element/Spinner/SpinnerCircle';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 // import Modal from "../../../../shared/UI_Element/Modal";
 
 import Button from '@material-ui/core/Button';
@@ -105,7 +105,7 @@ const AdminProfile = props => {
     onInputHandler(elementId, elementFile, true);
   };
 
-  let content = <SpinnerCircle />;
+  let content = <LoadingBar />;
 
   if (data && !props.admin.isLoading) {
     content = (

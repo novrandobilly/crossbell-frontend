@@ -1,6 +1,6 @@
 .AddSegment {
   font-size: 0.9rem;
-  /* font-family: 'Roboto'; */
+
   font-weight: 600;
 }
 
@@ -52,7 +52,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  /* font-family: sans-serif; */
+
   font-size: 0.8rem;
   font-weight: 700;
   position: relative;
@@ -89,7 +89,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  /* font-family: sans-serif; */
+
   font-size: 0.8rem;
   font-weight: 700;
   position: relative;
@@ -126,7 +126,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  /* font-family: sans-serif; */
+
   font-size: 0.8rem;
   font-weight: 700;
   position: relative;
@@ -163,7 +163,7 @@
   margin-left: 1rem;
   cursor: pointer;
   outline: none;
-  /* font-family: sans-serif; */
+
   font-size: 0.8rem;
   font-weight: 700;
   position: relative;
