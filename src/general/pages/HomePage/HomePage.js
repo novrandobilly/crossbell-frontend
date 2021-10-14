@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment, useRef } from 'react';
 
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Logo from '../../../shared/UI_Element/Logo';
+// import Logo from '../../../shared/UI_Element/Logo';
 import ContactUs from '../../components/HomePage/ContactUs';
 import Modal from '../../../shared/UI_Element/Modal';
 import Login from '../../components/RegistrationModal/Login';
@@ -19,7 +19,7 @@ import CheckMark from '../../../assets/icons/check-mark.svg';
 import RequestHH from '../../../assets/images/Request.png';
 import Screening from '../../../assets/images/Screening.png';
 import Headhunter from '../../../assets/images/Headhunter.png';
-import IntiDinamisLogo from '../../../assets/Inti-Dinamis-Logo.png';
+// import IntiDinamisLogo from '../../../assets/Inti-Dinamis-Logo.png';
 
 const HomePage = props => {
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -38,10 +38,7 @@ const HomePage = props => {
 
   const onSwitchToRegister = () => setIsLogin(false);
   const onSwitchToLogin = () => setIsLogin(true);
-  // const showLogin = () => {
-  //   setShowAuthForm(true);
-  //   setIsLogin(true);
-  // };
+
   const showRegistration = () => {
     setShowAuthForm(true);
     setIsLogin(false);
@@ -198,8 +195,8 @@ const HomePage = props => {
               <img alt='Check mark' src={CheckMark} />
               <h3>Assessment Test</h3>
               <p>
-                Kami bekerja sama dengan <strong>PT Inti Dinamis</strong> untuk memberikan <em>Assessment Test</em> demi mendapatkan
-                kandidat yang paling sesuai dengan kebutuhan bisnis anda
+                Kami bekerja sama dengan tim assessor untuk memberikan <em>Assessment Test</em> demi mendapatkan kandidat yang paling sesuai
+                dengan kebutuhan bisnis anda
               </p>
             </div>
           </div>
@@ -210,14 +207,14 @@ const HomePage = props => {
           </div>
         </div>
       </section>
-      <section className={classes.PartnersBackground}>
+      {/* <section className={classes.PartnersBackground}>
         <div className={classes.PartnersContainer}>
           <h2>Our Partners:</h2>
           <div className={classes.PartnersGallery}>
             <Logo src={IntiDinamisLogo} alt='Inti Dinamis' width='200px' />
           </div>
         </div>
-      </section>
+      </section> */}
       <section className={classes.ContactUsBackground}>
         <div className={classes.BackStripe}></div>
         <ContactUs />
