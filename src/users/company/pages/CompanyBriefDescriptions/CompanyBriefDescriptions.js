@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import * as actionCreators from '../../../../store/actions';
 import CompanyMap from '../../components/CompanyMap';
 
@@ -32,7 +32,7 @@ const CompanyBriefDescriptions = props => {
   if (loadedCompany) {
     return <CompanyMap items={loadedCompany} />;
   } else {
-    return <Spinner />;
+    return <LoadingBar />;
   }
 };
 

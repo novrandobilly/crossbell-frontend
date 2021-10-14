@@ -8,7 +8,7 @@ import * as actionCreators from '../../../../store/actions';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './Language.module.css';
@@ -86,7 +86,7 @@ const Language = props => {
 
   console.log(languagesList);
 
-  let formLanguages = <Spinner />;
+  let formLanguages = <LoadingBar />;
   if (languagesList && !props.applicant.isLoading) {
     formLanguages = (
       <form onSubmit={onSubmitHandler} className={classes.Container}>

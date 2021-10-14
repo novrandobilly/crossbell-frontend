@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import TextField from '@material-ui/core/TextField';
 import Input from '../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../shared/utils/validator';
@@ -695,7 +695,7 @@ const NewJob = props => {
   );
 
   if (props.job.isLoading) {
-    formContent = <Spinner />;
+    formContent = <LoadingBar />;
   }
 
   const onCancelHandler = () => {

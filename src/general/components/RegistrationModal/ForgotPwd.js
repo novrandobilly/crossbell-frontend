@@ -6,7 +6,7 @@ import * as actionCreators from '../../../store/actions';
 
 import classes from './ForgotPwd.module.css';
 import Input from '../../../shared/UI_Element/Input';
-// import Spinner from '../../../shared/UI_Element/Spinner/LoadingBar';
+// import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 // import Modal from '../../../shared/UI_Element/Modal';
 
 const ForgotPwd = props => {

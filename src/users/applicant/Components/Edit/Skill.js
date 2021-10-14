@@ -8,7 +8,7 @@ import * as actionCreators from '../../../../store/actions';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 
 import classes from './Skill.module.css';
@@ -86,7 +86,7 @@ const Skills = props => {
     });
   };
 
-  let formSkills = <Spinner />;
+  let formSkills = <LoadingBar />;
 
   if (skillsList && !props.applicant.isLoading) {
     formSkills = (

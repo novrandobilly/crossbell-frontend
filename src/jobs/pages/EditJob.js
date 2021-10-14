@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE } from '../../shared/utils/validator';
 import classes from './EditJob.module.css';
@@ -120,7 +120,7 @@ const EditJob = props => {
     onInputHandler(elementId, elementValue, true);
   };
 
-  let formContent = <Spinner />;
+  let formContent = <LoadingBar />;
   if (identifiedJob && !props.job.isLoading) {
     formContent = (
       <div className={classes.FormContainer}>

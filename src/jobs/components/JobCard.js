@@ -6,7 +6,7 @@ import * as actionCreators from '../../store/actions';
 import * as actionTypes from '../../store/actions/actions';
 
 import Modal from '../../shared/UI_Element/Modal';
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import Button from '../../shared/UI_Element/Button';
 import BlankCompany from '../../assets/images/Company.png';
 
@@ -57,7 +57,7 @@ const JobCard = props => {
   }
 
   if (props.job.isLoading && jobId === props.jobId) {
-    instantApplyButton = <Spinner />;
+    instantApplyButton = <LoadingBar />;
   }
 
   //   =====================================================================================

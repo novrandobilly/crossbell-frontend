@@ -5,7 +5,7 @@ import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionCreators from '../../../../store/actions';
 import { VALIDATOR_ALWAYSTRUE } from '../../../../shared/utils/validator';
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -184,7 +184,7 @@ const FinancialAO = props => {
     }
   }, [total]);
 
-  let content = <Spinner />;
+  let content = <LoadingBar />;
   if (displayData && !props.isLoading) {
     content = (
       <div className={classes.Container}>

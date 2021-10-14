@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../../store/actions';
 
-import Spinner from '../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import IconButton from '../../../shared/UI_Element/IconButton';
 import TextOnly from '../../../shared/UI_Element/TextOnly';
 import RangeSegment from '../../../shared/UI_Element/RangeSegment';
@@ -106,7 +106,7 @@ const ApplicantCard = props => {
 
                     {loadingResume ? (
                       <div className={classes.SaveText}>
-                        <Spinner />
+                        <LoadingBar />
                       </div>
                     ) : (
                       <span className={classes.SaveText} onClick={onSubmitResumeHandler}>

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import * as actionCreators from '../../../../store/actions/index';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -309,7 +308,7 @@ const CompaniesListAO = props => {
 
                           <th>
                             {props.company.isLoading && indexLoading === index ? (
-                              <Spinner />
+                              <LoadingBar />
                             ) : company.isActive ? (
                               <span style={{ color: 'Green', fontWeight: 'bold' }}>Active</span>
                             ) : (
@@ -424,7 +423,7 @@ const CompaniesListAO = props => {
 
                           <th>
                             {props.company.isLoading && indexLoading === index ? (
-                              <Spinner />
+                              <LoadingBar />
                             ) : company.isActive ? (
                               <span style={{ color: 'Green', fontWeight: 'bold' }}>Active</span>
                             ) : (

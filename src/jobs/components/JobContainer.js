@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import * as actionCreators from '../../store/actions/';
 import BlankCompany from '../../assets/images/Company.png';
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import Button from '../../shared/UI_Element/Button';
 
 import classes from './JobContainer.module.css';
@@ -217,7 +217,7 @@ const JobDetails = props => {
   );
 
   if (props.job.isLoading) {
-    containerContent = <Spinner />;
+    containerContent = <LoadingBar />;
   }
 
   return containerContent;

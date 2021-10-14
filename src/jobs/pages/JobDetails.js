@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions/';
 
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import JobDetailMap from '../components/JobDetailMap';
 
 const JobDetails = props => {
@@ -27,7 +27,7 @@ const JobDetails = props => {
     fetchJob();
   }, [getOneJob, jobsid, props.auth.token, props.admin.token]);
 
-  let jobDetails = <Spinner />;
+  let jobDetails = <LoadingBar />;
   if (loadedJob) {
     jobDetails = <JobDetailMap job={loadedJob} />;
   }

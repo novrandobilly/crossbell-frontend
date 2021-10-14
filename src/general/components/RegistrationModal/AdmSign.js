@@ -7,7 +7,7 @@ import { useForm } from '../../../shared/utils/useForm';
 
 import Button from '@material-ui/core/Button';
 import Input from '../../../shared/UI_Element/Input';
-import Spinner from '../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import Modal from '../../../shared/UI_Element/Modal';
 
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../shared/utils/validator';
@@ -106,7 +106,7 @@ const AdmSign = props => {
   );
 
   if (props.admin.isLoading) {
-    formContent = <Spinner />;
+    formContent = <LoadingBar />;
   }
 
   return (

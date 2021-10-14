@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE, VALIDATOR_EMAIL } from '../../shared/utils/validator';
 import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
@@ -408,7 +408,7 @@ const EditUnreleasedJob = props => {
     if (key !== 'default') cities = [...cities, ...CitiesData[key]];
   }
 
-  let formContent = <Spinner />;
+  let formContent = <LoadingBar />;
 
   if (!props.job.isLoading && loadedJob) {
     formContent = (

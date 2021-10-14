@@ -4,7 +4,7 @@ import { useParams, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 // import * as actionTypes from "../../store/actions/actions";
-import Spinner from './Spinner/LoadingBar';
+import LoadingBar from './Spinner/LoadingBar';
 import * as actionCreators from '../../store/actions/index';
 import IconButton from './IconButton';
 
@@ -74,7 +74,7 @@ const RangeSegmentMap = props => {
   );
 
   if (props.isLoading && indexLoading === props.index) {
-    segmentElement = <Spinner />;
+    segmentElement = <LoadingBar />;
   }
 
   return segmentElement;

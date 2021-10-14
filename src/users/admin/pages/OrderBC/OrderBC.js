@@ -6,7 +6,6 @@ import moment from 'moment';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import * as actionCreators from '../../../../store/actions/index';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -197,7 +196,7 @@ const OrderBC = props => {
 
                   <th>
                     {props.indexIsLoading && index === i ? (
-                      <Spinner />
+                      <LoadingBar />
                     ) : order.status === 'Paid' ? (
                       <span style={{ color: 'Green', fontWeight: 'bold' }}>Paid</span>
                     ) : (

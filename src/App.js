@@ -18,7 +18,7 @@ import NavigationWrapper from './shared/Navigation/NavigationWrapper';
 import Footer from './shared/Navigation/Footer';
 
 import OrderModal from './shared/UI_Element/OrderModal';
-import Spinner from './shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from './shared/UI_Element/Spinner/LoadingBar';
 
 import './App.css';
 
@@ -145,7 +145,7 @@ const App = props => {
         <Suspense
           fallback={
             <div className='centerGlobal'>
-              <Spinner />
+              <LoadingBar />
             </div>
           }>
           <Switch>

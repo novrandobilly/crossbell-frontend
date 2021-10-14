@@ -7,7 +7,7 @@ import * as actionCreators from '../../../store/actions';
 
 import classes from './ForgotPwd.module.css';
 import Input from '../../../shared/UI_Element/Input';
-import Spinner from '../../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 const ResetPwd = props => {
   const [tokenIsValid, setTokenIsValid] = useState(false);
@@ -60,7 +60,7 @@ const ResetPwd = props => {
 
   let content = (
     <div style={{ margin: '6rem auto' }}>
-      <Spinner />;
+      <LoadingBar />;
     </div>
   );
 

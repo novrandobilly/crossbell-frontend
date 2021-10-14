@@ -13,7 +13,6 @@ import SendIcon from '@material-ui/icons/Send';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import Spinner from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Pagination from '@material-ui/lab/Pagination';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -570,7 +569,7 @@ const DetailBC = props => {
                       {dataBC && dataBC.approvedAt ? (
                         <th>
                           {indexIsLoading && index === i ? (
-                            <Spinner />
+                            <LoadingBar />
                           ) : (
                             <Button
                               variant='contained'

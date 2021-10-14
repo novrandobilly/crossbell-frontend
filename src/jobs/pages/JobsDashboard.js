@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
 
-import Spinner from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import JobsList from '../components/JobsList';
 import QueryBar from '../components/QueryBar';
 import Modal from '../../shared/UI_Element/Modal';
@@ -161,7 +161,7 @@ const JobsDashboard = props => {
     });
   }, []);
 
-  let jobLists = <Spinner />;
+  let jobLists = <LoadingBar />;
   if (state.jobList) {
     jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />;
   }
