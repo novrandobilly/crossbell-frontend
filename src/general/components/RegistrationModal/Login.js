@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import * as actionTypes from '../../../store/actions/actions';
@@ -86,16 +86,13 @@ const Login = props => {
       </div>
 
       {props.auth.isLoading ? (
-        <LoadingBar />
+        <LoadingBar width='15px' />
       ) : (
-        <Fragment>
-          <button type='submit' className={classes.SubmitButton} disabled={!formState.formIsValid}>
-            Masuk
-          </button>
-          <GoogleLoginButton />
-        </Fragment>
+        <button type='submit' className={classes.SubmitButton} disabled={!formState.formIsValid}>
+          Masuk
+        </button>
       )}
-      <LoadingBar />
+      <GoogleLoginButton />
 
       <p className={classes.AdditionalLinks}>
         Tidak punya akun?{' '}
@@ -106,7 +103,7 @@ const Login = props => {
 
       <p className={classes.AdditionalLinks}>
         Lupa password?{' '}
-        <Link className={classes.ForgotPasswordLink} to='/forgot'>
+        <Link className={classes.ForgotPasswordLink} to='/forgot' onClick={props.onForgotPassword}>
           Klik disini
         </Link>
       </p>
@@ -115,7 +112,7 @@ const Login = props => {
 
   return (
     <form onSubmit={onSubmitHandler} className={classes.Container}>
-      <Modal show={props.auth.isError} onCancel={onCancelHandler}>
+      <Modal show={props.auth.isError} onCancel={onCancelHandler} style={{ top: '25vh' }}>
         Email or Password invalid. Please try again.
       </Modal>
       {formContent}

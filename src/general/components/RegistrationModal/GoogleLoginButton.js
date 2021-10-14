@@ -24,7 +24,7 @@ const GoogleLoginButton = props => {
     <div className={classes.GoogleLogin}>
       <GoogleLogin
         clientId='968047575665-o4ugi6bco8pp3j4ba10cs55av6cms52c.apps.googleusercontent.com'
-        buttonText='Login with Google'
+        buttonText={props.buttonText || 'Login with Google'}
         onSuccess={responseSuccessGoogle}
         onFailure={responseErrorGoogle}
         cookiePolicy={'single_host_origin'}

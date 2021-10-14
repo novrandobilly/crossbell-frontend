@@ -1,13 +1,11 @@
 .LoadingBar {
-  margin-bottom: 15px;
-  margin-right: 40px;
-  width: 70px;
+  max-width: 800px;
+  width: 100%;
   text-align: center;
+  margin: 10px auto 15px;
 }
 
 .LoadingBar > div {
-  width: 15px;
-  height: 15px;
   background-color: #f79f35;
 
   border-radius: 100%;

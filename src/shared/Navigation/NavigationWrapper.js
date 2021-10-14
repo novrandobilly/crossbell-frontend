@@ -38,8 +38,12 @@ const NavigationWrapper = () => {
         show={showAuthForm}
         onCancel={onCancelAuth}
         headerText={isLogin ? 'Login ' : 'Registration Form'}
-        style={{ maxWidth: '400px', top: !isLogin && '10vh' }}>
-        {isLogin ? <Login onSwitchToRegister={onSwitchToRegister} /> : <Register onSwitchToLogin={onSwitchToLogin} />}
+        style={{ top: !isLogin && '10vh', '--containerWidth': '400px' }}>
+        {isLogin ? (
+          <Login onSwitchToRegister={onSwitchToRegister} onForgotPassword={onCancelAuth} />
+        ) : (
+          <Register onSwitchToLogin={onSwitchToLogin} />
+        )}
       </Modal>
 
       {drawerIsOpen && <Backdrop onClick={toggleDrawerHandler} />}

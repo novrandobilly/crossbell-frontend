@@ -7,26 +7,27 @@ import * as actionCreators from '../../../store/actions/index';
 
 import Modal from '../../../shared/UI_Element/Modal';
 import Input from '../../../shared/UI_Element/Input';
+import Login from '../../components/RegistrationModal/Login';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
-import GoogleLoginButton from './GoogleLoginButton';
-
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../shared/utils/validator';
 
-import classes from './Register.module.css';
+import classes from './CompanyAuthForm.module.css';
 
-const Register = props => {
+const CompanyAuthForm = props => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loginCompany, setLoginCompany] = useState(false);
+
   const [formState, onInputHandler] = useForm(
     {
-      firstName: {
-        value: '',
-        isValid: false,
-      },
-      lastName: {
+      companyName: {
         value: '',
         isValid: false,
       },
       email: {
+        value: '',
+        isValid: false,
+      },
+      NPWP: {
         value: '',
         isValid: false,
       },
@@ -44,16 +45,16 @@ const Register = props => {
 
   const onSubmitHandler = async event => {
     event.preventDefault();
-    const newApplicant = {
-      firstName: formState.inputs.firstName.value,
-      lastName: formState.inputs.lastName.value,
+    const newCompany = {
+      companyName: formState.inputs.companyName.value,
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
+      NPWP: formState.inputs.NPWP.value,
     };
 
     try {
-      const res = await props.createApplicant(newApplicant);
-      console.log(res);
+      const res = await props.createCompany(newCompany);
+
       if (!res.token) {
         throw new Error(res.message);
       }
@@ -62,36 +63,43 @@ const Register = props => {
         userId: res.userId,
         isCompany: res.isCompany,
       });
-      props.history.push(`/ap/${res.userId}/res-val`);
+      props.history.push(`/co/${res.userId}/compro`);
     } catch (err) {
       setErrorMessage(err.message);
     }
   };
 
-  let formContent = (
-    <div className={classes.ContainerFlex}>
-      <div className={classes.Content}>
-        <div className={classes.InputBox}>
-          <Input
-            inputType='input'
-            id='firstName'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label='Nama depan*'
-            helperText='Mohon masukkan nama depan yang valid'
-          />
-        </div>
+  const onCompanyLogin = () => setLoginCompany(true);
+  const onCompanyCancelLogin = () => setLoginCompany(false);
 
+  // if (props.isLoading) {
+  //   formContent = <LoadingBar />;
+  // }
+
+  const onCancelHandler = () => {
+    props.resetCompany();
+    setErrorMessage(null);
+  };
+
+  return (
+    <form onSubmit={onSubmitHandler} className={classes.FormContainer}>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        {errorMessage && errorMessage}
+      </Modal>
+      <Modal show={loginCompany} onCancel={onCompanyCancelLogin} headerText='Login Perusahaan'>
+        <Login onSwitchToRegister={onCompanyCancelLogin} onForgotPassword={onCompanyCancelLogin} />
+      </Modal>
+      <h1 className={classes.FormTitle}>Registrasi Perusahaan</h1>
+      <div className={classes.InputContainer}>
         <div className={classes.InputBox}>
           <Input
             inputType='input'
-            id='lastName'
+            id='companyName'
             InputClass='Register'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Nama belakang*'
-            helperText='Mohon masukkan nama belakang yang valid'
+            label='Nama Perusahaan*'
+            helperText='Silahkan input nama perusahaan anda.'
           />
         </div>
 
@@ -102,8 +110,20 @@ const Register = props => {
             InputClass='Register'
             validatorMethod={[VALIDATOR_EMAIL()]}
             onInputHandler={onInputHandler}
-            label='Email*'
-            helperText='Mohon masukkan alamat email yang valid'
+            label='Email Perusahaan*'
+            helperText='Silahkan input email perusahaan yang valid.'
+          />
+        </div>
+
+        <div className={classes.InputBox}>
+          <Input
+            inputType='input'
+            id='NPWP'
+            InputClass='Register'
+            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+            onInputHandler={onInputHandler}
+            label='NPWP*'
+            helperText='Silahkan isi nomor NPWP perusahaan.'
           />
         </div>
 
@@ -116,7 +136,7 @@ const Register = props => {
             onInputHandler={onInputHandler}
             label='Password*'
             type='password'
-            helperText='Password minimal mengandung 6 karakter'
+            helperText='Password minimal 6 karakter'
           />
         </div>
 
@@ -129,57 +149,50 @@ const Register = props => {
             onInputHandler={onInputHandler}
             label='Password Confirmation*'
             type='password'
-            helperText='Password belum sesuai mohon coba lagi'
+            helperText='Password tidak sesuai'
           />
         </div>
 
-        <button
-          className={classes.RegisterButton}
-          disabled={!formState.formIsValid || formState.inputs.password.value !== formState.inputs.confirmPassword.value}>
-          Register
-        </button>
-        <GoogleLoginButton buttonText='Signup with Google' />
-        <p className={classes.AdditionalLinks}>
+        {props.isLoading ? (
+          <LoadingBar />
+        ) : (
+          <button
+            className={classes.SubmitButton}
+            type='submit'
+            disabled={!formState.formIsValid || formState.inputs.password.value !== formState.inputs.confirmPassword.value}
+            style={{
+              marginTop: '1rem',
+            }}>
+            Daftar
+          </button>
+        )}
+
+        <span className={classes.AdditionalLinks}>
           Sudah punya akun?{' '}
-          <span className={classes.LoginSwitch} onClick={props.onSwitchToLogin}>
-            Masuk disini
+          <span className={classes.LoginFormLink} onClick={onCompanyLogin}>
+            Masuk di sini
           </span>
-        </p>
+        </span>
       </div>
-    </div>
-  );
-
-  if (props.isLoading) {
-    formContent = <LoadingBar />;
-  }
-
-  const onCancelHandler = () => {
-    props.resetApplicant();
-  };
-
-  return (
-    <form onSubmit={onSubmitHandler} className={classes.Container}>
-      <Modal show={props.error} onCancel={onCancelHandler}>
-        {errorMessage && errorMessage}
-      </Modal>
-      {formContent}
     </form>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.applicant.isLoading,
-    error: state.applicant.error,
+    isLoading: state.company.isLoading,
+    error: state.company.error,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    createApplicant: newApplicant => dispatch(actionCreators.createApplicant(newApplicant)),
+    createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
+    resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
+    // createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
     login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+    authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyAuthForm));

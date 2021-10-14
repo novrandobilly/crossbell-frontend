@@ -1,10 +1,14 @@
+:root {
+  --containerWidth: 500px;
+}
+
 .Modal {
   z-index: 100;
   position: fixed;
   left: 50%;
-  transform: translate(-50%, 0);
-  top: 15vh;
-  max-width: 500px;
+  top: 20%;
+  max-width: var(--containerWidth);
+  margin-left: calc(var(--containerWidth) / -2);
   width: 100%;
   background: white;
   box-shadow: 0 0 10px #f79f35;

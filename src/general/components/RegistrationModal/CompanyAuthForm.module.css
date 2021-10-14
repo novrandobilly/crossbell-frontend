@@ -1,0 +1,72 @@
+.FormContainer {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background-color: white;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 0 15px #f79f35;
+}
+
+.FormTitle {
+  font-size: 20px;
+  margin: 0;
+  text-align: start;
+  background-color: #f79f35;
+  color: #fff;
+  padding: 15px;
+}
+
+.InputContainer {
+  padding: 0 15px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.InputBox {
+  min-height: 70px;
+  width: 100%;
+}
+
+.SubmitButton {
+  outline: none;
+  border-radius: 5px;
+  background-color: #f79f35;
+  color: #fff;
+  padding: 0.4em;
+  font-family: 'Lato', sans-serif;
+  border: 3px solid #f79f35;
+  font-size: 16px;
+  width: 100%;
+  max-width: 100px;
+  margin-bottom: 20px;
+}
+.SubmitButtonL:hover {
+  cursor: pointer;
+}
+.SubmitButton:disabled {
+  cursor: not-allowed;
+  background-color: #8b8b8b;
+  border: 3px solid #8b8b8b;
+}
+
+.AdditionalLinks {
+  margin: 0;
+  font-size: 12px;
+}
+
+.LoginFormLink {
+  text-decoration: none;
+  font-style: italic;
+  font-weight: 700;
+  color: #f79f35;
+}
+
+.LoginFormLink:hover {
+  cursor: pointer;
+  text-shadow: 0 0 5px #f8c688;
+}

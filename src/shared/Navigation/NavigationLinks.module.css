@@ -15,17 +15,28 @@
   background-color: transparent;
 }
 
-.NavigationLink a {
+.NavigationLink a,
+.NavigationLink button {
   color: #ef4037;
   text-decoration: none;
-  padding: 16px;
+  padding: 10px;
   font-weight: 700;
+  font-family: 'Lato', sans-serif;
   transition: all 0.1s ease-in;
+  font-size: 16px;
+}
+#CompanyPageLink {
+  background-color: #fed5d3;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-left: 10px;
 }
 
+.NavigationLink button:hover,
 .NavigationLink a:hover,
 .NavigationLink .active {
   text-shadow: 0 0 10px #ef4037;
+  cursor: pointer;
 }
 .NavigationLink button {
   border: 1px solid white;
@@ -38,13 +49,6 @@
 }
 .ApplicantAuthenticationWrapper a {
   padding: 5px;
-}
-
-.CompanyPageLink {
-  background-color: #fed5d3;
-  border-radius: 10px;
-  padding: 10px 20px;
-  margin-left: 10px;
 }
 
 #NotificationButton {
@@ -66,12 +70,6 @@
   top: 2px;
   right: 7px;
   font-size: 10px;
-}
-
-.NavigationLink button:hover,
-.NavigationLink button:active {
-  background: white;
-  color: rgba(58, 81, 153, 1);
 }
 
 /*Baru*/
@@ -146,23 +144,6 @@
   padding: 15px 12px;
   display: flex;
   align-items: center;
-}
-
-.NavigationLink button {
-  cursor: pointer;
-  color: rgba(58, 81, 153, 1);
-  background: transparent;
-  padding: 1rem;
-  font: inherit;
-}
-
-.NavigationLink button:focus {
-  outline: none;
-}
-
-.NavigationLink button:hover,
-.NavigationLink button:active {
-  background: rgba(58, 81, 153, 1);
 }
 
 .notificationVisible {

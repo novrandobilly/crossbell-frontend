@@ -1,9 +1,12 @@
-import React, { useEffect, Fragment, useRef } from 'react';
+import React, { useEffect, useState, Fragment, useRef } from 'react';
 
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Logo from '../../../shared/UI_Element/Logo';
 import ContactUs from '../../components/HomePage/ContactUs';
+import Modal from '../../../shared/UI_Element/Modal';
+import Login from '../../components/RegistrationModal/Login';
+import Register from '../../components/RegistrationModal/Register';
 
 import classes from './HomePage.module.css';
 import WelcomeIllustration from '../../../assets/Work.png';
@@ -19,6 +22,9 @@ import Headhunter from '../../../assets/images/Headhunter.png';
 import IntiDinamisLogo from '../../../assets/Inti-Dinamis-Logo.png';
 
 const HomePage = props => {
+  const [showAuthForm, setShowAuthForm] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
   const searchInputRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,8 +36,30 @@ const HomePage = props => {
     props.history.push(`/jobs-dashboard?search=${searchValue}`);
   };
 
+  const onSwitchToRegister = () => setIsLogin(false);
+  const onSwitchToLogin = () => setIsLogin(true);
+  // const showLogin = () => {
+  //   setShowAuthForm(true);
+  //   setIsLogin(true);
+  // };
+  const showRegistration = () => {
+    setShowAuthForm(true);
+    setIsLogin(false);
+  };
+  const onCancelAuth = () => setShowAuthForm(false);
   return (
     <Fragment>
+      <Modal
+        show={showAuthForm}
+        onCancel={onCancelAuth}
+        headerText={isLogin ? 'Login ' : 'Registration Form'}
+        style={{ top: !isLogin && '10vh', '--containerWidth': '400px' }}>
+        {isLogin ? (
+          <Login onSwitchToRegister={onSwitchToRegister} onForgotPassword={onCancelAuth} />
+        ) : (
+          <Register onSwitchToLogin={onSwitchToLogin} />
+        )}
+      </Modal>
       <section className={classes.WelcomeToCrossbellBackground}>
         <div className={classes.WelcomeToCrossbell}>
           <div className={classes.WelcomeText}>
@@ -53,9 +81,11 @@ const HomePage = props => {
               <Link to='/jobs-dashboard'>
                 <button className={classes.ExploreButton}>Telusuri Pekerjaan</button>
               </Link>
-              <Link to='/registration'>
-                <button className={classes.RegistrationButton}>Daftar Sekarang</button>
-              </Link>
+              <span to='/registration'>
+                <button className={classes.RegistrationButton} onClick={showRegistration}>
+                  Daftar Sekarang
+                </button>
+              </span>
             </div>
           </div>
           <div className={classes.WelcomeIllustrationContainer}>
@@ -71,9 +101,9 @@ const HomePage = props => {
               <em>One-Stop-Solution</em> untuk meningkatkan kualitas karir.
             </h1>
             <p>Pilih strategi yang paling cocok dengan-mu agar mencari kerja menjadi lebih menyenangkan.</p>
-            <Link to='/registration'>
+            <div onClick={showRegistration}>
               <button>Daftar Sekarang</button>
-            </Link>
+            </div>
           </div>
           <div className={classes.FeatureList}>
             <div className={classes.FirstPairFeatures}>
@@ -139,9 +169,9 @@ const HomePage = props => {
                 kandidat yang menarik bagi perusahaan-perusahaan favoritmu. All in One Profile!
               </em>
             </p>
-            <Link to='/registration'>
+            <div onClick={showRegistration}>
               <button type='button'>Buat Profile Sekarang</button>
-            </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -128,22 +128,20 @@ const NavigationLinks = props => {
           <Fragment>
             <div className={classes.ApplicantAuthenticationWrapper}>
               <li>
-                <NavLink to={`/daftar`} activeClassName={classes.active} onClick={props.showRegistration}>
+                <button activeClassName={classes.active} onClick={props.showRegistration}>
                   Daftar
-                </NavLink>
+                </button>
               </li>
               <span>|</span>
               <li>
-                <NavLink to={`/masuk`} activeClassName={classes.active} onClick={props.showLogin}>
+                <button activeClassName={classes.active} onClick={props.showLogin}>
                   Masuk
-                </NavLink>
+                </button>
               </li>
             </div>
-            <li className={classes.CompanyPageLink}>
-              <NavLink to={`/perusahaan`} activeClassName={classes.active}>
-                Perusahaan
-              </NavLink>
-            </li>
+            <NavLink id={classes.CompanyPageLink} to={`/authentication/co`} activeClassName={classes.active}>
+              Perusahaan
+            </NavLink>
           </Fragment>
         )}
 

@@ -2,12 +2,12 @@ import React from 'react';
 
 import classes from './LoadingBar.module.css';
 
-const LoadingBar = () => {
+const LoadingBar = props => {
   return (
     <div className={classes.LoadingBar}>
-      <div className={classes.Bounce1} />
-      <div className={classes.Bounce2} />
-      <div className={classes.Bounce3} />
+      <div className={classes.Bounce1} style={{ width: props.width || '15px', height: props.width || '15px' }} />
+      <div className={classes.Bounce2} style={{ width: props.width || '15px', height: props.width || '15px' }} />
+      <div className={classes.Bounce3} style={{ width: props.width || '15px', height: props.width || '15px' }} />
     </div>
   );
 };

@@ -1,0 +1,15 @@
+.CompanyAuthContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.CompanyAuthForm {
+  display: flex;
+  justify-content: flex-start;
+  padding: 50px 80px;
+  background-image: linear-gradient(to right, #000000ce 30%, #ffffff00 70%), url('../../../assets//images/CompanyAuthImage.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

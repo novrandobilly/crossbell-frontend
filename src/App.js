@@ -12,8 +12,7 @@ import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi'
 import ForgotPwd from './general/components/RegistrationModal/ForgotPwd';
 import ResetPwd from './general/components/RegistrationModal/ResetPwd';
 
-import AuthenticationAp from './users/applicant/pages/AuthenticationAp/AuthenticationAp';
-import AuthenticationCo from './users/company/pages/AuthenticationCo/AuthenticationCo';
+import CompanyAuthForm from './general/pages/CompanyAuth/CompanyAuth';
 import NavigationWrapper from './shared/Navigation/NavigationWrapper';
 import Footer from './shared/Navigation/Footer';
 
@@ -65,7 +64,6 @@ const AddApplicantEducation = React.lazy(() => import('./users/applicant/compone
 const AddApplicantExperience = React.lazy(() => import('./users/applicant/components/Add/Experience'));
 const AddApplicantCertification = React.lazy(() => import('./users/applicant/components/Add/Certification'));
 const AddApplicantOrganization = React.lazy(() => import('./users/applicant/components/Add/Organization'));
-// const AddApplicantSkills = React.lazy(() => import('./users/applicant/components/Add/Skill'));
 
 //==================================== admin =========================================================
 
@@ -171,7 +169,6 @@ const App = props => {
 
             <Route path='/ap/:applicantid/profile' component={ApplicantDetails} />
             <Route path='/subscription/:applicantid' component={Subscription} />
-            <Route path='/authentication/ap' component={AuthenticationAp} />
 
             {/* Users Routes: Company */}
             <Route path='/co/:companyid/compro/intro' component={EditCompanyIntro} />
@@ -187,7 +184,7 @@ const App = props => {
             <Route path='/co/:orderid/invoiceBC' component={InvoiceBC} />
             <Route path='/co/:companyid/compro' component={CompanyProfileForm} />
             <Route path='/co/:companyid/profile' component={CompanyBriefDescriptions} />
-            <Route path='/authentication/co' component={AuthenticationCo} />
+            <Route path='/authentication/co' component={CompanyAuthForm} />
 
             {/* Jobs Routes */}
             <Route path='/jobs-dashboard' component={JobsDashboard} />
