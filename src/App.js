@@ -12,7 +12,7 @@ import KebijakanPrivasi from './general/pages/KebijakanPrivasi/KebijakanPrivasi'
 import ForgotPwd from './general/components/RegistrationModal/ForgotPwd';
 import ResetPwd from './general/components/RegistrationModal/ResetPwd';
 
-import CompanyAuthForm from './general/pages/CompanyAuth/CompanyAuth';
+import CompanyRegisForm from './general/pages/CompanyAuth/CompanyAuth';
 import NavigationWrapper from './shared/Navigation/NavigationWrapper';
 import Footer from './shared/Navigation/Footer';
 
@@ -184,7 +184,7 @@ const App = props => {
             <Route path='/co/:orderid/invoiceBC' component={InvoiceBC} />
             <Route path='/co/:companyid/compro' component={CompanyProfileForm} />
             <Route path='/co/:companyid/profile' component={CompanyBriefDescriptions} />
-            <Route path='/authentication/co' component={CompanyAuthForm} />
+            <Route path='/authentication/co' component={CompanyRegisForm} />
 
             {/* Jobs Routes */}
             <Route path='/jobs-dashboard' component={JobsDashboard} />

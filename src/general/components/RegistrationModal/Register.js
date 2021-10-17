@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../shared/utils/useForm';
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
@@ -38,6 +38,10 @@ const Register = props => {
         value: '',
         isValid: false,
       },
+      tosAgreement: {
+        value: false,
+        isValid: false,
+      },
     },
     false
   );
@@ -67,6 +71,11 @@ const Register = props => {
     } catch (err) {
       setErrorMessage(err.message);
     }
+  };
+  const onAgreementChange = event => {
+    const agreement = event.target.checked;
+    const id = event.target.id;
+    onInputHandler(id, agreement, agreement);
   };
 
   let formContent = (
@@ -132,6 +141,13 @@ const Register = props => {
             type='password'
             helperText='Password belum sesuai mohon coba lagi'
           />
+        </div>
+        <div className={classes.TosAgreement}>
+          <input id='tosAgreement' onChange={onAgreementChange} type='checkbox' />{' '}
+          <span>
+            Saya mengetahui dan menyetujui <Link to='/syarat-ketentuan'>Syarat & Ketentuan</Link> dan{' '}
+            <Link to='/kebijakan-privasi'>Kebijakan Privasi</Link> yang berlaku
+          </span>
         </div>
 
         <button

@@ -32,6 +32,23 @@
   width: 100%;
 }
 
+.TosAgreement span {
+  font-size: 12px;
+}
+
+.TosAgreement a {
+  text-decoration: none;
+  font-weight: 900;
+  font-style: italic;
+}
+.TosAgreement input {
+  margin: 0;
+}
+.TosAgreement a:hover,
+.TosAgreement input:hover {
+  cursor: pointer;
+}
+
 .SubmitButton {
   outline: none;
   border-radius: 5px;

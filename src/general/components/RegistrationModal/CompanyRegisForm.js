@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../shared/utils/useForm';
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
 
 import Modal from '../../../shared/UI_Element/Modal';
 import Input from '../../../shared/UI_Element/Input';
-import Login from '../../components/RegistrationModal/Login';
+import Login from './Login';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../shared/utils/validator';
 
-import classes from './CompanyAuthForm.module.css';
+import classes from './CompanyRegisForm.module.css';
 
-const CompanyAuthForm = props => {
+const CompanyRegisForm = props => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loginCompany, setLoginCompany] = useState(false);
 
@@ -39,6 +39,10 @@ const CompanyAuthForm = props => {
         value: '',
         isValid: false,
       },
+      tosAgreement: {
+        value: false,
+        isValid: false,
+      },
     },
     false
   );
@@ -54,7 +58,6 @@ const CompanyAuthForm = props => {
 
     try {
       const res = await props.createCompany(newCompany);
-
       if (!res.token) {
         throw new Error(res.message);
       }
@@ -69,12 +72,14 @@ const CompanyAuthForm = props => {
     }
   };
 
+  const onAgreementChange = event => {
+    const agreement = event.target.checked;
+    const id = event.target.id;
+    onInputHandler(id, agreement, agreement);
+  };
+
   const onCompanyLogin = () => setLoginCompany(true);
   const onCompanyCancelLogin = () => setLoginCompany(false);
-
-  // if (props.isLoading) {
-  //   formContent = <LoadingBar />;
-  // }
 
   const onCancelHandler = () => {
     props.resetCompany();
@@ -152,6 +157,13 @@ const CompanyAuthForm = props => {
             helperText='Password tidak sesuai'
           />
         </div>
+        <div className={classes.TosAgreement}>
+          <input id='tosAgreement' onChange={onAgreementChange} type='checkbox' />{' '}
+          <span>
+            Saya mengetahui dan menyetujui <Link to='/syarat-ketentuan'>Syarat & Ketentuan</Link> dan{' '}
+            <Link to='/kebijakan-privasi'>Kebijakan Privasi</Link> yang berlaku
+          </span>
+        </div>
 
         {props.isLoading ? (
           <LoadingBar />
@@ -189,10 +201,9 @@ const mapDispatchToProps = dispatch => {
   return {
     createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    // createCompany: newCompany => dispatch({ type: actionTypes.CREATECOMPANY, payload: newCompany }),
     login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
     authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyAuthForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CompanyRegisForm));
