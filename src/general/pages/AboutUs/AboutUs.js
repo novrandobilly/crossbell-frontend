@@ -77,8 +77,9 @@ const AboutUs = () => {
       <section className={styles.AboutCrossbellTeam}>
         <h1>Crossbell Team</h1>
         <div className={styles.CrossbellTeamMember}>
-          {OUR_TEAM.map(teamMember => (
+          {OUR_TEAM.map((teamMember, index) => (
             <AboutUsAvatar
+              key={index}
               name={teamMember.name}
               title={teamMember.title}
               description={teamMember.description}

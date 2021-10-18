@@ -10,7 +10,10 @@ $secondary-color: #ef3f37;
   background-color: $primary-color;
   padding: 40px 0;
   h1 {
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     margin: 0;
     margin-bottom: 40px;
   }
