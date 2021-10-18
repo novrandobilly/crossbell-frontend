@@ -19,7 +19,9 @@ const GoogleLoginButton = props => {
       console.log(err);
     }
   };
-  const responseErrorGoogle = response => {};
+  const responseErrorGoogle = async response => {
+    console.log(response);
+  };
   return (
     <div className={classes.GoogleLogin}>
       <GoogleLogin
