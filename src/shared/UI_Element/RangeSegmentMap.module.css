@@ -1,5 +1,5 @@
 .MapContainer {
-  border-left: solid 0.4rem rgba(58, 81, 153, 1);
+  border-left: solid 0.4rem #f79f35;
   padding-left: 2rem;
   padding-bottom: 24px;
   display: flex;
@@ -17,7 +17,7 @@
 .Square {
   height: 1.5rem;
   width: 1.5rem;
-  background-color: rgba(58, 81, 153, 1);
+  background-color: #f79f35;
   transform: rotate(45deg);
   position: absolute;
   left: -0.95rem;

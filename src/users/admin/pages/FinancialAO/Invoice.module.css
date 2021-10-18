@@ -94,14 +94,14 @@
 }
 
 .Table thead th {
-  border-top: 0.2rem solid rgba(58, 81, 153, 1);
-  border-bottom: 0.2rem solid rgba(58, 81, 153, 1);
+  border-top: 0.2rem solid #f79f35;
+  border-bottom: 0.2rem solid #f79f35;
   font-weight: 500;
   padding: 0.5rem;
 }
 
 .Table tbody {
-  border-bottom: 0.1rem solid rgba(58, 81, 153, 1);
+  border-bottom: 0.1rem solid #f79f35;
 }
 
 .Table tbody th {
@@ -121,12 +121,12 @@
 
 .CommentContainer {
   width: 50%;
-  border: solid 0.1rem rgba(58, 81, 153, 1);
+  border: solid 0.1rem #f79f35;
   text-align: left;
 }
 
 .CommentHeader {
-  background-color: rgba(58, 81, 153, 1);
+  background-color: #f79f35;
   color: white;
   font-size: 1.2rem;
   padding: 0.4rem 0 0.4rem 1rem;
@@ -227,7 +227,7 @@ hr.UnderLine {
 }
 
 .PaymentButton {
-  background-color: rgba(58, 81, 153, 1);
+  background-color: #f79f35;
   color: white;
   padding: 3px 6px;
   border-radius: 4px;

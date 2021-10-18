@@ -124,7 +124,7 @@ const NavigationLinks = props => {
             Explore
           </NavLink>
         </li>
-        {!props.auth.isLoggedIn && (
+        {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
           <Fragment>
             <div className={classes.ApplicantAuthenticationWrapper}>
               <li>
@@ -182,7 +182,10 @@ const NavigationLinks = props => {
                     </p>
                   </NavLink>
 
-                  <NavLink to={`/co/${props.auth.userId}/listOrder`} activeClassName={classes.active} onClick={DropdownOrder}>
+                  <NavLink
+                    to={`/co/${props.auth.userId}/listOrder`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrder}>
                     <p>Riwayat pesanan</p>
                   </NavLink>
                 </div>
@@ -214,14 +217,23 @@ const NavigationLinks = props => {
                   <NavLink to={`/ad/alphaomega/promo`} activeClassName={classes.active}>
                     <p>Update Promo</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/order/reguler/fin`} activeClassName={classes.active} onClick={DropdownOrderAdminFinance}>
+                  <NavLink
+                    to={`/ad/alphaomega/order/reguler/fin`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminFinance}>
                     <p>Order Reguler</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/order/candidate/fin`} activeClassName={classes.active} onClick={DropdownOrderAdminFinance}>
+                  <NavLink
+                    to={`/ad/alphaomega/order/candidate/fin`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminFinance}>
                     <p>Order Bulk Candidate</p>
                   </NavLink>
 
-                  <NavLink to={`/ad/alphaomega/financial`} activeClassName={classes.active} onClick={DropdownOrderAdminFinance}>
+                  <NavLink
+                    to={`/ad/alphaomega/financial`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminFinance}>
                     <p>Finance</p>
                   </NavLink>
                 </div>
@@ -236,7 +248,10 @@ const NavigationLinks = props => {
                 </button>
 
                 <div className={adminDropdownOperational ? classes.dropdownShow : classes.dropdownContent}>
-                  <NavLink to={`/ad/alphaomega/order/reguler/opr`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
+                  <NavLink
+                    to={`/ad/alphaomega/order/reguler/opr`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}>
                     <p>Order Reguler</p>
                   </NavLink>
                   <NavLink
@@ -245,19 +260,34 @@ const NavigationLinks = props => {
                     onClick={DropdownOrderAdminOperational}>
                     <p>Order Bulk Candidate</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/order/es/opr`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
+                  <NavLink
+                    to={`/ad/alphaomega/order/es/opr`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}>
                     <p>Order Executive Search</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/applicants`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
+                  <NavLink
+                    to={`/ad/alphaomega/applicants`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}>
                     <p>Applicant List</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/companies`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
+                  <NavLink
+                    to={`/ad/alphaomega/companies`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}>
                     <p>Company list</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/jobs`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
+                  <NavLink
+                    to={`/ad/alphaomega/jobs`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}>
                     <p>Job list</p>
                   </NavLink>
-                  <NavLink to={`/ad/alphaomega/slot/reguler`} activeClassName={classes.active} onClick={DropdownOrderAdminOperational}>
+                  <NavLink
+                    to={`/ad/alphaomega/slot/reguler`}
+                    activeClassName={classes.active}
+                    onClick={DropdownOrderAdminOperational}>
                     <p>Slot list</p>
                   </NavLink>
                 </div>
@@ -265,7 +295,7 @@ const NavigationLinks = props => {
             </li>
             <li className={classes['AdminNotification']}>
               <NavLink to='/ad/alphaomega/notifications' id={classes['NotificationButton']} ref={ref}>
-                <NotificationsIcon style={{ color: 'rgba(58, 81, 153, 1)' }} />
+                <NotificationsIcon style={{ color: '#f79f35' }} />
                 <span className={adminNotifications > 0 ? classes.notificationVisible : classes.notificationInvisible}>
                   {adminNotifications}
                 </span>

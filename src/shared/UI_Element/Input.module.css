@@ -17,11 +17,11 @@
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 0.2rem;
-  color: rgba(58, 81, 153, 1);
+  color: #f79f35;
 }
 
 ::placeholder {
-  color: rgba(58, 81, 153, 1);
+  color: #f79f35;
 }
 
 .AddJobInput {

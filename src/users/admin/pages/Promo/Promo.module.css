@@ -8,8 +8,8 @@
 .PromoContainer {
   width: 30vw;
   background-color: white;
-  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.22);
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3), 0px 1px 1px 0px rgba(0, 0, 0, 0.24),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.22);
   padding: 0rem 2rem 1rem 2rem;
   border-radius: 0.5rem;
 }
@@ -22,7 +22,7 @@
 }
 
 .ReleasedPromo {
-  color: rgba(58, 81, 153, 1);
+  color: #f79f35;
   font-weight: 600;
   text-align: left;
   margin: 0.5rem 0 0 0;

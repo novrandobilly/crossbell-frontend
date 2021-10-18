@@ -99,7 +99,7 @@ const JobDetails = props => {
                   to={`/co/${props.companyId}/profile`}
                   style={{
                     textDecoration: 'none',
-                    color: 'rgba(58, 81, 153, 1)',
+                    color: '#f79f35',
                   }}>
                   <p className={classes.TextLeft}>{props.companyName}</p>
                 </Link>
@@ -113,8 +113,11 @@ const JobDetails = props => {
             </div>
 
             <div className={classes.ContainerThird}>
-              {props.auth.isCompany || (props.admin.isAdmin && <p className={classes.TextLeft}>email HR: {props.emailRecipient}</p>)}
-              <p className={classes.TextDateMobile}>Posted {moment().diff(moment(props.releasedAt), 'days')} days ago</p>
+              {props.auth.isCompany ||
+                (props.admin.isAdmin && <p className={classes.TextLeft}>email HR: {props.emailRecipient}</p>)}
+              <p className={classes.TextDateMobile}>
+                Posted {moment().diff(moment(props.releasedAt), 'days')} days ago
+              </p>
               <div className={classes.ButtonContainer}>
                 {props.auth.userId === props.companyId && (
                   <Link to={`/jobs/${props.jobId}/edit`}>
@@ -140,7 +143,9 @@ const JobDetails = props => {
                     btnType='InstantApply'
                     onClick={onSaveHandler}
                     disabled={props.jobApplicants.some(appId => appId.id.toString() === props.auth.userId.toString())}>
-                    {props.jobApplicants.some(appId => appId.id.toString() === props.auth.userId.toString()) ? 'Applied' : 'Apply'}
+                    {props.jobApplicants.some(appId => appId.id.toString() === props.auth.userId.toString())
+                      ? 'Applied'
+                      : 'Apply'}
                   </Button>
                 )}
               </div>

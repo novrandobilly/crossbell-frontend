@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './OrderComponent.module.css';
 
-const OrderComponent = (props) => {
+const OrderComponent = props => {
   return (
     <div className={classes.Container}>
       <div className={classes.OrderCard}>
@@ -17,14 +17,11 @@ const OrderComponent = (props) => {
                   ? { backgroundColor: '#a9a9a9' }
                   : props.title === 'Gold'
                   ? { backgroundColor: '#d4af47' }
-                  : { backgroundColor: 'rgba(58, 81, 153, 1)' }
-              }
-            >
+                  : { backgroundColor: '#f79f35' }
+              }>
               <p className={classes.Title}>{props.title}</p>
               <div className={classes.Perks}>
-                <p className={classes.Price}>
-                  IDR {props.price.toLocaleString()}/ slot
-                </p>
+                <p className={classes.Price}>IDR {props.price.toLocaleString()}/ slot</p>
                 <p className={classes.Slot}>{props.slot}</p>
               </div>
             </div>

@@ -34,7 +34,8 @@
 
 .TableHolder {
   overflow-y: hidden;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   width: 100%;
   min-height: 362px;
@@ -61,7 +62,7 @@
 .RowField th {
   background-color: #d7e2ff;
   font-weight: 700;
-  background-color: rgba(58, 81, 153, 1);
+  background-color: #f79f35;
   color: white;
 }
 
@@ -81,7 +82,8 @@
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #d7e2ff;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   width: 100%;
 }
 

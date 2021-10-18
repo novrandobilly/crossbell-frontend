@@ -7,12 +7,12 @@
 }
 
 .Title {
-  color: rgba(58, 81, 153, 1);
+  color: #f79f35;
 }
 
 .Title a {
   text-decoration: none;
-  color: rgba(58, 81, 153, 1);
+  color: #f79f35;
 }
 
 @media (max-width: 1080px) {
@@ -33,7 +33,7 @@
     display: block;
     width: 3rem;
     height: 4px;
-    background: rgba(58, 81, 153, 1);
+    background: #f79f35;
     border-radius: 5px;
   }
   .HeaderNav {

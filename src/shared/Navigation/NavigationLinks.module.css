@@ -181,7 +181,7 @@
 
   .MobileNavigationLink a {
     border: 1px solid transparent;
-    color: rgba(58, 81, 153, 1);
+    color: #f79f35;
     text-decoration: none;
     font-weight: 700;
     transition: all 0.1s ease-in;
@@ -199,8 +199,8 @@
 
   .MobileNavigationLink button {
     cursor: pointer;
-    border: 1px solid rgba(58, 81, 153, 1);
-    color: rgba(58, 81, 153, 1);
+    border: 1px solid #f79f35;
+    color: #f79f35;
     background: transparent;
     padding: 1rem;
     font: inherit;
@@ -212,7 +212,7 @@
 
   .MobileNavigationLink button:hover,
   .MobileNavigationLink button:active {
-    background: rgba(58, 81, 153, 1);
+    background: #f79f35;
   }
 
   .MobileNavigationLink .Logout {

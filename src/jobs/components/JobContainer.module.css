@@ -14,7 +14,8 @@
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .RightContainer {
@@ -22,7 +23,8 @@
   flex-direction: column;
   align-self: flex-start;
   width: 30%;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   padding: 16px;
   background-color: white;
@@ -160,7 +162,7 @@
 .InstantButton {
   background-color: transparent;
   border: none;
-  color: rgba(58, 81, 153, 1);
+  color: #f79f35;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;

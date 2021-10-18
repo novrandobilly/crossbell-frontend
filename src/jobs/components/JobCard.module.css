@@ -62,8 +62,8 @@
 
 .Content > h3:hover {
   cursor: pointer;
-  color: rgb(84, 103, 161, 1);
-  border-bottom: solid 1px rgb(84, 103, 161, 1);
+  color: #f79f35;
+  border-bottom: solid 1px#f79f35;
 }
 
 .ContentHeader {
@@ -93,7 +93,7 @@
 
 .TextLeft {
   font-weight: 700;
-  color: rgb(84, 103, 161, 1);
+  color: #f79f35;
 }
 
 .TextSecret {
@@ -126,7 +126,7 @@
 }
 
 .JobCard > footer {
-  background: rgba(58, 81, 153, 1);
+  background: #f79f35;
   width: 100%;
   position: absolute;
   bottom: 0;
