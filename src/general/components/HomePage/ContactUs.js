@@ -11,7 +11,7 @@ const ContactUs = () => {
   return (
     <div className={classes.ContactUsContainer}>
       <div className={classes.ContactUsInfo}>
-        <h3>Contact Us</h3>
+        <h3>Kontak Kami</h3>
         <p className={classes.OfficePhone}>(+62)21 848 6752</p>
         <p className={classes.CompanyEmail}>crossbellcorps@gmail.com</p>
         <p className={classes.CompanyAddress}>Taman Laguna Blok K, Jati Sampurna Bekasi 17435</p>

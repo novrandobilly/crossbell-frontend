@@ -1,0 +1,36 @@
+@mixin flexCenter($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.TeamMemberCard {
+  @include flexCenter(column);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+  .TeamMemberAvatar img {
+    border-radius: 50%;
+    width: 100%;
+    max-width: 200px;
+  }
+  h2 {
+    font-weight: 400;
+    margin: 10px auto;
+  }
+  h3 {
+    margin: 0;
+    color: #ffb357;
+    font-style: italic;
+    font-size: 14px;
+  }
+  p {
+    width: 100%;
+    max-width: 400px;
+    line-height: 1.8em;
+    text-align: start;
+  }
+}

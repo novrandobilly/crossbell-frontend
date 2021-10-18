@@ -1,7 +1,74 @@
 $primary-color: #f79f35;
+$secondary-color: #ef3f37;
 
 .AboutUsContainer {
   width: 100%;
-  min-height: 500px;
-  //   background-color: $primary-color;
+  font-family: 'Lato', sans-serif;
+}
+
+.AboutCrossbell {
+  background-color: $primary-color;
+  padding: 40px 0;
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 40px;
+  }
+  hr {
+    margin: 0 auto 60px;
+    max-width: 90%;
+    border: none;
+    border-top: 2px solid black;
+  }
+  p {
+    width: 100%;
+    max-width: 700px;
+    margin: 1.5em auto;
+    font-size: 18px;
+    line-height: 2em;
+  }
+}
+.AboutCrossbellTeam {
+  padding-top: 40px;
+  margin-bottom: 60px;
+  h1 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+}
+
+.CrossbellTeamMember {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.AboutCrossbellContact {
+  padding-bottom: 40px;
+  box-sizing: border-box;
+  .ContactUsText {
+    margin-bottom: 40px;
+    a {
+      text-decoration: none;
+      color: $primary-color;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    span {
+      color: $primary-color;
+    }
+  }
+  h2 {
+    font-weight: 400;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  p {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.8em;
+  }
 }
