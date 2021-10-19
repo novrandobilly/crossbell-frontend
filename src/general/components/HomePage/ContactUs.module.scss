@@ -79,7 +79,7 @@
 .ContactUsForm input,
 .ContactUsForm textarea {
   border-radius: 5px;
-  background-color: #ffeedd;
+  background-color: #ffeedd !important  ;
   width: 100%;
   border: 1px solid #ffeedd;
   margin-bottom: 10px;
@@ -88,6 +88,10 @@
   font-family: 'Lato', sans-serif;
   outline: none;
   box-sizing: border-box;
+  &:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px #ffeedd inset;
+    -webkit-box-shadow: 0 0 0px 1000px #ffeedd inset;
+  }
 }
 
 .ContactUsForm button {
@@ -100,4 +104,7 @@
   font-size: 18px;
   box-shadow: 1.5px 1.5px 5px #71430b;
   width: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 }

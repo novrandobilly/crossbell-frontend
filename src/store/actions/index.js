@@ -39,7 +39,7 @@ export {
   getAllSlot,
 } from './admin-actions';
 
-export { createFeed, getFeedback, deleteFeed } from './feedback-actions';
+export { createFeedback, getFeedback, deleteFeed } from './feedback-actions';
 
 export {
   createOrder,
@@ -76,12 +76,6 @@ export {
   editJobDraft,
 } from './job-actions';
 
-export {
-  login,
-  googleLogin,
-  forgotPwd,
-  getResetPwd,
-  resetPwd,
-} from './auth-actions';
+export { login, googleLogin, forgotPwd, getResetPwd, resetPwd } from './auth-actions';
 
 export { notificationUpdate } from './notification-actions';

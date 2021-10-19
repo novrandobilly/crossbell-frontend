@@ -1,6 +1,6 @@
 import * as actionTypes from './actions';
 
-const createFeedbackSuccess = (payload) => {
+const createFeedbackSuccess = payload => {
   return {
     type: actionTypes.CREATEFEEDBACKSUCCESS,
     payload: payload,
@@ -17,7 +17,7 @@ const createFeedbackStart = () => {
   };
 };
 
-const getFeedbackSuccess = (payload) => {
+const getFeedbackSuccess = payload => {
   return {
     type: actionTypes.GETFEEDBACKSUCCESS,
     payload: payload,
@@ -34,7 +34,7 @@ const getFeedbackStart = () => {
   };
 };
 
-const deleteFeedbackSuccess = (payload) => {
+const deleteFeedbackSuccess = payload => {
   return {
     type: actionTypes.DELETEFEEDBACK,
     payload: payload,
@@ -51,25 +51,22 @@ const deleteFeedbackStart = () => {
   };
 };
 
-export const createFeed = (feedData) => {
-  return async (dispatch) => {
+export const createFeedback = payload => {
+  return async dispatch => {
     dispatch(createFeedbackStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/feedback`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: feedData.name,
-            email: feedData.email,
-            phone: feedData.phone,
-            feed: feedData.feed,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          message: payload.message,
+        }),
+      });
       const responseJSON = await response.json();
       console.log(responseJSON);
       dispatch(createFeedbackSuccess(responseJSON));
@@ -80,21 +77,18 @@ export const createFeed = (feedData) => {
   };
 };
 
-export const getFeedback = (payload) => {
-  return async (dispatch) => {
+export const getFeedback = payload => {
+  return async dispatch => {
     dispatch(getFeedbackStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/feedback`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/feedback`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
 
       dispatch(getFeedbackSuccess(responseJSON));
@@ -105,22 +99,19 @@ export const getFeedback = (payload) => {
   };
 };
 
-export const deleteFeed = (feedData) => {
-  return async (dispatch) => {
+export const deleteFeed = payload => {
+  return async dispatch => {
     dispatch(deleteFeedbackStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/feedback`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            feedId: feedData,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/feedback`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          feedId: payload,
+        }),
+      });
       const responseJSON = await response.json();
       console.log(responseJSON);
       dispatch(deleteFeedbackSuccess(responseJSON));

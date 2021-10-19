@@ -23,7 +23,7 @@ const rootReducers = combineReducers({
   company: companyReducers,
   applicant: applicantReducers,
   auth: authReducers,
-  feed: feedbackReducers,
+  feedback: feedbackReducers,
   finance: financeReducers,
   admin: adminReducers,
   notification: notificationReducers,
