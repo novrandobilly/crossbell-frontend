@@ -128,15 +128,11 @@ const NavigationLinks = props => {
           <Fragment>
             <div className={classes.ApplicantAuthenticationWrapper}>
               <li>
-                <button activeClassName={classes.active} onClick={props.showRegistration}>
-                  Daftar
-                </button>
+                <button onClick={props.showRegistration}>Daftar</button>
               </li>
               <span>|</span>
               <li>
-                <button activeClassName={classes.active} onClick={props.showLogin}>
-                  Masuk
-                </button>
+                <button onClick={props.showLogin}>Masuk</button>
               </li>
             </div>
             <NavLink id={classes.CompanyPageLink} to={`/authentication/co`} activeClassName={classes.active}>

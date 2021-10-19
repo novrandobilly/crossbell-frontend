@@ -57,7 +57,7 @@ const AboutUs = () => {
   return (
     <div className={styles.AboutUsContainer}>
       <section className={styles.AboutCrossbell}>
-        <h1>About Crossbell</h1>
+        <h1>Tentang Crossbell</h1>
         <hr />
         <p>
           Crossbell dicanangkan sejak tahun 2020 dan resmi beroperasi pada Januari 2022. Dengan semangat untuk membantu
