@@ -46,8 +46,8 @@ const NavigationWrapper = () => {
         onCancel={onCancelAuth}
         headerText={isLogin ? 'Login ' : 'Registration Form'}
         style={{
-          top: !isLogin && viewportWidth > 480 ? '10vh' : !isLogin && '2vh',
-          '--containerWidth': viewportWidth > 480 ? '400px' : '360px',
+          top: !isLogin && viewportWidth > '480' ? '10vh' : !isLogin && '2vh',
+          '--containerWidth': viewportWidth > '480' ? '400px' : '360px',
         }}>
         {isLogin ? (
           <Login
