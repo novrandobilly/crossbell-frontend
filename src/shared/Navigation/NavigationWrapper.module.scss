@@ -1,3 +1,5 @@
+$primary-color: #f79f35;
+
 .MenuBtn {
   display: none;
 }
@@ -7,12 +9,12 @@
 }
 
 .Title {
-  color: #f79f35;
+  color: $primary-color;
 }
 
 .Title a {
   text-decoration: none;
-  color: #f79f35;
+  color: $primary-color;
 }
 
 @media (max-width: 1080px) {
@@ -33,7 +35,7 @@
     display: block;
     width: 3rem;
     height: 4px;
-    background: #f79f35;
+    background: $primary-color;
     border-radius: 5px;
   }
   .HeaderNav {

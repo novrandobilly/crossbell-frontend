@@ -9,7 +9,7 @@ import Logo from '../UI_Element/Logo';
 import Modal from '../UI_Element/Modal';
 import Login from '../../general/components/RegistrationModal/Login';
 import Register from '../../general/components/RegistrationModal/Register';
-import classes from './NavigationWrapper.module.css';
+import styles from './NavigationWrapper.module.scss';
 
 const NavigationWrapper = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -40,7 +40,11 @@ const NavigationWrapper = () => {
         headerText={isLogin ? 'Login ' : 'Registration Form'}
         style={{ top: !isLogin && '10vh', '--containerWidth': '400px' }}>
         {isLogin ? (
-          <Login onSwitchToRegister={onSwitchToRegister} onForgotPassword={onCancelAuth} onSucceedLogin={onCancelAuth} />
+          <Login
+            onSwitchToRegister={onSwitchToRegister}
+            onForgotPassword={onCancelAuth}
+            onSucceedLogin={onCancelAuth}
+          />
         ) : (
           <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} />
         )}
@@ -51,10 +55,10 @@ const NavigationWrapper = () => {
         <Link to='/'>
           <Logo width='200px' />
         </Link>
-        <nav className={classes.HeaderNav}>
+        <nav className={styles.HeaderNav}>
           <NavigationLinks showLogin={showLogin} showRegistration={showRegistration} />
         </nav>
-        <button className={classes.MenuBtn} onClick={toggleDrawerHandler}>
+        <button className={styles.MenuBtn} onClick={toggleDrawerHandler}>
           <span />
           <span />
           <span />
@@ -62,7 +66,7 @@ const NavigationWrapper = () => {
       </MainDrawer>
 
       <SideDrawer show={drawerIsOpen}>
-        <nav className={classes.DrawerNav} onClick={toggleDrawerHandler}>
+        <nav className={styles.DrawerNav} onClick={toggleDrawerHandler}>
           <NavigationLinks />
         </nav>
       </SideDrawer>

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions';
 
-import classes from './ContactUs.module.scss';
+import styles from './ContactUs.module.scss';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import Instagram from '../../../assets/icons/instagram.svg';
 import Whatsapp from '../../../assets/icons/whatsapp.svg';
@@ -34,13 +34,13 @@ const ContactUs = ({ createFeedback, feedbackIsLoading }) => {
   };
 
   return (
-    <div className={classes.ContactUsContainer}>
-      <div className={classes.ContactUsInfo}>
+    <div className={styles.ContactUsContainer}>
+      <div className={styles.ContactUsInfo}>
         <h3>Kontak Kami</h3>
-        <p className={classes.OfficePhone}>(+62)21 848 6752</p>
-        <p className={classes.CompanyEmail}>crossbellcorps@gmail.com</p>
-        <p className={classes.CompanyAddress}>Taman Laguna Blok K, Jati Sampurna Bekasi 17435</p>
-        <div className={classes.SocialMediaIcons}>
+        <p className={styles.OfficePhone}>(+62)21 848 6752</p>
+        <p className={styles.CompanyEmail}>crossbellcorps@gmail.com</p>
+        <p className={styles.CompanyAddress}>Taman Laguna Blok K, Jati Sampurna Bekasi 17435</p>
+        <div className={styles.SocialMediaIcons}>
           <a href='https://wa.link/yv4vyt' target='_blank' rel='noopener noreferrer'>
             <img alt='Instagram' src={Whatsapp} />
           </a>
@@ -49,7 +49,7 @@ const ContactUs = ({ createFeedback, feedbackIsLoading }) => {
           </a>
         </div>
       </div>
-      <form className={classes.ContactUsForm} onSubmit={onSubmitHandler}>
+      <form className={styles.ContactUsForm} onSubmit={onSubmitHandler}>
         <input type='text' name='name' placeholder='Tulis nama-mu' ref={nameInput} />
         <input type='email' name='email' placeholder='Tulis email-mu' ref={emailInput} />
         <input type='text' name='phone' placeholder='Tulis nomor hp-mu' ref={phoneInput} />

@@ -8,7 +8,7 @@ import Modal from '../../../shared/UI_Element/Modal';
 import Login from '../../components/RegistrationModal/Login';
 import Register from '../../components/RegistrationModal/Register';
 
-import classes from './HomePage.module.css';
+import styles from './HomePage.module.scss';
 import WelcomeIllustration from '../../../assets/Work.png';
 import ProfileIcon from '../../../assets/icons/profile-icon.svg';
 import MailAutoReminder from '../../../assets/icons/mail-reminder.svg';
@@ -52,16 +52,20 @@ const HomePage = props => {
         headerText={isLogin ? 'Login ' : 'Registration Form'}
         style={{ top: !isLogin && '10vh', '--containerWidth': '400px' }}>
         {isLogin ? (
-          <Login onSwitchToRegister={onSwitchToRegister} onForgotPassword={onCancelAuth} onSucceedLogin={onCancelAuth} />
+          <Login
+            onSwitchToRegister={onSwitchToRegister}
+            onForgotPassword={onCancelAuth}
+            onSucceedLogin={onCancelAuth}
+          />
         ) : (
           <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} />
         )}
       </Modal>
-      <section className={classes.WelcomeToCrossbellBackground}>
-        <div className={classes.WelcomeToCrossbell}>
-          <div className={classes.WelcomeText}>
+      <section className={styles.WelcomeToCrossbellBackground}>
+        <div className={styles.WelcomeToCrossbell}>
+          <div className={styles.WelcomeText}>
             <h1>Sudah saatnya berkarir dalam bidang impianmu!</h1>
-            <form className={classes.WelcomeSearchBar} onSubmit={onSearchHandler}>
+            <form className={styles.WelcomeSearchBar} onSubmit={onSearchHandler}>
               <input type='text' placeholder='Cari pekerjaan favoritmu' name='search job' ref={searchInputRef} />
               <button type='submit' onClick={onSearchHandler}>
                 Cari
@@ -69,31 +73,31 @@ const HomePage = props => {
             </form>
             <p>
               <em>
-                Crossbell menyediakan beragam peluang kerja bagi insan-insan terbaik bangsa, baik untuk mereka yang baru mulai berkarir
-                ataupun mereka yang ingin mencari peluang baru.
+                Crossbell menyediakan beragam peluang kerja bagi insan-insan terbaik bangsa, baik untuk mereka yang baru
+                mulai berkarir ataupun mereka yang ingin mencari peluang baru.
               </em>
             </p>
 
-            <div className={classes.WelcomeButton}>
+            <div className={styles.WelcomeButton}>
               <Link to='/jobs-dashboard'>
-                <button className={classes.ExploreButton}>Telusuri Pekerjaan</button>
+                <button className={styles.ExploreButton}>Telusuri Pekerjaan</button>
               </Link>
               <span to='/registration'>
-                <button className={classes.RegistrationButton} onClick={showRegistration}>
+                <button className={styles.RegistrationButton} onClick={showRegistration}>
                   Daftar Sekarang
                 </button>
               </span>
             </div>
           </div>
-          <div className={classes.WelcomeIllustrationContainer}>
+          <div className={styles.WelcomeIllustrationContainer}>
             <img alt='Welcome Illustration' src={WelcomeIllustration} />
           </div>
         </div>
       </section>
 
-      <section className={classes.FeatureBackground}>
-        <div className={classes.FeatureContainer}>
-          <div className={classes.FeatureText}>
+      <section className={styles.FeatureBackground}>
+        <div className={styles.FeatureContainer}>
+          <div className={styles.FeatureText}>
             <h1>
               <em>One-Stop-Solution</em> untuk meningkatkan kualitas karir.
             </h1>
@@ -102,11 +106,11 @@ const HomePage = props => {
               <button>Daftar Sekarang</button>
             </div>
           </div>
-          <div className={classes.FeatureList}>
-            <div className={classes.FirstPairFeatures}>
-              <div className={classes.FeatureCard}>
-                <div className={classes.FeatureIconBackground}>
-                  <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoReminder} />
+          <div className={styles.FeatureList}>
+            <div className={styles.FirstPairFeatures}>
+              <div className={styles.FeatureCard}>
+                <div className={styles.FeatureIconBackground}>
+                  <img className={styles.FeatureIcon} alt='Feature Icon' src={MailAutoReminder} />
                 </div>
                 <h2>Auto Remind</h2>
                 <p>Dapatkan informasi terupdate untuk pekerjaan-pekerjaan favoritmu yang langsung terkirim ke email.</p>
@@ -114,37 +118,41 @@ const HomePage = props => {
                   <span>MORE</span>
                 </Link>
               </div>
-              <div className={classes.FeatureCard}>
-                <div className={classes.FeatureIconBackground}>
-                  <img className={classes.FeatureIcon} alt='Feature Icon' src={MailAutoSend} />
+              <div className={styles.FeatureCard}>
+                <div className={styles.FeatureIconBackground}>
+                  <img className={styles.FeatureIcon} alt='Feature Icon' src={MailAutoSend} />
                 </div>
                 <h2>Auto Apply</h2>
                 <p>
-                  Tidak ingin terlewat untuk submit resume-mu ke pekerjaan favorit? Aktifkan fitur <em>Auto Apply</em> untuk mengirimkan
-                  secara langsung ke pekerjaan favoritmu.
+                  Tidak ingin terlewat untuk submit resume-mu ke pekerjaan favorit? Aktifkan fitur <em>Auto Apply</em>{' '}
+                  untuk mengirimkan secara langsung ke pekerjaan favoritmu.
                 </p>
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
                 </Link>
               </div>
             </div>
-            <div className={classes.SecondPairFeatures}>
-              <div className={classes.FeatureCard}>
-                <div className={classes.FeatureIconBackground}>
-                  <img className={classes.FeatureIcon} alt='Feature Icon' src={Briefcase} />
+            <div className={styles.SecondPairFeatures}>
+              <div className={styles.FeatureCard}>
+                <div className={styles.FeatureIconBackground}>
+                  <img className={styles.FeatureIcon} alt='Feature Icon' src={Briefcase} />
                 </div>
                 <h2>Executive Search Programme</h2>
-                <p>Raih kesempatan menjadi top talent untuk berpeluang menjadi kandidat headhunter bagi client kami.</p>{' '}
+                <p>
+                  Raih kesempatan menjadi top talent untuk berpeluang menjadi kandidat headhunter bagi client kami.
+                </p>{' '}
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
                 </Link>
               </div>
-              <div className={classes.FeatureCard}>
-                <div className={classes.FeatureIconBackground}>
-                  <img className={classes.FeatureIcon} alt='Feature Icon' src={ProfileIcon} />
+              <div className={styles.FeatureCard}>
+                <div className={styles.FeatureIconBackground}>
+                  <img className={styles.FeatureIcon} alt='Feature Icon' src={ProfileIcon} />
                 </div>
                 <h2>One Resume for All</h2>
-                <p>Cukup satu kali mengisi riwayat pekerjaan & pendidikan untuk bisa melamar ke berbagai macam pekerjaan.</p>
+                <p>
+                  Cukup satu kali mengisi riwayat pekerjaan & pendidikan untuk bisa melamar ke berbagai macam pekerjaan.
+                </p>
                 <Link to='/jobs-dashboard'>
                   <span>MORE</span>
                 </Link>
@@ -154,16 +162,16 @@ const HomePage = props => {
         </div>
       </section>
 
-      <section className={classes.AllInOneProfileBackground}>
-        <div className={classes.AllInOneProfileContainer}>
-          <div className={classes.AllInOneProfileImage}>
+      <section className={styles.AllInOneProfileBackground}>
+        <div className={styles.AllInOneProfileContainer}>
+          <div className={styles.AllInOneProfileImage}>
             <img alt='All in One Profile' src={AllInOneProfile} />
           </div>
-          <div className={classes.AllInOneProfileText}>
+          <div className={styles.AllInOneProfileText}>
             <p>
               <em>
-                Tunjukkan pengalaman, deskripsi diri, riwayat pendidikan lengkap dengan keahlian yang kamu miliki untuk tampil sebagai
-                kandidat yang menarik bagi perusahaan-perusahaan favoritmu. All in One Profile!
+                Tunjukkan pengalaman, deskripsi diri, riwayat pendidikan lengkap dengan keahlian yang kamu miliki untuk
+                tampil sebagai kandidat yang menarik bagi perusahaan-perusahaan favoritmu. All in One Profile!
               </em>
             </p>
             <div onClick={showRegistration}>
@@ -172,51 +180,54 @@ const HomePage = props => {
           </div>
         </div>
       </section>
-      <section className={classes.HeadhunterBackground}>
-        <div className={classes.HeadhunterContainer}>
-          <div className={classes.HeadhunterImage}>
+      <section className={styles.HeadhunterBackground}>
+        <div className={styles.HeadhunterContainer}>
+          <div className={styles.HeadhunterImage}>
             <img alt='RequestHH' src={RequestHH} />
             <img alt='Screening' src={Screening} />
             <img alt='Headhunter' src={Headhunter} />
           </div>
           <h2>Apakah perusahaan anda sedang mencari kandidat berkualitas untuk posisi managerial ke atas?</h2>
-          <div className={classes.HeadhunterFeatures}>
-            <div className={classes.HeadhunterScreeningItem}>
+          <div className={styles.HeadhunterFeatures}>
+            <div className={styles.HeadhunterScreeningItem}>
               <img alt='Check mark' src={CheckMark} />
               <h3>Pre-Employment Screening</h3>
-              <p>Kami melakukan screening cermat untuk memastikan kandidat memiliki kualitas terbaik bagi kebutuhan bisnis anda</p>
+              <p>
+                Kami melakukan screening cermat untuk memastikan kandidat memiliki kualitas terbaik bagi kebutuhan
+                bisnis anda
+              </p>
             </div>
-            <div className={classes.HeadhunterScreeningItem}>
+            <div className={styles.HeadhunterScreeningItem}>
               <img alt='Check mark' src={CheckMark} />
               <h3>Background Checking</h3>
               <p>Kandidat yang profesional untuk mengemban tanggung jawab yang akan anda berikan</p>
             </div>
-            <div className={classes.HeadhunterScreeningItem}>
+            <div className={styles.HeadhunterScreeningItem}>
               <img alt='Check mark' src={CheckMark} />
               <h3>Assessment Test</h3>
               <p>
-                Kami bekerja sama dengan tim assessor untuk memberikan <em>Assessment Test</em> demi mendapatkan kandidat yang paling sesuai
-                dengan kebutuhan bisnis anda
+                Kami bekerja sama dengan tim assessor untuk memberikan <em>Assessment Test</em> demi mendapatkan
+                kandidat yang paling sesuai dengan kebutuhan bisnis anda
               </p>
             </div>
           </div>
-          <div className={classes.HeadhunterRequest}>
+          <div className={styles.HeadhunterRequest}>
             <Link to='/co/order/es'>
               <span>Request For Candidates</span>
             </Link>
           </div>
         </div>
       </section>
-      {/* <section className={classes.PartnersBackground}>
-        <div className={classes.PartnersContainer}>
+      {/* <section className={styles.PartnersBackground}>
+        <div className={styles.PartnersContainer}>
           <h2>Our Partners:</h2>
-          <div className={classes.PartnersGallery}>
+          <div className={styles.PartnersGallery}>
             <Logo src={IntiDinamisLogo} alt='Inti Dinamis' width='200px' />
           </div>
         </div>
       </section> */}
-      <section className={classes.ContactUsBackground}>
-        <div className={classes.BackStripe}></div>
+      <section className={styles.ContactUsBackground}>
+        <div className={styles.BackStripe}></div>
         <ContactUs />
       </section>
     </Fragment>

@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './MainDrawer.module.css';
+import styles from './MainDrawer.module.scss';
 
 const MainDrawer = props => {
-  return <header className={classes.MainDrawer}>{props.children}</header>;
+  return <header className={styles.MainDrawer}>{props.children}</header>;
 };
 
 export default MainDrawer;
