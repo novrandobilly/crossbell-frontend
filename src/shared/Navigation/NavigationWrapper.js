@@ -47,7 +47,8 @@ const NavigationWrapper = () => {
         headerText={isLogin ? 'Login ' : 'Registration Form'}
         style={{
           top: !isLogin && viewportWidth > '480' ? '10vh' : !isLogin && '2vh',
-          '--containerWidth': viewportWidth > '480' ? '400px' : '360px',
+          maxWidth: viewportWidth > '480' ? '400px' : '360px',
+          marginLeft: viewportWidth > '480' ? '200px' : '180px',
         }}>
         {isLogin ? (
           <Login
