@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import MainDrawer from './MainDrawer';
@@ -15,6 +15,7 @@ const NavigationWrapper = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [showAuthForm, setShowAuthForm] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   const toggleDrawerHandler = () => {
     setDrawerIsOpen(!drawerIsOpen);
@@ -32,13 +33,22 @@ const NavigationWrapper = () => {
   };
   const onCancelAuth = () => setShowAuthForm(false);
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setViewportWidth(window.innerWidth);
+    });
+  }, [viewportWidth]);
+
   return (
     <React.Fragment>
       <Modal
         show={showAuthForm}
         onCancel={onCancelAuth}
         headerText={isLogin ? 'Login ' : 'Registration Form'}
-        style={{ top: !isLogin && '10vh', '--containerWidth': '400px' }}>
+        style={{
+          top: !isLogin && viewportWidth > 480 ? '10vh' : !isLogin && '2vh',
+          '--containerWidth': viewportWidth > 480 ? '400px' : '360px',
+        }}>
         {isLogin ? (
           <Login
             onSwitchToRegister={onSwitchToRegister}
@@ -53,7 +63,7 @@ const NavigationWrapper = () => {
       {drawerIsOpen && <Backdrop onClick={toggleDrawerHandler} />}
       <MainDrawer>
         <Link to='/'>
-          <Logo width='200px' />
+          <Logo width='150px' />
         </Link>
         <nav className={styles.HeaderNav}>
           <NavigationLinks showLogin={showLogin} showRegistration={showRegistration} />
@@ -67,7 +77,7 @@ const NavigationWrapper = () => {
 
       <SideDrawer show={drawerIsOpen}>
         <nav className={styles.DrawerNav} onClick={toggleDrawerHandler}>
-          <NavigationLinks />
+          <NavigationLinks showLogin={showLogin} showRegistration={showRegistration} />
         </nav>
       </SideDrawer>
     </React.Fragment>

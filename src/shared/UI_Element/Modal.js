@@ -4,17 +4,21 @@ import { CSSTransition } from 'react-transition-group';
 
 import Backdrop from './Backdrop';
 
-import classes from './Modal.module.css';
+import styles from './Modal.module.scss';
+import CloseButton from '../../assets/icons/x-mark.svg';
 
 const ModalOverlay = props => {
   const content = (
-    <div className={`${classes.Modal} ${props.ContainerClass}`} style={props.style}>
-      <header className={`${classes.Header} ${props.HeaderClass}`}>
+    <div className={`${styles.Modal} ${props.ContainerClass}`} style={props.style}>
+      <header className={`${styles.Header} ${props.HeaderClass}`}>
         <h2>{props.headerText}</h2>
+        <div className={styles.CloseButton} onClick={props.onCancel}>
+          <img alt='Close button' src={CloseButton} />
+        </div>
       </header>
-      <div className={classes.ModalContent}>
-        <div className={`${classes.Content} ${props.ContentClass}`}>{props.children}</div>
-        <footer className={`${classes.Footer} ${props.FooterClass}`}>{props.footerText}</footer>
+      <div className={styles.ModalContent}>
+        <div className={`${styles.Content} ${props.ContentClass}`}>{props.children}</div>
+        <footer className={`${styles.Footer} ${props.FooterClass}`}>{props.footerText}</footer>
       </div>
     </div>
   );

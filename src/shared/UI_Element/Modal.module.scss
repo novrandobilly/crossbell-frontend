@@ -1,0 +1,45 @@
+:root {
+  --containerWidth: 500px;
+}
+
+.Modal {
+  z-index: 100;
+  position: fixed;
+  left: 50%;
+  top: 20%;
+  max-width: var(--containerWidth);
+  margin-left: calc(var(--containerWidth) / -2);
+  width: 100%;
+  background: white;
+  box-shadow: 0 0 10px #f79f35;
+  .Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #f79f35;
+    color: white;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    h2 {
+      margin: 0;
+      text-align: start;
+    }
+    .CloseButton {
+      display: flex;
+      align-items: center;
+      img {
+        width: 100%;
+        max-width: 25px;
+        height: auto;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.Content {
+  padding: 1rem 0.5rem;
+}

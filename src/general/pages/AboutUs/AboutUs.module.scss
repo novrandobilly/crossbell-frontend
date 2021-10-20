@@ -25,10 +25,12 @@ $secondary-color: #ef3f37;
   }
   p {
     width: 100%;
-    max-width: 700px;
+    max-width: 740px;
     margin: 1.5em auto;
     font-size: 18px;
     line-height: 2em;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 }
 .AboutCrossbellTeam {
@@ -70,8 +72,25 @@ $secondary-color: #ef3f37;
   }
   p {
     width: 100%;
-    max-width: 600px;
+    max-width: 640px;
     margin: auto;
     line-height: 1.8em;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .CrossbellTeamMember {
+    flex-direction: column;
+    & > *:nth-child(1) {
+      order: 2;
+    }
+    & > *:nth-child(2) {
+      order: 1;
+    }
+    & > *:nth-child(3) {
+      order: 3;
+    }
   }
 }
