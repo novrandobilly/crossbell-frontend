@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useForm } from '../../shared/utils/useForm';
+import { useForm } from '../../../shared/utils/useForm';
 
-import * as actionTypes from '../../store/actions/actions';
-import * as actionCreators from '../../store/actions';
-import Modal from '../../shared/UI_Element/Modal';
+import * as actionTypes from '../../../store/actions/actions';
+import * as actionCreators from '../../../store/actions';
+import Modal from '../../../shared/UI_Element/Modal';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,12 +13,12 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import TextField from '@material-ui/core/TextField';
-import Input from '../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../shared/utils/validator';
-import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
-import CitiesData from '../../shared/UI_Element/CitiesData';
+import Input from '../../../shared/UI_Element/Input';
+import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
+import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
+import CitiesData from '../../../shared/UI_Element/CitiesData';
 import Slider from '@material-ui/core/Slider';
 
 import classes from './NewJob.module.css';
@@ -525,7 +525,13 @@ const NewJob = props => {
               freeSolo
               style={{ margin: '0', width: '100%' }}
               renderInput={params => (
-                <TextField {...params} style={{ margin: '0' }} label='Bidang Pekerjaan*' margin='normal' variant='standard' />
+                <TextField
+                  {...params}
+                  style={{ margin: '0' }}
+                  label='Bidang Pekerjaan*'
+                  margin='normal'
+                  variant='standard'
+                />
               )}
             />
           </div>
@@ -624,7 +630,13 @@ const NewJob = props => {
           <div className={classes.SliderDiv}>
             <p className={classes.AgeNumber}>{rangeAge[0]}</p>
             <div className={classes.Slider}>
-              <Slider value={rangeAge} onChange={handleAgeChange} valueLabelDisplay='auto' aria-labelledby='range-slider' id='rangeAge' />
+              <Slider
+                value={rangeAge}
+                onChange={handleAgeChange}
+                valueLabelDisplay='auto'
+                aria-labelledby='range-slider'
+                id='rangeAge'
+              />
             </div>
             <p className={classes.AgeNumber}>{rangeAge[1]}</p>
           </div>
@@ -659,7 +671,12 @@ const NewJob = props => {
             </h3>
 
             <div className={classes.SlotAddButton}>
-              <Button disableElevation size='small' style={{ fontWeight: '600' }} startIcon={<AddIcon />} onClick={onAddSlotHandler}>
+              <Button
+                disableElevation
+                size='small'
+                style={{ fontWeight: '600' }}
+                startIcon={<AddIcon />}
+                onClick={onAddSlotHandler}>
                 Tambah Slot
               </Button>
             </div>

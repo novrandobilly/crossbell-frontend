@@ -10,7 +10,7 @@ import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 import Button from '../../shared/UI_Element/Button';
 import BlankCompany from '../../assets/images/Company.png';
 
-import classes from './JobCard.module.css';
+import styles from './JobCard.module.scss';
 
 const JobCard = props => {
   const [jobId, setJobId] = useState(null);
@@ -68,23 +68,23 @@ const JobCard = props => {
   };
 
   let content = (
-    <div className={classes.FlexWrap}>
-      <div className={classes.JobCard}>
+    <div className={styles.FlexWrap}>
+      <div className={styles.JobCard}>
         <Modal show={props.job.error} onCancel={onCancelHandler}>
           Tidak dapat melamar pekerjaan untuk saat ini{' '}
         </Modal>
-        <div className={classes.Logo}>
+        <div className={styles.Logo}>
           <img src={props.logo && !props.isHidden ? props.logo.url : BlankCompany} alt='company-logo' />
         </div>
-        <div className={classes.Content}>
-          <div className={classes.ContentHeader}>
-            <div className={classes.TitleDateWrap}>
+        <div className={styles.Content}>
+          <div className={styles.ContentHeader}>
+            <div className={styles.TitleDateWrap}>
               <h3>
                 <Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
                   {props.jobTitle}
                 </Link>
               </h3>
-              <p className={classes.Date}>{moment().diff(moment(props.releasedAt), 'days')} hari lalu</p>
+              <p className={styles.Date}>{moment().diff(moment(props.releasedAt), 'days')} hari lalu</p>
             </div>
             <Link
               to={`/jobs/${props.jobId}`}
@@ -97,27 +97,27 @@ const JobCard = props => {
             </Link>
           </div>
 
-          <div className={classes.TopContent}>
+          <div className={styles.TopContent}>
             {props.isHidden ? (
-              <span className={classes.TextSecret}>Perusahaan Dirahasiakan</span>
+              <span className={styles.TextSecret}>Perusahaan Dirahasiakan</span>
             ) : (
               <Link to={`/co/${props.companyId._id}/profile`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-                <span className={classes.TextLeft}>{props.company}</span>
+                <span className={styles.TextLeft}>{props.company}</span>
               </Link>
             )}
 
-            <span className={classes.PlacementLocationProps}>, {props.placementLocation}</span>
+            <span className={styles.PlacementLocationProps}>, {props.placementLocation}</span>
           </div>
           <div>
             <em>{props.fieldOfWork?.filter(fow => fow).join(', ')}</em>
           </div>
-          <div className={classes.BottomContent}>
-            <p className={classes.BottomSalary}>
+          <div className={styles.BottomContent}>
+            <p className={styles.BottomSalary}>
               {props.salary && props.salary > 0 ? `IDR ${salary.toLocaleString()} /bulan` : 'Gaji Tidak Ditampilkan'}
             </p>
           </div>
         </div>
-        <div className={classes.InstantSubmit}>{instantApplyButton}</div>
+        <div className={styles.InstantSubmit}>{instantApplyButton}</div>
 
         <footer />
       </div>

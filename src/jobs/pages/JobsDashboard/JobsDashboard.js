@@ -1,14 +1,14 @@
 import React, { useReducer, useCallback, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../store/actions';
+import * as actionCreators from '../../../store/actions';
 
-import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
-import JobsList from '../components/JobsList';
-import QueryBar from '../components/QueryBar';
-import Modal from '../../shared/UI_Element/Modal';
+import JobsList from '../../components/JobsList';
+import QueryBar from '../../components/QueryBar';
+import Modal from '../../../shared/UI_Element/Modal';
 
-import classes from './JobsDashboard.module.css';
+import styles from './JobsDashboard.module.scss';
+import MeetingDashboard from '../../../assets/images/Meeting-Dashboard.png';
 
 const ACTION = {
   SEARCHUPDATE: 'update-search',
@@ -58,6 +58,9 @@ const searchReducer = (state, action) => {
 };
 
 const JobsDashboard = props => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   let search = window.location.search;
   let params = new URLSearchParams(search);
 
@@ -73,10 +76,6 @@ const JobsDashboard = props => {
     },
     jobList: null,
   });
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const { getAllAvailableJobs } = props;
 
@@ -161,10 +160,12 @@ const JobsDashboard = props => {
     });
   }, []);
 
-  let jobLists = <LoadingBar />;
-  if (state.jobList) {
-    jobLists = <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />;
-  }
+  // let jobLists = <LoadingBar />;
+  // if (state.jobList) {
+  //   jobLists = (
+  //     <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />
+  //   );
+  // }
 
   const onCancelHandler = () => {
     setModalError(false);
@@ -172,25 +173,37 @@ const JobsDashboard = props => {
   };
 
   return (
-    <div className={classes.JobsDashboard}>
+    <div className={styles.JobsDashboard}>
       <Modal show={modalError} onCancel={onCancelHandler}>
         Silahkan login untuk melamar pekerjaan
       </Modal>
-      <div className={classes.Dashboard}>
-        <div className={classes.Header}>
-          <div className={classes.HeaderSection1} />
-          <div className={classes.HeaderSection2}>
-            <QueryBar
-              onChange={onChangeValueHandler}
-              onSubmit={onSearchSubmitHandler}
-              clearHandler={clearHandler}
-              initValue={searchValue || ''}
-            />
+      <section className={styles.HeaderDashboard}>
+        <div className={styles.HeaderText}>
+          <h1>Pekerjaan Impianmu</h1>
+          <h2>Sudah di depan mata</h2>
+        </div>
+        <div className={styles.HeaderImage}>
+          <img alt='Meeting Dashboard' src={MeetingDashboard} />
+        </div>
+      </section>
+
+      <section className={styles.JobListing}>
+        <div className={styles.SearchQuery}>
+          <div className={styles.Title}>
+            <h2>
+              Job <span>Dashboard</span>
+            </h2>
           </div>
+          <QueryBar
+            onChange={onChangeValueHandler}
+            onSubmit={onSearchSubmitHandler}
+            clearHandler={clearHandler}
+            initValue={searchValue || ''}
+          />
         </div>
 
-        <div className={classes.Content}>{jobLists}</div>
-      </div>
+        <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />
+      </section>
     </div>
   );
 };

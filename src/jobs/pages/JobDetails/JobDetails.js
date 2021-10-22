@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../store/actions/';
+import * as actionCreators from '../../../store/actions';
 
-import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
-import JobDetailMap from '../components/JobDetailMap';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import JobDetailMap from '../../components/JobDetailMap';
 
 const JobDetails = props => {
   const { jobsid } = useParams();

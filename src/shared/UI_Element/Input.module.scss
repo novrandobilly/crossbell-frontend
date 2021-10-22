@@ -1,3 +1,4 @@
+$primaryColor: #f79f35;
 .InputContainer {
   width: 100%;
   display: flex;
@@ -6,7 +7,12 @@
 }
 
 .InputElements {
+  outline: none;
   width: 100%;
+  border: 3px solid $primaryColor;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .TextareaElements {

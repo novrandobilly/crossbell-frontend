@@ -23,26 +23,34 @@ import './App.css';
 
 //==================================== jobs =========================================================
 
-const NewJob = React.lazy(() => import('./jobs/pages/NewJob'));
-const EditJob = React.lazy(() => import('./jobs/pages/EditJob'));
-const JobsDashboard = React.lazy(() => import('./jobs/pages/JobsDashboard'));
-const EditUnreleasedJob = React.lazy(() => import('./jobs/pages/EditUnreleasedJob'));
-const PackageAds = React.lazy(() => import('./jobs/pages/PackageAds'));
-const JobDetails = React.lazy(() => import('./jobs/pages/JobDetails'));
+const NewJob = React.lazy(() => import('./jobs/pages/NewJob/NewJob'));
+const EditJob = React.lazy(() => import('./jobs/pages/EditJob/EditJob'));
+const JobsDashboard = React.lazy(() => import('./jobs/pages/JobsDashboard/JobsDashboard'));
+const EditUnreleasedJob = React.lazy(() => import('./jobs/pages/NewJob/EditUnreleasedJob'));
+const PackageAds = React.lazy(() => import('./jobs/pages/PackageAds/PackageAds'));
+const JobDetails = React.lazy(() => import('./jobs/pages/JobDetails/JobDetails'));
 const AppliedCandidatesList = React.lazy(() => import('./jobs/pages/AppliedCandidatesList/AppliedCandidatesList'));
 
 //==================================== company =========================================================
 
 const CompanyProfileForm = React.lazy(() => import('./users/company/pages/CompanyProfileForm/CompanyProfileForm'));
 const EditCompanyIntro = React.lazy(() => import('./users/company/components/EditIntro'));
-const CompanyBriefDescriptions = React.lazy(() => import('./users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions'));
-const EditCompanyBriefDescriptions = React.lazy(() => import('./users/company/components/EditCompanyBriefDescriptions'));
+const CompanyBriefDescriptions = React.lazy(() =>
+  import('./users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions')
+);
+const EditCompanyBriefDescriptions = React.lazy(() =>
+  import('./users/company/components/EditCompanyBriefDescriptions')
+);
 const EditCompanyPIC = React.lazy(() => import('./users/company/components/EditPIC'));
 const CompanyOrderForm = React.lazy(() => import('./users/company/pages/CompanyOrderForm/CompanyOrderForm'));
 const OrderBCForm = React.lazy(() => import('./users/company/pages/OrderBCForm/OrderBCForm'));
-const CompanyExecutiveSearch = React.lazy(() => import('./users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch'));
+const CompanyExecutiveSearch = React.lazy(() =>
+  import('./users/company/pages/CompanyExecutiveSearch/CompanyExecutiveSearch')
+);
 const CompanyOrderList = React.lazy(() => import('./users/company/pages/CompanyOrderList/CompanyOrderList'));
-const ExecutiveSearchDetail = React.lazy(() => import('./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail'));
+const ExecutiveSearchDetail = React.lazy(() =>
+  import('./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail')
+);
 const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJobList/CompanyJobList'));
 
 //==================================== applicant =========================================================
