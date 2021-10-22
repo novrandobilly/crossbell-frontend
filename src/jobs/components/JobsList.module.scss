@@ -1,7 +1,9 @@
+$primaryColor: #f79f35;
+
 .Container {
   display: flex;
   justify-content: space-between;
-  border: 2px solid red;
+  // border: 2px solid red;
 }
 
 .FilterContainer {
@@ -11,7 +13,8 @@
   background-color: white;
   width: 20%;
   padding: 20px;
-  border-right: solid 1px rgba(0, 0, 0, 0.1);
+  border: solid 2px $primaryColor;
+  border-radius: 5px;
 }
 
 .FilterTitle {
@@ -75,13 +78,14 @@
 
 .JobListing {
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   box-sizing: border-box;
   width: 100%;
-}
-
-.JobList h2 {
-  width: 100%;
+  padding: 0 5px 10px 20px;
+  h2 {
+    width: 100%;
+  }
 }
 
 .PaginationBox {

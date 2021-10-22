@@ -223,6 +223,7 @@ const Input = props => {
     <div
       className={`${styles.InputContainer} ${!state.isValid && state.isTouched && styles.InputInvalid}`}
       style={props.InputContainerStyle}>
+      {props.label && <label for={id}>{props.labelName || [id[0].toUpperCase(), id.slice(1)].join('')}</label>}
       {inputElement}
       {!state.isValid && state.isTouched && props.errorText && <p>{props.errorText}</p>}
     </div>

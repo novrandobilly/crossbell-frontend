@@ -2,17 +2,20 @@ $primaryColor: #f79f35;
 .InputContainer {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-}
-
-.InputElements {
-  outline: none;
-  width: 100%;
-  border: 3px solid $primaryColor;
-  border-radius: 5px;
-  padding: 5px;
-  box-sizing: border-box;
+  label {
+    margin-bottom: 5px;
+  }
+  .InputElements {
+    outline: none;
+    width: 100%;
+    border: 3px solid $primaryColor;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+  }
 }
 
 .TextareaElements {

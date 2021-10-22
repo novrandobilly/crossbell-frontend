@@ -143,6 +143,7 @@ const JobsDashboard = props => {
 
   const clearHandler = event => {
     event.preventDefault();
+
     dispatch({
       type: ACTION.SEARCHEMPTY,
       payload: { jobs: allAvailableJobs },
@@ -159,13 +160,6 @@ const JobsDashboard = props => {
       },
     });
   }, []);
-
-  // let jobLists = <LoadingBar />;
-  // if (state.jobList) {
-  //   jobLists = (
-  //     <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />
-  //   );
-  // }
 
   const onCancelHandler = () => {
     setModalError(false);
@@ -194,12 +188,14 @@ const JobsDashboard = props => {
               Job <span>Dashboard</span>
             </h2>
           </div>
-          <QueryBar
-            onChange={onChangeValueHandler}
-            onSubmit={onSearchSubmitHandler}
-            clearHandler={clearHandler}
-            initValue={searchValue || ''}
-          />
+          <div className={styles.QueryBarContainer}>
+            <QueryBar
+              onChange={onChangeValueHandler}
+              onSubmit={onSearchSubmitHandler}
+              clearHandler={clearHandler}
+              initValue={searchValue || ''}
+            />
+          </div>
         </div>
 
         <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />

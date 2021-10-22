@@ -12,14 +12,14 @@ const QueryBar = props => {
         inputType='input'
         id='search'
         type='text'
-        label='Job search'
+        label={false}
         validatorMethod={[VALIDATOR_REQUIRE()]}
         name='search'
         onInputHandler={props.onChange}
         placeholder='Cari pekerjaan...'
         initValue={props.initValue}
         InputElementStyle={{ minHeight: '45px', borderRadius: '6px', fontSize: '16px' }}
-        InputContainerStyle={{ maxWidth: '776px' }}
+        InputContainerStyle={{ maxWidth: '600px' }}
       />
       <div className={styles.ButtonContainer}>
         <button type='submit'>Cari</button>

@@ -67,64 +67,58 @@ const JobCard = props => {
     props.resetJob();
   };
 
-  let content = (
-    <div className={styles.FlexWrap}>
-      <div className={styles.JobCard}>
-        <Modal show={props.job.error} onCancel={onCancelHandler}>
-          Tidak dapat melamar pekerjaan untuk saat ini{' '}
-        </Modal>
-        <div className={styles.Logo}>
-          <img src={props.logo && !props.isHidden ? props.logo.url : BlankCompany} alt='company-logo' />
-        </div>
-        <div className={styles.Content}>
-          <div className={styles.ContentHeader}>
-            <div className={styles.TitleDateWrap}>
-              <h3>
-                <Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-                  {props.jobTitle}
-                </Link>
-              </h3>
-              <p className={styles.Date}>{moment().diff(moment(props.releasedAt), 'days')} hari lalu</p>
-            </div>
-            <Link
-              to={`/jobs/${props.jobId}`}
-              style={{
-                textDecoration: 'inherit',
-                fontWeight: '500',
-                color: 'rgba(0,0,0,0.6)',
-              }}>
-              Details
-            </Link>
-          </div>
-
-          <div className={styles.TopContent}>
-            {props.isHidden ? (
-              <span className={styles.TextSecret}>Perusahaan Dirahasiakan</span>
-            ) : (
-              <Link to={`/co/${props.companyId._id}/profile`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-                <span className={styles.TextLeft}>{props.company}</span>
-              </Link>
-            )}
-
-            <span className={styles.PlacementLocationProps}>, {props.placementLocation}</span>
-          </div>
-          <div>
-            <em>{props.fieldOfWork?.filter(fow => fow).join(', ')}</em>
-          </div>
-          <div className={styles.BottomContent}>
-            <p className={styles.BottomSalary}>
-              {props.salary && props.salary > 0 ? `IDR ${salary.toLocaleString()} /bulan` : 'Gaji Tidak Ditampilkan'}
-            </p>
-          </div>
-        </div>
-        <div className={styles.InstantSubmit}>{instantApplyButton}</div>
-
-        <footer />
+  return (
+    <div className={styles.JobCard}>
+      <Modal show={props.job.error} onCancel={onCancelHandler}>
+        Tidak dapat melamar pekerjaan untuk saat ini{' '}
+      </Modal>
+      <div className={styles.Logo}>
+        <img src={props.logo && !props.isHidden ? props.logo.url : BlankCompany} alt='company-logo' />
       </div>
+      <div className={styles.Content}>
+        <div className={styles.ContentHeader}>
+          <div className={styles.TitleDateWrap}>
+            <h3>
+              <Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+                {props.jobTitle}
+              </Link>
+            </h3>
+            <p className={styles.Date}>{moment().diff(moment(props.releasedAt), 'days')} hari lalu</p>
+          </div>
+          <Link
+            to={`/jobs/${props.jobId}`}
+            style={{
+              textDecoration: 'inherit',
+              fontWeight: '500',
+              color: 'rgba(0,0,0,0.6)',
+            }}>
+            Details
+          </Link>
+        </div>
+
+        <div className={styles.TopContent}>
+          {props.isHidden ? (
+            <span className={styles.TextSecret}>Perusahaan Dirahasiakan</span>
+          ) : (
+            <Link to={`/co/${props.companyId._id}/profile`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+              <span className={styles.TextLeft}>{props.company}</span>
+            </Link>
+          )}
+
+          <span className={styles.PlacementLocationProps}>, {props.placementLocation}</span>
+        </div>
+        <div>
+          <em>{props.fieldOfWork?.filter(fow => fow).join(', ')}</em>
+        </div>
+        <div className={styles.BottomContent}>
+          <p className={styles.BottomSalary}>
+            {props.salary && props.salary > 0 ? `IDR ${salary.toLocaleString()} /bulan` : 'Gaji Tidak Ditampilkan'}
+          </p>
+        </div>
+      </div>
+      <div className={styles.InstantSubmit}>{instantApplyButton}</div>
     </div>
   );
-
-  return <React.Fragment>{content}</React.Fragment>;
 };
 
 const mapStateToProps = state => {

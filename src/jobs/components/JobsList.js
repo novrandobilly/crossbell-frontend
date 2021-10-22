@@ -318,9 +318,7 @@ const JobsList = props => {
         </div>
       </div>
       <div className={styles.JobContainer}>
-        <div className={styles.JobListing} id='JobList'>
-          {content}
-        </div>
+        <div className={styles.JobListing}>{content}</div>
         <div className={styles.PaginationBox}>
           <div className={styles.Pagination}>
             <FormControl style={{ width: '4rem' }}>
