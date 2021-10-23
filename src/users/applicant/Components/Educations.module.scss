@@ -1,0 +1,45 @@
+$primaryColor: #f79f35;
+
+@mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+.EducationsContainer {
+  @include flexCenter(column, flex-start, flex-start);
+  width: 100%;
+  .EducationsHeaderTitle {
+    @include flexCenter(row, flex-start, center);
+    text-align: start;
+    .EducationsIcon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid $primaryColor;
+      margin-right: 10px;
+      padding: 5px;
+
+      img {
+        width: 100%;
+        max-width: 30px;
+      }
+    }
+  }
+  .EducationsItem {
+    @include flexCenter(column, flex-start, flex-start);
+    padding-left: 50px;
+    margin-bottom: 20px;
+    & > * {
+      margin: 0 0 10px;
+      text-align: start;
+    }
+    .EducationTitle {
+      padding-left: 20px;
+    }
+    p {
+      padding-left: 20px;
+      line-height: 1.5em;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import * as actionCreators from '../../../store/actions';
 import Description from './Description.js';
 import Skills from './Skills.js';
 import WorkingExperiences from './WorkingExperiences';
+import Educations from './Educations';
 
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
 import PhoneIcon from '../../../assets/icons/phone.svg';
@@ -71,9 +72,11 @@ const ApplicantProfile = props => {
       </section>
 
       <section className={styles.ApplicantWorkingExperiences}>
-        <WorkingExperiences experiences={props.experience.sort((a, b) => moment(b.startDate) - moment(a.startDate))} />
+        <WorkingExperiences experiences={props.experience.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
       </section>
-      <section className={styles.ApplicantEducations}></section>
+      <section className={styles.ApplicantEducations}>
+        <Educations educations={props.education.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
+      </section>
       <section className={styles.ApplicantOrganizationExperiences}></section>
       <section className={styles.ApplicantCertifications}></section>
     </div>
