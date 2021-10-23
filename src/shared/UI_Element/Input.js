@@ -77,7 +77,7 @@ const Input = props => {
           id={id}
           className={[styles.InputElements, styles[props.InputClass]].join(' ')}
           style={props.InputElementStyle}
-          label={props.label}
+          label={props.labelName}
           name={props.name}
           value={props.value || state.value}
           placeholder={props.placeholder || ''}

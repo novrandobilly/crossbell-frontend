@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../../store/actions';
 
 import Description from './Description.js';
 import Skills from './Skills.js';
+import WorkingExperiences from './WorkingExperiences';
+
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
 import PhoneIcon from '../../../assets/icons/phone.svg';
 import AddressIcon from '../../../assets/icons/location.svg';
@@ -17,31 +18,6 @@ import BirthdayIcon from '../../../assets/icons/birthday-cake.svg';
 import styles from './ApplicantProfile.module.scss';
 
 const ApplicantProfile = props => {
-  const [resumeFile, setResumeFile] = useState();
-  const [loadingResume, setLoadingResume] = useState(false);
-
-  const onUploadHandler = event => {
-    event.preventDefault();
-    setResumeFile(event.target.files[0]);
-  };
-
-  const onSubmitResumeHandler = async event => {
-    setLoadingResume(true);
-    event.preventDefault();
-    const payload = {
-      applicantId: props.auth.userId,
-      resume: resumeFile,
-      token: props.auth.token,
-    };
-    try {
-      await props.updateResume(payload);
-      setLoadingResume(false);
-    } catch (err) {
-      console.log(err);
-      setLoadingResume(false);
-    }
-  };
-
   return (
     <div className={styles.ApplicantDetailsContainer}>
       <section className={styles.ApplicantBriefInformation}>
@@ -93,7 +69,10 @@ const ApplicantProfile = props => {
       <section className={styles.ApplicantSkills}>
         <Skills skills={props.skills} />
       </section>
-      <section className={styles.ApplicantWorkingExperiences}></section>
+
+      <section className={styles.ApplicantWorkingExperiences}>
+        <WorkingExperiences experiences={props.experience.sort((a, b) => moment(b.startDate) - moment(a.startDate))} />
+      </section>
       <section className={styles.ApplicantEducations}></section>
       <section className={styles.ApplicantOrganizationExperiences}></section>
       <section className={styles.ApplicantCertifications}></section>
