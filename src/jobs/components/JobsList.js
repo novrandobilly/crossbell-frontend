@@ -199,33 +199,39 @@ const JobsList = props => {
   }
 
   //================= Element Component ===========================
-  let content = <LoadingBar />;
+  let content = (
+    <div className={styles.LoadingContainer}>
+      <LoadingBar />
+    </div>
+  );
   if (items) {
     content =
       displayJobs && displayJobs.length > 0 ? (
-        displayJobs.map(job => (
-          <JobCard
-            key={job._id}
-            isHidden={job.isHidden}
-            jobId={job._id}
-            jobTitle={job.jobTitle}
-            placementLocation={job.placementLocation}
-            company={job.companyId.companyName}
-            logo={job.companyId.logo}
-            salary={job.salary}
-            emailRecipient={job.companyId.emailRecipient}
-            companyId={job.companyId}
-            fieldOfWork={job.fieldOfWork}
-            jobApplicant={job.jobApplicants}
-            setModalError={props.setModalError}
-            modalError={props.modalError}
-            releasedAt={job.releasedAt}
-          />
-        ))
+        <div className={styles.JobListing}>
+          {displayJobs.map(job => (
+            <JobCard
+              key={job._id}
+              isHidden={job.isHidden}
+              jobId={job._id}
+              jobTitle={job.jobTitle}
+              placementLocation={job.placementLocation}
+              company={job.companyId.companyName}
+              logo={job.companyId.logo}
+              salary={job.salary}
+              emailRecipient={job.companyId.emailRecipient}
+              companyId={job.companyId}
+              fieldOfWork={job.fieldOfWork}
+              jobApplicant={job.jobApplicants}
+              setModalError={props.setModalError}
+              modalError={props.modalError}
+              releasedAt={job.releasedAt}
+            />
+          ))}
+        </div>
       ) : props.jobEmpty ? (
-        <h2>Tidak ada lowongan pekerjaan yang tersedia</h2>
+        <h2>Tidak ada lowongan pekerjaan yang tersedia.</h2>
       ) : (
-        <h2>Tidak ada pekerjaan sesuai pencarian</h2>
+        <h2>Tidak ada pekerjaan yang sesuai.</h2>
       );
   }
 
@@ -318,20 +324,22 @@ const JobsList = props => {
         </div>
       </div>
       <div className={styles.JobContainer}>
-        <div className={styles.JobListing}>{content}</div>
-        <div className={styles.PaginationBox}>
-          <div className={styles.Pagination}>
-            <FormControl style={{ width: '4rem' }}>
-              <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-                <MenuItem value={30}>30</MenuItem>
-              </Select>
-              <FormHelperText>Rows</FormHelperText>
-            </FormControl>
-            <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
+        {content}
+        {items && (
+          <div className={styles.PaginationBox}>
+            <div className={styles.Pagination}>
+              <FormControl style={{ width: '4rem' }}>
+                <Select labelId='rowPerPage' id='rowPerPageSelect' value={state.rowsPerPage} onChange={rowsHandler}>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                  <MenuItem value={30}>30</MenuItem>
+                </Select>
+                <FormHelperText>Rows</FormHelperText>
+              </FormControl>
+              <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

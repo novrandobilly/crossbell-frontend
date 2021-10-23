@@ -3,7 +3,6 @@ $primaryColor: #f79f35;
 .Container {
   display: flex;
   justify-content: space-between;
-  // border: 2px solid red;
 }
 
 .FilterContainer {
@@ -83,9 +82,16 @@ $primaryColor: #f79f35;
   box-sizing: border-box;
   width: 100%;
   padding: 0 5px 10px 20px;
+  align-items: flex-start;
   h2 {
     width: 100%;
   }
+}
+.LoadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
 }
 
 .PaginationBox {
@@ -103,75 +109,4 @@ $primaryColor: #f79f35;
 
 .FormControl {
   width: 15%;
-}
-
-@media (max-width: 992px) {
-  .FilterContainer {
-    display: none;
-  }
-
-  .JobList {
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .JobContainer {
-    width: 100%;
-  }
-
-  .FormControl {
-    order: 1;
-  }
-}
-
-@media (max-width: 768px) {
-  .Wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .Container {
-    flex-direction: column;
-    align-self: center;
-    align-items: center;
-    margin-top: 32px;
-    width: 80%;
-  }
-
-  .JobList {
-    width: 100%;
-  }
-
-  .FormControl {
-    align-self: flex-end;
-  }
-
-  .SortFilter {
-    align-self: start;
-  }
-}
-
-@media (max-width: 768px) {
-  .Container {
-    width: 100%;
-  }
-
-  .Pagination {
-    width: 100%;
-  }
-}
-
-@media (max-width: 576px) {
-  .Container {
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 400px) {
-  .JobList {
-    flex-direction: column;
-    align-items: center;
-  }
 }

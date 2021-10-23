@@ -1,0 +1,11 @@
+.DescriptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  p {
+    text-align: start;
+    line-height: 1.5em;
+    margin: 0;
+  }
+}

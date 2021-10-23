@@ -6,6 +6,7 @@ import * as actionCreators from '../../../store/actions';
 import JobsList from '../../components/JobsList';
 import QueryBar from '../../components/QueryBar';
 import Modal from '../../../shared/UI_Element/Modal';
+import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
 
 import styles from './JobsDashboard.module.scss';
 import MeetingDashboard from '../../../assets/images/Meeting-Dashboard.png';
@@ -171,15 +172,7 @@ const JobsDashboard = props => {
       <Modal show={modalError} onCancel={onCancelHandler}>
         Silahkan login untuk melamar pekerjaan
       </Modal>
-      <section className={styles.HeaderDashboard}>
-        <div className={styles.HeaderText}>
-          <h1>Pekerjaan Impianmu</h1>
-          <h2>Sudah di depan mata</h2>
-        </div>
-        <div className={styles.HeaderImage}>
-          <img alt='Meeting Dashboard' src={MeetingDashboard} />
-        </div>
-      </section>
+      <HeaderBanner imageSource={MeetingDashboard} />
 
       <section className={styles.JobListing}>
         <div className={styles.SearchQuery}>

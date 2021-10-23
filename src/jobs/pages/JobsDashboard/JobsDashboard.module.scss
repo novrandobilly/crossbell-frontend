@@ -5,40 +5,6 @@ $secondaryColor: #ef3f37;
   box-sizing: border-box;
 }
 
-.HeaderDashboard {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding-left: 30px;
-  margin-bottom: 50px;
-  .HeaderText {
-    width: 50%;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    & > * {
-      margin: 0;
-    }
-    h1 {
-      margin-bottom: 20px;
-      font-size: 36px;
-      text-align: start;
-    }
-    h2 {
-      color: $primaryColor;
-      font-size: 28px;
-      text-align: start;
-    }
-  }
-  .HeaderImage {
-    width: 50%;
-    img {
-      width: 100%;
-      max-width: 800px;
-    }
-  }
-}
 .JobListing {
   background-color: white;
   border-radius: 4px;

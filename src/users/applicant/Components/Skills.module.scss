@@ -1,0 +1,38 @@
+$primaryColor: #f79f35;
+@mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+
+.SkillsListingContainer {
+  @include flexCenter(column, flex-start, flex-start);
+  .SkillsHeaderTitle {
+    @include flexCenter(row, flex-start, center);
+    img {
+      width: 100%;
+      max-width: 30px;
+      border-radius: 50%;
+      border: 2px solid $primaryColor;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  }
+
+  .SkillsListing {
+    $skillItemWidth: 600px;
+    @include flexCenter(row, space-between, flex-start);
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: $skillItemWidth;
+    padding-left: 50px;
+    //  border: 1px solid black;
+    & > * {
+      width: 100%;
+      max-width: $skillItemWidth/2;
+      text-align: start;
+      margin: 5px 0;
+    }
+  }
+}
