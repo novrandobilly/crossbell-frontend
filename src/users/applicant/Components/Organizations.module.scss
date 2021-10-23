@@ -1,0 +1,44 @@
+$primaryColor: #f79f35;
+
+@mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+.OrganizationsContainer {
+  @include flexCenter(column, flex-start, flex-start);
+  width: 100%;
+  .OrganizationsHeaderTitle {
+    @include flexCenter(row, flex-start, center);
+    text-align: start;
+    .OrganizationsIcon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid $primaryColor;
+      padding: 5px;
+      margin-right: 10px;
+      img {
+        width: 100%;
+        max-width: 30px;
+      }
+    }
+  }
+  .OrganizationsItem {
+    @include flexCenter(column, flex-start, flex-start);
+    padding-left: 50px;
+    margin-bottom: 20px;
+    & > * {
+      margin: 0 0 10px;
+      text-align: start;
+    }
+    .OrganizationTitle {
+      padding-left: 20px;
+    }
+    p {
+      padding-left: 20px;
+      line-height: 1.5em;
+    }
+  }
+}
