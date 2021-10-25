@@ -8,6 +8,7 @@ import Skills from './Skills.js';
 import WorkingExperiences from './WorkingExperiences';
 import Educations from './Educations';
 import Organizations from './Organizations';
+import Certifications from './Certifications';
 
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
 import PhoneIcon from '../../../assets/icons/phone.svg';
@@ -81,7 +82,11 @@ const ApplicantProfile = props => {
       <section className={styles.ApplicantOrganizationExperiences}>
         <Organizations organizations={props.organization.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
       </section>
-      <section className={styles.ApplicantCertifications}></section>
+      <section className={styles.ApplicantCertifications}>
+        <Certifications
+          certifications={props.certification.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
+        />
+      </section>
     </div>
   );
 };
