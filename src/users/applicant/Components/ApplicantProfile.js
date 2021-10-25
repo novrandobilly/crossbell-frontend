@@ -9,6 +9,8 @@ import WorkingExperiences from './WorkingExperiences';
 import Educations from './Educations';
 import Organizations from './Organizations';
 import Certifications from './Certifications';
+import EditBriefInformations from './Edit/EditBriefInformations';
+import Modal from '../../../shared/UI_Element/Modal';
 
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
 import PhoneIcon from '../../../assets/icons/phone.svg';
@@ -17,13 +19,26 @@ import EmailIcon from '../../../assets/icons/email.svg';
 import MoneyIcon from '../../../assets/icons/money.svg';
 import GenderIcon from '../../../assets/icons/gender.svg';
 import BirthdayIcon from '../../../assets/icons/birthday-cake.svg';
+import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 
 import styles from './ApplicantProfile.module.scss';
 
 const ApplicantProfile = props => {
+  console.log(props);
   return (
     <div className={styles.ApplicantDetailsContainer}>
       <section className={styles.ApplicantBriefInformation}>
+        <Modal
+          show={true}
+          style={{ top: '12vh', maxWidth: '800px', marginLeft: '-400px', height: '80vh', overflowY: 'auto' }}
+          headerText='Biodata Kandidat'>
+          <EditBriefInformations />
+        </Modal>
+        {/*------------------- Absolute Edit Button -------------------*/}
+        <span className={styles.AddEditButton}>
+          <img alt='Edit Button' src={EditWhiteIcon} />
+        </span>
+        {/* ---------------------------------------------------------- */}
         <div className={styles.ApplicantAvatar}>
           <img alt='Applicant Avatar' src={props.picture ? props.picture.url : BlankProfile} />
         </div>
@@ -59,6 +74,12 @@ const ApplicantProfile = props => {
               <p className={styles.ApplicantGender}>
                 <img alt='Birthday Icon' src={BirthdayIcon} />
                 {`${props.dateOfBirth} (X tahun)`}
+              </p>
+              <p className={styles.ApplicantGender}>
+                &#x27A4; {`${props.workShifts ? ' B' : 'Tidak b'}ersedia bekerja dengan sistem kerja shift`}
+              </p>
+              <p className={styles.ApplicantGender}>
+                &#x27A4; {`${props.outOfTown ? ' B' : 'Tidak b'}ersedia ditempatkan di luar kota asal`}
               </p>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Pusher from 'pusher-js';
@@ -56,12 +57,13 @@ const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJob
 //==================================== applicant =========================================================
 
 const JobsApplied = React.lazy(() => import('./users/applicant/components/JobsApplied'));
-const ApplicantResumeVal = React.lazy(() => import('./users/applicant/pages/ApplicantResumeVal/ApplicantResumeVal'));
-const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/ApplicantDetails/ApplicantDetails'));
+const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/ApplicantDetails'));
 const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
 const Subscription = React.lazy(() => import('./users/applicant/components/Subscription'));
 const Language = React.lazy(() => import('./users/applicant/components/Edit/Language'));
-const EditApplicantIntro = React.lazy(() => import('./users/applicant/components/Edit/EditIntro'));
+// const EditApplicantBriefInformations = React.lazy(() =>
+//   import('./users/applicant/components/Edit/EditBriefInformations')
+// );
 const EditApplicantSummary = React.lazy(() => import('./users/applicant/components/Edit/EditSummary'));
 const EditApplicantEducation = React.lazy(() => import('./users/applicant/components/Edit/Education'));
 const EditApplicantExperience = React.lazy(() => import('./users/applicant/components/Edit/Experience'));
@@ -131,6 +133,7 @@ const App = props => {
   const adminTokenExp = props.admin.tokenExpirationDate;
   const userToken = props.auth.token;
   const userTokenExp = props.auth.tokenExpirationDate;
+  console.log(moment(props.auth.tokenExpirationDate).format('MMMM Do YYYY, h:mm:ss a'));
   const { logout, logoutAdmin } = props;
   useEffect(() => {
     if (adminToken && adminTokenExp) {
@@ -157,13 +160,12 @@ const App = props => {
           <Switch>
             {/* Users Routes: Applicant */}
             <Route path='/test/modal' component={OrderModal} />
-            <Route path='/ap/:applicantid/res-val' component={ApplicantResumeVal} />
             <Route path='/ap/:applicantid/add/education' component={AddApplicantEducation} />
             <Route path='/ap/:applicantid/add/experience' component={AddApplicantExperience} />
             <Route path='/ap/:applicantid/add/certification' component={AddApplicantCertification} />
             <Route path='/ap/:applicantid/add/organization' component={AddApplicantOrganization} />
 
-            <Route path='/ap/:applicantid/intro' component={EditApplicantIntro} />
+            {/* <Route path='/ap/:applicantid/intro' component={EditApplicantBriefInformations} /> */}
             <Route path='/ap/:applicantid/summary' component={EditApplicantSummary} />
             <Route path='/ap/:applicantid/education/:educationindex' component={EditApplicantEducation} />
             <Route path='/ap/:applicantid/experience/:experienceindex' component={EditApplicantExperience} />

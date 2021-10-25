@@ -1,0 +1,18 @@
+.BiodataContainer {
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  .ContactInformations {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    & > * {
+      width: 47%;
+      margin-bottom: 10px;
+    }
+    & > *:nth-child(3) {
+      width: 100%;
+    }
+  }
+}

@@ -75,7 +75,11 @@ const SlotHistory = props => {
 
     getJobsInCompany(payload).then(res => {
       if (res && res.foundJob) {
-        setFetchData(res.foundJob.filter(dat => dat.releasedAt != null).sort((a, b) => moment(b.expiredDate) - moment(a.expiredDate)));
+        setFetchData(
+          res.foundJob
+            .filter(dat => dat.releasedAt != null)
+            .sort((a, b) => moment(b.expiredDate) - moment(a.expiredDate))
+        );
       } else {
         setFetchData(null);
       }
@@ -120,7 +124,9 @@ const SlotHistory = props => {
     if (fetchData) {
       let filterData = [...fetchData];
       if (formState?.inputs?.sortDate?.value) {
-        filterData = filterData.filter(order => moment(order.releasedAt).isSame(moment(formState.inputs.sortDate.value), 'month'));
+        filterData = filterData.filter(order =>
+          moment(order.releasedAt).isSame(moment(formState.inputs.sortDate.value), 'month')
+        );
       }
       setTempData(filterData);
     }
@@ -151,7 +157,9 @@ const SlotHistory = props => {
                   <div
                     className={classes.CardTime}
                     style={moment(dat.expiredDate).diff(moment(), 'days') > 7 ? { color: 'green' } : { color: 'grey' }}>
-                    {moment(dat.expiredDate) > moment() ? `${moment(dat.expiredDate).diff(moment(), 'days')} hari` : 'expired'}
+                    {moment(dat.expiredDate) > moment()
+                      ? `${moment(dat.expiredDate).diff(moment(), 'days')} hari`
+                      : 'expired'}
                   </div>
                 </div>
               </Link>
@@ -188,7 +196,7 @@ const SlotHistory = props => {
       <div className={classes.TableFilter}>
         <div>
           <Input
-            inputType='customdate'
+            inputType='datePicker'
             id='sortDate'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}

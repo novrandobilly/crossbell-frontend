@@ -67,7 +67,7 @@ const Register = props => {
         isCompany: res.isCompany,
       });
       props.onSucceedRegister();
-      props.history.push(`/ap/${res.userId}/res-val`);
+      props.history.push(`/ap/${res.userId}/profile`);
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -152,7 +152,9 @@ const Register = props => {
 
         <button
           className={classes.RegisterButton}
-          disabled={!formState.formIsValid || formState.inputs.password.value !== formState.inputs.confirmPassword.value}>
+          disabled={
+            !formState.formIsValid || formState.inputs.password.value !== formState.inputs.confirmPassword.value
+          }>
           Register
         </button>
         <GoogleLoginButton buttonText='Signup with Google' />

@@ -9,7 +9,6 @@ const Certifications = ({ certifications }) => {
     let paragraphArray = expParagraph.split('\n').filter(exp => exp);
     return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);
   };
-  console.log(certifications);
   return (
     <div className={styles.CertificationsContainer}>
       <h1 className={styles.CertificationsHeaderTitle}>

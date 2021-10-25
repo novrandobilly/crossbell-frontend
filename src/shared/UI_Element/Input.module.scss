@@ -69,14 +69,15 @@ $primaryColor: #f79f35;
   resize: none;
 }
 
-.DateInput {
-  font-size: 0.8rem;
-  width: 15rem;
-  height: 1.5rem;
-  border: solid 0.05rem;
-  margin-bottom: 1rem;
+.DatePickerContainer {
+  display: flex;
+  align-items: center;
+}
+.DatePickerInput {
+  border: 3px solid $primaryColor;
+  border-radius: 5px;
+  padding: 5px;
   outline: none;
-  font-size: small;
 }
 
 .QueryHome {

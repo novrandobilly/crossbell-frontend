@@ -34,9 +34,18 @@ const NavigationWrapper = () => {
   const onCancelAuth = () => setShowAuthForm(false);
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      setViewportWidth(window.innerWidth);
-    });
+    let mounted = true;
+
+    if (mounted) {
+      window.addEventListener('resize', () => {
+        setViewportWidth(window.innerWidth);
+      });
+    }
+
+    const cleanUp = () => {
+      mounted = false;
+    };
+    return cleanUp();
   }, [viewportWidth]);
 
   return (

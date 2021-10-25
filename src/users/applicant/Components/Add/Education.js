@@ -6,7 +6,12 @@ import moment from 'moment';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE, VALIDATOR_MAX, VALIDATOR_MIN } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_MAX,
+  VALIDATOR_MIN,
+} from '../../../../shared/utils/validator';
 
 import University from '../../../../shared/UI_Element/UniversityData';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
@@ -186,7 +191,9 @@ const Education = props => {
             }}
             renderOption={option => option.institusi}
             freeSolo
-            renderInput={params => <TextField {...params} label='Nama sekolah/ universitas*' margin='normal' variant='standard' />}
+            renderInput={params => (
+              <TextField {...params} label='Nama sekolah/ universitas*' margin='normal' variant='standard' />
+            )}
           />
         </div>
 
@@ -254,7 +261,7 @@ const Education = props => {
           <div className={classes.EditLabel}>
             <p className={classes.Text}>Tahun Mulai*</p>
             <Input
-              inputType='customdate'
+              inputType='datePicker'
               id='startDate'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
@@ -268,7 +275,7 @@ const Education = props => {
           <div className={classes.EditLabel}>
             <p className={classes.Text}>Tahun Selesai*</p>
             <Input
-              inputType='customdate'
+              inputType='datePicker'
               id='endDate'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
@@ -292,7 +299,11 @@ const Education = props => {
               max={4}
               step='0.1'
               helperText={
-                formState.inputs.IPK.value < 0 ? 'Nilai IPK min 0' : formState.inputs.IPK.value > 4 ? 'Nilai IPK max 4' : 'IPK wajib diisi'
+                formState.inputs.IPK.value < 0
+                  ? 'Nilai IPK min 0'
+                  : formState.inputs.IPK.value > 4
+                  ? 'Nilai IPK max 4'
+                  : 'IPK wajib diisi'
               }
             />
           </div>

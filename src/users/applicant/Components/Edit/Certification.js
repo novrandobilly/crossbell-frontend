@@ -164,7 +164,7 @@ const Certification = props => {
               <div className={classes.EditLabel}>
                 <p className={classes.Text}>Berlaku Sejak*</p>
                 <Input
-                  inputType='customdate'
+                  inputType='datePicker'
                   id='startDate'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}
@@ -180,7 +180,7 @@ const Certification = props => {
                 <div className={classes.EditLabel}>
                   <p className={classes.Text}>Berlaku Sampai*</p>
                   <Input
-                    inputType='customdate'
+                    inputType='datePicker'
                     id='endDate'
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                     onInputHandler={onInputHandler}

@@ -48,7 +48,7 @@ const Login = props => {
     }
     if (res.token && !res.isCompany) {
       props.onSucceedLogin();
-      props.history.push('/jobs-dashboard');
+      props.history.push(`/ap/${res.userId}/profile`);
     } else if (res.token && res.isCompany) {
       props.onSucceedLogin();
       props.history.push(`/co/${res.userId}/profile`);

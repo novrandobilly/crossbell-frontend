@@ -3,13 +3,13 @@ import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { connect } from 'react-redux';
 
-import * as actionCreators from '../../../../store/actions/index';
-import * as actionTypes from '../../../../store/actions/actions';
-import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import ApplicantProfile from '../../components/ApplicantProfile';
-import Modal from '../../../../shared/UI_Element/Modal';
-import HeaderBanner from '../../../../shared/UI_Element/HeaderBanner';
-import MeetingDashboard from '../../../../assets/images/Meeting-Dashboard.png';
+import * as actionCreators from '../../../store/actions/index';
+import * as actionTypes from '../../../store/actions/actions';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import ApplicantProfile from '../components/ApplicantProfile';
+import Modal from '../../../shared/UI_Element/Modal';
+import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
+import MeetingDashboard from '../../../assets/images/Meeting-Dashboard.png';
 import styles from './ApplicantDetails.module.scss';
 
 const ApplicantDetails = props => {
@@ -40,9 +40,9 @@ const ApplicantDetails = props => {
   };
   console.log(data);
   let applicantProfileContent = <LoadingBar />;
-  if (props.error) {
+  if (props.applicant.error) {
     applicantProfileContent = (
-      <Modal show={props.error} onCancel={onCancelHandler}>
+      <Modal show={props.applicant.error} onCancel={onCancelHandler}>
         Anda tidak memiliki akses masuk ke halaman ini
       </Modal>
     );
@@ -92,21 +92,19 @@ const ApplicantDetails = props => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    admin: state.admin,
+    auth: state.auth,
+    applicant: state.applicant,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
     getApplicantFail: () => dispatch({ type: actionTypes.GETAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-  };
-};
-
-const mapStateToProps = state => {
-  return {
-    login: state.auth.isLogin,
-    admin: state.admin,
-    auth: state.auth,
-    applicant: state.applicant,
-    error: state.applicant.error,
   };
 };
 

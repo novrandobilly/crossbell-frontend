@@ -193,7 +193,7 @@ const FinancialAO = props => {
           <div className={classes.DateFilter}>
             <p className={classes.DateLabel}>Tanggal awal</p>
             <Input
-              inputType='customdate'
+              inputType='datePicker'
               id='start'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
@@ -209,7 +209,7 @@ const FinancialAO = props => {
           <div className={classes.DateFilter}>
             <p className={classes.DateLabel}>Tanggal akhir</p>
             <Input
-              inputType='customdate'
+              inputType='datePicker'
               id='end'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
@@ -248,7 +248,13 @@ const FinancialAO = props => {
                     <th>{display.companyId?.companyName}</th>
                     <th>{display._id}</th>
                     <th> {display.slot ? 'order reguler' : 'order bulk candidate'}</th>
-                    <th>{display.PPH ? <CheckCircleIcon style={{ color: '#00A30E' }} /> : <CancelIcon color='secondary' />}</th>
+                    <th>
+                      {display.PPH ? (
+                        <CheckCircleIcon style={{ color: '#00A30E' }} />
+                      ) : (
+                        <CancelIcon color='secondary' />
+                      )}
+                    </th>
 
                     <th>{display.slot ? display.packageName : '-'}</th>
                     <th>{moment(display.createdAt).format('D MMM YYYY')}</th>

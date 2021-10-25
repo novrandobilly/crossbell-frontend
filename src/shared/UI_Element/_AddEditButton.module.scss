@@ -1,0 +1,39 @@
+$primaryColor: #f79f35;
+@mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+
+.AddEditButton {
+  @include flexCenter(row, space-evenly, center);
+  background-color: $primaryColor;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 25px;
+  width: 100%;
+  padding: 5px;
+  max-width: 30px;
+  position: absolute;
+  transition: all 0.4s ease-out;
+  img {
+    width: 100%;
+    max-width: 30px;
+  }
+  &::after {
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    max-width: 180px;
+    cursor: pointer;
+    &::after {
+      opacity: 1;
+      right: 10px;
+    }
+  }
+}

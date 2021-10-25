@@ -50,7 +50,7 @@ const JobsApplied = props => {
                   </div>
                   <div className={classes.Content}>
                     <div className={classes.AvatarContainer}>
-                      <img className={classes.Avatar} src={`${items.companyId.logo.url}`} alt='Logo' />
+                      <img className={classes.Avatar} src={`${items.companyId.logo?.url}`} alt='Logo' />
                     </div>
                   </div>
                   <div className={classes.Footer}>

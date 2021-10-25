@@ -138,7 +138,7 @@ const Organization = props => {
             <div className={classes.Period}>
               <div className={classes.EditLabel}>
                 <Input
-                  inputType='customdate'
+                  inputType='datePicker'
                   id='startDate'
                   inputClass='EditProfileTextArea'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
@@ -154,7 +154,7 @@ const Organization = props => {
               {!tillNow ? (
                 <div className={classes.EditLabel}>
                   <Input
-                    inputType='customdate'
+                    inputType='datePicker'
                     id='endDate'
                     inputClass='EditProfileTextArea'
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}

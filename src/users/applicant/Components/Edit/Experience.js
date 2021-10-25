@@ -173,7 +173,7 @@ const Experience = props => {
               <div className={classes.EditLabel}>
                 <p className={classes.Text}>Waktu Mulai*</p>
                 <Input
-                  inputType='customdate'
+                  inputType='datePicker'
                   id='startDate'
                   inputClass='EditProfileTextArea'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
@@ -190,7 +190,7 @@ const Experience = props => {
                 <div className={classes.EditLabel}>
                   <p className={classes.Text}>Waktu Selesai*</p>
                   <Input
-                    inputType='customdate'
+                    inputType='datePicker'
                     id='endDate'
                     inputClass='EditProfileTextArea'
                     validatorMethod={[VALIDATOR_ALWAYSTRUE()]}

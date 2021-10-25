@@ -283,7 +283,7 @@ const SlotReg = props => {
 
         <div className={classes.FilterDiv}>
           {/* <Input
-            inputType='customdate'
+            inputType='datePicker'
             id='timeFilter'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
@@ -297,7 +297,7 @@ const SlotReg = props => {
           <div className={classes.DateFilter}>
             <p className={classes.DateLabel}>Tanggal awal</p>
             <Input
-              inputType='customdate'
+              inputType='datePicker'
               id='start'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}
@@ -313,7 +313,7 @@ const SlotReg = props => {
           <div className={classes.DateFilter}>
             <p className={classes.DateLabel}>Tanggal akhir</p>
             <Input
-              inputType='customdate'
+              inputType='datePicker'
               id='end'
               validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
               onInputHandler={onInputHandler}

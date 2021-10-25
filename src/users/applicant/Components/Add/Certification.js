@@ -144,7 +144,7 @@ const Certification = props => {
           <div className={classes.Period}>
             <div className={classes.EditLabel}>
               <Input
-                inputType='customdate'
+                inputType='datePicker'
                 id='startDate'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
@@ -159,7 +159,7 @@ const Certification = props => {
             {expiry ? (
               <div className={classes.EditLabel}>
                 <Input
-                  inputType='customdate'
+                  inputType='datePicker'
                   id='endDate'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}

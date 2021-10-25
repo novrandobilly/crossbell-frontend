@@ -114,7 +114,7 @@ const Organization = props => {
             <div className={classes.EditLabel}>
               <p className={classes.Text}>Waktu Mulai*</p>
               <Input
-                inputType='customdate'
+                inputType='datePicker'
                 id='startDate'
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                 onInputHandler={onInputHandler}
@@ -130,7 +130,7 @@ const Organization = props => {
               <div className={classes.EditLabel}>
                 <p className={classes.Text}>Waktu Selesai*</p>
                 <Input
-                  inputType='customdate'
+                  inputType='datePicker'
                   id='endDate'
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
                   onInputHandler={onInputHandler}

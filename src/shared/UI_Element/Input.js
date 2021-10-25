@@ -1,10 +1,11 @@
 import React, { useReducer, useEffect } from 'react';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import moment from 'moment';
 
 import { validate } from '../utils/validator';
-import TextField from '@material-ui/core/TextField';
 import styles from './Input.module.scss';
 
 const ACTION = {
@@ -76,7 +77,7 @@ const Input = props => {
         <input
           id={id}
           className={[styles.InputElements, styles[props.InputClass]].join(' ')}
-          style={props.InputElementStyle}
+          style={props.style}
           label={props.labelName}
           name={props.name}
           value={props.value || state.value}
@@ -141,46 +142,49 @@ const Input = props => {
       );
       break;
 
-    case 'date':
+    case 'datePicker':
       inputElement = (
-        <TextField
-          id={id}
-          type='date'
-          InputLabelProps={{
-            shrink: true,
-          }}
-          className={[styles.InputElements, styles[props.InputClass]].join(' ')}
-          views={props.views || ['year', 'month', 'date']}
-          value={moment(state.value)}
-          style={props.style}
-          onChange={eventValue => onCustomDateHandler(eventValue)}
-          minDate={props.minDate}
-          maxDate={props.maxDate}
-          format={props.format}
-          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-        />
-      );
-      break;
-    case 'customdate':
-      inputElement = (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
-            className={[styles.InputElements, styles[props.InputClass]].join(' ')}
-            views={props.views || ['year', 'month', 'date']}
-            value={moment(state.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            label={props.label}
-            style={props.style}
-            onChange={eventValue => onCustomDateHandler(eventValue)}
             minDate={props.minDate}
             maxDate={props.maxDate}
             id={id}
-            format={props.format}
-            helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+            views={['year', 'month', 'day']}
+            value={moment(state.value).format('L')}
+            onChange={eventValue => onCustomDateHandler(eventValue)}
+            renderInput={({ inputRef, inputProps, InputProps }) => (
+              <div className={styles.DatePickerContainer} style={props.ContainerStyle}>
+                <input
+                  ref={inputRef}
+                  {...inputProps}
+                  value={state.value ? moment(state.value).format('L') : 'Silahkan isi tanggal lahir'}
+                  onChange={eventValue => onCustomDateHandler(eventValue)}
+                  style={props.style}
+                  className={styles.DatePickerInput}
+                />
+                {InputProps?.endAdornment}
+              </div>
+            )}
           />
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
+        // <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        //   <DatePicker
+        //     className={[styles.InputElements, styles[props.InputClass]].join(' ')}
+        //     views={props.views || ['year', 'month', 'date']}
+        //     value={moment(state.value)}
+        //     InputLabelProps={{
+        //       shrink: true,
+        //       disableUnderline: true,
+        //     }}
+        //     style={props.style}
+        //     onChange={eventValue => onCustomDateHandler(eventValue)}
+        //     minDate={props.minDate}
+        //     maxDate={props.maxDate}
+        //     id={id}
+        //     format={props.format}
+        //     helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
+        //   />
+        // </MuiPickersUtilsProvider>
       );
       break;
 
