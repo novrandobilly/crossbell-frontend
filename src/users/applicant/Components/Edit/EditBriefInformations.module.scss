@@ -1,3 +1,5 @@
+$primaryColor: #f79f35;
+
 .BiodataContainer {
   width: 100%;
   padding: 0 10px;
@@ -7,12 +9,66 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    // border-bottom: 3px solid $primaryColor;
     & > * {
       width: 47%;
       margin-bottom: 10px;
     }
     & > *:nth-child(3) {
       width: 100%;
+    }
+    .GenderContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      & > * {
+        margin: 0;
+      }
+      .GenderLabel {
+        margin-bottom: 5px;
+      }
+      .GenderOptions {
+        width: 50%;
+        border: 2px solid $primaryColor;
+        outline: none;
+        border-radius: 5px;
+        padding: 5px;
+        min-height: 30px;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  .AddressContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    & > * {
+      width: 47%;
+      margin-bottom: 10px;
+    }
+    .RegionContainer {
+      width: 47%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      p {
+        margin: 0;
+        margin-bottom: 5px;
+        span {
+          font-size: 10px;
+          font-style: italic;
+        }
+      }
+      & > *:nth-child(2) {
+        width: 100%;
+      }
     }
   }
 }

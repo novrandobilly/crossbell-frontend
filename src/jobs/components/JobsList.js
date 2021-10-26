@@ -16,8 +16,8 @@ import TextField from '@material-ui/core/TextField';
 import JobCard from './JobCard';
 import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
 
-import WorkFieldData from '../../shared/UI_Element/WorkFieldData';
-import CitiesData from '../../shared/UI_Element/CitiesData';
+import WorkFieldData from '../../shared/UI_Element/PredefinedData/WorkFieldData';
+import CitiesData from '../../shared/UI_Element/PredefinedData/CitiesData';
 
 import styles from './JobsList.module.scss';
 

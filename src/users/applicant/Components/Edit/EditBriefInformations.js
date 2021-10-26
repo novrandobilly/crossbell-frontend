@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
@@ -15,15 +14,36 @@ import {
   VALIDATOR_MIN,
 } from '../../../../shared/utils/validator';
 
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/material/styles';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import Cities from '../../../../shared/UI_Element/CitiesData';
 import Input from '../../../../shared/UI_Element/Input';
-import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
-import LocationData from '../../../../shared/UI_Element/LocationData';
+
+import WorkFieldData from '../../../../shared/UI_Element/PredefinedData/WorkFieldData';
+import CitiesData from '../../../../shared/UI_Element/PredefinedData/CitiesData';
+import ProvinceData, { ProvinceToCity } from '../../../../shared/UI_Element/PredefinedData/ProvinceData';
 
 import styles from './EditBriefInformations.module.scss';
+
+const CustomTextField = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    padding: '0',
+    '& .MuiOutlinedInput-input': {
+      padding: '5px',
+    },
+    '& fieldset': {
+      border: '2px solid #f79f35',
+      borderRadius: '5px',
+    },
+    '&.Mui-focused fieldset': {
+      border: '2px solid #f79f35',
+    },
+    '&:hover fieldset': {
+      border: '2px solid #f79f35',
+    },
+  },
+});
 
 const initialLocation = {
   province: '',
@@ -58,161 +78,17 @@ const locationReducer = (state, action) => {
   }
 };
 
-const EditIntro = props => {
+const EditBriefInformations = props => {
   const { applicantid } = useParams();
   const [data, setData] = useState();
   const [interest, setInterest] = useState([]);
   const [locationState, dispatch] = useReducer(locationReducer, initialLocation);
+  const [city, setCity] = useState(CitiesData.default);
 
+  console.log(city);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const [city, setCity] = useState(Cities.default);
-
-  const ProvCityRelation = prov => {
-    switch (prov) {
-      case 'Aceh':
-        setCity(Cities.Aceh);
-        break;
-
-      case 'Sumatera Utara':
-        setCity(Cities.SumUt);
-        break;
-
-      case 'Sumatera Barat':
-        setCity(Cities.SumBar);
-        break;
-
-      case 'Riau':
-        setCity(Cities.Riau);
-        break;
-
-      case 'Kepulauan Riau':
-        setCity(Cities.KepulauanRiau);
-        break;
-
-      case 'Jambi':
-        setCity(Cities.Jambi);
-        break;
-
-      case 'Sumatera Selatan':
-        setCity(Cities.SumSel);
-        break;
-
-      case 'Kepulauan Bangka Belitung':
-        setCity(Cities.BangkaBelitung);
-        break;
-
-      case 'Bengkulu':
-        setCity(Cities.Bengkulu);
-        break;
-
-      case 'Lampung':
-        setCity(Cities.Lampung);
-        break;
-
-      case 'DKI Jakarta':
-        setCity(Cities.Jakarta);
-        break;
-
-      case 'Banten':
-        setCity(Cities.Banten);
-        break;
-
-      case 'Jawa Barat':
-        setCity(Cities.JawaBarat);
-        break;
-
-      case 'Jawa Tengah':
-        setCity(Cities.JawaTengah);
-        break;
-
-      case 'DI Yogyakarta':
-        setCity(Cities.Yogyakarta);
-        break;
-
-      case 'Jawa Timur':
-        setCity(Cities.JawaTimur);
-        break;
-
-      case 'Bali':
-        setCity(Cities.Bali);
-        break;
-
-      case 'Nusa Tenggara Barat':
-        setCity(Cities.NTB);
-        break;
-
-      case 'Nusa Tenggara Timur':
-        setCity(Cities.NTT);
-        break;
-
-      case 'Kalimantan Barat':
-        setCity(Cities.KalBar);
-        break;
-
-      case 'Kalimantan Timur':
-        setCity(Cities.KalTim);
-        break;
-
-      case 'Kalimantan Tengah':
-        setCity(Cities.KalTengh);
-        break;
-
-      case 'Kalimantan Utara':
-        setCity(Cities.KalUt);
-        break;
-
-      case 'Kalimantan Selatan':
-        setCity(Cities.KalSel);
-        break;
-
-      case 'Gorontalo':
-        setCity(Cities.Gorontalo);
-        break;
-
-      case 'Sulawesi Barat':
-        setCity(Cities.SulBar);
-        break;
-
-      case 'Sulawesi Timur':
-        setCity(Cities.SumTim);
-        break;
-
-      case 'Sulawesi Tengah':
-        setCity(Cities.SulTengah);
-        break;
-
-      case 'Sulawesi Tenggara':
-        setCity(Cities.SulTenggara);
-        break;
-
-      case 'Sulawesi Selatan':
-        setCity(Cities.SulSel);
-        break;
-
-      case 'Maluku':
-        setCity(Cities.Maluku);
-        break;
-
-      case 'Maluku Utara':
-        setCity(Cities.MalukuUtara);
-        break;
-
-      case 'Papua':
-        setCity(Cities.Papua);
-        break;
-
-      case 'Papua Barat':
-        setCity(Cities.PapuaBarat);
-        break;
-
-      default: {
-        return Cities.default;
-      }
-    }
-  };
 
   const { getOneApplicant } = props;
   useEffect(() => {
@@ -229,7 +105,7 @@ const EditIntro = props => {
           citySelected: res.applicant.city,
         });
         setData(res.applicant);
-        ProvCityRelation(res.applicant.state);
+        ProvinceToCity(res.applicant.state, setCity);
       });
     }
   }, [getOneApplicant, applicantid, props.auth.token]);
@@ -311,7 +187,7 @@ const EditIntro = props => {
       const outOfTownEl = document.getElementById('outOfTown');
       const workShiftsEl = document.getElementById('workShifts');
 
-      if (genderEl) genderEl.checked = true;
+      if (genderEl) genderEl.selected = true;
       outOfTownEl.checked = data.outOfTown;
       workShiftsEl.checked = data.workShifts;
 
@@ -383,7 +259,7 @@ const EditIntro = props => {
   //=================== State Handler ====================
 
   const handleStateChange = (e, value) => {
-    ProvCityRelation(value);
+    ProvinceToCity(value, setCity);
     onInputHandler('state', value, true);
     dispatch({ type: LOC.CHGPROVINCE, province: value });
     onInputHandler('city', '', false);
@@ -399,7 +275,7 @@ const EditIntro = props => {
   if (!props.isLoading && data) {
     formContent = (
       <form onSubmit={onSubmitHandler} className={styles.BiodataContainer}>
-        <div className={styles.ContactInformations}>
+        <section className={styles.ContactInformations}>
           <Input
             inputType='input'
             id='firstName'
@@ -452,24 +328,27 @@ const EditIntro = props => {
             style={{ width: '100%', maxWidth: '500px' }}
             ContainerStyle={{ width: '100%', maxWidth: '500px' }}
           />
+
           <div id='gender' className={styles.GenderContainer} onChange={onManualInputHandler}>
-            <p className={styles.Text}>Jenis Kelamin*</p>
-            <div className={styles.RadioHolder}>
-              <label style={{ marginRight: '2rem' }} className={styles.RadioButton}>
-                <input type='radio' value='male' name='gender' id='male' /> Pria
-              </label>
-              <label className={styles.RadioButton}>
-                <input type='radio' value='female' name='gender' id='female' /> Wanita
-              </label>
-            </div>
+            <p className={styles.GenderLabel}>Jenis Kelamin*</p>
+            <select name='gender' id='gender' className={styles.GenderOptions}>
+              <option value='male' id='male'>
+                Pria
+              </option>
+              <option value='female' id='female'>
+                Wanita
+              </option>
+            </select>
           </div>
+
           <Input
             inputType='input'
             id='email'
             InputClass='AppInput'
             validatorMethod={[VALIDATOR_EMAIL()]}
             onInputHandler={onInputHandler}
-            label='Email*'
+            label={true}
+            labelName='Email*'
             initValue={data.email}
             initIsValid={data.email ? data.email : false}
             helperText='Mohon input email yang valid'
@@ -481,59 +360,68 @@ const EditIntro = props => {
             InputClass='AppInput'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Nomor telepon*'
+            label={true}
+            labelName='Nomor Telepon'
             initValue={data.phone}
             initIsValid={data.phone ? data.phone : false}
             helperText='Mohon masukkan nomor telepon  yang aktif'
           />
-        </div>
+        </section>
 
-        <Autocomplete
-          id='state'
-          name='state'
-          options={LocationData.sort().map(option => option)}
-          onChange={handleStateChange}
-          value={locationState.province}
-          style={{ margin: '0' }}
-          renderInput={params => (
-            <TextField {...params} style={{ margin: '0' }} label='Provinsi*' margin='normal' variant='standard' />
-          )}
-        />
+        <section className={styles.AddressContainer}>
+          <div className={styles.RegionContainer}>
+            <p>
+              Provinsi <span>(Silahkan isi manual apabila tidak ada dalam pilihan)</span>
+            </p>
+            <Autocomplete
+              id='state'
+              name='state'
+              freeSolo
+              options={ProvinceData.sort().map(option => option)}
+              onChange={handleStateChange}
+              value={locationState.province}
+              renderInput={params => <CustomTextField {...params} />}
+            />
+          </div>
+          <div className={styles.RegionContainer}>
+            <p>
+              Kota <span>(Silahkan isi manual apabila tidak ada dalam pilihan)</span>
+            </p>
+            <Autocomplete
+              id='city'
+              name='city'
+              freeSolo
+              options={city.map(option => option)}
+              onChange={handleCityChange}
+              value={locationState.citySelected}
+              renderInput={params => <CustomTextField {...params} />}
+            />
+          </div>
 
-        <Autocomplete
-          id='city'
-          name='city'
-          options={city.map(option => option)}
-          onChange={handleCityChange}
-          value={locationState.citySelected}
-          renderInput={params => (
-            <TextField {...params} style={{ margin: '0' }} label='Kota*' margin='normal' variant='standard' />
-          )}
-        />
+          <Input
+            inputType='input'
+            id='address'
+            InputClass='AppInput'
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label='Alamat saat ini*'
+            initValue={data.address}
+            initIsValid={data.address ? data.address : false}
+            helperText='Alamat wajib diisi'
+          />
 
-        <Input
-          inputType='input'
-          id='address'
-          InputClass='AppInput'
-          validatorMethod={[VALIDATOR_REQUIRE()]}
-          onInputHandler={onInputHandler}
-          label='Alamat saat ini*'
-          initValue={data.address}
-          initIsValid={data.address ? data.address : false}
-          helperText='Alamat wajib diisi'
-        />
-
-        <Input
-          inputType='input'
-          id='zip'
-          InputClass='AppInput'
-          validatorMethod={[VALIDATOR_REQUIRE()]}
-          onInputHandler={onInputHandler}
-          label='Kode Pos*'
-          initValue={data.zip}
-          initIsValid={data.zip ? data.zip : false}
-          helperText='Kode pos wajib diisi'
-        />
+          <Input
+            inputType='input'
+            id='zip'
+            InputClass='AppInput'
+            validatorMethod={[VALIDATOR_REQUIRE()]}
+            onInputHandler={onInputHandler}
+            label='Kode Pos*'
+            initValue={data.zip}
+            initIsValid={data.zip ? data.zip : false}
+            helperText='Kode pos wajib diisi'
+          />
+        </section>
 
         <div className={styles.ContentWrapFull}>
           <Autocomplete
@@ -622,4 +510,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditIntro));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditBriefInformations));

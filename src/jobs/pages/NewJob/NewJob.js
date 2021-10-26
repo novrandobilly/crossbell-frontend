@@ -17,8 +17,8 @@ import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import TextField from '@material-ui/core/TextField';
 import Input from '../../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
-import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
-import CitiesData from '../../../shared/UI_Element/CitiesData';
+import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
+import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
 import Slider from '@material-ui/core/Slider';
 
 import classes from './NewJob.module.css';

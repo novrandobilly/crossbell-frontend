@@ -22,8 +22,8 @@ import {
   VALIDATOR_ALWAYSTRUE,
   VALIDATOR_EMAIL,
 } from '../../../shared/utils/validator';
-import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
-import CitiesData from '../../../shared/UI_Element/CitiesData';
+import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
+import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
 import Slider from '@material-ui/core/Slider';
 
 import classes from './NewJob.module.css';

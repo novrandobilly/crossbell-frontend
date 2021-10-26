@@ -227,9 +227,9 @@ import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Modal from '../../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import Cities from '../../../../shared/UI_Element/CitiesData';
+import Cities from '../../../../shared/UI_Element/PredefinedData/CitiesData';
 import Input from '../../../../shared/UI_Element/Input';
-import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
+import WorkFieldData from '../../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import LocationData from '../../../../shared/UI_Element/LocationData';
 
 import styles from './EditBriefInformations.module.scss';

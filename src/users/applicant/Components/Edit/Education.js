@@ -13,7 +13,7 @@ import {
   VALIDATOR_ALWAYSTRUE,
 } from '../../../../shared/utils/validator';
 
-import University from '../../../../shared/UI_Element/UniversityData';
+import University from '../../../../shared/UI_Element/PredefinedData/UniversityData';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';

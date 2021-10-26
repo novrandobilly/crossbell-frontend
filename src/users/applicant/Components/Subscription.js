@@ -13,7 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Modal from '../../../shared/UI_Element/Modal';
 import OrderModal from '../../../shared/UI_Element/OrderModal';
 import IndustryData from '../../../shared/UI_Element/IndustryData';
-import WorkFieldData from '../../../shared/UI_Element/WorkFieldData';
+import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import classes from './Subscription.module.css';
@@ -184,8 +184,8 @@ const Subscription = props => {
           <strong>
             <em>(uncheck)</em>
           </strong>{' '}
-          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto reminder) dan/atau fitur lamaran otomatis (auto apply) ,
-          keluar dari halaman bila anda tidak ingin melakukan pembaruan
+          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto reminder) dan/atau fitur lamaran otomatis
+          (auto apply) , keluar dari halaman bila anda tidak ingin melakukan pembaruan
         </p>
 
         <div className={classes.Content}>
@@ -205,7 +205,13 @@ const Subscription = props => {
                 onChange={onChangeAutoSendIndustry}
                 style={{ width: '100%' }}
                 renderInput={params => (
-                  <TextField {...params} style={{ marginTop: '0' }} label='Industri Perusahaan' margin='normal' variant='standard' />
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Industri Perusahaan'
+                    margin='normal'
+                    variant='standard'
+                  />
                 )}
               />
             </div>
@@ -218,7 +224,13 @@ const Subscription = props => {
                 onChange={onChangeAutoSendField}
                 style={{ width: '100%' }}
                 renderInput={params => (
-                  <TextField {...params} style={{ marginTop: '0' }} label='Bidang Pekerjaan' margin='normal' variant='standard' />
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Bidang Pekerjaan'
+                    margin='normal'
+                    variant='standard'
+                  />
                 )}
               />
             </div>
@@ -227,7 +239,13 @@ const Subscription = props => {
           <div className={classes.BottomContent}>
             <p className={classes.ContentTitle}>Notifikasi otomatis</p>
             <label onChange={onCheckedAutoRemind} className={classes.CheckBox}>
-              <input value={autoRemind.jobIndustry} id='autoRemind' type='checkbox' name='autoRemind' className={classes.Box} />
+              <input
+                value={autoRemind.jobIndustry}
+                id='autoRemind'
+                type='checkbox'
+                name='autoRemind'
+                className={classes.Box}
+              />
               <p className={classes.Text}>Berikan notifikasi bila ada pekerjaan sesuai bidang minat</p>{' '}
             </label>
             <div className={classes.InputDiv}>
@@ -239,7 +257,13 @@ const Subscription = props => {
                 onChange={onChangeAutoRemindIndustry}
                 style={{ width: '100%' }}
                 renderInput={params => (
-                  <TextField {...params} style={{ marginTop: '0' }} label='Industri Perusahaan' margin='normal' variant='standard' />
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Industri Perusahaan'
+                    margin='normal'
+                    variant='standard'
+                  />
                 )}
               />
             </div>
@@ -253,7 +277,13 @@ const Subscription = props => {
                 onChange={onChangeAutoRemindField}
                 style={{ width: '100%' }}
                 renderInput={params => (
-                  <TextField {...params} style={{ marginTop: '0' }} label='Bidang Pekerjaan' margin='normal' variant='standard' />
+                  <TextField
+                    {...params}
+                    style={{ marginTop: '0' }}
+                    label='Bidang Pekerjaan'
+                    margin='normal'
+                    variant='standard'
+                  />
                 )}
               />
             </div>
@@ -261,7 +291,12 @@ const Subscription = props => {
         </div>
 
         <div className={classes.Footer}>
-          <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='button' onClick={onOpenOrderModal}>
+          <Button
+            disabled={!formState.formIsValid}
+            variant='contained'
+            color='primary'
+            type='button'
+            onClick={onOpenOrderModal}>
             Simpan
           </Button>
         </div>

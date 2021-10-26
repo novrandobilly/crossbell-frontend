@@ -11,7 +11,7 @@ $primaryColor: #f79f35;
   .InputElements {
     outline: none;
     width: 100%;
-    border: 3px solid $primaryColor;
+    border: 2px solid $primaryColor;
     border-radius: 5px;
     padding: 5px;
     box-sizing: border-box;
@@ -72,12 +72,16 @@ $primaryColor: #f79f35;
 .DatePickerContainer {
   display: flex;
   align-items: center;
-}
-.DatePickerInput {
-  border: 3px solid $primaryColor;
+  justify-content: flex-start;
+  border: 2px solid $primaryColor;
   border-radius: 5px;
-  padding: 5px;
-  outline: none;
+  box-sizing: border-box;
+  padding-right: 10px;
+  .DatePickerInput {
+    border: none;
+    padding: 5px;
+    outline: none;
+  }
 }
 
 .QueryHome {

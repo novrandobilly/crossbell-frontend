@@ -20,7 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import University from '../../../../shared/UI_Element/UniversityData';
+import University from '../../../../shared/UI_Element/PredefinedData/UniversityData';
 
 import classes from './DetailBC.module.css';
 
@@ -191,7 +191,16 @@ const DetailBC = props => {
       filteredArray = filteredArray.slice(state.startIndex, state.startIndex + state.rowsPerPage);
       setDisplayData(filteredArray);
     }
-  }, [dataApplicant, genderFilter, educationFilter, locationFilter, shiftFilter, formState, state.rowsPerPage, state.startIndex]);
+  }, [
+    dataApplicant,
+    genderFilter,
+    educationFilter,
+    locationFilter,
+    shiftFilter,
+    formState,
+    state.rowsPerPage,
+    state.startIndex,
+  ]);
 
   //================= Gender Filter ===========================
   const onGenderHandler = e => {
@@ -383,7 +392,13 @@ const DetailBC = props => {
                   options={University.map(option => option.institusi)}
                   onChange={handleSchoolChange}
                   renderInput={params => (
-                    <TextField {...params} label='Universitas tertentu' margin='normal' variant='standard' style={{ margin: '0' }} />
+                    <TextField
+                      {...params}
+                      label='Universitas tertentu'
+                      margin='normal'
+                      variant='standard'
+                      style={{ margin: '0' }}
+                    />
                   )}
                 />
               </div>

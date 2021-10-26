@@ -5,7 +5,12 @@ import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
-import { VALIDATOR_MIN, VALIDATOR_EMAIL, VALIDATOR_ALWAYSTRUE, VALIDATOR_MAX } from '../../../../shared/utils/validator';
+import {
+  VALIDATOR_MIN,
+  VALIDATOR_EMAIL,
+  VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_MAX,
+} from '../../../../shared/utils/validator';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
@@ -16,10 +21,10 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import Button from '@material-ui/core/Button';
 import Modal from '../../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
-import University from '../../../../shared/UI_Element/UniversityData';
+import University from '../../../../shared/UI_Element/PredefinedData/UniversityData';
 import Input from '../../../../shared/UI_Element/Input';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
-import WorkFieldData from '../../../../shared/UI_Element/WorkFieldData';
+import WorkFieldData from '../../../../shared/UI_Element/PredefinedData/WorkFieldData';
 
 import classes from './OrderBCForm.module.css';
 
@@ -404,7 +409,13 @@ const OrderBCForm = props => {
                   freeSolo
                   style={{ margin: '0', width: '100%' }}
                   renderInput={params => (
-                    <TextField {...params} style={{ margin: '0' }} label='Bidang Pekerjaan*' margin='normal' variant='standard' />
+                    <TextField
+                      {...params}
+                      style={{ margin: '0' }}
+                      label='Bidang Pekerjaan*'
+                      margin='normal'
+                      variant='standard'
+                    />
                   )}
                 />
               </div>
@@ -432,12 +443,14 @@ const OrderBCForm = props => {
 
               <div className={classes.PPHDiv}>
                 <p className={classes.Question}>
-                  Apakah perusahaan anda memiliki kewajiban untuk memotong <span>PPH pasal 23</span>? Jika ya mohon mencentang kotak dibawah
-                  ini!
+                  Apakah perusahaan anda memiliki kewajiban untuk memotong <span>PPH pasal 23</span>? Jika ya mohon
+                  mencentang kotak dibawah ini!
                 </p>{' '}
                 <label onChange={onCheckedPPH} className={classes.CheckBox}>
                   <input id='PPH' type='checkbox' name='PPH' className={classes.Box} />
-                  <p className={classes.Text}>Ya, dan bersedia memberikan bukti potong PPH pasal 23 kepada pihak crossbell</p>
+                  <p className={classes.Text}>
+                    Ya, dan bersedia memberikan bukti potong PPH pasal 23 kepada pihak crossbell
+                  </p>
                 </label>
               </div>
 
@@ -467,7 +480,12 @@ const OrderBCForm = props => {
           </div>
 
           <div className={classes.Footer}>
-            <Button disabled={!formState.formIsValid} variant='contained' color='primary' type='button' onClick={onOpenOrderModal}>
+            <Button
+              disabled={!formState.formIsValid}
+              variant='contained'
+              color='primary'
+              type='button'
+              onClick={onOpenOrderModal}>
               Save
             </Button>
           </div>
