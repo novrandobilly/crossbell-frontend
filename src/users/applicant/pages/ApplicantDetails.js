@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { connect } from 'react-redux';
@@ -16,13 +16,13 @@ const ApplicantDetails = props => {
   const { applicantid } = useParams();
   const [data, setData] = useState(null);
 
-  const { getOneApplicant, getApplicantFail } = props;
+  const { getOneApplicant } = props;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
+  const fetchApplicantData = useCallback(() => {
     const payload = {
       applicantId: applicantid,
       token: props.auth.token || props.admin.token,
@@ -32,13 +32,16 @@ const ApplicantDetails = props => {
         setData(res.applicant);
       })
       .catch(err => console.log(err));
-  }, [getOneApplicant, applicantid, props.auth.token, props.auth.isCompany, props.admin.token, getApplicantFail]);
+  }, [getOneApplicant, applicantid, props.auth.token, props.admin.token]);
+
+  useEffect(() => {
+    fetchApplicantData();
+  }, [fetchApplicantData]);
 
   const onCancelHandler = () => {
     props.history.push(`/`);
     props.resetApplicant();
   };
-  console.log(data);
   let applicantProfileContent = <LoadingBar />;
   if (props.applicant.error) {
     applicantProfileContent = (
@@ -47,39 +50,13 @@ const ApplicantDetails = props => {
       </Modal>
     );
   }
+
   if (data) {
     applicantProfileContent = (
       <ApplicantProfile
         //======================== Applicant Intro
-        key={data.id}
-        id={data.id}
-        firstName={data.firstName}
-        lastName={data.lastName}
-        headline={data.headline}
-        dateOfBirth={data.dateOfBirth}
-        address={data.address}
-        city={data.city}
-        state={data.state}
-        zip={data.zip}
-        email={data.email}
-        phone={data.phone}
-        details={data.details}
-        gender={data.gender}
-        picture={data.picture}
-        resume={data.resume}
-        salary={data.salary}
-        // ======================================== Applicant Education
-        education={data.education}
-        //============================================= Applicant Experience
-        experience={data.experience}
-        //================================================ Applicant Certification
-        certification={data.certification}
-        //================================================ Applicant Organization
-        organization={data.organization}
-        //=========================================== Applicant Skill
-        skills={data.skills}
-        //=========================================== Applicant Languages
-        languages={data.languages}
+        data={data}
+        fetchApplicantData={fetchApplicantData}
       />
     );
   }
@@ -103,7 +80,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
-    getApplicantFail: () => dispatch({ type: actionTypes.GETAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
   };
 };

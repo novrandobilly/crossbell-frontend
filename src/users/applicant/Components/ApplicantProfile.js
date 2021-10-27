@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../../store/actions';
@@ -24,62 +24,78 @@ import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 import styles from './ApplicantProfile.module.scss';
 
 const ApplicantProfile = props => {
-  console.log(props);
+  const [openEditBrief, setOpenEditBrief] = useState(false);
+
+  const closeEditBriefHandler = () => {
+    setOpenEditBrief(false);
+  };
+  const openEditBriefHandler = () => {
+    setOpenEditBrief(true);
+  };
+
+  const applicantData = props.data;
   return (
     <div className={styles.ApplicantDetailsContainer}>
       <section className={styles.ApplicantBriefInformation}>
         <Modal
-          show={true}
+          show={openEditBrief}
+          onCancel={closeEditBriefHandler}
           style={{ top: '12vh', maxWidth: '800px', marginLeft: '-400px', height: '80vh', overflowY: 'auto' }}
           headerText='Biodata Kandidat'>
-          <EditBriefInformations />
+          <EditBriefInformations onCancel={closeEditBriefHandler} fetchApplicantData={props.fetchApplicantData} />
         </Modal>
         {/*------------------- Absolute Edit Button -------------------*/}
-        <span className={styles.AddEditButton}>
-          <img alt='Edit Button' src={EditWhiteIcon} />
-        </span>
+        {props.auth.userId === applicantData.id && (
+          <span className={styles.AddEditButton} onClick={openEditBriefHandler}>
+            <img alt='Edit Button' src={EditWhiteIcon} />
+          </span>
+        )}
+
         {/* ---------------------------------------------------------- */}
         <div className={styles.ApplicantAvatar}>
-          <img alt='Applicant Avatar' src={props.picture ? props.picture.url : BlankProfile} />
+          <img alt='Applicant Avatar' src={applicantData.picture ? applicantData.picture.url : BlankProfile} />
         </div>
         <div className={styles.ApplicantBriefDetails}>
           <h2 className={styles.ApplicantFullName}>
-            {props.firstName}&nbsp;{props.lastName}
+            {applicantData.firstName}&nbsp;{applicantData.lastName}
           </h2>
-          <h3 className={styles.ApplicantHeadline}>{props.headline}</h3>
+          <h3 className={styles.ApplicantHeadline}>{applicantData.headline}</h3>
           <div className={styles.ApplicantBiodata}>
             <div className={styles.ApplicantBiodataFirstGroup}>
               <p className={styles.ApplicantPhone}>
                 <img alt='Phone Icon' src={PhoneIcon} />
-                {props.phone}
+                {applicantData.phone}
               </p>
               <p className={styles.ApplicantEmail}>
                 <img alt='Email Icon' src={EmailIcon} />
-                {props.email}
+                {applicantData.email}
               </p>
               <p className={styles.ApplicantAddress}>
                 <img alt='Address Icon' src={AddressIcon} />
-                {props.address}
+                {applicantData.address}
               </p>
               <p className={styles.ApplicantSalaryExpectation}>
                 <img alt='Money Icon' src={MoneyIcon} />
-                {`Rp ${props.salary.toLocaleString()},-`}
+                {`Rp ${applicantData.salary.toLocaleString()},-`}
               </p>
             </div>
             <div className={styles.ApplicantBiodataSecondGroup}>
               <p className={styles.ApplicantGender}>
                 <img alt='Gender Icon' src={GenderIcon} />
-                {props.gender}
+                {applicantData.gender === 'male' ? 'Pria' : applicantData.gender === 'female' && 'Wanita'}
               </p>
               <p className={styles.ApplicantGender}>
                 <img alt='Birthday Icon' src={BirthdayIcon} />
-                {`${props.dateOfBirth} (X tahun)`}
+                {`${moment(applicantData.dateOfBirth).format('DD MMMM YYYY')} (${moment().diff(
+                  applicantData.dateOfBirth,
+                  'years'
+                )} tahun)`}
               </p>
               <p className={styles.ApplicantGender}>
-                &#x27A4; {`${props.workShifts ? ' B' : 'Tidak b'}ersedia bekerja dengan sistem kerja shift`}
+                &#x27A4; {`${applicantData.workShifts ? ' B' : 'Tidak b'}ersedia bekerja dengan sistem shift`}
               </p>
               <p className={styles.ApplicantGender}>
-                &#x27A4; {`${props.outOfTown ? ' B' : 'Tidak b'}ersedia ditempatkan di luar kota asal`}
+                &#x27A4; {`${applicantData.outOfTown ? ' B' : 'Tidak b'}ersedia ditempatkan di luar kota asal`}
               </p>
             </div>
           </div>
@@ -87,25 +103,29 @@ const ApplicantProfile = props => {
       </section>
 
       <section className={styles.ApplicantDescription}>
-        <Description description={props.details} />
+        <Description description={applicantData.details} />
       </section>
 
       <section className={styles.ApplicantSkills}>
-        <Skills skills={props.skills} />
+        <Skills skills={applicantData.skills} />
       </section>
 
       <section className={styles.ApplicantWorkingExperiences}>
-        <WorkingExperiences experiences={props.experience.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
+        <WorkingExperiences
+          experiences={applicantData.experience.sort((a, b) => moment(b.endDate) - moment(a.endDate))}
+        />
       </section>
       <section className={styles.ApplicantEducations}>
-        <Educations educations={props.education.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
+        <Educations educations={applicantData.education.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
       </section>
       <section className={styles.ApplicantOrganizationExperiences}>
-        <Organizations organizations={props.organization.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
+        <Organizations
+          organizations={applicantData.organization.sort((a, b) => moment(b.endDate) - moment(a.endDate))}
+        />
       </section>
       <section className={styles.ApplicantCertifications}>
         <Certifications
-          certifications={props.certification.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
+          certifications={applicantData.certification.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
         />
       </section>
     </div>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import { Button } from '@mui/material';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { useParams, withRouter, Link } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../../store/actions/actions';
@@ -85,7 +84,6 @@ const EditBriefInformations = props => {
   const [locationState, dispatch] = useReducer(locationReducer, initialLocation);
   const [city, setCity] = useState(CitiesData.default);
 
-  console.log(city);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -190,8 +188,7 @@ const EditBriefInformations = props => {
       if (genderEl) genderEl.selected = true;
       outOfTownEl.checked = data.outOfTown;
       workShiftsEl.checked = data.workShifts;
-
-      onInputHandler('interest', data.interest, true);
+      if (data?.interest.length > 0) onInputHandler('interest', data.interest, true);
       onInputHandler('outOfTown', data.outOfTown, true);
       onInputHandler('gender', data.gender, !!genderEl);
       onInputHandler('workShifts', data.workShifts, true);
@@ -209,7 +206,6 @@ const EditBriefInformations = props => {
 
     const ApplicantData = {
       applicantId: applicantid,
-      picture: formState.inputs.picture.value,
       firstName: formState.inputs.firstName.value,
       lastName: formState.inputs.lastName.value,
       headline: formState.inputs.headline.value,
@@ -222,24 +218,23 @@ const EditBriefInformations = props => {
       zip: formState.inputs.zip.value,
       phone: formState.inputs.phone.value,
       outOfTown: formState.inputs.outOfTown.value,
-      salary: formState.inputs.salary.value,
+      salary: formState.inputs.salary.value.toString(),
       workShifts: formState.inputs.workShifts.value,
       interest: formState.inputs.interest.value,
       token: props.auth.token,
     };
 
     try {
-      await props.updateApplicantIntro(ApplicantData);
-
-      props.history.push(`/ap/${applicantid}/profile`);
+      await props.updateApplicantBiodata(ApplicantData);
+      props.onCancel();
+      props.fetchApplicantData();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const fowHandler = (e, value) => {
-    let elementArray = [...interest];
-    elementArray = value;
+  const FieldOfWorkHandler = (e, value) => {
+    let elementArray = [...value];
     setInterest(elementArray);
     onInputHandler('interest', elementArray, true);
   };
@@ -265,7 +260,7 @@ const EditBriefInformations = props => {
     onInputHandler('city', '', false);
   };
 
-  const handleCityChange = (e, value) => {
+  const cityChangeHandler = (e, value) => {
     onInputHandler('city', value, true);
     dispatch({ type: LOC.CHGCITY, citySelected: value });
   };
@@ -392,7 +387,7 @@ const EditBriefInformations = props => {
               name='city'
               freeSolo
               options={city.map(option => option)}
-              onChange={handleCityChange}
+              onChange={cityChangeHandler}
               value={locationState.citySelected}
               renderInput={params => <CustomTextField {...params} />}
             />
@@ -401,10 +396,10 @@ const EditBriefInformations = props => {
           <Input
             inputType='input'
             id='address'
-            InputClass='AppInput'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Alamat saat ini*'
+            label={true}
+            labelName='Alamat Domisili*'
             initValue={data.address}
             initIsValid={data.address ? data.address : false}
             helperText='Alamat wajib diisi'
@@ -413,79 +408,74 @@ const EditBriefInformations = props => {
           <Input
             inputType='input'
             id='zip'
-            InputClass='AppInput'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Kode Pos*'
+            label={true}
+            labelName='Kode Pos*'
             initValue={data.zip}
             initIsValid={data.zip ? data.zip : false}
             helperText='Kode pos wajib diisi'
           />
         </section>
 
-        <div className={styles.ContentWrapFull}>
-          <Autocomplete
-            multiple
-            id='interest'
-            name='interest'
-            options={WorkFieldData.sort().map(option => option.field)}
-            getOptionLabel={option => option}
-            onChange={fowHandler}
-            value={interest ? interest : ''}
-            style={{ margin: '0' }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                style={{ margin: '0' }}
-                label='Bidang pekerejaan yang diminati'
-                margin='normal'
-                variant='standard'
-              />
-            )}
-          />
-        </div>
-
-        <div className={styles.ContentWrapFull}>
+        <section className={styles.JobCriteria}>
+          <div className={styles.JobInterestContainer}>
+            <p>
+              Bidang pekerjaan yang diminati <span>(max. 5)</span>
+            </p>
+            <Autocomplete
+              multiple
+              id='interest'
+              name='interest'
+              limitTags={3}
+              disableCloseOnSelect
+              getOptionDisabled={() => (interest.length < 5 ? false : true)}
+              options={WorkFieldData.sort().map(option => option.field)}
+              getOptionLabel={option => option}
+              onChange={FieldOfWorkHandler}
+              value={interest ? interest : ''}
+              renderInput={params => <CustomTextField {...params} />}
+            />
+          </div>
           <Input
             inputType='input'
             id='salary'
             validatorMethod={[VALIDATOR_MIN(0)]}
             onInputHandler={onInputHandler}
             error={false}
-            label='Harapan Gaji*'
+            label={true}
+            labelName='Harapan Gaji'
             initValue={data.salary}
             initIsValid={data.salary ? true : false}
             type='number'
             min={0}
-            step='100000'
-            helperText={formState.inputs.salary.value < 0 ? 'Harapan gaji minimal 0' : 'Harapan gaji wajib diisi'}
+            step='500000'
           />
-        </div>
+        </section>
 
         <div className={styles.WorkingAvailability}>
-          <label onChange={onCheckedInputHandler} className={styles.CheckBox}>
+          <label onChange={onCheckedInputHandler} className={styles.CheckBox} htmlFor='outOfTown'>
             <input id='outOfTown' type='checkbox' name='outOfTown' />
-            <p style={{ margin: '0', marginLeft: '4px' }}>Bersedia ditempatkan di luar kota asal</p>
+            Bersedia ditempatkan di luar kota asal
           </label>
-          <label onChange={onCheckedInputHandler} className={styles.CheckBox}>
+          <label onChange={onCheckedInputHandler} className={styles.CheckBox} htmlFor='workShifts'>
             <input id='workShifts' type='checkbox' name='workShifts' />
-            <p style={{ margin: '0', marginLeft: '4px' }}>Bersedia bekerja dengan sistem shift</p>
+            Bersedia bekerja dengan sistem shift
           </label>
         </div>
 
-        <div className={styles.Footer}>
-          <Link to={`/ap/${applicantid}/profile`}>
-            <Button variant='outlined' type='Button' disableElevation style={{ marginRight: '16px' }}>
-              Back
-            </Button>
-          </Link>
-          <Button
+        <div className={styles.SubmitButtonContainer}>
+          <button type='button' onClick={props.onCancel}>
+            Back
+          </button>
+
+          <button
             disabled={formState.inputs.interest.value.length <= 0 || !formState.formIsValid}
             variant='contained'
             color='primary'
             type='submit'>
             Save
-          </Button>
+          </button>
         </div>
       </form>
     );
@@ -506,7 +496,7 @@ const mapDispatchToProps = dispatch => {
   return {
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantIntro: ApplicantData => dispatch(actionCreators.updateApplicantIntro(ApplicantData)),
+    updateApplicantBiodata: ApplicantData => dispatch(actionCreators.updateApplicantBiodata(ApplicantData)),
   };
 };
 

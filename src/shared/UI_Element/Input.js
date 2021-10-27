@@ -86,6 +86,9 @@ const Input = props => {
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
           onKeyUp={props.onKeyUp}
+          step={props.step}
+          min={props.min}
+          max={props.max}
         />
       );
       break;
@@ -167,24 +170,6 @@ const Input = props => {
             )}
           />
         </LocalizationProvider>
-        // <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        //   <DatePicker
-        //     className={[styles.InputElements, styles[props.InputClass]].join(' ')}
-        //     views={props.views || ['year', 'month', 'date']}
-        //     value={moment(state.value)}
-        //     InputLabelProps={{
-        //       shrink: true,
-        //       disableUnderline: true,
-        //     }}
-        //     style={props.style}
-        //     onChange={eventValue => onCustomDateHandler(eventValue)}
-        //     minDate={props.minDate}
-        //     maxDate={props.maxDate}
-        //     id={id}
-        //     format={props.format}
-        //     helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-        //   />
-        // </MuiPickersUtilsProvider>
       );
       break;
 
