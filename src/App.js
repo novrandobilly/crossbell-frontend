@@ -61,19 +61,6 @@ const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/Applic
 const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
 const Subscription = React.lazy(() => import('./users/applicant/components/Subscription'));
 const Language = React.lazy(() => import('./users/applicant/components/Edit/Language'));
-// const EditApplicantBriefInformations = React.lazy(() =>
-//   import('./users/applicant/components/Edit/EditBriefInformations')
-// );
-const EditApplicantSummary = React.lazy(() => import('./users/applicant/components/Edit/EditSummary'));
-const EditApplicantEducation = React.lazy(() => import('./users/applicant/components/Edit/Education'));
-const EditApplicantExperience = React.lazy(() => import('./users/applicant/components/Edit/Experience'));
-const EditApplicantCertification = React.lazy(() => import('./users/applicant/components/Edit/Certification'));
-const EditApplicantOrganization = React.lazy(() => import('./users/applicant/components/Edit/Organization'));
-const EditApplicantSkills = React.lazy(() => import('./users/applicant/components/Edit/Skill'));
-const AddApplicantEducation = React.lazy(() => import('./users/applicant/components/Add/Education'));
-const AddApplicantExperience = React.lazy(() => import('./users/applicant/components/Add/Experience'));
-const AddApplicantCertification = React.lazy(() => import('./users/applicant/components/Add/Certification'));
-const AddApplicantOrganization = React.lazy(() => import('./users/applicant/components/Add/Organization'));
 
 //==================================== admin =========================================================
 
@@ -160,23 +147,11 @@ const App = props => {
           <Switch>
             {/* Users Routes: Applicant */}
             <Route path='/test/modal' component={OrderModal} />
-            <Route path='/ap/:applicantid/add/education' component={AddApplicantEducation} />
-            <Route path='/ap/:applicantid/add/experience' component={AddApplicantExperience} />
-            <Route path='/ap/:applicantid/add/certification' component={AddApplicantCertification} />
-            <Route path='/ap/:applicantid/add/organization' component={AddApplicantOrganization} />
 
             {/* <Route path='/ap/:applicantid/intro' component={EditApplicantBriefInformations} /> */}
-            <Route path='/ap/:applicantid/summary' component={EditApplicantSummary} />
-            <Route path='/ap/:applicantid/education/:educationindex' component={EditApplicantEducation} />
-            <Route path='/ap/:applicantid/experience/:experienceindex' component={EditApplicantExperience} />
-            <Route path='/ap/:applicantid/certification/:certificationindex' component={EditApplicantCertification} />
-            <Route path='/ap/:applicantid/organization/:organizationindex' component={EditApplicantOrganization} />
+
             <Route path='/ap/:applicantid/language' component={Language} />
-
-            <Route path='/ap/:applicantid/skills' component={EditApplicantSkills} />
-
             <Route path='/ap/:applicantid/appliedjobs' component={JobsApplied} />
-
             <Route path='/ap/:applicantid/profile' component={ApplicantDetails} />
             <Route path='/subscription/:applicantid' component={Subscription} />
 

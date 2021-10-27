@@ -126,21 +126,17 @@ const Input = props => {
 
     case 'textarea':
       inputElement = (
-        <TextField
+        <textarea
           id={id}
-          className={[styles.TextareaElements, styles[props.InputClass]].join(' ')}
-          style={{ margin: '0.5rem 0' }}
-          label={props.label}
+          className={[styles.Textarea, styles[props.InputClass]].join(' ')}
+          label={props.labelName}
           name={props.name}
           value={props.value || state.value}
-          type={props.type || 'text'}
           onChange={props.onChange || onChangeHandler}
           onBlur={onBlurHandler}
-          multiline
           rows={props.rows || 4}
-          variant='outlined'
-          helperText={props.helperText && !state.isValid && state.isTouched && props.helperText}
-          error={props.isValid !== undefined ? !props.isValid && state.isTouched : !state.isValid && state.isTouched}
+          style={props.style}
+          maxLength={props.maxLength || 1500}
         />
       );
       break;

@@ -1,0 +1,68 @@
+$primaryColor: #f79f35;
+
+.DescriptionContainer {
+  width: 100%;
+  padding: 0 5px;
+  box-sizing: border-box;
+  .DescriptionEdit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    .DescriptionTips {
+      width: 100%;
+      margin: 0 0 15px;
+      text-align: start;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.5em;
+      color: #333333;
+    }
+    .DescriptionMaxChar {
+      margin: 0;
+      font-size: 12px;
+      font-style: italic;
+      color: #333333;
+      align-self: flex-start;
+    }
+    .DescriptionChar {
+      margin: 0;
+      font-size: 12px;
+      font-style: italic;
+      color: #333333;
+      align-self: flex-end;
+    }
+  }
+  .ButtonContainer {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    button {
+      width: 100%;
+      max-width: 80px;
+      min-height: 30px;
+      background-color: $primaryColor;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .BackButton {
+      background-color: #fff;
+      border: 1px solid $primaryColor;
+      color: $primaryColor;
+    }
+    .SubmitButton {
+      &:disabled {
+        background-color: #aaaaaa;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

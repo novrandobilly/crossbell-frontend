@@ -1,9 +1,18 @@
+@import '../../../shared/UI_Element/AddEditButton.module';
 .DescriptionContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  p {
+  .AddEditButton {
+    top: 10px;
+    right: 10px;
+    &::after {
+      content: 'Edit Description';
+    }
+  }
+  .DescriptionBody {
     text-align: start;
     line-height: 1.5em;
     margin: 0;
