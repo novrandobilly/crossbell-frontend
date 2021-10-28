@@ -111,7 +111,11 @@ const ApplicantProfile = props => {
       </section>
 
       <section className={styles.ApplicantSkills}>
-        <Skills skills={applicantData.skills} />
+        <Skills
+          skills={applicantData.skills}
+          EditAuthorized={props.auth.userId === applicantData.id}
+          fetchApplicantData={props.fetchApplicantData}
+        />
       </section>
 
       <section className={styles.ApplicantWorkingExperiences}>

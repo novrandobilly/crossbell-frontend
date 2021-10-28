@@ -6,8 +6,18 @@ $primaryColor: #f79f35;
   justify-content: $justifyContent;
 }
 
+@import '../../../shared/UI_Element/AddEditButton.module';
+
 .SkillsListingContainer {
   @include flexCenter(column, flex-start, flex-start);
+  position: relative;
+  .AddEditButton {
+    top: 10px;
+    right: 10px;
+    &::after {
+      content: 'Edit Skills';
+    }
+  }
   .SkillsHeaderTitle {
     @include flexCenter(row, flex-start, center);
     img {

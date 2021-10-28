@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -315,7 +314,6 @@ const EditBriefInformations = props => {
             id='dateOfBirth'
             validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
             onInputHandler={onInputHandler}
-            maxDate={moment()}
             initValue={data.dateOfBirth ? data.dateOfBirth : null}
             initIsValid={data.dateOfBirth ? data.dateOfBirth : false}
             label={true}

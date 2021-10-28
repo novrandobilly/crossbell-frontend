@@ -7,12 +7,9 @@ import EditDescription from './Edit/EditDescription';
 
 const Description = props => {
   const [openDescription, setOpenDescription] = useState(false);
-  const openDescriptionHandler = () => {
-    setOpenDescription(true);
-  };
-  const closeDescriptionHandler = () => {
-    setOpenDescription(false);
-  };
+  const openDescriptionHandler = () => setOpenDescription(true);
+  const closeDescriptionHandler = () => setOpenDescription(false);
+
   const splitParagraph = eduParagraph => {
     let paragraphArray = eduParagraph.split('\n').filter(edu => edu);
     return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import moment from 'moment';
 
 import { validate } from '../utils/validator';
@@ -144,11 +144,12 @@ const Input = props => {
     case 'datePicker':
       inputElement = (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            minDate={props.minDate}
-            maxDate={props.maxDate}
+          <MobileDatePicker
+            minDate={props.minDate && props.minDate}
+            maxDate={props.maxDate && props.maxDate}
             id={id}
-            views={['year', 'month', 'day']}
+            disableFuture={props.disableFuture || true}
+            views={['year', 'day']}
             value={moment(state.value).format('L')}
             onChange={eventValue => onCustomDateHandler(eventValue)}
             renderInput={({ inputRef, inputProps, InputProps }) => (
@@ -156,7 +157,7 @@ const Input = props => {
                 <input
                   ref={inputRef}
                   {...inputProps}
-                  value={state.value ? moment(state.value).format('L') : 'Silahkan isi tanggal lahir'}
+                  value={state.value ? moment(state.value).format('L') : '-'}
                   onChange={eventValue => onCustomDateHandler(eventValue)}
                   style={props.style}
                   className={styles.DatePickerInput}
