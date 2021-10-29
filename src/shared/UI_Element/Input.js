@@ -133,7 +133,7 @@ const Input = props => {
           name={props.name}
           value={props.value || state.value}
           onChange={props.onChange || onChangeHandler}
-          onBlur={onBlurHandler}
+          onBlur={props.onBlurHandler && onBlurHandler}
           rows={props.rows || 4}
           style={props.style}
           maxLength={props.maxLength || 1500}
@@ -149,7 +149,7 @@ const Input = props => {
             maxDate={props.maxDate && props.maxDate}
             id={id}
             disableFuture={props.disableFuture || true}
-            views={['year', 'day']}
+            views={props.views || ['year', 'day']}
             value={moment(state.value).format('L')}
             onChange={eventValue => onCustomDateHandler(eventValue)}
             renderInput={({ inputRef, inputProps, InputProps }) => (
@@ -157,7 +157,7 @@ const Input = props => {
                 <input
                   ref={inputRef}
                   {...inputProps}
-                  value={state.value ? moment(state.value).format('L') : '-'}
+                  value={state.value ? moment(state.value).format(`${props.format || 'LL'}`) : '-'}
                   onChange={eventValue => onCustomDateHandler(eventValue)}
                   style={props.style}
                   className={styles.DatePickerInput}

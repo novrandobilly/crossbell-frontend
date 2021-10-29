@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import Backdrop from './Backdrop';
 
 import styles from './Modal.module.scss';
-import CloseButton from '../../assets/icons/x-mark.svg';
+import CloseButton from '../../assets/icons/x-mark-white.svg';
 
 const ModalOverlay = props => {
   const content = (

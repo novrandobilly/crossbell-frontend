@@ -1,0 +1,59 @@
+.AddWorkingExperienceContainer {
+  .WorkingExperienceInput {
+    & > * {
+      margin-bottom: 10px;
+    }
+    .WorkingPeriod {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+    .StillWorkingHereCheck {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .CheckboxText {
+        width: fit-content;
+        text-align: start;
+        margin-left: 5px;
+        box-sizing: border-box;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .SubmitButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    margin: auto;
+    button {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      max-width: 80px;
+      box-sizing: border-box;
+      &:hover {
+        cursor: pointer;
+      }
+      &:nth-child(1) {
+        background-color: #fff;
+        border: 2px solid #f79f35;
+      }
+      &:nth-child(2) {
+        background-color: #f79f35;
+        border: 2px solid #f79f35;
+        color: #fff;
+        &:disabled {
+          background-color: #aaa;
+          border-color: #aaa;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

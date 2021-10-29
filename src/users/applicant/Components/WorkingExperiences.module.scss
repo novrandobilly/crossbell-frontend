@@ -6,8 +6,11 @@ $primaryColor: #f79f35;
   align-items: $alignItems;
   justify-content: $justifyContent;
 }
+@import '../../../shared//UI_Element/AddEditButton.module';
+
 .WorkingExperiencesContainer {
   @include flexCenter(column, flex-start, flex-start);
+  position: relative;
   width: 100%;
   .WorkingExperiencesHeaderTitle {
     @include flexCenter(row, flex-start, center);
@@ -27,6 +30,9 @@ $primaryColor: #f79f35;
   }
   .WorkingExperiencesItem {
     @include flexCenter(column, flex-start, flex-start);
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
     padding-left: 50px;
     margin-bottom: 20px;
     & > * {
@@ -43,6 +49,60 @@ $primaryColor: #f79f35;
     p {
       padding-left: 20px;
       line-height: 1.5em;
+    }
+  }
+  .AddEditButton {
+    top: 10px;
+    right: 10px;
+    &::after {
+      content: 'Tambah Pengalaman';
+    }
+    &:hover {
+      max-width: 225px;
+    }
+    &.EditWorkingExpItem {
+      right: 60px;
+      &::after {
+        content: 'Edit Pengalaman';
+      }
+    }
+    &.DeleteItem {
+      & img {
+        width: 100%;
+        max-width: 40px;
+      }
+      &:hover {
+        max-width: 125px;
+      }
+      &::after {
+        content: 'Hapus';
+      }
+    }
+  }
+}
+.DeleteButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 200px;
+  margin: auto;
+  button {
+    width: 100%;
+    max-width: 70px;
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 2px solid #f79f35;
+    &:hover {
+      cursor: pointer;
+    }
+    &:nth-child(1) {
+      background-color: #fff;
+    }
+    &:nth-child(2) {
+      background-color: #f79f35;
+      color: #fff;
     }
   }
 }

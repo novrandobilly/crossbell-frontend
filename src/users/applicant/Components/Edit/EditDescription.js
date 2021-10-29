@@ -96,7 +96,6 @@ const EditDescription = props => {
             initValue={data.details}
             initIsValid={true}
             rows={14}
-            helperText='Rincian setidaknya berjumlah 20 karakter'
             style={{ height: '200px' }}
           />
           <p className={styles.DescriptionChar}>{characterLength}/1500 karakter</p>

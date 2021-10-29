@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from '../actions/actions';
 
 const initialState = {
   isLoading: false,
@@ -7,7 +7,7 @@ const initialState = {
 
 const applicantReducers = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.DELETESEGMENTSTART:
+    case actionTypes.DELETEITEMSTART:
     case actionTypes.GETAPPLICANTSTART:
     case actionTypes.CREATEAPPLICANTSTART:
     case actionTypes.UPDATEAPPLICANTSTART: {
@@ -17,7 +17,7 @@ const applicantReducers = (state = initialState, action) => {
         error: false,
       };
     }
-    case actionTypes.DELETESEGMENT:
+    case actionTypes.DELETEITEM:
     case actionTypes.APPLICANTRESET:
     case actionTypes.GETAPPLICANT:
     case actionTypes.UPDATEAPPLICANT:
@@ -29,7 +29,7 @@ const applicantReducers = (state = initialState, action) => {
       };
     }
 
-    case actionTypes.DELETESEGMENTFAIL:
+    case actionTypes.DELETEITEMFAIL:
     case actionTypes.UPDATEAPPLICANTFAIL:
     case actionTypes.GETAPPLICANTFAIL:
     case actionTypes.CREATEAPPLICANTFAIL: {

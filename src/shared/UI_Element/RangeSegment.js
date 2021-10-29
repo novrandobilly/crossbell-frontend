@@ -8,12 +8,12 @@ import IconButton from './IconButton';
 
 import classes from './RangeSegment.module.css';
 
-const RangeSegment = (props) => {
+const RangeSegment = props => {
   const [segmentArray, setSegmentArray] = useState(props.contents);
 
-  const deleteSegmentHandler = (elementId) => {
+  const deleteItemHandler = elementId => {
     let tempSegment = [...segmentArray];
-    tempSegment = tempSegment.filter((seg) => {
+    tempSegment = tempSegment.filter(seg => {
       return seg.id !== elementId;
     });
     setSegmentArray(tempSegment);
@@ -23,9 +23,7 @@ const RangeSegment = (props) => {
     <div className={classes.Wraper}>
       <div className={classes.Container}>
         <div className={classes.Header}>
-          {props.labelName && (
-            <label className={classes.Label}>{props.labelName}</label>
-          )}
+          {props.labelName && <label className={classes.Label}>{props.labelName}</label>}
           {props.auth.userId === props.applicantid && (
             <div>
               <Link to={props.routeAdd}>
@@ -41,9 +39,7 @@ const RangeSegment = (props) => {
               <div key={i} className={classes.MapContainer}>
                 <RangeSegmentMap
                   title={content.school || content.prevTitle || content.title}
-                  subTitle={
-                    content.major || content.prevCompany || content.organization
-                  }
+                  subTitle={content.major || content.prevCompany || content.organization}
                   start={moment(content.startDate).format('MMMM YYYY')}
                   end={
                     moment(content.endDate).year() < 10000
@@ -58,9 +54,7 @@ const RangeSegment = (props) => {
                   index={i}
                   elementId={content._id}
                   isLoading={props.isLoading}
-                  deleteSegmentHandler={(elementId) =>
-                    deleteSegmentHandler(elementId)
-                  }
+                  deleteItemHandler={elementId => deleteItemHandler(elementId)}
                   token={props.token}
                   applicantid={props.applicantid}
                 />
@@ -68,16 +62,14 @@ const RangeSegment = (props) => {
             );
           })}
         {segmentArray.length < 1 && (
-          <p className={classes.EmptyDescription}>
-            Silahkan lengkapi data diri anda terlebih dahulu
-          </p>
+          <p className={classes.EmptyDescription}>Silahkan lengkapi data diri anda terlebih dahulu</p>
         )}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     auth: state.auth,
     admin: state.admin,

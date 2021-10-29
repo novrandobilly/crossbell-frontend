@@ -51,38 +51,37 @@ const getApplicantStart = () => {
   };
 };
 
-const deleteSegmentSuccess = payload => {
+const deleteItemSuccess = payload => {
   return {
-    type: actionTypes.DELETESEGMENT,
+    type: actionTypes.DELETEITEM,
     payload: payload,
   };
 };
-const deleteSegmentFail = () => {
+const deleteItemFail = () => {
   return {
-    type: actionTypes.DELETESEGMENTFAIL,
+    type: actionTypes.DELETEITEMFAIL,
   };
 };
-const deleteSegmentStart = () => {
+const deleteItemStart = () => {
   return {
-    type: actionTypes.DELETESEGMENTSTART,
+    type: actionTypes.DELETEITEMSTART,
   };
 };
 
-export const deleteSegment = segmentData => {
+export const deleteItem = payload => {
   return async dispatch => {
-    dispatch(deleteSegmentStart());
+    dispatch(deleteItemStart());
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/segment`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/deleteItem`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${segmentData.token}`,
+          Authorization: `Bearer ${payload.token}`,
         },
         body: JSON.stringify({
-          applicantId: segmentData.applicantId,
-          elementId: segmentData.elementId,
-          segment: segmentData.segment,
-          index: segmentData.index,
+          applicantId: payload.applicantId,
+          itemId: payload.itemId,
+          itemCategories: payload.itemCategories,
         }),
       });
       const responseJSON = await response.json();
@@ -90,10 +89,10 @@ export const deleteSegment = segmentData => {
         throw new Error(responseJSON.message);
       }
       console.log(responseJSON);
-      dispatch(deleteSegmentSuccess(responseJSON));
+      dispatch(deleteItemSuccess(responseJSON));
       return responseJSON;
     } catch (err) {
-      dispatch(deleteSegmentFail());
+      dispatch(deleteItemFail());
     }
   };
 };
@@ -355,27 +354,27 @@ export const updateApplicantEducation = ApplicantData => {
   };
 };
 
-export const updateApplicantExperience = ApplicantData => {
+export const updateApplicantExperience = payload => {
   return async dispatch => {
     dispatch(updateApplicantStart());
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${ApplicantData.token}`,
+          Authorization: `Bearer ${payload.token}`,
         },
         body: JSON.stringify({
-          id: ApplicantData.applicantId,
+          id: payload.applicantId,
           experience: {
-            prevTitle: ApplicantData.prevTitle,
-            prevCompany: ApplicantData.prevCompany,
-            prevIndustry: ApplicantData.prevIndustry,
-            startDate: ApplicantData.startDate,
-            endDate: ApplicantData.endDate,
-            description: ApplicantData.description,
+            id: payload.experienceId,
+            prevTitle: payload.prevTitle,
+            prevCompany: payload.prevCompany,
+            prevIndustry: payload.prevIndustry,
+            startDate: payload.startDate,
+            endDate: payload.endDate,
+            description: payload.description,
           },
-          index: ApplicantData.index ? ApplicantData.index : null,
         }),
       });
       const responseJSON = await response.json();

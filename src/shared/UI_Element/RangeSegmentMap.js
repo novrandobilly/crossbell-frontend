@@ -28,12 +28,12 @@ const RangeSegmentMap = props => {
       };
 
       try {
-        const res = await props.deleteSegment(segmentData);
+        const res = await props.deleteItem(segmentData);
         if (res) {
           console.log(res);
         }
         setIndexLoading(null);
-        props.deleteSegmentHandler(props.elementId.toString());
+        props.deleteItemHandler(props.elementId.toString());
       } catch (err) {
         console.log(err);
         setIndexLoading(null);
@@ -91,7 +91,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteSegment: segmentData => dispatch(actionCreators.deleteSegment(segmentData)),
+    deleteItem: segmentData => dispatch(actionCreators.deleteItem(segmentData)),
   };
 };
 

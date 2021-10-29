@@ -120,7 +120,11 @@ const ApplicantProfile = props => {
 
       <section className={styles.ApplicantWorkingExperiences}>
         <WorkingExperiences
-          experiences={applicantData.experience.sort((a, b) => moment(b.endDate) - moment(a.endDate))}
+          experiences={applicantData.experience.sort(
+            (a, b) => moment(b.endDate ? b.endDate : new Date()) - moment(a.endDate ? a.endDate : new Date())
+          )}
+          EditAuthorized={props.auth.userId === applicantData.id}
+          fetchApplicantData={props.fetchApplicantData}
         />
       </section>
       <section className={styles.ApplicantEducations}>

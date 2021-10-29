@@ -18,7 +18,7 @@ export {
   updateApplicantSkills,
   updateApplicantLanguages,
   getOneApplicant,
-  deleteSegment,
+  deleteItem,
   updateResume,
   getApplicantJobsApplied,
 } from './applicant-actions';
