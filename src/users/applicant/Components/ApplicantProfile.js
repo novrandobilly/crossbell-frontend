@@ -128,7 +128,13 @@ const ApplicantProfile = props => {
         />
       </section>
       <section className={styles.ApplicantEducations}>
-        <Educations educations={applicantData.education.sort((a, b) => moment(b.endDate) - moment(a.endDate))} />
+        <Educations
+          educations={applicantData.education.sort(
+            (a, b) => moment(b.endDate ? b.endDate : new Date()) - moment(a.endDate ? a.endDate : new Date())
+          )}
+          EditAuthorized={props.auth.userId === applicantData.id}
+          fetchApplicantData={props.fetchApplicantData}
+        />
       </section>
       <section className={styles.ApplicantOrganizationExperiences}>
         <Organizations
