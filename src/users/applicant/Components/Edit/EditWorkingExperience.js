@@ -29,7 +29,7 @@ const Experience = props => {
     };
     if (props.auth.token) {
       getOneApplicant(payload).then(res => {
-        const workExperience = res.applicant.experience.filter(exp => exp.id === workingExperienceId)[0];
+        const workExperience = res.applicant?.experience.filter(exp => exp.id === workingExperienceId)[0];
         if (workExperience.endDate === null) setStillWorking(true);
         setData(workExperience);
       });
@@ -65,6 +65,7 @@ const Experience = props => {
     },
     false
   );
+  console.log(formState);
 
   const onSubmitHandler = async event => {
     event.preventDefault();

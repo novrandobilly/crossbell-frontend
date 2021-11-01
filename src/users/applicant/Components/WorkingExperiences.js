@@ -11,6 +11,7 @@ import Modal from '../../../shared/UI_Element/Modal';
 import AddWorkingExperience from './Add/AddWorkingExperience';
 import EditWorkingExperience from './Edit/EditWorkingExperience';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './WorkingExperiences.module.scss';
 
@@ -19,11 +20,6 @@ const WorkingExperiences = props => {
   const [openEditWorkingExp, setOpenEditWorkingExp] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [workingExperienceId, setWorkingExperienceId] = useState(null);
-
-  const splitParagraph = expParagraph => {
-    let paragraphArray = expParagraph.split('\n').filter(exp => exp);
-    return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);
-  };
 
   const openAddWorkingExpHandler = () => setOpenAddWorkingExp(true);
   const closeAddWorkingExpHandler = () => setOpenAddWorkingExp(false);

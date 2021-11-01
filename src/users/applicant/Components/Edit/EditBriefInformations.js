@@ -48,7 +48,7 @@ const initialLocation = {
   citySelected: '',
 };
 
-const LOC = {
+const LOCATION = {
   INITFETCH: 'initialFetch',
   CHGPROVINCE: 'changeProvince',
   CHGCITY: 'changeCity',
@@ -56,17 +56,17 @@ const LOC = {
 
 const locationReducer = (state, action) => {
   switch (action.type) {
-    case LOC.INITFETCH:
+    case LOCATION.INITFETCH:
       return {
         province: action.province,
         citySelected: action.citySelected,
       };
-    case LOC.CHGPROVINCE:
+    case LOCATION.CHGPROVINCE:
       return {
         province: action.province,
         citySelected: '',
       };
-    case LOC.CHGCITY:
+    case LOCATION.CHGCITY:
       return {
         ...state,
         citySelected: action.citySelected,
@@ -97,7 +97,7 @@ const EditBriefInformations = props => {
       getOneApplicant(payload).then(res => {
         setInterest(res.applicant.interest);
         dispatch({
-          type: LOC.INITFETCH,
+          type: LOCATION.INITFETCH,
           province: res.applicant.state,
           citySelected: res.applicant.city,
         });
@@ -192,7 +192,6 @@ const EditBriefInformations = props => {
       onInputHandler('gender', data.gender, !!genderEl);
       onInputHandler('workShifts', data.workShifts, true);
       onInputHandler('state', locationState.province, true);
-
       onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
     }
   }, [data, onInputHandler, locationState, city]);
@@ -252,16 +251,19 @@ const EditBriefInformations = props => {
 
   //=================== State Handler ====================
 
-  const handleStateChange = (e, value) => {
+  const onStateChangeHandler = (e, value) => {
+    console.log(value);
     ProvinceToCity(value, setCity);
     onInputHandler('state', value, true);
-    dispatch({ type: LOC.CHGPROVINCE, province: value });
+    dispatch({ type: LOCATION.CHGPROVINCE, province: value });
     onInputHandler('city', '', false);
   };
 
-  const cityChangeHandler = (e, value) => {
+  const onCityChangeHandler = (e, value) => {
+    console.log(value);
+
     onInputHandler('city', value, true);
-    dispatch({ type: LOC.CHGCITY, citySelected: value });
+    dispatch({ type: LOCATION.CHGCITY, citySelected: value });
   };
 
   let formContent = <LoadingBar />;
@@ -371,8 +373,10 @@ const EditBriefInformations = props => {
               name='state'
               freeSolo
               options={ProvinceData.sort().map(option => option)}
-              onChange={handleStateChange}
-              value={locationState.province}
+              value={locationState.province || ''}
+              inputValue={locationState.province || ''}
+              onChange={onStateChangeHandler}
+              onInputChange={onStateChangeHandler}
               renderInput={params => <CustomTextField {...params} />}
             />
           </div>
@@ -385,8 +389,10 @@ const EditBriefInformations = props => {
               name='city'
               freeSolo
               options={city.map(option => option)}
-              onChange={cityChangeHandler}
-              value={locationState.citySelected}
+              value={locationState.citySelected || ''}
+              inputValue={locationState.citySelected || ''}
+              onChange={onCityChangeHandler}
+              onInputChange={onCityChangeHandler}
               renderInput={params => <CustomTextField {...params} />}
             />
           </div>

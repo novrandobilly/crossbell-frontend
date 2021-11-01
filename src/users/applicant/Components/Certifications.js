@@ -2,13 +2,10 @@ import React from 'react';
 import moment from 'moment';
 
 import CertificationsIcon from '../../../assets/icons/certificate.svg';
+import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 import styles from './Certifications.module.scss';
 
 const Certifications = ({ certifications }) => {
-  const splitParagraph = expParagraph => {
-    let paragraphArray = expParagraph.split('\n').filter(exp => exp);
-    return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);
-  };
   return (
     <div className={styles.CertificationsContainer}>
       <h1 className={styles.CertificationsHeaderTitle}>

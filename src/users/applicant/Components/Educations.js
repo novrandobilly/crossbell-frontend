@@ -5,6 +5,7 @@ import Modal from '../../../shared/UI_Element/Modal';
 import AddEducation from './Add/AddEducation';
 import EducationsIcon from '../../../assets/icons/education.svg';
 import AddWhiteIcon from '../../../assets/icons/add-white.svg';
+import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './Educations.module.scss';
 
@@ -14,10 +15,6 @@ const Educations = props => {
   const onOpenAddEducationHandler = () => setOpenAddEducation(true);
   const onCloseAddEducationHandler = () => setOpenAddEducation(false);
 
-  const splitParagraph = eduParagraph => {
-    let paragraphArray = eduParagraph.split('\n').filter(edu => edu);
-    return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);
-  };
   return (
     <Fragment>
       <Modal

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
@@ -14,27 +14,40 @@ import {
 } from '../../../../shared/utils/validator';
 
 import University from '../../../../shared/UI_Element/PredefinedData/UniversityData';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/material/styles';
+
 import Modal from '../../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 
 import styles from './AddEducation.module.scss';
 
+const CustomTextField = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    padding: '0',
+    '& .MuiOutlinedInput-input': {
+      padding: '5px',
+    },
+    '& fieldset': {
+      border: '2px solid #f79f35',
+      borderRadius: '5px',
+    },
+    '&.Mui-focused fieldset': {
+      border: '2px solid #f79f35',
+    },
+    '&:hover fieldset': {
+      border: '2px solid #f79f35',
+    },
+  },
+});
+
 const AddEducation = props => {
   const { applicantid } = useParams();
-  const push = props.push;
 
-  const filter = createFilterOptions();
-
-  const [degree, setDegree] = useState('');
+  const [degree, setDegree] = useState('SMA');
   const [school, setSchool] = useState('');
-  const [open, setOpen] = useState(false);
   const [formState, onInputHandler] = useForm(
     {
       school: {
@@ -97,13 +110,7 @@ const AddEducation = props => {
       token: props.auth.token,
     };
     try {
-      const res = await props.updateApplicantEducation(updatedEducation);
-      if (res) {
-        console.log(res);
-      } else {
-        console.log('no res detected');
-      }
-      !push && props.history.push(`/ap/${applicantid}/profile`);
+      await props.updateApplicantEducation(updatedEducation);
     } catch (err) {
       console.log(err);
     }
@@ -119,113 +126,40 @@ const AddEducation = props => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
-    setDegree(e.target.value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
+    setDegree(elementValue);
   };
 
   const onAutoCompleteHandler = (event, newValue) => {
     event.preventDefault();
     console.log(newValue);
-    if (typeof newValue === 'string') {
-      setSchool({
-        institusi: newValue,
-      });
-      onInputHandler('school', newValue.institusi, true);
-    } else if (newValue && newValue.inputValue) {
-      setSchool({
-        institusi: newValue.inputValue,
-      });
-      onInputHandler('school', newValue.inputValue.institusi, true);
-    } else {
-      setSchool(newValue);
-      onInputHandler('school', newValue?.institusi || '', true);
-    }
-  };
-
-  const onFilterHandler = (options, params) => {
-    const filtered = filter(options, params);
-
-    if (params.inputValue !== '') {
-      filtered.push({
-        inputValue: params.inputValue,
-        institusi: `Tambahkan "${params.inputValue}"`,
-      });
-    }
-
-    return filtered;
   };
 
   let formContent = (
-    <div className={styles.ContainerFlex}>
-      <Autocomplete
-        value={school}
-        onChange={onAutoCompleteHandler}
-        filterOptions={onFilterHandler}
-        selectOnFocus
-        clearOnBlur
-        handleHomeEndKeys
-        id='school'
-        name='school'
-        ccc='true'
-        options={University}
-        getOptionLabel={option => {
-          if (typeof option === 'string') {
-            return option;
-          }
-          if (option.inputValue) {
-            return option.inputValue;
-          }
-          return option.institusi;
-        }}
-        renderOption={option => option.institusi}
-        freeSolo
-        renderInput={params => (
-          <TextField {...params} label='Nama sekolah/ universitas*' margin='normal' variant='standard' />
-        )}
-      />
+    <form className={styles.AddEducationFormContainer} onSubmit={onSubmitHandler}>
+      <div className={styles.UniversityContainer}>
+        <p>Nama Sekolah/Universitas</p>
+        <Autocomplete
+          value={school}
+          onChange={onAutoCompleteHandler}
+          id='school'
+          name='school'
+          options={University.map(uni => uni.institusi)}
+          freeSolo
+          renderInput={params => <CustomTextField {...params} />}
+        />
+      </div>
 
-      <FormControl className={styles.formControl} style={{ margin: '0 0 8px 0' }}>
-        <InputLabel id='degree' style={{ fontSize: '1rem' }}>
-          Tingkat Pendidikan*
-        </InputLabel>
-
-        <Select
-          labelId='degree'
-          id='degree'
-          name='degree'
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={degree}
-          onChange={handleChange}
-          style={{ fontSize: '0.9rem', textAlign: 'left' }}>
-          <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
-            SMA
-          </MenuItem>
-          <MenuItem value={'SMK'} style={{ fontSize: '0.9rem' }}>
-            SMK
-          </MenuItem>
-          <MenuItem value={'D3'} style={{ fontSize: '0.9rem' }}>
-            D3
-          </MenuItem>
-          <MenuItem value={'S1'} style={{ fontSize: '0.9rem' }}>
-            S1
-          </MenuItem>
-          <MenuItem value={'S2'} style={{ fontSize: '0.9rem' }}>
-            S2
-          </MenuItem>
-          <MenuItem value={'S3'} style={{ fontSize: '0.9rem' }}>
-            S3
-          </MenuItem>
-        </Select>
-      </FormControl>
+      <div className={styles.Degree}>
+        <p>Tingkat Pendidikan</p>
+        <select id='degree' name='degree' value={degree} onChange={handleChange}>
+          <option value='SMA'>SMA</option>
+          <option value='SMK'>SMK</option>
+          <option value='D3'>D3</option>
+          <option value='S1'>S1</option>
+          <option value='S2'>S2</option>
+          <option value='S3'>S3</option>
+        </select>
+      </div>
 
       <Input
         inputType='input'
@@ -233,7 +167,8 @@ const AddEducation = props => {
         InputClass='AddJobInput'
         validatorMethod={[VALIDATOR_REQUIRE()]}
         onInputHandler={onInputHandler}
-        label='Bidang Studi*'
+        label={true}
+        labelName='Bidang Studi*'
         initIsValid={true}
       />
 
@@ -243,49 +178,51 @@ const AddEducation = props => {
         InputClass='AddJobInput'
         validatorMethod={[VALIDATOR_REQUIRE()]}
         onInputHandler={onInputHandler}
-        label='Alamat*'
+        label={true}
+        labelName='Lokasi*'
         initIsValid={true}
       />
 
-      <Input
-        inputType='datePicker'
-        id='startDate'
-        validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-        onInputHandler={onInputHandler}
-        views={['year']}
-        maxDate={moment()}
-        initValue={moment()}
-        initIsValid={true}
-      />
+      <div className={styles.EducationPeriod}>
+        <Input
+          inputType='datePicker'
+          id='startDate'
+          validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+          onInputHandler={onInputHandler}
+          views={['year']}
+          format='YYYY'
+          initValue={moment()}
+          initIsValid={true}
+          label={true}
+          labelName='Tahun Mulai'
+        />
 
-      <Input
-        inputType='datePicker'
-        id='endDate'
-        validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-        onInputHandler={onInputHandler}
-        views={['year']}
-        maxDate={moment()}
-        initIsValid={true}
-        initValue={moment()}
-      />
+        <Input
+          inputType='datePicker'
+          id='endDate'
+          validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+          onInputHandler={onInputHandler}
+          views={['year']}
+          format='YYYY'
+          initIsValid={true}
+          disableFuture={false}
+          initValue={moment()}
+          label={true}
+          labelName='Tahun Selesai (atau estimasi selesai)'
+        />
+      </div>
 
       <Input
         inputType='input'
         id='IPK'
         validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
         onInputHandler={onInputHandler}
-        error={false}
         type='number'
         min={0}
         max={4}
         step='0.1'
-        helperText={
-          formState.inputs.IPK.value < 0
-            ? 'Nilai IPK min 0'
-            : formState.inputs.IPK.value > 4
-            ? 'Nilai IPK max 4'
-            : 'IPK wajib diisi'
-        }
+        label={true}
+        labelName='IPK'
       />
 
       <Input
@@ -294,18 +231,22 @@ const AddEducation = props => {
         inputClass='EditProfileTextArea'
         validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
         onInputHandler={onInputHandler}
-        label='Deskripsi Pendidikan (Opsional)'
+        label={true}
+        labelName='Deskripsi Pendidikan (Opsional)'
         initIsValid={true}
-        rows={12}
+        rows={10}
+        style={{ border: '2px solid #f79f35', outline: 'none' }}
       />
 
       <div className={styles.SubmitButtonContainer}>
-        <button type='button'>Back</button>
+        <button type='button' onClick={props.onCancel}>
+          Back
+        </button>
         <button disabled={!formState.formIsValid} type='submit'>
           Save
         </button>
       </div>
-    </div>
+    </form>
   );
 
   if (props.isLoading) {
@@ -317,12 +258,12 @@ const AddEducation = props => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className={styles.Container}>
+    <Fragment>
       <Modal show={props.error} onCancel={onCancelHandler}>
         Silahkan lengkapi form sesuai data yang diminta
       </Modal>
       {formContent}
-    </form>
+    </Fragment>
   );
 };
 

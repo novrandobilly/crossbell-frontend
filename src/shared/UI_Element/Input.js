@@ -148,7 +148,7 @@ const Input = props => {
             minDate={props.minDate && props.minDate}
             maxDate={props.maxDate && props.maxDate}
             id={id}
-            disableFuture={props.disableFuture || true}
+            disableFuture={props.disableFuture === undefined ? true : props.disableFuture}
             views={props.views || ['year', 'day']}
             value={moment(state.value).format('L')}
             onChange={eventValue => onCustomDateHandler(eventValue)}

@@ -1,19 +1,17 @@
 import React, { Fragment, useState } from 'react';
 
-import styles from './Description.module.scss';
 import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 import Modal from '../../../shared/UI_Element/Modal';
 import EditDescription from './Edit/EditDescription';
+import { splitParagraph } from '../../../shared/utils/sharedFunctions';
+
+import styles from './Description.module.scss';
 
 const Description = props => {
   const [openDescription, setOpenDescription] = useState(false);
   const openDescriptionHandler = () => setOpenDescription(true);
   const closeDescriptionHandler = () => setOpenDescription(false);
 
-  const splitParagraph = eduParagraph => {
-    let paragraphArray = eduParagraph.split('\n').filter(edu => edu);
-    return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);
-  };
   return (
     <Fragment>
       <Modal

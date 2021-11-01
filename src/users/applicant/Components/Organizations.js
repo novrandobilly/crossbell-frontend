@@ -1,15 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import OrganizationsIcon from '../../../assets/icons/organization.svg';
+import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './Organizations.module.scss';
 
 const Organizations = ({ organizations }) => {
-  const splitParagraph = orgParagraph => {
-    let paragraphArray = orgParagraph.split('\n').filter(org => org);
-    return paragraphArray.map((paragraph, index) => <p key={`paragraph_${index}`}>{paragraph}</p>);
-  };
-
   return (
     <div className={styles.OrganizationsContainer}>
       <h1 className={styles.OrganizationsHeaderTitle}>
