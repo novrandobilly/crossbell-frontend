@@ -1,0 +1,74 @@
+.EditEducationFormContainer {
+  & > * {
+    margin-bottom: 10px;
+  }
+  .UniversityContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    p {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    & > *:nth-child(2) {
+      width: 100%;
+    }
+  }
+  .Degree {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    p {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    select {
+      border-radius: 5px;
+      border: 2px solid #f79f35;
+      padding: 5px;
+      width: 100%;
+      max-width: 100px;
+      outline: none;
+    }
+  }
+  .EducationPeriod {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .SubmitButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+    button {
+      border-radius: 5px;
+      background-color: #f79f35;
+      border: none;
+      padding: 5px;
+      width: 100%;
+      max-width: 80px;
+      color: #fff;
+      border: 2px solid #f79f35;
+      &:hover {
+        cursor: pointer;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #999;
+        border-color: #999;
+      }
+      &:nth-child(1) {
+        background-color: #fff;
+        color: #f79f35;
+      }
+    }
+  }
+}

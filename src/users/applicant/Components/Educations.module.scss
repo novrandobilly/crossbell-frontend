@@ -30,6 +30,9 @@ $primaryColor: #f79f35;
   }
   .EducationsItem {
     @include flexCenter(column, flex-start, flex-start);
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
     padding-left: 50px;
     margin-bottom: 20px;
     & > * {
@@ -57,10 +60,10 @@ $primaryColor: #f79f35;
     &:hover {
       max-width: 225px;
     }
-    &.EditWorkingExpItem {
+    &.EditEducationItem {
       right: 60px;
       &::after {
-        content: 'Edit Pengalaman';
+        content: 'Edit Pendidikan';
       }
     }
     &.DeleteItem {
@@ -74,6 +77,33 @@ $primaryColor: #f79f35;
       &::after {
         content: 'Hapus';
       }
+    }
+  }
+}
+
+.DeleteButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 200px;
+  margin: auto;
+  button {
+    width: 100%;
+    max-width: 70px;
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 2px solid #f79f35;
+    &:hover {
+      cursor: pointer;
+    }
+    &:nth-child(1) {
+      background-color: #fff;
+    }
+    &:nth-child(2) {
+      background-color: #f79f35;
+      color: #fff;
     }
   }
 }

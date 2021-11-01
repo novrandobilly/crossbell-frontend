@@ -317,29 +317,29 @@ export const updateApplicantSummary = ApplicantData => {
   };
 };
 
-export const updateApplicantEducation = ApplicantData => {
+export const updateApplicantEducation = payload => {
   return async dispatch => {
     dispatch(updateApplicantStart());
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${ApplicantData.token}`,
+          Authorization: `Bearer ${payload.token}`,
         },
         body: JSON.stringify({
-          id: ApplicantData.applicantId,
+          id: payload.applicantId,
           education: {
-            school: ApplicantData.school,
-            degree: ApplicantData.degree,
-            major: ApplicantData.major,
-            location: ApplicantData.location,
-            startDate: ApplicantData.startDate,
-            endDate: ApplicantData.endDate,
-            description: ApplicantData.description,
-            IPK: ApplicantData.IPK,
+            id: payload.educationId,
+            school: payload.school,
+            degree: payload.degree,
+            major: payload.major,
+            location: payload.location,
+            startDate: payload.startDate,
+            endDate: payload.endDate,
+            description: payload.description,
+            IPK: payload.IPK,
           },
-          index: ApplicantData.index ? ApplicantData.index : null,
         }),
       });
       const responseJSON = await response.json();
@@ -367,7 +367,7 @@ export const updateApplicantExperience = payload => {
         body: JSON.stringify({
           id: payload.applicantId,
           experience: {
-            id: payload.experienceId,
+            id: payload.workingExperienceId,
             prevTitle: payload.prevTitle,
             prevCompany: payload.prevCompany,
             prevIndustry: payload.prevIndustry,

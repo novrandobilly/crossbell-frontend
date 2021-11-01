@@ -28,7 +28,7 @@ const WorkingExperiences = props => {
     setOpenEditWorkingExp(true);
   };
   const closeEditWorkingExpHandler = () => setOpenEditWorkingExp(false);
-  const openDeleteHandler = (index, experienceId) => {
+  const openDeleteHandler = (event, experienceId) => {
     setWorkingExperienceId(experienceId);
     setOpenDeleteModal(true);
   };

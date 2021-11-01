@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
 import { useForm } from '../../../../shared/utils/useForm';
-import moment from 'moment';
 
 import * as actionTypes from '../../../../store/actions/actions';
 import * as actionCreators from '../../../../store/actions/index';
@@ -22,7 +21,7 @@ import Modal from '../../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
 
-import styles from './AddEducation.module.scss';
+import styles from './EditEducation.module.scss';
 
 const CustomTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -43,44 +42,47 @@ const CustomTextField = styled(TextField)({
   },
 });
 
-const AddEducation = props => {
+const EditEducation = props => {
   const { applicantid } = useParams();
+  const { educationId } = props;
 
+  const [data, setData] = useState();
+
+  const [school, setSchool] = useState();
   const [degree, setDegree] = useState('SMA');
-  const [school, setSchool] = useState('');
   const [formState, onInputHandler] = useForm(
     {
       school: {
-        value: '',
-        isValid: false,
+        value: data ? data.school : null,
+        isValid: data && data.school ? true : false,
       },
       degree: {
-        value: degree,
-        isValid: true,
+        value: data ? data.degree : null,
+        isValid: data && data.degree ? true : false,
       },
       major: {
-        value: '',
-        isValid: false,
+        value: data ? data.major : null,
+        isValid: data && data.major ? true : false,
       },
       location: {
-        value: '',
-        isValid: false,
+        value: data ? data.location : null,
+        isValid: data && data.location ? true : false,
       },
       startDate: {
-        value: '',
-        isValid: false,
+        value: data ? data.startDate : null,
+        isValid: data && data.startDate ? true : false,
       },
       endDate: {
-        value: '',
-        isValid: false,
+        value: data ? data.endDate : null,
+        isValid: data && data.endDate ? true : false,
       },
       description: {
-        value: '',
-        isValid: false,
+        value: data ? data.description : null,
+        isValid: data && data.description ? true : false,
       },
       IPK: {
-        value: '',
-        isValid: false,
+        value: data ? data.IPK : null,
+        isValid: data && data.IPK ? true : false,
       },
     },
     false
@@ -89,6 +91,24 @@ const AddEducation = props => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { getOneApplicant } = props;
+  useEffect(() => {
+    const payload = {
+      applicantId: applicantid,
+      token: props.auth.token,
+    };
+    if (props.auth.token) {
+      getOneApplicant(payload).then(res => {
+        const education = res.applicant?.education.filter(edu => edu.id === educationId)[0];
+        setData(education);
+        onInputHandler('school', education.school, true);
+        onInputHandler('degree', education.degree, true);
+        setSchool(education.school);
+        setDegree(education.degree);
+      });
+    }
+  }, [getOneApplicant, applicantid, educationId, props.auth.token, onInputHandler]);
 
   const onSubmitHandler = async event => {
     event.preventDefault();
@@ -99,6 +119,7 @@ const AddEducation = props => {
 
     const updatedEducation = {
       applicantId: applicantid,
+      educationId,
       school: formState.inputs.school.value,
       degree: formState.inputs.degree.value,
       major: formState.inputs.major.value,
@@ -127,14 +148,11 @@ const AddEducation = props => {
 
   const onSetSchoolHandler = (event, newValue) => {
     console.log(newValue);
-    setSchool(newValue);
     onInputHandler('school', newValue, true);
   };
 
-  console.log(formState.inputs);
-
   let formContent = (
-    <form className={styles.AddEducationFormContainer} onSubmit={onSubmitHandler}>
+    <form className={styles.EditEducationFormContainer} onSubmit={onSubmitHandler}>
       <div className={styles.UniversityContainer}>
         <p>Nama Sekolah/Universitas</p>
         <Autocomplete
@@ -170,6 +188,8 @@ const AddEducation = props => {
         onInputHandler={onInputHandler}
         label={true}
         labelName='Bidang Studi*'
+        initValue={data?.major}
+        initIsValid={true}
       />
 
       <Input
@@ -180,6 +200,8 @@ const AddEducation = props => {
         onInputHandler={onInputHandler}
         label={true}
         labelName='Lokasi*'
+        initValue={data?.location}
+        initIsValid={true}
       />
 
       <div className={styles.EducationPeriod}>
@@ -190,7 +212,7 @@ const AddEducation = props => {
           onInputHandler={onInputHandler}
           views={['year']}
           format='YYYY'
-          initValue={moment()}
+          initValue={data?.startDate}
           initIsValid={true}
           label={true}
           labelName='Tahun Mulai'
@@ -203,9 +225,9 @@ const AddEducation = props => {
           onInputHandler={onInputHandler}
           views={['year']}
           format='YYYY'
+          initValue={data?.endDate}
           initIsValid={true}
           disableFuture={false}
-          initValue={moment()}
           label={true}
           labelName='Tahun Selesai (atau estimasi selesai)'
         />
@@ -222,6 +244,8 @@ const AddEducation = props => {
         step='0.1'
         label={true}
         labelName='IPK'
+        initValue={data?.IPK}
+        initIsValid={true}
       />
 
       <Input
@@ -233,6 +257,7 @@ const AddEducation = props => {
         label={true}
         labelName='Deskripsi Pendidikan (Opsional)'
         initIsValid={true}
+        initValue={data?.description}
         rows={10}
         style={{ border: '2px solid #f79f35', outline: 'none' }}
       />
@@ -248,7 +273,7 @@ const AddEducation = props => {
     </form>
   );
 
-  if (props.isLoading) {
+  if (props.isLoading || !data) {
     formContent = <LoadingBar />;
   }
 
@@ -279,7 +304,8 @@ const mapDispatchToProps = dispatch => {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     updateApplicantEducation: ApplicantData => dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
+    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddEducation));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditEducation));

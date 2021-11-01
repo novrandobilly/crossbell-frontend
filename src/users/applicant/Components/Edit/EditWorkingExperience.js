@@ -75,7 +75,7 @@ const Experience = props => {
     }
     let updatedExperience = {
       applicantId: applicantid,
-      experienceId: workingExperienceId,
+      workingExperienceId,
       prevTitle: formState.inputs.prevTitle.value,
       prevCompany: formState.inputs.prevCompany.value,
       prevIndustry: formState.inputs.prevIndustry.value,
