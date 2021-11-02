@@ -7,7 +7,7 @@ import Modal from '../../../shared/UI_Element/Modal';
 import AddEducation from './Add/AddEducation';
 import EducationsIcon from '../../../assets/icons/education.svg';
 import AddWhiteIcon from '../../../assets/icons/add-white.svg';
-import EditWhiteIcon from '../../../assets/icons/add-white.svg';
+import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 import DeleteIcon from '../../../assets/icons/x-mark.svg';
 import EditEducation from './Edit/EditEducation';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
@@ -18,7 +18,7 @@ import styles from './Educations.module.scss';
 const Educations = props => {
   const [openAddEducation, setOpenAddEducation] = useState(false);
   const [openEditEducation, setOpenEditEducation] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openDeleteEducation, setOpenDeleteEducation] = useState(false);
   const [educationId, setEducationId] = useState(null);
 
   const onOpenAddEducationHandler = () => setOpenAddEducation(true);
@@ -31,11 +31,10 @@ const Educations = props => {
   const onCloseEditEducationHandler = () => setOpenEditEducation(false);
 
   const onOpenDeleteEducationHandler = (event, educationId) => {
-    console.log(educationId);
     setEducationId(educationId);
-    setOpenDeleteModal(true);
+    setOpenDeleteEducation(true);
   };
-  const oncloseDeleteEducationHandler = () => setOpenDeleteModal(false);
+  const onCloseDeleteEducationHandler = () => setOpenDeleteEducation(false);
   const onDeleteHandler = async event => {
     const payload = {
       applicantId: props.auth.userId,
@@ -46,10 +45,10 @@ const Educations = props => {
     try {
       await props.deleteItem(payload);
       await props.fetchApplicantData();
-      setOpenDeleteModal(false);
+      setOpenDeleteEducation(false);
     } catch (err) {
       console.log(err);
-      setOpenDeleteModal(false);
+      setOpenDeleteEducation(false);
     }
   };
 
@@ -74,15 +73,15 @@ const Educations = props => {
         />
       </Modal>
       <Modal
-        show={openDeleteModal}
-        onCancel={oncloseDeleteEducationHandler}
+        show={openDeleteEducation}
+        onCancel={onCloseDeleteEducationHandler}
         style={{ top: '25vh', maxWidth: '400px', marginLeft: '-200px', height: '25vh', overflowY: 'auto' }}>
         <h3>Hapus Pekerjaan?</h3>
         {props.applicant.isLoading ? (
           <LoadingBar />
         ) : (
           <div className={styles.DeleteButtonContainer}>
-            <button type='button' onClick={oncloseDeleteEducationHandler}>
+            <button type='button' onClick={onCloseDeleteEducationHandler}>
               Tidak
             </button>
             <button type='button' onClick={onDeleteHandler}>

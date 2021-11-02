@@ -32,7 +32,6 @@ const ApplicantProfile = props => {
   const openEditBriefHandler = () => {
     setOpenEditBrief(true);
   };
-
   const applicantData = props.data;
   return (
     <div className={styles.ApplicantDetailsContainer}>
@@ -138,12 +137,18 @@ const ApplicantProfile = props => {
       </section>
       <section className={styles.ApplicantOrganizationExperiences}>
         <Organizations
-          organizations={applicantData.organization.sort((a, b) => moment(b.endDate) - moment(a.endDate))}
+          organizations={applicantData.organization.sort(
+            (a, b) => moment(b.endDate ? b.endDate : new Date()) - moment(a.endDate ? a.endDate : new Date())
+          )}
+          EditAuthorized={props.auth.userId === applicantData.id}
+          fetchApplicantData={props.fetchApplicantData}
         />
       </section>
       <section className={styles.ApplicantCertifications}>
         <Certifications
-          certifications={applicantData.certification.sort((a, b) => moment(b.startDate) - moment(a.startDate))}
+          certifications={applicantData.certification.sort(
+            (a, b) => moment(b.endDate ? b.endDate : new Date()) - moment(a.endDate ? a.endDate : new Date())
+          )}
         />
       </section>
     </div>

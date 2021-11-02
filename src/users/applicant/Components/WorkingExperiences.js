@@ -18,7 +18,7 @@ import styles from './WorkingExperiences.module.scss';
 const WorkingExperiences = props => {
   const [openAddWorkingExp, setOpenAddWorkingExp] = useState(false);
   const [openEditWorkingExp, setOpenEditWorkingExp] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openDeleteExperience, setOpenDeleteExperience] = useState(false);
   const [workingExperienceId, setWorkingExperienceId] = useState(null);
 
   const openAddWorkingExpHandler = () => setOpenAddWorkingExp(true);
@@ -30,9 +30,9 @@ const WorkingExperiences = props => {
   const closeEditWorkingExpHandler = () => setOpenEditWorkingExp(false);
   const openDeleteHandler = (event, experienceId) => {
     setWorkingExperienceId(experienceId);
-    setOpenDeleteModal(true);
+    setOpenDeleteExperience(true);
   };
-  const closeDeleteExpHandler = () => setOpenDeleteModal(false);
+  const onCloseDeleteExpHandler = () => setOpenDeleteExperience(false);
 
   const onDeleteHandler = async event => {
     const payload = {
@@ -44,10 +44,10 @@ const WorkingExperiences = props => {
     try {
       await props.deleteItem(payload);
       await props.fetchApplicantData();
-      setOpenDeleteModal(false);
+      setOpenDeleteExperience(false);
     } catch (err) {
       console.log(err);
-      setOpenDeleteModal(false);
+      setOpenDeleteExperience(false);
     }
   };
 
@@ -72,15 +72,15 @@ const WorkingExperiences = props => {
         />
       </Modal>
       <Modal
-        show={openDeleteModal}
-        onCancel={closeDeleteExpHandler}
+        show={openDeleteExperience}
+        onCancel={onCloseDeleteExpHandler}
         style={{ top: '25vh', maxWidth: '400px', marginLeft: '-200px', height: '25vh', overflowY: 'auto' }}>
         <h3>Hapus Pekerjaan?</h3>
         {props.applicant.isLoading ? (
           <LoadingBar />
         ) : (
           <div className={styles.DeleteButtonContainer}>
-            <button type='button' onClick={closeDeleteExpHandler}>
+            <button type='button' onClick={onCloseDeleteExpHandler}>
               Tidak
             </button>
             <button type='button' onClick={onDeleteHandler}>

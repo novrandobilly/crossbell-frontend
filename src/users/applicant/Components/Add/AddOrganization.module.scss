@@ -1,0 +1,49 @@
+.AddOrganizationContainer {
+  & > * {
+    margin-bottom: 20px;
+  }
+  .OrganizationPeriod {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .StillMemberHereCheck {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    & > *:hover {
+      cursor: pointer;
+    }
+  }
+  .SubmitButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
+    button {
+      border-radius: 5px;
+      background-color: #f79f35;
+      border: none;
+      padding: 5px;
+      width: 100%;
+      max-width: 80px;
+      color: #fff;
+      border: 2px solid #f79f35;
+      &:hover {
+        cursor: pointer;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #999;
+        border-color: #999;
+      }
+      &:nth-child(1) {
+        background-color: #fff;
+        color: #f79f35;
+      }
+    }
+  }
+}
