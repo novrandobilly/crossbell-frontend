@@ -389,26 +389,26 @@ export const updateApplicantExperience = payload => {
   };
 };
 
-export const updateApplicantCertification = ApplicantData => {
+export const updateApplicantCertification = payload => {
   return async dispatch => {
     dispatch(updateApplicantStart());
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${ApplicantData.token}`,
+          Authorization: `Bearer ${payload.token}`,
         },
         body: JSON.stringify({
-          id: ApplicantData.applicantId,
+          id: payload.applicantId,
           certification: {
-            title: ApplicantData.title,
-            organization: ApplicantData.organization,
-            startDate: ApplicantData.startDate,
-            endDate: ApplicantData.endDate ? ApplicantData.endDate : null,
-            description: ApplicantData.description,
+            id: payload.certificationId,
+            title: payload.title,
+            organization: payload.organization,
+            startDate: payload.startDate,
+            endDate: payload.endDate ? payload.endDate : null,
+            description: payload.description,
           },
-          index: ApplicantData.index ? ApplicantData.index : null,
         }),
       });
       const responseJSON = await response.json();
@@ -423,25 +423,25 @@ export const updateApplicantCertification = ApplicantData => {
   };
 };
 
-export const updateApplicantOrganization = ApplicantData => {
+export const updateApplicantOrganization = payload => {
   return async dispatch => {
     dispatch(updateApplicantStart());
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${ApplicantData.token}`,
+          Authorization: `Bearer ${payload.token}`,
         },
         body: JSON.stringify({
-          id: ApplicantData.applicantId,
+          id: payload.applicantId,
           organization: {
-            organization: ApplicantData.organization,
-            startDate: ApplicantData.startDate,
-            endDate: ApplicantData.endDate ? ApplicantData.endDate : null,
-            description: ApplicantData.description,
+            id: payload.organizationId,
+            organization: payload.organization,
+            startDate: payload.startDate,
+            endDate: payload.endDate ? payload.endDate : null,
+            description: payload.description,
           },
-          index: ApplicantData.index ? ApplicantData.index : null,
         }),
       });
       const responseJSON = await response.json();

@@ -149,6 +149,8 @@ const ApplicantProfile = props => {
           certifications={applicantData.certification.sort(
             (a, b) => moment(b.endDate ? b.endDate : new Date()) - moment(a.endDate ? a.endDate : new Date())
           )}
+          EditAuthorized={props.auth.userId === applicantData.id}
+          fetchApplicantData={props.fetchApplicantData}
         />
       </section>
     </div>

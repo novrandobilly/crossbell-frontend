@@ -1,14 +1,13 @@
-.EditOrganizationContainer {
+.AddCentificationContainer {
   & > * {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
-  .OrganizationPeriod {
+  .CertificationValidity {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .StillMemberCheck {
-    width: 100%;
+  .IsExpiredCheck {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -22,30 +21,27 @@
     align-items: center;
     width: 100%;
     max-width: 200px;
-    margin: auto;
+    margin: 20px auto;
     button {
-      padding: 5px;
       border-radius: 5px;
+      background-color: #f79f35;
       border: none;
+      padding: 5px;
       width: 100%;
       max-width: 80px;
-      box-sizing: border-box;
+      color: #fff;
+      border: 2px solid #f79f35;
       &:hover {
         cursor: pointer;
       }
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #999;
+        border-color: #999;
+      }
       &:nth-child(1) {
         background-color: #fff;
-        border: 2px solid #f79f35;
-      }
-      &:nth-child(2) {
-        background-color: #f79f35;
-        border: 2px solid #f79f35;
-        color: #fff;
-        &:disabled {
-          background-color: #aaa;
-          border-color: #aaa;
-          cursor: not-allowed;
-        }
+        color: #f79f35;
       }
     }
   }
