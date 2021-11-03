@@ -59,7 +59,7 @@ const EditDescription = props => {
       token: props.auth.token,
     };
     try {
-      await props.updateApplicantSummary(updatedAppSummary);
+      await props.updateApplicantBriefInformation(updatedAppSummary);
       props.onCancel();
       props.fetchApplicantData();
     } catch (err) {
@@ -140,7 +140,8 @@ const mapDispatchToProps = dispatch => {
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantSummary: ApplicantData => dispatch(actionCreators.updateApplicantSummary(ApplicantData)),
+    updateApplicantBriefInformation: ApplicantData =>
+      dispatch(actionCreators.updateApplicantBriefInformation(ApplicantData)),
   };
 };
 

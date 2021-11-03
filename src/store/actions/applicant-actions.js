@@ -181,50 +181,35 @@ export const getApplicantJobsApplied = payload => {
   };
 };
 
-// export const updateApplicantBiodata = ApplicantData => {
-//   return async dispatch => {
-//     dispatch(updateApplicantStart());
-//     try {
-//       const formData = new FormData();
-//       formData.append('id', ApplicantData.applicantId);
-//       formData.append('picture', ApplicantData.picture);
-//       formData.append('firstName', ApplicantData.firstName);
-//       formData.append('lastName', ApplicantData.lastName);
-//       formData.append('email', ApplicantData.email);
-//       formData.append('headline', ApplicantData.headline);
-//       formData.append('dateOfBirth', ApplicantData.dateOfBirth);
-//       formData.append('gender', ApplicantData.gender);
-//       formData.append('address', ApplicantData.address);
-//       formData.append('city', ApplicantData.city);
-//       formData.append('state', ApplicantData.state);
-//       formData.append('zip', ApplicantData.zip);
-//       formData.append('phone', ApplicantData.phone);
-//       formData.append('salary', ApplicantData.salary);
-//       formData.append('outOfTown', ApplicantData.outOfTown);
-//       formData.append('workShifts', ApplicantData.workShifts);
-//       formData.append('headhunterProgram', ApplicantData.headhunterProgram);
-//       formData.append('interest', ApplicantData.interest);
-//       console.log(formData);
-//       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
-//         method: 'PATCH',
-//         headers: {
-//           Authorization: `Bearer ${ApplicantData.token}`,
-//         },
-//         body: formData,
-//       });
-//       const responseJSON = await response.json();
-//       if (!response.ok) {
-//         throw new Error(responseJSON.message);
-//       }
-//       dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
-//       return responseJSON.foundApplicant;
-//     } catch (err) {
-//       console.log(err, typeof err);
-//       dispatch(updateApplicantFail());
-//       return err;
-//     }
-//   };
-// };
+export const updateApplicantAvatar = payload => {
+  return async dispatch => {
+    dispatch(updateApplicantStart());
+    try {
+      const formData = new FormData();
+      formData.append('id', payload.applicantId);
+      formData.append('picture', payload.picture);
+
+      console.log(formData);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: formData,
+      });
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(updateApplicantSuccess(responseJSON.foundApplicant));
+      return responseJSON.foundApplicant;
+    } catch (err) {
+      console.log(err, typeof err);
+      dispatch(updateApplicantFail());
+      return err;
+    }
+  };
+};
 export const updateApplicantBiodata = ApplicantData => {
   return async dispatch => {
     dispatch(updateApplicantStart());
@@ -290,7 +275,7 @@ export const updateApplicantSubscription = ApplicantData => {
   };
 };
 
-export const updateApplicantSummary = ApplicantData => {
+export const updateApplicantBriefInformation = ApplicantData => {
   return async dispatch => {
     dispatch(updateApplicantStart());
     try {

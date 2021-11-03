@@ -8,8 +8,9 @@ export {
 
 export {
   createApplicant,
+  updateApplicantAvatar,
   updateApplicantBiodata,
-  updateApplicantSummary,
+  updateApplicantBriefInformation,
   updateApplicantEducation,
   updateApplicantExperience,
   updateApplicantCertification,

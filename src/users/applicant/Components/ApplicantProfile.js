@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../../store/actions';
@@ -11,6 +11,7 @@ import Organizations from './Organizations';
 import Certifications from './Certifications';
 import EditBriefInformations from './Edit/EditBriefInformations';
 import Modal from '../../../shared/UI_Element/Modal';
+import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
 import PhoneIcon from '../../../assets/icons/phone.svg';
@@ -33,6 +34,21 @@ const ApplicantProfile = props => {
     setOpenEditBrief(true);
   };
   const applicantData = props.data;
+
+  const onUploadHandler = async e => {
+    const elementFile = e.target.files[0];
+    const payload = {
+      applicantId: applicantData._id,
+      token: props.auth.token,
+      picture: elementFile,
+    };
+    try {
+      await props.updateApplicantAvatar(payload);
+      props.fetchApplicantData();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className={styles.ApplicantDetailsContainer}>
       <section className={styles.ApplicantBriefInformation}>
@@ -51,9 +67,23 @@ const ApplicantProfile = props => {
         )}
 
         {/* ---------------------------------------------------------- */}
-        <div className={styles.ApplicantAvatar}>
-          <img alt='Applicant Avatar' src={applicantData.picture ? applicantData.picture.url : BlankProfile} />
-        </div>
+        <label className={styles.ApplicantAvatar} htmlFor='ApplicantAvatar'>
+          {props.applicant.isLoading ? (
+            <LoadingBar />
+          ) : (
+            <Fragment>
+              <img alt='Applicant Avatar' src={applicantData.picture ? applicantData.picture.url : BlankProfile} />
+              <input
+                accept='.jpg, .jpeg, .png'
+                name='ApplicantAvatar'
+                id='ApplicantAvatar'
+                type='file'
+                style={{ display: 'none' }}
+                onChange={onUploadHandler}
+              />
+            </Fragment>
+          )}
+        </label>
         <div className={styles.ApplicantBriefDetails}>
           <h2 className={styles.ApplicantFullName}>
             {applicantData.firstName}&nbsp;{applicantData.lastName}
@@ -168,6 +198,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateResume: payload => dispatch(actionCreators.updateResume(payload)),
+    updateApplicantAvatar: payload => dispatch(actionCreators.updateApplicantAvatar(payload)),
   };
 };
 
