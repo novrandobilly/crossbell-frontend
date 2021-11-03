@@ -31,17 +31,17 @@ const Skills = ({ skills, EditAuthorized, fetchApplicantData }) => {
           <img alt='Skill Icon' src={SkillsIcon} />
           Skill & Keterampilan:
         </h1>
-        <div className={styles.SkillsListing}>
-          {skills && skills.length > 0 ? (
-            skills.map((skill, index) => (
+        {skills && skills.length > 0 ? (
+          <div className={styles.SkillsListing}>
+            {skills.map((skill, index) => (
               <p className={styles.Skill} key={`${skill.skillName}_${index}`}>
                 &#x27A4; {skill.skillName} - {skill.rate}/5
               </p>
-            ))
-          ) : (
-            <p className={styles.SkillEmpty}>Belum ada skill.</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className={styles.SkillEmpty}>Belum ada skill.</p>
+        )}
       </div>
     </Fragment>
   );

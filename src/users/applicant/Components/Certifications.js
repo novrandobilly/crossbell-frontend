@@ -126,7 +126,7 @@ const Certifications = props => {
             </article>
           ))
         ) : (
-          <p className={styles.CertificationsEmpty}>Belum ada pengalaman.</p>
+          <p className={styles.CertificationsEmpty}>Belum ada sertifikasi.</p>
         )}
         {props.EditAuthorized && (
           <span className={styles.AddEditButton} onClick={onOpenAddCertificationHandler}>

@@ -126,9 +126,7 @@ const WorkingExperiences = props => {
             </article>
           ))
         ) : (
-          <article className={styles.WorkingExperiencesItem}>
-            <p className={styles.WorkingExperiencesEmpty}>Belum ada pengalaman.</p>
-          </article>
+          <p className={styles.WorkingExperiencesEmpty}>Belum ada pengalaman.</p>
         )}
         {props.EditAuthorized && (
           <span className={styles.AddEditButton} onClick={openAddWorkingExpHandler}>
