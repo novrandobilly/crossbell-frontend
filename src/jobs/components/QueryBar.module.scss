@@ -9,30 +9,28 @@
 .ButtonContainer {
   display: flex;
   align-self: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
-  max-width: 335px;
-  margin-left: 35px;
+  max-width: 500px;
+  margin-left: 20px;
 
   button {
     width: 100%;
-    // max-width: 120px;
     border: 3px solid #f79f35;
     background-color: #f79f35;
     color: #fff;
     border-radius: 3px;
     min-height: 45px;
-    font-size: 16px;
+    max-width: 200px;
+    font-size: 20px;
+    font-weight: 700;
     box-shadow: 1.5px 1.5px 2px #71430b;
     box-sizing: border-box;
-    &:nth-of-type(1) {
-      max-width: 150px;
-    }
+
     &:nth-of-type(2) {
       background-color: #ffe3c7;
       border: 3px solid #ffe3c7;
       color: #000;
-      max-width: 150px;
     }
     &:hover {
       cursor: pointer;

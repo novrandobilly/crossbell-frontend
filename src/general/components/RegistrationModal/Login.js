@@ -40,20 +40,14 @@ const Login = props => {
     let res;
     try {
       res = await props.loginServer(loginData);
-      if (!res) {
-        throw new Error('Error');
+      console.log(res);
+      if (!res.token) {
+        throw new Error(res.message);
       }
+      props.onSucceedLogin();
+      props.history.push(res.isCompany ? `/co/${res.userId}/profile` : `/ap/${res.userId}/profile`);
     } catch (err) {
       console.log(err);
-    }
-    if (res.token && !res.isCompany) {
-      props.onSucceedLogin();
-      props.history.push(`/ap/${res.userId}/profile`);
-    } else if (res.token && res.isCompany) {
-      props.onSucceedLogin();
-      props.history.push(`/co/${res.userId}/profile`);
-    } else {
-      console.log('error');
     }
   };
 

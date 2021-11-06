@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { useForm } from '../../../shared/utils/useForm';
@@ -87,106 +87,115 @@ const CompanyRegisForm = props => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className={classes.FormContainer}>
-      <Modal show={props.error} onCancel={onCancelHandler}>
-        {errorMessage && errorMessage}
-      </Modal>
+    <Fragment>
       <Modal show={loginCompany} onCancel={onCompanyCancelLogin} headerText='Login Perusahaan'>
-        <Login onSwitchToRegister={onCompanyCancelLogin} onForgotPassword={onCompanyCancelLogin} />
+        <Login
+          onSwitchToRegister={onCompanyCancelLogin}
+          onForgotPassword={onCompanyCancelLogin}
+          onSucceedLogin={onCompanyCancelLogin}
+        />
       </Modal>
-      <h1 className={classes.FormTitle}>Registrasi Perusahaan</h1>
-      <div className={classes.InputContainer}>
-        <div className={classes.InputBox}>
-          <Input
-            inputType='input'
-            id='companyName'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_REQUIRE()]}
-            onInputHandler={onInputHandler}
-            label='Nama Perusahaan*'
-            helperText='Silahkan input nama perusahaan anda.'
-          />
-        </div>
 
-        <div className={classes.InputBox}>
-          <Input
-            inputType='input'
-            id='email'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_EMAIL()]}
-            onInputHandler={onInputHandler}
-            label='Email Perusahaan*'
-            helperText='Silahkan input email perusahaan yang valid.'
-          />
-        </div>
+      <form onSubmit={onSubmitHandler} className={classes.FormContainer}>
+        <Modal show={props.error} onCancel={onCancelHandler}>
+          {errorMessage && errorMessage}
+        </Modal>
+        <h1 className={classes.FormTitle}>Registrasi Perusahaan</h1>
+        <div className={classes.InputContainer}>
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='companyName'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_REQUIRE()]}
+              onInputHandler={onInputHandler}
+              label='Nama Perusahaan*'
+              helperText='Silahkan input nama perusahaan anda.'
+            />
+          </div>
 
-        <div className={classes.InputBox}>
-          <Input
-            inputType='input'
-            id='NPWP'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label='NPWP*'
-            helperText='Silahkan isi nomor NPWP perusahaan.'
-          />
-        </div>
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='email'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_EMAIL()]}
+              onInputHandler={onInputHandler}
+              label='Email Perusahaan*'
+              helperText='Silahkan input email perusahaan yang valid.'
+            />
+          </div>
 
-        <div className={classes.InputBox}>
-          <Input
-            inputType='input'
-            id='password'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label='Password*'
-            type='password'
-            helperText='Password minimal 6 karakter'
-          />
-        </div>
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='NPWP'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='NPWP*'
+              helperText='Silahkan isi nomor NPWP perusahaan.'
+            />
+          </div>
 
-        <div className={classes.InputBox}>
-          <Input
-            inputType='input'
-            id='confirmPassword'
-            InputClass='Register'
-            validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-            onInputHandler={onInputHandler}
-            label='Password Confirmation*'
-            type='password'
-            helperText='Password tidak sesuai'
-          />
-        </div>
-        <div className={classes.TosAgreement}>
-          <input id='tosAgreement' onChange={onAgreementChange} type='checkbox' />{' '}
-          <span>
-            Saya mengetahui dan menyetujui <Link to='/syarat-ketentuan'>Syarat & Ketentuan</Link> dan{' '}
-            <Link to='/kebijakan-privasi'>Kebijakan Privasi</Link> yang berlaku
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='password'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Password*'
+              type='password'
+              helperText='Password minimal 6 karakter'
+            />
+          </div>
+
+          <div className={classes.InputBox}>
+            <Input
+              inputType='input'
+              id='confirmPassword'
+              InputClass='Register'
+              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
+              onInputHandler={onInputHandler}
+              label='Password Confirmation*'
+              type='password'
+              helperText='Password tidak sesuai'
+            />
+          </div>
+          <div className={classes.TosAgreement}>
+            <input id='tosAgreement' onChange={onAgreementChange} type='checkbox' />{' '}
+            <span>
+              Saya mengetahui dan menyetujui <Link to='/syarat-ketentuan'>Syarat & Ketentuan</Link> dan{' '}
+              <Link to='/kebijakan-privasi'>Kebijakan Privasi</Link> yang berlaku
+            </span>
+          </div>
+
+          {props.isLoading ? (
+            <LoadingBar />
+          ) : (
+            <button
+              className={classes.SubmitButton}
+              type='submit'
+              disabled={
+                !formState.formIsValid || formState.inputs.password.value !== formState.inputs.confirmPassword.value
+              }
+              style={{
+                marginTop: '1rem',
+              }}>
+              Daftar
+            </button>
+          )}
+
+          <span className={classes.AdditionalLinks}>
+            Sudah punya akun?{' '}
+            <span className={classes.LoginFormLink} onClick={onCompanyLogin}>
+              Masuk di sini
+            </span>
           </span>
         </div>
-
-        {props.isLoading ? (
-          <LoadingBar />
-        ) : (
-          <button
-            className={classes.SubmitButton}
-            type='submit'
-            disabled={!formState.formIsValid || formState.inputs.password.value !== formState.inputs.confirmPassword.value}
-            style={{
-              marginTop: '1rem',
-            }}>
-            Daftar
-          </button>
-        )}
-
-        <span className={classes.AdditionalLinks}>
-          Sudah punya akun?{' '}
-          <span className={classes.LoginFormLink} onClick={onCompanyLogin}>
-            Masuk di sini
-          </span>
-        </span>
-      </div>
-    </form>
+      </form>
+    </Fragment>
   );
 };
 

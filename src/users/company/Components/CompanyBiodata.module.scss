@@ -1,0 +1,45 @@
+$primaryColor: #f79f35;
+@mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+
+.CompanyBiodataContainer {
+  @include flexCenter(row, flex-start, center);
+  .BiodataImageContainer {
+    width: 100%;
+    max-width: 150px;
+    margin-right: 20px;
+  }
+  .CompanyBiodataInformation {
+    @include flexCenter(column, center, flex-start);
+    height: 100%;
+    & > * {
+      margin: 0 0 10px;
+    }
+    p {
+      @include flexCenter(row, flex-start, center);
+      font-size: 18px;
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+    }
+    .BioIcon {
+      width: 100%;
+      max-width: 20px;
+      margin-right: 10px;
+    }
+    .VerificationSign {
+      vertical-align: middle;
+      font-size: 14px;
+      font-weight: 400;
+      font-style: italic;
+      color: #494949;
+      width: 100%;
+      max-width: 25px;
+    }
+  }
+}

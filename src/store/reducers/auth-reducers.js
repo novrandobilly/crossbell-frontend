@@ -39,7 +39,7 @@ const authReducers = (state = initialState, action) => {
     }
     case actionTypes.AUTHLOGIN: {
       const tokenExpirationDate =
-        action.payload.expiration || new Date(new Date().getTime() + 1000 * 60 * 60 * 6).toISOString();
+        action.payload.expiration || new Date(new Date().getTime() + 1000 * 60 * 60 * 168).toISOString();
       localStorage.setItem(
         'userData',
         JSON.stringify({

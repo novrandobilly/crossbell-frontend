@@ -13,6 +13,7 @@ const QueryBar = props => {
         id='search'
         type='text'
         label={false}
+        style={{ height: '100%', fontSize: '20px' }}
         validatorMethod={[VALIDATOR_REQUIRE()]}
         name='search'
         onInputHandler={props.onChange}

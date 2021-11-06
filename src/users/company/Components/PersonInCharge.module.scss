@@ -1,0 +1,26 @@
+.PersonInChargeContainer {
+  //   border: 1px solid teal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  header {
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+    .PICTitle,
+    p {
+      margin: 0;
+      text-align: start;
+    }
+  }
+  .PICInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    p {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+  }
+}

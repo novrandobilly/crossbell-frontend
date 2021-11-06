@@ -222,8 +222,6 @@ const JobsList = props => {
               companyId={job.companyId}
               fieldOfWork={job.fieldOfWork}
               jobApplicant={job.jobApplicants}
-              setModalError={props.setModalError}
-              modalError={props.modalError}
               releasedAt={job.releasedAt}
             />
           ))}

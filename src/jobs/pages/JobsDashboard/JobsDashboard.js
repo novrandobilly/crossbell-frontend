@@ -5,7 +5,6 @@ import * as actionCreators from '../../../store/actions';
 
 import JobsList from '../../components/JobsList';
 import QueryBar from '../../components/QueryBar';
-import Modal from '../../../shared/UI_Element/Modal';
 import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
 
 import styles from './JobsDashboard.module.scss';
@@ -68,7 +67,6 @@ const JobsDashboard = props => {
   const searchValue = useState(params.get('search'))[0];
   const [jobEmpty, setJobEmpty] = useState(false);
   const [allAvailableJobs, setAllAvailableJobs] = useState();
-  const [modalError, setModalError] = useState(false);
   const [state, dispatch] = useReducer(searchReducer, {
     search: {
       id: '',
@@ -162,16 +160,8 @@ const JobsDashboard = props => {
     });
   }, []);
 
-  const onCancelHandler = () => {
-    setModalError(false);
-    props.history.push('/');
-  };
-
   return (
     <div className={styles.JobsDashboard}>
-      <Modal show={modalError} onCancel={onCancelHandler}>
-        Silahkan login untuk melamar pekerjaan
-      </Modal>
       <HeaderBanner imageSource={MeetingDashboard} />
 
       <section className={styles.JobListing}>
@@ -191,7 +181,7 @@ const JobsDashboard = props => {
           </div>
         </div>
 
-        <JobsList items={state.jobList} jobEmpty={jobEmpty} setModalError={setModalError} modalError={modalError} />
+        <JobsList items={state.jobList} jobEmpty={jobEmpty} />
       </section>
     </div>
   );

@@ -36,9 +36,7 @@ const AppliedCandidatesList = React.lazy(() => import('./jobs/pages/AppliedCandi
 
 const CompanyProfileForm = React.lazy(() => import('./users/company/pages/CompanyProfileForm/CompanyProfileForm'));
 const EditCompanyIntro = React.lazy(() => import('./users/company/components/EditIntro'));
-const CompanyBriefDescriptions = React.lazy(() =>
-  import('./users/company/pages/CompanyBriefDescriptions/CompanyBriefDescriptions')
-);
+const CompanyBriefDescriptions = React.lazy(() => import('./users/company/pages/CompanyProfilePage'));
 const EditCompanyBriefDescriptions = React.lazy(() =>
   import('./users/company/components/EditCompanyBriefDescriptions')
 );
@@ -120,7 +118,6 @@ const App = props => {
   const adminTokenExp = props.admin.tokenExpirationDate;
   const userToken = props.auth.token;
   const userTokenExp = props.auth.tokenExpirationDate;
-  console.log(moment(props.auth.tokenExpirationDate).format('MMMM Do YYYY, h:mm:ss a'));
   const { logout, logoutAdmin } = props;
   useEffect(() => {
     if (adminToken && adminTokenExp) {

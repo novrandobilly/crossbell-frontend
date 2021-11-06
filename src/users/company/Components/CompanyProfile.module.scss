@@ -1,0 +1,10 @@
+.CompanyProfileContainer {
+  width: 100%;
+  max-width: 1000px;
+  & > * {
+    width: 100%;
+  }
+  section {
+    margin-bottom: 10px;
+  }
+}
