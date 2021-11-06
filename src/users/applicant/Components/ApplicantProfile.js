@@ -26,6 +26,7 @@ import styles from './ApplicantProfile.module.scss';
 
 const ApplicantProfile = props => {
   const [openEditBrief, setOpenEditBrief] = useState(false);
+  const [uploadIsLoading, setUploadIsLoading] = useState(false);
 
   const closeEditBriefHandler = () => {
     setOpenEditBrief(false);
@@ -36,6 +37,7 @@ const ApplicantProfile = props => {
   const applicantData = props.data;
 
   const onUploadHandler = async e => {
+    setUploadIsLoading(true);
     const elementFile = e.target.files[0];
     const payload = {
       applicantId: props.auth.userId,
@@ -45,8 +47,10 @@ const ApplicantProfile = props => {
     try {
       await props.updateApplicantAvatar(payload);
       props.fetchApplicantData();
+      setUploadIsLoading(false);
     } catch (err) {
       console.log(err);
+      setUploadIsLoading(false);
     }
   };
   return (
@@ -68,7 +72,7 @@ const ApplicantProfile = props => {
 
         {/* ---------------------------------------------------------- */}
         <label className={styles.ApplicantAvatar} htmlFor='ApplicantAvatar'>
-          {props.applicant.isLoading ? (
+          {uploadIsLoading ? (
             <LoadingBar />
           ) : (
             <Fragment>
@@ -190,7 +194,6 @@ const ApplicantProfile = props => {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    applicant: state.applicant,
     admin: state.admin,
   };
 };

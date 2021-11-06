@@ -40,7 +40,6 @@ const Login = props => {
     let res;
     try {
       res = await props.loginServer(loginData);
-      console.log(res);
       if (!res.token) {
         throw new Error(res.message);
       }

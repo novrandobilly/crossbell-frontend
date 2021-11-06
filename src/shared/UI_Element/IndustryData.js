@@ -1,4 +1,4 @@
-const IndustryList = [
+const IndustryData = [
   { industry: 'Aerospace' },
   { industry: 'Agriculture' },
   { industry: 'Architecture' },
@@ -51,4 +51,4 @@ const IndustryList = [
   { industry: 'Technology' },
   { industry: 'Investment' },
 ];
-export default IndustryList;
+export default IndustryData;

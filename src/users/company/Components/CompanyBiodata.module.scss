@@ -6,8 +6,11 @@ $primaryColor: #f79f35;
   justify-content: $justifyContent;
 }
 
+@import '../../../shared/UI_Element/AddEditButton.module';
+
 .CompanyBiodataContainer {
   @include flexCenter(row, flex-start, center);
+  position: relative;
   .BiodataImageContainer {
     width: 100%;
     max-width: 150px;
@@ -55,6 +58,7 @@ $primaryColor: #f79f35;
   .CompanyBiodataInformation {
     @include flexCenter(column, center, flex-start);
     height: 100%;
+    position: relative;
     & > * {
       margin: 0 0 10px;
     }
@@ -79,6 +83,13 @@ $primaryColor: #f79f35;
       color: #494949;
       width: 100%;
       max-width: 25px;
+    }
+  }
+  .AddEditButton {
+    top: 10px;
+    right: 10px;
+    &::after {
+      content: 'Edit Biodata';
     }
   }
 }

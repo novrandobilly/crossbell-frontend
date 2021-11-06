@@ -13,35 +13,16 @@ import {
 } from '../../../../shared/utils/validator';
 
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
+
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../../shared/UI_Element/Input';
+import { CustomTextField } from '../../../../shared/UI_Element/CustomMUIComponents';
 
 import WorkFieldData from '../../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import CitiesData from '../../../../shared/UI_Element/PredefinedData/CitiesData';
 import ProvinceData, { ProvinceToCity } from '../../../../shared/UI_Element/PredefinedData/ProvinceData';
 
 import styles from './EditBriefInformations.module.scss';
-
-const CustomTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    padding: '0',
-    '& .MuiOutlinedInput-input': {
-      padding: '5px',
-    },
-    '& fieldset': {
-      border: '2px solid #f79f35',
-      borderRadius: '5px',
-    },
-    '&.Mui-focused fieldset': {
-      border: '2px solid #f79f35',
-    },
-    '&:hover fieldset': {
-      border: '2px solid #f79f35',
-    },
-  },
-});
 
 const initialLocation = {
   province: '',
@@ -473,11 +454,7 @@ const EditBriefInformations = props => {
             Back
           </button>
 
-          <button
-            disabled={formState.inputs.interest.value.length <= 0 || !formState.formIsValid}
-            variant='contained'
-            color='primary'
-            type='submit'>
+          <button disabled={formState.inputs.interest.value.length <= 0 || !formState.formIsValid} type='submit'>
             Save
           </button>
         </div>

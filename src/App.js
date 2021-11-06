@@ -34,7 +34,6 @@ const AppliedCandidatesList = React.lazy(() => import('./jobs/pages/AppliedCandi
 //==================================== company =========================================================
 
 const CompanyProfileForm = React.lazy(() => import('./users/company/pages/CompanyProfileForm/CompanyProfileForm'));
-const EditCompanyIntro = React.lazy(() => import('./users/company/components/EditIntro'));
 const CompanyBriefDescriptions = React.lazy(() => import('./users/company/pages/CompanyProfilePage'));
 const EditCompanyBriefDescriptions = React.lazy(() =>
   import('./users/company/components/EditCompanyBriefDescriptions')
@@ -152,7 +151,6 @@ const App = props => {
             <Route path='/subscription/:applicantid' component={Subscription} />
 
             {/* Users Routes: Company */}
-            <Route path='/co/:companyid/compro/intro' component={EditCompanyIntro} />
             <Route path='/co/:companyid/compro/details' component={EditCompanyBriefDescriptions} />
             <Route path='/co/:companyid/compro/personincharge' component={EditCompanyPIC} />
             <Route path='/co/order/es' component={CompanyExecutiveSearch} />

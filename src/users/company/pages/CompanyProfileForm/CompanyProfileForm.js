@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import EditIntro from '../../components/EditIntro';
+import EditCompanyBiodata from '../../components/EditCompanyBiodata';
 import EditCompanyBriefDescriptions from '../../components/EditCompanyBriefDescriptions';
 import EditPIC from '../../components/EditPIC';
 
@@ -33,9 +33,19 @@ const CompanyProfileForm = props => {
   return (
     <div className={classes.Form}>
       {counter === 0 ? (
-        <EditIntro FlexClass='FlexContainer' push={push} pushHandler={pushHandler} onNextHandler={onNextHandler} />
+        <EditCompanyBiodata
+          FlexClass='FlexContainer'
+          push={push}
+          pushHandler={pushHandler}
+          onNextHandler={onNextHandler}
+        />
       ) : counter === 1 ? (
-        <EditCompanyBriefDescriptions push={push} pushHandler={pushHandler} onNextHandler={onNextHandler} onBackHandler={onBackHandler} />
+        <EditCompanyBriefDescriptions
+          push={push}
+          pushHandler={pushHandler}
+          onNextHandler={onNextHandler}
+          onBackHandler={onBackHandler}
+        />
       ) : (
         <EditPIC push={push} pushHandler={pushHandler} onBackHandler={onBackHandler} />
       )}

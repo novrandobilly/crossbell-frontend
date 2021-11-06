@@ -14,6 +14,7 @@ const CompanyProfile = props => {
     <div className={styles.CompanyProfileContainer}>
       <section className={styles.CompanyBiodata}>
         <CompanyBiodata
+          companyId={company._id}
           companyName={company.companyName}
           industry={company.industry}
           website={company.website}
