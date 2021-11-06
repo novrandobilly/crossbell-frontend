@@ -38,7 +38,7 @@ const ApplicantProfile = props => {
   const onUploadHandler = async e => {
     const elementFile = e.target.files[0];
     const payload = {
-      applicantId: applicantData._id,
+      applicantId: props.auth.userId,
       token: props.auth.token,
       picture: elementFile,
     };

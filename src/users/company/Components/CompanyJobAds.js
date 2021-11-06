@@ -10,13 +10,11 @@ import styles from './CompanyJobAds.module.scss';
 const CompanyJobAds = props => {
   const [validJobList, setValidJobList] = useState();
 
-  const { userId, token } = props.auth;
-  const { getJobsInCompany } = props;
+  const { companyId, getJobsInCompany } = props;
   useEffect(() => {
     const fetchJobs = async () => {
       const payload = {
-        companyId: userId,
-        token,
+        companyId: companyId,
       };
       try {
         const response = await getJobsInCompany(payload);
@@ -27,9 +25,8 @@ const CompanyJobAds = props => {
       }
     };
     fetchJobs();
-  }, [userId, token, getJobsInCompany]);
+  }, [companyId, getJobsInCompany]);
 
-  console.log(validJobList);
   let jobList = <LoadingBar />;
   if (validJobList?.length > 0) {
     jobList = (

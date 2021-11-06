@@ -1,5 +1,4 @@
 import React, { useEffect, Suspense } from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Pusher from 'pusher-js';

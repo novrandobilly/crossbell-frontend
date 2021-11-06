@@ -1,13 +1,11 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions';
 
 import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
-import MeetingDashboard from '../../../assets/images/Meeting-Dashboard.png';
 import CompanyMeeting from '../../../assets/images/CompanyMeeting.png';
-import CompanyMap from '../components/CompanyMap';
 import CompanyProfile from '../components/CompanyProfile';
 import styles from './CompanyProfilePage.module.scss';
 
@@ -20,20 +18,25 @@ const CompanyProfilePage = props => {
   }, []);
 
   const { getOneCompany } = props;
-  useEffect(() => {
-    const getCompany = async () => {
-      try {
-        let res = await getOneCompany({ userId: companyid });
-        setLoadedCompany(res.company);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCompany();
+
+  const getCompany = useCallback(async () => {
+    try {
+      let res = await getOneCompany({ userId: companyid });
+      setLoadedCompany(res.company);
+    } catch (err) {
+      console.log(err);
+    }
   }, [companyid, getOneCompany]);
 
-  // let companyContent = loadedCompany ? <CompanyProfile company={loadedCompany} /> : <LoadingBar />;
-  let companyContent = loadedCompany ? <CompanyProfile company={loadedCompany} /> : <LoadingBar />;
+  useEffect(() => {
+    getCompany();
+  }, [getCompany]);
+
+  let companyContent = loadedCompany ? (
+    <CompanyProfile company={loadedCompany} fetchCompany={getCompany} />
+  ) : (
+    <LoadingBar />
+  );
 
   return (
     <div className={styles.CompanyProfileContainer}>

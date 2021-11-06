@@ -201,13 +201,11 @@ export const getOneJob = jobsid => {
 export const getJobsInCompany = payload => {
   return async dispatch => {
     dispatch(fetchingStart());
-
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${payload.companyId}/all/jobs`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${payload.token}`,
         },
       });
       const responseJSON = await res.json();

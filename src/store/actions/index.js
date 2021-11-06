@@ -4,6 +4,7 @@ export {
   updateCompanyBriefDescriptions,
   updateCompanyIntro,
   updateCompanyPIC,
+  updateCompanyLogo,
 } from './company-actions';
 
 export {

@@ -1,6 +1,6 @@
 import * as actionTypes from './actions';
 
-const createCompanySuccess = (payload) => {
+const createCompanySuccess = payload => {
   return {
     type: actionTypes.CREATECOMPANY,
     payload: payload,
@@ -17,7 +17,7 @@ const createCompanyStart = () => {
   };
 };
 
-const getCompanySuccess = (payload) => {
+const getCompanySuccess = payload => {
   return {
     type: actionTypes.GETCOMPANY,
     payload: payload,
@@ -34,7 +34,7 @@ const getCompanyStart = () => {
   };
 };
 
-const updateCompanySuccess = (payload) => {
+const updateCompanySuccess = payload => {
   return {
     type: actionTypes.UPDATECOMPANY,
     payload: payload,
@@ -51,21 +51,18 @@ const updateCompanyStart = () => {
   };
 };
 
-export const getOneCompany = (payload) => {
-  return async (dispatch) => {
+export const getOneCompany = payload => {
+  return async dispatch => {
     dispatch(getCompanyStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/co/${payload.userId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${payload.userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
 
       dispatch(getCompanySuccess(responseJSON));
@@ -76,25 +73,22 @@ export const getOneCompany = (payload) => {
   };
 };
 
-export const createCompany = (companyData) => {
-  return async (dispatch) => {
+export const createCompany = companyData => {
+  return async dispatch => {
     dispatch(createCompanyStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/signup`,
-        {
-          // const response = await fetch(`https://crossbell-corps.herokuapp.com/api/users/signup`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            companyName: companyData.companyName,
-            email: companyData.email,
-            password: companyData.password,
-            NPWP: companyData.NPWP,
-            isCompany: true,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/signup`, {
+        // const response = await fetch(`https://crossbell-corps.herokuapp.com/api/users/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          companyName: companyData.companyName,
+          email: companyData.email,
+          password: companyData.password,
+          NPWP: companyData.NPWP,
+          isCompany: true,
+        }),
+      });
       const responseJSON = await response.json();
       // console.log(responseJSON);
       if (!response.ok) {
@@ -109,8 +103,35 @@ export const createCompany = (companyData) => {
   };
 };
 
-export const updateCompanyIntro = (CompanyData) => {
-  return async (dispatch) => {
+export const updateCompanyLogo = payload => {
+  return async dispatch => {
+    dispatch(updateCompanyStart());
+    try {
+      const formData = new FormData();
+      formData.append('logo', payload.logo);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${payload.companyId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: formData,
+      });
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+
+      dispatch(updateCompanySuccess(responseJSON.foundCompany));
+      return responseJSON.foundCompany;
+    } catch (err) {
+      console.log(err, typeof err);
+      dispatch(updateCompanyFail());
+      return err;
+    }
+  };
+};
+export const updateCompanyIntro = CompanyData => {
+  return async dispatch => {
     dispatch(updateCompanyStart());
     // console.log('from action', CompanyData);
     try {
@@ -124,16 +145,13 @@ export const updateCompanyIntro = (CompanyData) => {
       formData.append('NPWP', CompanyData.NPWP);
       formData.append('website', CompanyData.website);
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`,
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${CompanyData.token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${CompanyData.token}`,
+        },
+        body: formData,
+      });
       const responseJSON = await response.json();
       // console.log(response, responseJSON);
       if (!response.ok) {
@@ -150,23 +168,20 @@ export const updateCompanyIntro = (CompanyData) => {
   };
 };
 
-export const updateCompanyBriefDescriptions = (CompanyData) => {
-  return async (dispatch) => {
+export const updateCompanyBriefDescriptions = CompanyData => {
+  return async dispatch => {
     dispatch(updateCompanyStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${CompanyData.token}`,
-          },
-          body: JSON.stringify({
-            briefDescriptions: CompanyData.briefDescriptions,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${CompanyData.token}`,
+        },
+        body: JSON.stringify({
+          briefDescriptions: CompanyData.briefDescriptions,
+        }),
+      });
       const responseJSON = await response.json();
       // console.log(response, responseJSON);
       if (!response.ok) {
@@ -183,28 +198,25 @@ export const updateCompanyBriefDescriptions = (CompanyData) => {
   };
 };
 
-export const updateCompanyPIC = (CompanyData) => {
-  return async (dispatch) => {
+export const updateCompanyPIC = CompanyData => {
+  return async dispatch => {
     dispatch(updateCompanyStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${CompanyData.token}`,
-          },
-          body: JSON.stringify({
-            id: CompanyData.companyId,
-            picName: CompanyData.picName,
-            picJobTitle: CompanyData.picJobTitle,
-            picEmail: CompanyData.picEmail,
-            picPhone: CompanyData.picPhone,
-            picOfficePhone: CompanyData.picOfficePhone,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${CompanyData.token}`,
+        },
+        body: JSON.stringify({
+          id: CompanyData.companyId,
+          picName: CompanyData.picName,
+          picJobTitle: CompanyData.picJobTitle,
+          picEmail: CompanyData.picEmail,
+          picPhone: CompanyData.picPhone,
+          picOfficePhone: CompanyData.picOfficePhone,
+        }),
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
