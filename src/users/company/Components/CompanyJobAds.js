@@ -54,6 +54,14 @@ const CompanyJobAds = props => {
     );
   }
 
+  if (validJobList?.length <= 0) {
+    jobList = (
+      <p style={{ fontStyle: 'italic', color: '#616161', width: '100%', textAlign: 'center' }}>
+        Belum ada iklan pekerjaan yang sedang tayang
+      </p>
+    );
+  }
+
   return (
     <Fragment>
       <h3>Lowongan dari perusahaan ini: </h3>
