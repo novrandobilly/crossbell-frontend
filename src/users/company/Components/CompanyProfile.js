@@ -10,6 +10,9 @@ import moment from 'moment';
 
 const CompanyProfile = props => {
   const { company } = props;
+
+  const EditAuthorization = company._id === props.auth.userId;
+
   return (
     <div className={styles.CompanyProfileContainer}>
       <section className={styles.CompanyBiodata}>
@@ -29,7 +32,11 @@ const CompanyProfile = props => {
       </section>
 
       <section className={styles.CompanyDescription}>
-        <CompanyDescription description={company.briefDescriptions} />
+        <CompanyDescription
+          description={company.briefDescriptions}
+          EditAuthorization={EditAuthorization}
+          fetchCompany={props.fetchCompany}
+        />
       </section>
 
       {(props.auth.isCompany || props.admin.isAdmin) && (
@@ -41,6 +48,8 @@ const CompanyProfile = props => {
             phone={company.picPhone}
             officePhone={company.picOfficePhone}
             npwp={company.NPWP}
+            EditAuthorization={EditAuthorization}
+            fetchCompany={props.fetchCompany}
           />
         </section>
       )}

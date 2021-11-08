@@ -1,9 +1,12 @@
+@import '../../../shared//UI_Element/AddEditButton.module';
+
 .PersonInChargeContainer {
   //   border: 1px solid teal;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  position: relative;
   header {
     margin-bottom: 10px;
     border-bottom: 1px solid black;
@@ -21,6 +24,13 @@
     p {
       margin: 0 0 10px;
       font-size: 18px;
+    }
+  }
+  .AddEditButton {
+    top: 0;
+    right: 10px;
+    &::after {
+      content: 'Edit PIC';
     }
   }
 }

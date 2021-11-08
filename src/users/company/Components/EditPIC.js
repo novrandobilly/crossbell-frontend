@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from '../../../shared/utils/useForm';
@@ -7,14 +7,11 @@ import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
 import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL } from '../../../shared/utils/validator';
 
-import Button from '@material-ui/core/Button';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import Modal from '../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../shared/UI_Element/Input';
 
-import classes from './EditPIC.module.css';
+import styles from './EditPIC.module.scss';
 
 const EditPIC = props => {
   const { companyid } = useParams();
@@ -31,8 +28,6 @@ const EditPIC = props => {
       setData(res.company);
     });
   }, [getOneCompany, companyid]);
-
-  let push = props.push;
 
   const [formState, onInputHandler] = useForm(
     {
@@ -77,13 +72,9 @@ const EditPIC = props => {
       token: props.auth.token || props.admin.token,
     };
     try {
-      const res = await props.updateCompanyPIC(updatedData);
-      if (res) {
-        // console.log(res);
-      } else {
-        console.log('no res detected');
-      }
-      props.history.push(`/co/${companyid}/profile`);
+      await props.updateCompanyPIC(updatedData);
+      props.fetchCompany();
+      props.onCancel();
     } catch (err) {
       console.log(err);
     }
@@ -93,103 +84,77 @@ const EditPIC = props => {
 
   if (!props.isLoading && data) {
     formContent = (
-      <React.Fragment>
-        <div className={classes.ContainerFlex}>
-          <p className={classes.FormTitle}>Edit Contact Person</p>
+      <form onSubmit={onSubmitHandler} className={styles.EditPICContainer}>
+        <Input
+          inputType='input'
+          id='picName'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Nama Lengkap*'
+          initValue={data.picName}
+          initIsValid={data.picName}
+        />
 
-          <div className={classes.FormRow}>
-            <div className={classes.EditLabel}>
-              <div className={classes.InputBox}>
-                <Input
-                  inputType='input'
-                  id='picName'
-                  InputClass='AddJobInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Nama lengkap*'
-                  initValue={data.picName}
-                  initIsValid={data.picName}
-                  helperText='Nama lengkap wajib diisi'
-                />
-              </div>
-              <div className={classes.InputBox}>
-                <Input
-                  inputType='input'
-                  id='picJobTitle'
-                  InputClass='AddJobInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Posisi*'
-                  initValue={data.picJobTitle}
-                  initIsValid={data.picJobTitle}
-                  helperText='Posisi dalam perusahaan wajib diisi'
-                />
-              </div>
-              <div className={classes.InputBox}>
-                <Input
-                  inputType='input'
-                  id='picEmail'
-                  InputClass='AddJobInput'
-                  validatorMethod={[VALIDATOR_EMAIL()]}
-                  onInputHandler={onInputHandler}
-                  label=' Email*'
-                  initValue={data.picEmail}
-                  initIsValid={data.picEmail}
-                  helperText='Mohon masukkan email yang valid'
-                />
-              </div>
-              <div className={classes.InputBox}>
-                <Input
-                  inputType='input'
-                  id='picPhone'
-                  InputClass='AddJobInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label=' Nomor telepon / Whatsapp*'
-                  initValue={data.picPhone}
-                  initIsValid={data.picPhone}
-                  helperText='Nomor telepon/ WA wajib diisi'
-                />
-              </div>
-              <div className={classes.InputBox}>
-                <Input
-                  inputType='input'
-                  id='picOfficePhone'
-                  InputClass='AddJobInput'
-                  validatorMethod={[VALIDATOR_REQUIRE()]}
-                  onInputHandler={onInputHandler}
-                  label='Nomor Telepon Kantor*'
-                  initValue={data.picPhone}
-                  initIsValid={data.picPhone}
-                  helperText='Nomor telepon kantor wajib diisi'
-                />
-              </div>
-            </div>
-          </div>
+        <Input
+          inputType='input'
+          id='picJobTitle'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Jabatan*'
+          initValue={data.picJobTitle}
+          initIsValid={data.picJobTitle}
+        />
 
-          <div className={classes.Footer}>
-            {push && (
-              <Button
-                className={classes.button}
-                startIcon={<NavigateBeforeIcon />}
-                onClick={props.onBackHandler}
-                style={{ marginRight: '2rem' }}>
-                Back
-              </Button>
-            )}
+        <Input
+          inputType='input'
+          id='picEmail'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_EMAIL()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Email*'
+          initValue={data.picEmail}
+          initIsValid={data.picEmail}
+        />
 
-            <Button
-              disabled={!formState.formIsValid}
-              variant='contained'
-              color='primary'
-              type='submit'
-              className={classes.button}
-              endIcon={<NavigateNextIcon />}>
-              Save
-            </Button>
-          </div>
+        <Input
+          inputType='input'
+          id='picPhone'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Nomor telepon / Whatsapp*'
+          initValue={data.picPhone}
+          initIsValid={data.picPhone}
+        />
+
+        <Input
+          inputType='input'
+          id='picOfficePhone'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_REQUIRE()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Nomor Telepon Kantor*'
+          initValue={data.picPhone}
+          initIsValid={data.picPhone}
+        />
+
+        <div className={styles.SubmitButtonContainer}>
+          <button type='button' onClick={props.onCancel}>
+            Back
+          </button>
+
+          <button disabled={!formState.formIsValid} type='submit'>
+            Save
+          </button>
         </div>
-      </React.Fragment>
+      </form>
     );
   }
   const onCancelHandler = () => {
@@ -197,14 +162,12 @@ const EditPIC = props => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmitHandler} className={classes.Container}>
-        <Modal show={props.error} onCancel={onCancelHandler}>
-          Could not update changes at the moment, please try again later
-        </Modal>
-        {formContent}
-      </form>
-    </div>
+    <Fragment>
+      <Modal show={props.error} onCancel={onCancelHandler}>
+        Could not update changes at the moment, please try again later
+      </Modal>
+      {formContent}
+    </Fragment>
   );
 };
 

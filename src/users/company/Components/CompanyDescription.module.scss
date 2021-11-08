@@ -1,19 +1,30 @@
+@import '../../../shared/UI_Element/AddEditButton.module';
+
 .CompanyDescriptionContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  & * {
-    text-align: start;
-    margin: 0 0 15px;
-  }
+  position: relative;
+
   h3 {
-    margin: 0 0 15px;
+    margin: 0 0 25px;
+    text-align: start;
   }
   .CompanyDescription {
     font-size: 18px;
+    text-align: start;
+
     p {
       line-height: 1.5em;
+      margin: 0 0 15px;
+    }
+  }
+  .AddEditButton {
+    top: 0;
+    right: 10px;
+    &::after {
+      content: 'Edit Deskripsi';
     }
   }
 }

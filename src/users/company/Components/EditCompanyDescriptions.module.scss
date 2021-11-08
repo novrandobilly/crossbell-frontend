@@ -1,0 +1,38 @@
+$primaryColor: #f79f35;
+
+.EditCompanyDescriptionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .SubmitButtonContainer {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    button {
+      background-color: $primaryColor;
+      border-radius: 5px;
+      padding: 5px;
+      border: none;
+      color: #fff;
+      width: 100%;
+      max-width: 80px;
+      min-height: 30px;
+      &:hover {
+        cursor: pointer;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #8d8d8d;
+      }
+      &:nth-child(1) {
+        background-color: #fff;
+        border: 1px solid $primaryColor;
+        color: $primaryColor;
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import EditCompanyBiodata from '../../components/EditCompanyBiodata';
-import EditCompanyBriefDescriptions from '../../components/EditCompanyBriefDescriptions';
+import EditCompanyDescriptions from '../../components/EditCompanyDescriptions';
 import EditPIC from '../../components/EditPIC';
 
 import classes from './CompanyProfileForm.module.css';
@@ -40,7 +40,7 @@ const CompanyProfileForm = props => {
           onNextHandler={onNextHandler}
         />
       ) : counter === 1 ? (
-        <EditCompanyBriefDescriptions
+        <EditCompanyDescriptions
           push={push}
           pushHandler={pushHandler}
           onNextHandler={onNextHandler}
