@@ -45,7 +45,7 @@ const CompanyOrderList = React.lazy(() => import('./users/company/pages/CompanyO
 const ExecutiveSearchDetail = React.lazy(() =>
   import('./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail')
 );
-const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJobList/CompanyJobList'));
+const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJobList'));
 
 //==================================== applicant =========================================================
 

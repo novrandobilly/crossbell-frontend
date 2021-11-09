@@ -121,7 +121,7 @@ const NavigationLinks = props => {
           <NavLink
             to={props.auth.isLoggedIn && props.auth.isCompany ? `/co/${props.auth.userId}/jobList` : '/jobs-dashboard'}
             activeClassName={styles.active}>
-            Explore
+            {props.auth.isLoggedIn && props.auth.isCompany ? 'Dashboard Iklan' : 'Explore'}
           </NavLink>
         </li>
         {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (

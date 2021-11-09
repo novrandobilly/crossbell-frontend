@@ -79,7 +79,7 @@ const JobCard = props => {
         show={applyConfirm}
         headerText='Anda yakin melamar pekerjaan ini?'
         onCancel={onCloseApplyConfirmHandler}
-        style={{ top: '30vh', maxWidth: '600px', marginLeft: '-300px', height: '25vh', overflowY: 'auto' }}>
+        style={{ top: '30vh', maxWidth: '600px', marginLeft: '-300px', height: '30vh', overflowY: 'auto' }}>
         <div className={styles.ApplicationModal}>
           <p>Pastikan profile anda sudah anda lengkapi untuk memudahkan perusahaan memahami potensi diri anda.</p>
 

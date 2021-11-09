@@ -1,0 +1,99 @@
+@mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+
+.JobCardContainer {
+  @include flexCenter(column, center, flex-start);
+  width: 100%;
+  border: 1px solid #666;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+
+  .JobCardHeader {
+    @include flexCenter(row, space-between, center);
+    width: 100%;
+    margin-bottom: 10px;
+    .JobTitle {
+      margin: 0;
+      &:hover {
+        cursor: pointer;
+        text-shadow: 0 0 10px #f79f35;
+      }
+    }
+    .Status {
+      @include flexCenter(row, space-between, center);
+      width: 100%;
+      max-width: 130px;
+      span {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .JobInformations {
+    @include flexCenter(row, space-between, flex-start);
+    width: 100%;
+
+    & > * {
+      @include flexCenter(column, flex-start, flex-start);
+      p {
+        margin: 0;
+      }
+    }
+    .JobTimeInformations {
+      width: 100%;
+      max-width: 300px;
+      font-size: 16px;
+      & > * {
+        margin: 0 0 5px;
+        text-align: start;
+      }
+    }
+    .JobBriefRequirements {
+      width: 100%;
+      max-width: 300px;
+      & > * {
+        margin: 0 0 5px;
+      }
+    }
+
+    .NumberOfApplicants {
+      @include flexCenter(column, space-between, center);
+      #NumberOfApplicants {
+        font-size: 48px;
+        margin: 7px auto;
+        color: #f79f35;
+      }
+
+      &:hover {
+        cursor: pointer;
+        text-shadow: 0 0 10px #f79f35;
+      }
+    }
+    .ControlButton {
+      @include flexCenter(column, center, center);
+      align-self: center;
+      width: 100%;
+      max-width: 100px;
+      button {
+        text-decoration: none;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #f79f35;
+        background-color: #fff;
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 80px;
+        padding: 5px 0;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
