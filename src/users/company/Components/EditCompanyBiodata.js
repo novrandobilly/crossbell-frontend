@@ -21,6 +21,7 @@ const EditCompanyBiodata = props => {
 
   const [data, setData] = useState();
   const [industry, setIndustry] = useState('');
+  const [inputIndustry, setInputIndustry] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -96,21 +97,13 @@ const EditCompanyBiodata = props => {
   };
 
   const onAutoCompleteHandler = (event, newValue) => {
-    event.preventDefault();
-    if (typeof newValue === 'string') {
-      setIndustry({
-        industry: newValue,
-      });
-      onInputHandler('industry', newValue.industry, true);
-    } else if (newValue && newValue.inputValue) {
-      setIndustry({
-        industry: newValue.inputValue,
-      });
-      onInputHandler('industry', newValue.inputValue.industry, true);
-    } else {
-      setIndustry(newValue);
-      onInputHandler('industry', newValue?.industry || '', true);
-    }
+    setIndustry(newValue);
+    onInputHandler('industry', newValue, true);
+  };
+
+  const onInputChangeHandler = (event, newValue) => {
+    setInputIndustry(newValue);
+    onInputHandler('industry', newValue, true);
   };
 
   let formContent = <LoadingBar />;
@@ -157,8 +150,10 @@ const EditCompanyBiodata = props => {
               return 0;
             })}
             getOptionLabel={option => `${option.industry}`}
+            value={industry || null}
             onChange={onAutoCompleteHandler}
-            value={industry ? industry : ''}
+            inputValue={inputIndustry}
+            onInputChange={onInputChangeHandler}
             renderInput={params => <CustomTextField {...params} />}
           />
         </div>

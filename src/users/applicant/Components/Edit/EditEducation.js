@@ -14,8 +14,7 @@ import {
 
 import University from '../../../../shared/UI_Element/PredefinedData/UniversityData';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
+import { CustomTextField } from '../../../../shared/UI_Element/CustomMUIComponents';
 
 import Modal from '../../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
@@ -23,32 +22,14 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import styles from './EditEducation.module.scss';
 
-const CustomTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    padding: '0',
-    '& .MuiOutlinedInput-input': {
-      padding: '5px',
-    },
-    '& fieldset': {
-      border: '2px solid #f79f35',
-      borderRadius: '5px',
-    },
-    '&.Mui-focused fieldset': {
-      border: '2px solid #f79f35',
-    },
-    '&:hover fieldset': {
-      border: '2px solid #f79f35',
-    },
-  },
-});
-
 const EditEducation = props => {
   const { applicantid } = useParams();
   const { educationId } = props;
 
   const [data, setData] = useState();
 
-  const [school, setSchool] = useState();
+  const [school, setSchool] = useState(null);
+  const [inputSchool, setInputSchool] = useState('');
   const [degree, setDegree] = useState('SMA');
   const [formState, onInputHandler] = useForm(
     {
@@ -105,6 +86,7 @@ const EditEducation = props => {
         onInputHandler('school', education.school, true);
         onInputHandler('degree', education.degree, true);
         setSchool(education.school);
+        setInputSchool(education.school);
         setDegree(education.degree);
       });
     }
@@ -147,7 +129,11 @@ const EditEducation = props => {
   };
 
   const onSetSchoolHandler = (event, newValue) => {
-    console.log(newValue);
+    setSchool(newValue);
+    onInputHandler('school', newValue, true);
+  };
+  const onInputSchoolHandler = (event, newValue) => {
+    setInputSchool(newValue);
     onInputHandler('school', newValue, true);
   };
 
@@ -156,10 +142,10 @@ const EditEducation = props => {
       <div className={styles.UniversityContainer}>
         <p>Nama Sekolah/Universitas</p>
         <Autocomplete
-          value={school || ''}
-          inputValue={school || ''}
+          value={school}
+          inputValue={inputSchool}
           onChange={onSetSchoolHandler}
-          onInputChange={onSetSchoolHandler}
+          onInputChange={onInputSchoolHandler}
           id='school'
           name='school'
           options={University.map(uni => uni.institusi)}

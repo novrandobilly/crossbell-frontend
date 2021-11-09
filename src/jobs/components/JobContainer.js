@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, withRouter, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { splitParagraph } from '../../shared/utils/sharedFunctions';
 
 import * as actionCreators from '../../store/actions/';
 import BlankCompany from '../../assets/images/Company.png';
@@ -38,21 +39,6 @@ const JobDetails = props => {
       return props.createJobFail();
     }
   };
-
-  // const onDeleteHandler = async event => {
-  // 	event.preventDefault();
-
-  // 	const payload = {
-  // 		jobId: jobsid,
-  // 		token: props.auth.token
-  // 	};
-  // 	try {
-  // 		await props.deleteJob(payload);
-  // 		props.history.push('/jobs-dashboard');
-  // 	} catch (err) {
-  // 		console.log(err);
-  // 	}
-  // };
 
   const onReleaseHandler = async event => {
     event.preventDefault();
@@ -209,7 +195,7 @@ const JobDetails = props => {
           {props.isHidden ? (
             <p className={classes.AboutText}>Data perusahaan dirahasiakan</p>
           ) : (
-            <p className={classes.AboutText}>{props.companyDetails}</p>
+            <div className={classes.AboutText}>{splitParagraph(props.companyDetails)}</div>
           )}
         </div>
 

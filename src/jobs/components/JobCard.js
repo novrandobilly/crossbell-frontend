@@ -133,7 +133,7 @@ const JobCard = props => {
 
           <div className={styles.TopContent}>
             {props.isHidden ? (
-              <span className={styles.TextSecret}>Perusahaan Dirahasiakan</span>
+              <span className={styles.TextSecret}>Perusahaan {props.fieldOfWork[0]}</span>
             ) : (
               <Link to={`/co/${props.companyId._id}/profile`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
                 <span className={styles.TextLeft}>{props.company}</span>

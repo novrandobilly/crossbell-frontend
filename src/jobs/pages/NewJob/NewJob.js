@@ -5,39 +5,41 @@ import { useForm } from '../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions';
+
+import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
+import CompanyMeeting from '../../../assets/images/CompanyMeeting.png';
 import Modal from '../../../shared/UI_Element/Modal';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+
+import Autocomplete from '@mui/material/Autocomplete';
+import { CustomTextField } from '../../../shared/UI_Element/CustomMUIComponents';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
-import TextField from '@material-ui/core/TextField';
 import Input from '../../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
 import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
 import Slider from '@material-ui/core/Slider';
 
-import classes from './NewJob.module.css';
+import styles from './NewJob.module.scss';
 
 const NewJob = props => {
   const [maxSlot, setMaxSlot] = useState(null);
   const [jobExperience, setJobExperience] = useState('');
-  const [jobExperienceOpen, setJobExperienceOpen] = useState(false);
   const [employment, setEmployment] = useState('');
-  const [employmentOpen, setEmploymentOpen] = useState(false);
-  const [educationalStageOpen, setEducationalStageOpen] = useState(false);
+
   const [educationalStage, setEducationalStage] = useState('');
+  const [inputLocation, setInputLocation] = useState('');
 
   const [requirement, setRequirement] = useState(['req']);
   const [requirementList, setRequirementList] = useState([]);
   const [rangeAge, setRangeAge] = useState([18, 35]);
   const [fieldOfWork, setFieldOfWork] = useState('');
 
-  const filter = createFilterOptions();
+  const [addSlotModal, setAddSlotModal] = useState(false);
+  const openAddSlot = () => setAddSlotModal(true);
+  const closeAddSlot = () => setAddSlotModal(false);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -54,8 +56,16 @@ const NewJob = props => {
         isValid: false,
       },
       educationalStage: {
-        value: '',
-        isValid: false,
+        value: 'SMA/SMK',
+        isValid: true,
+      },
+      jobExperience: {
+        value: '<2',
+        isValid: true,
+      },
+      employment: {
+        value: 'permanent',
+        isValid: true,
       },
       placementLocation: {
         value: '',
@@ -65,10 +75,7 @@ const NewJob = props => {
         value: '',
         isValid: true,
       },
-      employment: {
-        value: '',
-        isValid: true,
-      },
+
       salary: {
         value: '',
         isValid: true,
@@ -81,12 +88,9 @@ const NewJob = props => {
         value: null,
         isValid: false,
       },
-      jobExperience: {
-        value: null,
-        isValid: false,
-      },
+
       rangeAge: {
-        value: [],
+        value: [18, 35],
         isValid: true,
       },
       fieldOfWork: {
@@ -100,10 +104,6 @@ const NewJob = props => {
     },
     false
   );
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const { getOneCompany, auth } = props;
   useEffect(() => {
@@ -200,51 +200,11 @@ const NewJob = props => {
     }
   };
 
-  const onAddSlotHandler = async event => {
-    event.preventDefault();
-    const jobData = {
-      jobTitle: formState.inputs.jobTitle.value,
-      isHidden: formState.inputs.isHidden.value,
-      placementLocation: formState.inputs.placementLocation.value,
-      jobDescriptions: formState.inputs.jobDescriptions.value,
-      jobExperience: formState.inputs.jobExperience.value,
-      rangeAge: formState.inputs.rangeAge.value,
-      educationalStage: formState.inputs.educationalStage.value,
-      specialRequirement: formState.inputs.specialRequirement.value,
-      emailRecipient: formState.inputs.emailRecipient.value,
-      employment: formState.inputs.employment.value,
-      benefit: formState.inputs.benefit.value,
-      slot: formState.inputs.slotAllocation.value,
-      salary: formState.inputs.salary.value,
-      fieldOfWork: formState.inputs.fieldOfWork.value,
-    };
-    const authData = {
-      token: props.auth.token,
-      userId: props.auth.userId,
-    };
-
-    try {
-      const res = await props.saveJobDraft(jobData, authData);
-      console.log(res);
-      props.history.push(`/co/order/reguler`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleJobExperienceChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setJobExperience(e.target.value);
-  };
-
-  const handleJobExperienceClose = () => {
-    setJobExperienceOpen(false);
-  };
-
-  const handleJobExperienceOpen = () => {
-    setJobExperienceOpen(true);
   };
 
   const handleEmploymentChange = e => {
@@ -254,14 +214,6 @@ const NewJob = props => {
     setEmployment(elementValue);
   };
 
-  const handleEmploymentClose = () => {
-    setEmploymentOpen(false);
-  };
-
-  const handleEmploymentOpen = () => {
-    setEmploymentOpen(true);
-  };
-
   const handleChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
@@ -269,15 +221,11 @@ const NewJob = props => {
     setEducationalStage(e.target.value);
   };
 
-  const handleEducationClose = () => {
-    setEducationalStageOpen(false);
-  };
-
-  const handleEducationOpen = () => {
-    setEducationalStageOpen(true);
-  };
-
   const handleLocationChange = (e, value) => {
+    onInputHandler('placementLocation', value, true);
+  };
+  const onInputLocationHandler = (e, value) => {
+    setInputLocation(value);
     onInputHandler('placementLocation', value, true);
   };
 
@@ -310,19 +258,6 @@ const NewJob = props => {
     }
   };
 
-  const onFilterHandler = (options, params) => {
-    const filtered = filter(options, params);
-
-    if (params.inputValue !== '') {
-      filtered.push({
-        inputValue: params.inputValue,
-        field: `Tambahkan "${params.inputValue}"`,
-      });
-    }
-
-    return filtered;
-  };
-
   let cities = [];
 
   for (const key in CitiesData) {
@@ -345,370 +280,236 @@ const NewJob = props => {
   };
 
   let formContent = (
-    <div className={classes.ContainerFlex}>
-      <p className={classes.FormTitle}>Form Iklan Lowongan Pekerjaan</p>
+    <form className={styles.NewJobContainer}>
+      <h1 className={styles.NewJobTitle}>
+        Post Iklan <span>Pekerjaan Anda</span>
+      </h1>
 
-      <div className={classes.Content}>
-        <div className={classes.ContentLeft}>
-          <div className={classes.ContentWrap}>
-            <Input
-              inputType='input'
-              id='jobTitle'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Judul*'
-              helperText='Judul iklan pekerjaan wajib diisi'
-            />
+      <Input
+        inputType='input'
+        id='jobTitle'
+        InputClass='AddJobInput'
+        validatorMethod={[VALIDATOR_REQUIRE()]}
+        onInputHandler={onInputHandler}
+        label={true}
+        labelName='Nama Pekerjaan*'
+      />
 
-            <Autocomplete
-              id='placementLocation'
-              name='placementLocation'
-              options={cities.map(option => option)}
-              onChange={handleLocationChange}
-              style={{ margin: '0' }}
-              renderInput={params => (
-                // <Input
-                //   params={{ ...params }}
-                //   inputType='autoComplete'
-                //   validatorMethod={[VALIDATOR_REQUIRE()]}
-                //   label='Lokasi*'
-                //   helperText='Lokasi pekerjaan wajib diisi'
-                // />
-                <TextField {...params} style={{ margin: '0' }} label='Lokasi*' margin='normal' variant='standard' />
-              )}
-            />
-          </div>
+      <div className={styles.CategoryLocation}>
+        <div className={styles.JobCategory}>
+          <p>Kategori Pekerjaan</p>
+          <Autocomplete
+            id='fieldOfWork'
+            name='fieldOfWork'
+            freeSolo
+            options={WorkFieldData.sort((a, b) => {
+              const optA = a.field.toLowerCase();
+              const optB = b.field.toLowerCase();
+              if (optA < optB) return -1;
+              if (optA > optB) return 1;
+              return 0;
+            })}
+            getOptionLabel={option => option.field}
+            onChange={onAutoCompleteHandler}
+            renderInput={params => <CustomTextField {...params} />}
+          />
+        </div>
 
-          <div className={classes.ContentWrap}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id='educationalStage' style={{ fontSize: '1rem' }}>
-                Tingkat Pendidikan*
-              </InputLabel>
-
-              <Select
-                labelId='educationalStage'
-                id='educationalStage'
-                name='educationalStage'
-                open={educationalStageOpen}
-                onClose={handleEducationClose}
-                onOpen={handleEducationOpen}
-                value={educationalStage}
-                onChange={handleChange}
-                style={{ fontSize: '0.9rem', textAlign: 'left' }}>
-                <MenuItem value={'SMA'} style={{ fontSize: '0.9rem' }}>
-                  SMA
-                </MenuItem>
-                <MenuItem value={'SMK'} style={{ fontSize: '0.9rem' }}>
-                  SMK
-                </MenuItem>
-                <MenuItem value={'D3'} style={{ fontSize: '0.9rem' }}>
-                  D3
-                </MenuItem>
-                <MenuItem value={'S1'} style={{ fontSize: '0.9rem' }}>
-                  S1
-                </MenuItem>
-                <MenuItem value={'S2'} style={{ fontSize: '0.9rem' }}>
-                  S2
-                </MenuItem>
-                <MenuItem value={'S3'} style={{ fontSize: '0.9rem' }}>
-                  S3
-                </MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl className={classes.FormControl}>
-              <InputLabel id='jobExperience' style={{ fontSize: '1rem' }}>
-                Pengalaman Kerja*
-              </InputLabel>
-
-              <Select
-                id='jobExperience'
-                name='jobExperience'
-                open={jobExperienceOpen}
-                onClose={handleJobExperienceClose}
-                onOpen={handleJobExperienceOpen}
-                value={jobExperience}
-                onChange={handleJobExperienceChange}
-                style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
-                }}>
-                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                  <em>Pilih</em>
-                </MenuItem>
-                <MenuItem id={0} value='<2' style={{ fontSize: '0.9rem' }}>
-                  Kurang dari 2 tahun
-                </MenuItem>
-                <MenuItem id={0} value='2-5' style={{ fontSize: '0.9rem' }}>
-                  2 - 5 tahun
-                </MenuItem>
-                <MenuItem id={0} value='5-10' style={{ fontSize: '0.9rem' }}>
-                  5 - 10 tahun
-                </MenuItem>
-                <MenuItem id={0} value='>10' style={{ fontSize: '0.9rem' }}>
-                  Lebih dari 10 tahun
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-
-          <div className={classes.ContentWrap}>
-            <FormControl className={classes.FormControl}>
-              <InputLabel id='employment' style={{ fontSize: '1rem' }}>
-                Jenis Kontrak*
-              </InputLabel>
-
-              <Select
-                id='employment'
-                name='employment'
-                open={employmentOpen}
-                onClose={handleEmploymentClose}
-                onOpen={handleEmploymentOpen}
-                value={employment}
-                onChange={handleEmploymentChange}
-                style={{
-                  fontSize: '0.9rem',
-                  textAlign: 'left',
-                }}>
-                <MenuItem value='' style={{ fontSize: '0.9rem' }}>
-                  <em>Pilih</em>
-                </MenuItem>
-                <MenuItem id={0} value='permanent' style={{ fontSize: '0.9rem' }}>
-                  Karyawan Tetap
-                </MenuItem>
-                <MenuItem id={0} value='contract' style={{ fontSize: '0.9rem' }}>
-                  Karyawan kontrak (PKWT)
-                </MenuItem>
-                <MenuItem id={0} value='intern' style={{ fontSize: '0.9rem' }}>
-                  Karyawan magang (Intern)
-                </MenuItem>
-              </Select>
-            </FormControl>
-
-            <Input
-              inputType='input'
-              id='emailRecipient'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_REQUIRE()]}
-              onInputHandler={onInputHandler}
-              label='Email Penerima*'
-              helperText='Mohon masukkan email yang valid'
-            />
-          </div>
-
-          <div className={classes.ContentWrap}>
-            <Autocomplete
-              value={fieldOfWork}
-              onChange={onAutoCompleteHandler}
-              filterOptions={onFilterHandler}
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              id='fieldOfWork'
-              name='fieldOfWork'
-              ccc='true'
-              options={WorkFieldData}
-              getOptionLabel={option => {
-                // Value selected with enter, right from the input
-                if (typeof option === 'string') {
-                  return option;
-                }
-                // Add "xxx" option created dynamically
-                if (option.inputValue) {
-                  return option.inputValue;
-                }
-                // Regular option
-                return option.field;
-              }}
-              renderOption={option => option.field}
-              freeSolo
-              style={{ margin: '0', width: '100%' }}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  style={{ margin: '0' }}
-                  label='Bidang Pekerjaan*'
-                  margin='normal'
-                  variant='standard'
-                />
-              )}
-            />
-          </div>
+        <div className={styles.JobLocation}>
+          <p>Lokasi Penempatan</p>
+          <Autocomplete
+            id='placementLocation'
+            name='placementLocation'
+            options={cities.sort((a, b) => {
+              const optA = a.toLowerCase();
+              const optB = b.toLowerCase();
+              if (optA < optB) return -1;
+              if (optA > optB) return 1;
+              return 0;
+            })}
+            onChange={handleLocationChange}
+            inputValue={inputLocation}
+            onInputChange={onInputLocationHandler}
+            freeSolo
+            renderInput={params => <CustomTextField {...params} />}
+          />
         </div>
       </div>
 
-      <div style={{ width: '95%', marginTop: '16px' }}>
-        <Input
-          inputType='textarea'
-          id='jobDescriptions'
-          InputClass='AddJobInput'
-          validatorMethod={[VALIDATOR_REQUIRE()]}
-          onInputHandler={onInputHandler}
-          label='Deskripsi pekerjaan*'
-          helperText='Deskripsi pekerjaan wajib diisi'
-        />
+      <div className={styles.SelectOptions}>
+        <div className={styles.Degree}>
+          <p>Tingkat Pendidikan</p>
+          <select id='educationalStage' name='educationalStage' value={educationalStage} onChange={handleChange}>
+            <option value='SMA/SMK'>SMA/SMK</option>
+            <option value='D3'>D3</option>
+            <option value='S1'>S1</option>
+            <option value='S2'>S2</option>
+            <option value='S3'>S3</option>
+          </select>
+        </div>
+
+        <div className={styles.Experiences}>
+          <p>Syarat Pengalaman Kerja</p>
+          <select id='jobExperience' name='jobExperience' value={jobExperience} onChange={handleJobExperienceChange}>
+            <option value='<2'>Kurang dari 2 tahun</option>
+            <option value='2-5'>2 - 5 tahun</option>
+            <option value='5-10'>5 - 10 tahun</option>
+            <option value='>10'>Lebih dari 10 tahun</option>
+          </select>
+        </div>
+
+        <div className={styles.ContractTypes}>
+          <p>Jenis Kontrak</p>
+          <select id='employment' name='employment' value={employment} onChange={handleEmploymentChange}>
+            <option value='permanent'>Karyawan Tetap</option>
+            <option value='contract'>Karyawan kontrak (PKWT)</option>
+            <option value='intern'>Karyawan magang (Intern)</option>
+          </select>
+        </div>
       </div>
 
-      <div className={classes.CheckBoxDiv}>
-        <label onChange={onCheckedInputHandler} className={classes.CheckBoxLabel}>
-          <input id='isHidden' type='checkbox' name='isHidden' className={classes.CheckBox} />
-          <p style={{ margin: '0' }}>Rahasiakan nama perusahaan</p>
+      <div className={styles.AgeRangeRequirements}>
+        <div className={styles.SliderLegends}>
+          <p className={styles.SliderMin}>Min</p>
+          <h3>Persyaratan Usia</h3>
+          <p className={styles.SliderMax}>Max</p>
+        </div>
+
+        <div className={styles.AgeRangeSlider}>
+          <p className={styles.AgeMinValue}>{rangeAge[0]}</p>
+          <div className={styles.Slider}>
+            <Slider
+              value={rangeAge}
+              onChange={handleAgeChange}
+              valueLabelDisplay='auto'
+              aria-labelledby='range-slider'
+              id='rangeAge'
+              style={{ color: '#f79f35' }}
+              min={18}
+              max={100}
+            />
+          </div>
+          <p className={styles.AgeMaxValue}>{rangeAge[1]}</p>
+        </div>
+      </div>
+
+      <Input
+        inputType='input'
+        id='emailRecipient'
+        InputClass='AddJobInput'
+        validatorMethod={[VALIDATOR_REQUIRE()]}
+        onInputHandler={onInputHandler}
+        label={true}
+        labelName='Email Penerima Lamaran*'
+      />
+      <div className={styles.HideCompany}>
+        <label onChange={onCheckedInputHandler} className={styles.CheckBoxLabel}>
+          <input id='isHidden' type='checkbox' name='isHidden' className={styles.CheckBox} />
+          <p>Rahasiakan nama perusahaan</p>
         </label>
       </div>
 
-      <div className={classes.AdditionalContentContainer}>
-        <h2 className={classes.AdditionalContentHeader}>Informasi Tambahan</h2>
-        <div className={classes.AdditionalContent}>
-          <Input
-            inputType='input'
-            id='benefit'
-            InputClass='AddJobInput'
-            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-            onInputHandler={onInputHandler}
-            label='Fasilitas & benefit (optional)'
-            error={false}
-          />
+      <Input
+        inputType='textarea'
+        id='jobDescriptions'
+        InputClass='AddJobInput'
+        validatorMethod={[VALIDATOR_REQUIRE()]}
+        onInputHandler={onInputHandler}
+        label={true}
+        labelName='Deskripsi pekerjaan*'
+        rows={12}
+        style={{ border: '2px solid #f79f35', outline: 'none', padding: '5px', fontSize: '19px', fontFamily: 'Lato' }}
+      />
 
-          <Input
-            inputType='input'
-            id='salary'
-            InputClass='AddJobInput'
-            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-            onInputHandler={onInputHandler}
-            label='Gaji (optional)'
-            error={false}
-            type='number'
-            min={0}
-            step='500000'
-          />
+      <div className={styles.BenefitSalary}>
+        <Input
+          inputType='input'
+          id='benefit'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Fasilitas & Benefit (optional)'
+        />
+
+        <Input
+          inputType='input'
+          id='salary'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+          onInputHandler={onInputHandler}
+          label={true}
+          labelName='Gaji (optional)'
+          error={false}
+          type='number'
+          min={0}
+          step='500000'
+        />
+      </div>
+
+      <div className={styles.SpecialRequirementContainer}>
+        <div className={styles.SpecialRequirementHeader}>
+          <h3 className={styles.SpecialRequirementTitle}>Persyaratan Khusus (max. 5)</h3>
+          <button type='button' onClick={requirement.length < 5 ? addRequirement : null}>
+            Tambah Persyaratan
+          </button>
         </div>
 
-        <div className={classes.ContentFull}>
-          <div className={classes.SpecialReqDiv}>
-            <div className={classes.SpecialReqHeader}>
-              <p className={classes.SpecialRequirement}>Persyaratan Khusus</p>
-              <p className={classes.SpecialTips}>skill teknis, karakter, atau persyaratan khusus lainnya (maks 5)</p>
-            </div>
-            <Button
-              variant='contained'
-              color='primary'
-              type='button'
-              disableElevation
-              onClick={requirement.length < 5 ? addRequirement : null}
-              style={{ height: 'fit-content', alignSelf: 'flex-end' }}
-              size='small'>
-              Tambah Persyaratan
-            </Button>
-          </div>
-
-          {requirement.map((req, i) => {
-            return (
-              <div className={classes.AutoAddDiv} key={i}>
-                <p className={classes.ListNuber}>{i + 1}.</p>
-
-                <Input
-                  inputType='input'
-                  id={`requirement_${i}`}
-                  validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                  onChange={event => onRequirementsUpdate(event, i)}
-                  initIsValid={true}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className={classes.RangeAge}>
-          <div className={classes.SliderDiv}>
-            <p className={classes.SliderLabel}>min</p>
-            <p className={classes.AgeLabel}>Syarat Usia</p>
-
-            <p className={classes.SliderLabel}>max</p>
-          </div>
-
-          <div className={classes.SliderDiv}>
-            <p className={classes.AgeNumber}>{rangeAge[0]}</p>
-            <div className={classes.Slider}>
-              <Slider
-                value={rangeAge}
-                onChange={handleAgeChange}
-                valueLabelDisplay='auto'
-                aria-labelledby='range-slider'
-                id='rangeAge'
+        {requirement.map((req, i) => {
+          return (
+            <div className={styles.SpecialRequirementItem} key={`specialreq_${i}`}>
+              <p className={styles.ListNuber}>{i + 1}.</p>
+              <Input
+                inputType='input'
+                id={`requirement_${i}`}
+                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+                onChange={event => onRequirementsUpdate(event, i)}
+                initIsValid={true}
               />
             </div>
-            <p className={classes.AgeNumber}>{rangeAge[1]}</p>
-          </div>
+          );
+        })}
+      </div>
+
+      <div className={styles.DurationContainer}>
+        <h2>Durasi Tayang (bulan)</h2>
+        <Input
+          inputType='input'
+          id='slotAllocation'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_MIN(1)]}
+          onInputHandler={onInputHandler}
+          type='number'
+          label={false}
+          min={0}
+          max={parseInt(maxSlot) || 0}
+          step='1'
+        />
+        <div className={styles.RemainingSlot}>
+          <h3>
+            Sisa slot:{' '}
+            {formState.inputs.slotAllocation?.value > 0 &&
+            parseInt(maxSlot) > parseInt(formState.inputs.slotAllocation.value)
+              ? (parseInt(maxSlot) - parseInt(formState.inputs.slotAllocation.value)).toString()
+              : maxSlot}
+          </h3>
+          <span onClick={openAddSlot}>
+            <em>(Tambah Slot)</em>
+          </span>
         </div>
       </div>
 
-      <div className={classes.AdditionalContentContainer}>
-        <h2 className={classes.AdditionalContentHeader}>Durasi Tayang</h2>
-        <div className={classes.DurationContent}>
-          <div className={classes.SlotInput}>
-            <Input
-              inputType='input'
-              id='slotAllocation'
-              InputClass='AddJobInput'
-              validatorMethod={[VALIDATOR_MIN(1)]}
-              onInputHandler={onInputHandler}
-              type='number'
-              min={0}
-              max={parseInt(maxSlot) || 0}
-              step='1'
-            />
-            <span>bulan</span>
-          </div>
-          <div className={classes.RemainingSlot}>
-            <h3>
-              Sisa slot:{' '}
-              {formState.inputs.slotAllocation.value &&
-              formState.inputs.slotAllocation.value > 0 &&
-              parseInt(maxSlot) > parseInt(formState.inputs.slotAllocation.value)
-                ? (parseInt(maxSlot) - parseInt(formState.inputs.slotAllocation.value)).toString()
-                : maxSlot}
-            </h3>
-
-            <div className={classes.SlotAddButton}>
-              <Button
-                disableElevation
-                size='small'
-                style={{ fontWeight: '600' }}
-                startIcon={<AddIcon />}
-                onClick={onAddSlotHandler}>
-                Tambah Slot
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          alignSelf: 'flex-end',
-          marginRight: '1rem',
-          marginTop: '2rem',
-        }}>
-        <Button variant='outlined' color='primary' type='submit' size='small' disableElevation onClick={onSaveHandler}>
-          save draft
-        </Button>
-
+      <div className={styles.SubmitButtonContainer}>
+        <button type='submit' onClick={onSaveHandler}>
+          Simpan Draft
+        </button>
         {formState.inputs.slotAllocation.value <= maxSlot && (
-          <Button
-            variant='contained'
-            color='primary'
-            type='submit'
-            size='small'
-            disableElevation
-            onClick={onSubmitHandler}
-            disabled={!formState.formIsValid}
-            style={{ marginLeft: '1rem' }}>
-            save & publish
-          </Button>
+          <button type='submit' onClick={onSubmitHandler} disabled={!formState.formIsValid}>
+            Tayangkan Iklan
+          </button>
         )}
       </div>
-    </div>
+    </form>
   );
 
   if (props.job.isLoading) {
@@ -721,10 +522,27 @@ const NewJob = props => {
 
   return (
     <React.Fragment>
+      <HeaderBanner imageSource={CompanyMeeting} />
+      <Modal
+        show={addSlotModal}
+        onCancel={closeAddSlot}
+        headerText='Anda yakin ingin menambah slot?'
+        style={{ top: '25vh', maxWidth: '500px', marginLeft: '-250px', height: '20vh', overflowY: 'auto' }}>
+        <p className={styles.AddSlotExplanation}>Anda akan dialihkan ke halaman penambahan slot.</p>
+        <p className={styles.AddSlotExplanation}>Seluruh data yang belum tersimpan akan hilang.</p>
+        <div className={styles.AddSlotButtonContainer}>
+          <button type='button' onClick={closeAddSlot}>
+            Batal
+          </button>
+          <button type='button' onClick={() => props.history.push(`/co/order/reguler`)}>
+            Tambah Slot
+          </button>
+        </div>
+      </Modal>
       <Modal show={props.job.error} onCancel={onCancelHandler}>
         Tidak dapat memasang iklan pekerjaan saat ini{' '}
       </Modal>
-      <form className={classes.Container}>{formContent}</form>
+      {formContent}
     </React.Fragment>
   );
 };

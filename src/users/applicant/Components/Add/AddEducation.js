@@ -47,7 +47,8 @@ const AddEducation = props => {
   const { applicantid } = useParams();
 
   const [degree, setDegree] = useState('SMA');
-  const [school, setSchool] = useState('');
+  const [school, setSchool] = useState(null);
+  const [inputSchool, setInputSchool] = useState('');
   const [formState, onInputHandler] = useForm(
     {
       school: {
@@ -126,22 +127,23 @@ const AddEducation = props => {
   };
 
   const onSetSchoolHandler = (event, newValue) => {
-    console.log(newValue);
     setSchool(newValue);
     onInputHandler('school', newValue, true);
   };
-
-  console.log(formState.inputs);
+  const onInputSchoolHandler = (event, newValue) => {
+    setInputSchool(newValue);
+    onInputHandler('school', newValue, true);
+  };
 
   let formContent = (
     <form className={styles.AddEducationFormContainer} onSubmit={onSubmitHandler}>
       <div className={styles.UniversityContainer}>
         <p>Nama Sekolah/Universitas</p>
         <Autocomplete
-          value={school || ''}
-          inputValue={school || ''}
+          value={school || null}
+          inputValue={inputSchool}
           onChange={onSetSchoolHandler}
-          onInputChange={onSetSchoolHandler}
+          onInputChange={onInputSchoolHandler}
           id='school'
           name='school'
           options={University.map(uni => uni.institusi)}

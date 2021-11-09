@@ -61,6 +61,8 @@ const EditBriefInformations = props => {
   const { applicantid } = useParams();
   const [data, setData] = useState();
   const [interest, setInterest] = useState([]);
+  const [inputProvince, setInputProvince] = useState('');
+  const [inputCity, setInputCity] = useState('');
   const [locationState, dispatch] = useReducer(locationReducer, initialLocation);
   const [city, setCity] = useState(CitiesData.default);
 
@@ -233,7 +235,13 @@ const EditBriefInformations = props => {
   //=================== State Handler ====================
 
   const onStateChangeHandler = (e, value) => {
-    console.log(value);
+    ProvinceToCity(value, setCity);
+    onInputHandler('state', value, true);
+    dispatch({ type: LOCATION.CHGPROVINCE, province: value });
+    onInputHandler('city', '', false);
+  };
+  const onInputStateChangeHandler = (e, value) => {
+    setInputProvince(value);
     ProvinceToCity(value, setCity);
     onInputHandler('state', value, true);
     dispatch({ type: LOCATION.CHGPROVINCE, province: value });
@@ -241,8 +249,11 @@ const EditBriefInformations = props => {
   };
 
   const onCityChangeHandler = (e, value) => {
-    console.log(value);
-
+    onInputHandler('city', value, true);
+    dispatch({ type: LOCATION.CHGCITY, citySelected: value });
+  };
+  const onInputCityChangeHandler = (e, value) => {
+    setInputCity(value);
     onInputHandler('city', value, true);
     dispatch({ type: LOCATION.CHGCITY, citySelected: value });
   };
@@ -354,10 +365,10 @@ const EditBriefInformations = props => {
               name='state'
               freeSolo
               options={ProvinceData.sort().map(option => option)}
-              value={locationState.province || ''}
-              inputValue={locationState.province || ''}
+              value={locationState.province || null}
+              inputValue={inputProvince}
               onChange={onStateChangeHandler}
-              onInputChange={onStateChangeHandler}
+              onInputChange={onInputStateChangeHandler}
               renderInput={params => <CustomTextField {...params} />}
             />
           </div>
@@ -370,10 +381,10 @@ const EditBriefInformations = props => {
               name='city'
               freeSolo
               options={city.map(option => option)}
-              value={locationState.citySelected || ''}
-              inputValue={locationState.citySelected || ''}
+              value={locationState.citySelected || null}
+              inputValue={inputCity}
               onChange={onCityChangeHandler}
-              onInputChange={onCityChangeHandler}
+              onInputChange={onInputCityChangeHandler}
               renderInput={params => <CustomTextField {...params} />}
             />
           </div>
@@ -417,8 +428,8 @@ const EditBriefInformations = props => {
               getOptionDisabled={() => (interest.length < 5 ? false : true)}
               options={WorkFieldData.sort().map(option => option.field)}
               getOptionLabel={option => option}
-              onChange={FieldOfWorkHandler}
               value={interest ? interest : ''}
+              onChange={FieldOfWorkHandler}
               renderInput={params => <CustomTextField {...params} />}
             />
           </div>

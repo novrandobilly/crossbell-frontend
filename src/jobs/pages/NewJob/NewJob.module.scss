@@ -1,0 +1,238 @@
+$primaryColor: #f79f35;
+
+.NewJobContainer {
+  width: 100%;
+  margin: auto;
+  padding: 40px;
+  box-sizing: border-box;
+  & > * {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .Degree,
+  .Experiences,
+  .ContractTypes,
+  .JobCategory,
+  .JobLocation {
+    p {
+      margin: 0 0 5px;
+      width: 100%;
+      text-align: start;
+    }
+    select {
+      width: 100%;
+    }
+  }
+
+  input,
+  select {
+    min-height: 40px;
+    box-sizing: border-box;
+    border: 2px solid #f79f35;
+    font-size: 16px;
+    outline: none;
+    padding-left: 15px;
+  }
+
+  .NewJobTitle {
+    span {
+      color: $primaryColor;
+    }
+  }
+
+  .HideCompany {
+    label {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      input {
+        width: 25px;
+        height: 25px;
+        margin-right: 15px;
+      }
+      p {
+        font-size: 18px;
+      }
+      & > * {
+        margin: 0;
+      }
+    }
+  }
+
+  .CategoryLocation,
+  .BenefitSalary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > * {
+      width: 49%;
+    }
+  }
+  .SelectOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > * {
+      width: 32%;
+    }
+  }
+
+  .AgeRangeRequirements {
+    margin-top: 30px;
+    p,
+    h3 {
+      margin: 0;
+      font-weight: 400;
+    }
+    .SliderLegends {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .AgeRangeSlider {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .Slider {
+        width: 95%;
+      }
+    }
+  }
+
+  .SpecialRequirementContainer {
+    .SpecialRequirementHeader {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 10px;
+      .SpecialRequirementTitle {
+        margin: 0;
+        margin-right: 15px;
+        font-weight: 400;
+      }
+      button {
+        background-color: $primaryColor;
+        font-size: 18px;
+        border-radius: 5px;
+        padding: 5px;
+        border: none;
+        color: #fff;
+        width: 100%;
+        max-width: 200px;
+        min-height: 35px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .SpecialRequirementItem {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 20px;
+      margin-bottom: 15px;
+      p {
+        margin: 0;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .DurationContainer {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 30px auto 50px;
+    h2 {
+      margin: 0 0 5px;
+    }
+    .RemainingSlot {
+      width: 100%;
+      max-width: 250px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      h3 {
+        margin: 0;
+      }
+      span {
+        color: #c77513;
+        font-size: 18px;
+        border-bottom: 1px solid #c77513;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .SubmitButtonContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    min-height: 100px;
+    button {
+      background-color: $primaryColor;
+      font-size: 20px;
+      border-radius: 5px;
+      padding: 5px;
+      border: none;
+      color: #fff;
+      width: 100%;
+      min-height: 40px;
+
+      &:hover {
+        cursor: pointer;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #8d8d8d;
+      }
+      &:nth-child(1) {
+        background-color: #fff;
+        border: 2px solid $primaryColor;
+        color: $primaryColor;
+        &:hover {
+          color: #fff;
+          background-color: #f79f35;
+        }
+      }
+    }
+  }
+}
+
+.AddSlotButtonContainer {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: auto;
+  button {
+    background-color: $primaryColor;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    color: #fff;
+    width: 100%;
+    max-width: 100px;
+    min-height: 30px;
+    &:hover {
+      cursor: pointer;
+    }
+    &:nth-child(1) {
+      background-color: #fff;
+      border: 1px solid $primaryColor;
+      color: $primaryColor;
+    }
+  }
+}
+.AddSlotExplanation {
+  margin: 0 0 15px;
+}

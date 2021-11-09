@@ -26,7 +26,7 @@ import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldDa
 import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
 import Slider from '@material-ui/core/Slider';
 
-import classes from './NewJob.module.css';
+import classes from './NewJob.module.scss';
 
 const EditUnreleasedJob = props => {
   const { jobsid } = useParams();
