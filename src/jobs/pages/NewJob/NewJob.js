@@ -14,7 +14,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { CustomTextField } from '../../../shared/UI_Element/CustomMUIComponents';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../shared/UI_Element/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_MIN, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_MIN,
+  VALIDATOR_ALWAYSTRUE,
+  VALIDATOR_EMAIL,
+} from '../../../shared/utils/validator';
 import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
 import Slider from '@material-ui/core/Slider';
@@ -33,13 +38,14 @@ const NewJob = props => {
   const [requirementList, setRequirementList] = useState([]);
   const [rangeAge, setRangeAge] = useState([18, 35]);
   const [fieldOfWork, setFieldOfWork] = useState('');
+  const [inputFieldOfWork, setInputFieldOfWork] = useState('');
 
   const [addSlotModal, setAddSlotModal] = useState(false);
   const openAddSlot = () => setAddSlotModal(true);
   const closeAddSlot = () => setAddSlotModal(false);
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -107,15 +113,6 @@ const NewJob = props => {
 
   const { getOneCompany, auth } = props;
   useEffect(() => {
-    const salary = document.getElementById('salary');
-    const benefit = document.getElementById('benefit');
-
-    onInputHandler('fieldOfWork', fieldOfWork?.field, fieldOfWork?.field ? true : false);
-    onInputHandler('salary', salary?.value, true);
-    onInputHandler('benefit', benefit?.value, true);
-    onInputHandler('rangeAge', rangeAge, true);
-    onInputHandler('specialRequirement', requirementList, true);
-
     const getSlot = async () => {
       try {
         if (auth.userId) {
@@ -170,6 +167,7 @@ const NewJob = props => {
     }
   };
 
+  console.log(formState.inputs.specialRequirement.value);
   const onSaveHandler = async event => {
     event.preventDefault();
     const jobData = {
@@ -240,7 +238,7 @@ const NewJob = props => {
     onInputHandler('rangeAge', newValue, true);
   };
 
-  const onAutoCompleteHandler = (event, newValue) => {
+  const onFieldOfWorkHandler = (event, newValue) => {
     event.preventDefault();
     if (typeof newValue === 'string') {
       setFieldOfWork({
@@ -256,6 +254,10 @@ const NewJob = props => {
       setFieldOfWork(newValue);
       onInputHandler('fieldOfWork', newValue?.field || '', true);
     }
+  };
+  const onInputFieldOfWorkHandler = (e, value) => {
+    setInputFieldOfWork(value);
+    onInputHandler('fieldOfWork', value, true);
   };
 
   let cities = [];
@@ -275,6 +277,7 @@ const NewJob = props => {
     setRequirementList(prevState => {
       let newState = [...prevState];
       newState[reqIndex] = inputValue;
+      onInputHandler('specialRequirement', newState, true);
       return newState;
     });
   };
@@ -310,7 +313,9 @@ const NewJob = props => {
               return 0;
             })}
             getOptionLabel={option => option.field}
-            onChange={onAutoCompleteHandler}
+            onChange={onFieldOfWorkHandler}
+            inputValue={inputFieldOfWork}
+            onInputChange={onInputFieldOfWorkHandler}
             renderInput={params => <CustomTextField {...params} />}
           />
         </div>
@@ -397,7 +402,7 @@ const NewJob = props => {
         inputType='input'
         id='emailRecipient'
         InputClass='AddJobInput'
-        validatorMethod={[VALIDATOR_REQUIRE()]}
+        validatorMethod={[VALIDATOR_EMAIL()]}
         onInputHandler={onInputHandler}
         label={true}
         labelName='Email Penerima Lamaran*'
@@ -428,6 +433,7 @@ const NewJob = props => {
           InputClass='AddJobInput'
           validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
           onInputHandler={onInputHandler}
+          initIsValid={true}
           label={true}
           labelName='Fasilitas & Benefit (optional)'
         />
@@ -438,6 +444,7 @@ const NewJob = props => {
           InputClass='AddJobInput'
           validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
           onInputHandler={onInputHandler}
+          initIsValid={true}
           label={true}
           labelName='Gaji (optional)'
           error={false}

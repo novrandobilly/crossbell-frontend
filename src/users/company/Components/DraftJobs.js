@@ -17,6 +17,15 @@ const DraftJobs = props => {
   };
   const closeDeleteDraftHandler = () => setOpenDeleteDraft(false);
 
+  const deleteDraft = async draftId => {
+    try {
+      await props.onDelete(draftId);
+      closeDeleteDraftHandler();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   let draftAds =
     props.draftJobs.length > 0 ? (
       props.draftJobs.map(job => {
@@ -112,7 +121,7 @@ const DraftJobs = props => {
           ) : (
             <>
               <button onClick={closeDeleteDraftHandler}>No</button>
-              <button onClick={props.onDelete.bind(this, draftJobId)}>Yes</button>
+              <button onClick={deleteDraft.bind(this, draftJobId)}>Yes</button>
             </>
           )}
         </div>

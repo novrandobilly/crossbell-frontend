@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useReducer, useCallback, Fragment } from 'react';
+import React, { useState, useEffect, useReducer, Fragment } from 'react';
+// import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -9,7 +10,7 @@ import LiveJobs from '../components/LiveJobs';
 import ExpiredJobs from '../components/ExpiredJobs';
 import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
-import QueryBar from '../components/QueryBar';
+// import QueryBar from '../components/QueryBar';
 import MeetingCompany from '../../../assets/images/CompanyMeeting.png';
 import styles from './CompanyJobList.module.scss';
 
@@ -138,46 +139,46 @@ const CompanyJobList = props => {
     }
   };
 
-  const searchHandler = event => {
-    event.preventDefault();
-    console.log(state.search.value);
-    if (state.search.value) {
-      dispatch({
-        type: ACTION.SEARCHEXECUTE,
-        payload: { jobs: allCompanyJobs },
-      });
-    } else {
-      dispatch({
-        type: ACTION.SEARCHEMPTY,
-        payload: { jobs: allCompanyJobs },
-      });
-    }
-  };
+  // const searchHandler = event => {
+  //   event.preventDefault();
+  //   console.log(state.search.value);
+  //   if (state.search.value) {
+  //     dispatch({
+  //       type: ACTION.SEARCHEXECUTE,
+  //       payload: { jobs: allCompanyJobs },
+  //     });
+  //   } else {
+  //     dispatch({
+  //       type: ACTION.SEARCHEMPTY,
+  //       payload: { jobs: allCompanyJobs },
+  //     });
+  //   }
+  // };
 
-  const clearHandler = event => {
-    event.preventDefault();
-    dispatch({
-      type: ACTION.SEARCHEMPTY,
-      payload: { jobs: allCompanyJobs },
-    });
-  };
+  // const clearHandler = event => {
+  //   event.preventDefault();
+  //   dispatch({
+  //     type: ACTION.SEARCHEMPTY,
+  //     payload: { jobs: allCompanyJobs },
+  //   });
+  // };
 
-  const searchInputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: ACTION.SEARCHUPDATE,
-      payload: {
-        id,
-        value,
-        isValid,
-      },
-    });
-  }, []);
+  // const searchInputHandler = useCallback((id, value, isValid) => {
+  //   dispatch({
+  //     type: ACTION.SEARCHUPDATE,
+  //     payload: {
+  //       id,
+  //       value,
+  //       isValid,
+  //     },
+  //   });
+  // }, []);
 
   return (
     <Fragment>
       <HeaderBanner imageSource={MeetingCompany} />
       <div className={styles.CompanyJobListContainer}>
-        <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} />
+        {/* <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} /> */}
         <section className={styles.DraftContainer}>
           <h2>Draft Iklan Pekerjaan</h2>
           {unreleasedData ? (

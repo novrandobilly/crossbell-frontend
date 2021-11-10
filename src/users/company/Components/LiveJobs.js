@@ -5,7 +5,6 @@ import { withRouter } from 'react-router';
 import styles from './LiveJobs.module.scss';
 
 const LiveJobs = props => {
-  console.log(props.liveJobs);
   let liveAds =
     props.liveJobs.length > 0 ? (
       props.liveJobs.map(job => {
@@ -82,7 +81,7 @@ const LiveJobs = props => {
         );
       })
     ) : (
-      <p className={styles.EmptyText}>Belum ada draft iklan pekerjaan tersimpan</p>
+      <p className={styles.EmptyText}>Belum ada iklan pekerjaan yang sedang tayang</p>
     );
 
   return liveAds;
