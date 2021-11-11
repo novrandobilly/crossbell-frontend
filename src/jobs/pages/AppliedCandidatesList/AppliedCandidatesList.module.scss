@@ -1,0 +1,189 @@
+.AppliedCandidatesTitle {
+  span {
+    color: #f79f35;
+  }
+}
+.AppliedCandidatesListContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: calc(100vh - 30rem);
+  padding: 0 20px 20px;
+  box-sizing: border-box;
+  .JobAds {
+    width: 20%;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    // border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #71430b;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    & > * {
+      margin: 0 0 10px;
+    }
+    .JobAdsHeader {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      img {
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+        margin-right: 10px;
+      }
+      .JobTitle {
+        &:hover {
+          cursor: pointer;
+          text-shadow: 0 0 5px #f79f35;
+        }
+      }
+    }
+    .SpecialRequirements {
+      text-align: start;
+    }
+  }
+  .CardHolder {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 80%;
+  }
+}
+
+.CardContainer {
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #353535;
+  border-radius: 5px;
+  background-color: white;
+  overflow-y: hidden;
+}
+
+.CardLeft {
+  display: flex;
+  width: 20%;
+  padding: 0 12px 0 2px;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.Avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+    text-shadow: 0 0 5px #f79f35;
+  }
+  img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #969696;
+  }
+}
+
+.CardMid {
+  width: 45%;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 0.9rem;
+  border-left: 1px solid #353535;
+  box-sizing: border-box;
+}
+
+.CardMid a {
+  text-decoration: none;
+}
+
+.Name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  &:hover {
+    cursor: pointer;
+    text-shadow: 0 0 5px #f79f35;
+  }
+}
+
+.CardMidTitle {
+  font-weight: 400;
+  margin-top: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.CardMidLocation > span {
+  color: #535353;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.CardMidTitle > span {
+  color: #7a7a7a;
+  font-size: 16px;
+  margin-right: 3px;
+}
+
+.CardRight {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  font-size: 16px;
+  padding: 0 2px 0 12px;
+  border-left: solid 1px #353535;
+  box-sizing: border-box;
+  & > p {
+    margin: 5px 0;
+  }
+}
+
+.ExtraDetails {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.City {
+  margin: 0;
+}
+
+.GenderAge {
+  margin: 0;
+}
+
+.Salary {
+  margin: 0;
+}
+
+.Mail {
+  margin: 0;
+  padding-right: 8px;
+}
+
+.Phone {
+  margin: 0;
+}

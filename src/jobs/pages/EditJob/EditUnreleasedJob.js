@@ -299,7 +299,7 @@ const EditUnreleasedJob = props => {
     setEmployment(e.target.value);
   };
 
-  const handleChange = e => {
+  const handleEducationChange = e => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -411,7 +411,11 @@ const EditUnreleasedJob = props => {
         <div className={styles.SelectOptions}>
           <div className={styles.Degree}>
             <p>Tingkat Pendidikan</p>
-            <select id='educationalStage' name='educationalStage' value={educationalStage} onChange={handleChange}>
+            <select
+              id='educationalStage'
+              name='educationalStage'
+              value={educationalStage}
+              onChange={handleEducationChange}>
               <option value='SMA/SMK'>SMA/SMK</option>
               <option value='D3'>D3</option>
               <option value='S1'>S1</option>
