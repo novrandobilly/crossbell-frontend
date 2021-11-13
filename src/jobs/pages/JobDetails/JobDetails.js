@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useParams, Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -13,6 +13,10 @@ import styles from './JobDetails.module.scss';
 const JobDetails = props => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
+  const [applyConfirm, setApplyConfirm] = useState(false);
+
+  const onOpenApplyConfirmHandler = () => setApplyConfirm(true);
+  const onCloseApplyConfirmHandler = () => setApplyConfirm(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,25 +48,41 @@ const JobDetails = props => {
       await props.applyJob(payload);
     } catch (err) {
       console.log(err);
-
       return props.createJobFail();
     }
   };
 
-  const onReleaseHandler = async event => {
-    event.preventDefault();
+  // const onReleaseHandler = async event => {
+  //   event.preventDefault();
 
-    const payload = {
-      jobId: jobsid,
-      token: props.auth.token,
-    };
-    try {
-      await props.deleteJob(payload);
-      props.history.push('/jobs-dashboard');
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   const jobData = {
+  //     jobId: jobsid,
+  //     jobTitle: loadedJob.jobTitle,
+  //     isHidden: loadedJob.isHidden,
+  //     placementLocation: loadedJob.placementLocation,
+  //     jobDescriptions: loadedJob.jobDescriptions,
+  //     jobExperience: loadedJob.jobExperience,
+  //     educationalStage: loadedJob.educationalStage,
+  //     specialRequirement: loadedJob.specialRequirement,
+  //     emailRecipient: loadedJob.emailRecipient,
+  //     rangeAge: loadedJob.rangeAge,
+  //     employment: loadedJob.employment,
+  //     benefit: loadedJob.benefit,
+  //     salary: loadedJob.salary,
+  //     slot: loadedJob.slot,
+  //     fieldOfWork: loadedJob.fieldOfWork,
+  //   };
+  //   const authData = {
+  //     userId: props.auth.userId,
+  //     token: props.auth.token,
+  //   };
+
+  //   try {
+  //     await props.releaseJob(jobData, authData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   let jobDetails = <LoadingBar />;
 
@@ -128,16 +148,16 @@ const JobDetails = props => {
                       </button>
                     </Link>
                   )}
-                  {!loadedJob.releasedAt && props.auth.userId === loadedJob.companyId.id && (
+                  {/* {!loadedJob.releasedAt && props.auth.userId === loadedJob.companyId.id && (
                     <button onClick={onReleaseHandler} className={styles.ReleaseButton}>
                       <span>Release</span>
                     </button>
-                  )}
+                  )} */}
 
                   {!props.auth.isCompany && props.auth.token && (
                     <button
                       className={styles.ApplyButton}
-                      onClick={onApplyHandler}
+                      onClick={onOpenApplyConfirmHandler}
                       disabled={loadedJob.jobApplicants.some(
                         appId => appId.id.toString() === loadedJob.auth.userId.toString()
                       )}>
@@ -220,7 +240,39 @@ const JobDetails = props => {
       </div>
     );
   }
-  return jobDetails;
+  return (
+    <Fragment>
+      <Modal
+        show={applyConfirm}
+        headerText='Anda yakin melamar pekerjaan ini?'
+        onCancel={onCloseApplyConfirmHandler}
+        style={{ top: '30vh', maxWidth: '600px', marginLeft: '-300px', height: '30vh', overflowY: 'auto' }}>
+        <div className={styles.ApplicationModal}>
+          <p>Pastikan profile anda sudah anda lengkapi untuk memudahkan perusahaan memahami potensi diri anda.</p>
+
+          <div className={styles.ApplyButtonContainer}>
+            {props.job.isLoading && jobId === props.jobId ? (
+              <LoadingBar style={{ margin: '0 0 10px' }} />
+            ) : (
+              <>
+                <button type='button' onClick={onCloseApplyConfirmHandler}>
+                  Cancel
+                </button>
+                <button type='button' onClick={onApplyHandler}>
+                  Apply
+                </button>
+              </>
+            )}
+          </div>
+          <p className={styles.ProfileCompletion} onClick={profileCompletionHandler}>
+            <em>Lengkapi profile sekarang</em>
+          </p>
+        </div>
+      </Modal>
+
+      {jobDetails}
+    </Fragment>
+  );
 };
 
 const mapStateToProps = state => {
@@ -236,7 +288,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
     applyJob: payload => dispatch(actionCreators.applyJob(payload)),
-    releaseJob: payload => dispatch(actionCreators.releaseJob(payload)),
+    releaseJob: (jobData, authData) => dispatch(actionCreators.releaseJob(jobData, authData)),
   };
 };
 
