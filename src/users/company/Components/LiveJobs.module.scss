@@ -20,9 +20,14 @@
     margin-bottom: 10px;
     .JobTitle {
       margin: 0;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
       &:hover {
         cursor: pointer;
         text-shadow: 0 0 10px #f79f35;
+        color: #000;
       }
     }
     .Status {
@@ -64,12 +69,13 @@
 
     .NumberOfApplicants {
       @include flexCenter(column, space-between, center);
+      text-decoration: none;
+      color: #000;
       #NumberOfApplicants {
         font-size: 48px;
         margin: 7px auto;
         color: #f79f35;
       }
-
       &:hover {
         cursor: pointer;
         text-shadow: 0 0 10px #f79f35;
@@ -80,10 +86,11 @@
       align-self: center;
       width: 100%;
       max-width: 100px;
-      button {
+      .EditButton {
         text-decoration: none;
         outline: none;
         border-radius: 5px;
+        color: #f79f35;
         border: 1px solid #f79f35;
         background-color: #fff;
         margin-bottom: 10px;

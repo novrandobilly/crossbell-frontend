@@ -172,17 +172,25 @@ const NavigationLinks = props => {
                   <NavLink to={`/co/order/reguler`} activeClassName={styles.active} onClick={DropdownOrder}>
                     <p>Pesan Slot Iklan</p>
                   </NavLink>
-                  <NavLink to={`/co/order/candidate`} activeClassName={styles.active} onClick={DropdownOrder}>
+                  {/* <NavLink
+                    to={`/co/order/candidate`}
+                    to={`#`}
+                    className={styles.BulkCandidates}
+                    activeClassName={styles.active}
+                    onClick={DropdownOrder}>
                     <p>
-                      Pesan <em>Bulk Candidates</em>
+                      Pesan <em>Bulk Candidates</em> (Coming Soon)
                     </p>
-                  </NavLink>
+                  </NavLink> */}
 
+                  <NavLink to={`/co/order/es`} activeClassName={styles.active} onClick={DropdownOrder}>
+                    <p>Executive Search (Headhunter)</p>
+                  </NavLink>
                   <NavLink
                     to={`/co/${props.auth.userId}/listOrder`}
                     activeClassName={styles.active}
                     onClick={DropdownOrder}>
-                    <p>Riwayat pesanan</p>
+                    <p>Riwayat Pesanan</p>
                   </NavLink>
                 </div>
               </div>

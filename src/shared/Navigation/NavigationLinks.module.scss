@@ -107,6 +107,9 @@
   background-color: white;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  width: 100%;
+  right: 30px;
+  max-width: 250px;
 }
 .adminNotifications {
   right: 10px;
@@ -137,6 +140,14 @@
 
 .dropdownShow a {
   padding: 2px 11px;
+}
+.BulkCandidates p {
+  color: #808080;
+  text-shadow: none;
+  &:hover {
+    cursor: not-allowed;
+    background-color: #fff;
+  }
 }
 
 .NavigationLink .Logout {

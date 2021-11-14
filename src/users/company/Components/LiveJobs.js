@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import styles from './LiveJobs.module.scss';
 
@@ -11,9 +11,9 @@ const LiveJobs = props => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
-              <h3 className={styles.JobTitle} onClick={() => props.history.push(`/jobs/${job.id}`)}>
+              <Link className={styles.JobTitle} to={Link}>
                 {job.jobTitle}
-              </h3>
+              </Link>
               <div className={styles.Status}>
                 <span>Sedang Tayang</span>
                 <div style={{ borderRadius: '50%', backgroundColor: '#00a31b', width: '20px', height: '20px' }}></div>
@@ -58,23 +58,18 @@ const LiveJobs = props => {
                 </p>
               </div>
 
-              <div
-                className={styles.NumberOfApplicants}
-                onClick={() => props.history.push(`/jobs/appliedCandidatesList/${job.id}`)}>
+              <Link className={styles.NumberOfApplicants} to={`/jobs/appliedCandidatesList/${job.id}`}>
                 <p>Jumlah Pelamar</p>
                 <p id={styles.NumberOfApplicants}>{job.jobApplicants.length}</p>
                 <p>
                   <em>Lihat Semua</em>
                 </p>
-              </div>
+              </Link>
 
               <div className={styles.ControlButton}>
-                <button
-                  className={styles.EditButton}
-                  type='button'
-                  onClick={() => props.history.push(`/jobs/${job.id}/edit`)}>
+                <Link className={styles.EditButton} to={`/jobs/${job.id}/edit`}>
                   Edit
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -87,4 +82,4 @@ const LiveJobs = props => {
   return liveAds;
 };
 
-export default withRouter(LiveJobs);
+export default LiveJobs;

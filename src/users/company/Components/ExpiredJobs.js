@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import styles from './ExpiredJobs.module.scss';
 const ExpiredJobs = props => {
@@ -10,9 +10,9 @@ const ExpiredJobs = props => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
-              <h3 className={styles.JobTitle} onClick={() => props.history.push(`/jobs/${job.id}`)}>
+              <Link className={styles.JobTitle} to={`/jobs/${job.id}`}>
                 {job.jobTitle}
-              </h3>
+              </Link>
               <div className={styles.Status}>
                 <span>Selesai Tayang</span>
                 <div style={{ borderRadius: '50%', backgroundColor: '#EF3F37', width: '20px', height: '20px' }}></div>
@@ -54,15 +54,13 @@ const ExpiredJobs = props => {
                   Kontrak Kerja: <strong>{job.employment}</strong>
                 </p>
               </div>
-              <div
-                className={styles.NumberOfApplicants}
-                onClick={() => props.history.push(`/jobs/appliedCandidatesList/${job.id}`)}>
+              <Link className={styles.NumberOfApplicants} to={`/jobs/appliedCandidatesList/${job.id}`}>
                 <p>Jumlah Pelamar</p>
                 <p id={styles.NumberOfApplicants}>{job.jobApplicants.length}</p>
                 <p>
                   <em>Lihat Semua</em>
                 </p>
-              </div>
+              </Link>
               <div className={styles.ControlButton}>
                 {/* <button className={styles.DeleteButton} type='button'>
                   Duplicate
@@ -79,4 +77,4 @@ const ExpiredJobs = props => {
   return expiredAds;
 };
 
-export default withRouter(ExpiredJobs);
+export default ExpiredJobs;

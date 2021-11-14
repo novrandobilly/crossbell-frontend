@@ -1,3 +1,4 @@
+$primaryColor: #f79f35;
 .JobDetailsContainer {
   display: flex;
   flex-direction: row;
@@ -229,131 +230,33 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 1200px) {
-  .JobDetailsContainer {
-    flex-direction: column;
-    align-items: center;
-    border: blue 1px solid;
-  }
-
-  .JobContainer {
+.ApplyButtonContainer {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: auto;
+  button {
+    background-color: $primaryColor;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    color: #fff;
     width: 100%;
-    margin-right: 0;
-    margin-top: 16px;
-  }
-
-  .AboutCompanyContainer {
-    width: 100%;
-    margin-top: 16px;
-    align-self: center;
-  }
-
-  .AboutLabel {
-    margin: 0;
-  }
-
-  .AboutText {
-    margin: 16px 0 0 16px;
-    padding-bottom: 16px;
-  }
-}
-
-@media (max-width: 600px) {
-  .TextDate {
-    display: none;
-  }
-
-  .TextDateMobile {
-    display: flex;
-    font-size: 0.8rem;
-    color: rgba(0, 0, 0, 0.6);
-  }
-}
-
-@media (max-width: 576px) {
-  .HeaderContainer {
-    flex-direction: column;
-    padding-bottom: 16px;
-  }
-
-  .LogoContainer {
-    display: flex;
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 16px;
-    justify-content: center;
-  }
-
-  .Logo {
-    width: 15rem;
-    height: 15rem;
-    margin-bottom: 16px;
-  }
-  .MetaDatatext {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .LogoContainer {
-    margin-bottom: 0;
-  }
-
-  .Logo {
-    width: 10rem;
-    height: 10rem;
-  }
-
-  .HeaderContainer {
-    padding-bottom: 0;
-  }
-
-  .Header {
-    height: auto;
-  }
-
-  .JobTitle {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  .MetaDatatext {
-    margin: 0;
-    font-size: 0.8rem;
-  }
-
-  .TextDateMobile {
-    margin: 0;
-    font-size: 0.6rem;
-  }
-
-  .SectionDesc {
-    flex-direction: column;
-  }
-
-  .SectionDiv {
-    width: 100%;
-  }
-
-  .MiddleSectionDiv {
-    width: 100%;
-    border-left: 0;
-    border-right: 0;
-    border-top: solid 1px #71430b;
-    border-bottom: solid 1px #71430b;
-    margin: 16px 0;
-    padding: 16px 0;
-  }
-
-  .Details {
-    font-size: 0.8rem;
-  }
-
-  .TextLabel {
-    font-size: 0.9rem;
-  }
-
-  .TextLabel {
-    font-size: 0.8rem;
+    max-width: 80px;
+    min-height: 30px;
+    &:hover {
+      cursor: pointer;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      background-color: #8d8d8d;
+    }
+    &:nth-child(1) {
+      background-color: #fff;
+      border: 1px solid $primaryColor;
+      color: $primaryColor;
+    }
   }
 }

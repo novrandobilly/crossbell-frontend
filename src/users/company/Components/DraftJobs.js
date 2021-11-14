@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import Modal from '../../../shared/UI_Element/Modal';
@@ -32,9 +32,9 @@ const DraftJobs = props => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
-              <h3 className={styles.JobTitle} onClick={() => props.history.push(`/jobs/${job.id}`)}>
+              <Link className={styles.JobTitle} to={`/jobs/${job.id}`}>
                 {job.jobTitle}
-              </h3>
+              </Link>
               <div className={styles.Status}>
                 <span>Belum Tayang</span>
                 <div style={{ borderRadius: '50%', backgroundColor: '#666', width: '20px', height: '20px' }}></div>
@@ -77,22 +77,17 @@ const DraftJobs = props => {
                   Kontrak Kerja: <strong>{job.employment}</strong>
                 </p>
               </div>
-              <div
-                className={styles.NumberOfApplicants}
-                onClick={() => props.history.push(`/jobs/appliedCandidatesList/${job.id}`)}>
+              <Link className={styles.NumberOfApplicants} to={`/jobs/appliedCandidatesList/${job.id}`}>
                 <p>Jumlah Pelamar</p>
                 <p id={styles.NumberOfApplicants}>{job.jobApplicants.length}</p>
                 <p>
                   <em>Lihat Semua</em>
                 </p>
-              </div>
+              </Link>
               <div className={styles.ControlButton}>
-                <button
-                  className={styles.EditButton}
-                  type='button'
-                  onClick={() => props.history.push(`/jobs/new/edit/${job.id}`)}>
+                <Link className={styles.EditButton} to={`/jobs/new/edit/${job.id}`}>
                   Edit
-                </button>
+                </Link>
                 <button
                   className={styles.DeleteButton}
                   type='button'
@@ -131,4 +126,4 @@ const DraftJobs = props => {
   );
 };
 
-export default withRouter(DraftJobs);
+export default DraftJobs;

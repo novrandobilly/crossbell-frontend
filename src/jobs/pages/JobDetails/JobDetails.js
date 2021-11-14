@@ -4,8 +4,9 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions';
 import { splitParagraph, thousandSeparator } from '../../../shared/utils/sharedFunctions';
-import BlankCompany from '../../../assets/images/Company.png';
 
+import Modal from '../../../shared/UI_Element/Modal';
+import BlankCompany from '../../../assets/images/Company.png';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import styles from './JobDetails.module.scss';
@@ -50,6 +51,11 @@ const JobDetails = props => {
       console.log(err);
       return props.createJobFail();
     }
+  };
+
+  const profileCompletionHandler = () => {
+    onCloseApplyConfirmHandler();
+    props.history.push(`/ap/${props.auth.userId}/profile`);
   };
 
   // const onReleaseHandler = async event => {
@@ -251,7 +257,7 @@ const JobDetails = props => {
           <p>Pastikan profile anda sudah anda lengkapi untuk memudahkan perusahaan memahami potensi diri anda.</p>
 
           <div className={styles.ApplyButtonContainer}>
-            {props.job.isLoading && jobId === props.jobId ? (
+            {props.jobs.isLoading && jobsid === props.jobId ? (
               <LoadingBar style={{ margin: '0 0 10px' }} />
             ) : (
               <>
