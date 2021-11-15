@@ -119,7 +119,6 @@ export const createApplicant = ApplicantData => {
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
-      console.log(responseJSON);
 
       dispatch(createApplicantSuccess(responseJSON));
       return responseJSON;
@@ -168,7 +167,6 @@ export const getApplicantJobsApplied = payload => {
         body: null,
       });
       const responseJSON = await response.json();
-      console.log(responseJSON);
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }

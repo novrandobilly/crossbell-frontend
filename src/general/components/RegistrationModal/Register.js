@@ -57,7 +57,6 @@ const Register = props => {
 
     try {
       const res = await props.createApplicant(newApplicant);
-      console.log(res);
       if (!res.token) {
         throw new Error(res.message);
       }

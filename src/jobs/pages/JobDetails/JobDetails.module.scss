@@ -35,6 +35,15 @@ $primaryColor: #f79f35;
   justify-content: flex-start;
   border-bottom: solid 1px #71430b;
   padding-bottom: 3rem;
+  .LogoContainer {
+    display: flex;
+    align-items: center;
+    img {
+      width: 100%;
+      max-width: max-content;
+      height: auto;
+    }
+  }
   .JobMetaData {
     display: flex;
     flex-direction: column;
@@ -182,6 +191,11 @@ $primaryColor: #f79f35;
 
 .JobDesc {
   border-bottom: solid 1px #71430b;
+  p {
+    word-break: break-all;
+    white-space: normal;
+    text-align: start;
+  }
 }
 
 .TextLabel {

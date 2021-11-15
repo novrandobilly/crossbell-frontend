@@ -28,42 +28,29 @@ const JobsApplied = props => {
       };
 
       getApplicantJobsApplied(payload).then(res => {
-        console.log(res);
-        setData(res.Jobs.sort((a, b) => moment(b.releasedAt) - moment(a.releasedAt)));
+        setData(res.Jobs.sort((a, b) => moment(b.jobItem.releasedAt) - moment(a.jobItem.releasedAt)));
       });
     }
   }, [getApplicantJobsApplied, applicantid, props.auth]);
-
+  console.log(data);
   let content = <LoadingBar />;
-
   if (!props.isLoading && data) {
     content = (
-      <div className={styles.AppliedJobContainer}>
+      <div className={styles.AppliedJobsContainer}>
         {data.map((items, i) => {
-          console.log(items);
-
           return (
-            <div className={styles.JobCard} key={items.id}>
-              <Link to={`/jobs/${items.id}`}>
-                <div className={styles.CardContainer}>
-                  <div className={styles.Header}>
-                    <p className={styles.Title}>{items.jobTitle}</p>
-                    <p className={styles.Company}>{items.companyId.companyName}</p>
-                  </div>
-                  <div className={styles.Content}>
-                    <div className={styles.AvatarContainer}>
-                      <img className={styles.Avatar} src={`${items.companyId.logo?.url}`} alt='Logo' />
-                    </div>
-                  </div>
-                  <div className={styles.Footer}>
-                    <p className={styles.DateApplied}>
-                      {moment().diff(moment(items.createdAt), 'days') > 0
-                        ? [`posted ${moment().diff(moment(items.createdAt), 'days')} days ago`]
-                        : 'atas'}
-                    </p>
-                  </div>
-                </div>
+            <div className={styles.JobItem} key={items.jobItem.id}>
+              <p>{i + 1}</p>
+              <Link to={`/co/${items.jobItem?.companyId?.id}/profile`}>
+                <img className={styles.CompanyLogo} src={`${items.jobItem.companyId.logo?.url}`} alt='Logo' />
               </Link>
+              <Link to={`/co/${items.jobItem?.companyId?.id}/profile`}>
+                <p className={styles.CompanyName}>{items.jobItem.companyId.companyName}</p>
+              </Link>
+              <Link to={`/jobs/${items.jobItem.id}`}>
+                <p className={styles.JobTitle}>{items.jobItem.jobTitle}</p>
+              </Link>
+              <p className={styles.DateApplied}>{moment(items.appliedDate).fromNow()}</p>
             </div>
           );
         })}
@@ -75,7 +62,7 @@ const JobsApplied = props => {
     <div className={styles.Container}>
       <HeaderBanner imageSource={MeetingDashboard} />
 
-      <div className={styles.PageTitle}>PEKERJAAN SUDAH DILAMAR</div>
+      <h1 className={styles.PageTitle}>Pekerjaan Yang Telah Dilamar</h1>
       {content}
     </div>
   );

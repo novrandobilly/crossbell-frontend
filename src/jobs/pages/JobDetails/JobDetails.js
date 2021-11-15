@@ -115,7 +115,7 @@ const JobDetails = props => {
                     <em>Nama perusahaan dirahasiakan</em>
                   </p>
                 ) : (
-                  <Link to={`/co/${loadedJob.companyId}/profile`}>
+                  <Link to={`/co/${loadedJob.companyId.id}/profile`}>
                     <p className={`${styles.CompanyName} ${styles.MetaDataText}`}>
                       <em>{loadedJob.companyId.companyName}</em>
                     </p>
@@ -212,7 +212,7 @@ const JobDetails = props => {
 
             <div className={styles.JobDesc}>
               <p className={styles.TextLabel}>Deskripsi Pekerjaan</p>
-              <div className={styles.TextDetail}>{splitParagraph(loadedJob.jobDescriptions)}</div>
+              {splitParagraph(loadedJob.jobDescriptions)}
             </div>
 
             <div className={styles.JobDesc}>

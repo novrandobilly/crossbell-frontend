@@ -100,7 +100,7 @@ const CompanyBiodata = props => {
             <img className={styles.BioIcon} alt='Location Icon' src={Location} />
             {props.address ? props.address : noInformation}
           </p>
-          <p>Sisa Slot: {props.remainingSlot}</p>
+          {(props.admin.isAdmin || props.auth.userId === props.companyId) && <p>Sisa Slot: {props.remainingSlot}</p>}
         </div>
         {props.auth.userId === props.companyId && (
           <span className={styles.AddEditButton} onClick={openEditBiodataHandler}>
@@ -115,6 +115,7 @@ const CompanyBiodata = props => {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
+    admin: state.admin,
   };
 };
 

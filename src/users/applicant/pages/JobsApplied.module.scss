@@ -1,0 +1,28 @@
+.JobItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  box-sizing: border-box;
+  a {
+    text-decoration: none;
+    color: #000;
+    &:hover {
+      text-shadow: 0 0 10px #f79f35;
+      cursor: pointer;
+    }
+  }
+  .CompanyLogo {
+    width: 100%;
+    max-width: 80px;
+    height: auto;
+  }
+  .JobTitle,
+  .CompanyName,
+  .DateApplied {
+    width: 100%;
+    max-width: 250px;
+  }
+}
