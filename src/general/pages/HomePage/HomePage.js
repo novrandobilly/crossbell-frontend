@@ -64,7 +64,7 @@ const HomePage = props => {
       <section className={styles.WelcomeToCrossbellBackground}>
         <div className={styles.WelcomeToCrossbell}>
           <div className={styles.WelcomeText}>
-            <h1>Sudah saatnya berkarir dalam bidang impianmu!</h1>
+            <h1>Sudah saatnya berkarir di bidang impianmu!</h1>
             <form className={styles.WelcomeSearchBar} onSubmit={onSearchHandler}>
               <input type='text' placeholder='Cari pekerjaan favoritmu' name='search job' ref={searchInputRef} />
               <button type='submit' onClick={onSearchHandler}>
