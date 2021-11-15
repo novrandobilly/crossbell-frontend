@@ -66,7 +66,7 @@ const CompanyRegisForm = props => {
         userId: res.userId,
         isCompany: res.isCompany,
       });
-      props.history.push(`/co/${res.userId}/compro`);
+      props.history.push(`/co/${res.userId}/profile`);
     } catch (err) {
       setErrorMessage(err.message);
     }

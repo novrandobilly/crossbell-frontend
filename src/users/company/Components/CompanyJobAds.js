@@ -18,7 +18,7 @@ const CompanyJobAds = props => {
       };
       try {
         const response = await getJobsInCompany(payload);
-        const validJob = response.foundJob.filter(job => moment(job.expiredDate) >= moment());
+        const validJob = response.foundJob ? response.foundJob.filter(job => moment(job.expiredDate) >= moment()) : [];
         setValidJobList(validJob);
       } catch (err) {
         console.log(err);
@@ -54,7 +54,7 @@ const CompanyJobAds = props => {
     );
   }
 
-  if (validJobList?.length <= 0) {
+  if (!validJobList || validJobList?.length <= 0) {
     jobList = (
       <p style={{ fontStyle: 'italic', color: '#616161', width: '100%', textAlign: 'center' }}>
         Belum ada iklan pekerjaan yang sedang tayang
