@@ -534,7 +534,7 @@ const NewJob = props => {
         show={addSlotModal}
         onCancel={closeAddSlot}
         headerText='Anda yakin ingin menambah slot?'
-        style={{ top: '25vh', maxWidth: '500px', marginLeft: '-250px', height: '20vh', overflowY: 'auto' }}>
+        style={{ top: '25vh', maxWidth: '500px', marginLeft: '-250px', height: '200px', overflowY: 'auto' }}>
         <p className={styles.AddSlotExplanation}>Anda akan dialihkan ke halaman penambahan slot.</p>
         <p className={styles.AddSlotExplanation}>Seluruh data yang belum tersimpan akan hilang.</p>
         <div className={styles.AddSlotButtonContainer}>

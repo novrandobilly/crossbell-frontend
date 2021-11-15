@@ -181,19 +181,19 @@ const CompanyJobList = props => {
         {/* <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} /> */}
         <section className={styles.DraftContainer}>
           <h2>Draft Iklan Pekerjaan</h2>
-          {unreleasedData ? (
-            <DraftJobs draftJobs={unreleasedData} onDelete={onDeleteHandler} isLoading={props.job.isLoading} />
-          ) : (
+          {props.job.isLoading ? (
             <LoadingBar />
+          ) : (
+            <DraftJobs draftJobs={unreleasedData || []} onDelete={onDeleteHandler} isLoading={props.job.isLoading} />
           )}
         </section>
         <section className={styles.LiveContainer}>
           <h2>Iklan Pekerjaan Sedang Tayang</h2>
-          {displayData ? <LiveJobs liveJobs={displayData} /> : <LoadingBar />}
+          {props.job.isLoading ? <LoadingBar /> : <LiveJobs liveJobs={displayData || []} />}
         </section>
         <section className={styles.ExpiredContainer}>
           <h2>Iklan Pekerjaan Selesai Tayang</h2>
-          {expiredData ? <ExpiredJobs expiredData={expiredData} /> : <LoadingBar />}
+          {props.job.isLoading ? <LoadingBar /> : <ExpiredJobs expiredData={expiredData || []} />}
         </section>
       </div>
     </Fragment>

@@ -85,7 +85,7 @@ const CompanyBiodata = props => {
             {props.isActive ? (
               <img alt='Verified' src={Verified} className={styles.VerificationSign} />
             ) : (
-              <span className={styles.VerificationSign}>Verification in progress</span>
+              <span className={styles.VerificationSign}>(Sedang dalam proses verifikasi)</span>
             )}
           </h2>
           <h3>Industri: {props.industry ? props.industry : noInformation}</h3>
