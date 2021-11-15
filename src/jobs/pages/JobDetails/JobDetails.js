@@ -36,8 +36,6 @@ const JobDetails = props => {
     fetchJob();
   }, [getOneJob, jobsid, props.auth.token, props.admin.token]);
 
-  console.log(loadedJob);
-
   const onApplyHandler = async event => {
     event.preventDefault();
     const payload = {
@@ -147,7 +145,7 @@ const JobDetails = props => {
                   Posted {moment().diff(moment(loadedJob.releasedAt), 'days')} days ago
                 </p>
                 <div className={styles.EditContainer}>
-                  {props.auth.userId === loadedJob.companyId.id && (
+                  {props.auth?.userId === loadedJob.companyId.id && (
                     <Link to={`/jobs/${loadedJob.jobId}/edit`}>
                       <button className={styles.EditButton}>
                         <span>Edit</span>
@@ -164,10 +162,10 @@ const JobDetails = props => {
                     <button
                       className={styles.ApplyButton}
                       onClick={onOpenApplyConfirmHandler}
-                      disabled={loadedJob.jobApplicants.some(
-                        appId => appId.id.toString() === loadedJob.auth.userId.toString()
-                      )}>
-                      {loadedJob.jobApplicants.some(appId => appId.id.toString() === loadedJob.auth.userId.toString())
+                      disabled={loadedJob.jobApplicants.some(appId => {
+                        return appId.id.toString() === props.auth.userId.toString();
+                      })}>
+                      {loadedJob.jobApplicants.some(appId => appId.id.toString() === props.auth.userId.toString())
                         ? 'Applied'
                         : 'Apply'}
                     </button>

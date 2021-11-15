@@ -49,7 +49,7 @@ const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJob
 
 //==================================== applicant =========================================================
 
-const JobsApplied = React.lazy(() => import('./users/applicant/components/JobsApplied'));
+const JobsApplied = React.lazy(() => import('./users/applicant/pages/JobsApplied'));
 const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/ApplicantDetails'));
 const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
 const Subscription = React.lazy(() => import('./users/applicant/components/Subscription'));
