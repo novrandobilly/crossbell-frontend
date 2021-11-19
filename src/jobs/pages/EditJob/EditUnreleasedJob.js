@@ -368,7 +368,7 @@ const EditUnreleasedJob = props => {
 
         <div className={styles.CategoryLocation}>
           <div className={styles.JobCategory}>
-            <p>Kategori Pekerjaan</p>
+            <p>Kategori Pekerjaan xeexooxee</p>
             <Autocomplete
               id='fieldOfWork'
               name='fieldOfWork'

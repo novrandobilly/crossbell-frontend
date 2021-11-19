@@ -313,7 +313,7 @@ export const releaseJob = (jobData, authData) => {
   return async dispatch => {
     dispatch(fetchingStart());
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${jobData.jobId}/release`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${authData.jobId}/release`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
