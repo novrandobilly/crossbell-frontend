@@ -143,7 +143,7 @@ const Register = props => {
         </div>
         <div className={classes.TosAgreement}>
           <input id='tosAgreement' onChange={onAgreementChange} type='checkbox' />{' '}
-          <span>
+          <span onClick={() => props.onCancelAuth()}>
             Saya mengetahui dan menyetujui <Link to='/syarat-ketentuan'>Syarat & Ketentuan</Link> dan{' '}
             <Link to='/kebijakan-privasi'>Kebijakan Privasi</Link> yang berlaku
           </span>

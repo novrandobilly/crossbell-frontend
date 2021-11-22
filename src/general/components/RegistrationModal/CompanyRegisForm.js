@@ -109,7 +109,8 @@ const CompanyRegisForm = props => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_REQUIRE()]}
               onInputHandler={onInputHandler}
-              label='Nama Perusahaan*'
+              label={true}
+              labelName='Nama Perusahaan*'
               helperText='Silahkan input nama perusahaan anda.'
             />
           </div>
@@ -121,7 +122,8 @@ const CompanyRegisForm = props => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_EMAIL()]}
               onInputHandler={onInputHandler}
-              label='Email Perusahaan*'
+              label={true}
+              labelName='Email Perusahaan*'
               helperText='Silahkan input email perusahaan yang valid.'
             />
           </div>
@@ -133,7 +135,8 @@ const CompanyRegisForm = props => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_MINLENGTH(6)]}
               onInputHandler={onInputHandler}
-              label='NPWP*'
+              label={true}
+              labelName='NPWP*'
               helperText='Silahkan isi nomor NPWP perusahaan.'
             />
           </div>
@@ -145,7 +148,8 @@ const CompanyRegisForm = props => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_MINLENGTH(6)]}
               onInputHandler={onInputHandler}
-              label='Password*'
+              label={true}
+              labelName='Password*'
               type='password'
               helperText='Password minimal 6 karakter'
             />
@@ -158,7 +162,8 @@ const CompanyRegisForm = props => {
               InputClass='Register'
               validatorMethod={[VALIDATOR_MINLENGTH(6)]}
               onInputHandler={onInputHandler}
-              label='Password Confirmation*'
+              label={true}
+              labelName='Password Confirmation*'
               type='password'
               helperText='Password tidak sesuai'
             />

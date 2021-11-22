@@ -58,7 +58,7 @@ const HomePage = props => {
             onSucceedLogin={onCancelAuth}
           />
         ) : (
-          <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} />
+          <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} onCancelAuth={onCancelAuth} />
         )}
       </Modal>
       <section className={styles.WelcomeToCrossbellBackground}>

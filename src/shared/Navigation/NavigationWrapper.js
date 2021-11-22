@@ -66,7 +66,7 @@ const NavigationWrapper = () => {
             onSucceedLogin={onCancelAuth}
           />
         ) : (
-          <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} />
+          <Register onSwitchToLogin={onSwitchToLogin} onSucceedRegister={onCancelAuth} onCancelAuth={onCancelAuth} />
         )}
       </Modal>
 

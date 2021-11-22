@@ -70,26 +70,6 @@ const EditBriefInformations = props => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { getOneApplicant } = props;
-  useEffect(() => {
-    const payload = {
-      applicantId: applicantid,
-      token: props.auth.token,
-    };
-    if (props.auth.token) {
-      getOneApplicant(payload).then(res => {
-        setInterest(res.applicant.interest);
-        dispatch({
-          type: LOCATION.INITFETCH,
-          province: res.applicant.state,
-          citySelected: res.applicant.city,
-        });
-        setData(res.applicant);
-        ProvinceToCity(res.applicant.state, setCity);
-      });
-    }
-  }, [getOneApplicant, applicantid, props.auth.token]);
-
   const [formState, onInputHandler] = useForm(
     {
       picture: {
@@ -161,23 +141,45 @@ const EditBriefInformations = props => {
     false
   );
 
+  const { getOneApplicant } = props;
   useEffect(() => {
-    if (data) {
-      const genderEl = document.getElementById(data.gender);
-      const outOfTownEl = document.getElementById('outOfTown');
-      const workShiftsEl = document.getElementById('workShifts');
+    const payload = {
+      applicantId: applicantid,
+      token: props.auth.token,
+    };
+    if (props.auth.token) {
+      getOneApplicant(payload).then(res => {
+        dispatch({
+          type: LOCATION.INITFETCH,
+          province: res.applicant.state,
+          citySelected: res.applicant.city,
+        });
+        setData(res.applicant);
+        const applicantData = res.applicant;
+        if (applicantData?.interest.length > 0) {
+          setInterest(res.applicant.interest);
 
-      if (genderEl) genderEl.selected = true;
-      outOfTownEl.checked = data.outOfTown;
-      workShiftsEl.checked = data.workShifts;
-      if (data?.interest.length > 0) onInputHandler('interest', data.interest, true);
-      onInputHandler('outOfTown', data.outOfTown, true);
-      onInputHandler('gender', data.gender, !!genderEl);
-      onInputHandler('workShifts', data.workShifts, true);
-      onInputHandler('state', locationState.province, true);
-      onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
+          onInputHandler('interest', applicantData.interest, true);
+        }
+
+        const outOfTownEl = document.getElementById('outOfTown');
+        const workShiftsEl = document.getElementById('workShifts');
+
+        if (outOfTownEl) outOfTownEl.checked = applicantData.outOfTown;
+        if (workShiftsEl) workShiftsEl.checked = applicantData.workShifts;
+        onInputHandler('outOfTown', applicantData.outOfTown, true);
+        onInputHandler('gender', applicantData.gender || 'male', true);
+        onInputHandler('workShifts', applicantData.workShifts, true);
+        ProvinceToCity(res.applicant.state, setCity);
+      });
     }
-  }, [data, onInputHandler, locationState, city]);
+  }, [getOneApplicant, applicantid, props.auth.token, onInputHandler]);
+
+  // useEffect for Location Adjustment (City change based on state chosen)
+  useEffect(() => {
+    onInputHandler('state', locationState.province, true);
+    onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
+  }, [locationState.province, locationState.citySelected, onInputHandler]);
 
   const onSubmitHandler = async event => {
     event.preventDefault();
@@ -316,9 +318,9 @@ const EditBriefInformations = props => {
             ContainerStyle={{ width: '100%', maxWidth: '500px' }}
           />
 
-          <div id='gender' className={styles.GenderContainer} onChange={onManualInputHandler}>
+          <div id='gender' className={styles.GenderContainer}>
             <p className={styles.GenderLabel}>Jenis Kelamin*</p>
-            <select name='gender' id='gender' className={styles.GenderOptions}>
+            <select name='gender' id='gender' onChange={onManualInputHandler} className={styles.GenderOptions}>
               <option value='male' id='male'>
                 Pria
               </option>
