@@ -60,9 +60,11 @@ const NavigationLinks = props => {
         applicantId: applicantid,
         token: props.auth.token,
       };
-      getOneApplicant(payload).then(res => {
-        setApplicantFirstName(res.applicant.firstName);
-      });
+      getOneApplicant(payload)
+        .then(res => {
+          setApplicantFirstName(res.applicant.firstName);
+        })
+        .catch(err => console.log(err));
     }
   }, [getOneApplicant, props.auth.isLoggedIn, props.auth.isCompany, props.auth.userId, props.auth.token]);
 

@@ -140,6 +140,7 @@ const EditBriefInformations = props => {
     },
     false
   );
+  console.log(formState.inputs.gender);
 
   const { getOneApplicant } = props;
   useEffect(() => {
@@ -164,9 +165,12 @@ const EditBriefInformations = props => {
 
         const outOfTownEl = document.getElementById('outOfTown');
         const workShiftsEl = document.getElementById('workShifts');
+        const genderEl = document.getElementById('gender');
 
         if (outOfTownEl) outOfTownEl.checked = applicantData.outOfTown;
         if (workShiftsEl) workShiftsEl.checked = applicantData.workShifts;
+        if (genderEl) genderEl.value = applicantData.gender;
+
         onInputHandler('outOfTown', applicantData.outOfTown, true);
         onInputHandler('gender', applicantData.gender || 'male', true);
         onInputHandler('workShifts', applicantData.workShifts, true);
@@ -206,6 +210,7 @@ const EditBriefInformations = props => {
       interest: formState.inputs.interest.value,
       token: props.auth.token,
     };
+    console.log(ApplicantData);
 
     try {
       await props.updateApplicantBiodata(ApplicantData);
@@ -318,7 +323,7 @@ const EditBriefInformations = props => {
             ContainerStyle={{ width: '100%', maxWidth: '500px' }}
           />
 
-          <div id='gender' className={styles.GenderContainer}>
+          <div id='genderContainer' className={styles.GenderContainer}>
             <p className={styles.GenderLabel}>Jenis Kelamin*</p>
             <select name='gender' id='gender' onChange={onManualInputHandler} className={styles.GenderOptions}>
               <option value='male' id='male'>
