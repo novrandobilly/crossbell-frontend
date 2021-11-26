@@ -1,9 +1,16 @@
-.CompanyJobListContainer {
-  width: 100%;
-  padding: 0 40px;
-  box-sizing: border-box;
-  & > * {
+.ContentContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.Container {
+  padding: 0 24px;
+  .CompanyJobListContainer {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1000px;
+    box-sizing: border-box;
+    & > * {
+      width: 100%;
+      max-width: 1100px;
+    }
   }
 }

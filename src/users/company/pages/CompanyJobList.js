@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, Fragment } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 // import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -13,6 +13,8 @@ import MeetingCompany from '../../../assets/images/CompanyMeeting.png';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 // import QueryBar from '../components/QueryBar';
 import styles from './CompanyJobList.module.scss';
+import ExecutiveSearchBanner from '../../../shared/UI_Element/ExecutiveSearchBanner';
+import ExecutiveSearchImage from '../../../assets/images/ES_Banner_2.jpeg';
 
 const ACTION = {
   SEARCHUPDATE: 'update-search',
@@ -175,28 +177,31 @@ const CompanyJobList = props => {
   // }, []);
 
   return (
-    <Fragment>
+    <div className={styles.Container}>
       <HeaderBanner imageSource={MeetingCompany} />
-      <div className={styles.CompanyJobListContainer}>
-        {/* <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} /> */}
-        <section className={styles.DraftContainer}>
-          <h2>Draft Iklan Pekerjaan</h2>
-          {props.job.isLoading ? (
-            <LoadingBar />
-          ) : (
-            <DraftJobs draftJobs={unreleasedData || []} onDelete={onDeleteHandler} isLoading={props.job.isLoading} />
-          )}
-        </section>
-        <section className={styles.LiveContainer}>
-          <h2>Iklan Pekerjaan Sedang Tayang</h2>
-          {props.job.isLoading ? <LoadingBar /> : <LiveJobs liveJobs={displayData || []} />}
-        </section>
-        <section className={styles.ExpiredContainer}>
-          <h2>Iklan Pekerjaan Selesai Tayang</h2>
-          {props.job.isLoading ? <LoadingBar /> : <ExpiredJobs expiredData={expiredData || []} />}
-        </section>
+      <div className={styles.ContentContainer}>
+        <div className={styles.CompanyJobListContainer}>
+          {/* <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} /> */}
+          <section className={styles.DraftContainer}>
+            <h2>Draft Iklan Pekerjaan</h2>
+            {props.job.isLoading ? (
+              <LoadingBar />
+            ) : (
+              <DraftJobs draftJobs={unreleasedData || []} onDelete={onDeleteHandler} isLoading={props.job.isLoading} />
+            )}
+          </section>
+          <section className={styles.LiveContainer}>
+            <h2>Iklan Pekerjaan Sedang Tayang</h2>
+            {props.job.isLoading ? <LoadingBar /> : <LiveJobs liveJobs={displayData || []} />}
+          </section>
+          <section className={styles.ExpiredContainer}>
+            <h2>Iklan Pekerjaan Selesai Tayang</h2>
+            {props.job.isLoading ? <LoadingBar /> : <ExpiredJobs expiredData={expiredData || []} />}
+          </section>
+        </div>
+        <ExecutiveSearchBanner imageSource={ExecutiveSearchImage} />
       </div>
-    </Fragment>
+    </div>
   );
 };
 

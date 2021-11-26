@@ -7,6 +7,9 @@ import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import CompanyMeeting from '../../../assets/images/CompanyMeeting.png';
 import CompanyProfile from '../components/CompanyProfile';
+import ExecutiveSearchBanner from '../../../shared/UI_Element/ExecutiveSearchBanner';
+import ExecutiveSearchImage from '../../../assets/images/ES_Banner_1.jpeg';
+
 import styles from './CompanyProfilePage.module.scss';
 
 const CompanyProfilePage = props => {
@@ -41,7 +44,10 @@ const CompanyProfilePage = props => {
   return (
     <div className={styles.CompanyProfileContainer}>
       <HeaderBanner imageSource={CompanyMeeting} />
-      {companyContent}
+      <div className={styles.ContentContainer}>
+        {companyContent}
+        <ExecutiveSearchBanner imageSource={ExecutiveSearchImage} />
+      </div>
     </div>
   );
 };

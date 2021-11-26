@@ -1,0 +1,11 @@
+.BannerContainer {
+  align-self: flex-start;
+
+  img {
+    width: 100%;
+    max-width: 300px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

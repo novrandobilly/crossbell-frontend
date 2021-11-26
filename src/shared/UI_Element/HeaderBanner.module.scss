@@ -28,6 +28,8 @@ $secondaryColor: #ef3f37;
   }
   .HeaderImage {
     width: 50%;
+    display: flex;
+    justify-content: flex-end;
     img {
       width: 100%;
       max-width: 800px;
