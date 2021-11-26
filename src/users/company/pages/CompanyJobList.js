@@ -9,9 +9,9 @@ import DraftJobs from '../components/DraftJobs';
 import LiveJobs from '../components/LiveJobs';
 import ExpiredJobs from '../components/ExpiredJobs';
 import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
+import MeetingCompany from '../../../assets/images/CompanyMeeting.png';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 // import QueryBar from '../components/QueryBar';
-import MeetingCompany from '../../../assets/images/CompanyMeeting.png';
 import styles from './CompanyJobList.module.scss';
 
 const ACTION = {
