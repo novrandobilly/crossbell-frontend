@@ -80,14 +80,17 @@ const CompanyBiodata = props => {
         </label>
 
         <div className={styles.CompanyBiodataInformation}>
-          <h2>
-            {props.companyName ? props.companyName : noInformation}{' '}
+          <div className={styles.CompanyNameContainer}>
+            <h2>{props.companyName ? props.companyName : noInformation} </h2>
             {props.isActive ? (
-              <img alt='Verified' src={Verified} className={styles.VerificationSign} />
+              <div className={styles.VerificationTrueContainer}>
+                <img alt='Verified' src={Verified} className={styles.VerificationSign} />
+                <span className={styles.VerificationTrue}>Perusahaan telah terverifikasi</span>
+              </div>
             ) : (
-              <span className={styles.VerificationSign}>(Sedang dalam proses verifikasi)</span>
+              <span className={styles.VerificationFalse}>(Sedang dalam proses verifikasi)</span>
             )}
-          </h2>
+          </div>
           <h3>Industri: {props.industry ? props.industry : noInformation}</h3>
           <p>
             <img className={styles.BioIcon} alt='Location Icon' src={World} />

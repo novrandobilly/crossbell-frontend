@@ -89,7 +89,7 @@ const JobDetails = props => {
   // };
 
   let jobDetails = <LoadingBar />;
-
+  console.log(loadedJob);
   if (loadedJob) {
     jobDetails = (
       <div className={styles.JobDetailsContainer}>
@@ -146,7 +146,7 @@ const JobDetails = props => {
                 </p>
                 <div className={styles.EditContainer}>
                   {props.auth?.userId === loadedJob.companyId.id && (
-                    <Link to={`/jobs/${loadedJob.jobId}/edit`}>
+                    <Link to={`/jobs/${loadedJob.id}/edit`}>
                       <button className={styles.EditButton}>
                         <span>Edit</span>
                       </button>

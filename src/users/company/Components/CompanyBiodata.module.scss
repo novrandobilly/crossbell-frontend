@@ -11,6 +11,7 @@ $primaryColor: #f79f35;
 .CompanyBiodataContainer {
   @include flexCenter(row, flex-start, center);
   position: relative;
+
   .BiodataImageContainer {
     width: 100%;
     max-width: 150px;
@@ -58,6 +59,8 @@ $primaryColor: #f79f35;
   .CompanyBiodataInformation {
     @include flexCenter(column, center, flex-start);
     height: 100%;
+    width: 100%;
+    max-width: 600px;
     position: relative;
     & > * {
       margin: 0 0 10px;
@@ -75,14 +78,39 @@ $primaryColor: #f79f35;
       max-width: 20px;
       margin-right: 10px;
     }
-    .VerificationSign {
-      vertical-align: middle;
-      font-size: 16px;
-      font-weight: 400;
-      font-style: italic;
-      color: #e26d00;
+
+    .CompanyNameContainer {
+      @include flexCenter(row, flex-start, center);
       width: 100%;
-      max-width: 25px;
+
+      .VerificationTrueContainer {
+        @include flexCenter(row, flex-start, center);
+        margin-left: 15px;
+      }
+      .VerificationFalse,
+      .VerificationTrue {
+        vertical-align: middle;
+        font-size: 20px;
+        font-weight: 400;
+        font-style: italic;
+        color: #fff;
+        background-color: #f88424;
+        width: 100%;
+        max-width: 300px;
+        border-radius: 5px;
+        min-height: 30px;
+        padding: 0 10px;
+      }
+      .VerificationFalse {
+        margin-left: 15px;
+      }
+      .VerificationTrue {
+        background-color: #18b715;
+      }
+      .VerificationSign {
+        width: 100%;
+        max-width: 35px;
+      }
     }
   }
   .AddEditButton {

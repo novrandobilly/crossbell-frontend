@@ -11,7 +11,7 @@ const LiveJobs = props => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
-              <Link className={styles.JobTitle} to={Link}>
+              <Link className={styles.JobTitle} to={`/jobs/${job.id}`}>
                 {job.jobTitle}
               </Link>
               <div className={styles.Status}>
