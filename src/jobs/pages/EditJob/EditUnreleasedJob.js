@@ -483,7 +483,7 @@ const EditUnreleasedJob = props => {
         <div className={styles.HideCompany}>
           <label onChange={onCheckedInputHandler} className={styles.CheckBoxLabel}>
             <input id='isHidden' type='checkbox' name='isHidden' className={styles.CheckBox} />
-            <p>Rahasiakan nama perusahaan</p>
+            Rahasiakan nama perusahaan
           </label>
         </div>
         <Input
@@ -496,39 +496,40 @@ const EditUnreleasedJob = props => {
           initValue={loadedJob.jobDescriptions}
           label={true}
           labelName='Deskripsi pekerjaan*'
-          rows={12}
+          rows={6}
           style={{ border: '2px solid #f79f35', outline: 'none', padding: '5px', fontSize: '19px', fontFamily: 'Lato' }}
         />
 
-        <div className={styles.BenefitSalary}>
-          <Input
-            inputType='input'
-            id='benefit'
-            InputClass='AddJobInput'
-            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-            onInputHandler={onInputHandler}
-            initValue={loadedJob.benefit}
-            initIsValid={true}
-            label={true}
-            labelName='Fasilitas & Benefit (optional)'
-          />
+        <Input
+          inputType='textarea'
+          id='benefit'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+          onInputHandler={onInputHandler}
+          initValue={loadedJob.benefit}
+          initIsValid={true}
+          label={true}
+          labelName='Fasilitas & Benefit (optional)'
+          rows={6}
+          style={{ border: '2px solid #f79f35', outline: 'none', padding: '5px', fontSize: '19px', fontFamily: 'Lato' }}
+        />
 
-          <Input
-            inputType='input'
-            id='salary'
-            InputClass='AddJobInput'
-            validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-            onInputHandler={onInputHandler}
-            initValue={loadedJob.salary}
-            initIsValid={true}
-            label={true}
-            labelName='Gaji (optional)'
-            error={false}
-            type='number'
-            min={0}
-            step='500000'
-          />
-        </div>
+        <Input
+          inputType='input'
+          id='salary'
+          InputClass='AddJobInput'
+          validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
+          onInputHandler={onInputHandler}
+          initValue={loadedJob.salary}
+          initIsValid={true}
+          label={true}
+          labelName='Gaji (optional)'
+          error={false}
+          type='number'
+          min={0}
+          step='500000'
+        />
+
         <div className={styles.SpecialRequirementContainer}>
           <div className={styles.SpecialRequirementHeader}>
             <h3 className={styles.SpecialRequirementTitle}>Persyaratan Khusus (max. 5)</h3>

@@ -109,7 +109,7 @@ const DraftJobs = props => {
         show={openDeleteDraft}
         onCancel={closeDeleteDraftHandler}
         headerText='Anda yakin ingin menghapus draft ini?'
-        style={{ top: '35vh', maxWidth: '400px', marginLeft: '-200px', height: '17vh', overflowY: 'auto' }}>
+        style={{ top: '35vh', maxWidth: '500px', marginLeft: '-250px', height: '130px', overflowY: 'auto' }}>
         <div className={styles.ConfirmationButton}>
           {props.isLoading ? (
             <LoadingBar />
