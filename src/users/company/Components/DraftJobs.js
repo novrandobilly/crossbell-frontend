@@ -1,15 +1,73 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useReducer, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import Modal from '../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import Pagination from '@mui/material/Pagination';
 
 import styles from './DraftJobs.module.scss';
+
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  startIndex: 0,
+  itemsPerPage: 5,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
 
 const DraftJobs = props => {
   const [openDeleteDraft, setOpenDeleteDraft] = useState(false);
   const [draftJobId, setDraftJobId] = useState(null);
+  const [draftJobsDisplay, setDraftJobsDisplay] = useState([]);
+  const [state, dispatch] = useReducer(paginationReducer, initPagination);
+
+  const pageChangeHandler = (event, value) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: state.itemsPerPage * (value - 1),
+      },
+    });
+  };
+
+  // Initial Draft Jobs Data
+  // useEffect(() => {
+  //   setDraftJobsDisplay(props.draftJobs);
+  // }, [props.draftJobs]);
+
+  // Change Page Job Data
+  useEffect(() => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageCount: Math.ceil(props.draftJobs.length / state.itemsPerPage),
+      },
+    });
+    let jobsDataTemp = props.draftJobs.slice(state.startIndex, state.startIndex + state.itemsPerPage);
+    setDraftJobsDisplay(jobsDataTemp);
+  }, [props.draftJobs, state.startIndex, state.itemsPerPage]);
 
   const openDeleteDraftHandler = payload => {
     setDraftJobId(payload);
@@ -27,8 +85,8 @@ const DraftJobs = props => {
   };
 
   let draftAds =
-    props.draftJobs.length > 0 ? (
-      props.draftJobs.map(job => {
+    draftJobsDisplay.length > 0 ? (
+      draftJobsDisplay.map(job => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
@@ -109,7 +167,7 @@ const DraftJobs = props => {
         show={openDeleteDraft}
         onCancel={closeDeleteDraftHandler}
         headerText='Anda yakin ingin menghapus draft ini?'
-        style={{ top: '35vh', maxWidth: '500px', marginLeft: '-250px', height: '130px', overflowY: 'auto' }}>
+        style={{ top: '35vh', maxWidth: '500px', marginLeft: '-250px', height: '120px', overflowY: 'auto' }}>
         <div className={styles.ConfirmationButton}>
           {props.isLoading ? (
             <LoadingBar />
@@ -122,6 +180,11 @@ const DraftJobs = props => {
         </div>
       </Modal>
       {draftAds}
+      {draftJobsDisplay.length > 0 && (
+        <div className={styles.PaginationContainer}>
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
+        </div>
+      )}
     </Fragment>
   );
 };

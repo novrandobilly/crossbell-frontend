@@ -1,13 +1,67 @@
-import React from 'react';
+import React, { Fragment, useState, useReducer, useEffect } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
+import Pagination from '@mui/material/Pagination';
 import styles from './LiveJobs.module.scss';
 
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  startIndex: 0,
+  itemsPerPage: 5,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 const LiveJobs = props => {
+  const [liveJobsDisplay, setLiveJobsDisplay] = useState([]);
+  const [state, dispatch] = useReducer(paginationReducer, initPagination);
+
+  const pageChangeHandler = (event, value) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: state.itemsPerPage * (value - 1),
+      },
+    });
+  };
+
+  // Change Page Job Data
+  useEffect(() => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageCount: Math.ceil(props.liveJobs.length / state.itemsPerPage),
+      },
+    });
+    let jobsDataTemp = props.liveJobs.slice(state.startIndex, state.startIndex + state.itemsPerPage);
+    setLiveJobsDisplay(jobsDataTemp);
+  }, [props.liveJobs, state.startIndex, state.itemsPerPage]);
+
   let liveAds =
-    props.liveJobs.length > 0 ? (
-      props.liveJobs.map(job => {
+    liveJobsDisplay.length > 0 ? (
+      liveJobsDisplay.map(job => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
@@ -79,7 +133,16 @@ const LiveJobs = props => {
       <p className={styles.EmptyText}>Belum ada iklan pekerjaan yang sedang tayang</p>
     );
 
-  return liveAds;
+  return (
+    <Fragment>
+      {liveAds}
+      {liveJobsDisplay.length > 0 && (
+        <div className={styles.PaginationContainer}>
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
+        </div>
+      )}
+    </Fragment>
+  );
 };
 
 export default LiveJobs;

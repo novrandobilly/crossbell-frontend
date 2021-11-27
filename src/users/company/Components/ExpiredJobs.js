@@ -1,12 +1,67 @@
-import React from 'react';
+import React, { Fragment, useState, useReducer, useEffect } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
+import Pagination from '@mui/material/Pagination';
 import styles from './ExpiredJobs.module.scss';
+
+const ACTIONPAGE = {
+  PAGEUPDATE: 'PAGEUPDATE',
+};
+
+const initPagination = {
+  pageCount: 1,
+  pageNumber: 1,
+  startIndex: 0,
+  itemsPerPage: 5,
+};
+
+const paginationReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONPAGE.PAGEUPDATE: {
+      let update = {};
+      for (const key in action.payload) {
+        update[key] = action.payload[key];
+      }
+      return {
+        ...state,
+        ...update,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 const ExpiredJobs = props => {
+  const [expiredJobsDisplay, setExpiredJobsDisplay] = useState([]);
+  const [state, dispatch] = useReducer(paginationReducer, initPagination);
+
+  const pageChangeHandler = (event, value) => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageNumber: value,
+        startIndex: state.itemsPerPage * (value - 1),
+      },
+    });
+  };
+
+  // Change Page Job Data
+  useEffect(() => {
+    dispatch({
+      type: ACTIONPAGE.PAGEUPDATE,
+      payload: {
+        pageCount: Math.ceil(props.expiredData.length / state.itemsPerPage),
+      },
+    });
+    let jobsDataTemp = props.expiredData.slice(state.startIndex, state.startIndex + state.itemsPerPage);
+    setExpiredJobsDisplay(jobsDataTemp);
+  }, [props.expiredData, state.startIndex, state.itemsPerPage]);
+
   let expiredAds =
-    props.expiredData.length > 0 ? (
-      props.expiredData.map(job => {
+    expiredJobsDisplay.length > 0 ? (
+      expiredJobsDisplay.map(job => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
@@ -74,7 +129,16 @@ const ExpiredJobs = props => {
       <p className={styles.EmptyText}>Belum ada iklan pekerjaan yang selesai tayang</p>
     );
 
-  return expiredAds;
+  return (
+    <Fragment>
+      {expiredAds}
+      {expiredJobsDisplay.length > 0 && (
+        <div className={styles.PaginationContainer}>
+          <Pagination count={state.pageCount} page={state.pageNumber} onChange={pageChangeHandler} />
+        </div>
+      )}
+    </Fragment>
+  );
 };
 
 export default ExpiredJobs;
