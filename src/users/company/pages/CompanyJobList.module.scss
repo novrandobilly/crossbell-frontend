@@ -1,6 +1,15 @@
 .ContentContainer {
   display: flex;
   justify-content: space-between;
+  h2 {
+    text-align: start;
+    font-style: italic;
+  }
+
+  .TabPanel {
+    padding: 0;
+  }
+  padding: 0 0 20px;
 }
 .Container {
   padding: 0 24px;

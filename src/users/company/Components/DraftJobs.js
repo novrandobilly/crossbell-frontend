@@ -52,11 +52,6 @@ const DraftJobs = props => {
     });
   };
 
-  // Initial Draft Jobs Data
-  // useEffect(() => {
-  //   setDraftJobsDisplay(props.draftJobs);
-  // }, [props.draftJobs]);
-
   // Change Page Job Data
   useEffect(() => {
     dispatch({

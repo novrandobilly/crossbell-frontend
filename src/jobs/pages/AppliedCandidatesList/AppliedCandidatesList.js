@@ -28,7 +28,6 @@ const AppliedCandidatesList = props => {
   useEffect(() => {
     getOneJob(jobsid)
       .then(res => {
-        console.log(res);
         setJobData(res);
       })
       .catch(err => console.log(err));
@@ -43,8 +42,9 @@ const AppliedCandidatesList = props => {
           return (
             <div className={styles.CardContainer} key={data.id}>
               <div className={styles.CardLeft}>
+                {console.log(data.picture)}
                 <a href={`/ap/${data.id}/profile`} target='_blank' rel='noreferrer' className={styles.Avatar}>
-                  <img alt='Applicant Avatar' src={data.picture ? data.picture.url : <BlankProfile />} />
+                  <img alt='Applicant Avatar' src={data.picture ? data.picture.url : BlankProfile} />
                 </a>
               </div>
 
@@ -131,9 +131,9 @@ const AppliedCandidatesList = props => {
               {' '}
               <div className={styles.JobAdsHeader}>
                 <img alt='Company Logo' src={jobData.companyId?.logo?.url || BlankProfile} />
-                <h2 className={styles.JobTitle} onClick={() => props.history.push(`/jobs/${jobData.id}`)}>
+                <h3 className={styles.JobTitle} onClick={() => props.history.push(`/jobs/${jobData.id}`)}>
                   {jobData.jobTitle}
-                </h2>
+                </h3>
               </div>
               <p>
                 Kategori: <strong>{jobData.fieldOfWork[0]}</strong>

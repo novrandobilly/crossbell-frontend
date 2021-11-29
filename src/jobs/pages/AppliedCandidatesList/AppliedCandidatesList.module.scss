@@ -26,18 +26,23 @@
     & > * {
       margin: 0 0 10px;
     }
+    p {
+      text-align: start;
+    }
     .JobAdsHeader {
       width: 100%;
       display: flex;
-      justify-content: flex-start;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
       img {
         width: 100%;
         max-width: 100px;
         height: auto;
-        margin-right: 10px;
+        margin: 15px auto 0;
       }
       .JobTitle {
+        margin-bottom: 0;
         &:hover {
           cursor: pointer;
           text-shadow: 0 0 5px #f79f35;

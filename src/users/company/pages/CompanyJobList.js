@@ -5,6 +5,12 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../../store/actions';
 
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 import DraftJobs from '../components/DraftJobs';
 import LiveJobs from '../components/LiveJobs';
 import ExpiredJobs from '../components/ExpiredJobs';
@@ -68,6 +74,11 @@ const CompanyJobList = props => {
   const [unreleasedData, setUnreleasedData] = useState();
   const [expiredData, setExpiredData] = useState();
   const [displayData, setDisplayData] = useState();
+  const [tabValue, setTabValue] = useState('live');
+
+  const tabChangeHandler = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   const [state, dispatch] = useReducer(searchReducer, {
     search: {
@@ -181,25 +192,59 @@ const CompanyJobList = props => {
       <HeaderBanner imageSource={MeetingCompany} />
       <div className={styles.ContentContainer}>
         <div className={styles.CompanyJobListContainer}>
-          {/* <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} /> */}
-          <section className={styles.DraftContainer}>
-            <h2>Draft Iklan Pekerjaan</h2>
-            {props.job.isLoading ? (
-              <LoadingBar />
-            ) : (
-              <DraftJobs draftJobs={unreleasedData || []} onDelete={onDeleteHandler} isLoading={props.job.isLoading} />
-            )}
-          </section>
-          <section className={styles.LiveContainer}>
-            <h2>Iklan Pekerjaan Sedang Tayang</h2>
-            {props.job.isLoading ? <LoadingBar /> : <LiveJobs liveJobs={displayData || []} />}
-          </section>
-          <section className={styles.ExpiredContainer}>
-            <h2>Iklan Pekerjaan Selesai Tayang</h2>
-            {props.job.isLoading ? <LoadingBar /> : <ExpiredJobs expiredData={expiredData || []} />}
-          </section>
+          <TabContext value={tabValue}>
+            <Box sx={{ borderBottom: 1, borderColor: '#f79f35' }}>
+              <TabList
+                TabIndicatorProps={{ style: { background: '#f79f35' } }}
+                onChange={tabChangeHandler}
+                aria-label='lab API tabs example'>
+                <Tab
+                  className={styles.DraftTab}
+                  label={<strong style={{ color: '#666' }}>Draft</strong>}
+                  value='draft'
+                />
+                <Tab
+                  className={styles.LiveTab}
+                  label={<strong style={{ color: '#00a31b' }}>Live</strong>}
+                  value='live'
+                />
+                <Tab
+                  className={styles.ExpiredTab}
+                  label={<strong style={{ color: '#ef3f37' }}>Expired</strong>}
+                  value='expired'
+                />
+              </TabList>
+            </Box>
+            <TabPanel value='draft' className={styles.TabPanel}>
+              <section className={styles.DraftContainer}>
+                <h2>Draft Iklan Pekerjaan</h2>
+                {props.job.isLoading ? (
+                  <LoadingBar />
+                ) : (
+                  <DraftJobs
+                    draftJobs={unreleasedData || []}
+                    onDelete={onDeleteHandler}
+                    isLoading={props.job.isLoading}
+                  />
+                )}
+              </section>
+            </TabPanel>
+            <TabPanel value='live' className={styles.TabPanel}>
+              <section className={styles.LiveContainer}>
+                <h2>Iklan Pekerjaan Sedang Tayang</h2>
+                {props.job.isLoading ? <LoadingBar /> : <LiveJobs liveJobs={displayData || []} />}
+              </section>
+            </TabPanel>
+            <TabPanel value='expired' className={styles.TabPanel}>
+              <section className={styles.ExpiredContainer}>
+                <h2>Iklan Pekerjaan Selesai Tayang</h2>
+                {props.job.isLoading ? <LoadingBar /> : <ExpiredJobs expiredData={expiredData || []} />}
+              </section>
+            </TabPanel>
+          </TabContext>
         </div>
         <ExecutiveSearchBanner imageSource={ExecutiveSearchImage} />
+        {/* <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} clearHandler={clearHandler} /> */}
       </div>
     </div>
   );
