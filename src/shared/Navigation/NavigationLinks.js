@@ -123,7 +123,7 @@ const NavigationLinks = props => {
           <NavLink
             to={props.auth.isLoggedIn && props.auth.isCompany ? `/co/${props.auth.userId}/jobList` : '/jobs-dashboard'}
             activeClassName={styles.active}>
-            {props.auth.isLoggedIn && props.auth.isCompany ? 'Dashboard Iklan' : 'Explore'}
+            {props.auth.isLoggedIn && props.auth.isCompany ? 'Dashboard Iklan' : 'Lowongan'}
           </NavLink>
         </li>
         {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
@@ -332,7 +332,7 @@ const NavigationLinks = props => {
           <NavLink
             to={props.auth.isLoggedIn && props.auth.isCompany ? `/co/${props.auth.userId}/jobList` : '/jobs-dashboard'}
             activeClassName={styles.active}>
-            Explore
+            Lowongan
           </NavLink>
         </li>
         {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (

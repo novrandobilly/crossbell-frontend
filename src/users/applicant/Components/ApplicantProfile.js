@@ -27,6 +27,26 @@ import styles from './ApplicantProfile.module.scss';
 const ApplicantProfile = props => {
   const [openEditBrief, setOpenEditBrief] = useState(false);
   const [uploadIsLoading, setUploadIsLoading] = useState(false);
+  const [uploadResumeIsLoading, setUploadResumeIsLoading] = useState(false);
+
+  const onUploadResumeHandler = async event => {
+    event.preventDefault();
+    setUploadResumeIsLoading(true);
+    const resumeFile = event.target.files[0];
+    const payload = {
+      applicantId: props.auth.userId,
+      resume: resumeFile,
+      token: props.auth.token,
+    };
+    try {
+      await props.updateResume(payload);
+      props.fetchApplicantData();
+      setUploadResumeIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setUploadResumeIsLoading(false);
+    }
+  };
 
   const closeEditBriefHandler = () => {
     setOpenEditBrief(false);
@@ -53,6 +73,8 @@ const ApplicantProfile = props => {
       setUploadIsLoading(false);
     }
   };
+
+  console.log(applicantData.resume);
   return (
     <div className={styles.ApplicantDetailsContainer}>
       <section className={styles.ApplicantBriefInformation}>
@@ -132,6 +154,26 @@ const ApplicantProfile = props => {
               </p>
             </div>
           </div>
+          {props.auth.userId === applicantData.id &&
+            (uploadResumeIsLoading ? (
+              <LoadingBar />
+            ) : (
+              <div className={styles.UploadResume}>
+                <label className={styles.UploadResumeButton}>
+                  <input type='file' name='resume' id='resume' onChange={onUploadResumeHandler} accept='.pdf' />
+                  <span className={styles.UploadResumeText}> Upload Resume </span>
+                </label>
+                {applicantData.resume && (
+                  <a
+                    href={applicantData.resume?.url.slice(0, applicantData.resume.url.length - 4) + '.jpg'}
+                    className={styles.ResumeLink}
+                    target='_blank'
+                    rel='noopener noreferrer'>
+                    &#x02713; {applicantData.firstName} {applicantData.lastName}'s Resume
+                  </a>
+                )}
+              </div>
+            ))}
         </div>
       </section>
 
