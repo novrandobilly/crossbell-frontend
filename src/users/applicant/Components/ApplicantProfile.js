@@ -12,6 +12,7 @@ import Certifications from './Certifications';
 import EditBriefInformations from './Edit/EditBriefInformations';
 import Modal from '../../../shared/UI_Element/Modal';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import Subscription from './Subscription';
 
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
 import PhoneIcon from '../../../assets/icons/phone.svg';
@@ -28,6 +29,10 @@ const ApplicantProfile = props => {
   const [openEditBrief, setOpenEditBrief] = useState(false);
   const [uploadIsLoading, setUploadIsLoading] = useState(false);
   const [uploadResumeIsLoading, setUploadResumeIsLoading] = useState(false);
+  const [autoNotification, setAutoNotification] = useState(false);
+
+  const openAutoNotification = () => setAutoNotification(true);
+  const closeAutoNotification = () => setAutoNotification(false);
 
   const onUploadResumeHandler = async event => {
     event.preventDefault();
@@ -74,7 +79,6 @@ const ApplicantProfile = props => {
     }
   };
 
-  console.log(applicantData.resume);
   return (
     <div className={styles.ApplicantDetailsContainer}>
       <section className={styles.ApplicantBriefInformation}>
@@ -134,6 +138,7 @@ const ApplicantProfile = props => {
                 {`Rp ${applicantData.salary.toLocaleString()},-`}
               </p>
             </div>
+
             <div className={styles.ApplicantBiodataSecondGroup}>
               <p className={styles.ApplicantGender}>
                 <img alt='Gender Icon' src={GenderIcon} />
@@ -154,6 +159,7 @@ const ApplicantProfile = props => {
               </p>
             </div>
           </div>
+
           {props.auth.userId === applicantData.id &&
             (uploadResumeIsLoading ? (
               <LoadingBar />
@@ -163,7 +169,7 @@ const ApplicantProfile = props => {
                   <input type='file' name='resume' id='resume' onChange={onUploadResumeHandler} accept='.pdf' />
                   <span className={styles.UploadResumeText}> Upload Resume </span>
                 </label>
-                {applicantData.resume && (
+                {applicantData.resume ? (
                   <a
                     href={applicantData.resume?.url.slice(0, applicantData.resume.url.length - 4) + '.jpg'}
                     className={styles.ResumeLink}
@@ -171,9 +177,30 @@ const ApplicantProfile = props => {
                     rel='noopener noreferrer'>
                     &#x02713; {applicantData.firstName} {applicantData.lastName}'s Resume
                   </a>
+                ) : (
+                  <span>Klik 'Upload Resume' untuk menambahkan resume</span>
                 )}
               </div>
             ))}
+
+          {props.auth.userId === applicantData.id && (
+            <Fragment>
+              <Modal
+                show={autoNotification}
+                onCancel={closeAutoNotification}
+                style={{ top: '15vh', maxWidth: '600px', marginLeft: '-300px', height: '620px', overflowY: 'auto' }}
+                headerText='Notifikasi Otomatis'>
+                <Subscription fetchApplicantData={() => props.fetchApplicantData()} onCancel={closeAutoNotification} />
+              </Modal>
+              <div className={styles.AutoNotificationContainer}>
+                <p className={styles.AutoNotificationButton} onClick={openAutoNotification}>
+                  Notifikasi Otomatis
+                </p>
+                <p>Notifikasi Otomatis {applicantData.autoRemind.isAutoRemind ? 'aktif' : 'tidak aktif'}</p>
+                <p>Lamaran Otomatis {applicantData.autoSend.isAutoSend ? 'aktif' : 'tidak aktif'}</p>
+              </div>
+            </Fragment>
+          )}
         </div>
       </section>
 

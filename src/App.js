@@ -50,7 +50,6 @@ const CompanyJobList = React.lazy(() => import('./users/company/pages/CompanyJob
 const JobsApplied = React.lazy(() => import('./users/applicant/pages/JobsApplied'));
 const ApplicantDetails = React.lazy(() => import('./users/applicant/pages/ApplicantDetails'));
 const ApplicantDetailsAO = React.lazy(() => import('./users/admin/pages/ApplicantDetailsAO/ApplicantDetailsAO'));
-const Subscription = React.lazy(() => import('./users/applicant/components/Subscription'));
 const Language = React.lazy(() => import('./users/applicant/components/Edit/Language'));
 
 //==================================== admin =========================================================
@@ -143,7 +142,6 @@ const App = props => {
             <Route path='/ap/:applicantid/language' component={Language} />
             <Route path='/ap/:applicantid/appliedjobs' component={JobsApplied} />
             <Route path='/ap/:applicantid/profile' component={ApplicantDetails} />
-            <Route path='/subscription/:applicantid' component={Subscription} />
 
             {/* Users Routes: Company */}
             <Route path='/co/:companyid/compro/personincharge' component={EditCompanyPIC} />

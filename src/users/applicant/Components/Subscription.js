@@ -5,22 +5,19 @@ import { useForm } from '../../../shared/utils/useForm';
 
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
-// import { VALIDATOR_REQUIRE } from '../../../shared/utils/validator';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import Modal from '../../../shared/UI_Element/Modal';
-import OrderModal from '../../../shared/UI_Element/OrderModal';
 import IndustryData from '../../../shared/UI_Element/IndustryData';
 import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
+import { CustomTextField } from '../../../shared/UI_Element/CustomMUIComponents';
 
-import classes from './Subscription.module.css';
+import styles from './Subscription.module.scss';
 
 const Subscription = props => {
   const [data, setData] = useState();
-  const [orderModal, setOrderModal] = useState(false);
   const [autoSend, setAutoSend] = useState({
     isAutoSend: false,
     jobIndustry: '',
@@ -45,8 +42,18 @@ const Subscription = props => {
       token: props.auth.token,
     };
     getOneApplicant(payload).then(res => {
-      setAutoSend(res.applicant.autoSend);
-      setAutoRemind(res.applicant.autoRemind);
+      const autoRemind = {
+        isAutoRemind: res.applicant.autoRemind.isAutoRemind,
+        jobField: res.applicant.autoRemind.jobField,
+        jobIndustry: { industry: res.applicant.autoRemind.jobIndustry },
+      };
+      const autoSend = {
+        isAutoSend: res.applicant.autoSend.isAutoSend,
+        jobField: res.applicant.autoSend.jobField,
+        jobIndustry: { industry: res.applicant.autoSend.jobIndustry },
+      };
+      setAutoSend(autoSend);
+      setAutoRemind(autoRemind);
       setData(res.applicant);
     });
   }, [getOneApplicant, applicantid, props.auth.token]);
@@ -83,24 +90,48 @@ const Subscription = props => {
 
   const onSubmitHandler = async event => {
     event.preventDefault();
+
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
     }
+    const autoRemind = {
+      isAutoRemind: formState.inputs.autoRemind.value.isAutoRemind,
+      jobField: formState.inputs.autoRemind.value.jobField || '',
+      jobIndustry: formState.inputs.autoRemind.value.jobIndustry?.industry || '',
+    };
+    const autoSend = {
+      isAutoSend: formState.inputs.autoSend.value.isAutoSend,
+      jobField: formState.inputs.autoSend.value.jobField || '',
+      jobIndustry: formState.inputs.autoSend.value.jobIndustry?.industry || '',
+    };
+
+    const checkValidityAutoRemind = autoRemind => {
+      if (autoRemind.isAutoRemind) {
+        if (!autoRemind.jobField || !autoRemind.jobIndustry) return false;
+      }
+      return true;
+    };
+    const checkValidityAutoSend = autoSend => {
+      if (autoSend.isAutoSend) {
+        if (!autoSend.jobField || !autoSend.jobIndustry) return false;
+      }
+      return true;
+    };
 
     const ApplicantData = {
       applicantId: applicantid,
       token: props.auth.token,
-      autoSend: formState.inputs.autoSend.value,
-      autoRemind: formState.inputs.autoRemind.value,
+      autoSend: autoSend,
+      autoRemind: autoRemind,
     };
 
-    setOrderModal(false);
     try {
-      const res = await props.updateApplicantSubscription(ApplicantData);
-
-      if (res) {
-        props.history.push(`/ap/${applicantid}/profile`);
+      if (!checkValidityAutoRemind(autoRemind) || !checkValidityAutoSend(autoSend)) {
+        throw new Error('Bidang Industri & Bidang Pekerjaan tidak boleh kosong');
       }
+      await props.updateApplicantSubscription(ApplicantData);
+      props.fetchApplicantData();
+      props.onCancel();
     } catch (err) {
       console.log(err);
     }
@@ -162,144 +193,116 @@ const Subscription = props => {
     });
   };
 
-  const onCloseOrderModal = () => {
-    setOrderModal(false);
-  };
-
-  const onOpenOrderModal = () => {
-    setOrderModal(true);
-  };
-
   let content = <LoadingBar />;
-
-  console.log(autoSend);
-  console.log(autoRemind);
 
   if (!props.isLoading && data) {
     content = (
-      <form className={classes.Container}>
-        <h2>Ubah Kriteria Langganan</h2>
-        <p className={classes.AppealText}>
-          Silahkan klik centang untuk mengosongkan kotak{' '}
-          <strong>
-            <em>(uncheck)</em>
-          </strong>{' '}
-          untuk konfirmasi anda berhenti dari fitur notifikasi otomatis (auto reminder) dan/atau fitur lamaran otomatis
-          (auto apply) , keluar dari halaman bila anda tidak ingin melakukan pembaruan
+      <form className={styles.SubscriptionContainer}>
+        <p className={styles.Description}>
+          Dengan mengaktifkan salah satu/kedua fitur ini, anda akan mendapatkan email pemberitahuan (Auto Remind),
+          dan/atau mengizinkan sistem mengirimkan lamaran anda secara otomatis (Auto Apply) pada pekerjaan yang sesuai
+          dengan minat anda.
         </p>
 
-        <div className={classes.Content}>
-          <div className={classes.TopContent}>
-            <p className={classes.ContentTitle}>Lamaran otomatis</p>
+        <div className={styles.AutoRemindContainer}>
+          <label onChange={onCheckedAutoRemind} className={styles.CheckBox}>
+            <input
+              value={autoRemind.jobIndustry || ''}
+              id='autoRemind'
+              type='checkbox'
+              name='autoRemind'
+              className={styles.InputCheckBox}
+            />
+            <p className={styles.ContentTitle}>Auto Remind | Beri notifikasi apabila ada pekerjaan sesuai minat</p>
+          </label>
 
-            <label onChange={onCheckedAutoSend} className={classes.CheckBox}>
-              <input id='autoSend' type='checkbox' name='autoSend' className={classes.Box} />
-              <p className={classes.Text}>Saya bersedia didaftarkan kerja secara otomatis oleh Crossbell</p>{' '}
-            </label>
-            <div className={classes.InputDiv}>
-              <Autocomplete
-                value={autoSend.jobIndustry}
-                id='jobIndustry'
-                name='jobIndustry'
-                options={IndustryData.map(option => option.industry)}
-                onChange={onChangeAutoSendIndustry}
-                style={{ width: '100%' }}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    style={{ marginTop: '0' }}
-                    label='Industri Perusahaan'
-                    margin='normal'
-                    variant='standard'
-                  />
-                )}
-              />
-            </div>
-            <div className={classes.InputDiv}>
-              <Autocomplete
-                value={autoSend.jobField}
-                id='jobField'
-                name='jobField'
-                options={WorkFieldData.map(option => option.field)}
-                onChange={onChangeAutoSendField}
-                style={{ width: '100%' }}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    style={{ marginTop: '0' }}
-                    label='Bidang Pekerjaan'
-                    margin='normal'
-                    variant='standard'
-                  />
-                )}
-              />
-            </div>
+          <div className={styles.Industry}>
+            <p>Industri Pekerjaan Yang Diminati</p>
+            <Autocomplete
+              id='jobIndustry'
+              name='jobIndustry'
+              options={IndustryData.sort((a, b) => {
+                const optA = a.industry.toLowerCase();
+                const optB = b.industry.toLowerCase();
+                if (optA < optB) return -1;
+                if (optA > optB) return 1;
+                return 0;
+              }).map(option => option)}
+              getOptionLabel={option => `${option.industry}`}
+              value={autoRemind.jobIndustry}
+              onChange={onChangeAutoRemindIndustry}
+              renderInput={params => <CustomTextField {...params} />}
+            />
           </div>
-
-          <div className={classes.BottomContent}>
-            <p className={classes.ContentTitle}>Notifikasi otomatis</p>
-            <label onChange={onCheckedAutoRemind} className={classes.CheckBox}>
-              <input
-                value={autoRemind.jobIndustry}
-                id='autoRemind'
-                type='checkbox'
-                name='autoRemind'
-                className={classes.Box}
-              />
-              <p className={classes.Text}>Berikan notifikasi bila ada pekerjaan sesuai bidang minat</p>{' '}
-            </label>
-            <div className={classes.InputDiv}>
-              <Autocomplete
-                value={autoRemind.jobIndustry}
-                id='jobIndustry'
-                name='jobIndustry'
-                options={IndustryData.map(option => option.industry)}
-                onChange={onChangeAutoRemindIndustry}
-                style={{ width: '100%' }}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    style={{ marginTop: '0' }}
-                    label='Industri Perusahaan'
-                    margin='normal'
-                    variant='standard'
-                  />
-                )}
-              />
-            </div>
-
-            <div className={classes.InputDiv}>
-              <Autocomplete
-                value={autoRemind.jobField}
-                id='jobField'
-                name='jobField'
-                options={WorkFieldData.map(option => option.field)}
-                onChange={onChangeAutoRemindField}
-                style={{ width: '100%' }}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    style={{ marginTop: '0' }}
-                    label='Bidang Pekerjaan'
-                    margin='normal'
-                    variant='standard'
-                  />
-                )}
-              />
-            </div>
+          <div className={styles.JobCategory}>
+            <p>Bidang Pekerjaan yang diminati</p>
+            <Autocomplete
+              id='jobField'
+              name='jobField'
+              options={WorkFieldData.sort((a, b) => {
+                const optA = a.field.toLowerCase();
+                const optB = b.field.toLowerCase();
+                if (optA < optB) return -1;
+                if (optA > optB) return 1;
+                return 0;
+              }).map(option => option.field)}
+              getOptionLabel={option => option}
+              onChange={onChangeAutoRemindField}
+              value={autoRemind.jobField}
+              renderInput={params => <CustomTextField {...params} />}
+            />
           </div>
         </div>
+        <div className={styles.AutoApplyContainer}>
+          <label onChange={onCheckedAutoSend} className={styles.CheckBox}>
+            <input id='autoSend' type='checkbox' name='autoSend' className={styles.InputCheckBox} />
+            <p className={styles.ContentTitle}>Auto Apply | Lamar otomatis apabila ada pekerjaan sesuai minat</p>
+          </label>
 
-        <div className={classes.Footer}>
-          <Button
-            disabled={!formState.formIsValid}
-            variant='contained'
-            color='primary'
-            type='button'
-            onClick={onOpenOrderModal}>
-            Simpan
-          </Button>
+          <div className={styles.Industry}>
+            <p>Industri Pekerjaan Yang Diminati</p>
+            <Autocomplete
+              id='jobIndustry'
+              name='jobIndustry'
+              options={IndustryData.sort((a, b) => {
+                const optA = a.industry.toLowerCase();
+                const optB = b.industry.toLowerCase();
+                if (optA < optB) return -1;
+                if (optA > optB) return 1;
+                return 0;
+              }).map(option => option)}
+              getOptionLabel={option => `${option.industry}`}
+              value={autoSend.jobIndustry}
+              onChange={onChangeAutoSendIndustry}
+              renderInput={params => <CustomTextField {...params} />}
+            />
+          </div>
+          <div className={styles.JobCategory}>
+            <p>Bidang Pekerjaan yang diminati</p>
+            <Autocomplete
+              id='jobField'
+              name='jobField'
+              options={WorkFieldData.sort((a, b) => {
+                const optA = a.field.toLowerCase();
+                const optB = b.field.toLowerCase();
+                if (optA < optB) return -1;
+                if (optA > optB) return 1;
+                return 0;
+              }).map(option => option.field)}
+              getOptionLabel={option => option}
+              onChange={onChangeAutoSendField}
+              value={autoSend.jobField}
+              renderInput={params => <CustomTextField {...params} />}
+            />
+          </div>
         </div>
+        <button
+          className={styles.SubmitButton}
+          disabled={!formState.formIsValid}
+          type='button'
+          onClick={onSubmitHandler}>
+          Simpan
+        </button>
       </form>
     );
   }
@@ -309,14 +312,11 @@ const Subscription = props => {
   };
 
   return (
-    <div className={classes.ContainerFlex}>
+    <div className={styles.ContainerFlex}>
       {' '}
       <Modal show={props.error} onCancel={onCancelHandler}>
         Could not update changes at the moment, please try again later
       </Modal>
-      <OrderModal show={orderModal} onCancel={onCloseOrderModal} Accept={onSubmitHandler}>
-        Apakah anda yakin ingin membuat perubahan pada subscription anda saat ini?
-      </OrderModal>
       {content}
     </div>
   );

@@ -1,0 +1,52 @@
+.SubscriptionContainer {
+  .Description {
+    text-align: start;
+    font-style: italic;
+    color: #424242;
+    margin: 0;
+  }
+
+  .AutoRemindContainer {
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #000;
+  }
+
+  .CheckBox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .Industry,
+  .JobCategory {
+    margin-bottom: 10px;
+    p {
+      margin: 0 0 5px;
+      text-align: start;
+    }
+  }
+  .InputCheckBox {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+  .ContentTitle {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .SubmitButton {
+    width: 100%;
+    max-width: 100px;
+    padding: 0.2em 0;
+    font-size: 18px;
+    margin: 10px auto 15px;
+    background-color: #f79f35;
+    border: 2px solid #f79f35;
+    color: #fff;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
