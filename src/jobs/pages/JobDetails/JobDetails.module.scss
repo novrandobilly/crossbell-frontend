@@ -38,9 +38,9 @@ $primaryColor: #f79f35;
   .LogoContainer {
     display: flex;
     align-items: center;
+    width: 30%;
     img {
       width: 100%;
-      max-width: max-content;
       height: auto;
     }
   }
@@ -60,6 +60,7 @@ $primaryColor: #f79f35;
       .JobTitle {
         font-weight: 700;
         font-size: 24px;
+        text-align: start;
       }
     }
     .MetaData {
@@ -143,7 +144,7 @@ $primaryColor: #f79f35;
 
 .Caption {
   font-size: 0.9rem;
-  font-weight: 600;
+  // font-weight: 600;
   margin: 0;
   color: rgba(0, 0, 0, 0.8);
 }
@@ -152,11 +153,6 @@ $primaryColor: #f79f35;
   font-size: 0.9rem;
   font-weight: lighter;
   margin: 8px 0 0 16px;
-}
-
-.Logo {
-  height: 10rem;
-  margin-right: 2rem;
 }
 
 .CompanyName {
@@ -235,9 +231,9 @@ $primaryColor: #f79f35;
 }
 
 .Logo {
-  width: auto;
-  height: 10rem;
-  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  // border-radius: 50%;
   background-position: center;
   background-size: 75%;
   background-repeat: no-repeat;
@@ -271,6 +267,70 @@ $primaryColor: #f79f35;
       background-color: #fff;
       border: 1px solid $primaryColor;
       color: $primaryColor;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .JobDetailsContainer {
+    flex-direction: column;
+    & > * {
+      width: 100%;
+      margin: 0;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+  }
+  .HeaderContainer {
+    .JobMetaData {
+      .JobHeader {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 15px 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .JobDetailsContainer {
+    padding: 30px;
+    .JobContainer {
+      padding: 20px;
+    }
+    .HeaderContainer {
+      flex-direction: column;
+      // padding: 0;
+      padding-bottom: 20px;
+
+      .LogoContainer {
+        margin: 0 0 10px;
+      }
+      & > * {
+        width: 100%;
+      }
+      .MetaData {
+        p {
+          margin: 0;
+        }
+        & > *,
+        & > p {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .SectionDesc {
+      flex-direction: column;
+      & > * {
+        border: none;
+        width: 100%;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+      }
+      .Caption {
+        color: #9c9c9c;
+      }
     }
   }
 }

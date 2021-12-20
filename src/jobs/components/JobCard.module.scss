@@ -3,6 +3,7 @@ $primaryColor: #f79f35;
 .JobCard {
   box-sizing: border-box;
   display: flex;
+  align-items: center;
   width: 100%;
   max-width: 530px;
   padding: 10px;
@@ -33,8 +34,9 @@ $primaryColor: #f79f35;
 }
 
 .Logo > img {
-  max-width: 6rem;
-  max-height: 6rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   background-size: cover;
   background-position: center;
 }
@@ -187,13 +189,30 @@ $primaryColor: #f79f35;
   }
 }
 
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
   .FlexWrap {
     width: 100%;
   }
+  .JobCard {
+    max-width: none;
+    .Logo {
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .TitleDateWrap {
+    flex-direction: column;
+    align-items: flex-start;
+    & > * {
+      margin: 0;
+    }
+  }
 }
 
-@media (max-width: 400px) {
+@media screen and (max-width: 400px) {
   .Logo {
     width: 100%;
     height: auto;

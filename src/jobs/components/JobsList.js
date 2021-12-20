@@ -49,7 +49,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const JobsList = props => {
+const JobsList = (props) => {
   const [displayJobs, setDisplayJobs] = useState([]);
   const [displayData, setDisplayData] = useState();
 
@@ -78,31 +78,31 @@ const JobsList = props => {
     if (items && items.length > 0) {
       let filteredArray = [...items];
       if (employmentFilter && employmentFilter.length > 0) {
-        filteredArray = filteredArray.filter(el => {
-          return employmentFilter.some(gen => gen === el.employment);
+        filteredArray = filteredArray.filter((el) => {
+          return employmentFilter.some((gen) => gen === el.employment);
         });
       }
 
       if (fieldOfWorkFilter) {
-        filteredArray = filteredArray.filter(app => {
-          return app.fieldOfWork.some(fow => fow === fieldOfWorkFilter);
+        filteredArray = filteredArray.filter((app) => {
+          return app.fieldOfWork.some((fow) => fow === fieldOfWorkFilter);
         });
       }
       if (locationFilter) {
-        filteredArray = filteredArray.filter(el => {
+        filteredArray = filteredArray.filter((el) => {
           return el.placementLocation === locationFilter;
         });
       }
 
       if (formState.inputs.min.value > 0) {
-        filteredArray = filteredArray.filter(el => {
+        filteredArray = filteredArray.filter((el) => {
           let tempSalary = parseInt(el.salary);
           return tempSalary >= formState.inputs.min.value;
         });
       }
 
       if (formState.inputs.max.value > 0) {
-        filteredArray = filteredArray.filter(el => {
+        filteredArray = filteredArray.filter((el) => {
           let tempSalary = parseInt(el.salary);
           return tempSalary <= formState.inputs.max.value;
         });
@@ -154,7 +154,7 @@ const JobsList = props => {
     localStorage.setItem('dasboardPage', value);
   };
 
-  const rowsHandler = event => {
+  const rowsHandler = (event) => {
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
       payload: {
@@ -165,19 +165,19 @@ const JobsList = props => {
 
   //================= Sort ===========================
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setSort(event.target.value);
   };
 
   //================= Employment Filter ===========================
-  const onEmploymentHandler = e => {
-    setEmploymentFilter(prevState => {
+  const onEmploymentHandler = (e) => {
+    setEmploymentFilter((prevState) => {
       let tempArray = [...prevState];
 
       if (e.target.checked) {
         tempArray = [...tempArray, e.target.value];
       } else {
-        tempArray = tempArray.filter(el => el !== e.target.value);
+        tempArray = tempArray.filter((el) => el !== e.target.value);
       }
       return tempArray;
     });
@@ -208,7 +208,7 @@ const JobsList = props => {
     content =
       displayJobs && displayJobs.length > 0 ? (
         <div className={styles.JobListing}>
-          {displayJobs.map(job => (
+          {displayJobs.map((job) => (
             <JobCard
               key={job._id}
               isHidden={job.isHidden}
@@ -237,8 +237,7 @@ const JobsList = props => {
     <div className={styles.Container}>
       <div className={styles.FilterContainer}>
         <div className={styles.SortCriteria}>
-          <p className={styles.FilterTitle}>Sortir</p>
-
+          <p className={styles.FilterTitle}>Urutkan</p>
           <FormControl
             style={{
               width: '100%',
@@ -261,10 +260,10 @@ const JobsList = props => {
           <Autocomplete
             id='fieldOfWorkFilter'
             name='fieldOfWorkFilter'
-            options={WorkFieldData.map(option => option.field)}
+            options={WorkFieldData.map((option) => option.field)}
             onChange={handleWorkFieldChange}
             style={{ width: '100%' }}
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField {...params} style={{ marginTop: '0' }} label='Pilih*' margin='normal' variant='standard' />
             )}
           />
@@ -275,10 +274,10 @@ const JobsList = props => {
           <Autocomplete
             id='locationFilter'
             name='locationFilter'
-            options={cities.map(option => option)}
+            options={cities.map((option) => option)}
             onChange={handleLocationChange}
             style={{ width: '100%' }}
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField {...params} style={{ marginTop: '0' }} label='Pilih*' margin='normal' variant='standard' />
             )}
           />
@@ -302,11 +301,10 @@ const JobsList = props => {
           </div>
         </div>
 
-        <div className={styles.CheckboxCriteria}>
+        <div className={styles.SalaryFilter}>
           <p className={styles.FilterLabel}>Gaji</p>
           <div className={styles.InputHolder}>
             <p>Min</p>
-
             <Input
               inputType='input'
               id='min'

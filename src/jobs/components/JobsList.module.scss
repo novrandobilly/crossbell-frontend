@@ -23,7 +23,7 @@ $primaryColor: #f79f35;
 }
 
 .FilterLabel {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1rem;
   margin-bottom: 1rem;
 }
@@ -109,4 +109,41 @@ $primaryColor: #f79f35;
 
 .FormControl {
   width: 15%;
+}
+
+@media screen and (max-width: 992px) {
+  .Container {
+    flex-direction: column;
+
+    .FilterContainer {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      .SalaryFilter {
+        .InputHolder {
+          display: flex;
+          align-items: center;
+          & > * {
+            margin: 0;
+          }
+          p {
+            margin-right: 15px;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+    .JobContainer {
+      width: 100%;
+      .JobListing {
+        padding: 0;
+        width: 100%;
+      }
+    }
+    .PaginationBox {
+      .Pagination {
+        width: 100%;
+      }
+    }
+  }
 }

@@ -6,7 +6,6 @@ import { useForm } from '../../../shared/utils/useForm';
 import * as actionTypes from '../../../store/actions/actions';
 import * as actionCreators from '../../../store/actions/index';
 
-import Button from '@material-ui/core/Button';
 import Autocomplete from '@mui/material/Autocomplete';
 import Modal from '../../../shared/UI_Element/Modal';
 import IndustryData from '../../../shared/UI_Element/IndustryData';
@@ -16,7 +15,7 @@ import { CustomTextField } from '../../../shared/UI_Element/CustomMUIComponents'
 
 import styles from './Subscription.module.scss';
 
-const Subscription = props => {
+const Subscription = (props) => {
   const [data, setData] = useState();
   const [autoSend, setAutoSend] = useState({
     isAutoSend: false,
@@ -41,7 +40,7 @@ const Subscription = props => {
       applicantId: applicantid,
       token: props.auth.token,
     };
-    getOneApplicant(payload).then(res => {
+    getOneApplicant(payload).then((res) => {
       const autoRemind = {
         isAutoRemind: res.applicant.autoRemind.isAutoRemind,
         jobField: res.applicant.autoRemind.jobField,
@@ -88,7 +87,7 @@ const Subscription = props => {
     }
   }, [data, onInputHandler, autoSend, autoRemind]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -105,13 +104,13 @@ const Subscription = props => {
       jobIndustry: formState.inputs.autoSend.value.jobIndustry?.industry || '',
     };
 
-    const checkValidityAutoRemind = autoRemind => {
+    const checkValidityAutoRemind = (autoRemind) => {
       if (autoRemind.isAutoRemind) {
         if (!autoRemind.jobField || !autoRemind.jobIndustry) return false;
       }
       return true;
     };
-    const checkValidityAutoSend = autoSend => {
+    const checkValidityAutoSend = (autoSend) => {
       if (autoSend.isAutoSend) {
         if (!autoSend.jobField || !autoSend.jobIndustry) return false;
       }
@@ -137,9 +136,9 @@ const Subscription = props => {
     }
   };
 
-  const onCheckedAutoSend = e => {
+  const onCheckedAutoSend = (e) => {
     const elementValue = e.target.checked;
-    setAutoSend(prevState => {
+    setAutoSend((prevState) => {
       let tempObject = { ...prevState };
       tempObject.isAutoSend = elementValue;
       return { ...tempObject };
@@ -148,7 +147,7 @@ const Subscription = props => {
 
   const onChangeAutoSendIndustry = (e, newVal) => {
     e.persist();
-    setAutoSend(prevState => {
+    setAutoSend((prevState) => {
       let tempObject = { ...prevState };
       tempObject.jobIndustry = newVal;
       prevState.jobIndustry = newVal;
@@ -158,16 +157,16 @@ const Subscription = props => {
 
   const onChangeAutoSendField = (e, newVal) => {
     e.persist();
-    setAutoSend(prevState => {
+    setAutoSend((prevState) => {
       let tempObject = { ...prevState };
       tempObject.jobField = newVal;
       return { ...tempObject };
     });
   };
 
-  const onCheckedAutoRemind = e => {
+  const onCheckedAutoRemind = (e) => {
     const elementValue = e.target.checked;
-    setAutoRemind(prevState => {
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
       tempObject.isAutoRemind = elementValue;
       return { ...tempObject };
@@ -176,7 +175,7 @@ const Subscription = props => {
 
   const onChangeAutoRemindIndustry = (e, newVal) => {
     e.persist();
-    setAutoRemind(prevState => {
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
       tempObject.jobIndustry = newVal;
       prevState.jobIndustry = newVal;
@@ -186,7 +185,7 @@ const Subscription = props => {
 
   const onChangeAutoRemindField = (e, newVal) => {
     e.persist();
-    setAutoRemind(prevState => {
+    setAutoRemind((prevState) => {
       let tempObject = { ...prevState };
       tempObject.jobField = newVal;
       return { ...tempObject };
@@ -227,11 +226,11 @@ const Subscription = props => {
                 if (optA < optB) return -1;
                 if (optA > optB) return 1;
                 return 0;
-              }).map(option => option)}
-              getOptionLabel={option => `${option.industry}`}
+              }).map((option) => option)}
+              getOptionLabel={(option) => `${option.industry}`}
               value={autoRemind.jobIndustry}
               onChange={onChangeAutoRemindIndustry}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
           <div className={styles.JobCategory}>
@@ -245,11 +244,11 @@ const Subscription = props => {
                 if (optA < optB) return -1;
                 if (optA > optB) return 1;
                 return 0;
-              }).map(option => option.field)}
-              getOptionLabel={option => option}
+              }).map((option) => option.field)}
+              getOptionLabel={(option) => option}
               onChange={onChangeAutoRemindField}
               value={autoRemind.jobField}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
         </div>
@@ -270,11 +269,11 @@ const Subscription = props => {
                 if (optA < optB) return -1;
                 if (optA > optB) return 1;
                 return 0;
-              }).map(option => option)}
-              getOptionLabel={option => `${option.industry}`}
+              }).map((option) => option)}
+              getOptionLabel={(option) => `${option.industry}`}
               value={autoSend.jobIndustry}
               onChange={onChangeAutoSendIndustry}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
           <div className={styles.JobCategory}>
@@ -288,11 +287,11 @@ const Subscription = props => {
                 if (optA < optB) return -1;
                 if (optA > optB) return 1;
                 return 0;
-              }).map(option => option.field)}
-              getOptionLabel={option => option}
+              }).map((option) => option.field)}
+              getOptionLabel={(option) => option}
               onChange={onChangeAutoSendField}
               value={autoSend.jobField}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
         </div>
@@ -322,7 +321,7 @@ const Subscription = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -330,12 +329,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
-    updateApplicantSubscription: ApplicantData => dispatch(actionCreators.updateApplicantSubscription(ApplicantData)),
+    getOneApplicant: (payload) => dispatch(actionCreators.getOneApplicant(payload)),
+    updateApplicantSubscription: (ApplicantData) => dispatch(actionCreators.updateApplicantSubscription(ApplicantData)),
   };
 };
 
