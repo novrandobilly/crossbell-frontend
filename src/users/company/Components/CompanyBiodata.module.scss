@@ -71,6 +71,8 @@ $primaryColor: #f79f35;
       a {
         text-decoration: none;
         color: #000;
+        word-break: break-word;
+        text-align: start;
       }
     }
     .BioIcon {
@@ -82,6 +84,9 @@ $primaryColor: #f79f35;
     .CompanyNameContainer {
       @include flexCenter(row, flex-start, center);
       width: 100%;
+      h2 {
+        text-align: start;
+      }
 
       .VerificationTrueContainer {
         @include flexCenter(row, flex-start, center);
@@ -118,6 +123,46 @@ $primaryColor: #f79f35;
     right: 10px;
     &::after {
       content: 'Edit Biodata';
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .CompanyBiodataContainer {
+    .CompanyBiodataInformation {
+      .CompanyNameContainer {
+        flex-direction: column;
+        align-items: flex-start;
+
+        h2 {
+          margin: 0 0 10px;
+        }
+        .VerificationTrueContainer {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .CompanyBiodataContainer {
+    flex-direction: column;
+    .CompanyLogo {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      img {
+        margin: 0;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        max-height: none;
+      }
+    }
+    .CompanyBiodataInformation {
+      max-width: none;
+      margin: 20px 0 10px;
     }
   }
 }

@@ -57,7 +57,7 @@ const locationReducer = (state, action) => {
   }
 };
 
-const EditBriefInformations = props => {
+const EditBriefInformations = (props) => {
   const { applicantid } = useParams();
   const [data, setData] = useState();
   const [interest, setInterest] = useState([]);
@@ -140,7 +140,6 @@ const EditBriefInformations = props => {
     },
     false
   );
-  console.log(formState.inputs.gender);
 
   const { getOneApplicant } = props;
   useEffect(() => {
@@ -149,7 +148,7 @@ const EditBriefInformations = props => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then(res => {
+      getOneApplicant(payload).then((res) => {
         dispatch({
           type: LOCATION.INITFETCH,
           province: res.applicant.state,
@@ -185,7 +184,7 @@ const EditBriefInformations = props => {
     onInputHandler('city', locationState.citySelected, locationState.citySelected ? true : false);
   }, [locationState.province, locationState.citySelected, onInputHandler]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
@@ -227,13 +226,13 @@ const EditBriefInformations = props => {
     onInputHandler('interest', elementArray, true);
   };
 
-  const onManualInputHandler = e => {
+  const onManualInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
   };
 
-  const onCheckedInputHandler = e => {
+  const onCheckedInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
@@ -371,12 +370,12 @@ const EditBriefInformations = props => {
               id='state'
               name='state'
               freeSolo
-              options={ProvinceData.sort().map(option => option)}
+              options={ProvinceData.sort().map((option) => option)}
               value={locationState.province || null}
               inputValue={inputProvince}
               onChange={onStateChangeHandler}
               onInputChange={onInputStateChangeHandler}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
           <div className={styles.RegionContainer}>
@@ -387,12 +386,12 @@ const EditBriefInformations = props => {
               id='city'
               name='city'
               freeSolo
-              options={city.map(option => option)}
+              options={city.map((option) => option)}
               value={locationState.citySelected || null}
               inputValue={inputCity}
               onChange={onCityChangeHandler}
               onInputChange={onInputCityChangeHandler}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
 
@@ -433,11 +432,11 @@ const EditBriefInformations = props => {
               limitTags={3}
               disableCloseOnSelect
               getOptionDisabled={() => (interest.length < 5 ? false : true)}
-              options={WorkFieldData.sort().map(option => option.field)}
-              getOptionLabel={option => option}
+              options={WorkFieldData.sort().map((option) => option.field)}
+              getOptionLabel={(option) => option}
               value={interest ? interest : ''}
               onChange={FieldOfWorkHandler}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
           <Input
@@ -483,7 +482,7 @@ const EditBriefInformations = props => {
   return formContent;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -491,11 +490,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantBiodata: ApplicantData => dispatch(actionCreators.updateApplicantBiodata(ApplicantData)),
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantBiodata: (ApplicantData) => dispatch(actionCreators.updateApplicantBiodata(ApplicantData)),
   };
 };
 

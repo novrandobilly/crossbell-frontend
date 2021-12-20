@@ -7,3 +7,9 @@
   padding: 0 24px;
   min-height: 800px;
 }
+
+@media screen and (max-width: 1200px) {
+  .ExecutiveSearchBanner {
+    display: none;
+  }
+}

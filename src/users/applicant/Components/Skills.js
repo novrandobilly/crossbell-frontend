@@ -18,7 +18,14 @@ const Skills = ({ skills, EditAuthorized, fetchApplicantData }) => {
         headerText='Skill & Keterampilan'
         show={openSkillsEdit}
         onCancel={closeSkillsHandler}
-        style={{ top: '20vh', maxWidth: '400px', marginLeft: '-200px', height: '55vh', overflowY: 'auto' }}>
+        style={{
+          top: '20vh',
+          width: '100%',
+          maxWidth: '400px',
+          marginLeft: '-200px',
+          height: '55vh',
+          overflowY: 'auto',
+        }}>
         <EditSkills fetchApplicantData={fetchApplicantData} onCancel={closeSkillsHandler} />
       </Modal>
       <div className={styles.SkillsListingContainer}>

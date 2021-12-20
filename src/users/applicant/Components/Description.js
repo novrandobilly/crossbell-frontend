@@ -7,7 +7,7 @@ import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './Description.module.scss';
 
-const Description = props => {
+const Description = (props) => {
   const [openDescription, setOpenDescription] = useState(false);
   const openDescriptionHandler = () => setOpenDescription(true);
   const closeDescriptionHandler = () => setOpenDescription(false);
@@ -17,7 +17,7 @@ const Description = props => {
       <Modal
         show={openDescription}
         onCancel={closeDescriptionHandler}
-        style={{ top: '18vh', maxWidth: '800px', marginLeft: '-400px', height: '60vh', overflowY: 'auto' }}
+        style={{ top: '18vh', maxWidth: '80vw', marginLeft: '-40vw', height: '60vh', overflowY: 'auto' }}
         headerText='Deskripsi Diri'>
         <EditDescription onCancel={closeDescriptionHandler} fetchApplicantData={props.fetchApplicantData} />
       </Modal>

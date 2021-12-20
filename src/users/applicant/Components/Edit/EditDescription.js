@@ -13,7 +13,7 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import styles from './EditDescription.module.scss';
 
-const EditDescription = props => {
+const EditDescription = (props) => {
   const { applicantid } = useParams();
   const [characterLength, setCharacterLength] = useState();
   const [data, setData] = useState();
@@ -29,9 +29,9 @@ const EditDescription = props => {
       token: props.auth.token,
     };
     if (props.auth.token) {
-      getOneApplicant(payload).then(res => {
+      getOneApplicant(payload).then((res) => {
         setData(res.applicant);
-        setCharacterLength(res.applicant.details.length);
+        setCharacterLength(res.applicant.details?.length || 0);
       });
     }
   }, [getOneApplicant, applicantid, props.auth.token]);
@@ -46,7 +46,7 @@ const EditDescription = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -67,7 +67,7 @@ const EditDescription = props => {
     }
   };
 
-  const onCharacterCountHandler = e => {
+  const onCharacterCountHandler = (e) => {
     const charLength = e.target.value.length;
     setCharacterLength(charLength);
   };
@@ -127,7 +127,7 @@ const EditDescription = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -135,12 +135,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    getOneApplicant: data => dispatch(actionCreators.getOneApplicant(data)),
-    updateApplicantBriefInformation: ApplicantData =>
+    getOneApplicant: (data) => dispatch(actionCreators.getOneApplicant(data)),
+    updateApplicantBriefInformation: (ApplicantData) =>
       dispatch(actionCreators.updateApplicantBriefInformation(ApplicantData)),
   };
 };

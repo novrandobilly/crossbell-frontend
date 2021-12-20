@@ -12,6 +12,7 @@ $primaryColor: #f79f35;
   padding: 0 24px;
   width: 100%;
   max-width: 1000px;
+  box-sizing: border-box;
 }
 // =======================================Applicant Brief Information====================================================
 
@@ -181,4 +182,26 @@ $primaryColor: #f79f35;
 .ApplicantCertifications {
   width: 100%;
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 992px) {
+  .ApplicantBriefInformation {
+    flex-direction: column;
+    p {
+      text-align: start;
+    }
+    .AutoNotificationContainer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .ApplicantBriefDetails {
+      .UploadResume {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .ApplicantBiodata {
+        flex-direction: column;
+      }
+    }
+  }
 }

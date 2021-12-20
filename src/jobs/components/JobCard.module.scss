@@ -75,7 +75,14 @@ $primaryColor: #f79f35;
 
 .TitleDateWrap {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
+  & > * {
+    text-align: start;
+  }
+  .Date {
+    margin: 0;
+  }
 }
 
 .Date {

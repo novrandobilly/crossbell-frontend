@@ -6,3 +6,14 @@
     width: 49%;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .CompanyJobAds {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > * {
+      width: 100%;
+    }
+  }
+}

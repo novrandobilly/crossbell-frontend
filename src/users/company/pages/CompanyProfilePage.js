@@ -12,7 +12,7 @@ import ExecutiveSearchImage from '../../../assets/images/ES_Banner_1.jpeg';
 
 import styles from './CompanyProfilePage.module.scss';
 
-const CompanyProfilePage = props => {
+const CompanyProfilePage = (props) => {
   const { companyid } = useParams();
   const [loadedCompany, setLoadedCompany] = useState(null);
 
@@ -46,15 +46,17 @@ const CompanyProfilePage = props => {
       <HeaderBanner imageSource={CompanyMeeting} />
       <div className={styles.ContentContainer}>
         {companyContent}
-        <ExecutiveSearchBanner imageSource={ExecutiveSearchImage} />
+        <div className={styles.ExecutiveSearchBanner}>
+          <ExecutiveSearchBanner imageSource={ExecutiveSearchImage} />
+        </div>
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOneCompany: companyData => dispatch(actionCreators.getOneCompany(companyData)),
+    getOneCompany: (companyData) => dispatch(actionCreators.getOneCompany(companyData)),
   };
 };
 

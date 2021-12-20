@@ -25,7 +25,7 @@ import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 
 import styles from './ApplicantProfile.module.scss';
 
-const ApplicantProfile = props => {
+const ApplicantProfile = (props) => {
   const [openEditBrief, setOpenEditBrief] = useState(false);
   const [uploadIsLoading, setUploadIsLoading] = useState(false);
   const [uploadResumeIsLoading, setUploadResumeIsLoading] = useState(false);
@@ -34,7 +34,7 @@ const ApplicantProfile = props => {
   const openAutoNotification = () => setAutoNotification(true);
   const closeAutoNotification = () => setAutoNotification(false);
 
-  const onUploadResumeHandler = async event => {
+  const onUploadResumeHandler = async (event) => {
     event.preventDefault();
     setUploadResumeIsLoading(true);
     const resumeFile = event.target.files[0];
@@ -61,7 +61,7 @@ const ApplicantProfile = props => {
   };
   const applicantData = props.data;
 
-  const onUploadHandler = async e => {
+  const onUploadHandler = async (e) => {
     setUploadIsLoading(true);
     const elementFile = e.target.files[0];
     const payload = {
@@ -85,10 +85,19 @@ const ApplicantProfile = props => {
         <Modal
           show={openEditBrief}
           onCancel={closeEditBriefHandler}
-          style={{ top: '12vh', maxWidth: '800px', marginLeft: '-400px', height: '80vh', overflowY: 'auto' }}
+          style={{
+            top: '12vh',
+            maxWidth: '80vw',
+            marginLeft: '-40vw',
+            // maxWidth: `${maxWidth}px`,
+            // marginLeft: `${maxWidth / -2}px`,
+            height: '80vh',
+            overflowY: 'auto',
+          }}
           headerText='Biodata Kandidat'>
           <EditBriefInformations onCancel={closeEditBriefHandler} fetchApplicantData={props.fetchApplicantData} />
         </Modal>
+
         {/*------------------- Absolute Edit Button -------------------*/}
         {props.auth.userId === applicantData.id && (
           <span className={styles.AddEditButton} onClick={openEditBriefHandler}>
@@ -188,7 +197,7 @@ const ApplicantProfile = props => {
               <Modal
                 show={autoNotification}
                 onCancel={closeAutoNotification}
-                style={{ top: '15vh', maxWidth: '600px', marginLeft: '-300px', height: '620px', overflowY: 'auto' }}
+                style={{ top: '15vh', maxWidth: '60vw', marginLeft: '-30vw', height: '620px', overflowY: 'auto' }}
                 headerText='Notifikasi Otomatis'>
                 <Subscription fetchApplicantData={() => props.fetchApplicantData()} onCancel={closeAutoNotification} />
               </Modal>
@@ -260,17 +269,17 @@ const ApplicantProfile = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateResume: payload => dispatch(actionCreators.updateResume(payload)),
-    updateApplicantAvatar: payload => dispatch(actionCreators.updateApplicantAvatar(payload)),
+    updateResume: (payload) => dispatch(actionCreators.updateResume(payload)),
+    updateApplicantAvatar: (payload) => dispatch(actionCreators.updateApplicantAvatar(payload)),
   };
 };
 
