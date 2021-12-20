@@ -72,3 +72,13 @@
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .AddEducationFormContainer {
+    .EducationPeriod {
+      flex-direction: column;
+      & > * {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

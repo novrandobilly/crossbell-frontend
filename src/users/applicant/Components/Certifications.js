@@ -14,7 +14,7 @@ import DeleteIcon from '../../../assets/icons/x-mark.svg';
 import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 import styles from './Certifications.module.scss';
 
-const Certifications = props => {
+const Certifications = (props) => {
   const [openAddCertification, setOpenAddCertification] = useState(false);
   const [openEditCertification, setOpenEditCertification] = useState(false);
   const [openDeleteCertification, setOpenDeleteCertification] = useState(false);
@@ -35,7 +35,7 @@ const Certifications = props => {
   };
   const onCloseDeleteCertificationHandler = () => setOpenDeleteCertification(false);
 
-  const onDeleteHandler = async event => {
+  const onDeleteHandler = async (event) => {
     const payload = {
       applicantId: props.auth.userId,
       token: props.auth.token,
@@ -57,14 +57,16 @@ const Certifications = props => {
       <Modal
         show={openAddCertification}
         onCancel={onCloseAddCertificationHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.CertificationModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Tambah Sertifikasi'>
         <AddCertification onCancel={onCloseAddCertificationHandler} fetchApplicantData={props.fetchApplicantData} />
       </Modal>
       <Modal
         show={openEditCertification}
         onCancel={onCloseEditCertificationHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.CertificationModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Edit Organisasi'>
         <EditCertification
           onCancel={onCloseEditCertificationHandler}
@@ -112,13 +114,13 @@ const Certifications = props => {
                 <Fragment>
                   <span
                     className={`${styles.AddEditButton} ${styles.EditCertificationItem}`}
-                    onClick={event => onOpenEditCertificationHandler(event, cert.id)}>
+                    onClick={(event) => onOpenEditCertificationHandler(event, cert.id)}>
                     <img alt='Edit Button' src={EditWhiteIcon} />
                   </span>
 
                   <span
                     className={`${styles.AddEditButton} ${styles.DeleteItem}`}
-                    onClick={event => onOpenDeleteCertificationHandler(event, cert.id)}>
+                    onClick={(event) => onOpenDeleteCertificationHandler(event, cert.id)}>
                     <img alt='Delete Button' src={DeleteIcon} />
                   </span>
                 </Fragment>
@@ -138,16 +140,16 @@ const Certifications = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     applicant: state.applicant,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: payload => dispatch(actionCreators.deleteItem(payload)),
+    deleteItem: (payload) => dispatch(actionCreators.deleteItem(payload)),
   };
 };
 

@@ -60,3 +60,15 @@ $primaryColor: #f79f35;
     }
   }
 }
+
+@media screen and (max-width: 480px) {
+  .SkillsContainer {
+    .SkillItem {
+      justify-content: flex-start;
+      padding-right: 40px;
+      & > *:nth-child(1) {
+        margin-right: 20px;
+      }
+    }
+  }
+}

@@ -47,3 +47,14 @@
     }
   }
 }
+
+@media screen and (max-width: 480px) {
+  .AddOrganizationContainer {
+    .OrganizationPeriod {
+      flex-direction: column;
+      & > * {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

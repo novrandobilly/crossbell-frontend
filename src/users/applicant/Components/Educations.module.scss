@@ -107,3 +107,18 @@ $primaryColor: #f79f35;
     }
   }
 }
+
+.EducationModal {
+  top: 18vh;
+  max-width: 600px;
+  margin-left: -300px;
+  height: 60vh;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .EducationModal {
+    max-width: 80vw;
+    margin-left: -40vw;
+  }
+}

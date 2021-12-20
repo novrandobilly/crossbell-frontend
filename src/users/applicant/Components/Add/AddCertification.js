@@ -15,7 +15,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import styles from './AddCertification.module.scss';
 
-const Certification = props => {
+const Certification = (props) => {
   const { applicantid } = useParams();
   const [isExpired, setIsExpired] = useState(true);
 
@@ -49,12 +49,12 @@ const Certification = props => {
     window.scrollTo(0, 0);
   }, []);
 
-  const expiryHandler = event => {
+  const expiryHandler = (event) => {
     setIsExpired(!isExpired);
     formState.inputs.endDate.isValid = true;
   };
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
@@ -79,7 +79,7 @@ const Certification = props => {
   };
 
   let formContent = (
-    <form onSubmit={onSubmitHandler} className={styles.AddCentificationContainer}>
+    <form onSubmit={onSubmitHandler} className={styles.AddCertificationContainer}>
       <Input
         inputType='input'
         id='title'
@@ -179,7 +179,7 @@ const Certification = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -187,11 +187,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantCertification: ApplicantData => dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
+    updateApplicantCertification: (ApplicantData) =>
+      dispatch(actionCreators.updateApplicantCertification(ApplicantData)),
   };
 };
 

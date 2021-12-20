@@ -106,3 +106,18 @@ $primaryColor: #f79f35;
     }
   }
 }
+
+.WorkingExpModal {
+  top: 18vh;
+  max-width: 600px;
+  margin-left: -300px;
+  height: 60vh;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .WorkingExpModal {
+    max-width: 90vw;
+    margin-left: -45vw;
+  }
+}

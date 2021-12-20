@@ -1,4 +1,4 @@
-.AddCentificationContainer {
+.AddCertificationContainer {
   & > * {
     margin-bottom: 15px;
   }
@@ -42,6 +42,17 @@
       &:nth-child(1) {
         background-color: #fff;
         color: #f79f35;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .AddCertificationContainer {
+    .CertificationValidity {
+      flex-direction: column;
+      & > * {
+        margin-bottom: 10px;
       }
     }
   }

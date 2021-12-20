@@ -111,3 +111,17 @@ $primaryColor: #f79f35;
     }
   }
 }
+
+.CertificationModal {
+  top: 18vh;
+  max-width: 600px;
+  margin-left: -300px;
+  height: 60vh;
+  overflow-y: auto;
+}
+@media screen and (max-width: 768px) {
+  .CertificationModal {
+    max-width: 90vw;
+    margin-left: -45vw;
+  }
+}

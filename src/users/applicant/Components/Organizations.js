@@ -15,7 +15,7 @@ import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './Organizations.module.scss';
 
-const Organizations = props => {
+const Organizations = (props) => {
   const [openAddOrganization, setOpenAddOrganization] = useState(false);
   const [openEditOrganization, setOpenEditOrganization] = useState(false);
   const [openDeleteOrganization, setOpenDeleteOrganization] = useState(false);
@@ -36,7 +36,7 @@ const Organizations = props => {
   };
   const onCloseDeleteOrganizationHandler = () => setOpenDeleteOrganization(false);
 
-  const onDeleteHandler = async event => {
+  const onDeleteHandler = async (event) => {
     const payload = {
       applicantId: props.auth.userId,
       token: props.auth.token,
@@ -58,14 +58,16 @@ const Organizations = props => {
       <Modal
         show={openAddOrganization}
         onCancel={onCloseAddOrganizationHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.OrganizationModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Tambah Organisasi'>
         <AddOrganization onCancel={onCloseAddOrganizationHandler} fetchApplicantData={props.fetchApplicantData} />
       </Modal>
       <Modal
         show={openEditOrganization}
         onCancel={onCloseEditOrganizationHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.OrganizationModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Edit Organisasi'>
         <EditOrganization
           onCancel={onCloseEditOrganizationHandler}
@@ -112,13 +114,13 @@ const Organizations = props => {
                 <Fragment>
                   <span
                     className={`${styles.AddEditButton} ${styles.EditOrganizationItem}`}
-                    onClick={event => onOpenEditOrganizationHandler(event, org.id)}>
+                    onClick={(event) => onOpenEditOrganizationHandler(event, org.id)}>
                     <img alt='Edit Button' src={EditWhiteIcon} />
                   </span>
 
                   <span
                     className={`${styles.AddEditButton} ${styles.DeleteItem}`}
-                    onClick={event => onOpenDeleteOrganizationHandler(event, org.id)}>
+                    onClick={(event) => onOpenDeleteOrganizationHandler(event, org.id)}>
                     <img alt='Delete Button' src={DeleteIcon} />
                   </span>
                 </Fragment>
@@ -137,16 +139,16 @@ const Organizations = props => {
     </Fragment>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     applicant: state.applicant,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: payload => dispatch(actionCreators.deleteItem(payload)),
+    deleteItem: (payload) => dispatch(actionCreators.deleteItem(payload)),
   };
 };
 

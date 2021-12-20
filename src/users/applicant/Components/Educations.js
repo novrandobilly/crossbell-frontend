@@ -15,7 +15,7 @@ import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './Educations.module.scss';
 
-const Educations = props => {
+const Educations = (props) => {
   const [openAddEducation, setOpenAddEducation] = useState(false);
   const [openEditEducation, setOpenEditEducation] = useState(false);
   const [openDeleteEducation, setOpenDeleteEducation] = useState(false);
@@ -35,7 +35,7 @@ const Educations = props => {
     setOpenDeleteEducation(true);
   };
   const onCloseDeleteEducationHandler = () => setOpenDeleteEducation(false);
-  const onDeleteHandler = async event => {
+  const onDeleteHandler = async (event) => {
     const payload = {
       applicantId: props.auth.userId,
       token: props.auth.token,
@@ -57,14 +57,16 @@ const Educations = props => {
       <Modal
         show={openAddEducation}
         onCancel={onCloseAddEducationHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.EducationModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Tambah Pendidikan'>
         <AddEducation onCancel={onCloseAddEducationHandler} fetchApplicantData={props.fetchApplicantData} />
       </Modal>
       <Modal
         show={openEditEducation}
         onCancel={onCloseEditEducationHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.EducationModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Edit Pengalaman Kerja'>
         <EditEducation
           onCancel={onCloseEditEducationHandler}
@@ -114,13 +116,13 @@ const Educations = props => {
                 <Fragment>
                   <span
                     className={`${styles.AddEditButton} ${styles.EditEducationItem}`}
-                    onClick={event => onOpenEditEducationHandler(event, edu.id)}>
+                    onClick={(event) => onOpenEditEducationHandler(event, edu.id)}>
                     <img alt='Edit Button' src={EditWhiteIcon} />
                   </span>
 
                   <span
                     className={`${styles.AddEditButton} ${styles.DeleteItem}`}
-                    onClick={event => onOpenDeleteEducationHandler(event, edu.id)}>
+                    onClick={(event) => onOpenDeleteEducationHandler(event, edu.id)}>
                     <img alt='Delete Button' src={DeleteIcon} />
                   </span>
                 </Fragment>
@@ -140,16 +142,16 @@ const Educations = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     applicant: state.applicant,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: payload => dispatch(actionCreators.deleteItem(payload)),
+    deleteItem: (payload) => dispatch(actionCreators.deleteItem(payload)),
   };
 };
 

@@ -15,7 +15,7 @@ import { splitParagraph } from '../../../shared/utils/sharedFunctions';
 
 import styles from './WorkingExperiences.module.scss';
 
-const WorkingExperiences = props => {
+const WorkingExperiences = (props) => {
   const [openAddWorkingExp, setOpenAddWorkingExp] = useState(false);
   const [openEditWorkingExp, setOpenEditWorkingExp] = useState(false);
   const [openDeleteExperience, setOpenDeleteExperience] = useState(false);
@@ -34,7 +34,7 @@ const WorkingExperiences = props => {
   };
   const onCloseDeleteExpHandler = () => setOpenDeleteExperience(false);
 
-  const onDeleteHandler = async event => {
+  const onDeleteHandler = async (event) => {
     const payload = {
       applicantId: props.auth.userId,
       token: props.auth.token,
@@ -56,14 +56,16 @@ const WorkingExperiences = props => {
       <Modal
         show={openAddWorkingExp}
         onCancel={closeAddWorkingExpHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.WorkingExpModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Tambah Pengalaman Kerja'>
         <AddWorkingExperience onCancel={closeAddWorkingExpHandler} fetchApplicantData={props.fetchApplicantData} />
       </Modal>
       <Modal
         show={openEditWorkingExp}
         onCancel={closeEditWorkingExpHandler}
-        style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
+        ContainerClass={styles.WorkingExpModal}
+        // style={{ top: '18vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}
         headerText='Edit Pengalaman Kerja'>
         <EditWorkingExperience
           onCancel={closeEditWorkingExpHandler}
@@ -112,13 +114,13 @@ const WorkingExperiences = props => {
                 <Fragment>
                   <span
                     className={`${styles.AddEditButton} ${styles.EditWorkingExpItem}`}
-                    onClick={event => openEditWorkingExpHandler(event, exp.id)}>
+                    onClick={(event) => openEditWorkingExpHandler(event, exp.id)}>
                     <img alt='Edit Button' src={EditWhiteIcon} />
                   </span>
 
                   <span
                     className={`${styles.AddEditButton} ${styles.DeleteItem}`}
-                    onClick={event => openDeleteHandler(event, exp.id)}>
+                    onClick={(event) => openDeleteHandler(event, exp.id)}>
                     <img alt='Delete Button' src={DeleteIcon} />
                   </span>
                 </Fragment>
@@ -138,16 +140,16 @@ const WorkingExperiences = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     applicant: state.applicant,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: payload => dispatch(actionCreators.deleteItem(payload)),
+    deleteItem: (payload) => dispatch(actionCreators.deleteItem(payload)),
   };
 };
 
