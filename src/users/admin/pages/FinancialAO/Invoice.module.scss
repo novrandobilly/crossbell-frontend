@@ -14,12 +14,14 @@
 .DownloadButton {
   display: flex;
   justify-content: flex-end;
-  width: 90%;
+  width: 100%;
+  padding: 0 35px;
+  box-sizing: border-box;
 }
 
 .InvoiceContainer {
   box-shadow: 0 0 0.2rem 0.1rem rgb(214, 214, 214);
-  border-radius: 1rem;
+  border-radius: 5px;
   margin-top: 2rem;
   background-color: white;
   display: flex;
@@ -31,14 +33,14 @@
 
 .Id {
   width: 100%;
-  border-radius: 1rem 1rem 0 0;
-  background-color: rgb(215, 226, 255);
+  border-radius: 5px 5px 0 0;
+  background-color: #f7a035;
   margin: 0rem;
   font-size: 1.2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
+  padding: 10px;
   text-align: left;
+  box-sizing: border-box;
+  color: #fff;
 }
 
 .Content {
@@ -237,12 +239,13 @@ hr.UnderLine {
 .PaymentCardHead {
   display: flex;
   justify-content: space-between;
-  background-color: #d7e2ff;
+  background-color: #f79f35;
   margin: 8px 0;
   padding: 4px 6px;
   text-align: left;
   border-radius: 4px;
   border: 2px solid rgba(0, 0, 0, 0.1);
+  color: #fff;
 }
 
 .PaymentCard {
@@ -273,6 +276,11 @@ hr.UnderLine {
   width: 30%;
 }
 
+.Button {
+  background-color: white;
+  border: 2px solid #f79f35;
+  color: #f79f35;
+}
 /* .PaymentCardFooter {
 } */
 
@@ -317,6 +325,21 @@ hr.UnderLine {
 
   .LinkedText {
     width: 80%;
+  }
+  .FlexContainer {
+    flex-direction: column;
+  }
+  .Container {
+    width: 100%;
+  }
+  .PaymentDiv {
+    margin: auto;
+    width: 80%;
+    max-width: 800px;
+  }
+  .AmountContainer {
+    width: 50%;
+    margin-left: 20px;
   }
 }
 

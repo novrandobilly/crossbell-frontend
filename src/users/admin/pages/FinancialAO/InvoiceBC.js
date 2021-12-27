@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import PaymentProve from '../../../../shared/UI_Element/PaymentProve';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
-import classes from './Invoice.module.css';
+import styles from './Invoice.module.scss';
 
 const Invoice = (props) => {
   let { orderid } = useParams();
@@ -127,43 +127,43 @@ const Invoice = (props) => {
 
   if (!props.isLoading && orderData) {
     content = (
-      <div className={classes.Container}>
-        <div className={classes.DownloadButton}>
+      <div className={styles.Container}>
+        <div className={styles.DownloadButton}>
           <Button
             size='small'
             variant='contained'
             color='primary'
-            className={classes.margin}
+            className={styles.margin}
             onClick={handlePrint}
             startIcon={<GetAppIcon />}>
             dowload/ print
           </Button>
         </div>
-        <div className={classes.InvoiceContainer} ref={componentRef}>
-          <p className={classes.Id}>
+        <div className={styles.InvoiceContainer} ref={componentRef}>
+          <p className={styles.Id}>
             Order Id: <span>{orderData._id}</span>
           </p>
-          <div className={classes.Content}>
-            <div className={classes.CompanyDetail}>
-              <p className={classes.CompanyName}>{orderData.companyId.companyName}</p>
-              <p className={classes.InvoiceCompanyData}>{orderData.companyId.address}</p>
-              <p className={classes.InvoiceCompanyData}>{orderData.companyId.email}</p>
-              <p className={classes.InvoiceCompanyData}>{orderData.companyId.website}</p>
+          <div className={styles.Content}>
+            <div className={styles.CompanyDetail}>
+              <p className={styles.CompanyName}>{orderData.companyId.companyName}</p>
+              <p className={styles.InvoiceCompanyData}>{orderData.companyId.address}</p>
+              <p className={styles.InvoiceCompanyData}>{orderData.companyId.email}</p>
+              <p className={styles.InvoiceCompanyData}>{orderData.companyId.website}</p>
             </div>
-            <div className={classes.InvoiceRight}>
-              <p className={classes.InvoiceTitle}>Informasi Rincian Pemesanan</p>
-              <div className={classes.InvoiceDetail}>
-                <div className={classes.DetailLabel}>
-                  <p className={classes.InvoiceCompanyData}>Date</p>
+            <div className={styles.InvoiceRight}>
+              <p className={styles.InvoiceTitle}>Informasi Rincian Pemesanan</p>
+              <div className={styles.InvoiceDetail}>
+                <div className={styles.DetailLabel}>
+                  <p className={styles.InvoiceCompanyData}>Date</p>
                 </div>
                 <div>
-                  <p className={classes.InvoiceCompanyData}>{moment(orderData.createdAt).format('D MMMM  YYYY')}</p>
+                  <p className={styles.InvoiceCompanyData}>{moment(orderData.createdAt).format('D MMMM  YYYY')}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <table className={classes.Table}>
+          <table className={styles.Table}>
             <thead>
               <tr>
                 {orderData.packageName ? <th>Package Ads</th> : <th>Order</th>}
@@ -198,10 +198,10 @@ const Invoice = (props) => {
             </tbody>
           </table>
 
-          <div className={classes.Footer}>
-            <div className={classes.CommentContainer}>
-              <div className={classes.CommentHeader}>Instruksi Pembayaran</div>
-              <div className={classes.CommentContent}>
+          <div className={styles.Footer}>
+            <div className={styles.CommentContainer}>
+              <div className={styles.CommentHeader}>Instruksi Pembayaran</div>
+              <div className={styles.CommentContent}>
                 <ul>
                   <li>Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14 hari sejak tanggal invoice ini</li>
                   <li>
@@ -221,10 +221,10 @@ const Invoice = (props) => {
                     <li>
                       bukti potong PPH pasal 23 paling lambat dikirimkan pada akhir bulan berikutnya setelah pesanan ini
                       dibuat.{' '}
-                      <ul className={classes.CrossbellInfo} style={{ listStyleType: 'circle' }}>
-                        <li className={classes.AdditionalInfo}>Nama perusahaan: PT. Inti Dinamis</li>
-                        <li className={classes.AdditionalInfo}>Nomor Pokok Wajib Pajak: 23001939900293</li>
-                        <li className={classes.AdditionalInfo}>
+                      <ul className={styles.CrossbellInfo} style={{ listStyleType: 'circle' }}>
+                        <li className={styles.AdditionalInfo}>Nama perusahaan: PT. Inti Dinamis</li>
+                        <li className={styles.AdditionalInfo}>Nomor Pokok Wajib Pajak: 23001939900293</li>
+                        <li className={styles.AdditionalInfo}>
                           Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi 17435
                         </li>
                       </ul>
@@ -234,8 +234,8 @@ const Invoice = (props) => {
               </div>
             </div>
 
-            <div className={classes.AmountContainer}>
-              <div className={classes.Amount}>
+            <div className={styles.AmountContainer}>
+              <div className={styles.Amount}>
                 <p>SubTotal</p>
                 <p>
                   Rp.
@@ -244,8 +244,8 @@ const Invoice = (props) => {
                 </p>
               </div>
 
-              <p className={classes.SubTotal}>(jumlah x harga satuan)</p>
-              <div className={classes.Amount}>
+              <p className={styles.SubTotal}>(jumlah x harga satuan)</p>
+              <div className={styles.Amount}>
                 <p>Diskon</p>
                 <p>
                   - Rp.
@@ -255,7 +255,7 @@ const Invoice = (props) => {
               </div>
 
               {orderData.PPH && (
-                <div className={classes.Amount}>
+                <div className={styles.Amount}>
                   <p>
                     PPH<span>(2%)</span>
                   </p>
@@ -266,7 +266,7 @@ const Invoice = (props) => {
                 </div>
               )}
 
-              <div className={classes.AmountTotal}>
+              <div className={styles.AmountTotal}>
                 <p>Total </p>
                 <p>
                   Rp.
@@ -274,7 +274,7 @@ const Invoice = (props) => {
                   ,-
                 </p>
               </div>
-              <div className={classes.NumberToText}>
+              <div className={styles.NumberToText}>
                 <strong>
                   {terbilang(subTotal - tax - dis)
                     .split(' ')
@@ -292,7 +292,7 @@ const Invoice = (props) => {
         </div>
         {props.auth.isCompany && (
           <div style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-            <p className={classes.LinkedText}>
+            <p className={styles.LinkedText}>
               <Link style={{ textDecoration: 'none', color: 'blue' }} to={`/co/${props.auth.userId}/listOrder`}>
                 Lanjut ke daftar order {'>>'}
               </Link>
@@ -307,10 +307,10 @@ const Invoice = (props) => {
 
   if (!props.isLoading && orderData && props.admin.isAdmin) {
     payment = (
-      <div className={classes.PaymentDiv}>
-        <div className={classes.PaymentHeader}>Pembayaran</div>
-        <div className={classes.PaymentContent}>
-          <div className={classes.ContentHead}>
+      <div className={styles.PaymentDiv}>
+        <div className={styles.PaymentHeader}>Pembayaran</div>
+        <div className={styles.PaymentContent}>
+          <div className={styles.ContentHead}>
             <Button
               type='button'
               variant='contained'
@@ -322,27 +322,27 @@ const Invoice = (props) => {
               + Tambah Pembayaran
             </Button>
           </div>
-          <div className={classes.ContentBody}>
-            <div className={classes.PaymentCardHead}>
-              <div className={classes.Numbering}>No</div>
-              <div className={classes.Nominals}>Nominal</div>
-              <div className={classes.PaymentDate}>Tanggal</div>
-              <div className={classes.PaymentTime}>WIB</div>
+          <div className={styles.ContentBody}>
+            <div className={styles.PaymentCardHead}>
+              <div className={styles.Numbering}>No</div>
+              <div className={styles.Nominals}>Nominal</div>
+              <div className={styles.PaymentDate}>Tanggal</div>
+              <div className={styles.PaymentTime}>WIB</div>
             </div>
             {paymentData &&
               paymentData.length > 0 &&
               paymentData.map((payment, i) => {
                 return (
-                  <div className={classes.PaymentCard} key={i}>
-                    <div className={classes.Numbering}>{i + 1}</div>
-                    <div className={classes.Nominals}>Rp. {payment.nominal.toLocaleString()} </div>
-                    <div className={classes.PaymentDate}>{moment(payment.paymentDate).format('DD MMM YYYY ')}</div>
-                    <div className={classes.PaymentTime}>{payment.paymentTime}</div>
+                  <div className={styles.PaymentCard} key={i}>
+                    <div className={styles.Numbering}>{i + 1}</div>
+                    <div className={styles.Nominals}>Rp. {payment.nominal.toLocaleString()} </div>
+                    <div className={styles.PaymentDate}>{moment(payment.paymentDate).format('DD MMM YYYY ')}</div>
+                    <div className={styles.PaymentTime}>{payment.paymentTime}</div>
                   </div>
                 );
               })}
           </div>
-          <div className={classes.PaymentCardFooter}>
+          <div className={styles.PaymentCardFooter}>
             <Button
               type='button'
               variant='contained'
@@ -360,7 +360,7 @@ const Invoice = (props) => {
   }
 
   return (
-    <div className={classes.FlexContainer}>
+    <div className={styles.FlexContainer}>
       <OrderModal
         show={orderModal}
         onCancel={onCloseOrderModal}

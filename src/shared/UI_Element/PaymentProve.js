@@ -42,6 +42,7 @@ const ModalOverlay = (props) => {
     },
     false
   );
+  console.log(formState);
 
   const onUploadHandler = (e) => {
     const elementId = e.target.name;
@@ -162,10 +163,9 @@ const ModalOverlay = (props) => {
               <Input
                 inputType='input'
                 id='nominal'
-                validatorMethod={[VALIDATOR_MIN(0)]}
+                validatorMethod={[VALIDATOR_MIN(1)]}
                 onInputHandler={onInputHandler}
                 error={false}
-                initIsValid={true}
                 type='number'
                 min={0}
                 step='100000'
