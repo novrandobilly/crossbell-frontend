@@ -37,10 +37,20 @@
   background-color: white;
 }
 
-.Table th {
-  padding: 4px 8px;
-  text-align: left;
-  font-weight: 400;
+.Table {
+  th {
+    padding: 4px 8px;
+    text-align: left;
+    font-weight: 400;
+  }
+  .CenterColumnText {
+    text-align: center;
+  }
+}
+.TitleRow {
+  th {
+    text-align: center;
+  }
 }
 
 .Table tr {

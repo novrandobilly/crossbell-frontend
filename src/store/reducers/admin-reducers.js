@@ -6,6 +6,7 @@ const initialState = {
   token: null,
   userId: null,
   isAdmin: false,
+  isVerificator: false,
   isLoggedIn: false,
   tokenExpirationDate: null,
 };
@@ -20,6 +21,7 @@ const adminReducer = (state = initialState, action) => {
         token: null,
         userId: null,
         isAdmin: false,
+        isVerificator: false,
         isLoggedIn: false,
         tokenExpirationDate: null,
       };
@@ -33,6 +35,7 @@ const adminReducer = (state = initialState, action) => {
           userId: action.payload.userId,
           token: action.payload.token,
           isAdmin: action.payload.isAdmin,
+          isVerificator: action.payload.isVerificator,
           expiration: tokenExpirationDate,
         })
       );
@@ -43,6 +46,8 @@ const adminReducer = (state = initialState, action) => {
         token: action.payload.token,
         userId: action.payload.userId,
         isAdmin: action.payload.isAdmin,
+        isVerificator: action.payload.isVerificator,
+
         isLoggedIn: !!action.payload.token,
         tokenExpirationDate,
       };
@@ -55,6 +60,8 @@ const adminReducer = (state = initialState, action) => {
         token: null,
         userId: null,
         isAdmin: false,
+        isVerificator: false,
+
         isLoggedIn: false,
         tokenExpirationDate: null,
       };
@@ -68,6 +75,8 @@ const adminReducer = (state = initialState, action) => {
         token: null,
         userId: null,
         isAdmin: false,
+        isVerificator: false,
+
         isLoggedIn: false,
         tokenExpirationDate: null,
       };

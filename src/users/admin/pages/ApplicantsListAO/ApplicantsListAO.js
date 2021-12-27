@@ -48,29 +48,34 @@ const searchReducer = (state, action) => {
         let searchValidity = false;
         for (const key in app) {
           searchValidity =
-            searchValidity || (typeof app[key] === 'string' && app[key].toLowerCase().includes(state.search.value.toLowerCase()));
+            searchValidity ||
+            (typeof app[key] === 'string' && app[key].toLowerCase().includes(state.search.value.toLowerCase()));
 
           let eduValidity = false;
-          app.education.forEach(edu => {
+          app.education.forEach((edu) => {
             for (const key in edu) {
               eduValidity =
-                eduValidity || (typeof edu[key] === 'string' && edu[key].toLowerCase().includes(state.search.value.toLowerCase()));
+                eduValidity ||
+                (typeof edu[key] === 'string' && edu[key].toLowerCase().includes(state.search.value.toLowerCase()));
             }
           });
           searchValidity = searchValidity || eduValidity;
 
           let expValidity = false;
-          app.experience.forEach(exp => {
+          app.experience.forEach((exp) => {
             for (const key in exp) {
               expValidity =
-                expValidity || (typeof exp[key] === 'string' && exp[key].toLowerCase().includes(state.search.value.toLowerCase()));
+                expValidity ||
+                (typeof exp[key] === 'string' && exp[key].toLowerCase().includes(state.search.value.toLowerCase()));
             }
           });
           searchValidity = searchValidity || expValidity;
 
           let skillValidity = false;
-          app.skills.forEach(skill => {
-            skillValidity = skillValidity || (typeof skill === 'string' && skill.toLowerCase().includes(state.search.value.toLowerCase()));
+          app.skills.forEach((skill) => {
+            skillValidity =
+              skillValidity ||
+              (typeof skill === 'string' && skill.toLowerCase().includes(state.search.value.toLowerCase()));
           });
           searchValidity = searchValidity || skillValidity;
         }
@@ -123,7 +128,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const ApplicantListAO = props => {
+const ApplicantListAO = (props) => {
   const [find, setfind] = useState(false);
   const [filter, setfilter] = useState({ value: '' });
   const [data, setData] = useState();
@@ -150,7 +155,7 @@ const ApplicantListAO = props => {
   const { getAllApplicant, admin } = props;
   useEffect(() => {
     const payload = { token: admin.token };
-    getAllApplicant(payload).then(res => {
+    getAllApplicant(payload).then((res) => {
       setData(res.wholeApplicants.reverse());
       dispatch({
         type: ACTION.DATAINIT,
@@ -195,7 +200,7 @@ const ApplicantListAO = props => {
     setfilter('Premium');
   };
 
-  const searchHandler = event => {
+  const searchHandler = (event) => {
     event.preventDefault();
     if (state.search.value) {
       dispatch({
@@ -233,7 +238,7 @@ const ApplicantListAO = props => {
     });
   };
 
-  const rowsHandler = event => {
+  const rowsHandler = (event) => {
     console.log(event.target.value);
     dispatchPage({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -289,9 +294,6 @@ const ApplicantListAO = props => {
                   <th>Jenis Kelamin</th>
                   <th>Pendidikan</th>
                   <th>Jurusan</th>
-
-                  {/* <th>Status</th> */}
-                  {/* <th>Action</th> */}
                 </tr>
               </thead>
 
@@ -299,19 +301,10 @@ const ApplicantListAO = props => {
                 <tbody className={classes.ColumnField}>
                   {displayData &&
                     displayData
-                      .filter(app => app.status === filter)
+                      .filter((app) => app.status === filter)
                       .map((app, i) => (
                         <tr key={app.id}>
                           <th>{i + 1}</th>
-
-                          {/* <th>
-                            <Link
-                              to={`/ap/${app.id}/profile`}
-                              style={{ color: 'black', textDecoration: 'none' }}
-                            > */}
-                          {/* {app.id} */}
-                          {/* </Link>
-                          </th> */}
 
                           <th>
                             <div className={classes.NameRow}>
@@ -323,29 +316,8 @@ const ApplicantListAO = props => {
                             </div>
                           </th>
                           <th>{app.email}</th>
-                          {/* <th
-                            style={
-                              app.address
-                                ? { color: 'black' }
-                                : { color: 'rgba(255,0,0,0.7)' }
-                            }
-                          >
-                            {app.address ? app.address : 'no data'}
-                          </th> */}
+
                           <th>{app.dateOfBirth ? moment().diff(moment(app.dateOfBirth), 'year') : 'null'}</th>
-                          {/* <th>
-                            <div className={classes.DropDown}>
-                              <button className={classes.DropButton}>
-                                <ArrowDropDownIcon />
-                              </button>
-                              <div className={classes.DropDownContent}>
-                                <button style={{ color: 'Green' }}>
-                                  Activate
-                                </button>
-                                <button style={{ color: 'red' }}>Block</button>
-                              </div>
-                            </div>
-                          </th> */}
                         </tr>
                       ))}
                 </tbody>
@@ -355,16 +327,6 @@ const ApplicantListAO = props => {
                     displayData.map((app, i) => (
                       <tr key={app.id}>
                         <th>{i + 1}</th>
-
-                        {/* <th>
-                          {' '}
-                          <Link
-                            to={`/ap/${app.id}/profile`}
-                            style={{ color: 'black', textDecoration: 'none' }}
-                          >
-                            {app.id}
-                          </Link>
-                        </th> */}
 
                         <th>
                           <div className={classes.NameRow}>
@@ -376,45 +338,13 @@ const ApplicantListAO = props => {
                           </div>
                         </th>
                         <th>{app.email}</th>
-                        {/* <th
-                          style={
-                            app.address
-                              ? { color: 'black' }
-                              : { color: 'rgba(255,0,0,0.7)' }
-                          }
-                        >
-                          {app.address ? app.address : 'no data'}
-                        </th> */}
 
                         <th>{app.dateOfBirth ? moment().diff(moment(app.dateOfBirth), 'year') : 'null'}</th>
 
                         <th>{app.gender === 'male' ? 'Pria' : 'Wanita'}</th>
 
-                        <th>{app.education[0].degree}</th>
-                        <th>{app.education[0].major}</th>
-
-                        {/* <th
-                          style={
-                            app.status
-                              ? { color: 'green', fontWeight: '600' }
-                              : { color: 'red', fontWeight: '600' }
-                          }
-                        >
-                          {app.status ? 'Active' : 'Blocked'}
-                        </th>
-                        <th>
-                          <div className={classes.DropDown}>
-                            <button className={classes.DropButton}>
-                              <ArrowDropDownIcon />
-                            </button>
-                            <div className={classes.DropDownContent}>
-                              <button style={{ color: 'Green' }}>
-                                Activate
-                              </button>
-                              <button style={{ color: 'red' }}>Block</button>
-                            </div>
-                          </div>
-                        </th> */}
+                        <th>{app.education[0]?.degree || '-'}</th>
+                        <th>{app.education[0]?.major || '-'}</th>
                       </tr>
                     ))}
                 </tbody>
@@ -449,15 +379,15 @@ const ApplicantListAO = props => {
   return <div>{content}</div>;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getAllApplicant: payload => dispatch(actionCreators.getAllApplicant(payload)),
+    getAllApplicant: (payload) => dispatch(actionCreators.getAllApplicant(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicantListAO);

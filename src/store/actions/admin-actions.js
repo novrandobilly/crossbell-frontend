@@ -6,7 +6,7 @@ const adminStart = () => {
   };
 };
 
-const adminFinish = payload => {
+const adminFinish = (payload) => {
   return {
     type: actionTypes.AUTHADMINFINISH,
     payload,
@@ -19,7 +19,7 @@ const adminFail = () => {
   };
 };
 
-const getAllApplicantSuccess = payload => {
+const getAllApplicantSuccess = (payload) => {
   return {
     type: actionTypes.GETALLAPPLICANT,
     payload: payload,
@@ -36,7 +36,7 @@ const getAllApplicantStart = () => {
   };
 };
 
-const getAllJobSuccess = payload => {
+const getAllJobSuccess = (payload) => {
   return {
     type: actionTypes.GETALLJOB,
     payload: payload,
@@ -85,7 +85,7 @@ const getAdminFail = () => {
   };
 };
 
-const updateAdminSuccess = payload => {
+const updateAdminSuccess = (payload) => {
   return {
     type: actionTypes.UPDATEADMINSUCCESS,
     payload: payload,
@@ -102,8 +102,8 @@ const updateAdminStart = () => {
   };
 };
 
-export const admReg = payload => {
-  return async dispatch => {
+export const admReg = (payload) => {
+  return async (dispatch) => {
     dispatch(adminStart());
     const newAdminData = {
       NIK: payload.NIK,
@@ -141,8 +141,8 @@ export const admReg = payload => {
   };
 };
 
-export const admSignIn = loginData => {
-  return async dispatch => {
+export const admSignIn = (loginData) => {
+  return async (dispatch) => {
     dispatch(adminStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/admsign`, {
@@ -165,6 +165,7 @@ export const admSignIn = loginData => {
           token: resJSON.token,
           userId: resJSON.userId,
           isAdmin: resJSON.isAdmin,
+          isVerificator: resJSON.isVerificator,
         })
       );
       return resJSON;
@@ -176,8 +177,8 @@ export const admSignIn = loginData => {
   };
 };
 
-export const getAllApplicant = payload => {
-  return async dispatch => {
+export const getAllApplicant = (payload) => {
+  return async (dispatch) => {
     dispatch(getAllApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/applicants`, {
@@ -202,8 +203,8 @@ export const getAllApplicant = payload => {
   };
 };
 
-export const getWholeCompanies = payload => {
-  return async dispatch => {
+export const getWholeCompanies = (payload) => {
+  return async (dispatch) => {
     dispatch(fetchCompanyStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/companies`, {
@@ -228,8 +229,8 @@ export const getWholeCompanies = payload => {
   };
 };
 
-export const getAllJob = payload => {
-  return async dispatch => {
+export const getAllJob = (payload) => {
+  return async (dispatch) => {
     dispatch(getAllJobStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`, {
@@ -254,8 +255,8 @@ export const getAllJob = payload => {
 
 //=======================================================================
 
-export const activateCompany = payload => {
-  return async dispatch => {
+export const activateCompany = (payload) => {
+  return async (dispatch) => {
     dispatch(fetchCompanyStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.companyId}/activate`, {
@@ -279,8 +280,8 @@ export const activateCompany = payload => {
   };
 };
 
-export const blockCompany = payload => {
-  return async dispatch => {
+export const blockCompany = (payload) => {
+  return async (dispatch) => {
     dispatch(fetchCompanyStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.companyId}/block`, {
@@ -304,8 +305,8 @@ export const blockCompany = payload => {
   };
 };
 
-export const sentApplicantBC = InputBC => {
-  return async dispatch => {
+export const sentApplicantBC = (InputBC) => {
+  return async (dispatch) => {
     // dispatch(getAdminStart());
     console.log(InputBC);
     try {
@@ -329,8 +330,8 @@ export const sentApplicantBC = InputBC => {
   };
 };
 
-export const updateAdminIntro = payload => {
-  return async dispatch => {
+export const updateAdminIntro = (payload) => {
+  return async (dispatch) => {
     dispatch(updateAdminStart());
     try {
       const formData = new FormData();
@@ -362,8 +363,8 @@ export const updateAdminIntro = payload => {
   };
 };
 
-export const getAdmin = payload => {
-  return async dispatch => {
+export const getAdmin = (payload) => {
+  return async (dispatch) => {
     dispatch(getAdminStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/profile`, {
@@ -386,8 +387,8 @@ export const getAdmin = payload => {
   };
 };
 
-export const updatePromo = payload => {
-  return async dispatch => {
+export const updatePromo = (payload) => {
+  return async (dispatch) => {
     dispatch(getAdminStart());
     console.log(payload);
     try {
@@ -411,8 +412,8 @@ export const updatePromo = payload => {
   };
 };
 
-export const getPromo = payload => {
-  return async dispatch => {
+export const getPromo = (payload) => {
+  return async (dispatch) => {
     dispatch(getAdminStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/promo`, {
@@ -433,8 +434,8 @@ export const getPromo = payload => {
   };
 };
 
-export const getAllSlot = payload => {
-  return async dispatch => {
+export const getAllSlot = (payload) => {
+  return async (dispatch) => {
     dispatch(getAdminStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/slot/reguler`, {

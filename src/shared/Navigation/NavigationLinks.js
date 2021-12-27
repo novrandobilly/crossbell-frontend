@@ -11,7 +11,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import styles from './NavigationLinks.module.scss';
 
-const NavigationLinks = props => {
+const NavigationLinks = (props) => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
   const [applicantFirstName, setApplicantFirstName] = useState('');
   const [adminNotifications, setAdminNotifications] = useState(0);
@@ -61,10 +61,10 @@ const NavigationLinks = props => {
         token: props.auth.token,
       };
       getOneApplicant(payload)
-        .then(res => {
+        .then((res) => {
           setApplicantFirstName(res.applicant.firstName);
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   }, [getOneApplicant, props.auth.isLoggedIn, props.auth.isCompany, props.auth.userId, props.auth.token]);
 
@@ -78,7 +78,7 @@ const NavigationLinks = props => {
 
         try {
           let res = await getAdmin(payload);
-          const dummyCount = res.admin.notifications.filter(notif => !notif.isOpened);
+          const dummyCount = res.admin.notifications.filter((notif) => !notif.isOpened);
           setAdminNotifications(dummyCount.length);
         } catch (err) {
           console.log(err);
@@ -212,37 +212,36 @@ const NavigationLinks = props => {
                 Feedback
               </NavLink>
             </li>
-            <li>
-              <div className={styles.dropdown}>
-                <button className={styles.dropbtn} onClick={DropdownOrderAdminFinance} ref={ref}>
-                  Finance
-                  <ArrowDropDownIcon style={{ alignSelf: 'center', marginBottom: '-0.4rem' }} />
-                </button>
+            <li className={styles.dropdown}>
+              <button className={styles.dropbtn} onClick={DropdownOrderAdminFinance} ref={ref}>
+                Finance
+                <ArrowDropDownIcon style={{ alignSelf: 'center', marginBottom: '-0.4rem' }} />
+              </button>
 
-                <div className={adminDropdownFinance ? styles.dropdownShow : styles.dropdownContent}>
-                  <NavLink to={`/ad/alphaomega/promo`} activeClassName={styles.active}>
-                    <p>Update Promo</p>
-                  </NavLink>
-                  <NavLink
-                    to={`/ad/alphaomega/order/reguler/fin`}
-                    activeClassName={styles.active}
-                    onClick={DropdownOrderAdminFinance}>
-                    <p>Order Reguler</p>
-                  </NavLink>
-                  <NavLink
-                    to={`/ad/alphaomega/order/candidate/fin`}
-                    activeClassName={styles.active}
-                    onClick={DropdownOrderAdminFinance}>
-                    <p>Order Bulk Candidate</p>
-                  </NavLink>
+              <div className={adminDropdownFinance ? styles.dropdownShow : styles.dropdownContent}>
+                {/* <div className={styles.FinanceDropdown}> */}
+                <NavLink to={`/ad/alphaomega/promo`} activeClassName={styles.active}>
+                  <p>Update Promo</p>
+                </NavLink>
+                <NavLink
+                  to={`/ad/alphaomega/order/reguler/fin`}
+                  activeClassName={styles.active}
+                  onClick={DropdownOrderAdminFinance}>
+                  <p>Order Reguler</p>
+                </NavLink>
+                <NavLink
+                  to={`/ad/alphaomega/order/candidate/fin`}
+                  activeClassName={styles.active}
+                  onClick={DropdownOrderAdminFinance}>
+                  <p>Order Bulk Candidate</p>
+                </NavLink>
 
-                  <NavLink
-                    to={`/ad/alphaomega/financial`}
-                    activeClassName={styles.active}
-                    onClick={DropdownOrderAdminFinance}>
-                    <p>Finance</p>
-                  </NavLink>
-                </div>
+                <NavLink
+                  to={`/ad/alphaomega/financial`}
+                  activeClassName={styles.active}
+                  onClick={DropdownOrderAdminFinance}>
+                  <p>Finance</p>
+                </NavLink>
               </div>
             </li>
 
@@ -474,7 +473,7 @@ const NavigationLinks = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -483,12 +482,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
     admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
-    getOneApplicant: payload => dispatch(actionCreators.getOneApplicant(payload)),
-    getAdmin: payload => dispatch(actionCreators.getAdmin(payload)),
+    getOneApplicant: (payload) => dispatch(actionCreators.getOneApplicant(payload)),
+    getAdmin: (payload) => dispatch(actionCreators.getAdmin(payload)),
   };
 };
 

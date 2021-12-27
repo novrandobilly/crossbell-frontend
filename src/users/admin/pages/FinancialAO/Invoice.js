@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
@@ -10,12 +10,12 @@ import * as actionCreators from '../../../../store/actions/index';
 import LoadingBar from '../../../../shared/UI_Element/Spinner/LoadingBar';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Button from '@material-ui/core/Button';
-import ApproveModal from '../../../../shared/UI_Element/ApproveModal';
+import PaymentProve from '../../../../shared/UI_Element/PaymentProve';
 import OrderModal from '../../../../shared/UI_Element/OrderModal';
 
 import classes from './Invoice.module.css';
 
-const Invoice = props => {
+const Invoice = (props) => {
   let { orderid } = useParams();
   const [orderData, setOrderData] = useState();
   const [orderModal, setOrderModal] = useState(false);
@@ -23,7 +23,6 @@ const Invoice = props => {
 
   const [paymentData, setPaymentData] = useState([]);
   const [payOff, setPayOff] = useState(0);
-  const [paymentInput, setPaymentInput] = useState();
   const [approveSuccess, setApproveSuccess] = useState(false);
 
   useEffect(() => {
@@ -31,21 +30,28 @@ const Invoice = props => {
   }, []);
 
   const { getOrderInvoice } = props;
-  useEffect(() => {
-    if (props.auth.token || props.admin.token) {
+
+  const fetchPayment = useCallback(
+    () =>
       getOrderInvoice({
         orderId: orderid,
         token: props.auth.token || props.admin.token,
-      }).then(res => {
+      }).then((res) => {
         if (res.order) {
           setOrderData(res.order);
           setPaymentData(res.order.payment);
         } else {
           throw new Error('Can not retrive order data at the moment');
         }
-      });
+      }),
+    [getOrderInvoice, orderid, props.admin.token, props.auth.token]
+  );
+
+  useEffect(() => {
+    if (props.auth.token || props.admin.token) {
+      fetchPayment();
     }
-  }, [getOrderInvoice, orderid, props.admin.token, props.auth.token]);
+  }, [fetchPayment, props.admin.token, props.auth.token]);
 
   useEffect(() => {
     if (paymentData && paymentData.length > 0) {
@@ -58,14 +64,8 @@ const Invoice = props => {
   }, [paymentData]);
 
   useEffect(() => {
-    if (paymentInput) {
-      setPaymentData(prevState => [...prevState, paymentInput]);
-    }
-  }, [paymentInput]);
-
-  useEffect(() => {
     if (approveSuccess) {
-      setOrderData(prevState => {
+      setOrderData((prevState) => {
         prevState.status = 'Paid';
         return prevState;
       });
@@ -88,11 +88,7 @@ const Invoice = props => {
     setOrderModal(true);
   };
 
-  const onUpdatePaymentInput = payload => {
-    setPaymentInput(payload);
-  };
-
-  const approveOrderREGHandler = async dataInput => {
+  const approveOrderREGHandler = async (dataInput) => {
     setOrderModal(false);
 
     const payload = {
@@ -171,10 +167,17 @@ const Invoice = props => {
             </thead>
             <tbody>
               <tr>
-                <th>{orderData.packageName ? orderData.packageName : orderData.amount ? 'bulk candidate' : 'executive search'}</th>
+                <th>
+                  {orderData.packageName
+                    ? orderData.packageName
+                    : orderData.amount
+                    ? 'bulk candidate'
+                    : 'executive search'}
+                </th>
                 <th>{orderData.slot ? orderData.slot : orderData.amount}</th>
                 <th>
-                  Rp. {orderData.pricePerSlot ? orderData.pricePerSlot.toLocaleString() : orderData.price.toLocaleString()}
+                  Rp.{' '}
+                  {orderData.pricePerSlot ? orderData.pricePerSlot.toLocaleString() : orderData.price.toLocaleString()}
                   ,-
                 </th>
                 <th>
@@ -195,7 +198,8 @@ const Invoice = props => {
                 <ul>
                   <li>Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14 hari sejak tanggal invoice ini</li>
                   <li>
-                    Pembayaran dapat di transfer ke rekening BCA <span style={{ fontWeight: '500' }}>1234567xxx</span> a/n Bagong
+                    Pembayaran dapat di transfer ke rekening BCA <span style={{ fontWeight: '500' }}>1234567xxx</span>{' '}
+                    a/n Bagong
                   </li>
                   {/* <li>
                       Pembayaran melalui virtual account dapat transfer melalui
@@ -208,11 +212,14 @@ const Invoice = props => {
                   </li>
                   {orderData.PPH && (
                     <li>
-                      bukti potong PPH pasal 23 paling lambat dikirimkan pada akhir bulan berikutnya setelah pesanan ini dibuat.{' '}
+                      bukti potong PPH pasal 23 paling lambat dikirimkan pada akhir bulan berikutnya setelah pesanan ini
+                      dibuat.{' '}
                       <ul className={classes.CrossbellInfo} style={{ listStyleType: 'circle' }}>
                         <li className={classes.AdditionalInfo}>Nama perusahaan: PT. Inti Dinamis</li>
                         <li className={classes.AdditionalInfo}>Nomor Pokok Wajib Pajak: 23001939900293</li>
-                        <li className={classes.AdditionalInfo}>Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi 17435</li>
+                        <li className={classes.AdditionalInfo}>
+                          Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi 17435
+                        </li>
                       </ul>
                     </li>
                   )}
@@ -264,7 +271,7 @@ const Invoice = props => {
                 <strong>
                   {terbilang(subTotal - tax - dis)
                     .split(' ')
-                    .map(word => {
+                    .map((word) => {
                       let upperCaseWord = '';
                       upperCaseWord = word[0].toUpperCase() + word.slice(1, word.length);
                       return upperCaseWord;
@@ -291,10 +298,10 @@ const Invoice = props => {
 
   let payment = null;
 
-  if (!props.isLoading && orderData && props.admin.isAdmin) {
+  if (!props.isLoading && orderData && (props.admin.isAdmin || props.auth.userId === orderData?.companyId?.id)) {
     payment = (
       <div className={classes.PaymentDiv}>
-        <div className={classes.PaymentHeader}>Pembayaran</div>
+        <div className={classes.PaymentHeader}>Bukti Pembayaran</div>
         <div className={classes.PaymentContent}>
           <div className={classes.ContentHead}>
             <Button
@@ -305,7 +312,7 @@ const Invoice = props => {
               disableElevation
               disabled={orderData?.totalPrice <= payOff}
               onClick={onOpenApproveModal}>
-              + Tambah Pembayaran
+              + Upload Bukti Pembayaran
             </Button>
           </div>
           <div className={classes.ContentBody}>
@@ -328,18 +335,20 @@ const Invoice = props => {
                 );
               })}
           </div>
-          <div className={classes.PaymentCardFooter}>
-            <Button
-              type='button'
-              variant='contained'
-              color='primary'
-              size='small'
-              disableElevation
-              disabled={orderData.status !== 'Pending' || orderData?.totalPrice > payOff}
-              onClick={onOpenOrderModal}>
-              Setujui Pesanan
-            </Button>
-          </div>
+          {props.admin.isVerificator && (
+            <div className={classes.PaymentCardFooter}>
+              <Button
+                type='button'
+                variant='contained'
+                color='primary'
+                size='small'
+                disableElevation
+                disabled={orderData.status !== 'Pending' || orderData?.totalPrice > payOff}
+                onClick={onOpenOrderModal}>
+                Setujui Pesanan
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -358,21 +367,21 @@ const Invoice = props => {
         }>
         Setujui pembelian dari perusahaan ini?
       </OrderModal>
-      <ApproveModal
+      <PaymentProve
         show={approveModal}
         onCancel={onCloseApproveModal}
         orderId={orderid}
-        orderType='Reg'
-        onUpdatePaymentInput={pay => onUpdatePaymentInput(pay)}>
-        Form Persetujuan
-      </ApproveModal>
+        orderType='REG'
+        fetchPayment={fetchPayment}>
+        Upload Bukti Pembayaran
+      </PaymentProve>
       {content}
       {payment}
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     isLoading: state.finance.isLoading,
@@ -381,10 +390,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    approveOrderREG: payload => dispatch(actionCreators.approveOrderREG(payload)),
-    getOrderInvoice: orderData => dispatch(actionCreators.getOrderInvoice(orderData)),
+    approveOrderREG: (payload) => dispatch(actionCreators.approveOrderREG(payload)),
+    getOrderInvoice: (orderData) => dispatch(actionCreators.getOrderInvoice(orderData)),
   };
 };
 

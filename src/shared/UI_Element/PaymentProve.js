@@ -8,10 +8,10 @@ import * as actionCreators from '../../store/actions/index';
 import Button from '@material-ui/core/Button';
 import Backdrop from './Backdrop';
 import TextField from '@material-ui/core/TextField';
-import Input from '../UI_Element/Input';
+import Input from './Input';
 import { VALIDATOR_MIN } from '../utils/validator';
 
-import classes from './ApproveModal.module.css';
+import classes from './PaymentProve.module.css';
 import ModalSpinner from './Spinner/ModalSpinner';
 
 const ModalOverlay = (props) => {
@@ -53,37 +53,40 @@ const ModalOverlay = (props) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    props.onCancel();
     setSubmitLoading(true);
     if (!formState.formIsValid) {
       throw new Error('Approve order can not be done at the moment');
     }
     let payload;
-    if (props.orderType === 'Reg') {
+    if (props.orderType === 'REG') {
       payload = {
         orderRegId: props.orderId,
         paymentFile: formState.inputs.paymentFile.value,
         paymentDate: formState.inputs.date.value,
         paymentTime: formState.inputs.time.value,
         nominal: formState.inputs.nominal.value,
-        token: props.admin.token,
+        token: props.admin?.isAdmin ? props.admin.token : props.auth?.isCompany ? props.auth.token : '',
       };
+      console.log(payload);
 
       try {
         const res = await props.updatePaymentREG(payload);
+        console.log(res);
+
         if (!res) {
           throw new Error('gagal menambah pembayaran');
         }
-
-        props.onUpdatePaymentInput(payload);
+        props.fetchPayment();
         setSubmitLoading(false);
+        props.onCancel();
       } catch (err) {
         console.log(err);
         setSubmitLoading(false);
+        props.onCancel();
       }
     }
 
-    if (props.orderType === 'Bc') {
+    if (props.orderType === 'BC') {
       payload = {
         orderBcId: props.orderId,
         paymentFile: formState.inputs.paymentFile.value,
@@ -101,18 +104,17 @@ const ModalOverlay = (props) => {
 
         props.onUpdatePaymentInput(payload);
         setSubmitLoading(false);
+        props.onCancel();
       } catch (err) {
         console.log(err);
         setSubmitLoading(false);
+        props.onCancel();
       }
     }
   };
 
   let content = (
-    <div
-      className={`${classes.Modal} ${props.ContainerClass}`}
-      style={props.style}
-    >
+    <div className={`${classes.Modal} ${props.ContainerClass}`} style={props.style}>
       <header className={`${classes.Header} ${props.HeaderClass}`}>
         <p> {props.children}</p>
       </header>
@@ -126,7 +128,7 @@ const ModalOverlay = (props) => {
               {' '}
               <TextField
                 id='date'
-                label='Tanggal Transfer Masuk (dd/mm/yyyy)*'
+                label='Tanggal Bayar'
                 type='date'
                 style={{ width: '100%' }}
                 className={classes.textField}
@@ -141,7 +143,7 @@ const ModalOverlay = (props) => {
               {' '}
               <TextField
                 id='time'
-                label='Jam Transfer Masuk*'
+                label='Waktu Bayar'
                 type='time'
                 defaultValue='00:00'
                 className={classes.textField}
@@ -167,7 +169,8 @@ const ModalOverlay = (props) => {
                 type='number'
                 min={0}
                 step='100000'
-                label='Nominal Pembayaran*'
+                label={true}
+                labelName='Nominal Pembayaran'
                 helperText='Jumlah transfer wajib diisi'
                 InputLabelProps={{ shrink: true }}
               />
@@ -189,13 +192,9 @@ const ModalOverlay = (props) => {
                   name='paymentFile'
                   id='paymentFile'
                   onChange={onUploadHandler}
-                  style={{ width: '100%' }}
                   accept='.jpg, .jpeg, .png'
                 />
-                <span className={classes.InputButtonText}>
-                  {' '}
-                  Upload Bukti Pembayaran{' '}
-                </span>
+                <span className={classes.InputButtonText}> Upload Bukti Pembayaran </span>
               </label>
             </div>
           </div>
@@ -206,8 +205,7 @@ const ModalOverlay = (props) => {
                 variant='contained'
                 disableElevation
                 style={{ marginRight: '16px', padding: '0' }}
-                onClick={props.onCancel}
-              >
+                onClick={props.onCancel}>
                 tidak
               </Button>
 
@@ -217,8 +215,7 @@ const ModalOverlay = (props) => {
                 disableElevation
                 onClick={onSubmitHandler}
                 style={{ padding: '0' }}
-                disabled={!formState.formIsValid}
-              >
+                disabled={!formState.formIsValid}>
                 ya
               </Button>
             </div>
@@ -235,13 +232,7 @@ const Modal = (props) => {
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
-      <CSSTransition
-        in={props.show}
-        mountOnEnter
-        unmountOnExit
-        timeout={200}
-        classNames='Modal'
-      >
+      <CSSTransition in={props.show} mountOnEnter unmountOnExit timeout={200} classNames='Modal'>
         <ModalOverlay {...props} />
       </CSSTransition>
     </React.Fragment>
@@ -251,6 +242,7 @@ const Modal = (props) => {
 const mapStateToProps = (state) => {
   return {
     admin: state.admin,
+    auth: state.auth,
     isLoading: state.finance.isLoading,
     error: state.finance.error,
   };
@@ -258,10 +250,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePaymentREG: (payload) =>
-      dispatch(actionCreators.updatePaymentREG(payload)),
-    updatePaymentBC: (payload) =>
-      dispatch(actionCreators.updatePaymentBC(payload)),
+    updatePaymentREG: (payload) => dispatch(actionCreators.updatePaymentREG(payload)),
+    updatePaymentBC: (payload) => dispatch(actionCreators.updatePaymentBC(payload)),
   };
 };
 
