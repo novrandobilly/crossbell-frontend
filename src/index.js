@@ -16,7 +16,6 @@ import authReducers from './store/reducers/auth-reducers';
 import feedbackReducers from './store/reducers/feedback-reducers';
 import financeReducers from './store/reducers/finance-reducer';
 import adminReducers from './store/reducers/admin-reducers';
-import notificationReducers from './store/reducers/notification-reducers';
 
 const rootReducers = combineReducers({
   job: jobReducers,
@@ -26,7 +25,6 @@ const rootReducers = combineReducers({
   feedback: feedbackReducers,
   finance: financeReducers,
   admin: adminReducers,
-  notification: notificationReducers,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

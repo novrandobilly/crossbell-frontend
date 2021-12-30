@@ -79,5 +79,3 @@ export {
 } from './job-actions';
 
 export { login, googleLogin, forgotPwd, getResetPwd, resetPwd } from './auth-actions';
-
-export { notificationUpdate } from './notification-actions';

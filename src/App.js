@@ -1,7 +1,6 @@
 import React, { useEffect, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import Pusher from 'pusher-js';
 import * as actionTypes from './store/actions/actions';
 
 import HomePage from './general/pages/HomePage/HomePage';
@@ -75,11 +74,10 @@ const DetailBC = React.lazy(() => import('./users/admin/pages/OrderBC/DetailBC')
 const DetailES = React.lazy(() => import('./users/admin/pages/OrderES/DetailES'));
 const Promo = React.lazy(() => import('./users/admin/pages/Promo/Promo'));
 const SlotReg = React.lazy(() => import('./users/admin/pages/OrderREG/SlotReguler'));
-const Notifications = React.lazy(() => import('./users/admin/pages/Notifications/Notifications'));
 
 let logoutTimer;
 
-const App = props => {
+const App = (props) => {
   const { login, loginAdmin } = props;
   useEffect(() => {
     const authData = JSON.parse(localStorage.getItem('userData'));
@@ -91,20 +89,6 @@ const App = props => {
       localStorage.removeItem('userData');
     }
   }, [login, loginAdmin]);
-
-  useEffect(() => {
-    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-      cluster: process.env.REACT_APP_PUSHER_CLUSTER,
-      encrypted: true,
-    });
-    const channel = pusher.subscribe('notifications');
-    channel.bind('company_created', data => {
-      const authData = JSON.parse(localStorage.getItem('userData'));
-      if (authData?.token && authData?.isAdmin) {
-        console.log(data);
-      }
-    });
-  }, []);
 
   const adminToken = props.admin.token;
   const adminTokenExp = props.admin.tokenExpirationDate;
@@ -188,7 +172,6 @@ const App = props => {
             <Route path='/ad/alphaomega/order/:orderid/candidate' component={DetailBC} />
             <Route path='/ad/alphaomega/order/:orderid/es' component={DetailES} />
             <Route path='/ad/alphaomega/promo' component={Promo} />
-            <Route path='/ad/alphaomega/notifications' component={Notifications} />
 
             {/* General Routes */}
             <Route path='/blogs' component={Blogs} />
@@ -209,17 +192,17 @@ const App = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
-    loginAdmin: payload => dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
+    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+    loginAdmin: (payload) => dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
     logoutAdmin: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
   };

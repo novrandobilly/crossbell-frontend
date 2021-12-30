@@ -7,14 +7,12 @@ import * as actionTypes from '../../store/actions/actions';
 import * as actionCreators from '../../store/actions/index';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import styles from './NavigationLinks.module.scss';
 
 const NavigationLinks = (props) => {
   const [companyDropdown, setCompanyDropdown] = useState(false);
   const [applicantFirstName, setApplicantFirstName] = useState('');
-  const [adminNotifications, setAdminNotifications] = useState(0);
   const [adminDropdownFinance, setAdminDropdownFinance] = useState(false);
   const [adminDropdownOperational, setAdminDropdownOperational] = useState(false);
 
@@ -51,7 +49,7 @@ const NavigationLinks = (props) => {
     setAdminDropdownOperational(!adminDropdownOperational);
   };
 
-  const { getOneApplicant, getAdmin } = props;
+  const { getOneApplicant } = props;
 
   useEffect(() => {
     if (props.auth.isLoggedIn && !props.auth.isCompany) {
@@ -67,32 +65,6 @@ const NavigationLinks = (props) => {
         .catch((err) => console.log(err));
     }
   }, [getOneApplicant, props.auth.isLoggedIn, props.auth.isCompany, props.auth.userId, props.auth.token]);
-
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      if (props.admin.isLoggedIn && props.admin.isAdmin) {
-        const payload = {
-          userId: props.admin.userId,
-          token: props.admin.token,
-        };
-
-        try {
-          let res = await getAdmin(payload);
-          const dummyCount = res.admin.notifications.filter((notif) => !notif.isOpened);
-          setAdminNotifications(dummyCount.length);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-    fetchAdmin();
-  }, [props.admin.isLoggedIn, props.admin.isAdmin, props.admin.userId, props.admin.token, getAdmin]);
-
-  useEffect(() => {
-    if (props.notification.adminNotification !== null) {
-      setAdminNotifications(props.notification.adminNotification);
-    }
-  }, [props.notification]);
 
   let logout = null;
 
@@ -298,14 +270,6 @@ const NavigationLinks = (props) => {
                 </div>
               </div>
             </li>
-            <li className={styles['AdminNotification']}>
-              <NavLink to='/ad/alphaomega/notifications' id={styles['NotificationButton']} ref={ref}>
-                <NotificationsIcon style={{ color: '#f79f35' }} />
-                <span className={adminNotifications > 0 ? styles.notificationVisible : styles.notificationInvisible}>
-                  {adminNotifications}
-                </span>
-              </NavLink>
-            </li>
           </Fragment>
         )}
         {logout}
@@ -478,7 +442,6 @@ const mapStateToProps = (state) => {
     auth: state.auth,
     admin: state.admin,
     applicant: state.applicant,
-    notification: state.notification,
   };
 };
 
@@ -487,7 +450,6 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
     admLogout: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
     getOneApplicant: (payload) => dispatch(actionCreators.getOneApplicant(payload)),
-    getAdmin: (payload) => dispatch(actionCreators.getAdmin(payload)),
   };
 };
 
