@@ -120,23 +120,20 @@ export const createOrder = (orderData) => {
   return async (dispatch) => {
     dispatch(createOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${orderData.token}`,
-          },
-          body: JSON.stringify({
-            invoiceId: orderData.invoiceId,
-            companyId: orderData.companyId,
-            packageName: orderData.packageName,
-            slot: orderData.slot,
-            PPH: orderData.PPH,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${orderData.token}`,
+        },
+        body: JSON.stringify({
+          invoiceId: orderData.invoiceId,
+          companyId: orderData.companyId,
+          packageName: orderData.packageName,
+          slot: orderData.slot,
+          PPH: orderData.PPH,
+        }),
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -153,17 +150,14 @@ export const getOrder = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/reg`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/reg`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -208,17 +202,14 @@ export const getWholeOrderREG = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderRegulerStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/reg`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
 
       if (!response.ok) {
@@ -239,20 +230,17 @@ export const approveOrderREG = (orderData) => {
   return async (dispatch) => {
     dispatch(approveOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/approve/reg`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${orderData.token}`,
-          },
-          body: JSON.stringify({
-            orderId: orderData.orderId,
-            companyId: orderData.companyId,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/approve/reg`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${orderData.token}`,
+        },
+        body: JSON.stringify({
+          orderId: orderData.orderId,
+          companyId: orderData.companyId,
+        }),
+      });
       const responseJSON = await response.json();
 
       if (!response.ok) {
@@ -272,22 +260,20 @@ export const updatePaymentREG = (payload) => {
     dispatch(approveOrderStart());
     try {
       const formData = new FormData();
+      formData.append('companyId', payload.companyId);
       formData.append('paymentDate', payload.paymentDate);
       formData.append('paymentTime', payload.paymentTime);
       formData.append('orderRegId', payload.orderRegId);
       formData.append('nominal', payload.nominal);
       formData.append('payment-reguler', payload.paymentFile);
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`,
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: formData,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -307,16 +293,13 @@ export const getWholeOrderES = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload}`,
-          },
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload}`,
+        },
+      });
       const resJSON = await res.json();
       if (!res.ok) {
         throw new Error(resJSON.message);
@@ -334,17 +317,14 @@ export const getCompanyES = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/es`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/es`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -361,16 +341,13 @@ export const getOneOrderES = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/${payload.orderId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/${payload.orderId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+      });
       const resJSON = await res.json();
       if (!res.ok) {
         throw new Error(resJSON.message);
@@ -388,25 +365,22 @@ export const createOrderES = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: JSON.stringify({
-            name: payload.name,
-            email: payload.email,
-            phone: payload.phone,
-            companyName: payload.companyName,
-            industry: payload.industry,
-            candidateRequirement: payload.candidateRequirement,
-            specialRequirement: payload.specialRequirement,
-          }),
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          companyName: payload.companyName,
+          industry: payload.industry,
+          candidateRequirement: payload.candidateRequirement,
+          specialRequirement: payload.specialRequirement,
+        }),
+      });
       console.log(res);
       const resJSON = await res.json();
       if (!res.ok) {
@@ -426,22 +400,19 @@ export const addCandidateES = (payload) => {
     dispatch(createOrderStart());
     console.log(payload);
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/addcandidate`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: JSON.stringify({
-            orderId: payload.orderId,
-            candidateName: payload.candidateName,
-            candidateEmail: payload.candidateEmail,
-            candidateContact: payload.candidateContact,
-          }),
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/addcandidate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          orderId: payload.orderId,
+          candidateName: payload.candidateName,
+          candidateEmail: payload.candidateEmail,
+          candidateContact: payload.candidateContact,
+        }),
+      });
       console.log(res);
       const resJSON = await res.json();
       if (!res.ok) {
@@ -461,23 +432,20 @@ export const updateCandidateStatusES = (payload) => {
     dispatch(approveOrderStart());
     console.log(payload);
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/updatecandidate`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: JSON.stringify({
-            index: payload.index,
-            orderId: payload.orderId,
-            candidateId: payload.candidateId,
-            status: payload.status,
-            note: payload.note,
-          }),
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/updatecandidate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          index: payload.index,
+          orderId: payload.orderId,
+          candidateId: payload.candidateId,
+          status: payload.status,
+          note: payload.note,
+        }),
+      });
       console.log(res);
       const resJSON = await res.json();
       if (!res.ok) {
@@ -497,20 +465,17 @@ export const updateOrderStatusES = (payload) => {
     dispatch(approveOrderStart());
     console.log(payload);
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/updateorder`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: JSON.stringify({
-            orderId: payload.orderId,
-            status: payload.status,
-          }),
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/updateorder`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          orderId: payload.orderId,
+          status: payload.status,
+        }),
+      });
       console.log(res);
       const resJSON = await res.json();
       if (!res.ok) {
@@ -532,31 +497,28 @@ export const createOrderCandidate = (orderData) => {
     dispatch(createOrderCandidateStart());
     console.log(orderData);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/bc`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${orderData.token}`,
-          },
-          body: JSON.stringify({
-            invoiceId: orderData.invoiceId,
-            companyId: orderData.companyId,
-            note: orderData.note,
-            jobFunction: orderData.jobFunction,
-            amount: orderData.amount,
-            education: orderData.education,
-            gender: orderData.gender,
-            location: orderData.location,
-            shift: orderData.shift,
-            min: orderData.min,
-            max: orderData.max,
-            emailRecipient: orderData.emailRecipient,
-            PPH: orderData.PPH,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/bc`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${orderData.token}`,
+        },
+        body: JSON.stringify({
+          invoiceId: orderData.invoiceId,
+          companyId: orderData.companyId,
+          note: orderData.note,
+          jobFunction: orderData.jobFunction,
+          amount: orderData.amount,
+          education: orderData.education,
+          gender: orderData.gender,
+          location: orderData.location,
+          shift: orderData.shift,
+          min: orderData.min,
+          max: orderData.max,
+          emailRecipient: orderData.emailRecipient,
+          PPH: orderData.PPH,
+        }),
+      });
       const responseJSON = await response.json();
       console.log(responseJSON);
       if (!response.ok) {
@@ -574,17 +536,14 @@ export const getWholeOrderBC = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderCandidateStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/bc`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/bc`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -603,17 +562,14 @@ export const getCompanyBC = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/bc`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: null,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.userId}/order/bc`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: null,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -630,20 +586,17 @@ export const deleteCandidateES = (payload) => {
   return async (dispatch) => {
     dispatch(getOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/deletecandidate`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: JSON.stringify({
-            candidateESId: payload.candidateESId,
-            orderId: payload.orderId,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/es/deletecandidate`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          candidateESId: payload.candidateESId,
+          orderId: payload.orderId,
+        }),
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -661,20 +614,17 @@ export const approveOrderBC = (orderData) => {
   return async (dispatch) => {
     dispatch(approveOrderStart());
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/approve/bc`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${orderData.token}`,
-          },
-          body: JSON.stringify({
-            orderId: orderData.orderId,
-            companyId: orderData.companyId,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/approve/bc`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${orderData.token}`,
+        },
+        body: JSON.stringify({
+          orderId: orderData.orderId,
+          companyId: orderData.companyId,
+        }),
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);
@@ -699,16 +649,13 @@ export const updatePaymentBC = (payload) => {
       formData.append('nominal', payload.nominal);
       formData.append('payment-reguler', payload.paymentFile);
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`,
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/reg/payment/add`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: formData,
+      });
       const responseJSON = await response.json();
       if (!response.ok) {
         throw new Error(responseJSON.message);

@@ -42,7 +42,6 @@ const ModalOverlay = (props) => {
     },
     false
   );
-  console.log(formState);
 
   const onUploadHandler = (e) => {
     const elementId = e.target.name;
@@ -67,12 +66,11 @@ const ModalOverlay = (props) => {
         paymentTime: formState.inputs.time.value,
         nominal: formState.inputs.nominal.value,
         token: props.admin?.isAdmin ? props.admin.token : props.auth?.isCompany ? props.auth.token : '',
+        companyId: props.auth?.isCompany && props.auth.userId,
       };
-      console.log(payload);
 
       try {
         const res = await props.updatePaymentREG(payload);
-        console.log(res);
 
         if (!res) {
           throw new Error('gagal menambah pembayaran');

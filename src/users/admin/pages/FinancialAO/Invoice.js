@@ -309,7 +309,7 @@ const Invoice = (props) => {
               <div className={styles.Numbering}>No</div>
               <div className={styles.Nominals}>Nominal</div>
               <div className={styles.PaymentDate}>Tanggal</div>
-              <div className={styles.PaymentTime}>WIB</div>
+              <div className={styles.PaymentTime}>Waktu</div>
             </div>
             {paymentData &&
               paymentData.length > 0 &&
@@ -328,10 +328,6 @@ const Invoice = (props) => {
             <div className={styles.PaymentCardFooter}>
               <button
                 type='button'
-                variant='contained'
-                color='primary'
-                size='small'
-                disableElevation
                 disabled={orderData.status !== 'Pending' || orderData?.totalPrice > payOff}
                 onClick={onOpenOrderModal}>
                 Setujui Pesanan
