@@ -1,6 +1,6 @@
 import * as actionTypes from './actions';
 
-const createCompanySuccess = payload => {
+const createCompanySuccess = (payload) => {
   return {
     type: actionTypes.CREATECOMPANY,
     payload: payload,
@@ -17,7 +17,7 @@ const createCompanyStart = () => {
   };
 };
 
-const getCompanySuccess = payload => {
+const getCompanySuccess = (payload) => {
   return {
     type: actionTypes.GETCOMPANY,
     payload: payload,
@@ -34,7 +34,7 @@ const getCompanyStart = () => {
   };
 };
 
-const updateCompanySuccess = payload => {
+const updateCompanySuccess = (payload) => {
   return {
     type: actionTypes.UPDATECOMPANY,
     payload: payload,
@@ -51,8 +51,8 @@ const updateCompanyStart = () => {
   };
 };
 
-export const getOneCompany = payload => {
-  return async dispatch => {
+export const getOneCompany = (payload) => {
+  return async (dispatch) => {
     dispatch(getCompanyStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${payload.userId}`, {
@@ -73,8 +73,8 @@ export const getOneCompany = payload => {
   };
 };
 
-export const createCompany = companyData => {
-  return async dispatch => {
+export const createCompany = (companyData) => {
+  return async (dispatch) => {
     dispatch(createCompanyStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/signup`, {
@@ -103,8 +103,8 @@ export const createCompany = companyData => {
   };
 };
 
-export const updateCompanyLogo = payload => {
-  return async dispatch => {
+export const updateCompanyLogo = (payload) => {
+  return async (dispatch) => {
     dispatch(updateCompanyStart());
     try {
       const formData = new FormData();
@@ -130,8 +130,8 @@ export const updateCompanyLogo = payload => {
     }
   };
 };
-export const updateCompanyIntro = CompanyData => {
-  return async dispatch => {
+export const updateCompanyIntro = (CompanyData) => {
+  return async (dispatch) => {
     dispatch(updateCompanyStart());
     // console.log('from action', CompanyData);
     try {
@@ -168,8 +168,8 @@ export const updateCompanyIntro = CompanyData => {
   };
 };
 
-export const updateCompanyBriefDescriptions = CompanyData => {
-  return async dispatch => {
+export const updateCompanyBriefDescriptions = (CompanyData) => {
+  return async (dispatch) => {
     dispatch(updateCompanyStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
@@ -198,8 +198,8 @@ export const updateCompanyBriefDescriptions = CompanyData => {
   };
 };
 
-export const updateCompanyPIC = CompanyData => {
-  return async dispatch => {
+export const updateCompanyPIC = (CompanyData) => {
+  return async (dispatch) => {
     dispatch(updateCompanyStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/${CompanyData.companyId}`, {
@@ -225,6 +225,62 @@ export const updateCompanyPIC = CompanyData => {
       return responseJSON.foundCompany;
     } catch (err) {
       dispatch(updateCompanyFail());
+    }
+  };
+};
+
+export const getCompanyNotifications = (payload) => {
+  return async (dispatch) => {
+    dispatch(getCompanyStart());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/co/${payload.companyId}/notifications`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getCompanySuccess());
+      return responseJSON;
+    } catch (err) {
+      dispatch(getCompanyFail());
+      return err;
+    }
+  };
+};
+
+export const readNotificationCOM = (payload) => {
+  return async (dispatch) => {
+    dispatch(getCompanyStart());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/co/notifications/`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          notificationId: payload.notificationId,
+          userId: payload.companyId,
+        }),
+      });
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getCompanySuccess());
+      return responseJSON;
+    } catch (err) {
+      dispatch(getCompanyFail());
+      return err;
     }
   };
 };

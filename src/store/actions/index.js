@@ -5,6 +5,8 @@ export {
   updateCompanyIntro,
   updateCompanyPIC,
   updateCompanyLogo,
+  getCompanyNotifications,
+  readNotificationCOM,
 } from './company-actions';
 
 export {
@@ -39,6 +41,8 @@ export {
   updatePromo,
   getPromo,
   getAllSlot,
+  getAdminNotifications,
+  readNotification,
 } from './admin-actions';
 
 export { createFeedback, getFeedback, deleteFeed } from './feedback-actions';

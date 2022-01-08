@@ -1,0 +1,50 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 40px;
+  font-size: 14px;
+  .NotifItem {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+    max-width: 1200px;
+    border-bottom: 2px solid #f7a0355d;
+    padding: 10px 0;
+    & > * {
+      margin: 0;
+    }
+    & > *:nth-child(1) {
+      width: 5%;
+    }
+    & > *:nth-child(2) {
+      width: 25%;
+    }
+    & > *:nth-child(3) {
+      width: 30%;
+    }
+    & > *:nth-child(4) {
+      width: 20%;
+    }
+    & > *:nth-child(5) {
+      width: 10%;
+    }
+    & > *:nth-child(6) {
+      width: 10%;
+      font-style: italic;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #f79f35;
+    }
+  }
+}
+.Unread {
+  background-color: #fff2e3;
+}

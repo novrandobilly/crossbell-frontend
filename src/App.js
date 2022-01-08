@@ -74,6 +74,7 @@ const DetailBC = React.lazy(() => import('./users/admin/pages/OrderBC/DetailBC')
 const DetailES = React.lazy(() => import('./users/admin/pages/OrderES/DetailES'));
 const Promo = React.lazy(() => import('./users/admin/pages/Promo/Promo'));
 const SlotReg = React.lazy(() => import('./users/admin/pages/OrderREG/SlotReguler'));
+const NotificationsAO = React.lazy(() => import('./users/admin/pages/NotificationsAO/NotificationsAO'));
 
 let logoutTimer;
 
@@ -133,6 +134,7 @@ const App = (props) => {
             <Route path='/co/order/:orderid/es' component={ExecutiveSearchDetail} />
             <Route path='/co/order/reguler' component={CompanyOrderForm} />
             <Route path='/co/order/candidate' component={OrderBCForm} />
+            <Route path='/co/notifications' component={NotificationsAO} />
             <Route path='/co/:companyid/listOrder' component={CompanyOrderList} />
             <Route path='/co/:companyid/jobList' component={CompanyJobList} />
             <Route path='/co/:orderid/invoice' component={Invoice} />
@@ -172,6 +174,7 @@ const App = (props) => {
             <Route path='/ad/alphaomega/order/:orderid/candidate' component={DetailBC} />
             <Route path='/ad/alphaomega/order/:orderid/es' component={DetailES} />
             <Route path='/ad/alphaomega/promo' component={Promo} />
+            <Route path='/ad/alphaomega/notifications' component={NotificationsAO} />
 
             {/* General Routes */}
             <Route path='/blogs' component={Blogs} />

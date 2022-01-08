@@ -249,6 +249,7 @@ export const getAllJob = (payload) => {
       return responseJSON;
     } catch (err) {
       dispatch(getAllJobFail);
+      return err;
     }
   };
 };
@@ -322,10 +323,11 @@ export const sentApplicantBC = (InputBC) => {
         }),
       });
       const responseJSON = await response.json();
-      dispatch(getAdminSuccess(responseJSON));
+      dispatch(getAdminSuccess());
       return responseJSON;
     } catch (err) {
       dispatch(getAdminFail());
+      return err;
     }
   };
 };
@@ -379,10 +381,11 @@ export const getAdmin = (payload) => {
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
-      dispatch(getAdminSuccess(responseJSON));
+      dispatch(getAdminSuccess());
       return responseJSON;
     } catch (err) {
       dispatch(getAdminFail());
+      return err;
     }
   };
 };
@@ -404,10 +407,11 @@ export const updatePromo = (payload) => {
         }),
       });
       const responseJSON = await response.json();
-      dispatch(getAdminSuccess(responseJSON));
+      dispatch(getAdminSuccess());
       return responseJSON;
     } catch (err) {
       dispatch(getAdminFail());
+      return err;
     }
   };
 };
@@ -426,10 +430,11 @@ export const getPromo = (payload) => {
       });
       const responseJSON = await response.json();
       console.log(responseJSON);
-      dispatch(getAdminSuccess(responseJSON));
+      dispatch(getAdminSuccess());
       return responseJSON;
     } catch (err) {
       dispatch(getAdminFail());
+      return err;
     }
   };
 };
@@ -450,10 +455,67 @@ export const getAllSlot = (payload) => {
       if (!response.ok) {
         throw new Error(responseJSON.message);
       }
-      dispatch(getAdminSuccess(responseJSON));
+      dispatch(getAdminSuccess());
       return responseJSON;
     } catch (err) {
-      dispatch(getAdminFail);
+      dispatch(getAdminFail());
+      return err;
+    }
+  };
+};
+
+export const getAdminNotifications = (payload) => {
+  return async (dispatch) => {
+    dispatch(getAdminStart());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.adminId}/notifications`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${payload.token}`,
+          },
+          body: null,
+        }
+      );
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getAdminSuccess());
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAdminFail());
+      return err;
+    }
+  };
+};
+
+export const readNotification = (payload) => {
+  return async (dispatch) => {
+    dispatch(getAdminStart());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/notifications`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${payload.token}`,
+        },
+        body: JSON.stringify({
+          notificationId: payload.notificationId,
+          userId: payload.adminId,
+        }),
+      });
+      const responseJSON = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJSON.message);
+      }
+      dispatch(getAdminSuccess());
+      return responseJSON;
+    } catch (err) {
+      dispatch(getAdminFail());
+      return err;
     }
   };
 };

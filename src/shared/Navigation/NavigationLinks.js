@@ -5,6 +5,7 @@ import OutsideClick from '../utils/outsideClick';
 
 import * as actionTypes from '../../store/actions/actions';
 import * as actionCreators from '../../store/actions/index';
+import BellIcon from '../../assets/icons/bell.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -39,13 +40,11 @@ const NavigationLinks = (props) => {
 
   const DropdownOrderAdminFinance = () => {
     setAdminDropdownOperational(false);
-
     setAdminDropdownFinance(!adminDropdownFinance);
   };
 
   const DropdownOrderAdminOperational = () => {
     setAdminDropdownFinance(false);
-
     setAdminDropdownOperational(!adminDropdownOperational);
   };
 
@@ -78,7 +77,6 @@ const NavigationLinks = (props) => {
       </li>
     );
   }
-
   return (
     <Fragment>
       <ul className={styles.NavigationLink}>
@@ -168,6 +166,14 @@ const NavigationLinks = (props) => {
                   </NavLink>
                 </div>
               </div>
+            </li>
+            <li className={styles.NotificationIcon}>
+              <NavLink to={`/co/notifications`} activeClassName={styles.active}>
+                <img src={BellIcon} id={styles.BellIcon} alt='Bell Notification' />
+                {props.notificationsLength > 0 && (
+                  <span className={styles.NotificationNumber}>{props.notificationsLength}</span>
+                )}
+              </NavLink>
             </li>
           </Fragment>
         )}
@@ -270,6 +276,15 @@ const NavigationLinks = (props) => {
                 </div>
               </div>
             </li>
+
+            <li className={styles.NotificationIcon}>
+              <NavLink to={`/ad/alphaomega/notifications`} activeClassName={styles.active}>
+                <img src={BellIcon} id={styles.BellIcon} alt='Bell Notification' />
+                {props.notificationsLength > 0 && (
+                  <span className={styles.NotificationNumber}>{props.notificationsLength}</span>
+                )}
+              </NavLink>
+            </li>
           </Fragment>
         )}
         {logout}
@@ -298,6 +313,7 @@ const NavigationLinks = (props) => {
             Lowongan
           </NavLink>
         </li>
+
         {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
           <Fragment>
             <div className={styles.ApplicantAuthenticationWrapper}>
@@ -332,7 +348,7 @@ const NavigationLinks = (props) => {
             </li>
             <li>
               <NavLink to={`/jobs/new`} activeClassName={styles.active}>
-                Pasan Iklan
+                Pasang Iklan
               </NavLink>
             </li>
 
@@ -352,6 +368,14 @@ const NavigationLinks = (props) => {
             <li>
               <NavLink to={`/co/${props.auth.userId}/listOrder`} activeClassName={styles.active}>
                 Riwayat Pesanan
+              </NavLink>
+            </li>
+            <li className={styles.NotificationIcon}>
+              <NavLink to={`/co/notifications`} activeClassName={styles.active}>
+                <img src={BellIcon} id={styles.BellIcon} alt='Bell Notification' />
+                {props.notificationsLength > 0 && (
+                  <span className={styles.NotificationNumber}>{props.notificationsLength}</span>
+                )}
               </NavLink>
             </li>
           </Fragment>
