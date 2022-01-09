@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../../../store/actions/index';
@@ -8,43 +8,20 @@ import styles from './NotificationsAO.module.scss';
 const NotificationsAO = ({
   admin,
   auth,
+  notif,
   getAdminNotifications,
   readNotification,
   getCompanyNotifications,
   readNotificationCOM,
 }) => {
-  const [notifications, setNotifications] = useState([]);
-
-  const { isAdmin, token, userId } = admin;
-  useEffect(() => {
-    if (isAdmin) {
-      const payload = {
-        token,
-        adminId: userId,
-      };
-      getAdminNotifications(payload)
-        .then((res) => setNotifications([...res.notifications]))
-        .catch((err) => console.log(err));
-    }
-
-    if (auth.isCompany) {
-      const payload = {
-        token: auth.token,
-        companyId: auth.userId,
-      };
-      getCompanyNotifications(payload)
-        .then((res) => setNotifications([...res.notifications]))
-        .catch((err) => console.log(err));
-    }
-  }, [auth.isCompany, auth.token, auth.userId, isAdmin, token, userId, getAdminNotifications, getCompanyNotifications]);
-
   // console.log(notifications);
+  const { notifications } = notif;
 
   const readNotificationHandler = async (e, notificationId) => {
-    if (isAdmin) {
+    if (admin.isAdmin) {
       const payload = {
-        token,
-        adminId: userId,
+        token: admin.token,
+        adminId: admin.userId,
         notificationId,
       };
       try {
@@ -53,9 +30,7 @@ const NotificationsAO = ({
       } catch (err) {
         console.log(err);
       }
-      getAdminNotifications(payload)
-        .then((res) => setNotifications([...res.notifications]))
-        .catch((err) => console.log(err));
+      getAdminNotifications(payload).catch((err) => console.log(err));
     }
 
     if (auth.isCompany) {
@@ -70,9 +45,7 @@ const NotificationsAO = ({
       } catch (err) {
         console.log(err);
       }
-      getCompanyNotifications(payload)
-        .then((res) => setNotifications([...res.notifications]))
-        .catch((err) => console.log(err));
+      getCompanyNotifications(payload).catch((err) => console.log(err));
     }
   };
 
@@ -91,7 +64,7 @@ const NotificationsAO = ({
           .sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))
           .map((notif, index) => {
             let read = false;
-            if (isAdmin) read = notif.isOpened?.some((id) => id.toString() === userId.toString());
+            if (admin.isAdmin) read = notif.isOpened?.some((id) => id.toString() === admin.userId.toString());
             if (auth.isCompany) read = notif.isOpened?.some((id) => id.toString() === auth.userId?.toString());
             return (
               <li key={`admin-notif-${index}`} className={`${styles.NotifItem} ${!read && styles.Unread}`}>
@@ -114,15 +87,16 @@ const mapStateToProps = (state) => {
   return {
     admin: state.admin,
     auth: state.auth,
+    notif: state.notification,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAdminNotifications: (payload) => dispatch(actionCreators.getAdminNotifications(payload)),
-    getCompanyNotifications: (payload) => dispatch(actionCreators.getCompanyNotifications(payload)),
     readNotification: (payload) => dispatch(actionCreators.readNotification(payload)),
     readNotificationCOM: (payload) => dispatch(actionCreators.readNotificationCOM(payload)),
+    getAdminNotifications: (payload) => dispatch(actionCreators.getAdminNotifications(payload)),
+    getCompanyNotifications: (payload) => dispatch(actionCreators.getCompanyNotifications(payload)),
   };
 };
 

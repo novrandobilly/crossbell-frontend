@@ -5,7 +5,6 @@ export {
   updateCompanyIntro,
   updateCompanyPIC,
   updateCompanyLogo,
-  getCompanyNotifications,
   readNotificationCOM,
 } from './company-actions';
 
@@ -41,7 +40,6 @@ export {
   updatePromo,
   getPromo,
   getAllSlot,
-  getAdminNotifications,
   readNotification,
 } from './admin-actions';
 
@@ -83,3 +81,5 @@ export {
 } from './job-actions';
 
 export { login, googleLogin, forgotPwd, getResetPwd, resetPwd } from './auth-actions';
+
+export { getAdminNotifications, getCompanyNotifications } from './notification-actions';

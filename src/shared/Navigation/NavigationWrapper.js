@@ -13,7 +13,7 @@ import Login from '../../general/components/RegistrationModal/Login';
 import Register from '../../general/components/RegistrationModal/Register';
 import styles from './NavigationWrapper.module.scss';
 
-const NavigationWrapper = ({ admin, auth, getAdminNotifications, getCompanyNotifications }) => {
+const NavigationWrapper = ({ admin, auth, getAdminNotifications, getCompanyNotifications, notif }) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -51,33 +51,15 @@ const NavigationWrapper = ({ admin, auth, getAdminNotifications, getCompanyNotif
     return cleanUp();
   }, [viewportWidth]);
 
-  const { token, userId, isAdmin } = admin;
+  const { userId, isAdmin } = admin;
   useEffect(() => {
-    if (isAdmin) {
-      const payload = {
-        adminId: userId,
-        token: token,
-      };
-      getAdminNotifications(payload)
-        .then((res) => {
-          const unread = res.notifications?.filter((notif) => !notif.isOpened.some((id) => id === userId)).length;
-          setNotificationsLength(unread);
-        })
-        .catch((err) => console.log(err));
-    }
-    if (auth.isCompany) {
-      const payload = {
-        companyId: auth.userId,
-        token: auth.token,
-      };
-      getCompanyNotifications(payload)
-        .then((res) => {
-          const unread = res.notifications?.filter((notif) => !notif.isOpened.some((id) => id === auth.userId)).length;
-          setNotificationsLength(unread);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [token, userId, isAdmin, getAdminNotifications, getCompanyNotifications, auth.userId, auth.token, auth.isCompany]);
+    const { notifications } = notif;
+    let unread = [];
+    if (isAdmin) unread = notifications.filter((notif) => !notif.isOpened.some((id) => id === userId)).length;
+    if (auth.isCompany)
+      unread = notifications.filter((notif) => !notif.isOpened.some((id) => id === auth.userId)).length;
+    setNotificationsLength(unread);
+  }, [notif, userId, isAdmin, auth.userId, auth.isCompany]);
   return (
     <React.Fragment>
       <Modal
@@ -136,6 +118,7 @@ const mapStateToProps = (state) => {
   return {
     admin: state.admin,
     auth: state.auth,
+    notif: state.notification,
   };
 };
 

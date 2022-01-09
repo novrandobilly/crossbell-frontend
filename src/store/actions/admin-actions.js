@@ -464,34 +464,6 @@ export const getAllSlot = (payload) => {
   };
 };
 
-export const getAdminNotifications = (payload) => {
-  return async (dispatch) => {
-    dispatch(getAdminStart());
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/${payload.adminId}/notifications`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${payload.token}`,
-          },
-          body: null,
-        }
-      );
-      const responseJSON = await response.json();
-      if (!response.ok) {
-        throw new Error(responseJSON.message);
-      }
-      dispatch(getAdminSuccess());
-      return responseJSON;
-    } catch (err) {
-      dispatch(getAdminFail());
-      return err;
-    }
-  };
-};
-
 export const readNotification = (payload) => {
   return async (dispatch) => {
     dispatch(getAdminStart());

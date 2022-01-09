@@ -122,6 +122,7 @@ export const CANCELORDERFAIL = 'CANCEL_ORDER_FAIL';
 export const CANCELORDERSTART = 'CANCEL_ORDER_START';
 
 export const ORDERRESET = 'ORDER_RESET';
+
 //============================= Auth ==============================
 export const AUTHADMINSTART = 'AUTH_ADMIN_START';
 export const AUTHADMINFINISH = 'AUTH_ADMIN_FINISH';
@@ -140,3 +141,8 @@ export const AUTHFAIL = 'AUTH_FAIL';
 export const FETCHINGSTART = 'FETCHING_START';
 export const FETCHINGFAIL = 'FETCHING_FAIL';
 export const FETCHINGFINISH = 'FETCHING_FINISH';
+
+//============================= Notification ==============================
+export const FETCHNOTIFICATIONSTART = 'FETCH_NOTIFICATION_START';
+export const FETCHNOTIFICATIONSUCCESS = 'FETCH_NOTIFICATION_SUCCESS';
+export const FETCHNOTIFICATIONFAIL = 'FETCH_NOTIFICATION_FAIL';

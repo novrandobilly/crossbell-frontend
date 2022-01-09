@@ -2,6 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import * as actionTypes from './store/actions/actions';
+import * as actionCreators from './store/actions';
 
 import HomePage from './general/pages/HomePage/HomePage';
 import Blogs from './general/pages/Blogs/Blogs';
@@ -108,6 +109,37 @@ const App = (props) => {
     }
   }, [adminToken, adminTokenExp, userToken, userTokenExp, logout, logoutAdmin]);
 
+  // ====================================NOTIFICATION=======================================
+
+  const { admin, auth, getAdminNotifications, getCompanyNotifications } = props;
+
+  useEffect(() => {
+    if (admin.isAdmin) {
+      const payload = {
+        token: admin.token,
+        adminId: admin.userId,
+      };
+      getAdminNotifications(payload).catch((err) => console.log(err));
+    }
+
+    if (auth.isCompany) {
+      const payload = {
+        token: auth.token,
+        companyId: auth.userId,
+      };
+      getCompanyNotifications(payload).catch((err) => console.log(err));
+    }
+  }, [
+    admin.isAdmin,
+    admin.token,
+    admin.userId,
+    getAdminNotifications,
+    auth.isCompany,
+    auth.token,
+    auth.userId,
+    getCompanyNotifications,
+  ]);
+
   return (
     <Router>
       <NavigationWrapper />
@@ -208,6 +240,8 @@ const mapDispatchToProps = (dispatch) => {
     loginAdmin: (payload) => dispatch({ type: actionTypes.AUTHADMINFINISH, payload }),
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
     logoutAdmin: () => dispatch({ type: actionTypes.ADMINLOGOUT }),
+    getAdminNotifications: (payload) => dispatch(actionCreators.getAdminNotifications(payload)),
+    getCompanyNotifications: (payload) => dispatch(actionCreators.getCompanyNotifications(payload)),
   };
 };
 

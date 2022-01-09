@@ -32,7 +32,7 @@ const fetchingFinish = () => {
 };
 
 export const createJob = (jobData, authData) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(createJobStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`, {
@@ -73,7 +73,7 @@ export const createJob = (jobData, authData) => {
 };
 
 export const saveJobDraft = (jobData, authData) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(createJobStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft`, {
@@ -115,7 +115,7 @@ export const saveJobDraft = (jobData, authData) => {
 };
 
 export const editJobDraft = (jobData, authData) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(createJobStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/draft/${authData.id}`, {
@@ -157,7 +157,7 @@ export const editJobDraft = (jobData, authData) => {
 };
 
 export const getAllAvailableJobs = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`);
@@ -175,8 +175,8 @@ export const getAllAvailableJobs = () => {
   };
 };
 
-export const getOneJob = jobsid => {
-  return async dispatch => {
+export const getOneJob = (jobsid) => {
+  return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${jobsid}`, {
@@ -198,8 +198,8 @@ export const getOneJob = jobsid => {
   };
 };
 
-export const getJobsInCompany = payload => {
-  return async dispatch => {
+export const getJobsInCompany = (payload) => {
+  return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${payload.companyId}/all/jobs`, {
@@ -223,8 +223,8 @@ export const getJobsInCompany = payload => {
   };
 };
 
-export const updateJob = payload => {
-  return async dispatch => {
+export const updateJob = (payload) => {
+  return async (dispatch) => {
     console.log(payload);
     dispatch(fetchingStart());
     try {
@@ -256,8 +256,8 @@ export const updateJob = payload => {
   };
 };
 
-export const deleteJob = payload => {
-  return async dispatch => {
+export const deleteJob = (payload) => {
+  return async (dispatch) => {
     dispatch(fetchingStart());
     console.log(payload);
     try {
@@ -279,8 +279,8 @@ export const deleteJob = payload => {
   };
 };
 
-export const applyJob = payload => {
-  return async dispatch => {
+export const applyJob = (payload) => {
+  return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       // const response = await fetch(`https://crossbell-corps.herokuapp.com/api/jobs/${props.jobId}/apply`, {
@@ -310,7 +310,7 @@ export const applyJob = payload => {
 };
 
 export const releaseJob = (jobData, authData) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(fetchingStart());
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${authData.jobId}/release`, {
