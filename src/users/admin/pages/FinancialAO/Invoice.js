@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams, withRouter, Link } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
@@ -26,7 +26,7 @@ const Invoice = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  console.log(orderData);
   const { getOrderInvoice } = props;
 
   const fetchPayment = useCallback(
@@ -188,29 +188,31 @@ const Invoice = (props) => {
               <div className={styles.CommentHeader}>Instruksi Pembayaran</div>
               <div className={styles.CommentContent}>
                 <ul>
-                  <li>Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14 hari sejak tanggal invoice ini</li>
-                  <li>
-                    Pembayaran dapat di transfer ke rekening BCA <span style={{ fontWeight: '500' }}>1234567xxx</span>{' '}
-                    a/n Bagong
-                  </li>
-                  {/* <li>
-                      Pembayaran melalui virtual account dapat transfer melalui
-                      bank BCA dengan nomor VA{' '}
-                      <span style={{ fontWeight: '500' }}>807770817329xxx</span>
-                    </li> */}
-                  <li>
-                    Setelah melakukan pembayaran, mohon kirimkan bukti transfer kepada nomor wa{' '}
-                    <span style={{ fontWeight: '500' }}>081732954xxx</span>
-                  </li>
+                  {orderData.promo > 0 && (
+                    <li>Order ini mendapatkan promo Crossbell dengan potongan harga hingga {orderData.promo}%</li>
+                  )}
+                  {orderData !== 0 && (
+                    <Fragment>
+                      <li>Pembayaran dilakukan sebelum tanggal jatuh tempo yaitu 14 hari sejak tanggal invoice ini</li>
+                      <li>
+                        Pembayaran dapat di transfer ke rekening BCA <span style={{ fontWeight: '500' }}>68xxxxx</span>{' '}
+                        a/n PT Lonceng Temu Cipta Karya
+                      </li>
+                      <li>
+                        Setelah melakukan pembayaran, mohon upload bukti transfer pada menu{' '}
+                        <strong>Riwayat Pesanan - (Order ID)</strong>
+                      </li>
+                    </Fragment>
+                  )}
                   {orderData.PPH && (
                     <li>
                       bukti potong PPH pasal 23 paling lambat dikirimkan pada akhir bulan berikutnya setelah pesanan ini
                       dibuat.{' '}
                       <ul className={styles.CrossbellInfo} style={{ listStyleType: 'circle' }}>
-                        <li className={styles.AdditionalInfo}>Nama perusahaan: PT. Inti Dinamis</li>
+                        <li className={styles.AdditionalInfo}>Nama perusahaan: PT. Lonceng Temu Cipta Karya</li>
                         <li className={styles.AdditionalInfo}>Nomor Pokok Wajib Pajak: 23001939900293</li>
                         <li className={styles.AdditionalInfo}>
-                          Alamat: Taman Laguna Blok K, Jati Sampurna Bekasi 17435
+                          Alamat: Taman Laguna Blok O2 No 20, Jatisampurna Bekasi 17435
                         </li>
                       </ul>
                     </li>

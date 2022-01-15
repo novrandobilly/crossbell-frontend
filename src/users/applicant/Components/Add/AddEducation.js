@@ -43,7 +43,7 @@ const CustomTextField = styled(TextField)({
   },
 });
 
-const AddEducation = props => {
+const AddEducation = (props) => {
   const { applicantid } = useParams();
 
   const [degree, setDegree] = useState('SMA');
@@ -91,7 +91,7 @@ const AddEducation = props => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -119,10 +119,11 @@ const AddEducation = props => {
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
+    if (elementValue === 'SMK' || elementValue === 'SMA') onInputHandler('IPK', null, true);
     setDegree(elementValue);
   };
 
@@ -146,9 +147,9 @@ const AddEducation = props => {
           onInputChange={onInputSchoolHandler}
           id='school'
           name='school'
-          options={University.map(uni => uni.institusi)}
+          options={University.map((uni) => uni.institusi)}
           freeSolo
-          renderInput={params => <CustomTextField {...params} />}
+          renderInput={(params) => <CustomTextField {...params} />}
         />
       </div>
 
@@ -213,18 +214,20 @@ const AddEducation = props => {
         />
       </div>
 
-      <Input
-        inputType='input'
-        id='IPK'
-        validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
-        onInputHandler={onInputHandler}
-        type='number'
-        min={0}
-        max={4}
-        step='0.1'
-        label={true}
-        labelName='IPK'
-      />
+      {formState.inputs?.degree.value !== 'SMK' && formState.inputs?.degree.value !== 'SMA' && (
+        <Input
+          inputType='input'
+          id='IPK'
+          validatorMethod={[VALIDATOR_MAX(4), VALIDATOR_MIN(0)]}
+          onInputHandler={onInputHandler}
+          type='number'
+          min={0}
+          max={4}
+          step='0.1'
+          label={true}
+          labelName='IPK'
+        />
+      )}
 
       <Input
         inputType='textarea'
@@ -268,7 +271,7 @@ const AddEducation = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -276,11 +279,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantEducation: ApplicantData => dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
+    updateApplicantEducation: (ApplicantData) => dispatch(actionCreators.updateApplicantEducation(ApplicantData)),
   };
 };
 

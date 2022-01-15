@@ -103,18 +103,19 @@
   font-size: 0.9rem;
 }
 
-.PurchaseButton {
-  margin-top: 1rem;
-  width: 25rem;
-  height: 3rem;
-  color: white;
+.SubmitButton {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 20px;
+  min-height: 30px;
   background-color: #f79f35;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 700;
-  outline: none;
   border: none;
-  cursor: pointer;
-  border-radius: 0.2rem;
+  box-shadow: 1px 1px 2px #000;
+  &:disabled {
+    background-color: #cecece;
+  }
 }
 
 @media (max-width: 992px) {

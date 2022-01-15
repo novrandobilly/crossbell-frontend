@@ -10,7 +10,7 @@ import styles from './AboutUs.module.scss';
 const OUR_TEAM = [
   {
     name: 'John Arif Purba',
-    title: 'Chief HR, Certified Professional Coach',
+    title: 'Chief Operating Officer',
     description: (
       <p>
         Seorang psikolog yang berpengalaman puluhan tahun dalam bidang pengembangan sumber daya manusia. Dalam
@@ -23,7 +23,7 @@ const OUR_TEAM = [
   },
   {
     name: 'Billy Novrando',
-    title: 'CEO & Lead Developer',
+    title: 'Chief Executive Officer',
     description: (
       <p>
         Berawal dari keinginannya untuk mengerti dunia web development, Billy mulai membangun Crossbell dengan semangat
@@ -36,7 +36,7 @@ const OUR_TEAM = [
 
   {
     name: 'Gaby Anniwati',
-    title: 'CFO, Clinical Hypnotherapist',
+    title: 'Chief Financial Officer',
     description: (
       <p>
         Berpengalaman selama lebih dari dua puluh tahun dalam bidang pengelolaan SDM. Sebagai seorang HR Professional ia

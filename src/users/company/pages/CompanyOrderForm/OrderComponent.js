@@ -1,55 +1,29 @@
 import React from 'react';
 
-import classes from './OrderComponent.module.css';
+import styles from './OrderComponent.module.scss';
 
-const OrderComponent = props => {
+const OrderComponent = (props) => {
   return (
-    <div className={classes.Container}>
-      <div className={classes.OrderCard}>
-        <div className={classes.CardHolder}>
+    <div className={styles.Container}>
+      <div className={styles.OrderCard}>
+        <div className={styles.CardHolder}>
           <div>
             <div
-              className={classes.CardHeader}
-              style={
+              className={`${styles.CardHeader} ${
                 props.title === 'Bronze'
-                  ? { backgroundColor: '#ad8a56' }
+                  ? styles.Bronze
                   : props.title === 'Silver'
-                  ? { backgroundColor: '#a9a9a9' }
+                  ? styles.Silver
                   : props.title === 'Gold'
-                  ? { backgroundColor: '#d4af47' }
-                  : { backgroundColor: '#f79f35' }
-              }>
-              <p className={classes.Title}>{props.title}</p>
-              <div className={classes.Perks}>
-                <p className={classes.Price}>IDR {props.price.toLocaleString()}/ slot</p>
-                <p className={classes.Slot}>{props.slot}</p>
+                  ? styles.Gold
+                  : styles.Platinum
+              }`}>
+              <p className={styles.Title}>{props.title?.toUpperCase()}</p>
+              <div className={styles.Perks}>
+                <p className={styles.Price}>Rp {props.price.toLocaleString()}/ slot</p>
+                <p className={styles.Slot}>{props.slot}</p>
               </div>
             </div>
-
-            {/* <div
-              className={classes.CardContent}
-              style={
-                props.title === 'Bronze'
-                  ? { backgroundColor: '#ad8a5640' }
-                  : props.title === 'Silver'
-                  ? { backgroundColor: '#a9a9a940' }
-                  : props.title === 'Gold'
-                  ? { backgroundColor: '#d4af4740' }
-                  : { backgroundColor: 'rgba(58, 81, 153, 0.2)' }
-              }
-            > */}
-            {/* {props.perks ? (
-                <ul>
-                  {props.perks.map((perk, i) => {
-                    return <li key={i}> {perk}</li>;
-                  })}
-                </ul>
-              ) : (
-                <ul>
-                  <li>Harga normal tanpa diskon</li>
-                </ul>
-              )} */}
-            {/* </div> */}
           </div>
         </div>
       </div>

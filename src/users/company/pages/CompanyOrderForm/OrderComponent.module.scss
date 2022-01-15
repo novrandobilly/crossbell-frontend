@@ -9,20 +9,35 @@
 
 .CardHolder {
   width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 2px 10px -1px rgb(0, 0, 0, 0.2);
-  transition: all 0.5s;
+  transition: all 0.2s;
   border-radius: 0.2rem;
   overflow: hidden;
+  box-shadow: 2px 2px 5px #000;
+  &:hover {
+    box-shadow: 2px 2px 15px #000;
+  }
 }
 
 .CardHeader {
-  color: white;
   padding: 1.6px 8px 16px 8px;
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  font-family: 'Lato', sans-serif;
+}
+.Bronze {
+  background: linear-gradient(to bottom right, #fff 0%, #cd7f32 40%);
+}
+.Silver {
+  background: linear-gradient(to bottom right, #fff 0%, #c0c0c0 40%);
+}
+.Gold {
+  background: linear-gradient(to bottom right, #fff 0%, #ffd700 40%);
+}
+.Platinum {
+  background: linear-gradient(to bottom right, #fff 0%, #e5e4e2 40%);
 }
 
 .Title {
@@ -38,8 +53,7 @@
 }
 
 .Slot {
-  font-size: 1.1rem;
-  color: rgb(255, 255, 255);
+  font-size: 32px;
 }
 
 /* .CardContent {
@@ -75,6 +89,5 @@
 
   .Slot {
     font-size: 0.9rem;
-    color: rgb(255, 255, 255);
   }
 }
