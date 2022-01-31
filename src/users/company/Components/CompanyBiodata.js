@@ -12,14 +12,14 @@ import World from '../../../assets/icons/world.svg';
 import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 import styles from './CompanyBiodata.module.scss';
 
-const CompanyBiodata = props => {
+const CompanyBiodata = (props) => {
   const [openEditBiodata, setOpenEditBiodata] = useState(false);
   const [uploadIsLoading, setUploadIsLoading] = useState(false);
 
   const openEditBiodataHandler = () => setOpenEditBiodata(true);
   const closeEditBiodataHandler = () => setOpenEditBiodata(false);
 
-  const checkURL = websiteUrl => {
+  const checkURL = (websiteUrl) => {
     let isValid = false;
     isValid = isValid || websiteUrl.slice(0, 8) === 'https://';
     isValid = isValid || websiteUrl.slice(0, 7) === 'http://';
@@ -27,7 +27,7 @@ const CompanyBiodata = props => {
     return `http://${websiteUrl}`;
   };
 
-  const onUploadHandler = async e => {
+  const onUploadHandler = async (e) => {
     setUploadIsLoading(true);
     const elementFile = e.target.files[0];
     const payload = {
@@ -115,16 +115,16 @@ const CompanyBiodata = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateCompanyLogo: payload => dispatch(actionCreators.updateCompanyLogo(payload)),
+    updateCompanyLogo: (payload) => dispatch(actionCreators.updateCompanyLogo(payload)),
   };
 };
 

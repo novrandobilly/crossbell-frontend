@@ -13,7 +13,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import classes from './ApplicantListAO.module.css';
+import styles from './ApplicantListAO.module.scss';
 
 const ACTION = {
   SEARCHUPDATE: 'update-search',
@@ -254,18 +254,18 @@ const ApplicantListAO = (props) => {
 
   if (!isLoading && displayData && displayData.length > 0) {
     content = (
-      <div className={classes.FlexContainer}>
+      <div className={styles.FlexContainer}>
         <QueryBar searchInputHandler={searchInputHandler} searchHandler={searchHandler} action={`/AO/applicantlist`} />
 
-        <div className={classes.Container}>
-          <div className={classes.HeaderContainer}>
-            <h1 className={classes.Header}>Applicant Account List</h1>
-            <div className={classes.DropDown}>
-              <button className={classes.DropButton}>
+        <div className={styles.Container}>
+          <div className={styles.HeaderContainer}>
+            <h1 className={styles.Header}>Applicant Account List</h1>
+            <div className={styles.DropDown}>
+              <button className={styles.DropButton}>
                 Filter
                 <ArrowDropDownIcon />
               </button>
-              <div className={classes.DropDownContent}>
+              <div className={styles.DropDownContent}>
                 <button style={{ color: 'black' }} onClick={handleAll}>
                   All
                 </button>
@@ -283,9 +283,9 @@ const ApplicantListAO = (props) => {
             </div>
           </div>
 
-          <div className={classes.TableHolder}>
-            <table className={classes.Table}>
-              <thead className={classes.RowField}>
+          <div className={styles.TableHolder}>
+            <table className={styles.Table}>
+              <thead className={styles.RowField}>
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
@@ -298,7 +298,7 @@ const ApplicantListAO = (props) => {
               </thead>
 
               {find ? (
-                <tbody className={classes.ColumnField}>
+                <tbody className={styles.ColumnField}>
                   {displayData &&
                     displayData
                       .filter((app) => app.status === filter)
@@ -307,8 +307,8 @@ const ApplicantListAO = (props) => {
                           <th>{i + 1}</th>
 
                           <th>
-                            <div className={classes.NameRow}>
-                              <div className={classes.ApplicantName}>
+                            <div className={styles.NameRow}>
+                              <div className={styles.ApplicantName}>
                                 {app.firstName} {app.lastName}
                               </div>
                               <p />
@@ -322,15 +322,15 @@ const ApplicantListAO = (props) => {
                       ))}
                 </tbody>
               ) : (
-                <tbody className={classes.ColumnField}>
+                <tbody className={styles.ColumnField}>
                   {displayData &&
                     displayData.map((app, i) => (
                       <tr key={app.id}>
                         <th>{i + 1}</th>
 
                         <th>
-                          <div className={classes.NameRow}>
-                            <div className={classes.ApplicantName}>
+                          <div className={styles.NameRow}>
+                            <div className={styles.ApplicantName}>
                               {app.firstName} {app.lastName}
                             </div>
                             <p />
@@ -373,7 +373,7 @@ const ApplicantListAO = (props) => {
   }
 
   if (!props.isLoading && emptyText.current) {
-    content = <p className={classes.EmptyText}>{emptyText.current}</p>;
+    content = <p className={styles.EmptyText}>{emptyText.current}</p>;
   }
 
   return <div>{content}</div>;
