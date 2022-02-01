@@ -21,6 +21,7 @@ const IndustryData = [
   { industry: 'Hospitality' },
   { industry: 'Interior Design' },
   { industry: 'International Relation' },
+  { industry: 'Information Technology' },
   { industry: 'Journalism' },
   { industry: 'Law & Order' },
   { industry: 'Logistic' },

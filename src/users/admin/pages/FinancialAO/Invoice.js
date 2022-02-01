@@ -110,7 +110,7 @@ const Invoice = (props) => {
     documentTitle: `invoice_${orderid}`,
     content: () => componentRef.current,
   });
-
+  console.log(orderData);
   let tax = 0;
   let dis = 0;
   let subTotal = 0;
@@ -188,8 +188,10 @@ const Invoice = (props) => {
               <div className={styles.CommentHeader}>Instruksi Pembayaran</div>
               <div className={styles.CommentContent}>
                 <ul>
-                  {orderData.promo > 0 && (
-                    <li>Order ini mendapatkan promo Crossbell dengan potongan harga hingga {orderData.promo}%</li>
+                  {orderData.promo?.discount > 0 && (
+                    <li>
+                      Order ini mendapatkan promo Crossbell dengan potongan harga hingga {orderData.promo?.discount}%
+                    </li>
                   )}
                   {orderData !== 0 && (
                     <Fragment>
@@ -236,7 +238,7 @@ const Invoice = (props) => {
                 <p>Diskon</p>
                 <p>
                   - Rp.
-                  {(dis = (subTotal * orderData.promo) / 100).toLocaleString()}
+                  {(dis = (subTotal * orderData.promo?.discount) / 100).toLocaleString()}
                   ,-
                 </p>
               </div>

@@ -393,7 +393,6 @@ export const getAdmin = (payload) => {
 export const updatePromo = (payload) => {
   return async (dispatch) => {
     dispatch(getAdminStart());
-    console.log(payload);
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/alphaomega/order/promo`, {
         method: 'PATCH',
@@ -402,8 +401,14 @@ export const updatePromo = (payload) => {
           Authorization: `Bearer ${payload.token}`,
         },
         body: JSON.stringify({
-          promoReg: payload.promoReg,
-          promoBC: payload.promoBC,
+          REG: {
+            promoName: payload.REG.promoName,
+            discount: payload.REG.discount,
+          },
+          BC: {
+            promoName: payload.BC.promoName,
+            discount: payload.BC.discount,
+          },
         }),
       });
       const responseJSON = await response.json();
@@ -429,7 +434,6 @@ export const getPromo = (payload) => {
         body: null,
       });
       const responseJSON = await response.json();
-      console.log(responseJSON);
       dispatch(getAdminSuccess());
       return responseJSON;
     } catch (err) {
