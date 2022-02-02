@@ -20,7 +20,7 @@ const EditCompanyBiodata = (props) => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
-  const [industry, setIndustry] = useState('');
+  const [industry, setIndustry] = useState([]);
   const [inputIndustry, setInputIndustry] = useState('');
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const EditCompanyBiodata = (props) => {
   useEffect(() => {
     getOneCompany({ userId: companyid }).then((res) => {
       setData(res.company);
-      setIndustry({ industry: res.company.industry });
+      // setIndustry({ industry: res.company.industry });
     });
   }, [getOneCompany, companyid]);
 
@@ -66,7 +66,8 @@ const EditCompanyBiodata = (props) => {
   );
 
   useEffect(() => {
-    onInputHandler('industry', industry?.industry, true);
+    const arrayOfIndustry = industry.map((item) => item.industry);
+    onInputHandler('industry', arrayOfIndustry, arrayOfIndustry.length > 0);
   }, [onInputHandler, industry]);
 
   const onSubmitHandler = async (event) => {
@@ -97,15 +98,18 @@ const EditCompanyBiodata = (props) => {
   };
 
   const onAutoCompleteHandler = (event, newValue) => {
-    setIndustry(newValue);
-    onInputHandler('industry', newValue, true);
+    if (inputIndustry) {
+      setIndustry((prev) => [...prev, { industry: inputIndustry }]);
+    } else {
+      setIndustry(newValue);
+    }
+    const arrayOfIndustry = newValue.map((item) => item.industry);
+    onInputHandler('industry', arrayOfIndustry, arrayOfIndustry.length > 0);
   };
-
   const onInputChangeHandler = (event, newValue) => {
     setInputIndustry(newValue);
-    onInputHandler('industry', newValue, true);
   };
-  console.log(formState);
+
   let formContent = <LoadingBar />;
 
   if (!props.isLoading && data) {
@@ -138,9 +142,14 @@ const EditCompanyBiodata = (props) => {
 
         <div className={styles.CompanyIndustry}>
           <p>Bidang industri perusahaan</p>
+
           <Autocomplete
             id='industry'
             name='industry'
+            multiple
+            limitTags={4}
+            disableCloseOnSelect
+            getOptionDisabled={() => industry.length >= 4}
             freeSolo
             options={IndustryData.sort((a, b) => {
               const optA = a.industry.toLowerCase();
@@ -149,11 +158,10 @@ const EditCompanyBiodata = (props) => {
               if (optA > optB) return 1;
               return 0;
             })}
-            getOptionLabel={(option) => `${option.industry}`}
-            value={industry || null}
             onChange={onAutoCompleteHandler}
-            inputValue={inputIndustry}
+            value={industry || []}
             onInputChange={onInputChangeHandler}
+            getOptionLabel={(option) => `${option.industry}`}
             renderInput={(params) => <CustomTextField {...params} />}
           />
         </div>

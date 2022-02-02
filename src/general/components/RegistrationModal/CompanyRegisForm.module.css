@@ -62,7 +62,7 @@
   max-width: 100px;
   margin-bottom: 20px;
 }
-.SubmitButtonL:hover {
+.SubmitButton:hover {
   cursor: pointer;
 }
 .SubmitButton:disabled {

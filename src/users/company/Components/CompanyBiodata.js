@@ -87,7 +87,7 @@ const CompanyBiodata = (props) => {
               <span className={styles.VerificationFalse}>Dalam Evaluasi</span>
             )}
           </div>
-          <h3>Industri: {props.industry ? props.industry : noInformation}</h3>
+          <h3>Industri: {props.industry?.length ? props.industry?.join(', ') : noInformation}</h3>
           <p>
             <img className={styles.BioIcon} alt='Location Icon' src={World} />
 

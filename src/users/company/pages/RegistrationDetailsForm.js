@@ -82,13 +82,16 @@ const RegistrationDetailsForm = ({
   }, [companyid, getOneCompany]);
 
   const onAutoCompleteHandler = (event, newValue) => {
-    setIndustry(newValue);
-    onInputHandler('industry', newValue?.industry, !!newValue?.industry);
+    if (inputIndustry) {
+      setIndustry((prev) => [...prev, { industry: inputIndustry }]);
+    } else {
+      setIndustry(newValue);
+    }
+    const arrayOfIndustry = newValue.map((item) => item.industry);
+    onInputHandler('industry', arrayOfIndustry, arrayOfIndustry.length > 0);
   };
-
   const onInputChangeHandler = (event, newValue) => {
     setInputIndustry(newValue);
-    onInputHandler('industry', newValue, !!newValue);
   };
 
   const onSubmitHandler = async (event) => {
@@ -121,10 +124,10 @@ const RegistrationDetailsForm = ({
       await updateCompanyIntro(introPayload);
       await updateCompanyLogo(logoPayload);
       await updateCompanyBriefDescriptions(briefDescriptionsPayload);
-      history.push(`/co/${companyid}/pic-details`);
     } catch (err) {
       console.log(err);
     }
+    history.push(`/co/${companyid}/pic-details`);
   };
 
   const onUploadHandler = async (e) => {
@@ -189,6 +192,10 @@ const RegistrationDetailsForm = ({
           <Autocomplete
             id='industry'
             name='industry'
+            multiple
+            limitTags={4}
+            disableCloseOnSelect
+            getOptionDisabled={() => industry.length >= 4}
             freeSolo
             options={IndustryData.sort((a, b) => {
               const optA = a.industry.toLowerCase();
@@ -197,11 +204,10 @@ const RegistrationDetailsForm = ({
               if (optA > optB) return 1;
               return 0;
             })}
-            getOptionLabel={(option) => `${option.industry}`}
-            value={industry || null}
             onChange={onAutoCompleteHandler}
-            inputValue={inputIndustry}
+            value={industry || []}
             onInputChange={onInputChangeHandler}
+            getOptionLabel={(option) => `${option.industry}`}
             renderInput={(params) => <CustomTextField {...params} />}
           />
         </div>
