@@ -14,7 +14,7 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../../shared/utils/vali
 
 import classes from './Login.module.css';
 
-const Login = props => {
+const Login = (props) => {
   const [formState, onInputHandler] = useForm(
     {
       email: {
@@ -29,7 +29,7 @@ const Login = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     const loginData = {
@@ -115,17 +115,17 @@ const Login = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     isCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
     logout: () => dispatch({ type: actionTypes.AUTHLOGOUT }),
-    loginServer: loginData => dispatch(actionCreators.login(loginData)),
+    loginServer: (loginData) => dispatch(actionCreators.login(loginData)),
   };
 };
 

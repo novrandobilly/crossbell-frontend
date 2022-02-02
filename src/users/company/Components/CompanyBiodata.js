@@ -6,7 +6,6 @@ import Modal from '../../../shared/UI_Element/Modal';
 import EditCompanyBiodata from './EditCompanyBiodata';
 import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import BlankProfile from '../../../assets/images/Blank_Profile.png';
-import Verified from '../../../assets/icons/verified.svg';
 import Location from '../../../assets/icons/location.svg';
 import World from '../../../assets/icons/world.svg';
 import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
@@ -83,12 +82,9 @@ const CompanyBiodata = (props) => {
           <div className={styles.CompanyNameContainer}>
             <h2>{props.companyName ? props.companyName : noInformation} </h2>
             {props.isActive ? (
-              <div className={styles.VerificationTrueContainer}>
-                <img alt='Verified' src={Verified} className={styles.VerificationSign} />
-                <span className={styles.VerificationTrue}>Perusahaan telah terverifikasi</span>
-              </div>
+              <span className={styles.VerificationTrue}>Terverifikasi</span>
             ) : (
-              <span className={styles.VerificationFalse}>(Sedang dalam proses verifikasi)</span>
+              <span className={styles.VerificationFalse}>Dalam Evaluasi</span>
             )}
           </div>
           <h3>Industri: {props.industry ? props.industry : noInformation}</h3>

@@ -32,7 +32,7 @@ const inputReducer = (state, action) => {
   }
 };
 
-const Input = props => {
+const Input = (props) => {
   const [state, dispatch] = useReducer(inputReducer, {
     value: props.initValue || '',
     isValid: props.initIsValid || false,
@@ -45,7 +45,7 @@ const Input = props => {
     onInputHandler && onInputHandler(id, state.value, state.isValid);
   }, [id, state.value, state.isValid, onInputHandler]);
 
-  const onChangeHandler = event => {
+  const onChangeHandler = (event) => {
     dispatch({
       type: ACTION.ONCHANGE,
       payload: {
@@ -56,7 +56,7 @@ const Input = props => {
     props.onChange && props.onChange(event);
   };
 
-  const onCustomDateHandler = payload => {
+  const onCustomDateHandler = (payload) => {
     dispatch({
       type: ACTION.ONCHANGE,
       payload: {
@@ -151,14 +151,14 @@ const Input = props => {
             disableFuture={props.disableFuture === undefined ? true : props.disableFuture}
             views={props.views || ['year', 'day']}
             value={moment(state.value).format('L')}
-            onChange={eventValue => onCustomDateHandler(eventValue)}
+            onChange={(eventValue) => onCustomDateHandler(eventValue)}
             renderInput={({ inputRef, inputProps, InputProps }) => (
               <div className={styles.DatePickerContainer} style={props.ContainerStyle}>
                 <input
                   ref={inputRef}
                   {...inputProps}
                   value={state.value ? moment(state.value).format(`${props.format || 'LL'}`) : '-'}
-                  onChange={eventValue => onCustomDateHandler(eventValue)}
+                  onChange={(eventValue) => onCustomDateHandler(eventValue)}
                   style={props.style}
                   className={styles.DatePickerInput}
                 />
@@ -209,7 +209,11 @@ const Input = props => {
     <div
       className={`${styles.InputContainer} ${!state.isValid && state.isTouched && styles.InputInvalid}`}
       style={props.InputContainerStyle}>
-      {props.label && <label htmlFor={id}>{props.labelName || [id[0].toUpperCase(), id.slice(1)].join('')}</label>}
+      {props.label && (
+        <label htmlFor={id}>
+          <strong>{props.labelName || [id[0].toUpperCase(), id.slice(1)].join('')}</strong>
+        </label>
+      )}
       {inputElement}
       {!state.isValid && state.isTouched && props.errorText && <p>{props.errorText}</p>}
     </div>

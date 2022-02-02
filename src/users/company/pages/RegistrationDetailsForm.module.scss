@@ -1,0 +1,78 @@
+.BiodataForm {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 20px;
+  margin: auto;
+  & > * {
+    margin: 15px 0;
+  }
+  textarea {
+    border-width: 2px;
+  }
+  input {
+    font-size: 1rem;
+  }
+}
+.CompanyLogoContainer {
+  img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border: 2px solid #adadad;
+    border-radius: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .AdditionalNote {
+    font-style: italic;
+    margin: 0;
+  }
+  .UploadButton {
+    border: 2px solid #f79f35;
+    width: 100%;
+    max-width: 100px;
+    margin: auto;
+    padding: 5px 0;
+    border-radius: 10px;
+    color: #f79f35;
+    margin-top: 10px;
+    transition: 0.2s ease-in-out all;
+    &:hover {
+      color: #fff;
+      background-color: #f79f35;
+      cursor: pointer;
+    }
+  }
+}
+.CompanyIndustry {
+  p {
+    margin: 0 0 5px;
+    text-align: start;
+  }
+}
+
+.SubmitButtonContainer {
+  button {
+    border: 2px solid #f79f35;
+    border-radius: 10px;
+    padding: 5px 0;
+    width: 100%;
+    max-width: 100px;
+    color: #f79f35;
+    transition: 0.2s ease-in-out all;
+    background-color: #fff;
+
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: #f79f35;
+    }
+    &:disabled {
+      border-color: #adadad;
+      color: #adadad;
+      background-color: #fff;
+      cursor: not-allowed;
+    }
+  }
+}

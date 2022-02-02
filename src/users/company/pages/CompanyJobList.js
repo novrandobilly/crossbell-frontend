@@ -41,7 +41,7 @@ const searchReducer = (state, action) => {
       };
     }
     case ACTION.SEARCHEXECUTE: {
-      const filteredJob = action.payload.jobs.filter(job => {
+      const filteredJob = action.payload.jobs.filter((job) => {
         let searchValidity = false;
         for (const key in job) {
           if (typeof job[key] === 'string') {
@@ -67,7 +67,7 @@ const searchReducer = (state, action) => {
   }
 };
 
-const CompanyJobList = props => {
+const CompanyJobList = (props) => {
   const { companyid } = useParams();
   const [allCompanyJobs, setAllCompanyJobs] = useState();
 
@@ -102,7 +102,7 @@ const CompanyJobList = props => {
         companyId: companyid,
       };
 
-      getJobsInCompany(payload).then(res => {
+      getJobsInCompany(payload).then((res) => {
         setAllCompanyJobs(res.foundJob);
         dispatch({
           type: ACTION.SEARCHEMPTY,
@@ -116,18 +116,18 @@ const CompanyJobList = props => {
     if (allCompanyJobs && state.jobList) {
       setDisplayData(
         state.jobList
-          .filter(dat => dat.releasedAt != null && moment(dat.expiredDate) > moment())
+          .filter((dat) => dat.releasedAt != null && moment(dat.expiredDate) > moment())
           .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
       );
 
       setExpiredData(
         state.jobList
-          .filter(dat => dat.releasedAt != null && moment(dat.expiredDate) < moment())
+          .filter((dat) => dat.releasedAt != null && moment(dat.expiredDate) < moment())
           .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
       );
 
       setUnreleasedData(
-        state.jobList.filter(dat => dat.releasedAt === null).sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
+        state.jobList.filter((dat) => dat.releasedAt === null).sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
       );
     }
   }, [state.jobList, allCompanyJobs]);
@@ -143,7 +143,7 @@ const CompanyJobList = props => {
       const res = await props.deleteJob(payload);
       if (res) {
         console.log(res);
-        setUnreleasedData(unreleasedData.filter(fil => fil._id !== id));
+        setUnreleasedData(unreleasedData.filter((item) => item._id !== id));
       } else {
         console.log('No job with id:' + { id } + 'found');
       }
@@ -250,7 +250,7 @@ const CompanyJobList = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     job: state.job,
@@ -258,10 +258,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteJob: payload => dispatch(actionCreators.deleteJob(payload)),
-    getJobsInCompany: payload => dispatch(actionCreators.getJobsInCompany(payload)),
+    deleteJob: (payload) => dispatch(actionCreators.deleteJob(payload)),
+    getJobsInCompany: (payload) => dispatch(actionCreators.getJobsInCompany(payload)),
   };
 };
 

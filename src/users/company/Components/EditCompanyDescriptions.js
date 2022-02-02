@@ -12,9 +12,8 @@ import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 import Input from '../../../shared/UI_Element/Input';
 import styles from './EditCompanyDescriptions.module.scss';
 
-const EditCompanyDescriptions = props => {
+const EditCompanyDescriptions = (props) => {
   const { companyid } = useParams();
-
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const EditCompanyDescriptions = props => {
 
   const { getOneCompany } = props;
   useEffect(() => {
-    getOneCompany({ userId: companyid }).then(res => {
+    getOneCompany({ userId: companyid }).then((res) => {
       setData(res.company);
     });
   }, [getOneCompany, companyid]);
@@ -38,7 +37,7 @@ const EditCompanyDescriptions = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -104,7 +103,7 @@ const EditCompanyDescriptions = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -113,12 +112,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyBriefDescriptions: CompanyData => dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData)),
+    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyBriefDescriptions: (CompanyData) =>
+      dispatch(actionCreators.updateCompanyBriefDescriptions(CompanyData)),
   };
 };
 

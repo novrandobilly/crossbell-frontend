@@ -16,7 +16,7 @@ import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import styles from './EditCompanyBiodata.module.scss';
 
-const EditCompanyBiodata = props => {
+const EditCompanyBiodata = (props) => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
@@ -29,7 +29,7 @@ const EditCompanyBiodata = props => {
 
   const { getOneCompany } = props;
   useEffect(() => {
-    getOneCompany({ userId: companyid }).then(res => {
+    getOneCompany({ userId: companyid }).then((res) => {
       setData(res.company);
       setIndustry({ industry: res.company.industry });
     });
@@ -69,7 +69,7 @@ const EditCompanyBiodata = props => {
     onInputHandler('industry', industry?.industry, true);
   }, [onInputHandler, industry]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -105,7 +105,7 @@ const EditCompanyBiodata = props => {
     setInputIndustry(newValue);
     onInputHandler('industry', newValue, true);
   };
-
+  console.log(formState);
   let formContent = <LoadingBar />;
 
   if (!props.isLoading && data) {
@@ -120,7 +120,7 @@ const EditCompanyBiodata = props => {
           label={true}
           labelName='Nama Perusahaan*'
           initValue={data.companyName || ''}
-          initIsValid={data.companyName}
+          initIsValid={!!data.companyName}
         />
 
         <Input
@@ -133,7 +133,7 @@ const EditCompanyBiodata = props => {
           label={true}
           labelName='Email Login*'
           initValue={data.email || ''}
-          initIsValid={data.email}
+          initIsValid={!!data.email}
         />
 
         <div className={styles.CompanyIndustry}>
@@ -149,12 +149,12 @@ const EditCompanyBiodata = props => {
               if (optA > optB) return 1;
               return 0;
             })}
-            getOptionLabel={option => `${option.industry}`}
+            getOptionLabel={(option) => `${option.industry}`}
             value={industry || null}
             onChange={onAutoCompleteHandler}
             inputValue={inputIndustry}
             onInputChange={onInputChangeHandler}
-            renderInput={params => <CustomTextField {...params} />}
+            renderInput={(params) => <CustomTextField {...params} />}
           />
         </div>
 
@@ -167,7 +167,7 @@ const EditCompanyBiodata = props => {
           label={true}
           labelName='Alamat Perusahaan*'
           initValue={data.address || ''}
-          initIsValid={data.address}
+          initIsValid={!!data.address}
         />
 
         <Input
@@ -179,7 +179,7 @@ const EditCompanyBiodata = props => {
           label={true}
           labelName='NPWP'
           initValue={data.NPWP || ''}
-          initIsValid={data.NPWP}
+          initIsValid={!!data.NPWP}
         />
 
         <Input
@@ -191,7 +191,7 @@ const EditCompanyBiodata = props => {
           label={true}
           labelName='Website'
           initValue={data.website || ''}
-          initIsValid={data.website}
+          initIsValid={true}
         />
 
         <div className={styles.SubmitButtonContainer}>
@@ -220,7 +220,7 @@ const EditCompanyBiodata = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -229,12 +229,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyIntro: CompanyData => dispatch(actionCreators.updateCompanyIntro(CompanyData)),
+    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyIntro: (CompanyData) => dispatch(actionCreators.updateCompanyIntro(CompanyData)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditCompanyBiodata));

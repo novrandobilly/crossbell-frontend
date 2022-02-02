@@ -14,7 +14,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../.
 
 import classes from './Register.module.css';
 
-const Register = props => {
+const Register = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, onInputHandler] = useForm(
     {
@@ -46,7 +46,7 @@ const Register = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     const newApplicant = {
       firstName: formState.inputs.firstName.value,
@@ -71,7 +71,7 @@ const Register = props => {
       setErrorMessage(err.message);
     }
   };
-  const onAgreementChange = event => {
+  const onAgreementChange = (event) => {
     const agreement = event.target.checked;
     const id = event.target.id;
     onInputHandler(id, agreement, agreement);
@@ -87,7 +87,8 @@ const Register = props => {
             InputClass='Register'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Nama depan*'
+            labelName='Nama Depan*'
+            label={true}
             helperText='Mohon masukkan nama depan yang valid'
           />
         </div>
@@ -99,7 +100,8 @@ const Register = props => {
             InputClass='Register'
             validatorMethod={[VALIDATOR_REQUIRE()]}
             onInputHandler={onInputHandler}
-            label='Nama belakang*'
+            labelName='Nama Belakang*'
+            label={true}
             helperText='Mohon masukkan nama belakang yang valid'
           />
         </div>
@@ -111,7 +113,8 @@ const Register = props => {
             InputClass='Register'
             validatorMethod={[VALIDATOR_EMAIL()]}
             onInputHandler={onInputHandler}
-            label='Email*'
+            labelName='Email*'
+            label={true}
             helperText='Mohon masukkan alamat email yang valid'
           />
         </div>
@@ -123,7 +126,8 @@ const Register = props => {
             InputClass='Register'
             validatorMethod={[VALIDATOR_MINLENGTH(6)]}
             onInputHandler={onInputHandler}
-            label='Password*'
+            labelName='Password*'
+            label={true}
             type='password'
             helperText='Password minimal mengandung 6 karakter'
           />
@@ -136,7 +140,8 @@ const Register = props => {
             InputClass='Register'
             validatorMethod={[VALIDATOR_MINLENGTH(6)]}
             onInputHandler={onInputHandler}
-            label='Password Confirmation*'
+            labelName='Konfirmasi Password*'
+            label={true}
             type='password'
             helperText='Password belum sesuai mohon coba lagi'
           />
@@ -185,18 +190,18 @@ const Register = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
-    createApplicant: newApplicant => dispatch(actionCreators.createApplicant(newApplicant)),
-    login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+    createApplicant: (newApplicant) => dispatch(actionCreators.createApplicant(newApplicant)),
+    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
   };
 };
 

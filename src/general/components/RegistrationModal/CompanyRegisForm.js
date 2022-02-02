@@ -13,7 +13,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../.
 
 import classes from './CompanyRegisForm.module.css';
 
-const CompanyRegisForm = props => {
+const CompanyRegisForm = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loginCompany, setLoginCompany] = useState(false);
 
@@ -24,10 +24,6 @@ const CompanyRegisForm = props => {
         isValid: false,
       },
       email: {
-        value: '',
-        isValid: false,
-      },
-      NPWP: {
         value: '',
         isValid: false,
       },
@@ -47,13 +43,12 @@ const CompanyRegisForm = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     const newCompany = {
       companyName: formState.inputs.companyName.value,
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
-      NPWP: formState.inputs.NPWP.value,
     };
 
     try {
@@ -66,13 +61,13 @@ const CompanyRegisForm = props => {
         userId: res.userId,
         isCompany: res.isCompany,
       });
-      props.history.push(`/co/${res.userId}/profile`);
+      props.history.push(`/co/${res.userId}/registration-details`);
     } catch (err) {
       setErrorMessage(err.message);
     }
   };
 
-  const onAgreementChange = event => {
+  const onAgreementChange = (event) => {
     const agreement = event.target.checked;
     const id = event.target.id;
     onInputHandler(id, agreement, agreement);
@@ -125,19 +120,6 @@ const CompanyRegisForm = props => {
               label={true}
               labelName='Email Perusahaan*'
               helperText='Silahkan input email perusahaan yang valid.'
-            />
-          </div>
-
-          <div className={classes.InputBox}>
-            <Input
-              inputType='input'
-              id='NPWP'
-              InputClass='Register'
-              validatorMethod={[VALIDATOR_MINLENGTH(6)]}
-              onInputHandler={onInputHandler}
-              label={true}
-              labelName='NPWP*'
-              helperText='Silahkan isi nomor NPWP perusahaan.'
             />
           </div>
 
@@ -204,18 +186,18 @@ const CompanyRegisForm = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    createCompany: newCompany => dispatch(actionCreators.createCompany(newCompany)),
+    createCompany: (newCompany) => dispatch(actionCreators.createCompany(newCompany)),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    login: payload => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
+    login: (payload) => dispatch({ type: actionTypes.AUTHLOGIN, payload }),
     authCompany: () => dispatch({ type: actionTypes.AUTHCOMPANY }),
   };
 };

@@ -82,33 +82,30 @@ $primaryColor: #f79f35;
     }
 
     .CompanyNameContainer {
-      @include flexCenter(row, flex-start, center);
+      @include flexCenter(row, center, flex-start);
+      flex-direction: column;
       width: 100%;
       h2 {
         text-align: start;
+        margin: 0;
       }
 
-      .VerificationTrueContainer {
-        @include flexCenter(row, flex-start, center);
-        margin-left: 15px;
-      }
       .VerificationFalse,
       .VerificationTrue {
         vertical-align: middle;
-        font-size: 20px;
+        font-size: 12px;
         font-weight: 400;
         font-style: italic;
         color: #fff;
         background-color: #f88424;
-        width: 100%;
-        max-width: 300px;
+        width: max-content;
         border-radius: 5px;
-        min-height: 30px;
-        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 5px 2px 2px;
       }
-      .VerificationFalse {
-        margin-left: 15px;
-      }
+
       .VerificationTrue {
         background-color: #18b715;
       }

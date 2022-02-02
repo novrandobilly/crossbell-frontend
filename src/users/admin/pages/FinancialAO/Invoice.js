@@ -26,7 +26,6 @@ const Invoice = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  console.log(orderData);
   const { getOrderInvoice } = props;
 
   const fetchPayment = useCallback(
@@ -110,7 +109,6 @@ const Invoice = (props) => {
     documentTitle: `invoice_${orderid}`,
     content: () => componentRef.current,
   });
-  console.log(orderData);
   let tax = 0;
   let dis = 0;
   let subTotal = 0;

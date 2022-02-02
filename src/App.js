@@ -40,6 +40,8 @@ const CompanyOrderForm = React.lazy(() => import('./users/company/pages/CompanyO
 const OrderBCForm = React.lazy(() => import('./users/company/pages/OrderBCForm/OrderBCForm'));
 const ExecutiveSearchForm = React.lazy(() => import('./users/company/pages/ExecutiveSearchForm'));
 const CompanyOrderList = React.lazy(() => import('./users/company/pages/CompanyOrderList/CompanyOrderList'));
+const RegistrationDetailsForm = React.lazy(() => import('./users/company/pages/RegistrationDetailsForm'));
+const PICDetailsForm = React.lazy(() => import('./users/company/pages/PICDetails'));
 const ExecutiveSearchDetail = React.lazy(() =>
   import('./users/company/pages/CompanyExecutiveSearch/ExecutiveSearchDetail')
 );
@@ -167,6 +169,8 @@ const App = (props) => {
             <Route path='/co/order/reguler' component={CompanyOrderForm} />
             <Route path='/co/order/candidate' component={OrderBCForm} />
             <Route path='/co/notifications' component={NotificationsAO} />
+            <Route path='/co/:companyid/registration-details' component={RegistrationDetailsForm} />
+            <Route path='/co/:companyid/pic-details' component={PICDetailsForm} />
             <Route path='/co/:companyid/listOrder' component={CompanyOrderList} />
             <Route path='/co/:companyid/jobList' component={CompanyJobList} />
             <Route path='/co/:orderid/invoice' component={Invoice} />
