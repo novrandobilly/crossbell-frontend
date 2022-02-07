@@ -78,7 +78,7 @@ const Educations = (props) => {
         show={openDeleteEducation}
         onCancel={onCloseDeleteEducationHandler}
         style={{ top: '25vh', maxWidth: '400px', marginLeft: '-200px', height: '25vh', overflowY: 'auto' }}>
-        <h3>Hapus Pekerjaan?</h3>
+        <h3>Hapus Pendidikan?</h3>
         {props.applicant.isLoading ? (
           <LoadingBar />
         ) : (
@@ -108,9 +108,9 @@ const Educations = (props) => {
                 {edu.endDate ? moment(edu.endDate).format('MMMM YYYY') : 'Sekarang'}
               </h3>
               <h4 className={styles.EducationTitle}>
-                {edu.major} - {edu.school}, {edu.location}
+                {edu.major} - {edu.degree}, {edu.school}, {edu.location}
               </h4>
-              <h4 className={styles.EducationTitle}>Score/IPK: {edu.IPK}</h4>
+              {edu.IPK && <h4 className={styles.EducationTitle}>Score/IPK: {edu.IPK}</h4>}
               {splitParagraph(edu.description)}
               {props.EditAuthorized && (
                 <Fragment>

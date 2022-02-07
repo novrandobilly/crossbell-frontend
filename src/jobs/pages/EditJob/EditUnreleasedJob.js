@@ -26,7 +26,7 @@ import Slider from '@material-ui/core/Slider';
 
 import styles from '../NewJob/NewJob.module.scss';
 
-const EditUnreleasedJob = props => {
+const EditUnreleasedJob = (props) => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
   const [maxSlot, setMaxSlot] = useState(null);
@@ -57,7 +57,7 @@ const EditUnreleasedJob = props => {
       try {
         const res = await getOneJob(jobsid);
         res.specialRequirement.forEach((requirement, i) => {
-          setRequirement(prevState => [...prevState, 'req']);
+          setRequirement((prevState) => [...prevState, 'req']);
         });
         setFieldOfWork({ field: res?.fieldOfWork[0] });
         setEmployment(res.employment);
@@ -78,7 +78,7 @@ const EditUnreleasedJob = props => {
         if (auth.userId) {
           const res = await getOneCompany({ userId: auth.userId });
           setMaxSlot(
-            res.company.slotREG?.filter(slot => {
+            res.company.slotREG?.filter((slot) => {
               return slot.status === 'Idle';
             }).length
           );
@@ -198,7 +198,7 @@ const EditUnreleasedJob = props => {
     requirementList,
   ]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.createJobFail();
@@ -233,7 +233,7 @@ const EditUnreleasedJob = props => {
     }
   };
 
-  const onSaveHandler = async event => {
+  const onSaveHandler = async (event) => {
     event.preventDefault();
 
     const jobData = {
@@ -285,21 +285,21 @@ const EditUnreleasedJob = props => {
     }
   };
 
-  const handleJobExperienceChange = e => {
+  const handleJobExperienceChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setJobExperience(e.target.value);
   };
 
-  const handleEmploymentChange = e => {
+  const handleEmploymentChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setEmployment(e.target.value);
   };
 
-  const handleEducationChange = e => {
+  const handleEducationChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -320,20 +320,20 @@ const EditUnreleasedJob = props => {
     onInputHandler('rangeAge', newValue, true);
   };
 
-  const onCheckedInputHandler = e => {
+  const onCheckedInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
   };
 
-  const addRequirement = e => {
+  const addRequirement = (e) => {
     e.preventDefault();
-    setRequirement(req => [...req, 'req']);
+    setRequirement((req) => [...req, 'req']);
   };
 
   const onRequirementsUpdate = (event, reqIndex) => {
     let inputValue = event.target.value;
-    setRequirementList(prevState => {
+    setRequirementList((prevState) => {
       let newState = [...prevState];
       newState[reqIndex] = inputValue;
       return newState;
@@ -380,10 +380,10 @@ const EditUnreleasedJob = props => {
                 if (optA > optB) return 1;
                 return 0;
               })}
-              getOptionLabel={option => option.field}
+              getOptionLabel={(option) => option.field}
               value={fieldOfWork}
               onChange={onFieldOfWorkChangeHandler}
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
 
@@ -404,7 +404,7 @@ const EditUnreleasedJob = props => {
               inputValue={inputLocation}
               onInputChange={onInputLocationHandler}
               freeSolo
-              renderInput={params => <CustomTextField {...params} />}
+              renderInput={(params) => <CustomTextField {...params} />}
             />
           </div>
         </div>
@@ -427,10 +427,12 @@ const EditUnreleasedJob = props => {
           <div className={styles.Experiences}>
             <p>Syarat Pengalaman Kerja</p>
             <select id='jobExperience' name='jobExperience' value={jobExperience} onChange={handleJobExperienceChange}>
+              <option value='Fresh Graduate'>Fresh Graduate</option>
               <option value='<2'>Kurang dari 2 tahun</option>
               <option value='2-5'>2 - 5 tahun</option>
               <option value='5-10'>5 - 10 tahun</option>
-              <option value='>10'>Lebih dari 10 tahun</option>
+              <option value='11-20'>11 - 20 tahun</option>
+              <option value='>20'>Lebih dari 20 tahun</option>
             </select>
           </div>
 
@@ -546,7 +548,7 @@ const EditUnreleasedJob = props => {
                   inputType='input'
                   id={`requirement_${i}`}
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                  onChange={event => onRequirementsUpdate(event, i)}
+                  onChange={(event) => onRequirementsUpdate(event, i)}
                   initIsValid={true}
                   initValue={requirementList[i]}
                 />
@@ -628,20 +630,20 @@ const EditUnreleasedJob = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     releaseJob: (jobData, authData) => dispatch(actionCreators.releaseJob(jobData, authData)),
     editJobDraft: (jobData, authData) => dispatch(actionCreators.editJobDraft(jobData, authData)),
-    getOneCompany: payload => dispatch(actionCreators.getOneCompany(payload)),
+    getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
-    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
+    getOneJob: (jobsid) => dispatch(actionCreators.getOneJob(jobsid)),
   };
 };
 

@@ -26,7 +26,7 @@ import Slider from '@material-ui/core/Slider';
 
 import styles from './NewJob.module.scss';
 
-const NewJob = props => {
+const NewJob = (props) => {
   const [maxSlot, setMaxSlot] = useState(null);
   const [jobExperience, setJobExperience] = useState('');
   const [employment, setEmployment] = useState('');
@@ -121,7 +121,7 @@ const NewJob = props => {
             token: auth.token,
           });
           setMaxSlot(
-            res.company.slotREG?.filter(slot => {
+            res.company.slotREG?.filter((slot) => {
               return slot.status === 'Idle';
             }).length
           );
@@ -133,7 +133,7 @@ const NewJob = props => {
     getSlot();
   }, [onInputHandler, getOneCompany, auth, rangeAge, fieldOfWork, requirementList]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.createJobFail();
@@ -167,8 +167,7 @@ const NewJob = props => {
     }
   };
 
-  console.log(formState.inputs.specialRequirement.value);
-  const onSaveHandler = async event => {
+  const onSaveHandler = async (event) => {
     event.preventDefault();
     const jobData = {
       jobTitle: formState.inputs.jobTitle.value,
@@ -198,21 +197,21 @@ const NewJob = props => {
     }
   };
 
-  const handleJobExperienceChange = e => {
+  const handleJobExperienceChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setJobExperience(e.target.value);
   };
 
-  const handleEmploymentChange = e => {
+  const handleEmploymentChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setEmployment(elementValue);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
@@ -227,7 +226,7 @@ const NewJob = props => {
     onInputHandler('placementLocation', value, true);
   };
 
-  const onCheckedInputHandler = e => {
+  const onCheckedInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
@@ -266,15 +265,15 @@ const NewJob = props => {
     if (key !== 'default') cities = [...cities, ...CitiesData[key]];
   }
 
-  const addRequirement = e => {
+  const addRequirement = (e) => {
     e.preventDefault();
-    setRequirement(req => [...req, 'req']);
+    setRequirement((req) => [...req, 'req']);
     // onInputHandler(`requirement_${requirement.length}`, '', true);
   };
 
   const onRequirementsUpdate = (event, reqIndex) => {
     let inputValue = event.target.value;
-    setRequirementList(prevState => {
+    setRequirementList((prevState) => {
       let newState = [...prevState];
       newState[reqIndex] = inputValue;
       onInputHandler('specialRequirement', newState, true);
@@ -312,11 +311,11 @@ const NewJob = props => {
               if (optA > optB) return 1;
               return 0;
             })}
-            getOptionLabel={option => option.field}
+            getOptionLabel={(option) => option.field}
             onChange={onFieldOfWorkHandler}
             inputValue={inputFieldOfWork}
             onInputChange={onInputFieldOfWorkHandler}
-            renderInput={params => <CustomTextField {...params} />}
+            renderInput={(params) => <CustomTextField {...params} />}
           />
         </div>
 
@@ -336,7 +335,7 @@ const NewJob = props => {
             inputValue={inputLocation}
             onInputChange={onInputLocationHandler}
             freeSolo
-            renderInput={params => <CustomTextField {...params} />}
+            renderInput={(params) => <CustomTextField {...params} />}
           />
         </div>
       </div>
@@ -356,10 +355,12 @@ const NewJob = props => {
         <div className={styles.Experiences}>
           <p>Syarat Pengalaman Kerja</p>
           <select id='jobExperience' name='jobExperience' value={jobExperience} onChange={handleJobExperienceChange}>
+            <option value='Fresh Graduate'>Fresh Graduate</option>
             <option value='<2'>Kurang dari 2 tahun</option>
             <option value='2-5'>2 - 5 tahun</option>
             <option value='5-10'>5 - 10 tahun</option>
-            <option value='>10'>Lebih dari 10 tahun</option>
+            <option value='11-20'>11 - 20 tahun</option>
+            <option value='>20'>Lebih dari 20 tahun</option>
           </select>
         </div>
 
@@ -470,7 +471,7 @@ const NewJob = props => {
                 inputType='input'
                 id={`requirement_${i}`}
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onChange={event => onRequirementsUpdate(event, i)}
+                onChange={(event) => onRequirementsUpdate(event, i)}
                 initIsValid={true}
               />
             </div>
@@ -554,17 +555,17 @@ const NewJob = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     createJob: (jobData, authData) => dispatch(actionCreators.createJob(jobData, authData)),
     saveJobDraft: (jobData, authData) => dispatch(actionCreators.saveJobDraft(jobData, authData)),
-    getOneCompany: payload => dispatch(actionCreators.getOneCompany(payload)),
+    getOneCompany: (payload) => dispatch(actionCreators.getOneCompany(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
   };
