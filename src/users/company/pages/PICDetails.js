@@ -105,7 +105,7 @@ const PICDetails = ({ isLoading, auth, admin, updateCompanyPIC, updateCompanyFai
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
           label={true}
-          labelName='Nomor telepon / Whatsapp*'
+          labelName='Telepon/Whatsapp*'
         />
 
         <Input
@@ -115,7 +115,7 @@ const PICDetails = ({ isLoading, auth, admin, updateCompanyPIC, updateCompanyFai
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
           label={true}
-          labelName='Nomor Telepon Kantor*'
+          labelName='Telepon Kantor*'
         />
 
         <div className={styles['submit-button-container']}>

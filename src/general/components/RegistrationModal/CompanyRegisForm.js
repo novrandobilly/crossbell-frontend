@@ -60,6 +60,7 @@ const CompanyRegisForm = (props) => {
         token: res.token,
         userId: res.userId,
         isCompany: res.isCompany,
+        isActive: res.isActive,
       });
       props.history.push(`/co/${res.userId}/registration-details`);
     } catch (err) {

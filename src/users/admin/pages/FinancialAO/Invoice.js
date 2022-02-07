@@ -326,6 +326,17 @@ const Invoice = (props) => {
                 );
               })}
           </div>
+          {orderData?.totalPrice <= payOff ? (
+            <p className={styles.PaidStatus}>
+              Pesanan anda sudah terbayar <strong>LUNAS</strong> dan sedang diproses tim Crossbell. Silahkan periksa
+              email anda untuk mengetahui aktivasi slot.
+            </p>
+          ) : (
+            <p className={styles.PendingStatus}>
+              Pesanan anda telah kami terima, silahkan lakukan pembayaran untuk melunasi tagihan & upload bukti
+              pembayaran agar pesanan anda dapat segera kami proses. Terima kasih.
+            </p>
+          )}
           {props.admin.isVerificator && (
             <div className={styles.PaymentCardFooter}>
               <button

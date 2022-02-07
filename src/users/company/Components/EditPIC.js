@@ -13,7 +13,7 @@ import Input from '../../../shared/UI_Element/Input';
 
 import styles from './EditPIC.module.scss';
 
-const EditPIC = props => {
+const EditPIC = (props) => {
   const { companyid } = useParams();
 
   const [data, setData] = useState();
@@ -24,7 +24,7 @@ const EditPIC = props => {
 
   const { getOneCompany } = props;
   useEffect(() => {
-    getOneCompany({ userId: companyid }).then(res => {
+    getOneCompany({ userId: companyid }).then((res) => {
       setData(res.company);
     });
   }, [getOneCompany, companyid]);
@@ -55,7 +55,7 @@ const EditPIC = props => {
     false
   );
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -128,7 +128,7 @@ const EditPIC = props => {
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
           label={true}
-          labelName='Nomor telepon / Whatsapp*'
+          labelName='Telepon/Whatsapp*'
           initValue={data.picPhone}
           initIsValid={data.picPhone}
         />
@@ -171,7 +171,7 @@ const EditPIC = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.company.isLoading,
     error: state.company.error,
@@ -180,12 +180,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateCompanyFail: () => dispatch({ type: actionTypes.UPDATECOMPANYFAIL }),
     resetCompany: () => dispatch({ type: actionTypes.COMPANYRESET }),
-    getOneCompany: data => dispatch(actionCreators.getOneCompany(data)),
-    updateCompanyPIC: CompanyData => dispatch(actionCreators.updateCompanyPIC(CompanyData)),
+    getOneCompany: (data) => dispatch(actionCreators.getOneCompany(data)),
+    updateCompanyPIC: (CompanyData) => dispatch(actionCreators.updateCompanyPIC(CompanyData)),
   };
 };
 

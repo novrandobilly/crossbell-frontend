@@ -5,7 +5,7 @@ import EditPIC from './EditPIC';
 import EditWhiteIcon from '../../../assets/icons/edit-white.svg';
 import styles from './PersonInCharge.module.scss';
 
-const PersonInCharge = props => {
+const PersonInCharge = (props) => {
   const [openEditPIC, setOpenEditPIC] = useState(false);
 
   const openEditPICHandler = () => setOpenEditPIC(true);
@@ -31,8 +31,8 @@ const PersonInCharge = props => {
           <p>Nama: {props.name}</p>
           <p>Posisi: {props.jobTitle} </p>
           <p>Email: {props.email}</p>
-          <p>Telefon: {props.phone}</p>
-          <p>Kantor: {props.officePhone}</p>
+          <p>Telepon/Whatsapp: {props.phone}</p>
+          <p>Telepon Kantor: {props.officePhone}</p>
           <p>NPWP Perusahaan: {props.npwp}</p>
         </div>
         {props.EditAuthorization && (
