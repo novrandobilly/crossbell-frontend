@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actionCreators from '../../store/actions';
 import * as actionTypes from '../../store/actions/actions';
+import { LoginContext } from '../../store/LoginContext';
 
 import Modal from '../../shared/UI_Element/Modal';
 import LoadingBar from '../../shared/UI_Element/Spinner/LoadingBar';
@@ -12,10 +13,11 @@ import BlankCompany from '../../assets/images/Company.png';
 
 import styles from './JobCard.module.scss';
 
-const JobCard = props => {
+const JobCard = (props) => {
   const [jobId, setJobId] = useState(null);
   const [applicantList, setApplicantList] = useState([]);
   const [applyConfirm, setApplyConfirm] = useState(false);
+  const loginCtx = useContext(LoginContext);
 
   //=====================================INSTANT APPLY=====================================
   const onOpenApplyConfirmHandler = () => setApplyConfirm(true);
@@ -55,13 +57,21 @@ const JobCard = props => {
 
   let instantApplyButton;
 
+  if (!props.auth.isCompany && !props.admin.isAdmin) {
+    instantApplyButton = (
+      <Button btnType='InstantApply' onClick={() => loginCtx.showLogin()}>
+        Apply
+      </Button>
+    );
+  }
+
   if (!props.auth.isCompany && props.auth.token) {
     instantApplyButton = (
       <Button
         btnType='InstantApply'
         onClick={onOpenApplyConfirmHandler}
-        disabled={applicantList.some(appId => appId.toString() === props.auth.userId.toString())}>
-        {applicantList.some(appId => appId.toString() === props.auth.userId.toString()) ? 'Applied' : 'Apply'}
+        disabled={applicantList.some((appId) => appId.toString() === props.auth.userId.toString())}>
+        {applicantList.some((appId) => appId.toString() === props.auth.userId.toString()) ? 'Applied' : 'Apply'}
       </Button>
     );
   }
@@ -143,7 +153,7 @@ const JobCard = props => {
             <span className={styles.PlacementLocationProps}>, {props.placementLocation}</span>
           </div>
           <div>
-            <em>{props.fieldOfWork?.filter(fow => fow).join(', ')}</em>
+            <em>{props.fieldOfWork?.filter((fow) => fow).join(', ')}</em>
           </div>
           <div className={styles.BottomContent}>
             <p className={styles.BottomSalary}>
@@ -157,17 +167,18 @@ const JobCard = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     companies: state.company.companies,
     auth: state.auth,
+    admin: state.admin,
     job: state.job,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    applyJob: payload => dispatch(actionCreators.applyJob(payload)),
+    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
     createJobFail: () => dispatch({ type: actionTypes.CREATEJOBFAIL }),
     resetJob: () => dispatch({ type: actionTypes.JOBRESET }),
   };

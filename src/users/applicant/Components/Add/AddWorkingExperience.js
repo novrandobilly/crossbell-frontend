@@ -15,7 +15,7 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import styles from './AddWorkingExperience.module.scss';
 
-const AddWorkingExperience = props => {
+const AddWorkingExperience = (props) => {
   const { applicantid } = useParams();
   const [stillWorking, setStillWorking] = useState(false);
 
@@ -43,7 +43,7 @@ const AddWorkingExperience = props => {
       },
       description: {
         value: '',
-        isValid: false,
+        isValid: true,
       },
     },
     false
@@ -53,7 +53,7 @@ const AddWorkingExperience = props => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -79,8 +79,8 @@ const AddWorkingExperience = props => {
       console.log(err);
     }
   };
-
-  const dateHandler = event => {
+  console.log(formState);
+  const dateHandler = (event) => {
     setStillWorking(!stillWorking);
   };
 
@@ -168,6 +168,7 @@ const AddWorkingExperience = props => {
           onInputHandler={onInputHandler}
           label={true}
           labelName='Uraian pekerjaan (optional)'
+          initIsValid={true}
           rows={10}
           style={{ border: '2px solid #f79f35', outline: 'none' }}
         />
@@ -202,7 +203,7 @@ const AddWorkingExperience = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -210,11 +211,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantExperience: ApplicantData => dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
+    updateApplicantExperience: (ApplicantData) => dispatch(actionCreators.updateApplicantExperience(ApplicantData)),
   };
 };
 

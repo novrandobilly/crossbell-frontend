@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import './fonts/Lato/Lato-Regular.ttf';
 import './fonts/Lato/Lato-Bold.ttf';
+import { LoginContextProvider } from './store/LoginContext';
 
 import './index.css';
 import App from './App';
@@ -34,9 +35,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <LoginContextProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </LoginContextProvider>,
   document.getElementById('root')
 );
 

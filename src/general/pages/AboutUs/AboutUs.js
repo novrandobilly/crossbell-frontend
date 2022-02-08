@@ -60,9 +60,8 @@ const AboutUs = () => {
         <h1>Tentang Crossbell</h1>
         <hr />
         <p>
-          Crossbell dicanangkan sejak tahun 2020 dan resmi beroperasi pada Januari 2022. Dengan semangat untuk membantu
-          mempertemukan kandidat berkualitas dan perusahaan pencari tenaga kerja, Crossbell hadir menjadi wadah awal
-          bagi para kandidat untuk dapat berkarir di perusahaan favorit mereka.
+          Dengan semangat untuk membantu mempertemukan kandidat berkualitas dan perusahaan pencari tenaga kerja,
+          Crossbell hadir menjadi wadah awal bagi para kandidat untuk dapat berkarir di perusahaan favorit mereka.
         </p>
         <p>
           Terlebih dari itu, Crossbell juga membantu para perusahaan mendapatkan kandidat-kandidat berkualitas untuk

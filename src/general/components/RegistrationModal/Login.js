@@ -44,7 +44,9 @@ const Login = (props) => {
         throw new Error(res.message);
       }
       props.onSucceedLogin();
-      props.history.push(res.isCompany ? `/co/${res.userId}/profile` : `/ap/${res.userId}/profile`);
+      if (props.location.pathname === '/') {
+        props.history.push(res.isCompany ? `/co/${res.userId}/profile` : `/ap/${res.userId}/profile`);
+      }
     } catch (err) {
       console.log(err);
     }

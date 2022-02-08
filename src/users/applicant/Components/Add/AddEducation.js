@@ -135,7 +135,6 @@ const AddEducation = (props) => {
     setInputSchool(newValue);
     onInputHandler('school', newValue, true);
   };
-  console.log(formState);
 
   let formContent = (
     <form className={styles.AddEducationFormContainer} onSubmit={onSubmitHandler}>

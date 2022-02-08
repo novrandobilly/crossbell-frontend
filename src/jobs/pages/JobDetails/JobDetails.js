@@ -1,9 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useContext } from 'react';
 import { useParams, Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions';
 import { splitParagraph, thousandSeparator } from '../../../shared/utils/sharedFunctions';
+import { LoginContext } from '../../../store/LoginContext';
 
 import Modal from '../../../shared/UI_Element/Modal';
 import BlankCompany from '../../../assets/images/Company.png';
@@ -11,10 +12,11 @@ import LoadingBar from '../../../shared/UI_Element/Spinner/LoadingBar';
 
 import styles from './JobDetails.module.scss';
 
-const JobDetails = props => {
+const JobDetails = (props) => {
   const { jobsid } = useParams();
   const [loadedJob, setLoadedJob] = useState(null);
   const [applyConfirm, setApplyConfirm] = useState(false);
+  const loginCtx = useContext(LoginContext);
 
   const onOpenApplyConfirmHandler = () => setApplyConfirm(true);
   const onCloseApplyConfirmHandler = () => setApplyConfirm(false);
@@ -36,7 +38,7 @@ const JobDetails = props => {
     fetchJob();
   }, [getOneJob, jobsid, props.auth.token, props.admin.token]);
 
-  const onApplyHandler = async event => {
+  const onApplyHandler = async (event) => {
     event.preventDefault();
     const payload = {
       token: props.auth.token,
@@ -89,7 +91,6 @@ const JobDetails = props => {
   // };
 
   let jobDetails = <LoadingBar />;
-  console.log(loadedJob);
   if (loadedJob) {
     jobDetails = (
       <div className={styles.JobDetailsContainer}>
@@ -162,12 +163,18 @@ const JobDetails = props => {
                     <button
                       className={styles.ApplyButton}
                       onClick={onOpenApplyConfirmHandler}
-                      disabled={loadedJob.jobApplicants.some(appId => {
+                      disabled={loadedJob.jobApplicants.some((appId) => {
                         return appId.id.toString() === props.auth.userId.toString();
                       })}>
-                      {loadedJob.jobApplicants.some(appId => appId.id.toString() === props.auth.userId.toString())
+                      {loadedJob.jobApplicants.some((appId) => appId.id.toString() === props.auth.userId.toString())
                         ? 'Applied'
                         : 'Apply'}
+                    </button>
+                  )}
+
+                  {!props.auth.isCompany && !props.auth.token && (
+                    <button className={styles.ApplyButton} onClick={() => loginCtx.showLogin()}>
+                      Apply
                     </button>
                   )}
                 </div>
@@ -279,7 +286,7 @@ const JobDetails = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     admin: state.admin,
@@ -288,10 +295,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOneJob: jobsid => dispatch(actionCreators.getOneJob(jobsid)),
-    applyJob: payload => dispatch(actionCreators.applyJob(payload)),
+    getOneJob: (jobsid) => dispatch(actionCreators.getOneJob(jobsid)),
+    applyJob: (payload) => dispatch(actionCreators.applyJob(payload)),
     releaseJob: (jobData, authData) => dispatch(actionCreators.releaseJob(jobData, authData)),
   };
 };

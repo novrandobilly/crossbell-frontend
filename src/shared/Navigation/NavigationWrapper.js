@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions/index';
+import { LoginContext } from '../../store/LoginContext';
 
 import MainDrawer from './MainDrawer';
 import NavigationLinks from './NavigationLinks';
@@ -16,9 +17,10 @@ import styles from './NavigationWrapper.module.scss';
 const NavigationWrapper = ({ admin, auth, getAdminNotifications, getCompanyNotifications, notif }) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [showAuthForm, setShowAuthForm] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [notificationsLength, setNotificationsLength] = useState(0);
+
+  const loginCtx = useContext(LoginContext);
 
   const toggleDrawerHandler = () => {
     setDrawerIsOpen(!drawerIsOpen);
@@ -27,14 +29,14 @@ const NavigationWrapper = ({ admin, auth, getAdminNotifications, getCompanyNotif
   const onSwitchToRegister = () => setIsLogin(false);
   const onSwitchToLogin = () => setIsLogin(true);
   const showLogin = () => {
-    setShowAuthForm(true);
+    loginCtx.showLogin();
     setIsLogin(true);
   };
   const showRegistration = () => {
-    setShowAuthForm(true);
+    loginCtx.showLogin();
     setIsLogin(false);
   };
-  const onCancelAuth = () => setShowAuthForm(false);
+  const onCancelAuth = () => loginCtx.closeLogin();
 
   useEffect(() => {
     let mounted = true;
@@ -63,8 +65,8 @@ const NavigationWrapper = ({ admin, auth, getAdminNotifications, getCompanyNotif
   return (
     <React.Fragment>
       <Modal
-        show={showAuthForm}
-        onCancel={onCancelAuth}
+        show={loginCtx.login}
+        onCancel={loginCtx.closeLogin}
         headerText={isLogin ? 'Login ' : 'Registration Form'}
         style={{
           top: !isLogin && viewportWidth > '480' ? '10vh' : !isLogin && '2vh',

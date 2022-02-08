@@ -14,7 +14,7 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import styles from './AddOrganization.module.scss';
 
-const AddOrganization = props => {
+const AddOrganization = (props) => {
   const { applicantid } = useParams();
 
   const [stillMember, setStillMember] = useState(false);
@@ -28,7 +28,7 @@ const AddOrganization = props => {
 
       startDate: {
         value: '',
-        isValid: true,
+        isValid: false,
       },
       endDate: {
         value: '',
@@ -36,7 +36,7 @@ const AddOrganization = props => {
       },
       description: {
         value: '',
-        isValid: false,
+        isValid: true,
       },
     },
     false
@@ -46,7 +46,7 @@ const AddOrganization = props => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (!formState.formIsValid) {
@@ -82,7 +82,8 @@ const AddOrganization = props => {
     }
   };
 
-  const dateHandler = event => {
+  const dateHandler = (event) => {
+    if (!stillMember) onInputHandler('endDate', null, true);
     setStillMember(!stillMember);
   };
 
@@ -140,21 +141,20 @@ const AddOrganization = props => {
         label={true}
         labelName='Deskripsi Organisasi (optional)'
         rows={10}
+        initIsValid={true}
         style={{ border: '2px solid #f79f35', outline: 'none' }}
       />
 
       <div className={styles.SubmitButtonContainer}>
-        <button variant='outlined' type='button' disableElevation style={{ marginRight: '16px' }}>
-          Back
-        </button>
+        <button type='button'>Back</button>
 
-        <button disabled={!formState.formIsValid} variant='contained' color='primary' type='submit'>
+        <button disabled={!formState.formIsValid} type='submit'>
           Save
         </button>
       </div>
     </div>
   );
-
+  console.log(formState);
   if (props.isLoading) {
     formContent = <LoadingBar />;
   }
@@ -173,7 +173,7 @@ const AddOrganization = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.applicant.isLoading,
     error: state.applicant.error,
@@ -181,11 +181,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
-    updateApplicantOrganization: ApplicantData => dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
+    updateApplicantOrganization: (ApplicantData) => dispatch(actionCreators.updateApplicantOrganization(ApplicantData)),
   };
 };
 
