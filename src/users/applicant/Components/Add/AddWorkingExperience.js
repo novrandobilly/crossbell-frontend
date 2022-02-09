@@ -79,7 +79,6 @@ const AddWorkingExperience = (props) => {
       console.log(err);
     }
   };
-  console.log(formState);
   const dateHandler = (event) => {
     setStillWorking(!stillWorking);
   };

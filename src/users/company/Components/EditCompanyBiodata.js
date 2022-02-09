@@ -106,6 +106,7 @@ const EditCompanyBiodata = (props) => {
     const arrayOfIndustry = newValue.map((item) => item.industry);
     onInputHandler('industry', arrayOfIndustry, arrayOfIndustry.length > 0);
   };
+
   const onInputChangeHandler = (event, newValue) => {
     setInputIndustry(newValue);
   };

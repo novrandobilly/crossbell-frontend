@@ -22,6 +22,7 @@ import {
 } from '../../../shared/utils/validator';
 import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
+import EducationMajor from '../../../shared/UI_Element/EducationMajor';
 import Slider from '@material-ui/core/Slider';
 
 import styles from '../NewJob/NewJob.module.scss';
@@ -43,6 +44,9 @@ const EditUnreleasedJob = (props) => {
   const [rangeAge, setRangeAge] = useState([18, 35]);
   const [fieldOfWork, setFieldOfWork] = useState([]);
 
+  const [eduMajor, setEduMajor] = useState([]);
+  const [inputEduMajor, setInputEduMajor] = useState('');
+
   const [addSlotModal, setAddSlotModal] = useState(false);
   const openAddSlot = () => setAddSlotModal(true);
   const closeAddSlot = () => setAddSlotModal(false);
@@ -56,6 +60,15 @@ const EditUnreleasedJob = (props) => {
     const fetchJob = async () => {
       try {
         const res = await getOneJob(jobsid);
+        let eduArray = [];
+        if (res.major?.length) {
+          eduArray = res.major
+            .filter((major) => major)
+            .map((major) => {
+              return { major };
+            });
+        }
+
         res.specialRequirement.forEach((requirement, i) => {
           setRequirement((prevState) => [...prevState, 'req']);
         });
@@ -66,6 +79,7 @@ const EditUnreleasedJob = (props) => {
         setJobExperience(res.jobExperience);
         setRequirementList(res.specialRequirement);
         setRangeAge(res.rangeAge);
+        setEduMajor(eduArray);
         setLoadedJob(res);
       } catch (err) {
         console.log(err);
@@ -124,6 +138,10 @@ const EditUnreleasedJob = (props) => {
         value: loadedJob ? loadedJob.emailRecipient : '',
         isValid: loadedJob && loadedJob.emailRecipient ? true : false,
       },
+      major: {
+        value: loadedJob ? loadedJob.major : [],
+        isValid: true,
+      },
 
       employment: {
         value: loadedJob ? loadedJob.employment : '',
@@ -171,6 +189,8 @@ const EditUnreleasedJob = (props) => {
     }
   }, [loadedJob, onInputHandler]);
 
+  console.log(loadedJob);
+
   useEffect(() => {
     if (loadedJob) {
       const salary = document.getElementById('salary');
@@ -212,6 +232,7 @@ const EditUnreleasedJob = (props) => {
       jobExperience: formState.inputs.jobExperience.value,
       rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
+      major: formState.inputs.major.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -244,6 +265,7 @@ const EditUnreleasedJob = (props) => {
       jobExperience: formState.inputs.jobExperience.value,
       rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
+      major: formState.inputs.major.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -338,6 +360,20 @@ const EditUnreleasedJob = (props) => {
       newState[reqIndex] = inputValue;
       return newState;
     });
+  };
+
+  const onAutoCompleteEduMajorHandler = (event, newValue) => {
+    if (!newValue[newValue.length - 1].major) {
+      setEduMajor((prev) => [...prev, { major: inputEduMajor }]);
+    } else {
+      setEduMajor(newValue);
+    }
+    const arrayOfEduMajor = newValue.map((item) => item.major);
+    onInputHandler('major', arrayOfEduMajor, arrayOfEduMajor.length > 0);
+  };
+
+  const onInputChangeEduMajorHandler = (event, newValue) => {
+    setInputEduMajor(newValue);
   };
 
   let cities = [];
@@ -444,6 +480,35 @@ const EditUnreleasedJob = (props) => {
               <option value='intern'>Karyawan magang (Intern)</option>
             </select>
           </div>
+        </div>
+
+        <div className={styles.EducationMajor}>
+          <p>Bidang Pendidikan</p>
+
+          <Autocomplete
+            id='eduMajor'
+            name='eduMajor'
+            multiple
+            limitTags={4}
+            disableCloseOnSelect
+            getOptionDisabled={() => eduMajor.length >= 4}
+            freeSolo
+            options={EducationMajor.sort((a, b) => {
+              const optA = a.major.toLowerCase();
+              const optB = b.major.toLowerCase();
+              if (optA < optB) return -1;
+              if (optA > optB) return 1;
+              return 0;
+            })}
+            onChange={onAutoCompleteEduMajorHandler}
+            value={eduMajor || []}
+            onInputChange={onInputChangeEduMajorHandler}
+            getOptionLabel={(option) => `${option.major}`}
+            renderInput={(params) => <CustomTextField {...params} />}
+          />
+          <p className={styles.MajorNote}>
+            Silahkan kosongkan <strong>Bidang Pendidikan</strong> apabila lowongan ini terbuka untuk seluruh jurusan
+          </p>
         </div>
 
         <div className={styles.AgeRangeRequirements}>

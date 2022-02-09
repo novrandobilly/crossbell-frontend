@@ -9,6 +9,7 @@ import * as actionCreators from '../../../store/actions';
 import HeaderBanner from '../../../shared/UI_Element/HeaderBanner';
 import CompanyMeeting from '../../../assets/images/CompanyMeeting.png';
 import Modal from '../../../shared/UI_Element/Modal';
+import EducationMajor from '../../../shared/UI_Element/EducationMajor';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import { CustomTextField } from '../../../shared/UI_Element/CustomMUIComponents';
@@ -38,6 +39,9 @@ const NewJob = (props) => {
   const [requirementList, setRequirementList] = useState([]);
   const [rangeAge, setRangeAge] = useState([18, 35]);
   const [fieldOfWork, setFieldOfWork] = useState('');
+  const [eduMajor, setEduMajor] = useState([]);
+  const [inputEduMajor, setInputEduMajor] = useState('');
+
   const [inputFieldOfWork, setInputFieldOfWork] = useState('');
 
   const [addSlotModal, setAddSlotModal] = useState(false);
@@ -81,6 +85,10 @@ const NewJob = (props) => {
         value: '',
         isValid: true,
       },
+      major: {
+        value: [],
+        isValid: true,
+      },
 
       salary: {
         value: '',
@@ -110,7 +118,6 @@ const NewJob = (props) => {
     },
     false
   );
-
   const { getOneCompany, auth } = props;
   useEffect(() => {
     const getSlot = async () => {
@@ -147,6 +154,7 @@ const NewJob = (props) => {
       jobExperience: formState.inputs.jobExperience.value,
       rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
+      major: formState.inputs.major.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -177,6 +185,7 @@ const NewJob = (props) => {
       jobExperience: formState.inputs.jobExperience.value,
       rangeAge: formState.inputs.rangeAge.value,
       educationalStage: formState.inputs.educationalStage.value,
+      major: formState.inputs.major.value,
       specialRequirement: formState.inputs.specialRequirement.value,
       emailRecipient: formState.inputs.emailRecipient.value,
       employment: formState.inputs.employment.value,
@@ -281,6 +290,20 @@ const NewJob = (props) => {
     });
   };
 
+  const onAutoCompleteEduMajorHandler = (event, newValue) => {
+    if (!newValue[newValue.length - 1].major) {
+      setEduMajor((prev) => [...prev, { major: inputEduMajor }]);
+    } else {
+      setEduMajor(newValue);
+    }
+    const arrayOfEduMajor = newValue.map((item) => item.major);
+    onInputHandler('major', arrayOfEduMajor, arrayOfEduMajor.length > 0);
+  };
+
+  const onInputChangeEduMajorHandler = (event, newValue) => {
+    setInputEduMajor(newValue);
+  };
+
   let formContent = (
     <form className={styles.NewJobContainer}>
       <h1 className={styles.NewJobTitle}>
@@ -372,6 +395,34 @@ const NewJob = (props) => {
             <option value='intern'>Karyawan magang (Intern)</option>
           </select>
         </div>
+      </div>
+
+      <div className={styles.EducationMajor}>
+        <p>Bidang Pendidikan</p>
+        <Autocomplete
+          id='eduMajor'
+          name='eduMajor'
+          multiple
+          limitTags={4}
+          disableCloseOnSelect
+          getOptionDisabled={() => eduMajor.length >= 4}
+          freeSolo
+          options={EducationMajor.sort((a, b) => {
+            const optA = a.major.toLowerCase();
+            const optB = b.major.toLowerCase();
+            if (optA < optB) return -1;
+            if (optA > optB) return 1;
+            return 0;
+          })}
+          onChange={onAutoCompleteEduMajorHandler}
+          value={eduMajor || []}
+          onInputChange={onInputChangeEduMajorHandler}
+          getOptionLabel={(option) => `${option.major}`}
+          renderInput={(params) => <CustomTextField {...params} />}
+        />
+        <p className={styles.MajorNote}>
+          Silahkan kosongkan <strong>Bidang Pendidikan</strong> apabila lowongan ini terbuka untuk seluruh jurusan
+        </p>
       </div>
 
       <div className={styles.AgeRangeRequirements}>
