@@ -317,7 +317,7 @@ const NewJob = (props) => {
         validatorMethod={[VALIDATOR_REQUIRE()]}
         onInputHandler={onInputHandler}
         label={true}
-        labelName='Nama Pekerjaan*'
+        labelName='Nama Jabatan Yang Diiklankan*'
       />
 
       <div className={styles.CategoryLocation}>

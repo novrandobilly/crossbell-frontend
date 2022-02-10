@@ -9,13 +9,13 @@
   .AutoRemindContainer {
     margin-bottom: 20px;
     padding-bottom: 30px;
-    border-bottom: 1px solid #000;
   }
 
   .CheckBox {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    width: fit-content;
   }
   .Industry,
   .JobCategory {
@@ -47,6 +47,20 @@
 
     &:hover {
       cursor: pointer;
+    }
+    &:disabled {
+      color: #7e7e7e;
+      border-color: #7e7e7e;
+      cursor: not-allowed;
+      background-color: #fff;
+    }
+  }
+  .SalaryRange {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > * {
+      width: 48%;
     }
   }
 }

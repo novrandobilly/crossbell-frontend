@@ -1,6 +1,6 @@
 import * as actionTypes from './actions';
 
-const createApplicantSuccess = payload => {
+const createApplicantSuccess = (payload) => {
   return {
     type: actionTypes.CREATEAPPLICANTSUCCESS,
     payload: payload,
@@ -17,7 +17,7 @@ const createApplicantStart = () => {
   };
 };
 
-const updateApplicantSuccess = payload => {
+const updateApplicantSuccess = (payload) => {
   return {
     type: actionTypes.UPDATEAPPLICANT,
     payload: payload,
@@ -34,7 +34,7 @@ const updateApplicantStart = () => {
   };
 };
 
-const getApplicantSuccess = payload => {
+const getApplicantSuccess = (payload) => {
   return {
     type: actionTypes.GETAPPLICANT,
     payload: payload,
@@ -51,7 +51,7 @@ const getApplicantStart = () => {
   };
 };
 
-const deleteItemSuccess = payload => {
+const deleteItemSuccess = (payload) => {
   return {
     type: actionTypes.DELETEITEM,
     payload: payload,
@@ -68,8 +68,8 @@ const deleteItemStart = () => {
   };
 };
 
-export const deleteItem = payload => {
-  return async dispatch => {
+export const deleteItem = (payload) => {
+  return async (dispatch) => {
     dispatch(deleteItemStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/deleteItem`, {
@@ -97,8 +97,8 @@ export const deleteItem = payload => {
   };
 };
 
-export const createApplicant = ApplicantData => {
-  return async dispatch => {
+export const createApplicant = (ApplicantData) => {
+  return async (dispatch) => {
     dispatch(createApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/signup`, {
@@ -129,8 +129,8 @@ export const createApplicant = ApplicantData => {
   };
 };
 
-export const getOneApplicant = payload => {
-  return async dispatch => {
+export const getOneApplicant = (payload) => {
+  return async (dispatch) => {
     dispatch(getApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
@@ -154,8 +154,8 @@ export const getOneApplicant = payload => {
   };
 };
 
-export const getApplicantJobsApplied = payload => {
-  return async dispatch => {
+export const getApplicantJobsApplied = (payload) => {
+  return async (dispatch) => {
     dispatch(getApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}/jobs`, {
@@ -179,8 +179,8 @@ export const getApplicantJobsApplied = payload => {
   };
 };
 
-export const updateApplicantAvatar = payload => {
-  return async dispatch => {
+export const updateApplicantAvatar = (payload) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const formData = new FormData();
@@ -208,8 +208,8 @@ export const updateApplicantAvatar = payload => {
     }
   };
 };
-export const updateApplicantBiodata = ApplicantData => {
-  return async dispatch => {
+export const updateApplicantBiodata = (ApplicantData) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
@@ -234,8 +234,8 @@ export const updateApplicantBiodata = ApplicantData => {
   };
 };
 
-export const updateApplicantSubscription = ApplicantData => {
-  return async dispatch => {
+export const updateApplicantSubscription = (ApplicantData) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
@@ -245,15 +245,17 @@ export const updateApplicantSubscription = ApplicantData => {
           Authorization: `Bearer ${ApplicantData.token}`,
         },
         body: JSON.stringify({
-          autoSend: {
-            isAutoSend: ApplicantData.autoSend.isAutoSend,
-            jobIndustry: ApplicantData.autoSend.jobIndustry,
-            jobField: ApplicantData.autoSend.jobField,
-          },
+          // autoSend: {
+          //   isAutoSend: ApplicantData.autoSend.isAutoSend,
+          //   jobIndustry: ApplicantData.autoSend.jobIndustry,
+          //   jobField: ApplicantData.autoSend.jobField,
+          // },
           autoRemind: {
             isAutoRemind: ApplicantData.autoRemind.isAutoRemind,
             jobIndustry: ApplicantData.autoRemind.jobIndustry,
             jobField: ApplicantData.autoRemind.jobField,
+            minSalary: ApplicantData.autoRemind.minSalary,
+            maxSalary: ApplicantData.autoRemind.maxSalary,
           },
         }),
       });
@@ -273,8 +275,8 @@ export const updateApplicantSubscription = ApplicantData => {
   };
 };
 
-export const updateApplicantBriefInformation = ApplicantData => {
-  return async dispatch => {
+export const updateApplicantBriefInformation = (ApplicantData) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
@@ -300,8 +302,8 @@ export const updateApplicantBriefInformation = ApplicantData => {
   };
 };
 
-export const updateApplicantEducation = payload => {
-  return async dispatch => {
+export const updateApplicantEducation = (payload) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
@@ -337,8 +339,8 @@ export const updateApplicantEducation = payload => {
   };
 };
 
-export const updateApplicantExperience = payload => {
-  return async dispatch => {
+export const updateApplicantExperience = (payload) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
@@ -372,8 +374,8 @@ export const updateApplicantExperience = payload => {
   };
 };
 
-export const updateApplicantCertification = payload => {
-  return async dispatch => {
+export const updateApplicantCertification = (payload) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
@@ -406,8 +408,8 @@ export const updateApplicantCertification = payload => {
   };
 };
 
-export const updateApplicantOrganization = payload => {
-  return async dispatch => {
+export const updateApplicantOrganization = (payload) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${payload.applicantId}`, {
@@ -439,8 +441,8 @@ export const updateApplicantOrganization = payload => {
   };
 };
 
-export const updateApplicantSkills = ApplicantData => {
-  return async dispatch => {
+export const updateApplicantSkills = (ApplicantData) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
@@ -467,8 +469,8 @@ export const updateApplicantSkills = ApplicantData => {
   };
 };
 
-export const updateApplicantLanguages = ApplicantData => {
-  return async dispatch => {
+export const updateApplicantLanguages = (ApplicantData) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/ap/${ApplicantData.applicantId}`, {
@@ -496,8 +498,8 @@ export const updateApplicantLanguages = ApplicantData => {
   };
 };
 
-export const updateResume = payload => {
-  return async dispatch => {
+export const updateResume = (payload) => {
+  return async (dispatch) => {
     dispatch(updateApplicantStart());
     const resumeData = new FormData();
     resumeData.append('resume', payload.resume);

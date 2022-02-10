@@ -397,7 +397,7 @@ const EditUnreleasedJob = (props) => {
           validatorMethod={[VALIDATOR_REQUIRE()]}
           onInputHandler={onInputHandler}
           label={true}
-          labelName='Nama Pekerjaan*'
+          labelName='Nama Jabatan Yang Diiklankan*'
           initValue={loadedJob.jobTitle}
           initIsValid={loadedJob.jobTitle ? true : false}
         />

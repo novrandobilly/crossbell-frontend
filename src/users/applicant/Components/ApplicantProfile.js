@@ -206,7 +206,7 @@ const ApplicantProfile = (props) => {
                   Notifikasi Otomatis
                 </p>
                 <p>Notifikasi Otomatis {applicantData.autoRemind.isAutoRemind ? 'aktif' : 'tidak aktif'}</p>
-                <p>Lamaran Otomatis {applicantData.autoSend.isAutoSend ? 'aktif' : 'tidak aktif'}</p>
+                {/* <p>Lamaran Otomatis {applicantData.autoSend.isAutoSend ? 'aktif' : 'tidak aktif'}</p> */}
               </div>
             </Fragment>
           )}
