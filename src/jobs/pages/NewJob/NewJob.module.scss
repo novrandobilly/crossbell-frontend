@@ -33,7 +33,7 @@ $primaryColor: #f79f35;
     box-sizing: border-box;
     border: 2px solid #f79f35;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1rem;
     outline: none;
     padding-left: 15px;
   }
@@ -98,17 +98,34 @@ $primaryColor: #f79f35;
       margin: 0;
       font-weight: 400;
     }
-    .SliderLegends {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .AgeRangeTitle {
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: start;
+      margin: 0;
     }
-    .AgeRangeSlider {
+    .AgeRange {
+      width: 100%;
+      max-width: 400px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
-      .Slider {
-        width: 95%;
+      margin: 10px 0;
+      padding-left: 20px;
+      p {
+        width: 100%;
+        max-width: 50px;
+        text-align: start;
+      }
+      input {
+        width: 100%;
+        max-width: 50px;
+        outline: none;
+        border-radius: 5px;
+        border: 2px solid #f79f35;
+        font-size: 1rem;
+        padding: 5px;
+        margin-right: 10px;
       }
     }
   }
@@ -122,18 +139,18 @@ $primaryColor: #f79f35;
       .SpecialRequirementTitle {
         margin: 0;
         margin-right: 15px;
-        font-weight: 400;
+        font-size: 1rem;
+        font-weight: 700;
       }
       button {
         background-color: $primaryColor;
-        font-size: 18px;
+        font-size: 1rem;
         border-radius: 5px;
         padding: 5px;
         border: none;
         color: #fff;
         width: 100%;
-        max-width: 200px;
-        min-height: 35px;
+        max-width: 180px;
         &:hover {
           cursor: pointer;
         }
@@ -143,7 +160,7 @@ $primaryColor: #f79f35;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      font-size: 20px;
+      font-size: 1rem;
       margin-bottom: 15px;
       p {
         margin: 0;
@@ -162,6 +179,7 @@ $primaryColor: #f79f35;
     margin: 30px auto 50px;
     h2 {
       margin: 0 0 5px;
+      font-size: 1rem;
     }
     .RemainingSlot {
       width: 100%;
@@ -172,10 +190,11 @@ $primaryColor: #f79f35;
       margin-top: 10px;
       h3 {
         margin: 0;
+        font-size: 1rem;
       }
       span {
         color: #c77513;
-        font-size: 18px;
+        font-size: 1rem;
         border-bottom: 1px solid #c77513;
         &:hover {
           cursor: pointer;
@@ -193,7 +212,7 @@ $primaryColor: #f79f35;
     min-height: 100px;
     button {
       background-color: $primaryColor;
-      font-size: 20px;
+      font-size: 1rem;
       border-radius: 5px;
       padding: 5px;
       border: none;

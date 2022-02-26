@@ -434,12 +434,10 @@ const NewJob = (props) => {
       </div>
 
       <div className={styles.AgeRangeRequirements}>
-        <div className={styles.SliderLegends}>
-          <h3>Persyaratan Usia</h3>
-        </div>
+        <h3 className={styles.AgeRangeTitle}>Persyaratan Usia</h3>
 
-        <div className={styles.AgeRangeSlider}>
-          <p>{rangeAge[0]}</p>
+        <div className={styles.AgeRange}>
+          <p>Min</p>
           <input
             type='number'
             min={18}
@@ -448,9 +446,10 @@ const NewJob = (props) => {
             onChange={(e) => handleAgeChange(e, 0)}
             id='minAge'
           />
+          <p>tahun</p>
         </div>
-        <div className={styles.AgeRangeSlider}>
-          <p>{rangeAge[1]}</p>
+        <div className={styles.AgeRange}>
+          <p>Max</p>
           <input
             type='number'
             min={18}
@@ -459,6 +458,7 @@ const NewJob = (props) => {
             onChange={(e) => handleAgeChange(e, 1)}
             id='maxAge'
           />
+          <p>tahun</p>
         </div>
       </div>
 

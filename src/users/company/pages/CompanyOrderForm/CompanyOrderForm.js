@@ -136,6 +136,21 @@ const CompanyOrderForm = (props) => {
   if (!props.isLoading) {
     formContent = (
       <React.Fragment>
+        <div className={styles.Header}>
+          <h1>Form Pemesanan Slot</h1>
+          <ul>
+            <li>
+              <strong>Slot</strong> merepresentasikan durasi tayang pada sebuah iklan lowongan.
+            </li>
+            <li>
+              1 <strong>Slot</strong> sama dengan 30 hari penayangan.
+            </li>
+            <li>
+              Sebuah iklan dapat menggunakan lebih dari 1 <strong>Slot</strong> sesuai dengan durasi tayang yang
+              diinginkan
+            </li>
+          </ul>
+        </div>
         <div className={styles.PackageList}>
           <div onClick={OnclickBronze} className={styles.PackageCard}>
             <OrderComponent title='Bronze' price={600000} slot='1 slot' createOrder={props.createOrder} />

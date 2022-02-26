@@ -23,7 +23,6 @@ import {
 import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
 import EducationMajor from '../../../shared/UI_Element/EducationMajor';
-import Slider from '@material-ui/core/Slider';
 
 import styles from '../NewJob/NewJob.module.scss';
 
@@ -337,9 +336,18 @@ const EditUnreleasedJob = (props) => {
     onInputHandler('placementLocation', value, true);
   };
 
-  const handleAgeChange = (event, newValue) => {
-    setRangeAge(newValue);
-    onInputHandler('rangeAge', newValue, true);
+  const handleAgeChange = (event, ageType) => {
+    const newValue = event.target.value;
+
+    setRangeAge((prevState) => {
+      const newState = [...prevState];
+      newState[ageType] = parseInt(newValue);
+      return newState;
+    });
+    const newState = [...rangeAge];
+    newState[ageType] = parseInt(newValue);
+
+    onInputHandler('rangeAge', newState, true);
   };
 
   const onCheckedInputHandler = (e) => {
@@ -512,27 +520,31 @@ const EditUnreleasedJob = (props) => {
         </div>
 
         <div className={styles.AgeRangeRequirements}>
-          <div className={styles.SliderLegends}>
-            <p className={styles.SliderMin}>Min</p>
-            <h3>Persyaratan Usia</h3>
-            <p className={styles.SliderMax}>Max</p>
-          </div>
+          <h3 className={styles.AgeRangeTitle}>Persyaratan Usia</h3>
 
-          <div className={styles.AgeRangeSlider}>
-            <p className={styles.AgeMinValue}>{rangeAge[0]}</p>
-            <div className={styles.Slider}>
-              <Slider
-                value={rangeAge}
-                onChange={handleAgeChange}
-                valueLabelDisplay='auto'
-                aria-labelledby='range-slider'
-                id='rangeAge'
-                style={{ color: '#f79f35' }}
-                min={18}
-                max={100}
-              />
-            </div>
-            <p className={styles.AgeMaxValue}>{rangeAge[1]}</p>
+          <div className={styles.AgeRange}>
+            <p>Min</p>
+            <input
+              type='number'
+              min={18}
+              step={1}
+              value={rangeAge[0]}
+              onChange={(e) => handleAgeChange(e, 0)}
+              id='minAge'
+            />
+            <p>tahun</p>
+          </div>
+          <div className={styles.AgeRange}>
+            <p>Max</p>
+            <input
+              type='number'
+              min={18}
+              step={1}
+              value={rangeAge[1]}
+              onChange={(e) => handleAgeChange(e, 1)}
+              id='maxAge'
+            />
+            <p>tahun</p>
           </div>
         </div>
 
