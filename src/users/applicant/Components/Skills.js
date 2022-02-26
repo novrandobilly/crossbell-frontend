@@ -35,7 +35,7 @@ const Skills = ({ skills, EditAuthorized, fetchApplicantData }) => {
           <div className={styles.SkillsListing}>
             {skills.map((skill, index) => (
               <p className={styles.Skill} key={`${skill.skillName}_${index}`}>
-                &#x27A4; {skill.skillName} - {skill.rate}/5
+                &#x27A4; {skill.skillName} - {skill.rate}
               </p>
             ))}
           </div>

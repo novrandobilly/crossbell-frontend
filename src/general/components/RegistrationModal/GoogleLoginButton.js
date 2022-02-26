@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { LoginContext } from '../../../store/LoginContext';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -6,20 +7,22 @@ import * as actionCreators from '../../../store/actions';
 
 import classes from './GoogleLoginButton.module.css';
 
-const GoogleLoginButton = props => {
-  const responseSuccessGoogle = async response => {
+const GoogleLoginButton = (props) => {
+  const loginCtx = useContext(LoginContext);
+  const responseSuccessGoogle = async (response) => {
     const payload = {
       idToken: response.tokenId,
     };
     try {
       const res = await props.googleLogin(payload);
       console.log(res);
+      loginCtx.closeLogin();
       props.history.push('/jobs-dashboard');
     } catch (err) {
       console.log(err);
     }
   };
-  const responseErrorGoogle = async response => {
+  const responseErrorGoogle = async (response) => {
     console.log(response);
   };
   return (
@@ -35,9 +38,9 @@ const GoogleLoginButton = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    googleLogin: payload => dispatch(actionCreators.googleLogin(payload)),
+    googleLogin: (payload) => dispatch(actionCreators.googleLogin(payload)),
   };
 };
 

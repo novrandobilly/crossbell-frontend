@@ -12,7 +12,7 @@ import Input from '../../../../shared/UI_Element/Input';
 
 import styles from './EditSkills.module.scss';
 
-const EditSkills = props => {
+const EditSkills = (props) => {
   const [skills, setSkills] = useState(['skill']);
   const [skillsList, setSkillsList] = useState([{}]);
 
@@ -35,7 +35,7 @@ const EditSkills = props => {
       res = await getOneApplicant(payload);
 
       res.applicant.skills.forEach((skill, i) => {
-        setSkills(prevState => [...prevState, 'skill']);
+        setSkills((prevState) => [...prevState, 'skill']);
       });
       setSkillsList(res.applicant.skills);
     };
@@ -49,7 +49,7 @@ const EditSkills = props => {
     onInputHandler('skills', skillsList, true);
   }, [onInputHandler, skillsList]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (!formState.formIsValid) {
       return props.updateApplicantFail();
@@ -60,27 +60,28 @@ const EditSkills = props => {
       skillsData: formState.inputs.skills.value,
       token: props.auth.token,
     };
-    await props.updateSkills(updatedData);
+    const res = await props.updateSkills(updatedData);
+    console.log(res);
     props.onCancel();
     props.fetchApplicantData();
   };
 
-  const addSkill = e => {
+  const addSkill = (e) => {
     e.preventDefault();
-    if (skills.length < 5) setSkills(skills => [...skills, 'skill']);
+    if (skills.length < 5) setSkills((skills) => [...skills, 'skill']);
   };
 
   const onUpdateSkill = (event, i, type) => {
     let inputValue = event.target.value;
 
-    setSkillsList(prevState => {
+    setSkillsList((prevState) => {
       let newState = [...prevState];
       if (typeof newState[i] !== 'object') newState[i] = {};
       newState[i][type] = inputValue;
       return newState;
     });
   };
-
+  console.log(skillsList);
   const onDeleteSkillHandler = (event, index) => {
     const newSkillsCount = skills.slice(1, skills.length);
     const newSkillsList = skillsList.filter((skillObject, skillIndex) => skillIndex !== index);
@@ -100,27 +101,25 @@ const EditSkills = props => {
                 inputType='input'
                 id={`skill_${index}`}
                 validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onChange={e => onUpdateSkill(e, index, 'skillName')}
+                onChange={(e) => onUpdateSkill(e, index, 'skillName')}
                 initIsValid={true}
-                label={true}
-                labelName='Keterampilan'
+                label={false}
                 value={skillsList[index]?.skillName}
               />
-              <Input
-                inputType='input'
-                id={`rating_${index}`}
-                validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                onChange={e => onUpdateSkill(e, index, 'rate')}
-                initIsValid={true}
-                type='number'
-                label={true}
-                labelName='Rate'
-                min='0'
-                max='5'
-                step='1'
-                value={skillsList[index]?.rate}
-              />
-              <span className={styles.DeleteSkillIcon} onClick={event => onDeleteSkillHandler(event, index)}>
+
+              <div className={styles.SkillRating}>
+                <select
+                  id={`rating_${index}`}
+                  value={skillsList[index]?.rate}
+                  onChange={(e) => onUpdateSkill(e, index, 'rate')}>
+                  <option value=''></option>
+                  <option value='sangat-baik'>Sangat Baik</option>
+                  <option value='baik'>Baik</option>
+                  <option value='cukup'>Cukup</option>
+                </select>
+              </div>
+
+              <span className={styles.DeleteSkillIcon} onClick={(event) => onDeleteSkillHandler(event, index)}>
                 &#x2718;
               </span>
             </div>
@@ -155,7 +154,7 @@ const EditSkills = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     applicant: state.applicant,
     isLoading: state.applicant.isLoading,
@@ -164,10 +163,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateSkills: payload => dispatch(actionCreators.updateApplicantSkills(payload)),
-    getOneApplicant: applicantid => dispatch(actionCreators.getOneApplicant(applicantid)),
+    updateSkills: (payload) => dispatch(actionCreators.updateApplicantSkills(payload)),
+    getOneApplicant: (applicantid) => dispatch(actionCreators.getOneApplicant(applicantid)),
     resetApplicant: () => dispatch({ type: actionTypes.APPLICANTRESET }),
     updateApplicantFail: () => dispatch({ type: actionTypes.UPDATEAPPLICANTFAIL }),
   };

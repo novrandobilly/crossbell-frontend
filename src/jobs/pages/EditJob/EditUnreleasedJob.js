@@ -188,8 +188,6 @@ const EditUnreleasedJob = (props) => {
     }
   }, [loadedJob, onInputHandler]);
 
-  console.log(loadedJob);
-
   useEffect(() => {
     if (loadedJob) {
       const salary = document.getElementById('salary');
