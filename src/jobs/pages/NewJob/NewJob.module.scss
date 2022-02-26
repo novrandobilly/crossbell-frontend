@@ -5,6 +5,10 @@ $primaryColor: #f79f35;
   margin: auto;
   padding: 40px;
   box-sizing: border-box;
+  p {
+    font-weight: 700;
+  }
+
   & > * {
     width: 100%;
     margin-bottom: 15px;

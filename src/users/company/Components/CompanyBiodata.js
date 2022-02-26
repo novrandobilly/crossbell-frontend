@@ -43,7 +43,6 @@ const CompanyBiodata = (props) => {
       setUploadIsLoading(false);
     }
   };
-
   const noInformation = <em style={{ color: '#737373' }}>tidak ada informasi</em>;
   return (
     <Fragment>
@@ -51,21 +50,18 @@ const CompanyBiodata = (props) => {
         show={openEditBiodata}
         onCancel={closeEditBiodataHandler}
         headerText='Edit Biodata Perusahaan'
-        style={{ top: '20vh', maxWidth: '600px', marginLeft: '-300px', height: '60vh', overflowY: 'auto' }}>
+        style={{ top: '15vh', maxWidth: '600px', marginLeft: '-300px', minHeight: '530px', overflowY: 'auto' }}>
         <EditCompanyBiodata fetchCompany={props.fetchCompany} onCancel={closeEditBiodataHandler} />
       </Modal>
       <div className={styles.CompanyBiodataContainer}>
-        <label className={styles.CompanyLogo} htmlFor='CompanyLogo'>
+        <div className={styles.ImageContainer}>
           {uploadIsLoading ? (
             <LoadingBar />
           ) : (
-            <Fragment>
-              <img
-                className={styles.BiodataImageContainer}
-                alt='Company Logo'
-                src={props.logo ? props.logo.url : BlankProfile}
-              />
-
+            <img className={styles.BiodataImage} alt='Company Logo' src={props.logo ? props.logo.url : BlankProfile} />
+          )}
+          {props.auth.userId === props.companyId && (
+            <label className={styles.CompanyLogoLabel} htmlFor='CompanyLogo'>
               <input
                 accept='.jpg, .jpeg, .png'
                 name='CompanyLogo'
@@ -74,9 +70,10 @@ const CompanyBiodata = (props) => {
                 style={{ display: 'none' }}
                 onChange={onUploadHandler}
               />
-            </Fragment>
+              Update Foto
+            </label>
           )}
-        </label>
+        </div>
 
         <div className={styles.CompanyBiodataInformation}>
           <div className={styles.CompanyNameContainer}>

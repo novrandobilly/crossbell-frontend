@@ -404,7 +404,7 @@ const EditUnreleasedJob = (props) => {
 
         <div className={styles.CategoryLocation}>
           <div className={styles.JobCategory}>
-            <p>Kategori Pekerjaan xeexooxee</p>
+            <p>Bidang Pekerjaan </p>
             <Autocomplete
               id='fieldOfWork'
               name='fieldOfWork'
@@ -473,7 +473,7 @@ const EditUnreleasedJob = (props) => {
           </div>
 
           <div className={styles.ContractTypes}>
-            <p>Jenis Kontrak</p>
+            <p>Status Kekaryawanan</p>
             <select id='employment' name='employment' value={employment} onChange={handleEmploymentChange}>
               <option value='permanent'>Karyawan Tetap</option>
               <option value='contract'>Karyawan kontrak (PKWT)</option>

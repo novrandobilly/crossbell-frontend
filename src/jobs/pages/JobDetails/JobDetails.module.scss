@@ -34,13 +34,13 @@ $primaryColor: #f79f35;
   flex-direction: row;
   justify-content: flex-start;
   border-bottom: solid 1px #71430b;
-  padding-bottom: 3rem;
+  padding-bottom: 1rem;
   .LogoContainer {
     display: flex;
-    align-items: center;
-    width: 30%;
+    align-items: flex-start;
     img {
       width: 100%;
+      max-width: 200px;
       height: auto;
     }
   }
@@ -48,7 +48,6 @@ $primaryColor: #f79f35;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 10rem;
     width: 70%;
     .JobHeader {
       display: flex;
@@ -59,15 +58,22 @@ $primaryColor: #f79f35;
       }
       .JobTitle {
         font-weight: 700;
-        font-size: 24px;
+        font-size: 1.5rem;
         text-align: start;
       }
+    }
+    .Details {
+      font-size: 1rem;
+      text-align: start;
+      margin: 0 0 5px;
     }
     .MetaData {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
+      font-size: 0.8rem;
+      margin-top: 30px;
       .CompanyName {
         color: #71430b;
       }
@@ -149,20 +155,6 @@ $primaryColor: #f79f35;
   color: rgba(0, 0, 0, 0.8);
 }
 
-.Details {
-  font-size: 0.9rem;
-  font-weight: lighter;
-  margin: 8px 0 0 16px;
-}
-
-.CompanyName {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  color: #4e4e4e;
-  font-size: 18px;
-}
-
 .TextMiddle {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -187,7 +179,12 @@ $primaryColor: #f79f35;
 
 .JobDesc {
   border-bottom: solid 1px #71430b;
-  p {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  p,
+  li {
     word-break: break-all;
     white-space: normal;
     text-align: start;
@@ -203,7 +200,7 @@ $primaryColor: #f79f35;
 }
 
 .TextDetail {
-  margin: 16px 0 16px 16px;
+  margin: 1rem 0;
   width: 90%;
   text-align: left;
 }
@@ -287,7 +284,7 @@ $primaryColor: #f79f35;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin: 15px 0;
+        margin: 0;
       }
     }
   }

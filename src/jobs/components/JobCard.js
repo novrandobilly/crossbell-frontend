@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import moment from 'moment';
+// import moment from 'moment';
 import * as actionCreators from '../../store/actions';
 import * as actionTypes from '../../store/actions/actions';
 import { LoginContext } from '../../store/LoginContext';
@@ -82,7 +82,6 @@ const JobCard = (props) => {
   const onCancelHandler = () => {
     props.resetJob();
   };
-
   return (
     <Fragment>
       <Modal
@@ -122,26 +121,19 @@ const JobCard = (props) => {
         </div>
         <div className={styles.Content}>
           <div className={styles.ContentHeader}>
-            <div className={styles.TitleDateWrap}>
-              <h3>
-                <Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-                  {props.jobTitle}
-                </Link>
-              </h3>
-              <p className={styles.Date}>{moment().diff(moment(props.releasedAt), 'days')} hari lalu</p>
-            </div>
-            <Link
-              to={`/jobs/${props.jobId}`}
-              style={{
-                textDecoration: 'inherit',
-                fontWeight: '500',
-                color: 'rgba(0,0,0,0.6)',
-              }}>
-              Details
-            </Link>
+            <p className={styles.JobTitle}>
+              <Link to={`/jobs/${props.jobId}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+                {props.jobTitle}
+              </Link>
+            </p>
+            <p className={styles.FieldOfWork}>
+              <em>{props.fieldOfWork?.filter((fow) => fow).join(', ')}</em>
+            </p>
+            <p>Pengalaman: {props.jobExperience} tahun</p>
+            <p>Pendidikan: {props.educationalStage}</p>
           </div>
 
-          <div className={styles.TopContent}>
+          <div className={styles.Company}>
             {props.isHidden ? (
               <span className={styles.TextSecret}>Perusahaan {props.fieldOfWork[0]}</span>
             ) : (
@@ -149,17 +141,23 @@ const JobCard = (props) => {
                 <span className={styles.TextLeft}>{props.company}</span>
               </Link>
             )}
+          </div>
+          <p className={styles.Placement}> {props.placementLocation}</p>
+          <p className={styles.Salary}>
+            {props.salary && props.salary > 0 ? `IDR ${salary.toLocaleString()} /bulan` : 'Gaji Tidak Ditampilkan'}
+          </p>
 
-            <span className={styles.PlacementLocationProps}>, {props.placementLocation}</span>
-          </div>
-          <div>
-            <em>{props.fieldOfWork?.filter((fow) => fow).join(', ')}</em>
-          </div>
-          <div className={styles.BottomContent}>
-            <p className={styles.BottomSalary}>
-              {props.salary && props.salary > 0 ? `IDR ${salary.toLocaleString()} /bulan` : 'Gaji Tidak Ditampilkan'}
-            </p>
-          </div>
+          {/* <p className={styles.Date}>{moment().diff(moment(props.releasedAt), 'days')} hari lalu</p> */}
+          {/* 
+          <Link
+            to={`/jobs/${props.jobId}`}
+            style={{
+              textDecoration: 'inherit',
+              fontWeight: '500',
+              color: 'rgba(0,0,0,0.6)',
+            }}>
+            Details
+          </Link> */}
         </div>
         <div className={styles.InstantSubmit}>{instantApplyButton}</div>
       </div>

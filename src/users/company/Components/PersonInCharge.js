@@ -16,7 +16,7 @@ const PersonInCharge = (props) => {
       <Modal
         show={openEditPIC}
         onCancel={closeEditPICHandler}
-        style={{ top: '18vh', maxWidth: '500px', marginLeft: '-250px', height: '45vh', overflowY: 'auto' }}
+        style={{ top: '18vh', maxWidth: '500px', marginLeft: '-250px', minHeight: '450px', overflowY: 'auto' }}
         headerText='Edit Person In Charge'>
         <EditPIC onCancel={closeEditPICHandler} fetchCompany={props.fetchCompany} />
       </Modal>

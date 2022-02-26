@@ -33,7 +33,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const ExpiredJobs = props => {
+const ExpiredJobs = (props) => {
   const [expiredJobsDisplay, setExpiredJobsDisplay] = useState([]);
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -61,7 +61,7 @@ const ExpiredJobs = props => {
 
   let expiredAds =
     expiredJobsDisplay.length > 0 ? (
-      expiredJobsDisplay.map(job => {
+      expiredJobsDisplay.map((job) => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
@@ -76,7 +76,7 @@ const ExpiredJobs = props => {
             <div className={styles.JobInformations}>
               <div className={styles.JobTimeInformations}>
                 <p>
-                  Kategori Pekerjaan: <strong>{job.fieldOfWork[0]}</strong>
+                  Bidang Pekerjaan: <strong>{job.fieldOfWork[0]}</strong>
                 </p>
                 <p>
                   Tanggal Mulai: <strong>{job.releasedAt ? moment(job.releasedAt).format('LL') : '-'}</strong>

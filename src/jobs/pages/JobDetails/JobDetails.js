@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState, useContext } from 'react';
 import { useParams, Link, withRouter } from 'react-router-dom';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions';
 import { splitParagraph, thousandSeparator } from '../../../shared/utils/sharedFunctions';
 import { LoginContext } from '../../../store/LoginContext';
+import Button from '../../../shared/UI_Element/Button';
 
 import Modal from '../../../shared/UI_Element/Modal';
 import BlankCompany from '../../../assets/images/Company.png';
@@ -107,9 +107,25 @@ const JobDetails = (props) => {
             <div className={styles.JobMetaData}>
               <div className={styles.JobHeader}>
                 <p className={styles.JobTitle}>{loadedJob.jobTitle} </p>
-                <p className={styles.TextDate}>Posted {moment().diff(moment(loadedJob.releasedAt), 'days')} days ago</p>
+                {/* <p className={styles.TextDate}>{moment().diff(moment(loadedJob.releasedAt), 'days')} hari yang lalu</p> */}
               </div>
-
+              <p className={styles.Details}>{loadedJob.fieldOfWork[0]}</p>
+              <p className={styles.Details}>
+                Status Kekaryawanan:{' '}
+                <strong>
+                  {loadedJob.employment === 'permanent'
+                    ? 'Karyawan Tetap'
+                    : loadedJob.employment === 'contract'
+                    ? 'Karyawan Kontrak (PKWT)'
+                    : 'Karyawan Magang (Intern)'}
+                </strong>
+              </p>
+              <p className={styles.Details}>
+                Pengalaman Kerja: <strong>{loadedJob.jobExperience} tahun </strong>
+              </p>
+              <p className={styles.Details}>
+                Pendidikan: <strong>{loadedJob.educationalStage} </strong>
+              </p>
               <div className={styles.MetaData}>
                 {loadedJob.isHidden ? (
                   <p className={`${styles.CompanyName} ${styles.MetaDataText}`}>
@@ -142,9 +158,9 @@ const JobDetails = (props) => {
               </div>
 
               <div className={styles.ActionButtonContainer}>
-                <p className={styles.TextDateMobile}>
+                {/* <p className={styles.TextDateMobile}>
                   Posted {moment().diff(moment(loadedJob.releasedAt), 'days')} days ago
-                </p>
+                </p> */}
                 <div className={styles.EditContainer}>
                   {props.auth?.userId === loadedJob.companyId.id && (
                     <Link to={`/jobs/${loadedJob.id}/edit`}>
@@ -173,9 +189,9 @@ const JobDetails = (props) => {
                   )}
 
                   {!props.auth.isCompany && !props.auth.token && (
-                    <button className={styles.ApplyButton} onClick={() => loginCtx.showLogin()}>
+                    <Button btnType='InstantApply' className={styles.ApplyButton} onClick={() => loginCtx.showLogin()}>
                       Apply
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -183,40 +199,6 @@ const JobDetails = (props) => {
           </div>
 
           <div className={styles.LowerContainer}>
-            <div className={styles.SectionDesc}>
-              <div className={styles.SectionDiv}>
-                <p className={styles.Caption}>Fungsi Pekerjaan</p>
-                <p className={styles.Details}>
-                  <strong> {loadedJob.fieldOfWork[0]}</strong>
-                </p>
-              </div>
-              <div className={styles.SectionDiv}>
-                <p className={styles.Caption}>Jenis Kontrak</p>
-                <p className={styles.Details}>
-                  <strong>
-                    {loadedJob.employment === 'permanent'
-                      ? 'Karyawan Tetap'
-                      : loadedJob.employment === 'contract'
-                      ? 'Karyawan Kontrak (PKWT)'
-                      : 'Karyawan Magang (Intern)'}
-                  </strong>
-                </p>
-              </div>
-              <div className={styles.SectionDiv}>
-                <p className={styles.Caption}>Pengalaman Kerja</p>
-                <p className={styles.Details}>
-                  <strong>{loadedJob.jobExperience} tahun </strong>
-                </p>
-              </div>
-
-              <div className={styles.SectionDiv}>
-                <p className={styles.Caption}>Pendidikan</p>
-                <p className={styles.Details}>
-                  <strong>{loadedJob.educationalStage} </strong>
-                </p>
-              </div>
-            </div>
-
             <div className={styles.JobDesc}>
               <p className={styles.TextLabel}>Deskripsi Pekerjaan</p>
               {splitParagraph(loadedJob.jobDescriptions)}
@@ -225,17 +207,21 @@ const JobDetails = (props) => {
             <div className={styles.JobDesc}>
               <p className={styles.TextLabel}>Syarat Teknis</p>
               <ul>
-                {loadedJob?.specialRequirement.map((req, index) => (
-                  <li key={`${req}_${index}`} className={styles.TextDetail}>
-                    {req}
-                  </li>
-                ))}
+                {loadedJob?.specialRequirement?.length ? (
+                  loadedJob?.specialRequirement.map((req, index) => (
+                    <li key={`${req}_${index}`} className={styles.TextDetail}>
+                      {req}
+                    </li>
+                  ))
+                ) : (
+                  <li>Tidak ada persyaratan teknis</li>
+                )}
               </ul>
             </div>
 
             <div>
               <p className={styles.TextLabel}>Benefits</p>
-              <p className={styles.TextDetail}>{loadedJob.benefit}</p>
+              <p className={styles.TextDetail}>{loadedJob.benefit || '-'}</p>
             </div>
           </div>
         </div>

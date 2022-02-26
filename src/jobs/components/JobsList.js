@@ -223,6 +223,8 @@ const JobsList = (props) => {
               fieldOfWork={job.fieldOfWork}
               jobApplicant={job.jobApplicants}
               releasedAt={job.releasedAt}
+              jobExperience={job.jobExperience}
+              educationalStage={job.educationalStage}
             />
           ))}
         </div>

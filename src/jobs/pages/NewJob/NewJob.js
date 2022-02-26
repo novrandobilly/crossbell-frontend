@@ -23,7 +23,6 @@ import {
 } from '../../../shared/utils/validator';
 import WorkFieldData from '../../../shared/UI_Element/PredefinedData/WorkFieldData';
 import CitiesData from '../../../shared/UI_Element/PredefinedData/CitiesData';
-import Slider from '@material-ui/core/Slider';
 
 import styles from './NewJob.module.scss';
 
@@ -241,9 +240,18 @@ const NewJob = (props) => {
     onInputHandler(elementId, elementValue, true);
   };
 
-  const handleAgeChange = (event, newValue) => {
-    setRangeAge(newValue);
-    onInputHandler('rangeAge', newValue, true);
+  const handleAgeChange = (event, ageType) => {
+    const newValue = event.target.value;
+
+    setRangeAge((prevState) => {
+      const newState = [...prevState];
+      newState[ageType] = parseInt(newValue);
+      return newState;
+    });
+    const newState = [...rangeAge];
+    newState[ageType] = parseInt(newValue);
+
+    onInputHandler('rangeAge', newState, true);
   };
 
   const onFieldOfWorkHandler = (event, newValue) => {
@@ -322,7 +330,7 @@ const NewJob = (props) => {
 
       <div className={styles.CategoryLocation}>
         <div className={styles.JobCategory}>
-          <p>Kategori Pekerjaan</p>
+          <p>Bidang Pekerjaan</p>
           <Autocomplete
             id='fieldOfWork'
             name='fieldOfWork'
@@ -388,7 +396,7 @@ const NewJob = (props) => {
         </div>
 
         <div className={styles.ContractTypes}>
-          <p>Jenis Kontrak</p>
+          <p>Status Kekaryawanan</p>
           <select id='employment' name='employment' value={employment} onChange={handleEmploymentChange}>
             <option value='permanent'>Karyawan Tetap</option>
             <option value='contract'>Karyawan kontrak (PKWT)</option>
@@ -427,26 +435,30 @@ const NewJob = (props) => {
 
       <div className={styles.AgeRangeRequirements}>
         <div className={styles.SliderLegends}>
-          <p className={styles.SliderMin}>Min</p>
           <h3>Persyaratan Usia</h3>
-          <p className={styles.SliderMax}>Max</p>
         </div>
 
         <div className={styles.AgeRangeSlider}>
-          <p className={styles.AgeMinValue}>{rangeAge[0]}</p>
-          <div className={styles.Slider}>
-            <Slider
-              value={rangeAge}
-              onChange={handleAgeChange}
-              valueLabelDisplay='auto'
-              aria-labelledby='range-slider'
-              id='rangeAge'
-              style={{ color: '#f79f35' }}
-              min={18}
-              max={100}
-            />
-          </div>
-          <p className={styles.AgeMaxValue}>{rangeAge[1]}</p>
+          <p>{rangeAge[0]}</p>
+          <input
+            type='number'
+            min={18}
+            step={1}
+            value={rangeAge[0]}
+            onChange={(e) => handleAgeChange(e, 0)}
+            id='minAge'
+          />
+        </div>
+        <div className={styles.AgeRangeSlider}>
+          <p>{rangeAge[1]}</p>
+          <input
+            type='number'
+            min={18}
+            step={1}
+            value={rangeAge[1]}
+            onChange={(e) => handleAgeChange(e, 1)}
+            id='maxAge'
+          />
         </div>
       </div>
 

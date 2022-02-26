@@ -33,7 +33,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const LiveJobs = props => {
+const LiveJobs = (props) => {
   const [liveJobsDisplay, setLiveJobsDisplay] = useState([]);
   const [state, dispatch] = useReducer(paginationReducer, initPagination);
 
@@ -61,7 +61,7 @@ const LiveJobs = props => {
 
   let liveAds =
     liveJobsDisplay.length > 0 ? (
-      liveJobsDisplay.map(job => {
+      liveJobsDisplay.map((job) => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
@@ -77,7 +77,7 @@ const LiveJobs = props => {
             <div className={styles.JobInformations}>
               <div className={styles.JobTimeInformations}>
                 <p>
-                  Kategori Pekerjaan: <strong>{job.fieldOfWork[0]}</strong>
+                  Bidang Pekerjaan: <strong>{job.fieldOfWork[0]}</strong>
                 </p>
                 <p>
                   Tanggal Mulai: <strong>{job.releasedAt ? moment(job.releasedAt).format('LL') : '-'}</strong>

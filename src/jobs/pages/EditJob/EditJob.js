@@ -12,7 +12,7 @@ import Input from '../../../shared/UI_Element/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_ALWAYSTRUE } from '../../../shared/utils/validator';
 import styles from './EditJob.module.scss';
 
-const EditJob = props => {
+const EditJob = (props) => {
   const jobid = useParams().jobsid;
   const [identifiedJob, setIdentifiedJob] = useState(null);
   const [employment, setEmployment] = useState('');
@@ -63,7 +63,7 @@ const EditJob = props => {
         console.log(res);
 
         res.specialRequirement.forEach((requirement, i) => {
-          setRequirement(prevState => [...prevState, 'req']);
+          setRequirement((prevState) => [...prevState, 'req']);
         });
         setIdentifiedJob(res);
         setEmployment(res.employment);
@@ -75,7 +75,7 @@ const EditJob = props => {
     fetchJob();
   }, [getOneJob, jobid]);
 
-  const onSubmitHandler = async event => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     const payload = {
       jobId: jobid,
@@ -84,7 +84,7 @@ const EditJob = props => {
       employment: formState.inputs.employment.value,
       educationalStage: formState.inputs.educationalStage.value,
       salary: formState.inputs.salary.value,
-      specialRequirement: formState.inputs.specialRequirement.value.filter(req => req),
+      specialRequirement: formState.inputs.specialRequirement.value.filter((req) => req),
       token: props.auth.token,
     };
 
@@ -106,21 +106,21 @@ const EditJob = props => {
     }
   }, [identifiedJob, onInputHandler]);
 
-  const handleEmploymentChange = e => {
+  const handleEmploymentChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setEmployment(e.target.value);
   };
 
-  const handleEducationChange = e => {
+  const handleEducationChange = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.value;
     onInputHandler(elementId, elementValue, true);
     setEducationalStage(e.target.value);
   };
 
-  const onCheckedInputHandler = e => {
+  const onCheckedInputHandler = (e) => {
     const elementId = e.target.name;
     const elementValue = e.target.checked;
     onInputHandler(elementId, elementValue, true);
@@ -128,15 +128,15 @@ const EditJob = props => {
 
   const onRequirementsUpdate = (event, reqIndex) => {
     let inputValue = event.target.value;
-    setIdentifiedJob(prevState => {
+    setIdentifiedJob((prevState) => {
       let newState = { ...prevState };
       newState.specialRequirement[reqIndex] = inputValue;
       return newState;
     });
   };
-  const addRequirement = e => {
+  const addRequirement = (e) => {
     e.preventDefault();
-    setRequirement(req => [...req, 'req']);
+    setRequirement((req) => [...req, 'req']);
   };
 
   let formContent = <LoadingBar />;
@@ -173,7 +173,7 @@ const EditJob = props => {
             </select>
           </div>
           <div className={styles.ContractTypes}>
-            <p>Jenis Kontrak</p>
+            <p>Status Kekaryawanan</p>
             <select id='employment' name='employment' value={employment} onChange={handleEmploymentChange}>
               <option value='permanent'>Karyawan Tetap</option>
               <option value='contract'>Karyawan kontrak (PKWT)</option>
@@ -198,7 +198,7 @@ const EditJob = props => {
                   inputType='input'
                   id={`requirement_${i}`}
                   validatorMethod={[VALIDATOR_ALWAYSTRUE()]}
-                  onChange={event => onRequirementsUpdate(event, i)}
+                  onChange={(event) => onRequirementsUpdate(event, i)}
                   initIsValid={true}
                   initValue={identifiedJob.specialRequirement[i]}
                 />
@@ -253,17 +253,17 @@ const EditJob = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     job: state.job,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateJob: payload => dispatch(actionCreators.updateJob(payload)),
-    getOneJob: jobId => dispatch(actionCreators.getOneJob(jobId)),
+    updateJob: (payload) => dispatch(actionCreators.updateJob(payload)),
+    getOneJob: (jobId) => dispatch(actionCreators.getOneJob(jobId)),
   };
 };
 

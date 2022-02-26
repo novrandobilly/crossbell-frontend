@@ -36,7 +36,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const DraftJobs = props => {
+const DraftJobs = (props) => {
   const [openDeleteDraft, setOpenDeleteDraft] = useState(false);
   const [draftJobId, setDraftJobId] = useState(null);
   const [draftJobsDisplay, setDraftJobsDisplay] = useState([]);
@@ -64,13 +64,13 @@ const DraftJobs = props => {
     setDraftJobsDisplay(jobsDataTemp);
   }, [props.draftJobs, state.startIndex, state.itemsPerPage]);
 
-  const openDeleteDraftHandler = payload => {
+  const openDeleteDraftHandler = (payload) => {
     setDraftJobId(payload);
     setOpenDeleteDraft(true);
   };
   const closeDeleteDraftHandler = () => setOpenDeleteDraft(false);
 
-  const deleteDraft = async draftId => {
+  const deleteDraft = async (draftId) => {
     try {
       await props.onDelete(draftId);
       closeDeleteDraftHandler();
@@ -81,7 +81,7 @@ const DraftJobs = props => {
 
   let draftAds =
     draftJobsDisplay.length > 0 ? (
-      draftJobsDisplay.map(job => {
+      draftJobsDisplay.map((job) => {
         return (
           <div key={job.id} className={styles.JobCardContainer}>
             <div className={styles.JobCardHeader}>
@@ -97,7 +97,7 @@ const DraftJobs = props => {
             <div className={styles.JobInformations}>
               <div className={styles.JobTimeInformations}>
                 <p>
-                  Kategori Pekerjaan: <strong>{job.fieldOfWork[0]}</strong>
+                  Bidang Pekerjaan: <strong>{job.fieldOfWork[0]}</strong>
                 </p>
                 <p>
                   Tanggal Mulai: <strong>{job.releasedAt ? moment(job.releasedAt).format('LL') : '-'}</strong>

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions';
@@ -20,6 +20,19 @@ const WorkingExperiences = (props) => {
   const [openEditWorkingExp, setOpenEditWorkingExp] = useState(false);
   const [openDeleteExperience, setOpenDeleteExperience] = useState(false);
   const [workingExperienceId, setWorkingExperienceId] = useState(null);
+  const [totalWorkingExp, setTotalWorkingExperience] = useState({ years: 0, months: 0 });
+
+  useEffect(() => {
+    props.experiences.map((exp) => {
+      const startDate = moment(exp.startDate);
+      const endDate = moment(exp.endDate || new Date());
+      const years = endDate.diff(startDate, 'years');
+      const months = endDate.diff(startDate, 'months') % 12;
+      setTotalWorkingExperience({ years, months });
+
+      return false;
+    });
+  }, [props.experiences]);
 
   const openAddWorkingExpHandler = () => setOpenAddWorkingExp(true);
   const closeAddWorkingExpHandler = () => setOpenAddWorkingExp(false);
@@ -98,6 +111,12 @@ const WorkingExperiences = (props) => {
           </span>
           Pengalaman Kerja
         </h1>
+        {(totalWorkingExp.years > 0 || totalWorkingExp.months > 0) && (
+          <p>
+            Total masa kerja: {totalWorkingExp.years > 0 && `${totalWorkingExp.years} tahun`}{' '}
+            {totalWorkingExp.months > 0 && `${totalWorkingExp.months} bulan`}{' '}
+          </p>
+        )}
 
         {props.experiences && props.experiences.length > 0 ? (
           props.experiences.map((exp, index) => (

@@ -41,7 +41,7 @@ const paginationReducer = (state, action) => {
   }
 };
 
-const CompanyOrderList = props => {
+const CompanyOrderList = (props) => {
   const { companyid } = useParams();
   const [orderData, setOrderData] = useState([]);
   const [displayData, setDisplayData] = useState();
@@ -117,7 +117,7 @@ const CompanyOrderList = props => {
     });
   };
 
-  const rowsHandler = event => {
+  const rowsHandler = (event) => {
     console.log(event.target.value);
     dispatch({
       type: ACTIONPAGE.PAGEUPDATE,
@@ -129,13 +129,13 @@ const CompanyOrderList = props => {
 
   const history = useHistory();
 
-  const rowPushInvoice = id => {
+  const rowPushInvoice = (id) => {
     if (id) {
       history.push(`/co/${id}/invoice`);
     }
   };
 
-  const rowPushES = id => {
+  const rowPushES = (id) => {
     if (id) {
       history.push(`/co/order/${id}/es`);
     }
@@ -146,10 +146,10 @@ const CompanyOrderList = props => {
   if (!displayIsLoading && displayData) {
     content = (
       <div className={classes.Container}>
-        <div className={classes.Title}>
-          <h2>Riwayat pesanan</h2>
-        </div>
         <div className={classes.TableHolder}>
+          <div className={classes.Title}>
+            <h2>Riwayat pesanan</h2>
+          </div>
           <table className={classes.Table}>
             <thead className={classes.RowField}>
               <tr>
@@ -158,7 +158,6 @@ const CompanyOrderList = props => {
                 <th>Jenis Pesanan</th>
                 <th>Tanggal Order</th>
                 <th>Tanggal Approve</th>
-                <th>Jatuh Tempo</th>
                 <th>Jumlah Slot</th>
                 <th>Status</th>
               </tr>
@@ -166,29 +165,19 @@ const CompanyOrderList = props => {
 
             <tbody className={classes.ColumnField}>
               {displayData.map((order, i) => {
-                let dueDate = Math.ceil(moment(order.dueDate).diff(moment(), 'days', true));
                 return (
-                  <tr key={order._id} onClick={() => (order.slot || order.amount ? rowPushInvoice(order._id) : rowPushES(order._id))}>
+                  <tr
+                    key={order._id}
+                    onClick={() => (order.slot || order.amount ? rowPushInvoice(order._id) : rowPushES(order._id))}>
                     <td> {i + 1}</td>
                     <td>{order._id}</td>
 
                     <td>{order.slot ? 'Reguler' : order.amount ? 'Bulk Candidate' : 'Executive Search'}</td>
                     <td>{moment(order.createdAt).format('D MMM YYYY')}</td>
-                    <td style={{ color: 'green' }}>{order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : '-'}</td>
-                    <td>
-                      <p
-                        style={
-                          dueDate <= 0
-                            ? { color: 'gray' }
-                            : dueDate <= 3
-                            ? { color: 'red' }
-                            : dueDate <= 7
-                            ? { color: '#FF8C00' }
-                            : { color: 'green' }
-                        }>
-                        {dueDate > 0 ? `${dueDate} day` : dueDate <= 0 ? 'no due' : '0 day'}
-                      </p>
+                    <td style={{ color: 'green' }}>
+                      {order.approvedAt ? moment(order.approvedAt).format('D MMM YYYY') : '-'}
                     </td>
+
                     <td>{order.slot ? order.slot : order.amount ? order.amount : '-'}</td>
                     <td>
                       <p
@@ -237,7 +226,7 @@ const CompanyOrderList = props => {
   return <div className={classes.Wraper}>{content}</div>;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     isLoading: state.finance.isLoading,
@@ -245,11 +234,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOrder: data => dispatch(actionCreators.getOrder(data)),
-    getCompanyBC: data => dispatch(actionCreators.getCompanyBC(data)),
-    getCompanyES: data => dispatch(actionCreators.getCompanyES(data)),
+    getOrder: (data) => dispatch(actionCreators.getOrder(data)),
+    getCompanyBC: (data) => dispatch(actionCreators.getCompanyBC(data)),
+    getCompanyES: (data) => dispatch(actionCreators.getCompanyES(data)),
   };
 };
 

@@ -1,3 +1,4 @@
+@use 'sass:math';
 $primaryColor: #f79f35;
 @mixin flexCenter($flexDirection: row, $justifyContent: center, $alignItems: center) {
   display: flex;
@@ -40,7 +41,7 @@ $primaryColor: #f79f35;
     //  border: 1px solid black;
     & > * {
       width: 100%;
-      max-width: $skillItemWidth/2;
+      max-width: math.div($skillItemWidth, 2);
       text-align: start;
       margin: 5px 0;
     }

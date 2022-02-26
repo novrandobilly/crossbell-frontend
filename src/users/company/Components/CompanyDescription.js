@@ -6,7 +6,7 @@ import Modal from '../../../shared/UI_Element/Modal';
 import EditCompanyDescriptions from './EditCompanyDescriptions';
 import styles from './CompanyDescription.module.scss';
 
-const CompanyDescription = props => {
+const CompanyDescription = (props) => {
   const [openEditDescription, setOpenEditDescription] = useState(false);
 
   const openEditDescriptionHandler = () => setOpenEditDescription(true);
@@ -16,7 +16,7 @@ const CompanyDescription = props => {
       <Modal
         show={openEditDescription}
         onCancel={closeEditDescriptionHandler}
-        style={{ top: '18vh', maxWidth: '800px', marginLeft: '-400px', height: '40vh', overflowY: 'auto' }}
+        style={{ top: '25vh', maxWidth: '800px', marginLeft: '-400px', minHeight: '360px', overflowY: 'auto' }}
         headerText='Deskripsi Perusahaan'>
         <EditCompanyDescriptions onCancel={closeEditDescriptionHandler} fetchCompany={props.fetchCompany} />
       </Modal>

@@ -89,13 +89,13 @@ const NavigationLinks = (props) => {
           </li>
         )}
 
-        <li>
-          <NavLink
-            to={props.auth.isLoggedIn && props.auth.isCompany ? `/co/${props.auth.userId}/jobList` : '/jobs-dashboard'}
-            activeClassName={styles.active}>
-            {props.auth.isLoggedIn && props.auth.isCompany ? 'Dashboard Iklan' : 'Lowongan'}
-          </NavLink>
-        </li>
+        {!props.auth.isCompany && (
+          <li>
+            <NavLink to='/jobs-dashboard' activeClassName={styles.active}>
+              Lowongan
+            </NavLink>
+          </li>
+        )}
         {!props.auth.isLoggedIn && !props.admin.isLoggedIn && (
           <Fragment>
             <div className={styles.ApplicantAuthenticationWrapper}>
@@ -129,20 +129,15 @@ const NavigationLinks = (props) => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={`/jobs/new`} activeClassName={styles.active}>
-                Pasang Iklan
-              </NavLink>
-            </li>
-            <li>
               <div className={styles.dropdown}>
                 <button className={styles.dropbtn} onClick={DropdownOrder}>
-                  Pesan
+                  Order Slot
                   <ArrowDropDownIcon style={{ alignSelf: 'center', marginBottom: '-0.4rem' }} />
                 </button>
 
                 <div className={companyDropdown ? styles.dropdownShow : styles.dropdownContent} ref={ref}>
                   <NavLink to={`/co/order/reguler`} activeClassName={styles.active} onClick={DropdownOrder}>
-                    <p>Pesan Slot Iklan</p>
+                    <p>Order Slot Iklan</p>
                   </NavLink>
                   {/* <NavLink
                     to={`/co/order/candidate`}
@@ -156,7 +151,7 @@ const NavigationLinks = (props) => {
                   </NavLink> */}
 
                   <NavLink to={`/co/order/es`} activeClassName={styles.active} onClick={DropdownOrder}>
-                    <p>Executive Search (Headhunter)</p>
+                    <p>Executive Search</p>
                   </NavLink>
                   <NavLink
                     to={`/co/${props.auth.userId}/listOrder`}
@@ -167,6 +162,17 @@ const NavigationLinks = (props) => {
                 </div>
               </div>
             </li>
+            <li>
+              <NavLink to={`/jobs/new`} activeClassName={styles.active}>
+                Pasang Iklan
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={`/co/${props.auth.userId}/jobList`} activeClassName={styles.active}>
+                Dashboard Iklan
+              </NavLink>
+            </li>
+
             <li className={styles.NotificationIcon}>
               <NavLink to={`/co/notifications`} activeClassName={styles.active}>
                 <img src={BellIcon} id={styles.BellIcon} alt='Bell Notification' />
